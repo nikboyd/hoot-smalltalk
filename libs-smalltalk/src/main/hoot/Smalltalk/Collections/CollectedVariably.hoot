@@ -1,0 +1,31 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Collected? ElementType subtype: 
+CollectedVariably? ElementType -> Subject.
+"A type signature for ANSI Smalltalk ExtensibleCollection (section 5.7.5), which both adds and removes its elements."
+
+CollectedVariably type members: []
+
+CollectedVariably "adding elements" members:
+[
+	ElementType! add: ElementType! element "adds an element to this collection" []
+
+	Collected? ElementType! addAll: Collected? ElementType! elements
+        "adds all the supplied elements to this collection" []
+]
+
+CollectedVariably "removing elements" members:
+[
+	ElementType! remove: ElementType! element "removes an element from this collection" []
+
+	ElementType! remove: ElementType! element ifAbsent: NiladicValuable! aBlock
+        "an element removed from this collection, or result produced by aBlock if missing" []
+
+	Collected? ElementType! removeAll: Collected? ElementType! elements
+        "removes all the supplied elements from this collection" []
+
+	Collected? ElementType! removeAllSuchThat: MonadicPredicate! criteria
+        "removes elements that match criteria from this collection" []
+]

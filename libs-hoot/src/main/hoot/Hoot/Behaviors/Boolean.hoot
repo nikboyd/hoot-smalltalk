@@ -1,0 +1,50 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Object subclass: @Abstract Posit! Boolean. 
+"Provides behaviors common to both True and False."
+
+Boolean members: "converting booleans"
+[
+    @Static Boolean! from: Posit! aBoolean [ ^aBoolean "simply cast it" ]
+    @Static @Primitive Boolean! from: Java Lang Boolean! aBoolean [
+        ^aBoolean ifTrue: [ True literal ] ifFalse: [ False literal ]]
+
+    @Static Java Lang Boolean! primitiveValue: Posit! aBoolean [ ^(Boolean from: aBoolean) primitiveBoolean ]
+    @Static Java Lang Boolean! primitiveValue: Java Lang Boolean! aBoolean [ ^aBoolean "pass through" ]
+]
+
+Boolean members: "accessing values"
+[
+    @Abstract Java Lang Boolean! primitiveBoolean []
+    Java Lang Boolean! asPrimitive [ ^self primitiveBoolean ]
+
+    @Static Boolean! trueValue [ ^True literal ]
+    @Static Boolean! falseValue [ ^False literal ]
+]
+
+
+Boolean members: "operating logically"
+[
+    @Abstract Boolean! not []
+
+    @Primitive Boolean! & aPosit [ "value = (this AND aPosit)"
+        ^Boolean from: (self primitiveBoolean & aPosit primitiveBoolean) ]
+
+    @Primitive Boolean! | aPosit [ "value = (this OR aPosit)"
+        ^Boolean from: (self primitiveBoolean | aPosit primitiveBoolean) ]
+]
+
+Boolean members: "comparing values"
+[
+    Boolean! and: NiladicPredicate! aBlock [ ^self & aBlock value ]
+    Boolean! or: NiladicPredicate! aBlock [ ^self | aBlock value ]
+    Boolean! xor: NiladicPredicate! aBlock [ ^Boolean <- (self eqv: aBlock value) not ]
+    Boolean! eqv: aPosit [ "whether (this == aPosit)" ^self == aPosit ]
+]
+
+Boolean members: "testing behavior"
+[
+    Boolean! isBoolean [ ^True literal ]
+]

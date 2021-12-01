@@ -1,0 +1,40 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections ReadableString import.
+Smalltalk Collections CollectedReadably import.
+
+nil subtype: StreamedSource? ElementType -> Subject.
+"A type signature for ANSI Smalltalk GettableStream (section 5.9.2)."
+
+StreamedSource type members: []
+
+StreamedSource "accessing elements" members:
+[
+    ElementType! next "the next element from this stream after advance" []
+    ElementType! peek "the next element from this stream without advance" []
+]
+
+StreamedSource "accessing sequences" members:
+[
+    skip: Ordinal! count "skips the next count elements" []
+    do: MonadicValuable! aBlock "evaluates aBlock with each element" []
+
+    CollectedReadably? ElementType! next: Ordinal! count "the next count elements from this stream" []
+    ReadableString! nextLine "the next line from this stream" []
+
+    CollectedReadably? ElementType! upTo: ElementType! boundaryElement
+        "the elements up to but not including a boundaryElement" []
+]
+
+StreamedSource "testing" members:
+[
+    Posit! atEnd "whether this stream has reached its end" []
+    Posit! nextMatchFor: ElementType! candidate "whether (next = candidate)" []
+    Posit! peekFor: ElementType! candidate "whether (peek = candidate)" []
+
+    Posit! skipTo: ElementType! candidate
+        "advances this stream to the element after the next match for candidate (if possible)" []
+]

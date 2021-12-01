@@ -1,0 +1,68 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections importAll.
+
+TestBase subclass: BasicCollectionTest.
+"Confirms proper operation of collections."
+
+BasicCollectionTest members:
+[
+    Array! sample := #( 5 4 3 2 1 ).
+    Array! names := #( 'ddd' 'ccc' 'bbb' 'aaa' ).
+    OrderedCollection! o := OrderedCollection new.
+
+    Void! runTest [
+        self report: 'sample array   ' elements: sample.
+
+        2 timesRepeat: [ o addAll: sample ].
+        self report: 'twice collected' elements: o.
+
+        self assertTrue: [ ^sample size * 2 == o size ].
+        self passed: 'ordered collection size test'.
+
+        o do: [ :each | self assertTrue: [ ^sample includes: each ]. ].
+        self passed: 'ordered collection values test'.
+
+        self log cr.
+        self report: '... then bagged' elements: o asBag.
+        self report: 'sample sorted  ' elements: sample asSortedCollection.
+
+        s := Set new.
+        2 timesRepeat: [ s addAll: sample ].
+        self report: 'set w/2 samples' elements: s.
+
+        s removeAll: sample.
+        self report: 'after removal  ' elements: s.
+
+        self log cr.
+        self report: 'range =  ( 1 to: 5 )' elements: ( 1 to: 5 ).
+        self report: 'range = #( 1 2 3 4 5 )' value: (( 1 to: 5 ) = sample).
+        self report: 'range = #( 1 2 3 4 5 ) asOrderedCollection'
+              value: (( 1 to: 5 ) = sample asOrderedCollection).
+        self assertTrue: [ ^( 1 to: 5 ) = sample asOrderedCollection ].
+        self passed: 'interval range tests'.
+
+        self log cr.
+        self report: 'names ' elements: names.
+        self report: 'sorted' elements: names asSortedCollection.
+
+        self log cr.
+        String! aString := 'aaaa' , 'bbbb'.
+        self log print: 'concat = '. self log printLine: aString.
+        self log print: 'upper  = '. self log printLine: aString asUppercase.
+        self log print: 'lower  = '. self log printLine: aString asUppercase asLowercase.
+        self assertTrue: [ ^aString = aString asUppercase asLowercase ].
+        self passed: 'string comparison test'.
+    ]
+
+    Void! report: String! testName value: Boolean! value [
+        self log print: testName. self log print: ' ? '.
+        self log print: value printString. self log cr. ]
+
+    Void! report: String! collectionName elements: Collected! c [
+        self log print: collectionName. self log print: ' = ( '.
+        c do: [ :each | self log print: each printString. self log space. ].
+        self log print: ')'. self log cr. ]
+]

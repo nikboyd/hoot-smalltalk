@@ -1,0 +1,38 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+
+ArithmeticError subclass: ZeroDivide.
+"An exception raised by a thread upon division by zero."
+
+ZeroDivide class members:
+[
+    dividend: Number! aDividend [
+        "Signals a zero divide exception."
+        ^ZeroDivide <- (ZeroDivide basicNew: aDividend) signal
+    ]
+]
+
+ZeroDivide members: "constructing instances"
+[
+    "The number for which a zero division was attempted."
+    Number! dividend.
+
+    ZeroDivide: Number! aDividend [
+        super.
+        dividend := aDividend.
+    ]
+
+    Number! dividend [
+        ^dividend
+    ]
+]
+
+ZeroDivide members: "testing"
+[
+    Boolean! isResumable [
+        ^true
+    ]
+]

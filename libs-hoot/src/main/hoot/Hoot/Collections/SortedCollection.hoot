@@ -1,0 +1,145 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util ArrayList import.
+Java Util Collections import.
+
+Hoot Magnitudes Integer import.
+Hoot Streams WriteStream import.
+
+Smalltalk Core Subject import.
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Ordinal import.
+
+SequencedCollection? ElementType subclass:
+CollectedSortably? ElementType!
+SortedCollection? ElementType -> Object.
+"A sorted, variable sized collection of elements."
+
+"This implementation sorts elements lazily, i.e., only when needed for element access."
+
+SortedCollection class members: "creating instances"
+[
+    new [ ^self new: 10 ]
+    new: Ordinal! capacity [ ^SortedCollection basicNew: capacity ]
+
+    from: Java Util List! primitiveList [ ^SortedCollection basicNew: primitiveList ]
+
+    synchronizedFrom: Java Util List! primitiveList [
+     	^SortedCollection basicNew: (Java Util Collections synchronizedList: primitiveList) ]
+
+    DyadicPredicate! sortBlock [ ^[ : Ordered! a : Ordered! b | ^a < b ] toPredicate ]
+]
+
+SortedCollection members: "constructing instances"
+[
+    "Contains the collection elements."
+    @Final Java Util List? ElementType! contents.
+
+    @Protected! SortedCollection [ self : (Java Util ArrayList basicNew). ]
+    @Protected! SortedCollection: Ordinal! capacity [ self : (Java Util ArrayList basicNew: capacity intValue). ]
+    @Protected! SortedCollection: Java Util List! primitiveList [
+     	contents := Java Util Collections synchronizedList: primitiveList. ]
+]
+
+SortedCollection members: "accessing"
+[
+    @Protected ElementType! get: Int! index [ ^contents get: index ]
+    Java Util List! primitiveContents [ self reSort. ^contents ]
+    Integer! size [ ^SmallInteger from: contents size ]
+]
+
+SortedCollection members: "sorting elements"
+[
+    "Indicates whether the contents need sorting."
+    Boolean! needsSort := false.
+
+    "Refers to the block used to sort the receiver elements."
+    DyadicPredicate! sortBlock := SortedCollection type sortBlock.
+    DyadicPredicate! sortBlock [ ^sortBlock ]
+    sortBlock: DyadicPredicate! aBlock [ sortBlock := aBlock. needsSort := true. ]
+
+    @Protected @Primitive SortedCollection! reSort [
+        needsSort asPrimitive ifTrue: [
+            contents exclusivelyDo: [
+                Collections sort: contents.
+                needsSort := False literal.
+            ]
+        ].
+        ^self ]
+]
+
+SortedCollection members: "adding elements"
+[
+    ElementType! add: Object! element [
+        (Object isNull: Object <- element) ifTrue: [ ^element ].
+        self registerType: Object <- element.
+        contents add: ElementType <- element.
+        needsSort := true.
+        ^ElementType <- element ]
+
+    ElementType! add: Object! element at: Int! index [
+        "ignores the index, as this sorts elements differently"
+        ^self add: ElementType <- element ]
+
+    ElementType! add: ElementType! element afterIndex: Ordinal! index [ ^self add: element ]
+    ElementType! add: ElementType! element beforeIndex: Ordinal! index [ ^self add: element ]
+]
+
+SortedCollection members: "comparing"
+[
+    Java Lang Int! hashCode [ ^contents hashCode ]
+    Boolean! = Collected! aCollection [ ^self = aCollection asSortedCollection ]
+    Boolean! = SortedCollection! aCollection [
+        ^Boolean from: (contents equals: aCollection primitiveContents) ]
+]
+
+SortedCollection members: "converting"
+[
+    asSortedCollection [ ^self ]
+]
+
+SortedCollection members: "removing elements"
+[
+    SortedCollection! removeAll [ contents clear. ]
+
+    ElementType! removeAtIndex: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        self reSort. Int! i := self checkIndex: index ifAbsent: aBlock. ^(contents remove: i) ]
+
+    ElementType! removeAtIndex: Ordinal! index [
+     	^self removeAtIndex: index ifAbsent: [ ^self indexRangeError ] ]
+
+    @Primitive OrderedCollection? ElementType! removeAllSuchThat: MonadicPredicate! criteria [
+        ArrayList! results := ArrayList basicNew: 10.
+        (SmallInteger from: 1) to: self size do: [ : Ordinal! index |
+            ElementType! element := contents get: index intValue - 1.
+            (criteria value: element) primitiveBoolean ifTrue: [
+                results add: element.
+                self removeAtIndex: index.
+            ]
+        ].
+        ^OrderedCollection type from: results ]
+
+    @Primitive ElementType! removeFirst [
+     	self emptyCheck. self reSort. ^(contents remove: 0) ]
+
+    @Primitive ElementType! removeLast [
+     	self emptyCheck. self reSort. ^(contents remove: contents size - 1) ]
+
+    @Primitive Collected? ElementType! removeFirst: Ordinal! count [
+        ArrayList! results := ArrayList basicNew: count intValue.
+        (Integer <- count) timesRepeat: [ results add: self removeFirst ].
+        ^OrderedCollection type from: results ]
+
+    @Primitive Collected? ElementType! removeLast: Ordinal! count [
+        ArrayList! results := ArrayList basicNew: count intValue.
+        (Integer <- count) timesRepeat: [ results add: self removeLast ].
+        ^OrderedCollection type from: results ]
+]
+
+SortedCollection members: "streaming"
+[
+    WriteStream! writeStream [ ^WriteStream type with: self ]
+]

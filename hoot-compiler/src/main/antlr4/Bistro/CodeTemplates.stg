@@ -1,0 +1,361 @@
+//==================================================================================================
+// Copyright 2010,2017 Nikolas S. Boyd. All rights reserved.
+//==================================================================================================
+
+group BistroWalker;
+
+emitLibraryScope(packageName,imports,comment,signature,locals,methods) ::=
+<<
+<packageName>
+<if(imports)><emitLines(imports)><endif>
+>>
+
+emitLibraryType(libs,signature,metaFace,metaInstance,locals,methods) ::=
+<<
+<if(libs)><libs><endif>
+<signature>
+{
+  <if(metaFace)><metaFace><endif>
+
+  <if(metaInstance)><metaInstance><endif>
+  <if(locals)><locals><endif>
+  <if(methods)><methods><endif>
+}
+>>
+
+emitFaceSignature(comment,notes,type,subType,baseType,typeClass,faces) ::=
+<<
+<if(comment)><comment><endif>
+<notes> <type> <subType><if(baseType)> extends <baseType> <endif><if(typeClass)><if(faces)>
+  implements <faces><endif><endif>
+>>
+
+emitFaceMembers(type,name,metaName,member,override) ::=
+<<
+/** <type> instance for <name>. **/
+public static final <metaName> $class = new <metaName>(<name>.class);
+<if(override)>@Override <endif>public Behavior $class() { return <member>; }
+>>
+
+emitMetaMembers(name) ::=
+<<
+/** Constructs a new <name>. **/
+protected <name>(final java.lang.Class aClass) { super(aClass); }
+>>
+
+emitTypeMembers() ::=
+<<
+/** Indicates a Bistro type definition. **/
+public static final boolean $class = true;
+>>
+
+
+emitVariable(comment,notes,type,name,cast,value) ::=
+<<
+<if(name)><if(comment)><comment><endif>
+<if(notes)><notes><endif>
+<type> <name><if(value)> = <cast><value><endif><endif>
+>>
+
+emitTransientLocal(type,name,cast,value) ::=
+<<<if(name)>
+<type>[] <name><if(value)> = { <cast><value> }<else> = { null }<endif><endif>
+>>
+
+emitExitedMethod(comment,type,signature,locals,content,scope) ::=
+<<
+<if(comment)>
+
+/**
+* <if(type)>@return <type><endif><comment>
+*/
+<endif>
+<signature> {
+  <if(locals)><locals><endif>
+  try {
+    <content>
+  }
+  catch (MethodExit e) {
+    return e.exitOn(<scope>);
+  }
+}
+>>
+
+emitPrimitiveMethod(comment,type,signature,code) ::=
+<<
+<if(comment)>
+
+/**
+* <if(type)>@return <type><endif><comment>
+*/
+<endif>
+<signature>
+<code>
+>>
+
+emitMethodEmpty(comment,type,signature) ::=
+<<
+<if(comment)>
+
+/**
+* <if(type)>@return <type><endif><comment>
+*/
+<endif>
+<signature>;
+>>
+
+emitMethodScope(comment,type,signature,locals,content) ::=
+<<
+<if(comment)>
+
+/**
+* <if(type)>@return <type><endif><comment>
+*/
+<endif>
+<signature> {
+  <if(locals)><locals><endif>
+  <content>
+}
+>>
+
+emitMethodSignature(notes,details,type,name,arguments,exceptions) ::=
+<<
+<if(notes)><notes><endif>
+<details> <type> <name>(<if(arguments)><arguments; separator=", "><endif>)<exceptions>
+>>
+
+emitNamedArgument(notes,type,name) ::=
+"<if(notes)><notes><endif><type> <name>"
+
+emitFrameArgument(typeName,valueName,id,index) ::=
+"<typeName> <valueName> = <id>.getValue(<index>).value();"
+
+emitArgument(useFinal,type,name) ::= "<if(useFinal)>final <endif><type> <name>"
+emitExceptions(items) ::= " throws <emitList(items)>"
+
+emitBlockSignature(erasure,name,arguments,exceptions) ::=
+<<
+<if(erasure)><erasure>
+<else>@Override <endif>public Object <name>(<arguments>) <exceptions>
+>>
+
+emitWrapErasedCall() ::=
+<<
+try {
+  return $value();
+}
+catch (Throwable e) {
+  throw new UnhandledJavaException(e);
+}
+>>
+
+emitErasedCall(name,arguments) ::= "return <name>(<arguments>);"
+emitErasedVoid(name,arguments) ::= "<name>(<arguments>); return null;"
+
+emitErasedBlock(name,arguments,content) ::=
+<<
+@Override public Object <name>(<arguments>) {
+  <content>
+}
+>>
+
+emitNewClosure(closureType) ::= "new <closureType>()"
+emitOptimizedBlock(closureType,locals,signature,content) ::=
+<<
+<emitNewClosure(closureType)>
+{<if(locals)>
+  <locals>
+<endif>  <signature> {
+    <content>
+  }
+}
+>>
+
+emitBlockScope(blockName,blockType,resultName,resultType,types,locals,content) ::=
+<<
+<if(locals)><locals><endif>
+<content>
+>>
+
+emitFramedScope(count,scope,type,id) ::=
+<<
+(<type>)Closure.with(<count>, <id> -> {
+  <scope>
+})
+>>
+
+emitBlockUsage(blockName,blockType,names) ::= "<blockName>"
+
+emitClosure(blockType, types) ::=
+"<blockType>.Closure<if(types)><emitDetails(types)><endif>"
+
+emitBlockType(blockType,types) ::=
+"<blockType><if(types)><emitDetails(types)><endif>"
+
+emitStatements(items) ::=
+<<
+<items; wrap, separator="\n">
+>>
+
+emitAssignment(name,value) ::= "<name> = <value>"
+emitStatement(value) ::= "<value>;"
+emitMethodExit(scope,value) ::=
+<<
+throw new MethodExit(<scope>,
+<value>);
+>>
+
+emitResult(value) ::= "<if(value)>return <value>;<endif>"
+emitAnswer(value) ::= "<if(value)><value><endif>"
+emitYourself() ::= "return yourself();"
+emitCast(type,value) ::= "((<type>)<value>)"
+emitPath(value) ::= ".<value>"
+emitComposite(base,path) ::= "<base>.<path>"
+emitConstruct(reference,arguments) ::= "<reference>(<arguments; separator=\", \">);"
+emitExpression(operand,messages) ::= "<operand><if(messages)><messages><endif>"
+emitCalls(calls) ::= "<calls; separator=\"\">"
+emitMethodCall(methodName,arguments) ::= ".<emitCall(methodName,arguments)>"
+emitCall(methodName,arguments) ::= "<methodName>(<arguments; separator=\", \">)"
+emitPerform(operand,name,methodName,arguments) ::= "<operand><name>(<methodName><if(arguments)>, <arguments; separator=\", \"><endif>)"
+emitOperation(operator,argument) ::= " <operator> <argument>"
+emitTerm(value) ::= "(<value>)"
+
+emitAssert(value,message) ::= "assert <value><if(message)> : <message>.value()<endif>"
+emitThrowSelf() ::= "throw this"
+emitThrow(item) ::= "throw <item>"
+emitNew(className,arguments) ::= "new <className>(<arguments; separator=\", \">)"
+//emitNewArray(className,size) ::= "new <className>[<size>]"
+emitElementGet(name,index) ::= "<name>[<index>]"
+emitElementSet(name,index,value) ::= "<name>[<index>] = <value>"
+emitInstanceOf(name,className) ::= "<name> instanceof <className>"
+
+emitAlternatives(condition,trueValue,falseValue) ::=
+"(<condition> ? <trueValue> : <falseValue>)"
+
+emitGuardedBlock(condition,aBlock) ::=
+<<
+if (<condition>) {
+  <aBlock>
+}
+>>
+
+emitGuardedPair(condition,trueValue,falseValue) ::=
+<<
+if (<condition>) {
+  <trueValue>
+}
+else {
+  <falseValue>
+}
+>>
+
+emitWhileLoop(condition, guardedBlock) ::=
+<<
+while(<condition>) {
+  <guardedBlock>
+}
+>>
+
+emitOnlyTry(locals,content) ::=
+<<
+try {<if(locals)>
+  <locals><endif>
+  <content>
+}
+>>
+
+emitOnlyEnsure(locals,content) ::=
+<<
+finally {<if(locals)>
+  <locals><endif>
+  <content>
+}
+>>
+
+emitOnlyCatch(caught,locals,content) ::=
+<<
+catch (<caught>) {<if(locals)>
+  <locals><endif>
+  <content>
+}
+>>
+
+emitUseResource(resource,block) ::=
+<<
+try (<resource>) {
+  <block>
+}
+>>
+
+emitExclusivelyDo(resource,block) ::=
+<<
+synchronized (<resource>) {
+  <block>
+}
+>>
+
+emitExclusivelyDoEach(resource,elementType,elementName,block) ::=
+<<
+synchronized (<resource>) {
+  for (<elementType> <elementName> : <resource>) {
+    <block>
+  }
+}
+>>
+
+emitSections(sections) ::=
+<<
+<sections; wrap, separator="\n\n">
+>>
+
+emitLines(items) ::=
+<<
+<items; wrap, separator="\n">
+>>
+
+emitPackage(name) ::= "package <name>"
+emitImport(name) ::= "import <name>;"
+emitSequence(items) ::= "<items; separator=\" \"> "
+emitList(items) ::= "<items; separator=\", \">"
+emitNote(name,values) ::= "@<name><if(values)>(<values>)<endif>"
+emitPair(name,value) ::= "<name>=<value>"
+emitItem(item) ::= "<item>"
+
+emitExtendedType(type,base) ::= "<type><if(base)> extends <base><endif>"
+emitDetailedType(type,details) ::= "<type><details>"
+emitDetails(values) ::= "<if(values)>\<<values; separator=\", \">><endif>"
+
+emitCharacter(value) ::= "Character.from(<value>)"
+emitString(value) ::= "String.from(<value>)"
+emitSymbol(value) ::= "Symbol.from(<value>)"
+
+emitRadical(value) ::= "Integer.parseRadix(<value>)"
+emitDecimal(value) ::= "ScaledDecimal.from(<value>)"
+emitInteger(value) ::= "SmallInteger.from(<value>)"
+emitFloat(value) ::= "Float.from(<value>)"
+emitBoolean(value) ::= "<value>.literal()"
+
+emitScalar(factory,value) ::= "primitive.<factory>From(<value>)"
+emitTrueGuard(value) ::= "Boolean.primitiveValue(<value>)"
+emitFalseGuard(value) ::= "!Boolean.primitiveValue(<value>)"
+emitClosureValue(closure) ::= "(<closure>).value()"
+
+emitVoid() ::= "void"
+emitObject() ::= "Object"
+emitSelf() ::= "this"
+emitSuper() ::= "super"
+emitNull() ::= "null"
+emitNil() ::= "primitive.literalNil()"
+emitFalse() ::= "False.literal()"
+emitTrue() ::= "True.literal()"
+emitEmpty() ::= ""
+
+emitQuoted(value) ::= <<"<value>">>
+
+emitArrayWith(values) ::= "Array.withAll(new Object[]<emitArray(values)>)"
+emitArray(values) ::=
+<<
+{
+  <values; wrap, separator=", ">
+}
+>>

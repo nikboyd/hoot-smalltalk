@@ -1,0 +1,99 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections OrdinalRange import.
+
+Scalar subtype: Numeric.
+"A type signature for ANSI Smalltalk Number (section 5.6.2)."
+
+Numeric type members: "force proper metatype inheritance" [ ]
+
+Numeric "comparing" members:
+[
+    Posit! = Numeric! value "indicates whether (this = value)" []
+]
+
+Numeric "converting" members:
+[
+    Ratio! asRational "a rational approximation of this" []
+    Ratio! asFraction "a fractional approximation of this" []
+
+    Floater! asFloat "a floating point approximation of this" []
+    Floater! asFloatE "a single precision floating point approximation of this" []
+    Floater! asFloatD "a double precision floating point approximation of this" []
+
+    Ordinal! asInteger "an integer narrowed from this" []
+
+    ScaledDecimal! asScaledDecimal: Ordinal! scale
+        "this value as a fixed point decimal" []
+]
+
+Numeric "arithmetic" members:
+[
+    + aNumeric "the sum = (this + aNumeric)" []
+    - aNumeric "the difference = (this - aNumeric)" []
+    * aNumeric "the product = (this * aNumeric)" []
+    / aNumeric "the ratio = (this / aNumeric)" []
+    \\ aNumeric "the partial remainder portion from (this // aNumeric)" []
+    Ordinal! // aNumeric "the full integer portion from (this / aNumeric)" []
+]
+
+Numeric "mathematics" members:
+[
+    abs "a value = |this|" []
+    Ratio! fractionPart "the fractional part of this" []
+    Ordinal! integerPart "the integral part of this" []
+
+    negated "arithmetic inverse, a value = (0 - this)" []
+    reciprocal "multiplicative inverse, a value = (1 / this)" []
+
+    Ordinal! quo: Numeric! divisor "the integral value = (this / divisor)" []
+    rem: Numeric! divisor "the remainder from (this / divisor)" []
+
+    ** Numeric! power "a value = (this ** power)" []
+    ** Ordinal! power "a value = (this ** power)" []
+
+    Ordinal! sign "the integral sign of this number = (-1, 0, 1)" []
+    sqrt "a value = square root (this)" []
+    squared "a value = (this ** 2)" []
+]
+
+Numeric "truncation" members:
+[
+    Ordinal! ceiling "the least integer >= this" []
+    Ordinal! floor "the greatest integer <= this" []
+    Ordinal! truncated "the nearest integer in (0, this)" []
+    truncatedTo: aNumeric "the nearest multiple of aNumeric between (0, this)" []
+]
+
+Numeric "rounding" members:
+[
+    Ordinal! rounded "the integer nearest this" []
+    roundTo: aNumeric "the multiple of aNumeric nearest this" []
+]
+
+Numeric "testing" members:
+[
+    Posit! negative "indicates whether (this < 0)" []
+    Posit! positive "indicates whether (this >= 0)" []
+    Posit! strictlyPositive "indicates whether (this > 0)" []
+]
+
+Numeric "intervals" members:
+[
+    OrdinalRange! to: Ordinal! upperBound
+        "an interval between this and upperBound separated by steps of one" []
+
+    OrdinalRange! to: Ordinal! upperBound by: Ordinal! delta
+        "an interval between this and upperBound separated by steps of delta" []
+]
+
+Numeric "block iterating" members:
+[
+    Subject! to: Ordinal! upperBound by: Ordinal! delta do: MonadicValuable! aBlock
+    	"evaluates aBlock with an index, which varies by delta from this to upperBound" []
+
+    Subject! to: Ordinal! upperBound do: MonadicValuable! aBlock
+    	"evaluates aBlock with an index, which varies by one from this to upperBound" []
+]

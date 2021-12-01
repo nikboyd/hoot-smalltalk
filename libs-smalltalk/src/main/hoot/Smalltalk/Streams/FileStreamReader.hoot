@@ -1,0 +1,19 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections ReadableString import.
+
+StreamedSource? ElementType,
+FileStreamer? ElementType subtype: 
+FileStreamReader? ElementType -> Subject.
+"A type signature for ANSI Smalltalk ReadFileStream (section 5.10.2)."
+
+FileStreamReader type members: 
+[
+    FileStreamReader? ElementType -> Subject! read: ReadableString! fileName
+        "a new read stream on a file, with #text values" []
+
+    FileStreamReader? ElementType -> Subject! read: ReadableString! fileName type: ReadableString! fileType
+        "a new read stream on a file, with either #binary or #text values" []
+]

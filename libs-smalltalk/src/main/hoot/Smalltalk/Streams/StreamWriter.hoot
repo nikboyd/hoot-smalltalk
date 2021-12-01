@@ -1,0 +1,16 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections CollectedVariably import.
+
+StreamedSink? ElementType,
+StreamedSequence? ElementType subtype: 
+StreamWriter? ElementType -> Subject.
+"A type signature for ANSI Smalltalk WriteStream (section 5.9.11)."
+
+StreamWriter type "creating instances" members:
+[
+    StreamWriter? ElementType -> Subject! with: CollectedVariably? ElementType! aCollection
+        "a new stream for writing into a collection" []
+]

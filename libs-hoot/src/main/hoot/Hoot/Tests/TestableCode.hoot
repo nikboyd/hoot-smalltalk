@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util importAll.
+Hoot Collections importAll.
+Hoot Compiler Scopes importAll.
+Hoot Runtime Names TypeName import.
+Hoot Runtime Names Primitive import.
+
+TestableClosure subclass: TestableCode. "Defines a testable closure."
+
+TestableCode "constructing" members:
+[
+    OrderedCollection? String! codeBlocks := OrderedCollection type new.
+
+    @Protected TestableCode: ArrayedCollection? String! blocks [ super. codeBlocks addAll: blocks. ]
+    @Static TestableCode! withAll: ArrayedCollection? String! blocks [ ^TestableCode basicNew: blocks ]
+    @Static TestableCode! withAll: List? String! blocks [ ^TestableCode withAll: (OrderedCollection type from: blocks) ]
+    @Static TestableCode! withAll: String! ... blocks [ ^TestableCode withAll: (Utils wrap: blocks) ]
+]
+
+TestableCode members: "evaluating code"
+[
+    Void! runTests [ codeBlocks do: [ :String! each | self showCode: each ] ]
+
+    Java Lang Object! evaluateCode: String! code [ ^ClosureCompiler evaluate: code asPrimitive ]
+    @Primitive TestableCode! showCode: String! code [
+        code isEmpty asPrimitive ifTrue: [ self log cr. ^self ].
+        Java Lang Object! result := (self evaluateCode: code).
+        Java Lang Class! resultType := Primitive JavaRoot.
+        (result == null) ifTrue: [ result := 'null' ] ifFalse: [ resultType := result getClass ].
+        self reportCode: code result: result type: result getClass. ^self ]
+
+    @Static @Final String! CodeReport := '%s = %s, %s'.
+    reportCode: String! code result: Java Lang Object! result type: Java Lang Class! resultType [
+        self log printLine: (CodeReport formatWith: code
+            : (String from: result toString)
+            : (String from: resultType getSimpleName)
+        )]
+]

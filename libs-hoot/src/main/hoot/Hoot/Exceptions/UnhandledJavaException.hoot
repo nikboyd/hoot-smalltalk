@@ -1,0 +1,59 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Io importAll.
+Java Lang Throwable import.
+
+Hoot Runtime Exceptions ExceptionBase import.
+
+"Represents a notification raised by a thread."
+ExceptionBase subclass: UnhandledJavaException.
+
+UnhandledJavaException class members: "creating instances"
+[
+    "Raises an unhandled Java exception."
+    Void! raise: aThrowable
+    [	(UnhandledJavaException basicNew: aThrowable) raise.
+    ]
+]
+
+UnhandledJavaException members: "creating instances"
+[
+    "Holds the unhandled Java exception."
+    Throwable! throwable.
+
+    "Constructs a new UnhandledJavaException."
+    UnhandledJavaException: aThrowable [
+        super : aThrowable getMessage.
+        throwable := aThrowable.
+    ]
+
+    Void! raise [
+        "Throws this exception."
+        self throw.
+    ]
+
+    "Returns the unhandled Java exception."
+    Throwable! unhandledException
+    [	^throwable
+    ]
+
+    "Prints stack traces for the receiver and the unhandled exception."
+    @Override Void! printStackTrace: PrintWriter! s
+    [	throwable printStackTrace: s.
+            super printStackTrace: s.
+    ]
+
+    "Prints stack traces for the receiver and the unhandled exception."
+    @Override Void! printStackTrace: PrintStream! s
+    [	throwable printStackTrace: s.
+            super printStackTrace: s.
+    ]
+
+    "Prints stack traces for the receiver and the unhandled exception."
+    @Override Void! printStackTrace
+    [	throwable printStackTrace.
+            super printStackTrace.
+    ]
+]

@@ -1,0 +1,40 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Scalar import.
+
+CollectedReadably, Scalar, CharSequence subtype: ReadableString.
+"A type signature for ANSI Smalltalk ReadableString (sections 5.7.10)."
+
+ReadableString type members: []
+
+ReadableString "comparing" members:
+[
+    Posit! <  ReadableString! upperBound "whether (this < upperBound)" []
+    Posit! <= ReadableString! upperBound "whether (this <= upperBound)" []
+    Posit! >  ReadableString! lowerBound "whether (this > lowerBound)" []
+    Posit! >= ReadableString! lowerBound "whether (this >= lowerBound)" []
+
+    Posit! sameAs: ReadableString! candidate "whether a candidate collates the same as this" []
+]
+
+ReadableString "converting" members:
+[
+    ReadableString! asLowercase "a new copy of this string with all lower case characters" []
+    ReadableString! asUppercase "a new copy of this string with all upper case characters" []
+
+    ReadableString! asString "a string containing the same characters as this string" []
+    Selector! asSymbol "a symbol containing the same characters as this string" []
+    Selector! asSelector "a selector containing the characters of this string" []
+
+    CollectedArray! subStrings: ReadableString! separators
+        "the portions of this string between the separators" []
+]
+
+ReadableString "copying elements" members:
+[
+    @Override ReadableString! , CollectedReadably! aString
+        "a new collection containing all the elements of both this string and aString" []
+]

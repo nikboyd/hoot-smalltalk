@@ -1,0 +1,284 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Faces IntegerValue import.
+Hoot Runtime Names Primitive import.
+
+Hoot Magnitudes Integer import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Magnitudes Numeric import.
+
+Integer subclass: SmallInteger.
+"An integer value, especially for a literals. Manages flyweight instances of 32 bits precision."
+
+SmallInteger class members: "converting value types"
+[
+    SmallInteger! IntegerFrom: Java Lang Integer! intValue "a new integer" [ ^SmallInteger from: intValue ]
+    @Primitive Java Lang Integer! intFrom: Integer! anInteger [ ^anInteger intValue ]
+    SmallInteger! coerce: aNumber [ ^SmallInteger from: aNumber primitiveInteger ]
+]
+
+SmallInteger class members: "initializing"
+[
+    @Primitive @Protected Void! initialize [
+        "note: MUST be primitive to prevent runtime recursion error!"
+        SmallInteger initializeFlyweights.
+    ]
+]
+
+SmallInteger class members: "characterizing values"
+[
+    SmallInteger! maximum [ ^SmallInteger from: Primitive elementaryMaxInteger ]
+    SmallInteger! minimum [ ^SmallInteger from: Primitive elementaryMinInteger ]
+
+    SmallInteger! radix [ ^Duality ]
+    SmallInteger! precision [ ^32 ]
+
+    "Used for numeric coercions."
+    @Static SmallInteger! Generality := 10.
+    SmallInteger! generality [ ^Generality ]
+]
+
+SmallInteger members: "caching flyweights"
+[
+    "Caches the flyweight instances."
+    @Static IntegerValue Cache! FlyweightCache := IntegerValue Cache basicNew.
+    @Static IntegerValue Cache! flyweights [ ^FlyweightCache ]
+    @Static SmallInteger! flyweightCount [ ^SmallInteger from: FlyweightCache size ]
+
+    @Public @Static SmallInteger! Zero := 0.
+    @Public @Static SmallInteger! Unity := 1.
+    @Public @Static SmallInteger! Duality := 2.
+    @Public @Static SmallInteger! Negativity := 0-1.
+
+    "Instantiates the flyweight SmallInteger instances."
+    @Static @Primitive Void! initializeFlyweights [
+        Int! index := 0.
+        [ index < FlyweightCache size ] whileTrue: [
+            FlyweightCache cache: (SmallInteger basicNew: index).
+            FlyweightCache cache: (SmallInteger basicNew: 0 - index).
+            index += 1.
+        ].
+
+        "re-initialize constants"
+        Zero := FlyweightCache getCached: 0.
+        Unity := FlyweightCache getCached: 1.
+        Duality := FlyweightCache getCached: 2.
+        Negativity := FlyweightCache getCached: 0-1.
+    ]
+
+    @Primitive @Static SmallInteger! from: Java Lang Int! intValue [
+       "a SmallInteger derived from a primitive Integer"
+
+        "if outside cache bounds ..."
+        (SmallInteger flyweights covers: intValue)
+            ifFalse: [ ^SmallInteger basicNew: intValue ].
+
+        "if not yet cached ..."
+        (SmallInteger flyweights hasCached: intValue)
+            ifFalse: [ ^SmallInteger flyweights cache: (SmallInteger basicNew: intValue) ].
+
+        "else, answer a previously cached value"
+        ^SmallInteger flyweights getCached: intValue
+    ]
+]
+
+SmallInteger members: "constructing values"
+[
+    "Holds a primitive integer value."
+    @Primitive @Protected Java Lang Int! cachedValue := 0.
+
+    @Protected SmallInteger [ super. ]
+    @Protected SmallInteger: Java Lang Int! value [ self. cachedValue := value. ]
+]
+
+SmallInteger members: "arithmetic - final"
+[
+    @Primitive @Final SmallInteger! + SmallInteger! aNumber [
+        ^SmallInteger from: cachedValue + aNumber intValue ]
+
+    @Primitive @Final SmallInteger! - SmallInteger! aNumber [
+        ^SmallInteger from: cachedValue - aNumber intValue ]
+
+    @Primitive @Final SmallInteger! * SmallInteger! aNumber [
+        ^SmallInteger from: cachedValue * aNumber intValue ]
+
+    @Primitive @Final Number! / SmallInteger! aNumber [
+        aNumber primitiveInteger == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^Fraction type numerator: self denominator: aNumber ]
+]
+
+SmallInteger members: "arithmetic"
+[
+    Integer! + Numeric! aNumber [ ^(LargeInteger from: (
+        (Number <- aNumber) asInteger asBigInteger add: self asBigInteger)) narrowGenerality ]
+
+    Integer! * Numeric! aNumber [ ^(LargeInteger from: (
+        (Number <- aNumber) asInteger asBigInteger multiply: self asBigInteger)) narrowGenerality ]
+
+    Number! / aNumber [ ^self / aNumber asSmallInteger ]
+    // Numeric! aNumber [ ^self // (Number <- aNumber) asSmallInteger ]
+
+    @Primitive Number! / Numeric! aNumber [
+        Number! n := Number <- aNumber.
+        n isZero primitiveBoolean ifTrue: [ self zeroDivide. ^self ].
+        ^self divideWith: n ]
+
+    @Primitive SmallInteger! // SmallInteger! aNumber [
+        aNumber primitiveInteger == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^SmallInteger from: (self primitiveInteger / aNumber intValue) ]
+
+    @Primitive SmallInteger! \\ SmallInteger! aNumber [
+        aNumber primitiveInteger == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^SmallInteger from: (self primitiveInteger % aNumber intValue) ]
+]
+
+SmallInteger members: "comparing values - final"
+[
+    @Primitive @Final Boolean! = SmallInteger! aNumber [
+        ^Boolean from: self primitiveInteger == aNumber intValue ]
+
+    @Primitive @Final Boolean! < SmallInteger! aNumber [
+        ^Boolean from: self primitiveInteger < aNumber intValue ]
+
+    @Primitive @Final Boolean! > SmallInteger! aNumber [
+        ^Boolean from: self primitiveInteger > aNumber intValue ]
+]
+
+SmallInteger members: "comparing values"
+[
+    Boolean! = Magnitude! aNumber [ ^self = (SmallInteger <- aNumber) ]
+    Boolean! = Numeric! aNumber [ ^(Number <- aNumber) asSmallInteger = self ]
+    Boolean! < Rational! aNumber [ ^aNumber asSmallInteger > self ]
+    Boolean! > Rational! aNumber [ ^aNumber asSmallInteger < self ]
+]
+
+SmallInteger members: "converting values"
+[
+    @Static SmallInteger! from: Numeric! aNumber [ ^SmallInteger from: aNumber asInteger intValue ]
+    @Primitive Java Lang Short! primitiveShort [ ^self elementaryInteger shortValue ]
+
+    Java Lang Byte! primitiveByte [ ^self elementaryInteger byteValue ]
+    Java Lang Char! primitiveCharacter [ ^char <- self primitiveInteger ]
+    Java Lang Int! primitiveInteger [ ^cachedValue ]
+    Java Lang Integer! elementaryInteger [ ^cachedValue ]
+    Java Lang Int! asPrimitive [ ^self primitiveInteger ]
+    Java Lang Long! primitiveLong [ ^self elementaryInteger longValue ]
+    Java Lang Float! primitiveFloat [ ^self elementaryInteger floatValue ]
+    Java Lang Double! primitiveDouble [ ^self elementaryInteger doubleValue ]
+    Java Lang Number! elementaryNumber [ ^self elementaryInteger ]
+
+    asSmallInteger [ ^self ]
+    String! asString [ ^self printString ]
+    FastInteger! asFastInteger [ ^FastInteger fromInteger: self ]
+
+    generality [ ^self class generality ]
+]
+
+SmallInteger members: "copying"
+[
+    shallowCopy [ ^self ]
+    deepCopy [ ^self shallowCopy ]
+]
+
+SmallInteger members: "handling errors"
+[
+    unmodifiableInteger [ "reports an unmodifiable integer"
+        self error: 'Attempt to change an unmodifiable SmallInteger instance'. ]
+]
+
+SmallInteger members: "manipulating bits - concrete"
+[
+    @Primitive SmallInteger! bitAnd: Ordinal! anInteger [
+        ^SmallInteger from: self intValue & anInteger intValue ]
+
+    @Primitive SmallInteger! bitOr: Ordinal! anInteger [
+        ^SmallInteger from: self intValue | anInteger intValue ]
+
+    @Primitive SmallInteger! bitXor: Ordinal! anInteger [
+        ^SmallInteger from: (Primitive xorBits: self intValue : anInteger intValue) ]
+
+
+    @Primitive SmallInteger! bitAt: Ordinal! index [
+        @Final Java Lang Int! x := (Integer <- index) primitiveInteger - 1.
+        ((x < 0) | (x > 31)) ifTrue:
+            [ (IllegalArgumentException basicNew: 'Bit index out of range, not 1 - 32') throw ].
+
+        @Final SmallInteger! s := SmallInteger from: (1 << x).
+        ^(self bitAnd: s) primitiveInteger == 0
+            ifTrue: [ Zero ]
+            ifFalse: [ Unity ] ]
+
+    @Primitive SmallInteger! bitAt: Ordinal! index put: Ordinal! bitValue [
+        @Final Java Lang Int! x := (Integer <- index) intValue - 1.
+        Java Lang Int! v := (Integer <- bitValue) intValue.
+        ((x < 0) | (x > 31)) ifTrue:
+            [ (IllegalArgumentException basicNew: 'Bit index out of range, not 1 - 32') throw ].
+
+        @Final SmallInteger! s := SmallInteger from: (1 << x).
+        (v == 0) ifTrue: [ ^SmallInteger from: self intValue & s bitInvert intValue ].
+        (v == 1) ifTrue: [ ^SmallInteger from: self intValue | s intValue ].
+
+        (IllegalArgumentException basicNew: 'Bit value must be 0 or 1') throw ]
+
+    @Primitive SmallInteger! bitShift: Ordinal! count [
+        (Integer <- count) primitiveInteger < 0 ifTrue: [ ^self rightShift: Integer <- count negated ].
+        ^self leftShift: Integer <- count ]
+]
+
+SmallInteger members: "bit shifts - primitive"
+[
+    @Private @Primitive SmallInteger! rightShift: Integer! count [
+        ^SmallInteger from: self intValue >> count intValue ]
+
+    @Private @Primitive SmallInteger! leftShift: Integer! count [
+        ^SmallInteger from: self intValue << count intValue ]
+]
+
+SmallInteger members: "testing behavior"
+[
+    Boolean! isLiteral [ ^true ]
+    Boolean! isSmallInteger [ ^true ]
+]
+
+SmallInteger "mathematics" members:
+[
+    abs [ ^self < Zero ifTrue: [ self negated ] ifFalse: [ self ] ]
+    @Primitive SmallInteger! negated [ ^SmallInteger from: Zero intValue - self intValue ]
+]
+
+SmallInteger "enumerating" members:
+[
+    timesRepeat: NiladicValuable! aBlock [
+        "evaluates aBlock this number of times"
+        @Final FastInteger! count := Unity asFastInteger.
+        [ count <= self ] whileTrue: [
+            aBlock value.
+            count += Unity.
+        ].
+    ]
+
+    to: SmallInteger! otherBound by: SmallInteger! delta do: MonadicValuable! aBlock [
+        "evaluates aBlock with an index, which varies by delta from this value to otherBound"
+        @Final FastInteger! index := self asFastInteger.
+        delta > Zero ifTrue: [
+            [ index <= otherBound ] whileTrue: [
+                aBlock value: index.
+                index += delta.
+            ]
+        ]
+        ifFalse: [
+            [ otherBound <= index ] whileTrue: [
+                aBlock value: index.
+                index += delta.
+            ]
+        ].
+    ]
+]
+
+SmallInteger "printing" members:
+[
+    String! printString [ ^String from: (Java Lang Integer toString: self intValue) ]
+]

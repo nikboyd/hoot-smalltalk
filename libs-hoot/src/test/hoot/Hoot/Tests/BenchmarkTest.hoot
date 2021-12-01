@@ -1,0 +1,56 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Metrics MetricsSnapshot import.
+
+TestBase subclass: BenchmarkTest.
+"benchmarks derived from (former) Smalltalk Industry Council STIC."
+
+BenchmarkTest members: "testing performance"
+[
+    SmallInteger! fullweightSample [ ^SmallInteger flyweightCount + 3 ]
+
+    Void! runTest [
+        MetricsSnapshot basicNew reportUsage: 'before benchmarks'; reportHeapUsage.
+
+        self log cr.
+        SticBenchmark basicNew runTest.
+
+        self log cr.
+        self testFlyWeights.
+        self testFullWeights.
+        self testFastIntegers.
+    ]
+
+    SmallInteger! test := Unity.
+    testFlyWeights [
+        "self log cr. self reportValue: test."
+        (TestableClosure named: 'flyweight ops'
+        repeat: 10000 closure: [
+            test := test + Unity.
+            test := test - Unity.
+        ]) reportSnapshots.
+    ]
+
+    SmallInteger! full := self fullweightSample.
+    testFullWeights [
+        "self log cr. self reportValue: full."
+        (TestableClosure named: 'fullweight ops'
+        repeat: 10000 closure: [
+            full := full + Unity.
+            full := full - Unity.
+        ]) reportSnapshots.
+    ]
+
+    FastInteger! fast := self fullweightSample asFastInteger.
+    testFastIntegers [
+        "self log cr. self reportValue: fast."
+        (TestableClosure named: 'fastweight ops'
+        repeat: 10000 closure: [
+            fast += Unity.
+            fast -= Unity.
+        ]) reportSnapshots.
+    ]
+]

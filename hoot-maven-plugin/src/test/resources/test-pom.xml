@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.apache.maven.plugin.my.unit</groupId>
+    <artifactId>project-to-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Test MyMojo</name>
+
+    <parent>
+        <groupId>hoot-smalltalk</groupId>
+        <artifactId>hoot-project</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!--<version>${version.junit}</version>-->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>hoot-maven-plugin</artifactId>
+                <version>${version.hoot.libs}</version>
+                <configuration>
+                    <main-args>
+                        <source>../hoot-compiler/src/test/hoot</source>
+                        <folder>../sample-code</folder>
+                        <test>true</test>
+                    </main-args>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven.surefire}</version>
+                <configuration>
+                    <argLine>${test-args}</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

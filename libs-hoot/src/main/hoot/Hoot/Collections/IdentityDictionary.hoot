@@ -1,0 +1,50 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util IdentityHashMap import.
+
+Hoot Behaviors Ordered import.
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections Collected import.
+
+Dictionary? KeyType : ElementType subclass:
+IdentityDictionary? KeyType -> Magnitude : ElementType -> Object.
+"An identity mapped set of associations between key-value pairs."
+
+"Supports instantiation with a primitive Map. Uses a native IdentityHashMap as the primitive contents."
+
+IdentityDictionary class members:
+[
+    IdentityDictionary! new [ "a new empty IdentityDictionary" ^self new: 10 ]
+    IdentityDictionary! new: Ordinal! capacity [ ^IdentityDictionary basicNew: capacity ]
+    IdentityDictionary! from: Java Util Map! primitiveMap [ ^IdentityDictionary basicNew: primitiveMap ]
+]
+
+IdentityDictionary members:
+[
+    @Protected! IdentityDictionary [ contents := IdentityHashMap basicNew. ]
+    @Protected! IdentityDictionary: Ordinal! capacity [ contents := IdentityHashMap basicNew: capacity intValue. ]
+    @Protected! IdentityDictionary: Java Util Map! primitiveMap [
+        contents := IdentityHashMap basicNew: primitiveMap size.
+        contents putAll: primitiveMap. ]
+]
+
+IdentityDictionary members: "accessing elements"
+[
+    Set? KeyType! keys [
+        Java Util Set? KeyType! s := contents keySet.
+    	^(IdentitySet new: (SmallInteger from: s size)) addAll: (Set from: s); yourself ]
+]
+
+IdentityDictionary members: "comparing"
+[
+    Boolean! = IdentityDictionary! aCollection [
+        ^Boolean from: (contents equals: aCollection primitiveContents) ]
+
+    Boolean! = Collected! aCollection [
+        (aCollection isKindOf: IdentityDictionary type) ifFalse: [ ^false ].
+        ^self = (IdentityDictionary <- aCollection) ]
+]

@@ -1,0 +1,23 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections ReadableString import.
+
+StreamedSink? ElementType,
+FileStreamer? ElementType subtype: 
+FileStreamWriter? ElementType -> Subject.
+"A type signature for ANSI Smalltalk WriteFileStream (section 5.10.3)."
+
+FileStreamWriter type members: 
+[
+    FileStreamWriter? ElementType -> Subject! write: ReadableString! fileName
+        "a new write stream on a file, with #text values in #create mode" []
+
+    FileStreamWriter? ElementType -> Subject! write: ReadableString! fileName mode: ReadableString! mode
+        "a new write stream on a file, with #text values" []
+
+    FileStreamWriter? ElementType -> Subject! write: ReadableString! fileName mode: ReadableString! mode
+        check: Posit! checkExists type: ReadableString! fileType
+        "a new write stream on a file, with either #binary or #text values" []
+]

@@ -1,0 +1,77 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+Hoot Runtime Names Primitive import.
+
+Smalltalk Core Subject import.
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Ordinal import.
+
+ArrayedCollection subclass: ByteArray. "A fixed sized array of integers in the range 0-255."
+
+ByteArray class members: "creating instances"
+[
+    ByteArray! new [ "a new empty ByteArray" ^self new: 0 ]
+    ByteArray! new: Ordinal! capacity [ ^ByteArray basicNew: capacity ]
+    ByteArray! withAll: Java Lang Byte! ... elements [ ^ByteArray basicNew: elements ]
+]
+
+ByteArray members: "constructing instances"
+[
+    "Contains the array elements."
+    @Primitive Java Lang Byte! ... contents := #( ).
+
+    @Protected! ByteArray []
+    @Protected! ByteArray: Java Lang Byte! ... elements [ contents := elements. ]
+    @Protected! ByteArray: Ordinal! capacity [ contents := Byte arrayNew: capacity intValue. ]
+]
+
+ByteArray members: "accessing"
+[
+    Java Lang Byte! ... primitiveContents [ ^contents ]
+    @Primitive Integer! size [ ^SmallInteger from: (Primitive length: contents) ]
+]
+
+ByteArray members: "accessing primitively"
+[
+    @Protected @Primitive Integer! get: Int! index [ ^SmallInteger from: (contents at: index) ]
+    @Protected @Primitive Integer! add: Object! element at: Int! index [
+        contents at: index put: Byte <- (Ordinal <- element) intValue.
+        ^SmallInteger from: (Ordinal <- element) intValue ]
+]
+
+ByteArray members: "accessing elements"
+[
+    Integer! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        ^self get: (self checkIndex: index ifAbsent: aBlock) ]
+
+    Integer! at: Ordinal! index put: Ordinal! element [
+        ^self add: Magnitude <- element at: (self checkIndex: index) ]
+]
+
+ByteArray members: "comparing"
+[
+    Java Lang Int! hashCode [ ^self primitiveContents hashCode ]
+    Boolean! = ByteArray! aCollection [ ^Boolean from: (contents equals: aCollection primitiveContents) ]
+    @Primitive Boolean! = Collected! aCollection [
+        (aCollection instanceOf: ByteArray) ifTrue: [ ^self equals: ByteArray <- aCollection ].
+        ^aCollection asArray equals: self ]
+]
+
+ByteArray members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        1 to: self size do: [ : Integer! index | aBlock value: (self get: (index - 1) primitiveInteger) ].
+    ]
+]
+
+ByteArray members: "mutations - not allowed"
+[
+    ByteArray! removeAll [ self immutabilityError. ]
+    Subject! removeFirst [ self immutabilityError. ^0 ]
+    Subject! removeLast [ self immutabilityError. ^0 ]
+    Subject! removeAtIndex: Ordinal! index [ self immutabilityError. ^0 ]
+    Subject! add: Subject! element [ self immutabilityError. ^0 ]
+]

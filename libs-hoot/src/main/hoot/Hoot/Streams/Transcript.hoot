@@ -1,0 +1,55 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Faces Logging import.
+Hoot Runtime Names Primitive import.
+Hoot Magnitudes Integer import.
+Smalltalk Collections ReadableString import.
+
+nil subclass: Logging! Transcript. "Logs messages on the system console."
+
+Transcript members: "logging"
+[
+    @Public @Static @Final Transcript! Instance := Transcript basicNew.
+    @Public @Static Transcript! log [ ^Instance ]
+
+    printLine [ self cr. ]
+    printLine: CharSequence! text [ Primitive printLine: text toString. ]
+    printLine: ReadableString! text [ self printLine: String <- text. ]
+    printLine: String! text [ Primitive printLine: text primitiveString. ]
+
+    print: CharSequence! text [ Primitive printLine: text toString. ]
+    print: ReadableString! text [ self print: String <- text. ]
+    print: String! text [ Primitive print: text primitiveString. ]
+
+    cr [ self print: self lineSeparator. ]
+    tab [ self print: Character type tab asString. ]
+    space [ self print: Character type space asString. ]
+    quote [ self print: Character type quote asString. ]
+
+    String! lineSeparator [ ^WriteStream type lineSeparator ]
+    Transcript! yourself [ ^self ]
+]
+
+Transcript members: "reporting performance measures"
+[
+    reportSecs: String! text fromTest: Closure! testBlock [
+        duration := LongInteger from: testBlock millisecondsToRun.
+        self print: text; print: (duration / 1000.0) printString; printLine: ' secs'. ]
+
+    reportMsecs: String! text fromTest: Closure! testBlock [
+        duration := LongInteger from: testBlock millisecondsToRun.
+        self print: text; print: duration printString; printLine: ' msecs'. ]
+
+    report: String! text afterTest: Closure! testBlock [ self report: text after: 1 timesRepeat: testBlock. ]
+    report: String! text after: Integer! count timesRepeat: Closure! testBlock [
+        duration := LongInteger from: (testBlock millisecondsToRepeat: count).
+        count > 1 ifTrue: [
+            self print: text; print: (duration / 1000.0) printString; printLine: ' secs'.
+        ]
+        ifFalse: [
+            self print: text; print: duration printString; printLine: ' msecs'.
+        ].
+    ]
+]

@@ -1,0 +1,182 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Behaviors HootRegistry import.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Exceptions importAll.
+
+Smalltalk Core Posit import.
+Smalltalk Core Subject import.
+Smalltalk Exceptions importAll.
+Smalltalk Collections ReadableString import.
+
+"Represents an exception raised by a thread."
+Object subclass: ExceptionBuilder! SignaledException! Exception.
+
+Exception class members: "creating exception sets"
+[
+    "Returns a new ExceptionSet containing the receiver and the (argument)."
+    ExceptionSet! , ExceptionSelector Metatype! argument [
+            ^(ExceptionSet type with: self) , argument
+    ]
+]
+
+Exception class members: "handling exceptions"
+[
+    @Override Boolean! handles: SignaledException! exception [ ^exception class isKindOf: self ]
+    @Override Boolean! isKindOf: ExceptionDescription Metatype! superType [
+        ^Boolean from: (superType getClass isAssignableFrom: self getClass)
+    ]
+
+    @Override Void! handleWith: MonadicValuable! handler during: Closure! aBlock [
+        ExceptionContext during: aBlock handle:
+            ((Enclosure <- handler) asHandlerOf: HandledException Metatype <- self type). ]
+]
+
+Exception class members: "signaling exceptions"
+[
+    @Override Exception! signal [ ^(Exception <- self new) signal ]
+    @Override Exception! signal: ReadableString! message [ ^self new messageText: message; signal ]
+    Exception! new [ ^(Primitive newInstance: self outerClass) ]
+]
+
+Exception members: "creating exception sets"
+[
+    ExceptionSet! , ExceptionSelector Metatype! argument [ ^self class , argument ]
+]
+
+Exception members: "accessing the exception environment"
+[
+    ExceptionContext! environment [  ^ExceptionContext environment ]
+]
+
+Exception members: "accessing an exception handler"
+[
+    @Protected Enclosure! registeredHandler [ ^self environment findHandler: self ]
+    @Protected Enclosure! activeHandler [ ^(ExceptionContext findHandler: self valueType) ]
+
+    Enclosure! theHandler.
+    Enclosure! currentHandler [ ^theHandler ]
+    Enclosure! currentHandler: Enclosure! handler [ theHandler := handler. ^handler ]
+    @Primitive Boolean! isSignaled [ ^Boolean from: (self hasAny: self currentHandler) ]
+]
+
+Exception members: "completing an exception"
+[
+    Void! exit: Subject! value [ "the value as result of the handler"
+        "If the exception is resumable this will be equivalent to #resume:.
+         If the exception is non-resumable this is equivalent to #return:."
+        self isResumable
+            ifTrue: [ self resume: value ]
+            ifFalse: [ self return: value ].
+    ]
+
+    @Override Void! resume [ self resume: nil. ]
+    @Override Void! resume: Subject! value [
+        self isResumable ifFalse: [ ControlError type signal: 'Attempt to resume from a non-resumable exception'. ].
+        self activeHandler resume: value. "will not return"
+    ]
+
+    @Override Void! return [ self return: nil. ]
+    @Override Void! return: Subject! value [ self activeHandler return: value. ]
+]
+
+Exception members: "describing an exception"
+[
+    String! messageText := ''.
+    String! messageText [ ^messageText ]
+    String! messageText: ReadableString! aMessage [
+        messageText := String from: aMessage.
+        ^messageText
+    ]
+
+    String! tag := ''.
+    String! tag: String! aTag [ tag := aTag. ^tag ]
+    String! tag [
+        tag isEmpty ifFalse: [ ^tag ].
+        messageText isEmpty ifFalse: [ ^messageText ].
+        ^'' "both were empty" ]
+
+    @Protected String! defaultDescriptionString [ "derived classes often override this method." ^self class name ]
+    @Override @Primitive String! description [
+        ^self messageText isEmpty
+            ifTrue: [ self defaultDescriptionString ]
+            ifFalse: [ self messageText ] ]
+]
+
+Exception members: "handling an exception"
+[
+    @Protected Subject! activateHandler [ ^ExceptionContext activateHandler: self ]
+
+    defaultAction [ UnhandledException type raise: self. "better would be to launch a debugger..." ]
+    @Protected Exception! abandonAction [ UnhandledException type raise: UnresumableException basicNew. ]
+
+    @Primitive Subject! handle [ "finds the active handler for this exception and activates it."
+        Valued! result := ExceptionContext activateHandler: self.
+        self wasResignaled primitiveBoolean ifTrue: [ ^self replacementException signal ].
+        self isResumable primitiveBoolean ifFalse: [ self abandonAction ].
+        ^result ]
+
+    "Activate the enclosing handler for this exception. Afterwards, if this exception
+    is resumable, the current handler will continue executing with the resumption value
+    from the enclosing handler returned as the value of this message."
+    Subject! outer [ self activeHandler passFrom: self. ^self ]
+
+    "Passes the receiver to the next enclosing exception handler."
+    @Override Void! pass [ self currentHandler passFrom: self. ]
+]
+
+Exception members: "resignaling an exception"
+[
+    @Property Exception! replacementException.
+    @Protected Boolean! wasResignaled [ ^self hasAny: replacementException ]
+
+    Void! resignalAs: ExceptionDescription! anException	[
+        self replacementException: Exception <- anException.
+        "self resignalContinuation value." "never returns!"
+    ]
+
+    NiladicValuable! resignalBlock.
+    @Protected NiladicValuable! resignalContinuation [ ^resignalBlock ]
+    @Protected Exception! resignalContinuation: NiladicValuable! aBlock [ resignalBlock := aBlock. ]
+    @Protected Exception! initializeResignal [ self resignalContinuation: [ ^self resignalContinuation ]. ]
+
+    Exception [ self initializeResignal. ]
+]
+
+Exception members: "retrying an exception"
+[
+    Void! retry [ self activeHandler retry. ]
+    Void! retryUsing: NiladicValuable! aBlock [ self activeHandler retry: aBlock. ]
+]
+
+Exception members: "signaling an exception"
+[
+    "Signals that this exception occurred, finds and executes the appropriate handler."
+    signal [
+        self isSignaled ifTrue: [ ^ControlError type signal: 'Signaling an already signaled exception' ].
+        self handle.
+    ]
+
+    signal: ReadableString! message [ ^self messageText: message; signal ]
+]
+
+Exception members: "testing"
+[
+    @Protected Boolean! hasNo: Valued! item [ ^(Boolean from: (Utils hasNo: item)) ]
+    @Protected Boolean! hasAny: Valued! item [ ^Boolean from: (Utils hasAny: item) ]
+    @Protected Boolean! hasHandler [ ^self hasAny: self registeredHandler ]
+    @Protected Boolean! isActive [ ^self isSignaled ]
+    @Protected Boolean! hasActiveHandler [
+        Enclosure! handler := self registeredHandler.
+        ^(self hasAny: handler) ]
+
+    @Override Boolean! isResumable [ "resumable derived classes should override this method." ^false ]
+
+    "Indicates whether the handler for this exception is nested."
+    @Override Boolean! isNested [ ^self hasAny: (ExceptionContext findPriorHandler: self valueType) ]
+    @Override Boolean! isKindOf: ExceptionDescription Metatype! superType [
+        ^self class isKindOf: superType
+    ]
+]

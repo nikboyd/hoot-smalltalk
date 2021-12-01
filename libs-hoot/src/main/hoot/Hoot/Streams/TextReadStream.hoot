@@ -1,0 +1,39 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Collections importAll.
+
+ReadStream? Character subclass: TextReadStream. "Reads from a text string (in memory)."
+
+TextReadStream class members:
+[
+    TextReadStream! on: String! aString [ ^self with: aString ]
+    TextReadStream! with: String! aString [ ^TextReadStream basicNew: aString ]
+]
+
+TextReadStream members: "constructing instances"
+[
+    @Protected! TextReadStream: String! aString [ super : aString. ]
+    String! contents [ ^String from: contents toString ]
+]
+
+TextReadStream "reading" members:
+[
+    Character! next [
+     	position := 1 + position.
+        ^self contents at: position ]
+
+    String! nextLine [ ^self upTo: Character type newLine ]
+
+    String! upTo: Character! target [
+        result := String emptyString.
+        [ self atEnd ] whileFalse: [
+            Character! c := self next.
+            target = c ifTrue: [ ^result ].
+            result at: result size + 1 put: c.
+        ].
+        ^result
+    ]
+]

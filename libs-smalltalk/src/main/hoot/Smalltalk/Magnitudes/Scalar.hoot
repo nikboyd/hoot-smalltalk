@@ -1,0 +1,22 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Subject subtype: Scalar.
+"A type signature for ANSI Smalltalk Magnitude (section 5.6.1)."
+
+Scalar type members: []
+
+Scalar "comparing" members:
+[
+    Posit! <  Scalar! upperBound "whether (this <  upperBound)" []
+    Posit! <= Scalar! upperBound "whether (this <= upperBound)" []
+    Posit! >  Scalar! lowerBound "whether (this >  lowerBound)" []
+    Posit! >= Scalar! lowerBound "whether (this >= lowerBound)" []
+
+    Posit! between: Scalar! lowerBound and: Scalar! upperBound
+       "whether ((Interval from: lowerBound to: upperBound) includes: this)" []
+
+    Scalar! max: aScalar "the greater of (this, aScalar)" []
+    Scalar! min: aScalar "the lesser of (this, aScalar)" []
+]

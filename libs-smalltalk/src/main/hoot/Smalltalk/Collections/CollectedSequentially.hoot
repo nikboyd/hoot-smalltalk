@@ -1,0 +1,38 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+
+CollectedReadably? ElementType subtype: 
+CollectedSequentially? ElementType -> Subject.
+"A type signature for ANSI Smalltalk SequencedCollection (section 5.7.8, 5.7.12, 5.7.16)."
+
+CollectedSequentially type members: []
+
+CollectedSequentially members: "accessing elements"
+[
+    ElementType! at: Ordinal! index put: ElementType! element
+        "stores an element at an index in this collection" []
+
+    ElementType! atAll: CollectedReadably? Ordinal! indices put: ElementType! element
+        "stores an element at all indices in this collection" []
+
+    ElementType! atAllPut: ElementType! element
+        "stores an element at all available locations in this collection" []
+]
+
+CollectedSequentially members: "replacing elements"
+[
+    ElementType! replaceFrom: Ordinal! start to: Ordinal! stop
+        withObject: ElementType! anElement
+        "replaces elements in this collection from start to stop with anElement" []
+
+    CollectedReadably! replaceFrom: Ordinal! start to: Ordinal! stop
+        with: CollectedReadably? ElementType! replacements
+        "replaces elements in this collection from start to stop with elements from replacements" []
+
+    CollectedReadably! replaceFrom: Ordinal! start to: Ordinal! stop
+        with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin
+        "replaces elements in this collection from start to stop with elements from replacements starting at origin" []
+]

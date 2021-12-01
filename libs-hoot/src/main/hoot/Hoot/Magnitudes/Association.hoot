@@ -1,0 +1,68 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Core Subject import.
+Smalltalk Core Posit import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Associated import.
+
+Magnitude subclass: Associated! Association. "A key-value pair."
+
+Association class members: []
+
+Association members: "accessing values"
+[
+    "Refers to the key."
+    @Property Object! key := nil.
+    key: Subject! aKey [ key := Object <- aKey. ]
+
+    "Refers to the value."
+    @Property Object! value := nil.
+    value: Subject! aValue [ value := Object <- aValue. ]
+
+    key: Object! aKey value: Object! aValue [ key := aKey. value := aValue. ]
+]
+
+Association members: "creating instances"
+[
+    @Protected Association: Object! aKey : Object! aValue [
+        key := aKey. value := aValue. ]
+
+    @Static Association! withKey: Subject! aKey withValue: Subject! aValue [
+        ^Association basicNew: Object <- aKey : Object <- aValue ]
+]
+
+Association members: "comparing"
+[
+    Java Lang Int! hashCode [ ^key hashCode ]
+
+    @Primitive Boolean! = Magnitude! candidate [
+        "whether (this = candidate)"
+        candidate == nil ifTrue: [ ^False literal ].
+        (candidate instanceOf: Association) ifFalse: [ ^False literal ].
+        ^self equals: (Association <- candidate) ]
+
+    @Primitive Boolean! = Association! candidate [
+        "whether (this = candidate)"
+        candidate == nil ifTrue: [ ^False literal ].
+        (self key equals: candidate key) primitiveBoolean ifFalse: [ ^False literal ].
+        (self value equals: candidate value) primitiveBoolean ifFalse: [ ^False literal ].
+        ^True literal ]
+
+    @Primitive Boolean! < Scalar! candidate [
+        candidate == nil ifTrue: [ ^False literal ].
+        (candidate instanceOf: Association) ifFalse: [ ^False literal ].
+        ^self lessThan: (Association <- candidate) ]
+
+    @Primitive Boolean! < Association! candidate [
+        "whether (this key < candidate key)"
+        candidate == nil ifTrue: [ ^False literal ].
+        ^Boolean from: ((Scalar <- self key) lessThan: Scalar <- candidate key) ]
+]
+
+Association members: "printing"
+[
+    Java Lang String! toString [ ^self printTerm primitiveString ]
+    String! printString [ ^key printString , ' >> ' , value printString ]
+]

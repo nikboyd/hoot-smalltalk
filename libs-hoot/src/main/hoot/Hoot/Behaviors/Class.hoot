@@ -1,0 +1,35 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Maps MethodCache import.
+
+Behavior subclass: Class.
+"Supports basic classification of the behavior of objects."
+
+Class class members: "creating classes"
+[
+    @Primitive Class! new "placeholder" [ ^Class basicNew: Object class ]
+]
+
+Class members: "constructing instances"
+[
+    Class: Java Lang Class! aClass "constructs a new Class" [
+        super.
+        methodDictionary := MethodCache basicNew: aClass.
+        self registerType.
+    ]
+]
+
+Class members: "accessing values"
+[
+    @Primitive String! namePrefix [
+        Character! first := Character <- self name first.
+        first isVowel asPrimitive ifTrue: [ ^String from: 'an ' ].
+        ^String from: 'a ' ]
+]
+
+Class members: "testing behavior"
+[
+    Boolean! isClass "whether this is a class" [ ^true ]
+]

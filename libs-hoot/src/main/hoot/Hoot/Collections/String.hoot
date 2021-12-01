@@ -1,0 +1,221 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+Org Apache Commons Lang3 lowerCase importAll.
+
+Hoot Behaviors importAll.
+Hoot Behaviors Boolean import.
+Hoot Behaviors Object import.
+Hoot Magnitudes Integer import.
+Hoot Magnitudes SmallInteger import.
+Hoot Magnitudes Character import.
+Hoot Streams TextWriteStream import.
+Hoot Runtime Names Primitive import.
+
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+
+CharacterString subclass: MutableString! String. "A literal string."
+
+String class members:
+[
+    new [ ^self new: 10 ]
+    new: Ordinal! capacity [ ^String basicNew: capacity ]
+
+    TextWriteStream! writeStream: Integer! capacity [ ^(String basicNew: capacity) writeStream ]
+]
+
+String members: "constructing"
+[
+    "Contains the string value."
+    @Private StringBuffer! contents := StringBuffer basicNew.
+
+    @Protected! String: Java Lang String! primitiveString [ contents append: primitiveString. ]
+    @Protected! String: Ordinal! capacity [ contents := StringBuffer basicNew: capacity intValue. ]
+    @Static String! emptyString [ ^String type new ]
+
+    @Static @Primitive String! from: ReadableString! aString [
+        ^aString == null ifTrue: [ String emptyString ] ifFalse: [ String basicNew: aString toString ] ]
+
+    @Static @Primitive String! from: Java Lang String! aString [
+        ^aString == null ifTrue: [ String emptyString ] ifFalse: [ String basicNew: aString ] ]
+]
+
+String members: "converting"
+[
+    @Static List? String! listFrom: String! ... textStrings [ ^Utils wrap: textStrings ]
+    @Static String! join: List? String! textStrings with: String! joint [
+        ^String from: (Utils joinWith: joint asPrimitive : (String primitiveListFrom: textStrings)) ]
+
+    @Primitive @Static List? Java Lang String! primitiveListFrom: List? String! textStrings [
+        ^[ :List? Java Lang String! list :String! s | list add: s asPrimitive. ] collectStringsFrom: textStrings ]
+
+    @Static List? String! listWith: Java Lang String! ... textStrings [ ^String listWith: (Utils wrap: textStrings) ]
+    @Static List? String! listWith: List? Java Lang String! textStrings [
+        ^[ :Java Lang String! s | String from: s ] evaluateEach: textStrings : String type outerClass ]
+
+    @Static List? String! listWithEach: List? Java Lang Object! textStrings [
+        ^[ :Java Lang Object! s | String from: s toString ] evaluateEach: textStrings : String type outerClass ]
+
+    Integer! toInteger [ ^SmallInteger from: (Java Lang Integer valueOf: self asPrimitive) ]
+]
+
+String "accessing" members:
+[
+    Java Lang String! toString [ ^self primitiveString ]
+    Java Lang String! primitiveString [ ^contents toString ]
+    Integer! size [ ^SmallInteger from: contents length ]
+]
+
+String members: "accessing elements"
+[
+    @Protected Character! get: Int! index [ ^Character from: (contents charAt: index) ]
+
+    Character! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        Int! i := self checkIndex: index ifAbsent: aBlock.
+        ^Character from: (contents charAt: i) ]
+
+    @Primitive Character! at: Ordinal! index put: Object! element [
+        Character! c := Character <- element.
+        Int! i := self checkRange: index.
+        (i < contents length)
+            ifTrue: [ contents setCharAt: i : c primitiveCharacter. ]
+            ifFalse: [ contents append: c primitiveCharacter. ].
+
+        ^c ]
+]
+
+String members: "adding elements"
+[
+    @Protected Object! add: Object! element at: Int! index [
+        contents insert: index : element.
+        ^element ]
+
+    Character! add: Subject! element [ ^self add: Character <- element ]
+    Character! add: Character! c [ contents append: c primitiveCharacter. ^c ]
+
+    Character! add: Object! element after: Object! target [
+     	^self add: element afterIndex: (self indexOf: target ifAbsent: [ self elementNotFound ]) ]
+
+    Character! add: Object! element afterIndex: Ordinal! index [
+        Int! i := self checkRange: Ordinal <- (index + 1).
+        Character! c := Character <- element.
+        contents insert: i : c primitiveCharacter.
+        ^c ]
+
+    Character! add: Object! element before: Object! target [
+     	^self add: element beforeIndex: (self indexOf: target ifAbsent: [ self elementNotFound ]) ]
+
+    Character! add: Object! element beforeIndex: Ordinal! index [
+        Int! i := self checkRange: index.
+        Character! c := Character <- element.
+        contents insert: i : c primitiveCharacter.
+        ^c ]
+
+    CollectedReadably? Character! addAll: CollectedReadably! elements after: Object! target [
+     	^self addAll: elements afterIndex: (self indexOf: target ifAbsent: [ self elementNotFound. ]) ]
+
+    CollectedReadably? Character! addAll: CollectedReadably! elements afterIndex: Ordinal! index [
+     	elements inject: index into: [ Ordinal! : Ordinal! i : Character! e |
+            self add: e afterIndex: i.
+            i + 1
+        ].
+        ^elements ]
+
+    CollectedReadably? Character! addAll: CollectedReadably! elements before: Object! target [
+     	^self addAll: elements beforeIndex: (self indexOf: target ifAbsent: [ ^self elementNotFound ]) ]
+
+    CollectedReadably? Character! addAll: CollectedReadably! elements beforeIndex: Ordinal! index [
+     	elements inject: index into: [ Ordinal! : Ordinal! i : Character! e |
+            self add: e beforeIndex: i.
+            i + 1
+        ].
+        ^elements ]
+
+    Collected? Character! addAll: Collected! elements [
+     	elements do: [ : Character! element | self add: element ].
+        ^elements ]
+
+    CollectedReadably? Character! addAllFirst: CollectedReadably! elements [
+     	elements reverseDo: [ : Character! element | self addFirst: element ].
+        ^elements ]
+
+    CollectedReadably? Character! addAllLast: CollectedReadably! elements [
+     	elements do: [ : Character! element | self addLast: element ].
+        ^elements ]
+
+    Character! addFirst: Object! element [
+        Character! c := Character <- element.
+    	self add: c beforeIndex: 1.
+        ^c ]
+
+    Character! addLast: Object! element [ ^self add: element ]
+]
+
+String members: "removing elements"
+[
+    String! removeAll [ contents := StringBuffer basicNew. ]
+
+    Character! removeAtIndex: Ordinal! index [
+     	^self removeAtIndex: index ifAbsent: [ self indexRangeError. ^nil ] ]
+
+    Character! removeAtIndex: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+     	Int! i := self checkIndex: index ifAbsent: aBlock.
+        Character! c := Character from: (contents charAt: i).
+        contents deleteCharAt: i.
+        ^c ]
+
+    Character! remove: Object! element [
+     	^self remove: element ifAbsent: [ self elementNotFound. ^nil ] ]
+
+    Character! remove: Object! element ifAbsent: NiladicValuable! aBlock [
+     	^self removeAtIndex: (self indexOf: element ifAbsent: aBlock) ]
+
+    Collected! removeAll: Collected! elements [
+     	elements do: [ : Character! element | self remove: element ].
+        ^elements ]
+
+    Character! removeFirst [
+     	self emptyCheck.
+        Character! c := Character from: (contents charAt: 0 asPrimitive).
+        contents deleteCharAt: 0 asPrimitive.
+        ^c ]
+
+    @Primitive Character! removeLast [
+     	self emptyCheck.
+        Int! index := contents length - 1.
+        Character! c := Character from: (contents charAt: index).
+        contents deleteCharAt: index.
+        ^c ]
+]
+
+String "copying elements" members:
+[
+    @Primitive String! , CharacterString! aString [
+        "a new string containing a copy of all elements from both this string and aString"
+        ^String from: (self primitiveString + aString primitiveString) ]
+]
+
+String "streaming" members:
+[
+    TextWriteStream! writeStream [ ^TextWriteStream type with: self ]
+]
+
+String members: "testing behavior"
+[
+    Boolean! isLiteral [ ^true ]
+]
+
+String "printing" members:
+[
+    printString [ ^String from: (Primitive quoteLiterally: self primitiveString) ]
+    rightPadded: Integer! count [ ^String from: (StringUtils rightPad: self asPrimitive : count intValue) ]
+    formatWith: Java Lang String! ... args [ ^String from: (Java Lang String format: self asPrimitive : args) ]
+    formatWith: String! ... args [ ^String from: (self formatWith: (Utils wrap: args)) ]
+    formatWith: List? String! args [
+        ^String from: (Java Lang String format: self asPrimitive :
+            (Utils unwrap: (String primitiveListFrom: args) : Primitive EmptyArray)) ]
+]

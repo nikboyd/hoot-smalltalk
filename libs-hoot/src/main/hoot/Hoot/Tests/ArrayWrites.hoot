@@ -1,0 +1,31 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+
+TestableClosure subclass: ArrayWrites. "writing into an array"
+
+ArrayWrites members:
+[
+    "pre-allocate integers and array used in this test"
+    @Static @Final Array! CachedInts := #( 1 2 3 4 5 6 7 8 9 10 ).
+    Array! array := Array new: 10.
+
+    String! description [ ^'Array writes' ]
+    Void! runTest [
+        array
+        at: 1 put: Zero;
+        at: 2 put: Zero;
+        at: 3 put: Zero;
+        at: 4 put: Zero;
+        at: 5 put: Zero;
+        at: 6 put: Zero;
+        at: 7 put: Zero;
+        at: 8 put: Zero;
+        at: 9 put: Zero;
+        at: 10 put: Zero.
+    ]
+
+]
+

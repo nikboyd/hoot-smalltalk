@@ -1,0 +1,40 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+
+CollectedVariably? ElementType, 
+CollectedCollapsibly? ElementType,
+CollectedSequentially? ElementType subtype: 
+CollectedOrdinally? ElementType -> Subject.
+"A type signature for ANSI Smalltalk OrderedCollection (section 5.7.18)."
+
+CollectedOrdinally type members: []
+
+CollectedOrdinally "adding elements" members:
+[
+	ElementType! add: ElementType! element after: ElementType! target "adds an element after an existing one" []
+	ElementType! add: ElementType! element afterIndex: Ordinal! index "adds an element after an index" []
+
+	ElementType! add: ElementType! element before: ElementType! target "adds an element before an existing one" []
+	ElementType! add: ElementType! element beforeIndex: Ordinal! index "adds an element before an index" []
+
+	CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements after: ElementType! target
+            "adds elements after an existing one" []
+	CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements afterIndex: Ordinal! index
+            "adds elements after an index" []
+
+	CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements before: ElementType! target
+            "adds elements before an existing one" []
+	CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements beforeIndex: Ordinal! index
+            "adds elements before an index" []
+
+	CollectedReadably? ElementType! addAllFirst: CollectedReadably? ElementType! elements
+            "adds elements at the start of this collection" []
+	CollectedReadably? ElementType! addAllLast:  CollectedReadably? ElementType! elements
+            "adds elements at the end of this collection" []
+
+	ElementType! addFirst: ElementType! element "adds an element at the start of this collection" []
+	ElementType! addLast:  ElementType! element "adds an element at the end of this collection" []
+]

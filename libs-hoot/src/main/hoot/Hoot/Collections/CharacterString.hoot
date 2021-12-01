@@ -1,0 +1,183 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+
+Hoot Runtime Names TypeName import.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors HootRegistry import.
+
+Hoot Behaviors Class import.
+Hoot Behaviors Ordered import.
+Hoot Magnitudes Integer import.
+Hoot Streams TextReadStream import.
+
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Scalar import.
+
+SequencedCollection subclass: @Abstract Ordered! ReadableString!
+CharacterString. "A string of text."
+
+CharacterString class members: []
+
+CharacterString "accessing" members:
+[
+    @Abstract Java Lang String! primitiveString []
+    Java Lang String! toString [ ^self primitiveString ]
+    Java Lang String! asPrimitive [ ^self primitiveString ]
+    Integer! size [ ^SmallInteger from: self primitiveString length ]
+]
+
+CharacterString members: "accessing classes"
+[
+    Class! resolvedToClass [
+        ^Class <- (HootRegistry getType: self resolvedToPrimitiveClass) ]
+
+    Java Lang Class! resolvedToPrimitiveClass [
+        ^(TypeName fromName: self primitiveString) findPrimitiveClass ]
+]
+
+CharacterString "comparing" members:
+[
+    Int! hashCode [ ^self primitiveString hashCode ]
+    @Primitive Boolean! = Collected! candidate [
+        (candidate instanceOf: CharacterString) ifFalse: [ ^False literal ].
+        ^self equals: (CharacterString <- candidate) ]
+
+    Boolean! = CharacterString! aString [
+        ^Boolean from: (self primitiveString equals: aString primitiveString) ]
+
+    Boolean! <  ReadableString! upperBound [ "whether (this < upperBound)"
+        CharacterString! boundary := CharacterString <- upperBound.
+        Java Lang Int! comparison := self primitiveString compareTo: boundary primitiveString.
+        ^(SmallInteger from: comparison) < 0 ]
+
+    Boolean! <= ReadableString! upperBound [ "whether (this <= upperBound)"
+        CharacterString! boundary := CharacterString <- upperBound.
+        Java Lang Int! comparison := self primitiveString compareTo: boundary primitiveString.
+        ^(SmallInteger from: comparison) <= 0 ]
+
+    Boolean! >  ReadableString! lowerBound [ "whether (this > lowerBound)"
+        CharacterString! boundary := CharacterString <- lowerBound.
+        Java Lang Int! comparison := self primitiveString compareTo: boundary primitiveString.
+        ^(SmallInteger from: comparison) > 0 ]
+
+    Boolean! >= ReadableString! lowerBound [ "whether (this >= lowerBound)"
+        CharacterString! boundary := CharacterString <- lowerBound.
+        Java Lang Int! comparison := self primitiveString compareTo: boundary primitiveString.
+        ^(SmallInteger from: comparison) >= 0 ]
+
+    Boolean! sameAs: ReadableString! candidate [ "whether candidate collates the same"
+        CharacterString! boundary := CharacterString <- candidate.
+        Java Lang Int! comparison := self primitiveString compareTo: boundary primitiveString.
+        ^(SmallInteger from: comparison) = 0 ]
+
+    Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
+        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        (self < (CharacterString <- lowerBound)) ifTrue: [ ^false ].
+        (self > (CharacterString <- upperBound)) ifTrue: [ ^false ].
+        ^true ]
+
+    Ordered! max: Scalar! value [ "(the greater of this AND value)"
+        (value isKindOf: CharacterString type) ifFalse: [ ^self max: value printString ].
+    	self > (CharacterString <- value) ifTrue: [ ^self ].
+        ^value ]
+
+    Ordered! min: Scalar! value [ "(the lesser of this AND value)"
+        (value isKindOf: CharacterString type) ifFalse: [ ^self min: value printString ].
+    	self < (CharacterString <- value) ifTrue: [ ^self ].
+        ^value ]
+
+    Boolean! < Scalar! upperBound [ "whether (this < upperBound)"
+        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        ^self < (CharacterString <- upperBound) ]
+
+    Boolean! <= Scalar! upperBound [ "whether (this <= upperBound)"
+        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        ^self <= (CharacterString <- upperBound) ]
+
+    Boolean! > Scalar! lowerBound [ "whether (this > lowerBound)"
+        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        ^self > (CharacterString <- lowerBound) ]
+
+    Boolean! >= Scalar! lowerBound [ "whether (this >= lowerBound)"
+        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
+        ^self >= (CharacterString <- lowerBound) ]
+]
+
+CharacterString "testing" members:
+[
+    Boolean! isString [ ^true ]
+    Boolean! sameAs: aString [ ^aString sameAsString: self ]
+    Boolean! sameAsString: CharacterString! aString [
+        ^Boolean from: (self primitiveString equalsIgnoreCase: aString primitiveString) ]
+
+    Boolean! includes: Subject! anObject [
+        (anObject isKindOf: String type) ifTrue: [ ^self includes: String <- anObject ].
+        (anObject isKindOf: Character type) ifTrue: [ ^self includes: Character <- anObject ].
+        ^false
+    ]
+
+    Boolean! includes: String! s [ ^Boolean from: (self primitiveString contains: s primitiveString) ]
+    Boolean! includes: Character! c [ ^Boolean from: (self primitiveString contains: c asString primitiveString) ]
+]
+
+CharacterString "enumerating" members:
+[
+    String! reverse [ ^String from: (Primitive reverse: self primitiveString) ]
+]
+
+CharacterString members: "copying elements"
+[
+    CharacterString! , CollectedReadably! aString [
+        ^self , (CharacterString <- aString) ]
+
+    @Primitive CharacterString! , CharacterString! aString [
+        ^String from: (self primitiveString + aString asPrimitive) ]
+
+    String! asString [ ^String from: self primitiveString ]
+    Symbol! asSymbol [ ^Symbol from: self primitiveString ]
+    Symbol! asSelector [ ^self asSymbol ]
+
+    asLowercase [ ^String from: self primitiveString toLowerCase ]
+    asUppercase [ ^String from: self primitiveString toUpperCase ]
+]
+
+CharacterString "streaming" members:
+[
+    TextReadStream! readStream [ ^TextReadStream type with: self asString ]
+]
+
+CharacterString members: "matching patterns"
+[
+    Boolean! matches: aString [ "whether this (as pattern) matches aString"
+        ^(StringPattern basicNew: self) accepts: aString ]
+]
+
+CharacterString members: "parsing sub-collections"
+[
+    List? String! subStrings [
+        "an array of the substrings separated by blanks from within this string"
+        ^self subStrings: Character type space asString ]
+
+    Array! subStrings: ReadableString! separators [
+        ^Array basicNew: (self subStrings: String <- separators) ]
+
+    List? String! subStrings: String! separators [
+        ^String listWith: (self tokenized: separators) ]
+
+    @Protected List? Java Lang String! tokenized: String! separators [
+        ^Primitive tokenize: self primitiveString : separators primitiveString ]
+]
+
+CharacterString members: "primitive sequences"
+[
+    Int! length [ ^self primitiveString length ]
+    Char! charAt: Int! index [ ^self primitiveString charAt: index ]
+
+    CharacterString! subSequence: Int! start : Int! end [
+        ^String from: (self primitiveString subSequence: start : end) toString ]
+]

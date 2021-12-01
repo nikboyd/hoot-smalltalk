@@ -1,0 +1,16 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections CollectedReadably import.
+
+StreamedSource? ElementType,
+StreamedSequence? ElementType subtype: 
+StreamReader? ElementType -> Subject.
+"A type signature for ANSI Smalltalk ReadStream (section 5.9.9)."
+
+StreamReader type "creating instances" members:
+[
+    StreamReader? ElementType -> Subject! on: CollectedReadably? ElementType! aCollection
+        "a new stream for reading from a collection" []
+]

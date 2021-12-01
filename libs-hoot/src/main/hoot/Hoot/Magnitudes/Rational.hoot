@@ -1,0 +1,96 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ratio import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Numeric import.
+
+Number subclass: @Abstract Ratio! Rational.
+"Represents a ratio between a numerator and a denominator."
+
+Rational class members: []
+
+Rational members: "accessing values"
+[
+    "Returns the numerator."
+    @Abstract Integer! numerator []
+
+    "Returns the denominator."
+    @Abstract Integer! denominator []
+
+    @Protected Rational [ super. ]
+    @Protected Integer! internalProduct [ ^self numerator * self denominator ]
+    @Protected Integer! underProduct: Rational! aNumber [ ^self denominator * aNumber denominator ]
+    @Protected Integer! overProduct: Rational! aNumber [ ^self numerator * aNumber numerator ]
+    @Protected Integer! crossProduct: Rational! aNumber [ ^self numerator * aNumber denominator ]
+    @Protected Integer! crossSum: Rational! aNumber [ ^(self crossProduct: aNumber) + (aNumber crossProduct: self) ]
+    @Protected Integer! crossDiff: Rational! aNumber [ ^(self crossProduct: aNumber) - (aNumber crossProduct: self) ]
+]
+
+Rational members: "comparing values"
+[
+    @Primitive Boolean! = Magnitude! value [
+        (value instanceOf: Rational) ifTrue: [ ^self equals: (Rational <- value) ].
+        ^False literal ]
+
+    Boolean! = Rational! aNumber "whether (this = aNumber)" [
+    	^self numerator = aNumber numerator and:
+            [ self denominator = aNumber denominator ]
+    ]
+
+    Boolean! < Rational! aNumber "whether (this < aNumber)" [
+    	^(self crossProduct: aNumber) < (aNumber crossProduct: self)
+    ]
+
+    Boolean! > Rational! aNumber "whether (this > aNumber)" [
+    	^(self crossProduct: aNumber) > (aNumber crossProduct: self)
+    ]
+
+    @Override @Primitive Boolean! = Numeric! aNumber "whether (this = aNumber)" [
+        Number! n := Number <- aNumber.
+    	^(self lessGeneral: n)
+            ifTrue: [ n equals: (self coerceTo: n type) ]
+            ifFalse: [ self equals: n asRational ]
+    ]
+
+    @Primitive Boolean! < Scalar! aNumber "whether (this < aNumber)" [
+        (aNumber isKindOf: Number type) primitiveBoolean ifFalse: [ ^False literal ].
+        Number! n := Number <- aNumber.
+    	^(self lessGeneral: n)
+            ifTrue: [ n moreThan: (self coerceTo: n type) ]
+            ifFalse: [ self lessThan: n asRational ]
+    ]
+
+    @Primitive Boolean! > Scalar! aNumber "whether (this > aNumber)" [
+        (aNumber isKindOf: Number type) primitiveBoolean ifFalse: [ ^False literal ].
+        Number! n := Number <- aNumber.
+    	^(self lessGeneral: n)
+            ifTrue: [ n lessThan: (self coerceTo: n type) ]
+            ifFalse: [ self moreThan: n asRational ]
+    ]
+
+    @Primitive Int! hashCode [
+        "a value to use for equivalence testing"
+        ^(self numerator bitXor: self denominator) intValue
+    ]
+]
+
+Rational members: "converting values"
+[
+    asRational [ ^self ]
+]
+
+Rational members: "testing"
+[
+    @Primitive Boolean! isZero [ ^Boolean from: 0 == self numerator intValue ]
+    Boolean! negative [ ^Boolean from: 0 > self internalProduct ]
+    Boolean! positive [ ^Boolean from: 0 <= self internalProduct ]
+    Boolean! strictlyPositive [ ^Boolean from: 0 < self internalProduct ]
+]
+
+Rational "truncation" members:
+[
+    @Primitive Integer! floor [ ^SmallInteger from: Int <- (Math floor: self primitiveDouble) ]
+    @Primitive Integer! ceiling [ ^SmallInteger from: Int <- (Math ceil: self primitiveDouble) ]
+]

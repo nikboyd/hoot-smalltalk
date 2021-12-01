@@ -1,0 +1,74 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+
+TestBase subclass: IntegersTest.
+"Confirms proper operation of various integer behaviors."
+
+IntegersTest members: "testing integers"
+[
+    Void! runTest [
+        self log printLine: 'starting small ...'.
+        self testValues.
+        self testFlyWeightRange.
+        self log cr.
+        self testIntegerMath.
+        self testIntegerCompares.
+    ]
+
+    @Static @Final String! ValueReport := 'value %s = id %s'.
+    reportValue: value [ self log printLine:
+        (ValueReport formatWith: value printString : value identityHash printString). ]
+
+    checkValue: SmallInteger! value [ self assertTrue: [ value == (self lookup: value) ] ]
+    SmallInteger! lookup: SmallInteger! value [ ^SmallInteger flyweights getCached: value asPrimitive ]
+
+    testValues [ "force flyweight caching"
+        self log printLine: 'small integer flyweights:'.
+        self testValue: Zero.
+        self testValue: Unity.
+        self testValue: Duality.
+        self testValue: Negativity.
+        self log cr.
+        self passed: 'small integer flyweight values test'.
+    ]
+
+    testFlyWeightRange [
+        0 to: SmallInteger flyweightCount - 1
+        do: [ :SmallInteger! value |
+            self checkValue: value.
+            self checkValue: 0 - value.
+        ].
+        self passed: 'all integer flyweight checks'.
+    ]
+
+    testValue: SmallInteger! value [
+        self checkValue: value.
+        self reportValue: value.
+    ]
+
+    testIntegerMath [
+        SmallInteger!
+        value := Unity.
+        value := value + Unity.
+        value := value - Unity.
+        self assertTrue: [ :v | Unity = v ] with: value.
+
+        value := Duality.
+        value := value + Duality.
+        value := value - Duality.
+        value := value * Duality.
+        value := (value / Duality) asSmallInteger.
+        self assertTrue: [ :v | Duality = v ] with: value.
+        self passed: 'integer math operations'.
+    ]
+
+    testIntegerCompares [
+        self assertTrue: [ 6 = 6 ].
+        self assertTrue: [ 5 < 6 ].
+        self assertTrue: [ 7 > 6 ].
+        self passed: 'integer comparisons'.
+    ]
+]

@@ -1,0 +1,37 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Subject, ConditionalValue subtype: Posit.
+"A type signature for ANSI Smalltalk Boolean (section 5.3.3)."
+
+Posit "comparing" members:
+[
+    eqv: Posit! aPosit "result (this = aPosit)" []
+
+    @Override Java Lang Boolean! primitiveBoolean "its primitive value" []
+]
+
+Posit "operating logically" members:
+[
+    & Posit! aPosit "a value = (this AND aPosit)" []
+    | Posit! aPosit "a value = (this OR  aPosit)" []
+
+    not "a value = (NOT this)" []
+
+    and: NiladicPredicate! predicate "a value = (this AND predicate value)" []
+    or:  NiladicPredicate! predicate "a value = (this OR  predicate value)" []
+    xor: NiladicPredicate! predicate "a value = (this XOR predicate value)" []
+]
+
+Posit "selecting alternatives" members:
+[
+    Subject! ifTrue:  NiladicValuable! trueBlock  "result = (this ? trueBlock value : nil)" []
+    Subject! ifFalse: NiladicValuable! falseBlock "result = (this ? nil : falseBlock value)" []
+
+    Subject! ifTrue:  NiladicValuable! trueBlock ifFalse: NiladicValuable! falseBlock
+        "result (this ? trueBlock value : falseBlock value)" []
+
+    Subject! ifFalse: NiladicValuable! falseBlock ifTrue:  NiladicValuable! trueBlock
+        "result (this ? trueBlock value : falseBlock value)" []
+]

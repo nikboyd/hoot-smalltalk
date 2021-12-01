@@ -1,0 +1,56 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Streams WriteStream importStatics.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Names Primitive importStatics.
+Hoot Exceptions FileCheckError import.
+
+Smalltalk Collections CollectedReadably import.
+Smalltalk Collections ReadableString import.
+Smalltalk Streams importAll.
+
+FileStream? ElementType subclass: @Abstract FileStreamWriter? ElementType! 
+FileWriteStream? ElementType -> Object. "Writes into a file."
+
+FileWriteStream class members: "creating instances"
+[
+    FileWriteStream! write: ReadableString! fileName [ ^self write: fileName mode: #create ]
+    FileWriteStream! write: ReadableString! fileName mode: ReadableString! mode [
+        ^self open: String <- fileName type: #text mode: Symbol <- mode check: false ]
+
+    FileWriteStream! write: ReadableString! fileName mode: ReadableString! mode 
+        check: Posit! check type: ReadableString! fileType [
+        ^self open: String <- fileName type: Symbol <- fileType mode: Symbol <- mode check: Boolean <- check ]
+
+    @Primitive FileWriteStream! open: String! fileName type: Symbol! fileType mode: Symbol! mode check: Boolean! check [
+        File! file := File basicNew: fileName primitiveString.
+        file exists ifTrue: [
+            check primitiveBoolean ifTrue: [ (CreateMode equals: mode primitiveString) ifTrue: [ FileCheckError type presentFile: fileName. ^null ] ].
+        ] ifFalse: [
+            check primitiveBoolean ifTrue: [ (CreateMode equals: mode primitiveString) ifFalse: [ FileCheckError type missingFile: fileName. ^null ] ].
+        ].
+
+        ('binary' equals: fileType primitiveString) ifTrue: [ 
+            ^BinaryFileWriteStream type on: (Primitive writeFile: fileName primitiveString : mode primitiveString) ].
+        ^TextFileWriteStream type on: (Primitive writeFile: fileName primitiveString : mode primitiveString)
+    ]
+]
+
+FileWriteStream members: "constructing instances"
+[
+    FileWriteStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+]
+
+FileWriteStream members: "writing"
+[
+    flush [ ^self ]
+
+    cr [ self nextPutAll: CollectedReadably <- LineSeparator. ]
+    tab [ self nextPut: ElementType <- Character type tab. ]
+    space [ self nextPut: ElementType <- Character type space. ]
+
+    nextPutLine: String! line [ self nextPutAll: line; cr. ]
+]

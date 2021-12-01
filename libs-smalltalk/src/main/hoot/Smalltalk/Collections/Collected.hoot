@@ -1,0 +1,89 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+Smalltalk Magnitudes Ordinal import.
+
+Subject subtype: 
+Collected? ElementType -> Subject.
+"A type signature for ANSI Smalltalk Collection (sections 5.7.1, 5.7.20)."
+
+Collected type "creating instances" members:
+[
+    CollectionType -> Collected! new: Ordinal! capacity
+        "a new collection of a given initial capacity" []
+]
+
+Collected "accessing" members:
+[
+    Ordinal! occurrencesOf: Subject! candidate "an element occurrence count" []
+    Ordinal! size "a contained element count" []
+
+    CollectionType -> Collected! rehash "re-establishes any hash invariants" []
+]
+
+Collected "converting" members:
+[
+    List? ElementType! asList "an elementary list of elements" []
+    CollectedBaggage? ElementType! asBag "a bag containing the elements of this collection" []
+    CollectedDistinctly? ElementType! asSet "a set containing the elements of this collection" []
+    CollectedArray? ElementType! asArray "an array containing the elements of this collection" []
+
+    CollectedOrdinally? ElementType! asOrderedCollection
+        "an ordered collection containing the elements of this collection" []
+
+    CollectedSortably? ElementType! asSortedCollection
+        "a sorted collection containing the elements of this collection" []
+
+    CollectedSortably? ElementType! asSortedCollection:
+        DyadicPredicate! sortBlock
+        "a sorted collection containing the elements of this collection" []
+]
+
+Collected "enumerating" members:
+[
+    CollectionType -> Collected! collect: MonadicValuable! transformBlock
+        "a new collection containing the results produced by a transformBlock with each element" []
+
+    CollectionType -> Collected! reject: MonadicPredicate! filterBlock
+        "a new collection containing the elements that don't satisfy a filter predicate" []
+
+    CollectionType -> Collected! select: MonadicPredicate! filterBlock
+        "a new collection containing the elements that satisfy a filter predicate" []
+
+    ElementType! detect: MonadicPredicate! testBlock
+        "an element that satisfies a test predicate" []
+
+    ElementType! detect: MonadicPredicate! testBlock ifNone: NiladicValuable! exceptionBlock
+        "an element that satisfies a test predicate or the result of the supplied execptionBlock" []
+
+    Collected! do: MonadicValuable! aBlock
+        "evaluates aBlock with each element" []
+
+    Collected! do: MonadicValuable! aBlock separatedBy: NiladicValuable! betweenBlock
+        "evaluates aBlock with each element, and betweenBlock between the elements" []
+
+    ResultType -> Subject! inject: ResultType! value into: DyadicValuable! injectionBlock
+        "the result produced by injectionBlock with each element and the result of the previous evaluation" []
+]
+
+Collected "testing" members:
+[
+    Posit! allSatisfy: MonadicPredicate! testBlock
+        "whether all elements have true == (testBlock value: element)" []
+
+    Posit! anySatisfy: MonadicPredicate! testBlock
+        "whether any element has true == (testBlock value: element)" []
+
+    Posit! isEmpty "whether (this == 0)" []
+    Posit! notEmpty "whether (this size > 0)" []
+    Posit! includes: Subject! candidate "whether any element = candidate" []
+
+    Posit! = Collected? ElementType! aCollection "whether (this = aCollection)" []
+]
+
+Collected "removing" members:
+[
+    Collected! removeAll "removes all elements" []
+]

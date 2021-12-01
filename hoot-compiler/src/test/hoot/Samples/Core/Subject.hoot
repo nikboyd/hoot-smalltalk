@@ -1,0 +1,90 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections ReadableString import.
+Smalltalk Streams StreamedSink import.
+
+Valued subtype: Subject.
+"Defines the type signatures for ANSI Smalltalk Object (sections 5.3.1, 5.3.9, 5.3.10)."
+
+Subject type "creating instances" members:
+[
+    Subject! new "a new instance of this class" []
+]
+
+Subject "accessing" members:
+[
+    Classified! class "the class of this instance" []
+
+    ResultType -> Subject! yourself "this object" []
+]
+
+Subject "comparing" members:
+[
+    Posit! =  Subject! candidate "whether (this =  candidate)" []
+    Posit! == Subject! candidate "whether (this == candidate)" []
+    Posit! ~= Subject! candidate "whether (this ~= candidate)" []
+    Posit! ~~ Subject! candidate "whether (this ~~ candidate)" []
+
+    Ordinal! hash "an integer to use for equivalence tests" []
+    Ordinal! identityHash "an integer to use for identity tests" []
+]
+
+Subject "copying" members:
+[
+    ResultType -> Subject! copy "a copy of this, typically shallow" []
+]
+
+Subject "performing" members:
+[
+    perform: Selector! selector withArguments: Subject! ... arguments
+    "the result of the selected method with the supplied arguments" []
+
+    perform: Selector! selector with: Subject! a0 with: Subject! a1 with: Subject! a2
+    "the result of the selected method with the supplied arguments" []
+
+    perform: Selector! selector with: Subject! a0 with: Subject! a1
+    "the result of the selected method with the supplied arguments" []
+
+    perform: Selector! selector with: Subject! argument
+    "the result of the selected method with the supplied argument" []
+
+    perform: Selector! selector
+    "the result of the selected method (without any arguments)" []
+]
+
+Subject "printing" members:
+[
+    printOn: StreamedSink! stream
+    "appends a representation of this on a stream" []
+
+    ReadableString! printString
+    "a printable representation of this" []
+]
+
+Subject members: "handling errors"
+[
+    doesNotUnderstand: SentMessage! message
+    "signals a failed message" []
+
+    Java Lang Void! error: ReadableString! messageText
+    "reports a text message as an error" []
+]
+
+Subject members: "testing behavior"
+[
+    Posit! isKindOf: Classified! candidateClass
+    "whether (this class -> candidateClass)" []
+
+    Posit! isMemberOf: Classified! candidateClass
+    "whether (this class == candidateClass)" []
+
+    Posit! isNil  "whether (this == nil)" []
+    Posit! notNil "whether (this ~~ nil)" []
+
+    Posit! respondsTo: Selector! selector
+    "whether this has a method named: selector" []
+]

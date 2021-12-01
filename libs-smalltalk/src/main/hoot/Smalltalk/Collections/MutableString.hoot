@@ -1,0 +1,10 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+
+ReadableString, CollectedOrdinally subtype: MutableString.
+"A type signature for ANSI Smalltalk String (sections 5.7.13)."
+
+MutableString type members: []

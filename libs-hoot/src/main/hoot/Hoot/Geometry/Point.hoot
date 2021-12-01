@@ -1,0 +1,126 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Magnitudes Magnitude import.
+
+Smalltalk Magnitudes Scalar import.
+
+Magnitude subclass: Point. "A point on a 2-dimensional plane."
+
+Point class members: "creating instances"
+[
+    Point! new [ ^Point basicNew x: 0 y: 0 ]
+    Point! x: Number! x  y: Number! y [ ^Point basicNew x: x y: y ]
+]
+
+Point members: "knowing coordinates"
+[
+    "X coordinate"
+    @Property Number! x := 0.
+
+    "Y coordinate"
+    @Property Number! y := 0.
+
+    x: Number! x y: Number! y [ ^self x: x; y: y; yourself ]
+    @Static Point! from: Number! scalar [ ^Point basicNew x: scalar y: scalar ]
+]
+
+Point members: "point arithmetic"
+[
+    + aPoint [ ^self class x: x + aPoint x y: y + aPoint y ]
+    - aPoint [ ^self class x: x - aPoint x y: y - aPoint y ]
+    * aPoint [ ^self class x: x * aPoint x y: y * aPoint y ]
+    / aPoint [ ^self class x: x / aPoint x y: y / aPoint y ]
+
+    // aPoint [ ^self class x: x // aPoint x y: y // aPoint y ]
+    \\ aPoint [ ^self class x: x \\ aPoint x y: y \\ aPoint y ]
+]
+
+Point members: "scalar arithmetic"
+[
+    + Number! scalar [ ^self + (Point from: scalar) ]
+    - Number! scalar [ ^self - (Point from: scalar) ]
+    * Number! scalar [ ^self * (Point from: scalar) ]
+    / Number! scalar [ ^self / (Point from: scalar) ]
+
+    // Number! scalar [ ^self // (Point from: scalar) ]
+    \\ Number! scalar [ ^self \\ (Point from: scalar) ]
+]
+
+Point members: "comparing points"
+[
+    Boolean! = aPoint [ ^Boolean <- (( x = aPoint x ) and: [ y = aPoint y ]) ]
+    Boolean! < aPoint [ ^Boolean <- (( x < aPoint x ) and: [ y < aPoint y ]) ]
+    Boolean! > aPoint [ ^Boolean <- (( x > aPoint x ) and: [ y > aPoint y ]) ]
+    Boolean! <= aPoint [ ^Boolean <- (( aPoint x < x ) not and: [ ( aPoint y < y ) not ]) ]
+    Boolean! >= aPoint [ ^Boolean <- (( aPoint x > x ) not and: [ ( aPoint y > y ) not ]) ]
+
+    Point! min: Scalar! aPoint [ ^self min: Point <- aPoint ]
+    Point! max: Scalar! aPoint [ ^self max: Point <- aPoint ]
+
+    @Primitive Point! min: Point! aPoint [
+        "the lesser of this versus aPoint"
+        (aPoint == null) ifTrue: [ ^self ].
+        (self lessThan: aPoint) primitiveBoolean ifTrue: [ ^self ].
+        ^aPoint ]
+
+    @Primitive Point! max: Point! aPoint [
+        "the greater of this versus aPoint"
+        (aPoint == null) ifTrue: [ ^self ].
+        (self moreThan: aPoint) primitiveBoolean ifTrue: [ ^self ].
+        ^aPoint ]
+]
+
+Point members: "comparing with scalars"
+[
+    @Primitive Boolean! = Magnitude! value [
+        (value instanceOf: Point) ifTrue: [ ^self equals: (Point <- value) ].
+        ^False literal ]
+
+    @Primitive Boolean! < Scalar! value [
+        (value instanceOf: Point) ifTrue: [ ^self lessThan: (Point <- value) ].
+        ^False literal ]
+
+    @Primitive Boolean! <= Scalar! value [
+        (value instanceOf: Point) ifTrue: [ ^self notMore: (Point <- value) ].
+        ^False literal ]
+
+    @Primitive Boolean! > Scalar! value [
+        (value instanceOf: Point) ifTrue: [ ^self moreThan: (Point <- value) ].
+        ^False literal ]
+
+    @Primitive Boolean! >= Scalar! value [
+        (value instanceOf: Point) ifTrue: [ ^self notLess: (Point <- value) ].
+        ^False literal ]
+]
+
+Point members: "converting types"
+[
+    Point! asPoint [ ^self ]
+    String! printString [ ^x printString, ' @ ', y printString ]
+    Java Lang String! toString [ ^self printTerm toString ]
+
+    Java Awt Point! primitivePoint [
+        ^Java Awt Point basicNew: x primitiveInteger : y primitiveInteger ]
+
+    Java Awt Dimension! primitiveDimension [
+        ^Java Awt Dimension basicNew: x primitiveInteger : y primitiveInteger ]
+
+    Java Lang Int! hashCode [ ^(x hash bitXor: y hash) primitiveInteger ]
+
+    Rectangle! extent: Point! extentPoint [ ^Rectangle origin: self extent: extentPoint ]
+    Rectangle! corner: Point! cornerPoint [ ^Rectangle origin: self corner: cornerPoint ]
+]
+
+Point members: "functional arithmetic"
+[
+    abs [ ^x abs @ y abs ]
+    negated [ ^x negated @ y negated ]
+    truncated [ ^x truncated @ y truncated ]
+    truncatedTo: aNumber [ ^(x truncatedTo: aNumber) @ (y truncatedTo: aNumber) ]
+    Number! dotProduct: aPoint [ ^(x * aPoint x) + (y * aPoint y) ]
+    rounded [ ^x rounded @ y rounded ]
+    transpose [ ^y @ x ]
+]

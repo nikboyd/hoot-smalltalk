@@ -1,0 +1,83 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Numeric import.
+Hoot Runtime Names Primitive import.
+
+Integer subclass: LongInteger. "A long integer value."
+
+LongInteger class "coercing" members:
+[
+    coerce: aNumber [ "a long value = aNumber" ^LongInteger from: aNumber primitiveLong ]
+]
+
+LongInteger class members: "characteristics"
+[
+    maximum [ "a max value" ^LongInteger from: Primitive elementaryMaxLong ]
+    minimum [ "a min value" ^LongInteger from: Primitive elementaryMinLong ]
+
+    SmallInteger! precision [ "the primitive precision" ^64 ]
+    SmallInteger! radix [ "the primitive radix" ^2 ]
+]
+
+LongInteger members: "constructing instances"
+[
+    Java Lang Long! primitiveValue.
+    LongInteger: Long! aLong [ primitiveValue := aLong. ]
+    @Static LongInteger! from: Long! aLong [ ^LongInteger basicNew: aLong ]
+]
+
+LongInteger members: "converting"
+[
+    Long! asPrimitive [ ^self primitiveLong ]
+    asLongInteger [ ^self ]
+
+    Java Lang Float! primitiveFloat [ ^Java Lang Float valueOf: primitiveValue ]
+    Java Lang Double! primitiveDouble [ ^Java Lang Double valueOf: primitiveValue ]
+    Java Lang Number! elementaryNumber "converts this value to a Number" [ ^primitiveValue ]
+    @Primitive Long! primitiveLong "converts this value to a long" [ ^primitiveValue ]
+
+    @Static SmallInteger! Generality := 20.
+    Integer! generality [ ^Generality ]
+]
+
+LongInteger members: "printing"
+[
+    String! printString [ ^String from: (Primitive printLong: self primitiveLong) ]
+]
+
+
+LongInteger members: "arithmetic - final"
+[
+    @Primitive @Final LongInteger! + LongInteger! aNumber [ ^LongInteger from: (self asPrimitive + aNumber asPrimitive) ]
+    @Primitive @Final LongInteger! - LongInteger! aNumber [ ^LongInteger from: (self asPrimitive - aNumber asPrimitive) ]
+    @Primitive @Final LongInteger! * LongInteger! aNumber [ ^LongInteger from: (self asPrimitive * aNumber asPrimitive) ]
+    @Primitive @Final Number! / LongInteger! aNumber [
+        aNumber asPrimitive == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^Fraction type numerator: self denominator: aNumber ]
+]
+
+LongInteger members: "arithmetic"
+[
+    + aNumber [ "this + aNumber"
+        ^self generality < aNumber generality
+            ifTrue: [ aNumber + self ]
+            ifFalse: [ self + aNumber asLongInteger ] ]
+
+    * aNumber [ "this * aNumber"
+        ^self generality < aNumber generality
+            ifTrue: [ aNumber * self ]
+            ifFalse: [ self * aNumber asLongInteger ] ]
+
+    Number! / Numeric! aNumber [ "this / aNumber"
+        Number! n := Number <- aNumber. ^self / n asLongInteger ]
+
+    @Primitive LongInteger! // LongInteger! aNumber [ "this // aNumber"
+        aNumber asPrimitive == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^LongInteger from: (self asPrimitive / aNumber asPrimitive) ]
+
+    @Primitive LongInteger! \\ LongInteger! aNumber [ "this \\ aNumber"
+        aNumber asPrimitive == 0 ifTrue: [ self zeroDivide. ^self ].
+        ^LongInteger from: (self asPrimitive % aNumber asPrimitive) ]
+]

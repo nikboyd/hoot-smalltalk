@@ -1,0 +1,46 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Scalar import.
+Hoot Collections Interval import.
+Hoot Behaviors Ordered import.
+
+Object subclass: @Abstract Ordered! Magnitude.
+"Supports comparisons between (typically scalar) magnitudes."
+
+Magnitude class members: []
+
+Magnitude "constructing" members:
+[
+    @Protected Magnitude [ super. ]
+]
+
+Magnitude members: "comparing values"
+[
+    Boolean! = Magnitude! candidate [ ^candidate = self ]
+    @Primitive Boolean! = Subject! candidate "whether (this = candidate)" [
+        (candidate isKindOf: self species) primitiveBoolean ifFalse: [ ^False literal ].
+        ^(Magnitude <- candidate) equals: self ]
+
+    Boolean! <  Scalar! upperBound [ ^Boolean <- (upperBound > self) ]
+    Boolean! <= Scalar! upperBound [ ^Boolean from: (self > upperBound) not ]
+    Boolean! >  Scalar! lowerBound [ ^Boolean <- (lowerBound < self) ]
+    Boolean! >= Scalar! lowerBound [ ^Boolean <- (lowerBound <= self) ]
+
+    Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
+        ^Boolean <- (( lowerBound <= self ) and: [ self <= upperBound ]) ]
+
+    Boolean! in: Interval! aRange [ ^aRange includes: self ]
+    Boolean! inside: Scalar! lowerBound and: Scalar! upperBound [
+        ^Boolean <- (( lowerBound < self ) and: [ self < upperBound ]) ]
+
+    Ordered! max: Scalar! value [ self > value ifTrue: [ ^self ]. ^Ordered <- value ]
+    Ordered! min: Scalar! value [ self < value ifTrue: [ ^self ]. ^Ordered <- value ]
+]
+
+Magnitude members: "printing"
+[
+    Java Lang String! toString [ ^self printString primitiveString ]
+]

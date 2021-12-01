@@ -1,0 +1,59 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+Java Util Function Consumer import.
+Java Util Function Function import.
+Java Util Function Supplier import.
+
+Smalltalk Exceptions importAll.
+Smalltalk Magnitudes Ordinal import.
+
+Hoot Runtime Functions Exceptional importStatics.
+Hoot Runtime Behaviors HootRegistry import.
+Hoot Runtime Values Frame import.
+
+Enclosure subclass: Closure. "A block closure."
+
+Closure members: "creating instances"
+[
+    @Primitive @Static Closure! with: Argued? Frame : Subject! block : Java Lang String! ... argNames [
+        ^(Closure basicNew: (Enclosure withQuiet: block) block) valueNames: argNames ]
+
+    @Primitive @Static Closure! with: Runner! block : Java Lang String! ... argNames [
+        ^(Closure basicNew: (Enclosure withQuieted: block) block) valueNames: argNames ]
+
+    @Primitive @Static Closure! with: Consumer? Frame! block : Java Lang String! ... argNames [
+        ^(Closure basicNew: (Enclosure withBlock: block) block) valueNames: argNames ]
+
+    @Primitive @Static Closure! with: Supplier! block [
+        ^(Closure basicNew: (Enclosure withBlock: block) block) ]
+
+    @Protected Closure: Function? Frame : Subject! block [ super : block. ]
+
+    @Primitive Predicate! toPredicate [ ^Predicate basicNew: self block ]
+]
+
+Closure members: "evaluating"
+[
+    @Primitive Subject! value [ ^Subject <- super value ]
+    @Primitive Subject! value: Subject! value [ ^Subject <- (super valueWith: value) ]
+    @Primitive Subject! value: Subject! valueA value: Subject! valueB [ ^Subject <- (super valueWith: valueA : valueB) ]
+"
+    @Override Subject! on: ExceptionDescription Metatype! exceptionType do: MonadicValuable! handler [
+        exceptionType handleWith: handler during: self.
+    ]
+"
+]
+
+Closure members: "measuring"
+[
+    @Primitive Java Lang Long! millisecondsToRun [
+        Long! before := System currentTimeMillis. self value.
+        Long! after  := System currentTimeMillis. ^(after - before) ]
+
+    @Primitive Java Lang Long! millisecondsToRepeat: Ordinal! count [
+        Long! before := System currentTimeMillis. count timesRepeat: self.
+        Long! after  := System currentTimeMillis. ^(after - before) ]
+]

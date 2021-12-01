@@ -1,0 +1,28 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Behaviors importAll.
+
+Smalltalk Magnitudes Code import.
+Smalltalk Collections ReadableString import.
+Smalltalk Collections CollectedDistinctly import.
+
+Typified, Subject subtype: Classified.
+"A type signatures for ANSI Smalltalk ClassDescription (sections 5.3.8)."
+
+Classified type members: []
+
+Classified "accessing hierarchy" members:
+[
+    CollectedDistinctly? Classified! allSubclasses "all the subclasses of this behavior" []
+    CollectedDistinctly? Classified! allSuperclasses "all the superclasses of this behavior" []
+    CollectedDistinctly? Classified! subclasses "the immediate subclasses of this behavior" []
+
+    @Override Classified! superclass "the immediate superclass of this behavior, or nil" []
+]
+
+Classified "identifying class" members:
+[
+    @Override ReadableString! name "the name of this class" []
+]

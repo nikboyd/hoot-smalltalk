@@ -1,0 +1,57 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Math BigInteger import.
+
+Hoot Runtime Names Primitive import.
+
+Smalltalk Magnitudes Ordinal import.
+
+Integer subclass: LargeInteger. "A large integer value."
+
+LargeInteger class "coercing" members:
+[
+    coerce: aNumber [ "a large value = aNumber" ^LargeInteger from: (BigInteger valueOf: aNumber primitiveLong) ]
+]
+
+LargeInteger members: "constructing instances"
+[
+    @Static SmallInteger! Generality := 30.
+
+    BigInteger! primitiveValue.
+    BigInteger! primitiveValue [ ^primitiveValue ]
+
+    LargeInteger: BigInteger! aValue [ primitiveValue := aValue. ]
+    @Static LargeInteger! from: BigInteger! aValue [ ^LargeInteger basicNew: aValue ]
+]
+
+LargeInteger members: "converting"
+[
+    asLargeInteger [ ^self ]
+    BigInteger! asBigInteger [ ^primitiveValue ]
+    Java Lang Number! elementaryNumber [ ^primitiveValue ]
+    LongInteger! asLongInteger [ ^LongInteger from: self narrowGenerality longValue ]
+
+    Integer! generality [ ^Generality ]
+    @Primitive Integer! narrowGenerality [
+        Int! bits := primitiveValue bitLength.
+        (bits < 32) ifTrue: [ ^SmallInteger from: primitiveValue intValue ].
+        (bits < 64) ifTrue: [ ^LongInteger from: primitiveValue longValue ].
+        ^self ]
+]
+
+LargeInteger "mathematics" members:
+[
+    gcd: LargeInteger! anInteger [ ^LargeInteger from: ( primitiveValue gcd: anInteger primitiveValue ) ]
+    gcd: Ordinal! anInteger [ ^self gcd: (Integer <- anInteger) asLargeInteger ]
+
+    raisedToInteger: anInteger [ ^self raisedToInteger: anInteger asSmallInteger ]
+    raisedToInteger: SmallInteger! anInteger [
+    	^LargeInteger from: ( primitiveValue pow: anInteger primitiveInteger ) ]
+]
+
+LargeInteger "printing" members:
+[
+    String! printString [ ^String from: primitiveValue toString ]
+]

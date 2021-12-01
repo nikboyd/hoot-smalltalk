@@ -1,0 +1,228 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+Hoot Streams WriteStream import.
+
+Smalltalk Core Posit import.
+Smalltalk Core Subject import.
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Associated import.
+
+Collection? ElementType subclass:
+CollectedDictionary? KeyType : ElementType!
+Dictionary? KeyType -> Object : ElementType -> Object.
+"A mapped set of associations between key-value pairs."
+
+"Supports instantiation with a primitive Map. Uses a native HashMap as the default primitive contents."
+
+Dictionary class members: "creating instances"
+[
+    Dictionary! new [ "a new empty Dictionary" ^self new: 10 ]
+    Dictionary! new: Ordinal! capacity [ ^Dictionary basicNew: capacity ]
+
+    Dictionary! withAll: CollectedDictionary? KeyType -> Scalar : ElementType -> Subject! pairedElements [
+        Dictionary! results := self new: pairedElements size.
+        pairedElements keysAndValuesDo:
+            [ : KeyType! key : ElementType! value | results at: Magnitude <- key put: Object <- value. ].
+        ^results ]
+
+    Dictionary! from: Java Util Map! primitiveMap [
+        "a new Dictionary with primitiveMap as its contents"
+        ^Dictionary basicNew: primitiveMap ]
+
+    Dictionary! synchronizedFrom: Java Util Map! primitiveMap [
+        "a new Dictionary with synchronized access to a primitiveMap"
+        ^self from: primitiveMap ]
+]
+
+Dictionary "constructing" members:
+[
+    "the map elements"
+    Java Util Map? KeyType : ElementType! contents.
+
+    @Protected! Dictionary [ self : Java Util HashMap basicNew. ]
+    @Protected! Dictionary: Ordinal! capacity [ self : (Java Util HashMap basicNew: capacity intValue). ]
+    @Protected! Dictionary: Java Util Map! primitiveMap [ contents := Java Util Collections synchronizedMap: primitiveMap. ]
+]
+
+Dictionary "accessing" members:
+[
+    Java Util Map! primitiveContents [ ^contents ]
+    Integer! size [ ^SmallInteger from: contents size ]
+]
+
+Dictionary members: "accessing keys"
+[
+    Set? KeyType! keys [ ^Set from: contents keySet ]
+
+    KeyType! indexOf: ElementType! element [
+        "the index of an element"
+        ^self indexOf: element ifAbsent: [ self elementNotFound. ^nil ] ]
+
+    KeyType! indexOf: ElementType! element ifAbsent: NiladicValuable! aBlock [
+        "the index of an element, or the value of aBlock"
+        self keysAndValuesDo: [ :key :value |
+            value = element ifTrue: [ ^key ]
+        ].
+        ^aBlock value ]
+
+    KeyType! keyAtValue: ElementType! element [ ^self indexOf: element ]
+    KeyType! keyAtValue: ElementType! element ifAbsent: NiladicValuable! aBlock [
+        "the index of an element, or the value of aBlock"
+        ^self indexOf: element ifAbsent: aBlock ]
+]
+
+Dictionary members: "accessing elements"
+[
+    @Primitive ElementType! at: KeyType! index [
+        (contents containsKey: index) ifTrue: [ ^contents get: index ].
+        self elementNotFound. ^nil ]
+
+    @Primitive ElementType! at: KeyType! index ifAbsent: NiladicValuable! aBlock [
+        (contents containsKey: index) ifTrue: [ ^contents get: index ].
+        ^aBlock value ]
+
+    ElementType! at: KeyType! index ifAbsentPut: NiladicValuable! aBlock [
+        ^self at: index ifAbsent: [ ^self at: index put: aBlock value ] ]
+
+    ElementType! at: KeyType! index put: ElementType! element [
+        contents put: index : element.
+        ^element ]
+
+    ElementType! atAll: CollectedDistinctly? KeyType! indices put: ElementType! element [
+        indices do: [ : KeyType! key | self at: key put: element ].
+        ^element ]
+
+    ElementType! atAllPut: ElementType! element [ ^self atAll: self keys put: element ]
+
+    CollectedSequentially? ElementType! values [
+        @Final OrderedCollection? ElementType! results := OrderedCollection new: self size.
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element | results add: element ].
+        ^results ]
+]
+
+Dictionary members: "adding elements"
+[
+    ElementType! add: ElementType! element [ ^element ]
+    Collected? ElementType! addAll: Collected? ElementType! elements [ ^elements ]
+
+    Association! add: Associated! pairedElement [
+        self at: pairedElement key put: ElementType <- pairedElement value.
+        ^Association <- pairedElement ]
+
+    CollectedDictionary! addAll: CollectedDictionary? KeyType : ElementType! pairedElements [
+        pairedElements keysAndValuesDo: [ : KeyType! key : ElementType! element | self at: key put: element ].
+        ^pairedElements ]
+]
+
+Dictionary "comparing" members:
+[
+    Boolean! = Dictionary! aCollection [
+        ^Boolean from: (contents equals: aCollection primitiveContents) ]
+
+    Boolean! = Collected! aCollection [
+        (aCollection isKindOf: Dictionary type) ifFalse: [ ^false ].
+        ^self = (Dictionary <- aCollection) ]
+
+    Java Lang Int! hashCode [ ^contents hashCode ]
+]
+
+Dictionary "enumerating" members:
+[
+    associationsDo: MonadicValuable! aBlock [
+        "evaluates aBlock with each associated (key >> value) pair in this Dictionary"
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element |
+            aBlock value: (Association withKey: key withValue: element) ]. ]
+
+    collect: MonadicValuable! aBlock [
+        Dictionary! results := Dictionary new: self size.
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element |
+            results at: key put: (aBlock value: element) ].
+        ^results ]
+
+    do: MonadicValuable! aBlock [
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element | aBlock value: element ]. ]
+
+    keysAndValuesDo: DyadicValuable! aBlock [
+        self keys do: [ : Scalar! key | aBlock value: key value: (contents get: key) ]. ]
+
+    sortedKeysAndValuesDo: DyadicValuable! aBlock [
+        self keys sorted do: [ : Scalar! key | aBlock value: key value: (contents get: key) ]. ]
+
+    keysDo: MonadicValuable! aBlock [
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element | aBlock value: key ]. ]
+
+    valuesDo: MonadicValuable! aBlock [
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element | aBlock value: element ]. ]
+
+    reject: MonadicPredicate! aBlock [
+     	Dictionary! results := Dictionary new: self size.
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element |
+            (aBlock value: element) ifFalse: [ results at: key put: element ] ].
+        ^results ]
+
+    select: MonadicPredicate! aBlock [
+        Dictionary! results := Dictionary new: self size.
+        self keysAndValuesDo: [ : KeyType! key : ElementType! element |
+            (aBlock value: element) ifTrue: [ results at: key put: element ] ].
+        ^results ]
+]
+
+Dictionary members: "removing elements"
+[
+    Dictionary! removeAll [ contents clear. ]
+
+    ElementType! removeKey: KeyType! key [
+        "the element indexed by the supplied key after removing it"
+        ^self removeKey: key ifAbsent: [ self elementNotFound. ^nil ]
+    ]
+
+    ElementType! removeKey: KeyType! key ifAbsent: NiladicValuable! aBlock [
+        "the element indexed by the supplied key after removing it, or the value of aBlock"
+        ElementType! result := self at: key ifAbsent: aBlock.
+        contents remove: key.
+        ^result ]
+
+    Dictionary! removeAllKeys: CollectedDistinctly? KeyType! keys [
+        "the receiver after removing the supplied keys"
+        self removeAllKeys: keys ifAbsent: [ self elementNotFound. ^nil asPrimitive ]. ]
+
+    Dictionary! removeAllKeys: CollectedDistinctly? KeyType! keys ifAbsent: MonadicValuable! aBlock [
+        "the receiver after removing the supplied keys, and evaluating aBlock with each missing key"
+        Dictionary! results := Dictionary new: self size.
+        keys do: [ : KeyType! key |
+            results at: key put: (self removeKey: key ifAbsent: [ aBlock value: key ]). ].
+        ^results ]
+
+    ElementType! remove: ElementType! element [
+     	^self remove: element ifAbsent: [ self elementNotFound. ^nil ] ]
+
+    ElementType! remove: ElementType! element ifAbsent: NiladicValuable! aBlock [
+     	^self removeKey: (self keyAtValue: element ifAbsent: aBlock) ]
+
+    Collected? ElementType! removeAll: Collected? ElementType! elements [
+     	elements do: [ : ElementType! element |
+            KeyType! key := self keyAtValue: element.
+            key notNil ifTrue: [ self removeKey: key ]].
+        ^elements ]
+
+    OrderedCollection? ElementType! removeAllSuchThat: MonadicPredicate! criteria [
+     	OrderedCollection? ElementType! results := OrderedCollection new.
+        self valuesDo: [ : ElementType! element |
+            (criteria value: element) ifTrue: [
+                results add: element. self removeKey: (self keyAtValue: element). ]].
+        ^results ]
+]
+
+Dictionary "testing" members:
+[
+    Boolean! isEmpty [ ^Boolean from: contents isEmpty ]
+    Boolean! includes: Subject! element [ ^Boolean from: (contents containsValue: ElementType <- element) ]
+    Boolean! includesIndex: KeyType! index [ ^Boolean from: (contents containsKey: index) ]
+
+    Posit! includesKey: KeyType! key [ ^self includesIndex: key ]
+]

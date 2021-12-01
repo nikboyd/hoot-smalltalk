@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Exceptions Warning import.
+Hoot Exceptions ZeroDivide import.
+
+TestBase subclass: ExceptionTest. "Regression tests exceptions."
+
+ExceptionTest members: [
+
+    Void! runTest [
+        self log printLine: 'testing exceptions...'.
+        [   [   [   self signalException.
+                    self log printLine: 'reached after resumption'.
+                ]
+                on: ZeroDivide type do: [ : ZeroDivide! exception |
+                    self log printLine: 'handled ', exception description.
+                    self log printLine: 'resignaling as Warning'.
+                    exception resignalAs: Warning new.
+                ].
+            ]
+            on: Warning type do: [ : Warning! exception |
+                self log printLine: 'handled ', exception description.
+                self log printLine: 'passing ', exception description.
+                exception pass.
+            ].
+        ]
+        on: Warning type do: [ : Warning! exception |
+            self log printLine: 'received passed ', exception description.
+        ].
+        self log printLine: 'exception tests done'.
+    ]
+
+    "Signals an exception."
+    signalException [
+        self log printLine: 'signaling ZeroDivide ...'.
+        Number! x := 1 / 0.
+    ]
+]

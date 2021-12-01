@@ -1,0 +1,31 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util Arrays import.
+Smalltalk Core Subject import.
+Smalltalk Core SentMessage import.
+Smalltalk Collections CollectedSequentially import.
+
+Object subclass: SentMessage! Message.
+"A message, including the method selector and method arguments."
+
+Message members: "constructing instances"
+[
+    "a method selector"
+    @Protected Selector! selector.
+    Selector! selector [ ^selector ]
+
+    "the method invocation arguments"
+    @Protected @Primitive Subject! ... arguments.
+
+    Message: Selector! methodSelector : Subject! ... methodArguments [
+        "constructs a new Message"
+        selector := methodSelector.
+        arguments := methodArguments.
+    ]
+
+    CollectedSequentially? Subject! arguments [ ^null "arguments" ]
+
+    @Protected @Primitive Java Lang Int! argumentCount [ ^(Arrays asList: arguments) size ]
+]

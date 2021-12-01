@@ -1,0 +1,9 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+CollectedSequentially? ElementType subtype: 
+CollectedArray? ElementType -> Subject. 
+"A type signature for ANSI Smalltalk Array (section 5.7.14)."
+
+CollectedArray type members: []

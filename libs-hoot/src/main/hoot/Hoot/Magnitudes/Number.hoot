@@ -1,0 +1,254 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Lang Math import.
+Java Math BigInteger import.
+Java Math BigDecimal import.
+Hoot Runtime Names Primitive import.
+
+Hoot Geometry Point import.
+Hoot Collections Interval import.
+Hoot Exceptions ZeroDivide import.
+Hoot Magnitudes SmallInteger importStatics.
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Magnitudes Numeric import.
+Smalltalk Magnitudes Floater import.
+
+Magnitude subclass: @Abstract Smalltalk Magnitudes Numeric! Smalltalk Magnitudes Floater! Number.
+"Supports basic arithmetic and mathemetical operations."
+
+Number class members: "accessing constants"
+[
+    Floater! e [ ^Double basicNew: Math E ]
+    Floater! pi [ ^Double basicNew: Math PI ]
+
+    Boolean! denormalized [ ^false ]
+
+    Integer! radix [ ^Duality ]
+    Integer! precision [ ^32 ]
+
+    Integer! emax [ ^38 ]
+    Integer! emin [ ^Zero - 45 ]
+
+    Floater! epsilon [ ^self radix raisedTo: (Unity - self precision) ]
+    Floater! fmax [ ^Float basicNew: Primitive elementaryMaxFloat ]
+    Floater! fmin [ ^Float basicNew: Primitive elementaryMinFloat ]
+
+    Floater! fminDenormalized [ ^self radix raisedTo: (self emin - self precision) ]
+    Floater! fminNormalized [ ^self radix raisedTo: (self emin - Unity) ]
+]
+
+Number class members: "coercing value types"
+[
+    NumericType -> Number! coerce: Number! aNumber "a coerced number derived aNumber" [
+        self error: 'concrete derived metaclasses must override this method.'. ^null ]
+
+    NumericType -> Number! coerce: Object! aNumber "a coerced number" [ ^self coerce: (Number <- aNumber) ]
+    NumericType -> Number! zero "additive identity" [ ^NumericType <- (self coerce: Zero) ]
+    NumericType -> Number! unity "product identity" [ ^NumericType <- (self coerce: Unity) ]
+
+    @Protected Number Metaclass! fromType: Classified! numberClass [ ^numberClass ]
+]
+
+Number members:
+[
+    @Protected Number [ super. ]
+]
+
+Number members: "coercing values"
+[
+    Boolean! lessGeneral: Numeric! aNumber [ Number! n := Number <- aNumber. ^self generality < n generality ]
+    NumericType -> Number! coerceTo: Classified! numberClass [ ^self coerceTo: (self class fromType: numberClass) ]
+    NumericType -> Number! coerceTo: Number Metaclass! numberClass [ ^numberClass coerce: this ]
+    @Abstract Integer! generality "level of generality for coercion" []
+]
+
+Number members: "comparing values"
+[
+    Boolean! = Number! aNumber [ ^self = (Magnitude <- aNumber) ]
+
+    Boolean! = Numeric! aNumber "whether (this = aNumber)" [
+        ^Boolean from: (Number <- aNumber) = self ]
+
+    Boolean! < Scalar! aNumber "whether (this < aNumber)" [
+        (aNumber isKindOf: Number type) not ifTrue: [ ^false ].
+        ^Boolean from: (Number <- aNumber) > self ]
+
+    Boolean! > Scalar! aNumber "whether (this > aNumber)" [
+        (aNumber isKindOf: Number type) not ifTrue: [ ^false ].
+        ^Boolean from: (Number <- aNumber) < self ]
+]
+
+Number members: "converting values"
+[
+    Java Lang Byte!  primitiveByte [ ^self elementaryNumber byteValue ]
+    Java Lang Short! primitiveShort [ ^self elementaryNumber shortValue ]
+
+    Character! asCharacter [ ^Character from: self primitiveCharacter ]
+    Java Lang Char! primitiveCharacter [ ^Char <- self elementaryNumber intValue ]
+
+    SmallInteger! asSmallInteger [ ^SmallInteger from: self primitiveInteger ]
+    Java Lang Int! primitiveInteger [ ^self elementaryNumber intValue ]
+
+    LongInteger! asLongInteger [ ^LongInteger basicNew: self primitiveLong ]
+    Java Lang Long! primitiveLong [ ^self elementaryNumber longValue ]
+
+    Float! asFloatE [ ^self asFloat ]
+    Float! asFloat [ ^Float from: self primitiveFloat ]
+    Java Lang Float! primitiveFloat [ ^self elementaryNumber floatValue ]
+
+    Double! asFloatD [ ^Double from: self primitiveDouble ]
+    Java Lang Double! primitiveDouble [ ^self elementaryNumber doubleValue ]
+
+    Integer! asInteger [ ^self asLargeInteger narrowGenerality ]
+    Java Lang Integer! elementaryInteger [ ^self elementaryNumber intValue ]
+
+    @Abstract Java Lang Number! elementaryNumber "converts this value to a Number" []
+
+    Rational! asRational [ ^self asFraction ]
+    Fraction! asFraction [ ^Fraction basicNew: self asInteger ]
+
+    LargeInteger! asLargeInteger [ ^LargeInteger from: self asBigInteger ]
+    BigInteger! asBigInteger [ ^BigInteger valueOf: self primitiveLong ]
+    BigDecimal! asDecimal [ ^BigDecimal basicNew: self primitiveLong ]
+
+    Fixed! asFixedPoint: Ordinal! scale [ ^self asFraction scaledAt: Integer <- scale ]
+    Fixed! asScaledDecimal: Ordinal! scale [ ^self asFraction scaledAt: Integer <- scale ]
+    Point! asPoint [ ^self @ self ]
+]
+
+Number members: "arithmetic"
+[
+    - Numeric! aNumber [ ^(Number <- aNumber) negated + self ]
+    + Numeric! aNumber [ ^(Number <- aNumber) + self ]
+    * Numeric! aNumber [ ^(Number <- aNumber) * self ]
+
+    @Override / Numeric! aNumber [ ^self / (Number <- aNumber) ]
+    Integer!  // Numeric! aNumber [ ^(self / (Number <- aNumber)) floor ]
+
+    \\ Numeric! aNumber "division remainder" [ ^(self - (self // (Number <- aNumber) * (Number <- aNumber))) ]
+     % Numeric! aNumber "division remainder" [ ^self \\ (Number <- aNumber) ]
+]
+
+Number members: "arithmetic exceptions"
+[
+    "signals a zero divide exception"
+    zeroDivide [ ZeroDivide type dividend: self. ]
+]
+
+Number members: "geometry"
+[
+    Point! @ Numeric! aNumber [ ^Point basicNew x: self y: Number <- aNumber ]
+]
+
+Number members: "mathematics"
+[
+    ** Ordinal! power [ ^self raisedTo: (Double from: (Number <- power) primitiveDouble) ]
+    ** Numeric! power [ ^self raisedTo: (Double from: (Number <- power) primitiveDouble) ]
+    ** Double! power [ ^self asFloatD raisedTo: power ]
+
+    abs [ ^self < self class zero ifTrue: [ self negated ] ifFalse: [ self ] ]
+
+    Rational! fractionPart [ ^(self - self truncated) asRational ]
+    Integer! integerPart [ ^self truncated ]
+
+    negated [ ^self class zero - self ]
+    reciprocal [ ^self class unity / self ]
+    squared [ ^Number <- (self * self) ]
+
+    Integer! quo: Numeric! aNumber [ ^(self / aNumber) truncated ]
+    rem: Numeric! aNumber [ ^self - (self truncatedTo: aNumber) ]
+
+    @Primitive Integer! sign [
+     	self strictlyPositive asPrimitive ifTrue: [ ^Unity ].
+        self negative asPrimitive ifTrue: [ ^Negativity ].
+        ^Zero ]
+
+    @Primitive sqrt "a value = (this squareRoot)" [
+        Java Lang Double! rootD := Math sqrt: self primitiveDouble.
+        Long! rootL := rootD longValue.
+        (rootL == rootD) ifTrue: [
+            Int! rootI := Int <- rootL.
+            ^(rootI == rootL)
+                ifTrue: [ SmallInteger basicNew: rootI ]
+                ifFalse: [ LongInteger basicNew: rootL ]
+        ].
+
+        Java Lang Float! rootF := rootD floatValue.
+        ^(rootF doubleValue == rootD)
+            ifTrue: [ Float basicNew: rootF ]
+            ifFalse: [ Double basicNew: rootD ]
+    ]
+]
+
+Number members: "mathematics - functions"
+[
+    Floater! cos [ ^Double basicNew: (Math cos: self primitiveFloat) ]
+    Floater! arcCos [ ^Double basicNew: (Math acos: self primitiveFloat) ]
+    Floater! arcSin [ ^Double basicNew: (Math asin: self primitiveFloat) ]
+    Floater! arcTan [ ^Double basicNew: (Math atan: self primitiveFloat) ]
+    Floater! exp [ ^Double basicNew: (Math exp: self primitiveFloat) ]
+
+    @Primitive Double! degreesToRadians [ ^Double basicNew: self primitiveDouble * Primitive radiansPerDegree ]
+    @Primitive Double! radiansToDegrees [ ^Double basicNew: self primitiveDouble * Primitive degreesPerRadian ]
+
+    Double! ln [ ^Double basicNew: (Math log: self primitiveFloat) ]
+    Number! log: Numeric! radix [ ^self ln / (Number <- radix) ln ]
+    Integer! floorLog: Numeric! radix [ ^(self log: (Number <- radix) asFloat) floor ]
+
+    Double! sin [ ^Double basicNew: (Math sin: self primitiveFloat) ]
+    Double! tan [ ^Double basicNew: (Math tan: self primitiveFloat) ]
+]
+
+Number members: "truncation"
+[
+    @Abstract Integer! floor []
+    @Abstract Integer! ceiling []
+    Integer! truncated [ ^self negative ifTrue: [ self ceiling ] ifFalse: [ self floor ] ]
+
+    truncatedTo: Numeric! aNumber [ ^(self quo: aNumber) * aNumber ]
+]
+
+Number members: "rounding values"
+[
+    Integer! rounded [ ^(self + (self sign / Duality)) truncated ]
+    roundTo: Numeric! aNumber [ ^(self / aNumber) rounded * aNumber ]
+]
+
+Number members: "testing"
+[
+    Boolean! isZero [ ^Boolean from: self = self class zero ]
+    Boolean! negative [ ^Boolean from: self < self class zero ]
+    Boolean! positive [ ^Boolean from: self >= self class zero ]
+    Boolean! strictlyPositive [ ^Boolean from: self > self class zero ]
+]
+
+Number members: "intervals"
+[
+    Interval! to: Ordinal! aNumber [
+     	^Interval type from: self asInteger to: aNumber ]
+
+    Interval! to: Ordinal! aNumber by: Ordinal! delta [
+     	^Interval type from: self asInteger to: aNumber by: delta ]
+
+    to: Ordinal! aNumber do: MonadicValuable! aBlock [ self to: aNumber by: Unity do: aBlock. ]
+    @Primitive to: Ordinal! aNumber by: Ordinal! delta do: MonadicValuable! aBlock [
+        Int! index := self primitiveInteger.
+        delta intValue > 0 ifTrue: [
+            [ index <= aNumber intValue ] whileTrue: [
+                aBlock value: (SmallInteger from: index).
+                index += delta intValue.
+            ]
+        ]
+        ifFalse: [
+            [ aNumber intValue <= index ] whileTrue: [
+                aBlock value: (SmallInteger from: index).
+                index += delta intValue.
+            ]
+        ].
+        ^self ]
+]

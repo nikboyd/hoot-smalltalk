@@ -1,0 +1,138 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Lang Math import.
+Java Util List import.
+Java Math BigDecimal import.
+
+Hoot Magnitudes Number import.
+Hoot Runtime Names Primitive import.
+Hoot Magnitudes SmallInteger importStatics.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Magnitudes Numeric import.
+Smalltalk Magnitudes Fractional import.
+
+Rational subclass: Fractional! Fraction. "An exact representation for rational numbers."
+
+Fraction class members:
+[
+    Rational! coerce: aNumber [ ^aNumber asFraction ]
+
+    Fraction! numerator: LongInteger! upper denominator: LongInteger! lower [
+        ^Fraction basicNew: (Integer <- upper) : (Integer <- lower) ]
+
+    Fraction! numerator: Ordinal! upper denominator: Ordinal! lower [
+        ^self rationalized: (Integer <- upper) over: (Integer <- lower) ]
+
+    @Primitive Fraction! rationalized: Number! upper over: Number! lower [
+        "Returns a new rationalized Fraction for the supplied arguments."
+    	SmallInteger! num := upper truncated asSmallInteger.
+        SmallInteger! den := lower truncated asSmallInteger.
+        ^self rationalized: (Primitive rationalize: num intValue : den intValue) ]
+
+    @Primitive Fraction! rationalized: Java Lang Integer! ... parts [
+        List? Java Lang Integer! ps := Utils wrap: parts. ^Fraction basicNew: (ps get: 0) : (ps get: 1) ]
+]
+
+Fraction members:
+[
+    "Used for numeric coercions."
+    @Static SmallInteger! Generality := 40.
+
+    "The numerator of a fraction."
+    Integer! numerator := 0.
+
+    "The denominator of a fraction."
+    Integer! denominator := 1.
+
+    Fraction []
+    Fraction: Integer! upper [ numerator := upper. ]
+    Fraction: Int! upper : Int! lower [ self : (SmallInteger from: upper) : (SmallInteger from: lower). ]
+    Fraction: Integer! upper : Integer! lower [ numerator := upper. denominator := lower. ]
+]
+
+Fraction members: "accessing"
+[
+    Integer! numerator [ ^numerator ]
+    Integer! denominator [ ^denominator ]
+]
+
+Fraction members: "arithmetic"
+[
+    Rational! - Rational! aNumber [
+    	denominator = aNumber denominator ifTrue: [
+            ^self class numerator: numerator - aNumber numerator denominator: denominator ].
+
+        ^self class numerator: (self crossDiff: aNumber) denominator: (self underProduct: aNumber) ]
+
+    Rational! + Rational! aNumber [
+    	denominator = aNumber denominator ifTrue: [
+            ^self class numerator: numerator + aNumber numerator denominator: denominator ].
+
+        ^self class numerator: (self crossSum: aNumber) denominator: (self underProduct: aNumber) ]
+
+    Rational! * Rational! aNumber [
+    	^self class numerator: (self overProduct: aNumber) denominator: (self underProduct: aNumber) ]
+
+    Rational! / Rational! aNumber [
+    	^self class numerator: (self crossProduct: aNumber) denominator: (aNumber crossProduct: self) ]
+
+    Number! + Numeric! aNumber [ ^self + (Rational <- aNumber asRational) ]
+    Number! * Numeric! aNumber [ ^self * (Rational <- aNumber asRational) ]
+    Number! / Numeric! aNumber [ ^self / (Rational <- aNumber asRational) ]
+]
+
+Fraction members: "converting"
+[
+    asFraction [ ^self ]
+    Float! asFloat [ ^Float from: self primitiveFloat ]
+    Double! asFloatD [ ^Double from: self primitiveDouble ]
+
+    Integer! generality [ ^Generality ]
+    @Primitive Java Lang Number! elementaryNumber [ ^self primitiveDouble ]
+    @Primitive Java Lang Long! primitiveLong [
+        Java Lang Double! value := self primitiveDouble.
+        (value < 0) ifTrue: [ ^Long <- (Math ceil: value) ].
+        ^Long <- (Math floor: value) ]
+
+    @Primitive Java Lang Float! primitiveFloat [ ^self primitiveDouble floatValue ]
+    @Primitive Java Lang Double! primitiveDouble [
+        Java Lang Double! n := numerator primitiveDouble.
+        Java Lang Double! d := denominator primitiveDouble.
+        ^n / d ]
+
+    Fixed! asFixedPoint: Ordinal! scale [ ^self scaledAt: Integer <- scale ]
+    Fixed! asScaledDecimal: Ordinal! scale [ ^self scaledAt: Integer <- scale ]
+
+    Fixed! scaledZero [ ^Fixed basicNew: numerator : denominator ]
+    Fixed! scaledAt: Integer! scale [ ^Fixed basicNew: numerator : denominator : scale ]
+
+    @Primitive BigDecimal! asDecimal [
+        Int! n := numerator printString length.
+        Int! d := denominator printString length.
+        Int! r := 4. "round half up"
+        ^numerator asDecimal divide:
+            denominator asDecimal : (Math min: n : d) : r ]
+]
+
+Fraction members: "mathematics"
+[
+    negated [ "the arithmetic inverse of this fraction"
+     	^self class numerator: numerator negated denominator: denominator ]
+
+    reciprocal [ "the multiplicative inverse of this fraction"
+     	^self class numerator: denominator denominator: numerator ]
+]
+
+Fraction members: "rounding values"
+[
+    Integer! rounded [ ^(self + (self sign / Duality)) truncated ]
+]
+
+Fraction members: "printing"
+[
+    Java Lang String! toString [ ^self printTerm primitiveString ]
+    @Primitive String! printString [ ^String from: numerator printString + ' / ' + denominator printString ]
+]

@@ -1,0 +1,91 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections ReadableString import.
+
+Scalar subtype: Instant.
+"A type signature for ANSI Smalltalk DateAndTime (sections 5.8.1, 5.8.4)."
+
+Instant type "measuring execution time" members:
+[
+    Duration! clockPrecision
+        "a duration after which #now will produce a different result" []
+]
+
+Instant type "creating instances" members:
+[
+    Instant! year: Ordinal! year month: Ordinal! month day: Ordinal! dayOfMonth
+        hour: Ordinal! hour minute: Ordinal! minute second: Numeric! second "a new Instant" []
+
+    Instant! year: Ordinal! year month: Ordinal! month day: Ordinal! dayOfMonth
+        hour: Ordinal! hour minute: Ordinal! minute second: Numeric! second
+        offset: Duration! offset "a new Instant" []
+
+    Instant! year: Ordinal! year day: Ordinal! dayOfYear
+        hour: Ordinal! hour minute: Ordinal! minute second: Numeric! second "a new Instant" []
+
+    Instant! year: Ordinal! year day: Ordinal! dayOfYear
+        hour: Ordinal! hour minute: Ordinal! minute second: Numeric! second
+        offset: Duration! offset "a new Instant" []
+
+    Instant! now "the time now" []
+]
+
+Instant "converting" members:
+[
+    asLocal "the local time coincident with this time (UTC)" []
+    asUTC "the Universal Time (UTC) coincident with this time" []
+]
+
+Instant "arithmetic" members:
+[
+    + aDuration "the time aDuration after this" []
+    - aDuration "the time aDuration before this" []
+
+    Duration! - anInstant "a duration = (this - anInstant)" []
+]
+
+Instant "accessing descriptions" members:
+[
+    ReadableString! monthName "a month name" []
+    ReadableString! dayOfWeekName "a day of the week name" []
+    ReadableString! timeZoneName "a time zone name" []
+
+    ReadableString! monthAbbreviation "a month abbreviation" []
+    ReadableString! dayOfWeekAbbreviation "a day of the week abbreviation" []
+    ReadableString! timeZoneAbbreviation "a time zone abbreviation" []
+    ReadableString! meridianAbbreviation "a meridian abbreviation (AM or PM)" []
+]
+
+Instant "accessing date" members:
+[
+    Ordinal! dayOfMonth "a day of the month" []
+    Ordinal! dayOfWeek  "a day of the week" []
+    Ordinal! dayOfYear  "a day of the year" []
+
+    Ordinal! month "a month"[]
+    Ordinal! year  "a year" []
+
+    Posit! isLeapYear "whether this resides in a leap year" []
+]
+
+Instant "accessing zone" members:
+[
+    Duration! offset "the offset between this local time and coincident UTC" []
+    offset: Duration! offset "the offset between this local time and coincident UTC" []
+]
+
+Instant "accessing time" members:
+[
+    Ordinal! hour   "an hour of the day" []
+    Ordinal! hour12 "an hour of the day (12 hour clock)" []
+    Ordinal! hour24 "an hour of the day (24 hour clock)" []
+    Ordinal! minute "a minute of the hour" []
+    Numeric!  second "a second within the minute" []
+]
+
+Instant "printing" members:
+[
+    @Override ReadableString! printString "a formatted timestamp" []
+]

@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util Function Function import.
+
+Hoot Runtime Values Frame import.
+Hoot Runtime Functions Exceptional importStatics.
+
+Closure subclass: NiladicPredicate! MonadicPredicate! DyadicPredicate! Predicate. 
+"A block closure with a Boolean (Posit) result."
+
+Predicate members: "creating instances"
+[
+    @Primitive @Static Predicate! with: Argued? Frame : Subject! block : Java Lang String! ... argNames [ 
+        ^(Predicate basicNew: (Enclosure withQuiet: block) block)  valueNames: argNames ]
+
+    @Protected Predicate: Function? Frame : Subject! block [ super : block. ]
+]
+
+Predicate members: "evaluating predicates"
+[
+    @Primitive Posit! value [ ^Posit <- (super value) ]
+    @Primitive Posit! value: Subject! value [ ^Posit <- (super valueWith: value) ]
+    @Primitive Posit! value: Subject! valueA value: Subject! valueB [ ^Posit <- (super valueWith: valueA : valueB) ]
+]
+
+Predicate "looping" members:
+[
+    @Primitive Posit! whileTrue [ Posit! result := self value. 
+        [ result primitiveBoolean ] whileTrue: [ result := self value. ]. ^result ]
+
+    @Primitive Posit! whileFalse [ Posit! result := self value. 
+        [ result primitiveBoolean ] whileFalse: [ result := self value. ]. ^result ]
+
+    @Primitive Posit! whileTrue: NiladicValuable! aBlock [ Posit! result := self value. 
+        [ result primitiveBoolean ] whileTrue: [ aBlock value. result := self value. ]. ^result ]
+
+    @Primitive Posit! whileFalse: NiladicValuable! aBlock [ Posit! result := self value.
+        [ result primitiveBoolean ] whileFalse: [ aBlock value. result := self value. ]. ^result ]
+]

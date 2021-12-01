@@ -1,0 +1,31 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Magnitudes Integer import.
+
+TestableClosure subclass: CollectionWrites. "writing into a collection"
+
+CollectionWrites members:
+[
+    OrderedCollection! sample := OrderedCollection new: 20.
+    refillSample [
+        sample removeAll;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero;
+        add: Zero.
+    ]
+
+    String! description [ ^'Collection writes' ]
+    Void! runTest [
+        self refillSample.
+    ]
+]

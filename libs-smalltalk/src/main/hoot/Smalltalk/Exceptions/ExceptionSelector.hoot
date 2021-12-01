@@ -1,0 +1,20 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Subject subtype: ExceptionSelector.
+"A type signature for ANSI Smalltalk ExceptionSelector (sections 5.5.5)."
+
+ExceptionSelector type members: "creating exception sets"
+[
+    ExceptionalSet! , ExceptionSelector Metatype! exceptionType
+        "a set that includes this exception type and another exceptionType" []
+]
+
+ExceptionSelector type members: "handling exceptions"
+[
+    Posit! handles: SignaledException! exception 
+        "indicates whether a handler accepts a signaled exception" []
+]
+
+ExceptionSelector members: []

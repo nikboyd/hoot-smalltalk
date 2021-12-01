@@ -1,0 +1,75 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+Java Util ArrayList import.
+Java Util StringTokenizer import.
+
+Hoot Runtime Names Primitive import.
+
+Object subclass: StringPattern. "Matches strings against a pattern expression."
+
+"Pattern expressions may contain any number of wild cards.
+The wild card may be specified at construction time, or the standard wild card (*) will be used.
+The wild card delimits the segments of a pattern expression.
+To match, a string must include all the pattern segments in their specified order."
+
+StringPattern class members: []
+
+StringPattern members:
+[
+    @Static String! WildCard := '*'.
+    @Static String! EmptyString := ''.
+
+    List? Java Lang String! segments := ArrayList basicNew.
+
+    StringPattern: CharacterString! pattern [ self : pattern : WildCard. ]
+
+    @Primitive! StringPattern: CharacterString! pattern : CharacterString! wildCard [
+        Java Lang String! p := pattern primitiveString.
+        Java Lang String! w := wildCard primitiveString.
+
+        StringTokenizer! tokens := Primitive tokens: p : w.
+        Int! count := tokens countTokens.
+        (0 < count) ifTrue: [
+            (p startsWith: w) ifTrue: [ count += 1. ].
+            (p endsWith: w)   ifTrue: [ count += 1. ].
+
+            (p startsWith: w) ifTrue: [
+                segments add: EmptyString primitiveString. count += 1.
+            ].
+            [ tokens hasMoreTokens ] whileTrue: [
+                segments add: tokens nextToken. count += 1.
+            ].
+            (p endsWith: w) ifTrue: [
+                segments add: EmptyString primitiveString. count += 1.
+            ].
+        ].
+    ]
+
+    @Primitive Boolean! accepts: CharacterString! aString [
+        @Final Java Lang String! sample := aString primitiveString.
+        @Final Int! count := segments size.
+        (0 > count) ifTrue: [ ^True literal ].
+        (sample startsWith: (segments get: 0)) ifFalse: [ ^False literal ].
+        (0 == count) ifTrue: [ ^Boolean from: (sample length == (segments get: 0) length) ].
+        (sample endsWith: (segments get: count)) ifFalse: [ ^False literal ].
+
+        (1 < count) ifTrue: [
+            Int! x := 0.
+            Int! p := (segments get: 0) length.
+            [ count > x ] whileTrue: [
+                Java Lang String! s := segments get: x.
+                (0 < x) ifTrue: [
+                    Int! a := sample indexOf: s : p.
+                    (0 > a) ifTrue: [ ^False literal ]
+                            ifFalse: [ p := a + s length. ].
+                ].
+                x += 1.
+            ].
+        ].
+
+        ^True literal
+    ]
+]

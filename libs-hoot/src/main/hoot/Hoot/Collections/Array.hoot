@@ -1,0 +1,110 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util importAll.
+
+Hoot Magnitudes Integer import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+Smalltalk Core Subject import.
+Smalltalk Blocks importAll.
+
+ArrayedCollection? ElementType subclass:
+Array? ElementType -> Object. "A literal array."
+
+Array class members: "creating instances"
+[
+    with: ElementType -> Subject! a [ ^Array <- (super with: Object <- a) ]
+
+    with: ElementType -> Subject! a
+    with: ElementType -> Subject! b [ ^Array <- (self withAll: Object <- a : Object <- b) ]
+
+    with: ElementType -> Subject! a
+    with: ElementType -> Subject! b
+    with: ElementType -> Subject! c [ ^Array <- (self withAll: Object <- a : Object <- b : Object <- c) ]
+
+    with: ElementType -> Subject! a
+    with: ElementType -> Subject! b
+    with: ElementType -> Subject! c
+    with: ElementType -> Subject! d [ ^Array <- (self withAll: Object <- a : Object <- b : Object <- c : Object <- d) ]
+
+    Array? ElementType -> Object! withAll: ElementType! ... elements [ ^Array basicNew: elements ]
+    withAll: CollectedReadably? ElementType -> Subject! aCollection [ ^Array basicNew: aCollection asList ]
+
+    Array! new [ "a new empty Array" ^self new: 0 ]
+    Array! new: Ordinal! capacity [ ^Array basicNew: Integer <- capacity ]
+    Array? String! withStrings: Java Lang String! ... textStrings [ ^Array basicNew: (String listWith: textStrings) ]
+]
+
+Array members: "constructing instances"
+[
+    "Contains the array elements."
+    @Primitive ArrayList? ElementType! contents := ArrayList basicNew.
+
+    Array: List? ElementType! elements [ contents addAll: elements. ]
+    @Protected! Array [ "a new (empty) Array" ]
+    @Protected! Array: ElementType! ... elements [ contents addAll: (Arrays asList: elements). ]
+    @Protected! Array: Integer! capacity [ ElementType! none := null.
+        contents := (Utils fillList: capacity primitiveInteger : none). ]
+
+    @Static Array? ElementType -> Object! withAll: ElementType! ... elements [ ^Array basicNew: elements ]
+]
+
+Array members: "accessing"
+[
+    List? ElementType! primitiveContents [ ^contents ]
+    Integer! size [ ^SmallInteger from: contents size ]
+    @Protected ElementType! get: Int! index [ ^(contents get: index) ]
+]
+
+Array members: "adding elements"
+[
+    @Protected ElementType! add: ElementType! element at: Int! index [
+        contents add: index : element. ^element ]
+]
+
+Array members: "accessing elements"
+[
+    ElementType! at: Integer! index ifAbsent: NiladicValuable! aBlock [
+        ^self get: (self checkIndex: index ifAbsent: aBlock) ]
+
+    ElementType! at: Integer! index put: ElementType! element [
+        contents add: (self checkIndex: index) : element.
+        ^element ]
+]
+
+Array members: "converting"
+[
+    List? ElementType! asList [ ^self primitiveContents ]
+]
+
+Array members: "comparing"
+[
+    Java Lang Int! hashCode [ ^self primitiveContents hashCode ]
+    Boolean! = Collected! aCollection [ ^self = (Array <- aCollection asArray) ]
+    Boolean! = Array? ElementType! aCollection [
+        ^Boolean from: (contents equals: aCollection primitiveContents) ]
+]
+
+Array members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        1 to: self size do: [ : Integer! index | aBlock value: (self get: (index - 1) primitiveInteger) ].
+    ]
+]
+
+Array members: "testing"
+[
+    Boolean! includes: Subject! anObject [ ^Boolean from: (contents contains: anObject) ]
+]
+
+Array members: "mutations - not allowed"
+[
+    Array! removeAll [ self immutabilityError. ]
+    ElementType! removeLast [ self immutabilityError. ^ElementType <- nil ]
+    ElementType! removeFirst [ self immutabilityError. ^ElementType <- nil ]
+    ElementType! removeAtIndex: Ordinal! index [ self immutabilityError. ^ElementType <- nil ]
+    ElementType! add: ElementType! element [ self immutabilityError. ^ElementType <- nil ]
+]

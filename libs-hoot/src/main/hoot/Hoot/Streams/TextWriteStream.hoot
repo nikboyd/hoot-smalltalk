@@ -1,0 +1,31 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Collections importAll.
+
+WriteStream? Character subclass: TextWriteStream. "Writes on a text string (in memory)."
+
+TextWriteStream class members:
+[
+    TextWriteStream! with: CollectedVariably! aString [ ^self with: String <- aString ]
+    TextWriteStream! with: String! aString [ ^TextWriteStream basicNew: aString ]
+]
+
+TextWriteStream members: "constructing instances"
+[
+    @Protected! TextWriteStream: String! aString [ super : aString. ]
+    String! contents [ ^String from: contents toString ]
+]
+
+TextWriteStream members: "writing"
+[
+    nextPut: Character! element [
+        (String <- contents) add: element.
+        position := 1 + position. ]
+
+    nextPutAll: CollectedReadably? Character! elements [
+        (String <- contents) addAll: elements.
+        position := position + elements size. ]
+]

@@ -1,0 +1,35 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Collections ReadableString import.
+Hoot Runtime Exceptions HandledException import.
+
+HandledException subtype: ExceptionDescription.
+"A type signature for ANSI Smalltalk ExceptionDescription (section 5.5.1)."
+
+ExceptionDescription type members:
+[
+    Posit! isKindOf: ExceptionDescription Metatype! exceptionType []
+    Void! handleWith: MonadicValuable! handler during: Closure! aBlock []
+]
+
+ExceptionDescription "describing an exception" members:
+[
+    ReadableString! description "a description of this exception" []
+    ReadableString! messageText "a message associated with this exception" []
+    Subject! tag "an unique exception identifier" []
+]
+
+ExceptionDescription "handling an exception" members:
+[
+    Subject! defaultAction
+        "Performs the default action if this exception is signaled without an active handler." []
+]
+
+ExceptionDescription "testing" members:
+[
+    Posit! isResumable "whether this is a resumable exception" []
+    Posit! isKindOf: ExceptionDescription Metatype! exceptionType []
+]

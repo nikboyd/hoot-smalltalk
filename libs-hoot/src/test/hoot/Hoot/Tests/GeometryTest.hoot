@@ -1,0 +1,33 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Geometry importAll.
+Hoot Streams Transcript import.
+Org Junit lowerCase importAll.
+
+TestBase subclass: GeometryTest.
+"Regression tests the Geometry classes."
+
+GeometryTest members:
+[
+    Array! testBlocks := #(
+        '[ ( 50 @ 50 ) - ( 10 @ 10 ) ]'
+        '[ ( 50 @ 50 ) + ( 10 @ 10 ) ]'
+        '[ ( 50 @ 50 ) dotProduct: ( 10 @ 10 ) ]'
+        '[ ( 50.0 @ 50.0 ) - ( 10.0 @ 10.0 ) ]'
+        '[ ( 50.0 @ 50.0 ) dotProduct: ( 10.0 @ 10.0 ) ]'
+
+        '[ ( 10 @ 10 extent: 40 @ 40 ) ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) area ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) center ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) corners ]'
+
+        '[ ( 10 @ 10 extent: 40 @ 40 ) containsPoint: ( 20 @ 20 ) ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) contains: ( 20 @ 20 extent: 10 @ 10 ) ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) intersects: ( 20 @ 20 extent: 10 @ 10 ) ]'
+        '[ ( 10 @ 10 extent: 40 @ 40 ) intersects: ( 51 @ 51 extent: 10 @ 10 ) ]'
+    ).
+
+    Void! runTest [ (TestableCode withAll: testBlocks) runTests. ]
+]

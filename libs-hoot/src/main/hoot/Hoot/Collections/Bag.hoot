@@ -1,0 +1,127 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util Arrays import.
+
+Hoot Behaviors Ordered import.
+Hoot Magnitudes Integer import.
+Hoot Magnitudes FastInteger import.
+Hoot Streams WriteStream import.
+
+Smalltalk Blocks importAll.
+Smalltalk Core Subject import.
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Ordinal import.
+
+Collection? ElementType subclass:
+CollectedBaggage? ElementType!
+Bag? ElementType -> Magnitude.
+"A counted set of objects, each of which may occur multiple times."
+
+"This initial implementation needs further optimization - e.g., using hashes to
+improve performance."
+
+Bag class members: "creating instances"
+[
+    new [ ^self new: 10 ]
+    Bag! new: Ordinal! capacity [ ^Bag basicNew: capacity ]
+]
+
+Bag members: "constructing instances"
+[
+    "Contains the set elements."
+    Dictionary? ElementType : Integer! contents := Dictionary basicNew.
+    @Protected Dictionary! contents [ ^contents ]
+
+    @Protected! Bag [ "a new (empty) Bag" ]
+    @Protected! Bag: Ordinal! capacity [
+        contents := Dictionary basicNew: Integer <- capacity.
+    ]
+]
+
+Bag members: "accessing"
+[
+    Integer! size [ ^contents size ]
+    Integer! occurrencesOf: Subject! element [
+        ^contents at: ElementType <- element ifAbsent: [ ^0 ] ]
+]
+
+Bag members: "adding elements"
+[
+    ElementType! add: ElementType! element [
+        contents at: element put: 1 + (self occurrencesOf: element).
+        ^element ]
+
+    ElementType! add: ElementType! element withOccurrences: Ordinal! count [
+        contents at: element put: (Integer <- count).
+        ^element ]
+
+    Collected? ElementType! addAll: Collected? ElementType! elements [
+        elements do: [ : ElementType! element | self add: element ].
+        ^elements ]
+
+    Collected? ElementType! addAll: ElementType! ... elements [
+        ^self addAll: (Set from: (Arrays asList: elements)) ]
+]
+
+Bag members: "comparing"
+[
+    Boolean! = Collected! aCollection [ ^self = aCollection asBag ]
+    Boolean! = CollectedBaggage? ElementType! aBag [ ^contents = (Bag <- aBag) contents ]
+
+    Java Lang Int! hashCode [ ^contents hashCode ]
+]
+
+Bag members: "converting"
+[
+    Bag! asBag [ ^self ]
+    Set! asSet [ ^contents keys ]
+]
+
+Bag members: "removing elements"
+[
+    Bag! removeAll [ contents removeAll. ]
+
+    ElementType! remove: ElementType! element [
+        ^self remove: element
+            ifAbsent: [ self elementNotFound. ^nil ] ]
+
+    ElementType! remove: ElementType! element ifAbsent: NiladicValuable! aBlock [
+        FastInteger! count := FastInteger fromInteger: (self occurrencesOf: element).
+        count = 0 ifTrue: [ ^aBlock value ].
+        count = 1 ifTrue: [ contents removeKey: element ] ifFalse: [ count -= 1 ].
+        ^element ]
+
+    Collected? ElementType! removeAll: ElementType! ... elements [
+        ^self removeAll: (OrderedCollection type from: (Utils wrap: elements)) ]
+
+    Collected? ElementType! removeAll: Collected? ElementType! elements [
+        elements do: [ : ElementType! element | self remove: element ].
+        ^elements ]
+
+    Set? ElementType! removeAllSuchThat: MonadicPredicate! criteria [
+        @Final Set? ElementType! results := Set type new.
+        self do: [ : ElementType! element |
+            (criteria value: element) ifTrue: [
+                results add: element.
+                self remove: element.
+            ].
+        ].
+        ^results
+    ]
+]
+
+Bag members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        contents keysAndValuesDo: [ : ElementType! element : Integer! count |
+            count timesRepeat: [ aBlock value: element. ].
+        ].
+    ]
+]
+
+Bag members: "streaming"
+[
+    WriteStream! writeStream [ ^WriteStream type with: self ]
+]

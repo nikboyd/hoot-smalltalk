@@ -1,0 +1,51 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Exceptions HandledException import.
+
+ExceptionDescription, ExceptionSelector, HandledException subtype: SignaledException.
+"A type signature for ANSI Smalltalk SignaledException (section 5.5.4)."
+
+SignaledException type members: []
+
+SignaledException "completing an exception" members:
+[
+    Void! resume "no result from the message that signaled this exception" []
+    Void! return "no result from the block guarded by the active exception handler" []
+
+    Void! resume: Subject! value
+        "the supplied value as the result of the message that signaled this exception" []
+
+    Void! return: Subject! value
+        "the supplied value as the result of the block guarded by the active exception handler" []
+]
+
+SignaledException "handling an exception" members:
+[
+    Subject! outer
+        "Activates the enclosing handler for this exception. Afterwards, if this exception is resumable, 
+        the current handler will continue executing with the resumption value from the enclosing handler 
+        returned as the value of this message." []
+
+    Void! pass "no result, but passes this exception to the next enclosing exception handler." []
+]
+
+SignaledException "resignaling an exception" members:
+[
+    Void! resignalAs: ExceptionDescription! anException
+        "no result, but resignals with anException as the raised exception, replacing the receiver." []
+]
+
+SignaledException "retrying an exception" members:
+[
+    Void! retry "aborts the current exception handler and reattempts evaluation of the protected block." []
+    Void! retryUsing: NiladicValuable! aBlock
+        "aborts the current exception handler, replaces the protected block with aBlock, 
+        and evaluates the new protected block under the protection of the handler." []
+]
+
+SignaledException "testing" members:
+[
+    Posit! isNested "whether the handler for this exception is nested" []
+]

@@ -1,0 +1,152 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Magnitudes FastInteger import.
+
+Smalltalk Core Subject import.
+Smalltalk Core Classified import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections Collected import.
+Smalltalk Collections OrdinalRange import.
+
+SequencedCollection subclass: 
+OrdinalRange! Interval. "A sequence of ordinal numbers."
+
+Interval class members: "creating instances"
+[
+    Interval! new [ 
+        "a new empty Interval (0, 0, 0)"
+        ^self from: 0 to: 0 by: 0 ]
+
+    Interval! from: Ordinal! start to: Ordinal! stop [
+        "a new Interval (start, stop, 1)"
+    	^self from: start to: stop by: 1 ]
+
+    Interval! from: Ordinal! start to: Ordinal! stop by: Ordinal! step [
+        "a new Interval (start, stop, step)"
+    	^Interval basicNew: start : stop : step ]
+]
+
+Interval members: "constructing instances"
+[
+    "The interval start."
+    Ordinal! start := 0.
+
+    "The interval stop."
+    Ordinal! stop := 0.
+
+    "The interval step."
+    Ordinal! step := 0.
+
+    "Constructs a new Interval."
+    @Protected Interval: Ordinal! aStart : Ordinal! aStop : Ordinal! aStep [
+     	start := aStart.
+        stop := aStop.
+        step := aStep.
+    ]
+]
+
+Interval "accessing" members:
+[
+    @Private Integer! start [ ^Integer <- start ]
+    @Private Integer! stop  [ ^Integer <- stop ]
+    @Private Integer! step  [ ^Integer <- step ]
+
+    @Private @Primitive Int! countSteps [
+        ^(self stop primitiveInteger - self start primitiveInteger / self step primitiveInteger) + 1 ]
+
+    Integer! first [ self emptyCheck. ^self start ]
+    Integer! last [ self emptyCheck.
+        ^(self stop - (self stop - self start \\ step)) asInteger ]
+
+    @Primitive Integer! size [
+    	^self isEmpty
+            ifTrue: [ SmallInteger from: 0 ]
+            ifFalse: [ SmallInteger from: self countSteps ] ]
+
+    Behavior! species [ ^Behavior <- OrderedCollection type ]
+]
+
+Interval members: "comparing"
+[
+    @Primitive Boolean! = Collected! aCollection [
+        (aCollection instanceOf: Interval) ifFalse: [ ^super equals: aCollection ].
+        Interval! candidate := Interval <- aCollection.
+        (candidate start == self start) ifFalse: [ ^False literal ].
+        (candidate stop == self stop) ifFalse: [ ^False literal ].
+        (candidate step == self step) ifFalse: [ ^False literal ].
+        ^True literal
+    ]
+
+    @Primitive Java Lang Int! hashCode [
+    	Int! result := start hashCode.
+        result <<= 2.
+        result ^= stop hashCode.
+        result <<= 1.
+        result ^= step hashCode.
+        ^result
+    ]
+]
+
+Interval members: "accessing elements"
+[
+    @Protected Integer! get: Int! index [
+        ^self at: (SmallInteger from: index) + 1 ]
+
+    Integer! at: Ordinal! index [
+        ^self at: index ifAbsent: [ self elementNotFound. ^0 ] ]
+
+    "Returns the element at (index), or evaluates (aBlock),
+    if the receiver does not include an (index)."
+    @Primitive Integer! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        Int! i := self checkIndex: index ifAbsent: aBlock.
+        i *= step intValue.
+        i += start intValue.
+        ^SmallInteger from: i ]
+]
+
+Interval members: "copying elements"
+[
+    reverse [ ^Interval type from: stop to: start by: step negated asInteger ]
+]
+
+Interval members: "enumerating"
+[
+    do: MonadicValuable! aBlock [ start to: stop by: step do: [ : Ordinal! i | aBlock value: i ] ]
+
+    OrderedCollection! collect: MonadicValuable! filterBlock [
+     	OrderedCollection! result := OrderedCollection new: self size.
+        FastInteger! index := 0 asFastInteger.
+        self do: [ : Ordinal! v |
+            index += 1.
+            result at: index put: Integer <- (filterBlock value: v).
+        ].
+        ^result ]
+]
+
+Interval members: "testing"
+[
+    @Primitive Boolean! isEmpty [
+    	^step intValue < 0
+            ifTrue: [ Boolean from: (start intValue < stop intValue) ]
+            ifFalse: [ Boolean from: (stop intValue < start intValue) ] ]
+
+    Boolean! includes: Subject! aValue [
+        (aValue isKindOf: Integer type) ifFalse: [ ^false ].
+        Integer! candidate := Integer <- aValue.
+        ^(Boolean from: ((candidate < self first) or: [candidate > self last])) not ]
+]
+
+Interval members: "mutations - not allowed"
+[
+    Subject! add: Subject! element [ self immutabilityError. ^0 ]
+    @Protected Object! add: Object! element at: Int! index [ self immutabilityError. ^0 ]
+
+    Interval! removeAll [ self immutabilityError. ]
+    Subject! removeFirst [ self immutabilityError. ^0 ]
+    Subject! removeLast [ self immutabilityError. ^0 ]
+    Subject! removeAtIndex: Ordinal! index [ self immutabilityError. ^0 ]
+]

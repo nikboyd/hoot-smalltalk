@@ -1,0 +1,33 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Org Junit lowerCase importAll.
+Hoot Streams Transcript import.
+
+Object subclass: @Abstract Testable! TestBase. "a basic test adapter"
+TestBase class members: []
+
+TestBase members: "testing" [
+
+    @Test Void! testOnce [ self log cr. self runTest. self log cr. ]
+
+    Void! assertTrue:  Closure! test [ Assert assertTrue:  test toPredicate value primitiveBoolean. ]
+    Void! assertFalse: Closure! test [ Assert assertFalse: test toPredicate value primitiveBoolean. ]
+
+    Void! assertTrue:  Closure! test with: argument [ Assert assertTrue:  (test toPredicate value: argument) primitiveBoolean. ]
+    Void! assertFalse: Closure! test with: argument [ Assert assertFalse: (test toPredicate value: argument) primitiveBoolean. ]
+]
+
+TestBase members: "reporting" [
+
+    Transcript! log [ ^Transcript log ]
+
+    Void! report: String! message  [ self log printLine: message. ]
+    Void! passed: String! testName [ self report: 'passed: ', testName. ]
+]
+
+TestBase members: "garbage collection" [
+
+    Void! recycleGarbage [ Java Lang Runtime getRuntime gc. ]
+]

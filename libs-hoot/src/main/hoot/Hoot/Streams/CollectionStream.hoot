@@ -1,0 +1,56 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+Hoot Collections OrderedCollection import.
+
+Smalltalk Streams importAll.
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+
+Object subclass: @Abstract StreamedSequence? ElementType! 
+CollectionStream? ElementType -> Object. "A stream on a collection."
+
+CollectionStream class members: []
+
+CollectionStream members: "constructing instances"
+[
+    Integer! position := 0.
+    Collected? ElementType! contents.
+
+    @Protected CollectionStream: Collected? ElementType! aCollection [
+        contents := aCollection.
+    ]
+]
+
+CollectionStream "accessing" members:
+[
+    Collected? ElementType! contents [ ^contents ]
+    OrderedCollection? ElementType! orderedContents [
+        ^OrderedCollection <- self contents ]
+
+    Boolean! collectsElements: Object! element [
+        ^self orderedContents collectsElements: element ]
+]
+
+CollectionStream "testing" members:
+[
+    Boolean! atEnd [ ^position = contents size ]
+    Boolean! isEmpty [ ^Boolean from: contents isEmpty ]
+]
+
+CollectionStream "managing" members:
+[
+    close [ ^self setToEnd ]
+]
+
+CollectionStream "positioning" members:
+[
+    SmallInteger! position [ ^position ]
+    position: Ordinal! aPosition [ position := SmallInteger <- aPosition. ]
+
+    reset [ self position: 0. ]
+    setToEnd [ position := SmallInteger <- contents size. ]
+]

@@ -1,0 +1,65 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Collections OrderedCollection import.
+Hoot Runtime Names Primitive import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Streams StreamReader import.
+Smalltalk Collections importAll.
+Smalltalk Blocks importAll.
+Smalltalk Core Subject import.
+
+CollectionStream? ElementType subclass: StreamReader? ElementType! 
+ReadStream? ElementType -> Object. "A readable stream (on a collection)."
+
+ReadStream class members:
+[
+    ReadStream! on: CollectedReadably? ElementType -> Subject! aCollection [ ^ReadStream basicNew: aCollection ]
+]
+
+ReadStream members: "constructing instances"
+[
+    @Protected ReadStream: CollectedReadably? ElementType! aCollection [ super : aCollection. ]
+    CollectedReadably? ElementType! contents [ ^CollectedReadably <- contents ]
+]
+
+ReadStream "enumerating" members:
+[
+    do: MonadicValuable! aBlock [ [ self atEnd ] whileFalse: [ aBlock value: self next ]. ]
+]
+
+ReadStream "positioning" members:
+[
+    skip: Ordinal! count [ position := position + count. ]
+    Boolean! skipTo: ElementType! element [
+        [ self next = element ] whileFalse.
+        ^self atEnd not ]
+]
+
+ReadStream "reading" members:
+[
+    ElementType! next [
+     	position := 1 + position.
+        ^self contents at: position ]
+
+    String! nextLine [ ^'' ]
+
+    OrderedCollection? ElementType! next: Ordinal! count [
+     	OrderedCollection? ElementType! result := OrderedCollection new: count.
+        1 to: count do: [ : Ordinal! index | result at: index put: self next ].
+        ^result ]
+
+    Boolean! nextMatchFor: ElementType! element [ ^Boolean from: self next = element ]
+    ElementType! peek [ self atEnd ifTrue: [ ^nil ]. ^self contents at: 1 + position ]
+    Boolean! peekFor: ElementType! element [ ^Boolean from: self peek = element ]
+
+    @Primitive CollectedReadably? ElementType! upTo: ElementType! candidate [
+     	OrderedCollection? ElementType! result := OrderedCollection new.
+        [ self atEnd primitiveBoolean ] whileFalse: [
+            ElementType! element := self next.
+            (element equals: candidate) primitiveBoolean ifTrue: [ ^result ].
+            result add: element. ].
+        ^result ]
+]

@@ -1,0 +1,26 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+SmallInteger subclass: @Final FastInteger.
+"An integer value, especially for a fast integer arithmetic."
+
+FastInteger class members: [ ]
+
+FastInteger members: "constructing instances"
+[
+    @Protected! FastInteger: Integer! anInteger [ super : anInteger primitiveInteger. ]
+    @Static FastInteger! fromInteger: Integer! anInteger [ ^FastInteger basicNew: anInteger ]
+
+    FastInteger! value: IntegerValue Source! source [ cachedValue := source intValue. ^self ]
+]
+
+FastInteger members: "cumulative math"
+[
+    @Primitive @Final FastInteger! += SmallInteger! aNumber [ cachedValue += aNumber primitiveInteger. ^self ]
+    @Primitive @Final FastInteger! -= SmallInteger! aNumber [ cachedValue -= aNumber primitiveInteger. ^self ]
+    @Primitive @Final FastInteger! *= SmallInteger! aNumber [ cachedValue *= aNumber primitiveInteger. ^self ]
+    @Primitive @Final FastInteger! /= SmallInteger! aNumber [ cachedValue /= aNumber primitiveInteger. ^self ]
+    @Primitive @Final FastInteger! ^= SmallInteger! aNumber [ cachedValue ^= aNumber primitiveInteger. ^self ]
+    @Primitive @Final FastInteger! <<= SmallInteger! aNumber [ cachedValue <<= aNumber primitiveInteger. ^self ]
+]

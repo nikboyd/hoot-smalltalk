@@ -1,0 +1,63 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util importAll.
+Hoot Streams Transcript import.
+Hoot Runtime Names TypeName import.
+Hoot Runtime Names Selector import.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Functions Utils import.
+Hoot Runtime Blocks MultiValuable import.
+Hoot Runtime Maps Library importStatics.
+Hoot Runtime Behaviors Invoke import.
+
+Object subclass: HootRunner. "loads libs and runs code"
+
+HootRunner class members: []
+HootRunner "main entry" members:
+[
+    @Static @Final HootRunner! Runner := HootRunner basicNew.
+    @Primitive @Static Void! main: Java Lang String! ... args [
+        [ "CurrentLib loadAllHootLibs." Runner runWith: args. ] runLoud.
+    ]
+]
+
+HootRunner members: "running code"
+[
+    @Primitive Void! runWith: Java Lang String! ... args [
+        List? String! argList := String listWith: (Utils wrap: args).
+        argList isEmpty ifTrue: [ self reportMissingClass. ] ifFalse: [
+            String! className := argList remove: 0.
+            self reportClass: className with: argList.
+            self run: className with: argList.
+        ].
+    ]
+
+    @Primitive Void! run: String! className with: List? String! argList [
+        Java Lang Class! aClass := TypeName findPrimitiveClass: className primitiveString.
+        (MultiValuable type isAssignableFrom: aClass) ifTrue: [ self runNew: className with: argList ].
+    ]
+
+    @Primitive Void! runNew: String! className with: List? String! argList [
+        List? Java Lang Object! args := ArrayList basicNew. args addAll: argList.
+        MultiValuable! mv := (Invoke with with: (Selector named: className primitiveString)) call.
+        mv runWith: args.
+    ]
+]
+
+HootRunner members: "reporting"
+[
+    Transcript! log [ ^Transcript log ]
+    reportMissingClass [ self log printLine: '!! please specify a class name to run !!'. ]
+    reportClass: String! className with: List? String! argList [
+        self log cr.
+        self log print: 'running: ', className, ' with: '.
+        self log printLine: argList toString.
+    ]
+]
+
+HootRunner members: "locating code"
+[
+    String! locationPath [ ^String from: (Primitive locateClass: self getClass) toString ]
+]

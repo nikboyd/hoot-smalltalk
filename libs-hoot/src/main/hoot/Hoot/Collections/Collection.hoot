@@ -1,0 +1,262 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Magnitudes Integer import.
+Hoot Magnitudes FastInteger import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+Smalltalk Core Subject import.
+Smalltalk Core Classified import.
+
+Java Util List import.
+
+Object subclass: @Abstract
+CollectedVariably? ElementType!
+Collection? ElementType -> Object. "A collection of elements."
+
+"Defines the common protocols supported by all collections."
+
+Collection class members: "creating instances"
+[
+    Collection! new [ ^self new: 10 ]
+    Collection! new: Ordinal! capacity [ ^OrderedCollection basicNew: capacity ]
+
+    CollectedVariably? ElementType -> Subject! with: ElementType! a [
+        "a new collection containing the supplied element"
+        ^self new add: Object <- a; yourself ]
+
+    CollectedVariably? ElementType -> Subject! with: ElementType! a with: ElementType! b [
+        "a new collection containing the supplied elements"
+        ^self new add: Object <- a; add: Object <- b; yourself ]
+
+    CollectedVariably? ElementType -> Subject!
+    with: ElementType! a with: ElementType! b with: ElementType! c [
+        "a new collection containing the supplied elements"
+        ^self new add: Object <- a; add: Object <- b; add: Object <- c; yourself ]
+
+    CollectedVariably? ElementType -> Subject!
+    with: ElementType! a with: ElementType! b
+    with: ElementType! c with: ElementType! d [
+        "a new collection containing the supplied elements"
+        ^self new add: Object <- a; add: Object <- b; add: Object <- c; add: Object <- d; yourself ]
+
+    CollectedVariably? ElementType -> Subject! withAll: CollectedReadably? ElementType! elements [
+        "a new collection containing the supplied element"
+        ^self new addAll: elements; yourself ]
+]
+
+Collection members: "hashing"
+[
+    Collection! rehash [
+        "Establishes any hash invariants. Subclasses override this if needed."
+        ^self ]
+]
+
+Collection members: "accessing"
+[
+    Integer! capacity [
+        "an element capacity count"
+    	^self size ]
+
+    Integer! size [
+        "a contained element count"
+        FastInteger! tally := 0 asFastInteger.
+        self do: [ :element | tally += 1. ].
+        ^tally ]
+
+    Integer! occurrencesOf: Subject! candidate [
+        "an element occurrence count"
+        FastInteger! tally := 0 asFastInteger.
+        self do: [ :element | candidate = element ifTrue: [ tally += 1. ]].
+        ^tally ]
+]
+
+Collection members: "converting"
+[
+    Java Lang String! toString [ ^self printString primitiveString ]
+    String! printString [ ^String from: (self asList toString) ]
+    List? ElementType! asList [ ^self asOrderedCollection asList ]
+
+    CollectedArray? ElementType! asArray [
+        "a new Array containing the elements of this collection"
+        Array! result := Array new: self size.
+        FastInteger! index := 1 asFastInteger.
+        self do: [ :element |
+            result at: index put: element.
+            index += 1.
+        ].
+        ^result ]
+
+    CollectedBaggage? ElementType! asBag [
+        "a bag containing the elements of this collection"
+        ^(Bag new: self size) addAll: self; yourself ]
+
+    CollectedOrdinally? ElementType! asOrderedCollection [
+        "a new OrderedCollection containing the elements of this collection"
+        OrderedCollection! result := OrderedCollection new: self size.
+        self do: [ :element | result addLast: element ].
+        ^result ]
+
+    CollectedDistinctly? ElementType! asSet [
+        "a new Set containing the elements of this collection"
+        ^(Set new: self size) addAll: self; yourself ]
+
+    CollectedSortably? ElementType! sorted [ ^self asSortedCollection ]
+    CollectedSortably? ElementType! asSortedCollection [
+        "a new SortedCollection containing the elements of this collection"
+        ^(SortedCollection new: self size) addAll: self; reSort ]
+
+    CollectedSortably? ElementType! asSortedCollection: DyadicPredicate! sortBlock [
+        "a new SortedCollection containing the elements of this collection"
+        ^(SortedCollection new: self size) sortBlock: sortBlock; addAll: self; reSort ]
+]
+
+Collection members: "enumerating"
+[
+    Collection! do: MonadicValuable! aBlock [ ^self ]
+    Collection! reverseDo: MonadicValuable! aBlock [ ^self ]
+
+    CollectionType -> Collected! collect: MonadicValuable! transformBlock [
+        "a new collection with elements filtered through transformBlock"
+    	CollectedVariably! result := self species new.
+        self do: [ : ElementType! element | result add: ( transformBlock value: element ) ].
+        ^CollectionType <- result ]
+
+    ElementType! detect: MonadicPredicate! testBlock [
+        "a found element that satisfies testBlock, or nil"
+     	^self detect: testBlock ifNone: [ self elementNotFound. ^nil ] ]
+
+    ElementType! detect: MonadicPredicate! testBlock ifNone: NiladicValuable! missingBlock [
+        "a found element that satisfies testBlock, or the result of missingBlock"
+     	self do: [ : ElementType! element | ( testBlock value: element ) ifTrue: [ ^element ] ].
+        ^missingBlock value ]
+
+    do: MonadicValuable! aBlock separatedBy: NiladicValuable! betweenBlock [
+        "evaluates aBlock with each element and evaluates betweenBlock between elements."
+        @Stacked Boolean! betweenElements := false.
+        self do: [ : ElementType! element |
+            betweenElements ifTrue: [ betweenBlock value. ].
+            aBlock value: element.
+            betweenElements := betweenElements not. ] ]
+
+    @Primitive ResultType -> Subject! inject: ResultType! value into: DyadicValuable! binaryBlock [
+        "evaluates binaryBlock with each element and the result of the prior evaluation, starting with value"
+        @Stacked Subject! result := value.
+        self do: [ : ElementType! element |
+            result := binaryBlock value: result value: element.
+        ].
+        ^ResultType <- result ]
+
+    CollectionType -> Collected! reject: MonadicPredicate! testBlock [
+        "a new collection containing the elements not selected by testBlock"
+        CollectedVariably! result := self species new.
+        self do: [ : ElementType! element |
+            ( testBlock value: element ) ifFalse: [ result add: element ]
+        ].
+        ^CollectionType <- result ]
+
+    CollectionType -> Collected! select: MonadicPredicate! testBlock [
+        "a new collection containing the elements selected by testBlock"
+     	CollectedVariably! result := self species new.
+        self do: [ : ElementType! element |
+            ( testBlock value: element ) ifTrue: [ result add: element ]
+        ].
+        ^CollectionType <- result ]
+]
+
+Collection members: "reporting errors"
+[
+    indexError [ self error: 'Improper index for this collection'. ]
+    indexRangeError [ self error: 'Supplied index is out of bounds'. ]
+    indexError: Ordinal! index limit: Ordinal! limit [ self error: index printString, ' exceeds ', limit printString. ]
+    elementNotFound [ self error: 'Desired collection element not found'. ]
+    elementClassError [ self error: 'Collection does not hold supplied kind of element'. ]
+    immutabilityError [ self error: 'Collection contents cannot be changed'. ]
+    compatibilityError [ self error: 'Collections are not comparable'. ]
+    emptyCollectionError [ self error: 'This collection is empty'. ]
+]
+
+Collection members: "testing"
+[
+    Boolean! isCollection [ ^true ]
+    Boolean! = Subject! candidate [ ^(Object <- candidate) isCollection and: [ self = (Collected <- candidate) ] ]
+    Boolean! = Collected? ElementType! aCollection [ ^false "derived classes override this" ]
+
+    Boolean! allSatisfy: MonadicPredicate! testBlock [
+     	self do: [ :element | ( testBlock value: element ) ifFalse: [ ^false ] ]. ^true ]
+
+    Boolean! anySatisfy: MonadicPredicate! testBlock [
+     	self do: [ :element | ( testBlock value: element ) ifTrue: [ ^true ] ]. ^false ]
+
+    Boolean! contains: MonadicPredicate! testBlock [
+     	self detect: testBlock ifNone: [ ^false ]. ^true ]
+
+    Boolean! includes: Subject! anObject [
+     	self do: [ :element | element = anObject ifTrue: [ ^true ] ]. ^false ]
+
+    Boolean! isEmpty [ ^Boolean from: 0 = self size ]
+    Boolean! notEmpty [ ^self isEmpty not ]
+
+    emptyCheck [ self isEmpty ifTrue: [ ^self emptyCollectionError ]. ]
+    Int! checkRange: Ordinal! index [ ^self checkIndex: index ]
+
+    @Primitive Int! checkIndex: Ordinal! index [
+        Integer! x := Integer <- index.
+        Integer! size := self size.
+        Int! i := x primitiveInteger - 1.
+        (i < 0) ifTrue: [ self indexError: index limit: Unity. ^0-1 ].
+        (i < size primitiveInteger) ifFalse: [ self indexError: index limit: size. ^0-1 ].
+        ^i
+    ]
+
+    @Primitive Int! checkIndex: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        Integer! x := Integer <- index.
+        Integer! size := self size.
+        Int! i := x primitiveInteger - 1.
+        (i < 0) ifTrue: [ aBlock value. ^0-1 ].
+        (i < size primitiveInteger) ifFalse: [ aBlock value. ^0-1 ].
+        ^i
+    ]
+]
+
+Collection members: "testing elements"
+[
+    @Property Classified! elementType := Object type.
+
+    registerType: Object! element [
+        (Object isNull: element) ifTrue: [ ^self ].
+        elementType := element species.
+    ]
+
+    Boolean! collectsElements: Object! element [
+        (Object isNull: element) ifTrue: [ ^false ].
+        ^Boolean from: (element species inheritsFrom: self elementType) ]
+]
+
+Collection members: "locating elements"
+[
+    Integer! findFirst: MonadicPredicate! testBlock [
+    	^self findFirst: testBlock ifAbsent: [ ^0 ] ]
+
+    Integer! findLast: MonadicPredicate! testBlock [
+        ^self findLast: testBlock ifAbsent: [ ^0 ] ]
+
+    Integer! findFirst: MonadicPredicate! testBlock ifAbsent: NiladicValuable! exceptionBlock [
+        FastInteger! index := 1 asFastInteger.
+        self do: [ : ElementType! element |
+            (testBlock value: element) ifTrue: [ ^index ].
+            index += 1.
+        ].
+        ^exceptionBlock value ]
+
+    Integer! findLast: MonadicPredicate! testBlock ifAbsent: NiladicValuable! exceptionBlock [
+        FastInteger! index := self size asSmallInteger asFastInteger.
+        self reverseDo: [ : ElementType! element |
+            (testBlock value: element) ifTrue: [ ^index ].
+            index -= 1.
+        ].
+        ^exceptionBlock value ]
+]

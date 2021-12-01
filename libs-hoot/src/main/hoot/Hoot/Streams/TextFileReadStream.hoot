@@ -1,0 +1,63 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Magnitudes Integer import.
+Hoot Runtime Names Primitive import.
+Hoot Collections CharacterString import.
+Hoot Runtime Functions Exceptional Handler import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections ReadableString import.
+Smalltalk Collections CollectedReadably import.
+Smalltalk Streams importAll.
+
+FileReadStream? Character subclass: TextFileReadStream. "Reads from a text file (external storage)."
+
+TextFileReadStream class members: "creating instances"
+[
+    TextFileReadStream! on: RandomAccessFile! primitiveFile [ ^TextFileReadStream basicNew: primitiveFile ]
+]
+
+TextFileReadStream members: "constructing instances"
+[
+    @Protected! TextFileReadStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+    @Static TextFileReadStream! read: String! fileName [ ^FileReadStream type read: fileName ]
+]
+
+TextFileReadStream members: "accessing"
+[
+    String! contents [
+        Integer! pose := self position.
+        self reset.
+        String! result := self nextString: self length.
+        self position: pose.
+        ^result
+    ]
+]
+
+TextFileReadStream members: "testing"
+[
+    Boolean! isText [ ^true ]
+    Boolean! isBinary [ ^false ]
+    Symbol! externalType [ ^#text ]
+]
+
+TextFileReadStream members: "reading"
+[
+    String! next: Ordinal! count [ ^self nextString: Integer <- count ]
+    String! nextLine [ ^[ String from: file readLine ] defaultIfCurtailed: String emptyString ]
+    Character! next [
+        ^[ Character from: Char <- file readUnsignedByte ] defaultIfCurtailed: Character type nullCode ]
+
+    @Primitive String! upTo: Character! target [
+        result := String emptyString.
+        [ self atEnd asPrimitive ] whileFalse: [
+            Character! c := self next.
+            (target equals: c) asPrimitive ifTrue: [ ^result ].
+            result add: c.
+        ].
+        ^result
+    ]
+]

@@ -1,0 +1,264 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO Serializable import.
+
+Hoot Exceptions importAll.
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors HootRegistry import.
+
+Smalltalk Collections ReadableString import.
+Smalltalk Streams StreamedSink import.
+Smalltalk Magnitudes Scalar import.
+
+Java Lang Object subclass:
+@Abstract Cloneable! Serializable! Ordered! Subject! Object.
+"Object is the base of the class hierarchy, and defines many basic operations."
+
+Object class members:
+[
+    Subject! new [ ^(Primitive newInstance: self outerClass) ]
+]
+
+Object members: "constructing instances"
+[
+    @Protected Object [ "constructs a new instance" ]
+]
+
+Object members: "synchronizing threads"
+[
+    @Synchronized Object! acquireMonitorDuring: NiladicValuable! aBlock [
+        "acquires a monitor on this resource while evaluating aBlock"
+        aBlock value. ]
+
+    @Synchronized Object! awakenAllWaitingThreads [
+        "awakens all threads waiting for this resource"
+        self notifyAll. ]
+
+    @Synchronized Object! awakenOneWaitingThread [
+        "awakens a single thread waiting for this resource"
+        self notify. ]
+
+    @Primitive @Synchronized Object! waitForChange: Number! duration ifInterrupted: NiladicValuable! aBlock [
+        "waits for a change and evaluates aBlock if the wait is interrupted"
+        [ self wait: duration primitiveLong ] on: InterruptedException do: [ :e | aBlock value ].
+        ^self ]
+
+    @Primitive @Synchronized Object! waitForChangeIfInterrupted: NiladicValuable! aBlock [
+        "waits for a change and evaluates aBlock if the wait is interrupted"
+        [ self wait ] on: InterruptedException do: [ :e | aBlock value ].
+        ^self ]
+]
+
+Object members: "accessing values"
+[
+    Subject! value "this value" [ ^self ]
+    ResultType -> Subject! yourself "this object" [ ^self ]
+    Behavior! species "the behavior associated with this object" [ ^self class ]
+]
+
+Object members: "associating"
+[
+    Association! >> Object! associate [
+        "a new association (this >> associate)"
+    	^Association withKey: self withValue: associate ]
+]
+
+Object members: "comparing values"
+[
+    @Override @Primitive Int! compareTo: Java Lang Object! candidate [
+        candidate == null ifTrue: [ Hoot Exceptions UnhandledJavaException raiseNullPointer ].
+        (self equals: candidate) ifTrue: [ ^0 ].
+        ^(self lessThan: Scalar <- candidate)
+            ifTrue: [ Negativity intValue ] ifFalse: [ Unity intValue ] ]
+
+    @Primitive Java Lang Boolean! equals: Java Lang Object! candidate [
+        "indicates whether (this = candidate)"
+        (candidate == nil) ifTrue: [ ^false ].
+        ^(self equals: (Subject <- candidate)) asPrimitive ]
+
+    @Primitive Java Lang Int! hashCode [
+        "a value used for basic equivalence tests"
+        ^super hashCode ]
+
+    Boolean! = Subject! candidate [ ^self == (Object <- candidate) ]
+    @Primitive Boolean! isSame: Object! candidate [ ^Boolean from: self == candidate ]
+    @Primitive Boolean! == Subject! candidate [ ^(Object <- candidate) isSame: self ]
+
+    Boolean! ~= Subject! candidate [
+     	"indicates whether (this ~= candidate)"
+        ^Boolean <- (self = candidate) not ]
+
+    Boolean! ~~ Subject! candidate [
+     	"indicates whether this differs from a candidate"
+        ^Boolean <- (self == candidate) not ]
+
+    @Final Integer! hash [
+        "a value used for basic equivalence tests"
+        "derived classes should override hashCode"
+        ^(SmallInteger from: self hashCode) ]
+
+    @Final Integer! identityHash [ ^(SmallInteger from: super hashCode) ]
+
+    Boolean! <  Scalar! upperBound [ ^Boolean <- (upperBound > self) ]
+    Boolean! <= Scalar! upperBound [ ^Boolean from: (self > upperBound) not ]
+    Boolean! >  Scalar! lowerBound [ ^Boolean <- (lowerBound < self) ]
+    Boolean! >= Scalar! lowerBound [ ^Boolean <- (lowerBound <= self) ]
+
+    Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
+        ^Boolean <- (( lowerBound <= self ) and: [ self <= upperBound ]) ]
+
+    Boolean! in: Interval! aRange [ ^aRange includes: self ]
+    Boolean! inside: Scalar! lowerBound and: Scalar! upperBound [
+        ^Boolean <- (( lowerBound < self ) and: [ self < upperBound ]) ]
+
+    Ordered! max: Scalar! value [ self > value ifTrue: [ ^self ]. ^Ordered <- value ]
+    Ordered! min: Scalar! value [ self < value ifTrue: [ ^self ]. ^Ordered <- value ]
+]
+
+Object members: "copying"
+[
+    copy [
+        "a (typically shallow) copy of this"
+        ^self shallowCopy ]
+
+    ResultType -> Object! deepCopy [
+        "a deep copy of this"
+        ^ResultType <- (Primitive deepCopyOf: self) ]
+
+    ResultType -> Object! shallowCopy [
+        "a shallow copy of this"
+        ^ResultType <- (Primitive shallowCopyOf: self) ]
+]
+
+Object members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        "the result of evaluating aBlock with this"
+        ^(aBlock value: self) ]
+]
+
+Object members: "performing methods"
+[
+    perform: Selector! selector : Subject! ... arguments [
+        ^(MessageSend basicNew: self : selector : arguments) perform ]
+
+    perform: Selector! selector
+    withArguments: Subject! ... arguments [
+        "the result of invoking the selected method of the receiver"
+        ^(MessageSend basicNew: self : selector : arguments) perform ]
+
+    perform: Selector! selector
+    with: Subject! a0 with: Subject! a1 with: Subject! a2 with: Subject! a3 [
+        ^self perform: selector : a0 : a1 : a2 : a3 ]
+
+    perform: Selector! selector
+    with: Subject! a0 with: Subject! a1 with: Subject! a2 [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0 : a1 : a2 ]
+
+    perform: Selector! selector with: Subject! a0 with: Subject! a1 [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0 : a1 ]
+
+    perform: Selector! selector with: Subject! a0 [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0 ]
+
+    perform: Selector! selector [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : Subject arrayNew ]
+]
+
+Object members: "printing"
+[
+    printOn: StreamedSink! aStream [ aStream nextPutAll: self printString. ]
+    String! printString [ ^self species namePrefix , self class name ]
+    String! printTerm [ "a printable term for a formula"
+        ^'( ', self printString , ' )' ]
+]
+
+Object members: "handling errors"
+[
+    doesNotUnderstand: SentMessage! message [
+        "signals a message not understood exception"
+        ^(MessageNotUnderstood basicNew:
+            (MessageSend basicNew: self : message selector : message arguments)) "signal" ]
+
+    @Primitive Void! error: ReadableString! messageText [
+        Primitive printError: messageText asSelector name.
+        (IllegalStateException basicNew: messageText asSelector name) throw. ]
+
+    Void! invalidMessage [
+        self error: 'An unsupported message was sent to this object'. ]
+]
+
+Object members: "testing"
+[
+    ifNil: NiladicValuable! nilBlock [
+        "nil (because this exists)"
+        ^nil ]
+
+    ifNil: NiladicValuable! nilBlock
+    ifExtant: NiladicValuable! extantBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value ]
+
+    ifExtant: NiladicValuable! extantBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value ]
+
+    ifExtant: NiladicValuable! extantBlock
+    ifNil: NiladicValuable! nilBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value ]
+]
+
+Object members: "testing behaviors"
+[
+    Boolean! isClass [ ^false ]
+    Boolean! isBehavior [ ^false ]
+    Boolean! isMetaclass [ ^false ]
+
+    Boolean! isKindOf: Classified! candidateClass [
+    	"indicates whether this is derived from a candidateClass"
+        ^self species inheritsFrom: Behavior <- candidateClass ]
+
+    Boolean! instanceOf: Java Lang Class! aClass [
+        Behavior! aType := Behavior <- (HootRegistry getType: aClass).
+        ^self isMemberOf: aType "placeholder" ]
+
+    Boolean! isMemberOf: Classified! candidateClass [
+    	"indicates whether this a member of a candidateClass"
+        ^(Behavior <- candidateClass) == (Subject <- self class) ]
+
+    @Primitive Boolean! respondsTo: Selector! selector [
+        "indicates whether this has a method named: selector"
+        ^Boolean from: (Primitive class: self class primitiveClass hasMethod: selector name) ]
+]
+
+Object members: "testing literals"
+[
+    Boolean! isNil [ ^false ]
+    Boolean! notNil [ ^true ]
+    Boolean! isFloat [ ^false ]
+    Boolean! isLiteral [ ^false ]
+    Boolean! isString [ ^false ]
+    Boolean! isSmallInteger [ ^false ]
+    Boolean! isInteger [ ^false ]
+    Boolean! isArray [ ^false ]
+    Boolean! isBoolean [ ^false ]
+    Boolean! isCharacter [ ^false ]
+    Boolean! isCollection [ ^false ]
+
+    @Primitive @Static Boolean! isNull: Object! candidate [ ^Boolean from: candidate == nil ]
+]
+
+Object members: "accessing literals"
+[
+    @Static Nil! literalNil [ ^Nil literal ]
+]

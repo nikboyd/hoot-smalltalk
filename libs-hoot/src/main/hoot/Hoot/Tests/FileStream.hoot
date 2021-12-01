@@ -1,0 +1,40 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO File import.
+Hoot Streams importAll.
+
+TestableClosure subclass: FileStream.
+"Regression tests a file stream."
+
+FileStream members:
+[
+    @Static @Final String! FileReport := '%s %s: %s'.
+    Void! runTest [
+        File! testFolder := File basicNew: 'target'.
+        (Boolean from: testFolder exists) ifFalse: [ testFolder mkdir. ].
+
+        String! fileName := 'target/stream.test.txt'.
+        String! fileOut := 'target/parsed.text.txt'.
+        String! text := 'a quick brown fox jumped over a lazy dog'.
+
+        oStream := TextFileWriteStream write: fileName.
+        oStream nextPutAll: text; cr.
+        oStream close.
+
+        self log cr.
+        self log printLine: (FileReport formatWith: 'wrote into ' : fileName : text).
+        self log printLine: (FileReport formatWith: 'reads from ' : fileName : '').
+
+        iStream := TextFileReadStream read: fileName.
+        newStream := TextFileWriteStream write: fileOut.
+        [ ^iStream atEnd ] whileFalse: [
+            String! line := iStream upTo: $  .
+            newStream nextPutAll: line; cr.
+            self log printLine: line.
+        ].
+        iStream close.
+        oStream close.
+    ]
+]

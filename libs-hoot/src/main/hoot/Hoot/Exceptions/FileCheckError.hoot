@@ -1,0 +1,28 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Error subclass: FileCheckError.
+"A file check error raised by a thread."
+
+FileCheckError class members: "creating instances"
+[
+    FileCheckError! missingFile: String! filePath [ ^(FileCheckError basicNew: filePath) signal: 'file missing' ]
+    FileCheckError! presentFile: String! filePath [ ^(FileCheckError basicNew: filePath) signal: 'file present' ]
+]
+
+FileCheckError "accessing" members: 
+[
+    String! filePath.
+    String! filePath [ ^filePath ]
+]
+
+FileCheckError members: "constructing instances"
+[
+    FileCheckError: String! path [ filePath := path. ]
+]
+
+FileCheckError "testing" members: 
+[
+    Boolean! isResumable [ ^true ]
+]

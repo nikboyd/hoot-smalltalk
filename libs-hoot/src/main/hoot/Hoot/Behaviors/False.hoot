@@ -1,0 +1,86 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors HootRegistry import.
+
+Smalltalk Core Posit import.
+
+Boolean subclass: False. "Indicates falsity."
+
+False members: "accessing"
+[
+    "caches the sole instance of this literal value"
+    @Static False! Literal := False basicNew.
+    @Static Boolean! literal "the literal value" [ ^Literal ]
+
+    @Protected False [ HootRegistry registerValue: self. ]
+]
+
+False members: "converting values"
+[
+    "caches the primitive boolean indicated by this value"
+    @Primitive @Private @Final Java Lang Boolean! value := false.
+    @Primitive Java Lang Boolean! primitiveBoolean [ ^value ]
+
+    Java Lang Int! hashCode [ ^Primitive elementaryFalse hashCode ]
+]
+
+False members: "comparing values"
+[
+    Java Lang Boolean! equals: Java Lang Object! candidate [
+        ^(self eqv: Boolean <- candidate) primitiveBoolean ]
+
+    Boolean! eqv: Posit! operand "whether (this = operand)" [ ^Boolean <- operand not ]
+]
+
+False members: "copying"
+[
+    copy [ "a (typically shallow) copy of this" ^self ]
+    deepCopy [ "a deep copy of this" ^self ]
+    shallowCopy [ "a shallow copy of this" ^self ]
+]
+
+False members: "selecting alternatives"
+[
+    Object! ifTrue: NiladicValuable! trueBlock [
+        "value = (this ? trueBlock value : nil)" ^nil ]
+
+    Object! ifFalse: NiladicValuable! falseBlock [
+    	"value = (this ? nil : falseBlock value)" ^Object <- falseBlock value ]
+
+    Object! ifTrue:  NiladicValuable! trueBlock ifFalse: NiladicValuable! falseBlock [
+    	"value = (this ? trueBlock value : falseBlock value)"
+        ^Object <- falseBlock value ]
+
+    Object! ifFalse: NiladicValuable! falseBlock ifTrue: NiladicValuable! trueBlock [
+    	"value = (this ? trueBlock value : falseBlock value)"
+        ^Object <- falseBlock value ]
+]
+
+False members: "operating logically"
+[
+    Boolean! & aPosit "value = (this AND aPosit)" [ ^self ]
+    Boolean! | aPosit "value = (this OR aPosit)" [ ^Boolean <- aPosit ]
+    Boolean! not "value = (NOT this)" [ ^True literal ]
+
+    Boolean! and: NiladicPredicate! aBlock [
+        "value = (this AND aBlock value)"
+        ^self ]
+
+    Boolean! or: NiladicPredicate! aBlock [
+        "value = (this OR aBlock value)"
+        ^Boolean <- aBlock value ]
+]
+
+False members: "printing"
+[
+    String! printString [ ^'false' ]
+    Java Lang String! toString [ ^self printString primitiveString ]
+]
+
+False members: "testing behavior"
+[
+    Boolean! isLiteral [ ^True literal ]
+]

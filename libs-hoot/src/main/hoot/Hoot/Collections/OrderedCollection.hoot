@@ -1,0 +1,186 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Streams WriteStream import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+Smalltalk Core Subject import.
+
+Java Util List import.
+Java Util Arrays import.
+Java Util ArrayList import.
+
+ArrayedCollection? ElementType subclass:
+CollectedOrdinally? ElementType!
+OrderedCollection? ElementType -> Object. "An ordered, variable sized collection of elements."
+
+OrderedCollection class members: "creating"
+[
+    with: ElementType -> Subject! a [
+        ^OrderedCollection <- (super with: a) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b [
+        ^OrderedCollection <- (self withAll: Object <- a : Object <- b) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b with: ElementType -> Subject! c [
+        ^OrderedCollection <- (self withAll: Object <- a : Object <- b : Object <- c) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b
+    with: ElementType -> Subject! c with: ElementType -> Subject! d [
+        ^OrderedCollection <- (self withAll: Object <- a : Object <- b : Object <- c : Object <- d) ]
+
+    withAll: CollectedReadably? ElementType -> Subject! elements [
+        ^OrderedCollection <- (super withAll: elements) ]
+
+    OrderedCollection? ElementType -> Object! withAll: ElementType! ... elements [
+        ^OrderedCollection basicNew: (Arrays asList: elements) ]
+
+    OrderedCollection! new [ ^self new: 10 ]
+    OrderedCollection! new: Ordinal! capacity [ ^OrderedCollection basicNew: capacity ]
+
+    OrderedCollection! from: Java Util List! primitiveList [
+     	^OrderedCollection basicNew: primitiveList ]
+
+    OrderedCollection! synchronizedFrom: Java Util List! primitiveList [
+        ^OrderedCollection basicNew: (
+            Java Util Collections synchronizedList: primitiveList) ]
+]
+
+OrderedCollection members: "constructing instances"
+[
+    "Contains the collection elements."
+    Java Util List? ElementType! contents := ArrayList basicNew: 10.
+
+    @Protected! OrderedCollection []
+    @Protected! OrderedCollection: Ordinal! capacity [ contents := ArrayList basicNew: capacity intValue. ]
+    @Protected! OrderedCollection: Java Util List! primitiveList [ contents addAll: primitiveList. ]
+]
+
+OrderedCollection members: "accessing"
+[
+    Java Util List! primitiveContents [ ^contents ]
+    SmallInteger! size [ ^SmallInteger from: contents size ]
+]
+
+OrderedCollection members: "accessing elements"
+[
+    @Primitive ElementType! at: Ordinal! index put: ElementType! element [
+        Int! i := self checkRange: index.
+        (self size primitiveInteger > i)
+            ifTrue: [ contents set: i : element. ]
+            ifFalse: [ contents add: element. ].
+        ^element ]
+
+    @Protected ElementType! get: Int! index [ ^contents get: index ]
+    ElementType! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        Int! i := self checkIndex: index ifAbsent: aBlock. ^self get: i ]
+]
+
+OrderedCollection members: "converting"
+[
+    List? ElementType! asList [ ^ArrayList basicNew: self primitiveContents ]
+]
+
+OrderedCollection members: "adding elements"
+[
+    @Protected ElementType! add: ElementType! element at: Int! index [
+        (Object isNull: Object <- element) ifFalse: [
+            self registerType: Object <- element.
+            contents add: index : element.
+        ].
+        ^element ]
+
+    ElementType! add: ElementType! element [ contents add: element. ^element ]
+
+    CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements [
+     	elements do: [ : ElementType! element | self add: element ].
+        ^elements ]
+
+    ElementType! add: ElementType! element after: ElementType! target [
+     	^self add: element afterIndex: (
+            self indexOf: target ifAbsent: [ self elementNotFound. ] ) ]
+
+    ElementType! add: ElementType! element afterIndex: Ordinal! index [
+        ^self add: element at: (self checkRange: 1 + index) ]
+
+    ElementType! add: ElementType! element before: ElementType! target [
+     	^self add: element beforeIndex: (
+            self indexOf: target ifAbsent: [ self elementNotFound. ] ) ]
+
+    ElementType! add: ElementType! element beforeIndex: Ordinal! index [
+        ^self add: element at: (self checkRange: index) ]
+
+    CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements after: ElementType! target [
+     	^self addAll: elements afterIndex: (
+            self indexOf: target ifAbsent: [ self elementNotFound. ] ) ]
+
+    CollectedReadably? ElementType! addAll: CollectedReadably? ElementType! elements before: ElementType! target [
+     	^self addAll: elements beforeIndex: (
+            self indexOf: target ifAbsent: [ ^self elementNotFound ] ) ]
+]
+
+OrderedCollection members: "comparing"
+[
+    Java Lang Int! hashCode [ ^contents hashCode ]
+    Boolean! = Collected! aCollection [ ^self = aCollection asOrderedCollection ]
+    Boolean! = CollectedReadably! aCollection [
+        ^Boolean from: (contents equals: (OrderedCollection <- aCollection) primitiveContents) ]
+]
+
+OrderedCollection members: "removing elements"
+[
+    OrderedCollection! removeAll [ contents clear. ]
+
+    ElementType! removeAtIndex: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+     	Int! i := self checkIndex: index ifAbsent: aBlock.
+        ^ElementType <- (contents remove: i) ]
+
+    ElementType! removeAtIndex: Ordinal! index [
+     	^self removeAtIndex: index ifAbsent: [ self indexRangeError. ^nil ] ]
+
+    ElementType! remove: ElementType! element [
+     	^self remove: element ifAbsent: [ self elementNotFound. ^nil ] ]
+
+    ElementType! remove: ElementType! element ifAbsent: NiladicValuable! aBlock [
+     	^self removeAtIndex: (self indexOf: element ifAbsent: aBlock) ]
+
+    CollectedReadably? ElementType! removeAll: CollectedReadably? ElementType! elements [
+        elements do: [ : ElementType! element | self remove: element ].
+        ^elements ]
+
+    OrderedCollection? ElementType! removeAllSuchThat: MonadicPredicate! criteria [
+        OrderedCollection? ElementType! results := OrderedCollection new.
+        1 to: self size do: [ : Ordinal! index |
+            ElementType! element := self at: index.
+            (criteria value: element) ifTrue: [
+                results add: element.
+                self removeAtIndex: index
+            ]
+        ].
+        ^results ]
+
+    ElementType! removeFirst [
+     	self emptyCheck. ^ElementType <- (contents remove: 0 asPrimitive) ]
+
+    @Primitive ElementType! removeLast [
+     	self emptyCheck. ^ElementType <- (contents remove: contents size - 1) ]
+
+    OrderedCollection? ElementType! removeFirst: Ordinal! count [
+     	OrderedCollection? ElementType! results := OrderedCollection new: count.
+        Integer <- count timesRepeat: [ results add: self removeFirst ].
+        ^results ]
+
+    OrderedCollection? ElementType! removeLast: Ordinal! count [
+     	OrderedCollection? ElementType! results := OrderedCollection new: count.
+        Integer <- count timesRepeat: [ results add: self removeLast ].
+        ^results ]
+]
+
+OrderedCollection members: "streaming"
+[
+    WriteStream! writeStream [ ^WriteStream type with: self ]
+]

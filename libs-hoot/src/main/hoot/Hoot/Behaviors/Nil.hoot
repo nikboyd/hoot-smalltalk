@@ -1,0 +1,96 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Behaviors HootRegistry import.
+
+Smalltalk Core Undefined import.
+
+Object subclass: Undefined! Nil.
+"Indicates nothing. Knows nothing. Does nothing useful."
+
+Nil members: "accessing"
+[
+    "caches the sole instance of this literal value"
+    @Static @Final Nil! Literal := Nil basicNew.
+    @Static Nil! literal [ ^Literal ]
+
+    @Protected Nil [ HootRegistry registerValue: self. ]
+
+    Java Lang Object! asPrimitive [ ^null ]
+]
+
+Nil members: "comparing values"
+[
+    @Primitive Java Lang Int! hashCode [ ^0 ]
+]
+
+Nil members: "copying"
+[
+    copy [ ^self ]
+    deepCopy [ ^self ]
+    shallowCopy [ ^self ]
+]
+
+Nil members: "testing"
+[
+    @Override @Primitive Boolean! isSame: Object! candidate [
+        (candidate == null) ifTrue: [ ^True literal ]. ^Boolean from: self == candidate ]
+
+    @Override @Primitive Boolean! isSame: Subject! candidate [
+        (candidate == null) ifTrue: [ ^True literal ]. ^Boolean from: self == candidate ]
+
+    @Override Object!
+    ifNil: NiladicValuable! nilBlock [
+        "nilBlock value (because this is nil)"
+        ^Object <- nilBlock value
+    ]
+
+    @Override Object!
+    ifNil: NiladicValuable! nilBlock
+    ifExtant: NiladicValuable! extantBlock [
+        "nilBlock value (because this is nil)"
+        ^Object <- nilBlock value
+    ]
+
+    @Override Object!
+    ifExtant: NiladicValuable! extantBlock [
+        "this (because this is nil)"
+        ^self
+    ]
+
+    @Override Object!
+    ifExtant: NiladicValuable! extantBlock
+    ifNil: NiladicValuable! nilBlock [
+        "nilBlock value (because this is nil)"
+        ^Object <- nilBlock value
+    ]
+]
+
+Nil members: "testing behaviors"
+[
+    Boolean! isBehavior [ ^false ]
+    Boolean! isClass [ ^false ]
+    Boolean! isMetaclass [ ^false ]
+]
+
+Nil members: "testing literals"
+[
+    Boolean! isNil [ ^true ]
+    Boolean! isArray [ ^false ]
+    Boolean! isBoolean [ ^false ]
+    Boolean! isCharacter [ ^false ]
+    Boolean! isCollection [ ^false ]
+    Boolean! isFloat [ ^false ]
+    Boolean! isInteger [ ^false ]
+    Boolean! isLiteral [ ^true ]
+    Boolean! isSmallInteger  [ ^false ]
+    Boolean! isString [ ^false ]
+    Boolean! notNil [ ^false ]
+]
+
+Nil members: "printing"
+[
+    String! printString [ ^'nil' ]
+    Java Lang String! toString [ ^self printString primitiveString ]
+]

@@ -1,0 +1,37 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+"Represents an unresolved message raised by a thread."
+ControlError subclass: MessageNotUnderstood.
+
+MessageNotUnderstood class members: []
+
+MessageNotUnderstood members: "creating instances"
+[
+	"Refers to the message sent."
+	MessageSend! message.
+
+	"Constructs a new MessageNotUnderstood."
+	MessageNotUnderstood: MessageSend! messageSend [
+		message := messageSend.
+	]
+
+	"Returns the message not understood."
+	MessageSend! message [
+		^message
+	]
+
+	"Returns the message receiver."
+	Object! receiver [
+		^Object <- message receiver
+	]
+]
+
+MessageNotUnderstood members: "testing"
+[
+	"Indicates whether this is a resumable exception."
+	Boolean! isResumable [
+		^true
+	]
+]

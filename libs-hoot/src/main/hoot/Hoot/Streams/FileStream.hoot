@@ -1,0 +1,71 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Magnitudes Integer import.
+
+Smalltalk Streams importAll.
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Ordinal import.
+
+Object subclass: @Abstract StreamedSequence? ElementType!
+FileStream? ElementType -> Object. "A stream over a file."
+
+FileStream class members: "creating instances"
+[
+    TextFileReadStream! read: String! fileName [ ^FileReadStream type read: fileName type: #text ]
+    TextFileWriteStream! write: String! fileName [ ^self write: fileName mode: #create ]
+    TextFileWriteStream! write: String! fileName mode: Symbol! mode [ ^FileWriteStream type write: fileName mode: mode check: false type: #text ]
+]
+
+FileStream members: "constructing instances"
+[
+    RandomAccessFile! file.
+    @Protected! FileStream: RandomAccessFile! primitiveFile [ file := primitiveFile. ]
+]
+
+FileStream "managing" members:
+[
+    close [ [ file close. ^null ] runQuiet. ]
+]
+
+FileStream "testing" members:
+[
+    @Primitive Boolean! atEnd [
+        ^[  Long! length := file length.
+            Long! position := file getFilePointer.
+            ^Boolean from: position == length
+        ]
+        defaultIfCurtailed: True literal
+    ]
+
+    @Primitive Boolean! isEmpty [
+        ^[  Long! length := file length.
+            ^Boolean from: length == 0
+        ]
+        defaultIfCurtailed: True literal
+    ]
+]
+
+FileStream "positioning" members:
+[
+    Integer! length [ ^[ LongInteger from: file length ] defaultIfCurtailed: 0 ]
+    Integer! position [ ^[ LongInteger from: file getFilePointer ] defaultIfCurtailed: 0 ]
+    position: Ordinal! position [ [ file seek: (Integer <- position) primitiveLong. ^null ] runLoud. ]
+    setToEnd [ [ file seek: file length. ^null ] runLoud. ]
+    reset [ self position: 0. ]
+]
+
+FileStream "accessing" members:
+[
+    @Protected ByteArray! nextBytes: Integer! count [
+    	result := ByteArray new: count.
+        [ file readFully: result primitiveContents. ^null ] runLoud.
+        ^result
+    ]
+
+    @Protected String! nextString: Integer! count [
+    	^String from: (Java Lang String basicNew: (self nextBytes: count) primitiveContents)
+    ]
+]

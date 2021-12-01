@@ -1,0 +1,104 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Magnitudes Numeric import.
+
+Collected? ElementType subtype: 
+CollectedReadably? ElementType -> Subject.
+"A type signature for ANSI Smalltalk SequencedReadableCollection (section 5.7.8)."
+
+CollectedReadably type members: []
+
+CollectedReadably "accessing elements" members:
+[
+    ElementType! first "the first element in this collection" []
+    ElementType! last "the first element in this collection" []
+
+    ElementType! after: ElementType! target
+        "the element immediately after the first occurrence of target in this collection" []
+
+    ElementType! before: ElementType! target
+        "the element immediately before the first occurrence of target in this collection" []
+
+    ElementType! at: Numeric! index "the indexed element of this collection" []
+    ElementType! at: Numeric! index ifAbsent: NiladicValuable! aBlock "the indexed element of this collection" []
+
+    ElementType! at: Ordinal! index "the indexed element of this collection" []
+    ElementType! at: Ordinal! index ifAbsent: NiladicValuable! aBlock "the indexed element of this collection" []
+]
+
+CollectedReadably "enumerating elements" members:
+[
+    Collected! from: Ordinal! start to: Ordinal! stop do: MonadicValuable! aBlock
+        "evaluates aBlock with each element" []
+
+    Collected! keysAndValuesDo: DyadicValuable! aBlock
+        "evaluates aBlock with each element and its corresponding index" []
+
+    Collected! reverseDo: MonadicValuable! aBlock
+        "evaluates aBlock with each element from this collection in reverse order" []
+
+    Collected! with: CollectedReadably? ElementType! otherCollection do: DyadicValuable! aBlock
+        "evaluates aBlock with pairs of elements, one each from this and another collection" []
+]
+
+CollectedReadably "copying elements" members:
+[
+    CollectedReadably? ElementType! reverse "a new copy of this collection with its elements reversed" []
+
+    CollectedReadably? ElementType! , CollectedReadably? ElementType! aCollection
+        "a new collection containing all the elements of both this collection and aCollection" []
+
+    CollectedReadably? ElementType! copyFrom: Ordinal! start to: Ordinal! stop
+        "a new collection containing the elements from start to stop in this collection" []
+
+    CollectedReadably? ElementType! copyReplaceAll: CollectedReadably? ElementType! targetElements
+        with: CollectedReadably? ElementType! replacementElements
+        "a new collection containing all the elements from this collection,
+        but with all sequences of the target elements replaced with the replacement elements" []
+
+    CollectedReadably? ElementType! copyReplaceFrom: Ordinal! start to: Ordinal! stop
+        with: CollectedReadably? ElementType! replacementElements
+        "a new collection containing all the elements from this collection,
+        but with those from start to stop replaced with the replacement elements" []
+
+    CollectedReadably? ElementType! copyReplaceFrom: Ordinal! start to: Ordinal! stop
+        withObject: ElementType! anElement
+        "a new collection containing all the elements from this collection,
+        but with those from start to stop replaced with anElement" []
+
+    CollectedReadably? ElementType! copyReplacing: ElementType! targetElement
+        withObject: ElementType! anElement
+        "a new collection containing all the elements from this collection,
+        but with all occurrences of targetElement replaced with anElement" []
+
+    CollectedReadably? ElementType! copyWith: ElementType! anElement
+        "a new collection containing all the elements of this collection and an additional element" []
+
+    CollectedReadably? ElementType! copyWithout: ElementType! anElement
+        "a new collection containing all the elements of this collection, but without element" []
+]
+
+CollectedReadably "locating elements" members:
+[
+    Ordinal! indexOf: ElementType! target "the index of the first (element = target)" []
+
+    Ordinal! indexOf: ElementType! target ifAbsent: NiladicValuable! exceptionBlock
+        "the index of the first (element = target), or the result produced by exceptionBlock if none found" []
+
+    Ordinal! indexOfSubCollection: CollectedReadably? ElementType! targetSequence startingAt: Ordinal! start
+        "the index of the matched targetSequence within this collection starting at start" []
+
+    Ordinal! indexOfSubCollection: CollectedReadably? ElementType! targetSequence
+        startingAt: Ordinal! start ifAbsent: NiladicValuable! exceptionBlock
+        "the index of the matched targetSequence within this collection starting at start,
+        or the result produced by exceptionBlock if none found" []
+
+    Ordinal! findFirst: MonadicPredicate! testBlock
+        "the index of the first element for which testBlock is true" []
+
+    Ordinal! findLast: MonadicPredicate! testBlock
+        "the index of the last element for which testBlock is true" []
+]

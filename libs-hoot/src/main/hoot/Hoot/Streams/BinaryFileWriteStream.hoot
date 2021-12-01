@@ -1,0 +1,61 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Magnitudes Integer import.
+Hoot Collections CharacterString import.
+Hoot Runtime Functions Exceptional Handler import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections CollectedReadably import.
+Smalltalk Streams importAll.
+
+FileWriteStream? Integer subclass: BinaryFileWriteStream. "Writes into a binary file (external storage)."
+
+BinaryFileWriteStream class members: "creating instances"
+[
+    @Protected! on: RandomAccessFile! primitiveFile [ ^BinaryFileWriteStream basicNew: primitiveFile ]
+]
+
+BinaryFileWriteStream members: "constructing instances"
+[
+    @Protected! BinaryFileWriteStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+]
+
+BinaryFileWriteStream members: "accessing"
+[
+    ByteArray! contents [
+        Integer! pose := self position.
+        self reset.
+        ByteArray! result := self nextBytes: self length.
+        self position: pose.
+        ^result
+    ]
+]
+
+BinaryFileWriteStream members: "writing"
+[
+    @Override @Primitive BinaryFileWriteStream! nextPut: Integer! element [
+        [ file writeByte: element primitiveByte. ^null ] runLoud. ^self ]
+
+    nextPutAll: Byte! ... elements [
+        [ file write: elements. ^null ] runLoud. ^self ]
+
+    nextPutAll: Java Lang String! elements [
+        [ file writeBytes: elements. ^null ] runLoud. ^self ]
+
+    nextPutAll: String! elements [ ^self nextPutAll: elements primitiveString ]
+
+    nextPutAll: CollectedReadably? Integer! elements [
+        StringBuilder! b := StringBuilder basicNew.
+        elements do: [ :Integer! each | b append: each primitiveCharacter. ].
+        ^self nextPutAll: b toString ]
+]
+
+BinaryFileWriteStream members: "testing"
+[
+    Boolean! isText [ ^false ]
+    Boolean! isBinary [ ^true ]
+    Symbol! externalType [ ^#binary ]
+]

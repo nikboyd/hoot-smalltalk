@@ -1,0 +1,52 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Lang Runtime import.
+Java Lang Management importAll.
+Javax Management MBeanServer import.
+
+Hoot Streams Transcript import.
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Collections OrderedCollection import.
+
+Object subclass: MetricsSnapshot. "collects certain system metrics"
+
+MetricsSnapshot "snapshot collection" members:
+[
+    @Static @Final Runtime! HostRuntime := Runtime getRuntime.
+
+    @Property LongInteger! currentTimeMsecs   := LongInteger from: System currentTimeMillis.
+    @Property LongInteger! currentProcessors  := LongInteger from: HostRuntime availableProcessors.
+    @Property LongInteger! currentTotalMemory := LongInteger from: HostRuntime totalMemory.
+    @Property LongInteger! currentFreeMemory  := LongInteger from: HostRuntime freeMemory.
+    @Property LongInteger! currentMaxMemory   := LongInteger from: HostRuntime maxMemory.
+
+    @Primitive Integer! coreCount [
+        Long! coreCount := currentProcessors longValue.
+        (coreCount > 2) ifTrue: [ coreCount := coreCount / 2 ].
+        ^LongInteger from: coreCount
+    ]
+]
+
+MetricsSnapshot "reporting" members:
+[
+    @Static @Final MBeanServer! Manager := ManagementFactory getPlatformMBeanServer.
+
+    Transcript! log [ ^Transcript log ]
+    @Static @Final String! MemoryUsageReport := '%s: %s - %s = %s bytes used with %s cores'.
+    reportUsage: String! snapshotName [
+        LongInteger! usedMemory := currentTotalMemory - currentFreeMemory.
+        self log printLine: (MemoryUsageReport formatWith: snapshotName
+            : currentTotalMemory printString : currentFreeMemory printString
+            : usedMemory printString : self coreCount printString).
+    ]
+
+    @Primitive Void! reportHeapUsage [
+        MemoryUsage! nonh := ManagementFactory getMemoryMXBean getNonHeapMemoryUsage.
+        MemoryUsage! heap := ManagementFactory getMemoryMXBean getHeapMemoryUsage.
+        self log printLine: 'nonH usage: ' + nonh.
+        self log printLine: 'heap usage: ' + heap.
+    ]
+
+]

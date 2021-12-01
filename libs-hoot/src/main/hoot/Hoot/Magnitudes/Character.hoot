@@ -1,0 +1,194 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util List import.
+Java Util Arrays import.
+Java Util ArrayList import.
+
+Hoot Collections Interval import.
+Hoot Magnitudes Integer import.
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Streams StreamedSink import.
+
+Integer subclass: Code! Character. "A literal character."
+
+"Manages flyweight instances for the ASCII character range (0-255).
+Provides utility methods for conversions and tests of letters and digits."
+
+Character class members: "accessing constants"
+[
+    Character! nullCode [ ^self codePoint: 0 ]
+
+    Character! backspace [ ^self bsCode ]
+    Character! bsCode [ ^self codePoint: 8 ]
+
+    Character! cr [ ^self crCode ]
+    Character! carriageReturn [ ^self crCode ]
+    Character! crCode [ ^self codePoint: 13 ]
+
+    Character! lf [ ^self lfCode ]
+    Character! lineFeed [ ^self lfCode ]
+    Character! newLine [ ^self lfCode ]
+    Character! lfCode [ ^self codePoint: 10 ]
+
+    Character! delete [ ^self delCode ]
+    Character! delCode [ ^self codePoint: 127 ]
+
+    Character! escape [ ^self esc ]
+    Character! esc [ ^self escCode ]
+    Character! escCode [ ^self codePoint: 27 ]
+
+    Character! newPage [ ^self ffCode ]
+    Character! formFeed [ ^self ffCode ]
+    Character! ffCode [ ^self codePoint: 12 ]
+
+    Character! space [ ^self spaceCode ]
+    Character! spaceCode [ ^self codePoint: 32 ]
+
+    Character! tab [ ^self tabCode ]
+    Character! tabCode [ ^self codePoint: 9 ]
+
+    Character! quote [ ^self quoteCode ]
+    Character! quoteCode [ ^self codePoint: 39 ]
+]
+
+Character class members: "testing characters"
+[
+    @Primitive Boolean! isAlphaNumeric: aCharacter [
+        ^Boolean from: (Java Lang Character isLetterOrDigit: aCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! isDigit: aCharacter [
+        ^Boolean from: (Java Lang Character isDigit: aCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! isLetter: aCharacter [
+        ^Boolean from: (Java Lang Character isLetter: aCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! isLowercase: aCharacter [
+        ^Boolean from: (Java Lang Character isLowerCase: aCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! isUppercase: aCharacter [
+        ^Boolean from: (Java Lang Character isUpperCase: aCharacter primitiveCharacter) ]
+
+    @Primitive Java Lang String! toString: aCharacter [
+        ^Java Lang String valueOf: aCharacter primitiveCharacter ]
+]
+
+Character class members: "accessing flyweights"
+[
+    "initializes the flyweight instances"
+    @Protected @Primitive Void! initialize [ AsciiCharacters isEmpty ifTrue: [ Character initializeFlyweights ]. ]
+
+    Character! codePoint: Ordinal! codePoint [ ^self from: codePoint intValue ]
+    Character! value: Ordinal! codePoint [ ^self codePoint: codePoint ]
+    Character! coerce: aNumber [ ^self from: aNumber primitiveInteger ]
+]
+
+Character class members: "converting characters"
+[
+    Character! from: SmallInteger! anInteger [ ^self from: anInteger intValue ]
+    Character! from: Int! intValue [ ^self from: (char <- intValue) ]
+    @Primitive Character! from: Char! charValue [
+        (charValue < AsciiMaximum) ifTrue: [ ^AsciiCharacters get: charValue ]. ^Character basicNew: charValue ]
+]
+
+Character members: "initializing"
+[
+    @Static SmallInteger! Generality := 5.
+
+    "the range of flyweight ASCII instances"
+    @Private @Static @Final Int! AsciiMaximum := 256 primitiveInteger.
+
+    "the flyweight instances of ASCII characters"
+    @Private @Static @Final List? Character! AsciiCharacters := ArrayList basicNew.
+    @Private @Static @Primitive Void! initializeFlyweights [ Int! charValue := 0.
+        [ charValue < AsciiMaximum ] whileTrue: [
+            AsciiCharacters add: (Character basicNew: char <- charValue). charValue += 1. ]. ]
+
+    "Holds a primitive character value."
+    @Private Char! primitiveValue := 0 primitiveCharacter.
+
+    @Static Character! from: SmallInteger! anInteger [ ^Character basicNew: anInteger primitiveCharacter ]
+    @Static Character! from: Char! aCharacter [ ^Character basicNew: aCharacter ]
+    @Protected! Character: Char! charValue [ self. primitiveValue := charValue. ]
+    @Protected! Character [ super. ]
+]
+
+Character members: "converting"
+[
+    Java Lang Char! primitiveCharacter [ ^primitiveValue ]
+    Java Lang Char! asPrimitive [ ^self primitiveCharacter ]
+    Java Lang Int!  primitiveInteger [ ^primitiveValue ]
+    Java Lang Number! elementaryNumber [ ^self elementaryInteger ]
+    Java Lang Integer! elementaryInteger [ ^Int <- primitiveValue ]
+
+    asCharacter [ ^self ]
+    Integer! asInteger [ ^SmallInteger from: self primitiveInteger ]
+    String! asString [ ^String from: (Character type toString: self) ]
+
+    asLowerCase [ ^self asLowercase ]
+    asLowercase [ ^Character type from: (Java Lang Character toLowerCase: self asPrimitive) ]
+
+    asUpperCase [ ^self asUppercase ]
+    asUppercase [ ^Character type from: (Java Lang Character toUpperCase: self asPrimitive) ]
+
+    Integer! codePoint [ ^self asInteger ]
+    SmallInteger! generality [ ^Generality ]
+]
+
+Character members: "comparing"
+[
+    Boolean! = Magnitude! aNumber [ ^self = (Number <- aNumber) ]
+
+    @Primitive Boolean! = aNumber [
+        aNumber == null ifTrue: [ ^False literal ].
+        ^Boolean from: (self primitiveCharacter == aNumber asCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! < aNumber [
+        ^Boolean from: (self primitiveCharacter < aNumber asCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! <= aNumber [
+        ^Boolean from: (self primitiveCharacter <= aNumber asCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! > aNumber [
+        ^Boolean from: (self primitiveCharacter > aNumber asCharacter primitiveCharacter) ]
+
+    @Primitive Boolean! >= aNumber [
+        ^Boolean from: (self primitiveCharacter >= aNumber asCharacter primitiveCharacter) ]
+
+    Boolean! in: Interval! aRange [ ^aRange includes: self ]
+    Java Lang Int! hashCode [ ^self primitiveInteger ]
+]
+
+Character members: "printing"
+[
+    printOn: StreamedSink! aStream [ aStream nextPut: self. ]
+    String! printString [ ^String from: (Java Lang String valueOf: self primitiveCharacter) ]
+]
+
+Character members: "testing"
+[
+    Boolean! isDigit [ ^Character type isDigit: self ]
+    Boolean! isLetter [ ^Character type isLetter: self ]
+    Boolean! isAlphaNumeric [ ^Character type isAlphaNumeric: self ]
+
+    Boolean! isLowercase [ ^Character type isLowercase: self ]
+    Boolean! isLowerCase [ ^self isLowercase ]
+
+    Boolean! isUppercase [ ^Character type isUppercase: self ]
+    Boolean! isUpperCase [ ^self isUppercase ]
+
+    "the essential vowels"
+    @Private @Primitive @Static @Final String! ... Vowels := #( 'a' 'e' 'i' 'o' 'u' ).
+    @Private @Static @Final List? String! VowelList := Arrays asList: Vowels.
+    Boolean! isVowel [ ^Boolean from: (VowelList contains: self asString) ]
+]
+
+Character members: "testing behavior"
+[
+    Boolean! isLiteral [ ^true ]
+    Boolean! isCharacter [ ^true ]
+]

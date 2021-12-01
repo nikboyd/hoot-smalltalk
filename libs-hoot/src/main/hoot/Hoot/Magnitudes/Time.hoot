@@ -1,0 +1,23 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Names Primitive import.
+Java Time LocalDateTime import.
+Java Time Duration import.
+Java Lang System import.
+
+Magnitude subclass: Time.
+Time class members: []
+Time members:
+[
+    @Static @Primitive Duration! clockPrecision [ 
+        Java Lang Long! now := System currentTimeMillis.
+        ^Duration ofMillis: System currentTimeMillis - now ]
+
+    @Static LocalDateTime! now [ ^LocalDateTime now ]
+    @Static String! printTimeNow [ ^Time printTime: Time now ]
+    @Static String! printTime: LocalDateTime! time [ ^String from: (Primitive printTime: time) ]
+    @Static String! formatTime: LocalDateTime! time as: String! timeFormat [ 
+        ^String from: (Primitive formatTime: time : timeFormat asPrimitive) ]
+]

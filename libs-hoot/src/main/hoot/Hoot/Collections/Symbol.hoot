@@ -1,0 +1,60 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Faces Selector import.
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Ordinal import.
+
+CharacterString subclass: Selector! Symbol. "A literal symbol."
+
+Symbol class members: []
+
+Symbol members: "constructing"
+[
+    "Contains the string value."
+    @Primitive Java Lang String! contents := ''.
+
+    @Static Symbol! from: Java Lang String! aString [ ^Symbol basicNew: aString ]
+    @Protected! Symbol: Java Lang String! primitiveString [ contents := primitiveString intern. ]
+]
+
+Symbol members: "accessing"
+[
+    Java Lang String! primitiveString [ ^contents ]
+    @Protected Character! get: Int! index [ ^Character from: (contents charAt: index) ]
+    Character! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
+        self checkIndex: index ifAbsent: aBlock.
+        ^Character from: (contents charAt: index intValue) ]
+]
+
+Symbol members: "comparing"
+[
+    Boolean! = CharacterString! aString [ ^Boolean from: (contents equals: aString primitiveString) ]
+]
+
+Symbol members: "testing behavior"
+[
+    Boolean! isLiteral [ ^true ]
+]
+
+Symbol members: "printing"
+[
+    String! printString [ ^String <- ('#' , self asString) ]
+]
+
+Symbol members: "adding elements - not allowed"
+[
+    @Override Character! add: Subject! element [ self immutabilityError. ^element ]
+    @Override @Protected Character! add: Object! element at: Int! index [ self immutabilityError. ^element ]
+]
+
+Symbol members: "removing elements - not allowed"
+[
+    Symbol! removeAll [ self immutabilityError. ]
+    Code! removeFirst [ self immutabilityError. ^0 asCharacter ]
+    Code! removeLast [ self immutabilityError. ^0 asCharacter ]
+    Code! removeAtIndex: Ordinal! index [ self immutabilityError. ^0 asCharacter ]
+]

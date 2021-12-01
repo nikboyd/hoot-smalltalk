@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="5cm" height="4cm" viewBox="-30 16 670 487" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <polygon style="fill: #ffff00" points="240,280 380,280 310,440 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" points="240,280 380,280 310,440 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="310" y="326">
+      <tspan x="310" y="326"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #bfbfbf" cx="430" cy="230" rx="130" ry="130"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 14; stroke: #000000" cx="430" cy="230" rx="130" ry="130"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="430" y="231.6">
+      <tspan x="430" y="231.6"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #000000" cx="410" cy="220" rx="70" ry="80"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="410" cy="220" rx="70" ry="80"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="410" y="221.6">
+      <tspan x="410" y="221.6"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #bfbfbf" cx="190" cy="230" rx="130" ry="130"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 14; stroke: #000000" cx="190" cy="230" rx="130" ry="130"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="190" y="231.6">
+      <tspan x="190" y="231.6"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #000000" cx="210" cy="220" rx="70" ry="80"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="210" cy="220" rx="70" ry="80"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="210" y="221.6">
+      <tspan x="210" y="221.6"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="218.497" cy="218.497" rx="18.4971" ry="18.4971"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="218.497" cy="218.497" rx="18.4971" ry="18.4971"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="218.497" y="220.097">
+      <tspan x="218.497" y="220.097"></tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="398.497" cy="218.497" rx="18.4971" ry="18.4971"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="398.497" cy="218.497" rx="18.4971" ry="18.4971"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="398.497" y="220.097">
+      <tspan x="398.497" y="220.097"></tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #bfbfbf" x="300" y="180" width="29" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #bfbfbf" x="300" y="180" width="29" height="100"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="314.5" y="231.6">
+      <tspan x="314.5" y="231.6"></tspan>
+    </text>
+  </g>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 60 230 C -160,420 160,620 275,360"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 345 360 C 460,620 780,420 560,230"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 40,20 A 185.617,185.617 0 0 0 60,230"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 560,230 A 192.822,192.822 0 0 0 580,20"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 220,440 A 97.5,97.5 0 0 0 400,440"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 500,100 A 330.833,330.833 0 0 0 120,100"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 38,24.0002 A 91.7677,91.7677 0 0 0 140,87.0002"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 6; stroke: #000000" d="M 481,87.0002 A 90.2139,90.2139 0 0 0 581,23.0002"/>
+</svg>

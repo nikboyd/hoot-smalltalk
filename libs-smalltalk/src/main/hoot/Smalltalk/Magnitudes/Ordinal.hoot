@@ -1,0 +1,59 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Runtime Faces IntegerValue import.
+
+Smalltalk Streams StreamedSink import.
+Smalltalk Collections ReadableString import.
+
+Ratio, IntegerValue subtype: Ordinal.
+"A type signature for ANSI Smalltalk Integer (section 5.6.5)."
+
+Ordinal type members: []
+
+Ordinal "manipulating bits" members:
+[
+    bitAnd: Ordinal! value "a value = (this AND value)" []
+    bitOr:  Ordinal! value "a value = (this OR  value)" []
+    bitXor: Ordinal! value "a value = (this XOR value)" []
+    bitInvert "a value = (NOT this)" []
+
+    bitAt: Ordinal! index "a bit value = this[index]" []
+    bitAt: Ordinal! index put: Ordinal! bitValue "a value = (this[index] <- bitValue)" []
+
+    highBit "a value = (the highest bit = 1)" []
+
+    bitShift: Ordinal! count "a value = (count > 0 ? this << count : this >> count)" []
+
+    Posit! allMask: Ordinal! mask "whether this has all mask bits set" []
+    Posit! anyMask: Ordinal! mask "whether this has any mask bits set" []
+    Posit! noMask:  Ordinal! mask "whether this has no  mask bits set" []
+]
+
+Ordinal "mathematics" members:
+[
+    factorial "a value = (this!)" []
+    gcd: Ordinal! value "a value = gcd(this, value)" []
+    lcm: Ordinal! value "a value = lcm(this, value)" []
+]
+
+Ordinal "printing" members:
+[
+    printOn: StreamedSink! aStream base: Ordinal! radix showRadix: Posit! showRadix
+        "appends this on aStream with a given radix and radix indicator (if shown)" []
+
+    ReadableString! printStringRadix: Ordinal! radix
+        "this formatted with a radix" []
+]
+
+Ordinal "testing" members:
+[
+    Posit! even "whether (this % 2 == 0)" []
+    Posit! odd  "whether (this % 2 != 0)" []
+]
+
+Ordinal "block iterating" members:
+[
+    Ordinal! timesRepeat: NiladicValuable! aBlock []
+]

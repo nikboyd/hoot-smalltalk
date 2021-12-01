@@ -1,0 +1,17 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Code import.
+Smalltalk Collections ReadableString import.
+
+ExceptionDescription, ExceptionSignaler subtype: ExceptionBuilder.
+"A type signature for ANSI Smalltalk ExceptionBuilder (section 5.5.3)."
+
+ExceptionBuilder type members: []
+
+ExceptionBuilder members: "building an exception"
+[
+    ReadableString! messageText: ReadableString! message
+    	"configures the message for this exception" []
+]

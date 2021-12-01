@@ -1,0 +1,61 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO RandomAccessFile import.
+Hoot Magnitudes Integer import.
+Hoot Runtime Names Primitive import.
+Hoot Streams WriteStream importStatics.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections CollectedReadably import.
+Smalltalk Collections ReadableString import.
+Smalltalk Streams importAll.
+
+FileStream? ElementType subclass: @Abstract FileStreamReader? ElementType! 
+FileReadStream? ElementType -> Object. "Reads from a file."
+
+FileReadStream class members: "creating instances"
+[
+    FileReadStream! read: ReadableString! fileName [ ^self read: fileName type: #text ]
+    FileReadStream! read: ReadableString! fileName type: ReadableString! fileType [
+        ^self open: String <- fileName type: Symbol <- fileType ]
+
+    FileReadStream! open: String! fileName type: Symbol! fileType [
+        (#binary == fileType) ifTrue: [ 
+            ^BinaryFileReadStream type on: (Primitive readFile: fileName primitiveString) ].
+        ^TextFileReadStream type on: (Primitive readFile: fileName primitiveString)
+    ]
+]
+
+FileReadStream members: "constructing instances"
+[
+    FileReadStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+]
+
+FileReadStream members: "positioning"
+[
+    skip: Ordinal! count [ [ file skipBytes: count intValue. ^null ] runLoud. ]
+    Boolean! skipTo: ElementType! target [ [ target = self next ] whileFalse. ^true ]
+]
+
+FileReadStream members: "reading"
+[
+    Boolean! nextMatchFor: ElementType! target [ ^self next = target ]
+    Boolean! peekFor: ElementType! target [ ^self peek = target ]
+
+    ElementType! peek [
+    	self atEnd ifTrue: [ ^nil ].
+        Integer! position := self position.
+        ElementType! result := self next.
+        self position: position.
+        ^result
+    ]
+]
+
+FileReadStream members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        [ self atEnd ] whileFalse: [ aBlock value: self next ].
+    ]
+]

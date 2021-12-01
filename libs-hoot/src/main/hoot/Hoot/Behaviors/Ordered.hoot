@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Core Subject import.
+Smalltalk Magnitudes Scalar import.
+Hoot Collections Interval import.
+
+Comparable, Scalar subtype: Ordered.
+"Defines protocol for comparing values."
+
+Ordered type members: []
+
+Ordered "comparing" members:
+[
+    Boolean! = Subject! aBound
+        "indicates whether (this = aBound)" []
+
+    Boolean! <= Scalar! upperBound
+        "indicates whether (this <= upperBound)" []
+
+    Boolean! < Scalar! upperBound
+        "indicates whether (this < upperBound)" []
+
+    Boolean! > Scalar! lowerBound
+        "indicates whether (this > lowerBound)" []
+
+    Boolean! >= Scalar! lowerBound
+        "indicates whether (this >= lowerBound)" []
+
+    Boolean! between: Scalar! lowerBound and: Scalar! upperBound
+        "indicates whether ((Interval from: lowerBound to: upperBound) includes: this)" []
+"
+    Boolean! in: Interval! range []
+"
+    Scalar! min: Scalar! value
+        "a value = (this < value ? this : value)" []
+
+    Scalar! max: Scalar! value
+        "a value = (this > value ? this : value)" []
+]

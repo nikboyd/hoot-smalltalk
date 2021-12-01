@@ -1,0 +1,65 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+TestBase subclass: MagnitudesTest.
+"Regression tests Smalltalk Magnitudes."
+
+MagnitudesTest members:
+[
+    Array! testBlocks := #(
+        '[ 5 + 6 ]'
+        '[ 5 - 6 ]'
+        '[ 5 * 6 ]'
+        '[ 5 / 6 ]'
+        '[ 5 % 6 ]'
+        ''
+        '[ 5 ** 30 ]'
+        '[ (5 - 6) abs ]'
+        '[ (5 / 6) rounded ]'
+        '[ (5 / 6) reciprocal ]'
+        ''
+        '[ 5 @ 6 ]'
+        '[ 5 >> 6 ]'
+        '[ (5 / 6) + (6 / 5) ]'
+        '[ 20 squared sqrt ]'
+        ''
+        '[ 11.1234s5 ]'
+        '[ 11.1234s5 + 3.14s4 ]'
+        '[ $c asUppercase ]'
+        '[ $9 isDigit ]'
+        ''
+        '[ SmallInteger type maximum ]'
+        '[ LongInteger type maximum ]'
+        ''
+        '[ ( 12 / 4 ) asDecimal ]'
+        '[ ( 127 / 40 ) asDecimal ]'
+        '[ ( 1274 / 405 ) asDecimal ]'
+        '[ ( 12742 / 4056 ) asDecimal ]'
+        '[ ( 127424 / 40560 ) asDecimal ]'
+        '[ ( 1274249 / 405606 ) asDecimal ]'
+        '[ ( 12742492 / 4056061 ) asDecimal ]'
+        '[ ( 127424922 / 40560612 ) asDecimal ]'
+        ''
+        '[ ( 1274249220 / 405606124 ) asDecimal ]'
+        '[ ( 12742492206 / 4056061243 ) asDecimal ]'
+        '[ ( 127424922065 / 40560612439 ) asDecimal ]'
+        '[ ( 1274249220651 / 405606124395 ) asDecimal ]'
+        '[ ( 12742492206511 / 4056061243952 ) asDecimal ]'
+        '[ ( 127424922065116 / 40560612439525 ) asDecimal ]'
+        '[ ( 1274249220651168 / 405606124395257 ) asDecimal ]'
+        '[ ( 12742492206511680 / 4056061243952573 ) asDecimal ]'
+        ''
+        '[ Float type pi ]'
+        '[ Float type pi asFraction ]'
+        '[ Float type pi asFraction asFloat ]'
+        "[ Float type pi asFraction scaledZero ]"
+        '[ Float type pi asFraction asScaledDecimal: 5 ]'
+        ''
+        '[ Double type pi ]'
+        '[ Double type pi asFraction ]'
+        '[ Double type pi asFraction asFloatD ]'
+    ).
+
+    Void! runTest [ (TestableCode withAll: testBlocks) runTests. ]
+]

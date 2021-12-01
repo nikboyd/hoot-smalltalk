@@ -1,0 +1,38 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections importAll.
+Smalltalk Core Subject import.
+
+Java Util Collections import.
+Java Util IdentityHashMap import.
+
+Set? ElementType subclass:
+IdentitySet? ElementType -> Object. "A set of unique elements."
+
+"Supports instantiation with a primitive Set. Uses a native IdentityHashMap as the primitive contents."
+
+IdentitySet class members: "creating instances"
+[
+    new [ ^self new: 10 ]
+    new: Ordinal! capacity [ ^IdentitySet basicNew: capacity ]
+
+    from: Java Util Set! primitiveSet [ ^IdentitySet basicNew: primitiveSet : False literal ]
+    synchronizedFrom: Java Util Set! primitiveSet [ ^IdentitySet basicNew: primitiveSet : True literal ]
+]
+
+IdentitySet members: "constructing instances"
+[
+    @Protected! IdentitySet [ contents := Collections newSetFromMap: IdentityHashMap basicNew. ]
+    @Protected! IdentitySet: Ordinal! capacity [
+     	contents := Collections newSetFromMap: (IdentityHashMap basicNew: capacity intValue). ]
+
+    @Protected! IdentitySet: Java Util Set! primitiveSet : Boolean! syncSet [
+        self : (SmallInteger from: primitiveSet size).
+        syncSet ifTrue: [ contents := Collections synchronizedSet: contents. ].
+        self addAll: (Set from: primitiveSet). ]
+]

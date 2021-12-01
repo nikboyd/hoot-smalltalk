@@ -1,0 +1,23 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Valuable subtype: NiladicPredicate. 
+"A predicate type signature conforming with ANSI Smalltalk NiladicValuable (section 5.4.2)."
+
+NiladicPredicate "evaluating" members:
+[
+    @Override Posit! value "the result produced by this predicate block" []
+]
+
+NiladicPredicate "looping" members:
+[
+    ResultType! whileTrue "evaluates this block while its resulting value is true" []
+    ResultType! whileFalse "evaluates this block while its resulting value is false" []
+
+    Subject! whileTrue: NiladicValuable! aBlock
+        "evaluates aBlock while the resulting value of this block is true" []
+
+    Subject! whileFalse: NiladicValuable! aBlock
+        "evaluates aBlock while the resulting value of this block is false" []
+]

@@ -1,0 +1,77 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Runtime Behaviors Mirror import.
+Hoot Runtime Behaviors Typified import.
+Hoot Runtime Behaviors HootRegistry import.
+Hoot Magnitudes SmallInteger importStatics.
+
+TestableClosure subclass: HanoiTower.
+"Simple tower of Hanoi benchmark. This benchmark compares the performance of three variations:
+1) Primitive Java (from Hoot), 2) Optimized Hoot, 3) Untyped Hoot."
+
+HanoiTower members: "testing performance"
+[
+    value [ self reportCount. self reportAfterRun. ]
+    Void! runTest [ self move: count from: 1 to: 2 via: 3. ]
+]
+
+HanoiTower members: "describing transfers"
+[
+    @Static Integer! initialCount [ ^18 ]
+
+    @Static @Final String! CountReport := 'Transfering %s disks'.
+    reportCount [ self log printLine: (CountReport formatWith: HanoiTower initialCount printString). ]
+
+    @Property Number! count := HanoiTower initialCount.
+    @Static HanoiTower! withFloat [ ^HanoiTower basicNew count: HanoiTower initialCount asFloat ]
+    @Static HanoiTower! withCount: Number! count [ ^HanoiTower basicNew count: count ]
+
+    @Property Boolean! usePrimitive := false.
+    @Static HanoiTower! withPrimitive [ ^HanoiTower basicNew usePrimitive: true ]
+
+    String! description [ ^'Tower of Hanoi with ', self typeName ]
+    String! typeName [
+        ^self usePrimitive
+            ifFalse: [ String from: count class outerClass getName ]
+            ifTrue:  [ String from: count elementaryInteger getClass getName ]]
+]
+
+HanoiTower members: "moving disks"
+[
+    @Protected @Primitive move: Number! diskCount from: source to: target via: transfer [
+        "determine which case to test ..."
+
+        self usePrimitive asPrimitive ifTrue: [ "fastest case"
+            self move: diskCount elementaryInteger from: 1 to: 2 via: 3.
+            ^self "bail out early" ].
+
+        (diskCount isKindOf: SmallInteger type) asPrimitive "forward to more resolved type ..."
+            ifTrue:  [ self move: diskCount asInteger from: source to: target via: transfer ]
+            ifFalse: [ self move: diskCount asFloat   from: source to: target via: transfer ].
+
+        ^self
+    ]
+
+    @Protected move: Integer! diskCount from: source to: target via: transfer [
+        Unity < diskCount ifTrue: [
+            disks := diskCount - Unity.
+            self move: disks from: source to: transfer via: target;
+                 move: disks from: transfer to: target via: source. ] ]
+
+    @Protected move: Float! diskCount from: source to: target via: transfer [
+        Float type unity < diskCount ifTrue: [
+            disks := diskCount - Float type unity.
+            self move: disks from: source to: transfer via: target;
+                 move: disks from: transfer to: target via: source. ] ]
+
+    @Protected @Primitive Void! move: Java Lang Integer! diskCount from: Int! source to: Int! target via: Int! transfer [
+        (Unity asPrimitive < diskCount) ifTrue: [
+            Int! disks := diskCount - Unity asPrimitive.
+            self move: disks from: source to: transfer via: target.
+            self move: disks from: transfer to: target via: source. ].
+    ]
+]

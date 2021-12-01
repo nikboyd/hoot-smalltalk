@@ -1,0 +1,53 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Magnitudes Integer import.
+Hoot Collections CharacterString import.
+Hoot Runtime Functions Exceptional Handler import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections ReadableString import.
+Smalltalk Collections CollectedReadably import.
+Smalltalk Streams importAll.
+
+FileWriteStream? Character subclass: TextFileWriteStream. "Writes into a text file (external storage)."
+
+TextFileWriteStream class members: "creating instances"
+[
+    @Protected! on: RandomAccessFile! primitiveFile [ ^TextFileWriteStream basicNew: primitiveFile ]
+]
+
+TextFileWriteStream members: "constructing instances"
+[
+    @Protected! TextFileWriteStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+    @Static TextFileWriteStream! write: String! fileName [ ^FileWriteStream type write: fileName ]
+]
+
+TextFileWriteStream members: "accessing"
+[
+    String! contents [
+        Integer! pose := self position.
+        self reset.
+        String! result := self nextString: self length.
+        self position: pose.
+        ^result
+    ]
+]
+
+TextFileWriteStream members: "writing"
+[
+    @Override @Primitive TextFileWriteStream! nextPut: Character! element [
+        [ file writeByte: element primitiveByte. ^null ] runLoud. ^self ]
+
+    @Primitive TextFileWriteStream! nextPutAll: CollectedReadably? Character! elements [
+        [ file writeBytes: (CharacterString <- elements) primitiveString. ^null ] runLoud. ^self ]
+]
+
+TextFileWriteStream members: "testing"
+[
+    Boolean! isText [ ^true ]
+    Boolean! isBinary [ ^false ]
+    Symbol! externalType [ ^#text ]
+]

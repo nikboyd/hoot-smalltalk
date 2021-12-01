@@ -1,0 +1,25 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+TestableClosure subclass: SticBenchmark.
+"Benchmarks derived from (former) Smalltalk Industry Council STIC."
+
+SticBenchmark members:
+[
+    Void! runTest [
+        self recycleGarbage. "start with a clean slate"
+        SmallInteger! count := 10000. "cache a large integer"
+        (ArrayWrites  basicNew reportAfterRepeated: count) reportSnapshots.
+        (ArrayCreates basicNew reportAfterRepeated: count) reportSnapshots.
+
+        (DictionaryWrites basicNew reportAfterRepeated: count) reportSnapshots.
+        (CollectionWrites basicNew reportAfterRepeated: count) reportSnapshots.
+        (CollectionCycles basicNew reportAfterRepeated: count) reportSnapshots.
+        (StringCompare    basicNew reportAfterRepeated: count) reportSnapshots.
+
+        self log cr.
+        (FloatMath   basicNew reportAfterRepeated: count) reportSnapshots.
+        (IntegerMath basicNew reportAfterRepeated: count) reportSnapshots.
+    ]
+]

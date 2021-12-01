@@ -1,0 +1,14 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Scalar subtype: Associated. "A key-value pair."
+
+Associated members: "accessing values"
+[
+    KeyType -> Subject! key "a key" []
+    @Override Subject! value "a value" []
+
+    Associated! key: Subject! aKey "a key" []
+    Associated! value: Subject! aValue "a value" []
+]

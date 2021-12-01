@@ -1,0 +1,450 @@
+//==================================================================================================
+// Copyright 2010,2019 Nikolas S Boyd.
+// Permission is granted to copy this work provided this copyright statement is retained in all copies.
+// See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
+//==================================================================================================
+
+group HootWalker;
+
+emitLibraryScope(notice,packageName,imports) ::=
+<<
+/**
+* <notice>
+*/
+<packageName>
+
+<if(imports)><emitLines(imports)>
+<endif>
+>>
+
+emitLibraryType(libs,signature,metaFace,locals,methods) ::=
+<<
+<if(libs)><libs><endif>
+<signature>
+{
+  <if(metaFace)><metaFace><endif>
+
+  <if(locals)><locals><endif>
+  <if(methods)><methods><endif>
+}
+>>
+
+emitTypeSignature(notes,typeName,details,superTypes) ::=
+<<
+public <notes>interface <typeName><details><if(superTypes)> extends <emitList(superTypes)><endif>
+>>
+
+emitClassSignature(notes,className,details,superClass,faces) ::=
+<<
+public <notes>class <className><details> extends <superClass><if(faces)> implements <faces><endif>
+>>
+
+emitNilSubclassSignature(notes,className,details,faces) ::=
+<<
+public <notes>class <className><details><if(faces)>
+  implements <faces><endif>
+>>
+
+emitMetatype(signature,methods) ::=
+<<
+
+<signature>
+{
+  <methods>
+}
+
+>>
+
+emitMetaclass(className,superClass,signature,locals,methods) ::=
+<<
+
+public static Metaclass type() { return (Metaclass)Metaclass.$class; }
+@Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }
+<signature>
+{
+  static final <className>.Metaclass $class = new <className>.Metaclass();
+  public Metaclass() {
+    this(<className>.Metaclass.class);
+  }
+
+  public Metaclass(java.lang.Class aClass) {
+    super(aClass);
+  }
+
+  @Override public java.lang.Class outerClass() { return <className>.class; }
+
+  <if(locals)><locals><endif>
+  <if(methods)><methods><endif>
+}
+
+>>
+
+emitProtocol(className,classUnary,members) ::=
+<<
+<members>
+>>
+
+emitArgument(useFinal,type,name) ::= "<if(useFinal)>final <endif><type> <name>"
+emitExceptions(items) ::= " throws <emitList(items)>"
+
+emitVariable(comment,notes,type,name,value) ::=
+<<
+<if(comment)>/** <comment> */<endif>
+<if(notes)><notes> <endif><type> <name><if(value)> = <value><endif>
+>>
+
+emitProperty(comment,notes,type,name,upper,value,className) ::=
+<<
+<if(comment)>  /** <comment> */<endif>
+  <if(notes)><notes> <endif><type> <name><if(value)> = <value><endif>;
+  public <type> <name>() { return this.<name>; }
+  public Object get<upper>() { return (Object)this.<name>; }
+
+  public <className> <name>(<type> value) { this.<name> = value; return this; }
+  public void set<upper>(Object value) { this.<name> = (<type>)value; }
+<\n>
+>>
+
+emitMethodEmpty(comment,type,signature) ::=
+<<
+
+<if(comment)>
+/**
+ * <if(type)>@return <endif><comment>
+ */
+<endif>
+<signature>;
+>>
+
+emitMethodScope(comment,type,signature,locals,content,framed,construct) ::=
+<<
+
+<if(comment)>
+/**
+ * <if(type)>@return <endif><comment>
+ */
+<endif>
+<signature>
+{
+  <if(construct)><construct><endif>
+  <if(locals)><locals><endif>
+  <if(framed)>return f0.evaluate(() -> {<endif>
+  <content>
+  <if(framed)>});<endif>
+}
+>>
+
+emitMethodSignature(notes,details,type,name,arguments,exceptions) ::=
+<<
+<if(notes)><notes> <endif><details><type> <name>(<if(arguments)>final <arguments; separator=", final "><endif>)
+>>
+
+emitNamedArgument(notes,type,name) ::=
+"<if(notes)><notes><endif><type> <name>"
+
+emitFrameArgument(typeName,valueName,id,index) ::=
+"<typeName> <valueName> = <id>.getValue(<index>).value();"
+
+emitBlockScope(blockName,blockType,resultName,resultType,types,locals,content) ::=
+<<
+<if(locals)>
+<locals>
+<endif>
+<content>
+>>
+
+emitFramedScope(count,scope,type,id) ::=
+<<
+(<type>)Closure.with(<count>, <id> -> {
+  <scope>
+})
+>>
+
+emitBlockUsage(blockName,blockType,names) ::= "<blockName>"
+
+emitClosure(blockType, types) ::=
+"<blockType>.Closure<if(types)><emitDetails(types)><endif>"
+
+emitBlockType(blockType,types) ::=
+"<blockType><if(types)><emitDetails(types)><endif>"
+
+
+
+emitBlockSignature(erasure,name,arguments,exceptions) ::=
+<<
+<if(erasure)><erasure>
+<else>@Override <endif>public Object <name>(<arguments>) <exceptions>
+>>
+
+emitBlockArgument(type,name,index,level) ::= "<type> <name> = f<level>.getValue(<index>).value();"
+emitNewClosure(closureType,argNames,level) ::= "<closureType>.with(f<level> -> {"
+emitOptimizedBlock(closureType,level,prior,locals,argNames,arguments,content) ::=
+<<
+<emitNewClosure(closureType,argNames,level)>
+<if(locals)>
+  <locals>
+<endif><if(arguments)>
+  <arguments>
+<endif>  <content>
+}<if(argNames)>, <argNames><endif>)
+>>
+
+
+emitErasedCall(name,arguments) ::= "return <name>(<arguments>);"
+emitErasedVoid(name,arguments) ::= "<name>(<arguments>); return null;"
+
+emitErasedBlock(name,arguments,content) ::=
+<<
+@Override public Object <name>(<arguments>) {
+  <content>
+}
+>>
+
+
+emitIfTrue(condition,trueValue) ::=
+<<
+if (<condition>) {
+  <trueValue>
+}
+>>
+
+emitIfFalse(condition,falseValue) ::=
+<<
+if (!(<condition>)) {
+  <falseValue>
+}
+>>
+
+emitIfTrueFalse(condition,trueValue,falseValue) ::=
+<<
+if (<condition>) {
+  <trueValue>
+}
+else {
+  <falseValue>
+}
+>>
+
+emitIfFalseTrue(condition,falseValue,trueValue) ::=
+<<
+if (!(<condition>)) {
+  <trueValue>
+}
+else {
+  <falseValue>
+}
+>>
+
+emitTrueExit(condition,trueValue) ::=
+<<
+if (<condition>) {
+  <trueValue>
+}
+>>
+
+emitFalseExit(condition,falseValue) ::=
+<<
+if (!(<condition>)) {
+  <falseValue>
+}
+>>
+
+emitTrueFalseExit(condition,trueValue,falseValue) ::=
+<<
+if (<condition>) {
+  <trueValue>
+}
+else {
+  <falseValue>
+}
+>>
+
+emitWhileTrue(condition, guardedBlock) ::=
+<<
+while(<condition>) {
+  <guardedBlock>
+}
+>>
+
+emitWhileFalse(condition, guardedBlock) ::=
+<<
+while(!(<condition>)) {
+  <guardedBlock>
+}
+>>
+
+emitOnlyTry(tryBlock) ::=
+<<
+try {
+  <tryBlock>
+}
+>>
+
+emitOnlyEnsure(finallyBlock) ::=
+<<
+finally {
+  <finallyBlock>
+}
+>>
+
+emitOnlyCatch(exceptionClass, catchBlock) ::=
+<<
+catch (<exceptionClass> ex) {
+  <catchBlock>
+}
+>>
+
+emitUseResource(resource, block) ::=
+<<
+try (<resource>) {
+  <block>
+}
+>>
+
+emitExclusivelyDo(resource, block) ::=
+<<
+synchronized (<resource>) {
+  <block>
+}
+>>
+
+emitExclusivelyDoEach(resource,elementType,elementName,block) ::=
+<<
+synchronized (<resource>) {
+  for (<elementType> <elementName> : <resource>) {
+    <block>
+  }
+}
+>>
+
+emitAlternatives(condition,trueValue,falseValue) ::=
+"(<condition> ? <trueValue> : <falseValue>)"
+
+emitSections(name,sections) ::=
+<<
+<if(name)>// <name><endif>
+
+<sections; wrap, separator="\n\n">
+>>
+
+emitLines(items) ::=
+<<
+<items; wrap, separator="\n">
+>>
+
+emitStatements(items,value) ::=
+<<
+<items; wrap, separator="\n">
+<value>
+>>
+
+emitAssignment(notes,type,name,value) ::=
+"<if(notes)><notes; separator=\" \"> <endif>var <name> = <value>"
+
+emitPadded(value) ::= "  <value>"
+emitStatement(value) ::= "<value>;"
+emitExit(level,value,type) ::= "<if(value)>return (<type>)f0.exit(exitID, <value>);<endif>"
+emitResult(type,value) ::= "<if(value)>return <if(type)>(<type>)<endif><value>;<endif>"
+emitAnswer(value) ::= "<if(value)><value><endif>"
+emitYourself() ::= "return yourself();"
+emitCast(type,value) ::= "((<type>)<value>)"
+emitPath(value) ::= ".<value>"
+emitConstruct(reference,arguments) ::= "<reference>(<arguments; separator=\", \">)"
+emitExpression(operand,messages) ::= "<operand><if(messages)><messages><endif>"
+emitCalls(calls) ::= "<calls; separator=\"\">"
+emitCall(methodName,arguments) ::= ".<methodName>(<arguments; separator=\", \">)"
+emitOperation(operator,argument) ::= "<operator> <argument>"
+emitTerm(value) ::= "(<value>)"
+
+emitThrowSelf() ::= "throw this"
+emitThrow(item) ::= "throw <item>"
+emitTypeNew(className,arguments) ::= "<className>.type().$new(<arguments; separator=\", \">)"
+emitNew(className,arguments) ::= "new <className>(<arguments; separator=\", \">)"
+emitNewArray(className,size) ::= "new <className>[<size>]"
+emitElementGet(name,index) ::= "<name>[<index>]"
+emitElementSet(name,index,value) ::= "<name>[<index>] = <value>"
+emitInstanceOf(name,className) ::= "<name> instanceof <className>"
+
+emitPackage(name) ::= "package <name>"
+emitImport(name) ::= "import <name>;"
+emitImportStatics(name) ::= "import static <name>;"
+
+emitItem(item) ::= "<item>"
+emitItems(items) ::= "<if(items)><items; separator=\" \"> <endif>"
+emitSequence(items) ::= "<if(items)><items; separator=\" \"><endif>"
+emitList(items) ::= "<if(items)><items; separator=\", \"><endif>"
+emitNote(name,values) ::= "@<name><if(values)>(<values>)<endif>"
+emitPair(name,value) ::= "<name>=<value>"
+
+emitExtendedType(type,base) ::= "<type><if(base)> extends <base><endif>"
+emitDetailedType(type,details) ::= "<type><details>"
+emitDetails(values) ::= "<if(values)>\<<values; separator=\", \">><endif>"
+
+emitCharacter(value) ::= "Character.from(<value>)"
+emitString(value) ::= "String.from(<value>)"
+emitSymbol(value) ::= "Symbol.from(<value>)"
+
+emitBoolean(value) ::= "<value>.literal()"
+emitRadical(value) ::= "Integer.parseRadix(<value>)"
+emitDecimal(value) ::= "ScaledDecimal.from(<value>)"
+emitInteger(value) ::= "SmallInteger.from(<value>)"
+emitLong(value)    ::= "LongInteger.from(<value>L)"
+emitFloat(value)   ::= "Float.from(<value>)"
+
+emitScalar(factory,value) ::= "<factory>.from(<value>)"
+emitTrueGuard(value) ::= "Boolean.primitiveValue(<value>)"
+emitFalseGuard(value) ::= "!Boolean.primitiveValue(<value>)"
+emitClosureValue(closure) ::= "(<closure>).value()"
+
+emitVoid() ::= "void"
+emitObject() ::= "Object"
+emitSelf() ::= "this"
+emitSuper() ::= "super"
+emitNull() ::= "null"
+emitNil() ::= "Nil.literal()"
+emitFalse() ::= "False.literal()"
+emitTrue() ::= "True.literal()"
+emitEmpty() ::= ""
+
+emitQuoted(value) ::= <<"<value>">>
+
+emitArrayWith(values) ::= "Array.withAll(new Object[]<emitArray(values)>)"
+emitArray(values) ::=
+<<
+{
+  <values; wrap, separator=", ">
+}
+>>
+
+emitCascades(messages,resultType,exit,framed) ::=
+<<
+<if(framed)>(fp) -> <endif>{
+<resultType> prime = (<resultType>)<first(messages)>;
+<trunc(rest(messages)) : { m | prime<m>; <\n>}>
+<if(exit)><exit> <endif>prime<last(messages)>;
+}
+>>
+
+emitCascadesOnSelf(messages,resultType,exit,framed) ::=
+<<
+<if(framed)>(fp) -> <endif>{
+<if(resultType)><resultType><else>var<endif> prime = this;
+<trunc(rest(messages)) : { m | prime<m>; <\n>}>
+<if(exit)><exit> <endif>prime<last(messages)>;
+}
+>>
+
+emitStackedBind(name,value) ::=
+<<
+; f0.bind("<name>", <value>)
+>>
+
+emitStackedValue(name) ::=
+<<
+f0.getValue("<name>").value()
+>>
+
+emitNamedValue(name,type) ::=
+<<
+f0.getValue("<name>", <type>.class)
+>>

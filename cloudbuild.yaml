@@ -1,0 +1,47 @@
+# hoot-smalltalk google cloud build
+steps:
+  # build checked sums of poms
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: check_sums
+    entrypoint: 'bash'
+    args: [ '-c', "shell/build-cache-check.sh" ]
+
+  # restore cached repository
+  - name: 'gcr.io/$PROJECT_ID/restore_cache'
+    id: restore
+    args:
+    - '--bucket=gs://hoot-build-cache'
+    - '--key=cache-$( checksum checked-sums.txt )'
+    - '--key_fallback=cache-'
+    waitFor:
+    - check_sums
+
+  # fetch account secrets
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: fetch_secrets
+    entrypoint: 'bash'
+    args: [ '-c', "shell/fetch-secrets.sh" ]
+    waitFor:
+    - restore
+
+  # build with pre-configured ubuntu + jdk 8 + maven host
+  - name: 'gcr.io/hoot-smalltalk-builds/maven-host'
+    id: build
+    entrypoint: 'bash'
+    args: [ '-c', "shell/build-all-mods.sh" ]
+    waitFor:
+    - fetch_secrets
+
+  # save cached repository
+  - name: 'gcr.io/$PROJECT_ID/save_cache'
+    id: cache
+    args:
+    - '--bucket=gs://hoot-build-cache/'
+    - '--key=cache-$( checksum checked-sums.txt )'
+    - '--path=/workspace/.m2/repository'
+    waitFor:
+    - build
+
+options:
+   # build faster with 8 cores
+   machineType: 'N1_HIGHCPU_8'

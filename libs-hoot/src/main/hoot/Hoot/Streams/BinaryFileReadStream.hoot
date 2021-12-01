@@ -1,0 +1,62 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java IO importAll.
+Hoot Magnitudes Integer import.
+Hoot Runtime Names Primitive import.
+Hoot Collections CharacterString import.
+Hoot Runtime Functions Exceptional Handler import.
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections ReadableString import.
+Smalltalk Collections CollectedReadably import.
+Smalltalk Streams importAll.
+
+FileReadStream? Integer subclass: BinaryFileReadStream. "Reads from a binary file (external storage)."
+
+BinaryFileReadStream class members: "creating instances"
+[
+    BinaryFileReadStream! read: ReadableString! fileName [ ^super read: fileName ]
+    BinaryFileReadStream! on: RandomAccessFile! primitiveFile [ ^BinaryFileReadStream basicNew: primitiveFile ]
+]
+
+BinaryFileReadStream members: "constructing instances"
+[
+    @Protected! BinaryFileReadStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+]
+
+BinaryFileReadStream members: "accessing"
+[
+    ByteArray! contents [
+        Integer! pose := self position.
+        self reset.
+        ByteArray! result := self nextBytes: self length.
+        self position: pose.
+        ^result
+    ]
+]
+
+BinaryFileReadStream members: "testing"
+[
+    Boolean! isText [ ^true ]
+    Boolean! isBinary [ ^false ]
+    Symbol! externalType [ ^#text ]
+]
+
+BinaryFileReadStream members: "reading"
+[
+    Integer! next [ ^[ ^SmallInteger from: Int <- file readUnsignedByte ] defaultIfCurtailed: SmallInteger type zero ]
+    String! nextLine [ ^String emptyString ]
+    ByteArray! next: Ordinal! count [ ^self nextBytes: Integer <- count ]
+
+    ByteArray! upTo: Integer! target [
+        results := String emptyString.
+        [ self atEnd ] whileFalse: [
+            Integer! v := self next.
+            target = v ifTrue: [ ^ByteArray type withAll: results primitiveString getBytes ].
+            results add: v asCharacter.
+        ].
+        ^ByteArray type withAll: results primitiveString getBytes
+    ]
+]

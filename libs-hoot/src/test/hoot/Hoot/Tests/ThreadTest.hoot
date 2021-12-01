@@ -1,0 +1,95 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Lang Thread import.
+Java Time LocalDateTime import.
+Java Util Concurrent Locks ReentrantLock import.
+
+Hoot Magnitudes Integer import.
+Hoot Streams Transcript import.
+Hoot Streams TextWriteStream import.
+Hoot Runtime Names Primitive import.
+
+TestBase subclass: ThreadTest. "Tests threads and synchronization."
+
+ThreadTest members:
+[
+    @Static @Final String! ThreadFork := '%s forked'.
+    @Static @Final String! ThreadSync := '%s got sync'.
+    @Static @Final String! ThreadTimes := 'Thread-%s %s to %s'.
+
+    Void! runTest [
+        self log printLine: 'main thread start'.
+        self forkThreadsWithDelays.
+        self wait: 8000.
+
+        self forkAndSyncThreads.
+        self wait: 1000.
+
+        self wakeAndJoinThreads.
+        self log printLine: 'main thread done'.
+    ]
+
+    wait: Integer! msecs [ Primitive waitMilliseconds: msecs. ]
+
+    forkThreadsWithDelays [
+        1 to: 3 do: [ :x |
+            Thread! b := [ self monitorIncrementsWithDelay. ] fork.
+            self log printLine: (ThreadFork formatWith: b getName).
+            self wait: 1000.
+        ].
+    ]
+
+    forkAndSyncThreads [
+        1 to: 3 do: [ :x |
+            Thread! b := [ self monitorIncrementsWithSync. ] fork.
+            self log printLine: (ThreadFork formatWith: b getName).
+        ].
+    ]
+
+    wakeAndJoinThreads [
+        n awakenAllWaitingThreads. self wait: 500.
+        [ self syncBusy ] whileTrue: [ self wait: 500. ].
+    ]
+
+    monitorIncrementsWithDelay [
+        t := LocalDateTime now.
+        Integer! i := self valueBeforeIncrementWithMonitor.
+        self wait: 5000.
+        self report: t index: i.
+    ]
+
+    monitorIncrementsWithSync [
+        t := LocalDateTime now.
+        Integer! i := self valueBeforeIncrementWithMonitor.
+        n waitForChangeIfInterrupted: [].
+        self report: t index: i.
+        self lockAndReport.
+    ]
+
+    FastInteger! n := 0 asFastInteger.
+    Integer! valueBeforeIncrementWithMonitor [
+        @Stacked Integer! result := 0.
+        n acquireMonitorDuring: [ n += 1.
+            result := SmallInteger from: n intValue.
+        ].
+        ^result
+    ]
+
+
+    ReentrantLock! sync := ReentrantLock basicNew: true.
+    Boolean! syncLocked [ ^Boolean from: sync isLocked ]
+    Boolean! syncHasWaiters [ ^Boolean from: sync hasQueuedThreads ]
+    Boolean! syncBusy [ ^self syncLocked or: [ self syncHasWaiters ] ]
+
+    lockAndReport [ sync lock. [ self reportSync. ] ensure: [ sync unlock. ]. ]
+    reportSync [ self log printLine: (ThreadSync formatWith: Thread currentThread getName). ]
+
+    "Report thread information."
+    report: LocalDateTime! startTime index: Integer! threadID [
+        self log printLine: (self formatRunTime: startTime thread: threadID). ]
+
+    String! formatRunTime: LocalDateTime! startTime thread: Integer! threadID [
+        ^ThreadTimes formatWith: (threadID + 1) printString : (Time printTime: startTime) : Time printTimeNow ]
+]

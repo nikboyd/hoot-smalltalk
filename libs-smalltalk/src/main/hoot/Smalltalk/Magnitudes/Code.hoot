@@ -1,0 +1,35 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections ReadableString import.
+
+Scalar subtype: Code.
+"A type signatures for ANSI Smalltalk Character and it's factory (sections 5.3.4, 5.3.5)."
+
+Code type "accessing constants" members:
+[
+    Code! codePoint: Ordinal! codePoint "a character whose value is a code point" []
+    Code! cr "a carriage return" []
+    Code! lf "a line feed" []
+    Code! space "a space" []
+    Code! tab "a tab" []
+]
+
+Code "converting" members:
+[
+    asLowercase "the lower case of this character" []
+    asUppercase "the upper case of this character" []
+
+    Ordinal! codePoint "the code point of this character" []
+    ReadableString!  asString  "a string that contains this character" []
+]
+
+Code "testing" members:
+[
+    Posit! isDigit "whether this is a digit" []
+    Posit! isLetter "whether this is a letter" []
+    Posit! isLowercase "whether this is a lower case letter" []
+    Posit! isUppercase "whether this is an upper case letter" []
+    Posit! isAlphaNumeric "whether this is a letter or a digit" []
+]

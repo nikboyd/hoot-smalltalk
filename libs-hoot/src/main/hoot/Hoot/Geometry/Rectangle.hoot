@@ -1,0 +1,139 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+
+Object subclass: Rectangle. "A rectangle on a 2-dimensional plane."
+
+Rectangle class members: "creating instances"
+[
+    Rectangle! new [ ^Rectangle basicNew ]
+]
+
+Rectangle members: "knowing corners"
+[
+    "Refers to the origin."
+    Point! origin := Point basicNew.
+
+    "Refers to the extent."
+    Point! extent := Point basicNew.
+
+    @Protected Rectangle [
+        origin := 0 @ 0.
+        extent := 0 @ 0.
+    ]
+
+    @Protected Rectangle: Point! originPoint : Point! extentPoint [
+     	origin := originPoint.
+        extent := extentPoint.
+    ]
+
+    @Static Rectangle! origin: Point! origin extent: Point! extent [
+     	^Rectangle basicNew: origin : extent ]
+
+    @Static Rectangle! origin: Point! origin corner: Point! corner [
+     	Rectangle! result := Rectangle basicNew.
+        result origin: origin.
+        result corner: corner.
+        ^result ]
+]
+
+Rectangle members: "accessing basic corners"
+[
+    Point! origin [ ^origin ]
+    Point! origin: Point! originPoint [ origin := originPoint. ^originPoint ]
+
+    Point! corner [ ^(origin x + extent x) @ (origin y + extent y) ]
+    Point! corner: Point! cornerPoint [ self extent: cornerPoint - origin. ^cornerPoint ]
+]
+
+Rectangle members: "accessing positions"
+[
+    Number! top [ ^self origin y ]
+    Number! bottom [ ^self corner y ]
+
+    Number! left [ ^self origin x ]
+    Number! right [ ^self corner x ]
+]
+
+Rectangle members: "accessing centers"
+[
+    Point! center [ ^self origin + (self extent / 2) ]
+
+    Point! topCenter [ ^self center x @ self top ]
+    Point! bottomCenter [ ^self center x @ self bottom ]
+
+    Point! leftCenter [ ^self left @ self center y ]
+    Point! rightCenter [ ^self right @ self center y ]
+]
+
+Rectangle members: "accessing corners"
+[
+    Point! bottomLeft [ ^self left @ self bottom ]
+    Point! bottomRight [ ^self right @ self bottom ]
+
+    Point! leftTop  [ ^self left @ self top ]
+    Point! leftBottom [ ^self bottomLeft ]
+
+    Point! rightTop [ ^self right @ self top ]
+    Point! rightBottom [ ^self bottomRight ]
+
+    Point! topLeft [ ^self leftTop ]
+    Point! topRight [ ^self rightTop ]
+
+    Array? Point! corners [
+        ^Array withAll: self leftTop : self rightTop : self leftBottom : self rightBottom
+    ]
+]
+
+Rectangle members: "accessing dimensions"
+[
+    Point! extent [ ^extent ]
+    Point! extent: Point! extentPoint [ extent := extentPoint. ^extentPoint ]
+
+    Number! width [ ^extent x ]
+    Number! width: Number! width [ extent x: width. ^width ]
+
+    Number! height [ ^extent y ]
+    Number! height: Number! height [ extent y: height. ^height ]
+
+    Number! area [ ^self width * self height ]
+]
+
+Rectangle members: "comparing"
+[
+    Java Lang Int! hashCode [ ^(origin hash bitXor: extent hash) primitiveInteger ]
+    Boolean! = aRectangle [
+     	^Boolean <- ((origin = aRectangle origin) and: [extent = aRectangle extent]) ]
+
+    @Primitive Boolean! = Subject! value [
+        (value instanceOf: Rectangle) ifTrue: [ ^self equals: (Rectangle <- value) ].
+        ^False literal ]
+]
+
+Rectangle members: "converting"
+[
+    Java Awt Rectangle! primitiveRectangle [
+     	^Java Awt Rectangle basicNew:
+            origin primitivePoint :
+            extent primitiveDimension ]
+]
+
+Rectangle members: "printing"
+[
+    String! printString [ ^origin printString , ' extent: ' , extent printString ]
+    Java Lang String! toString [ ^self printTerm toString ]
+]
+
+Rectangle members: "testing"
+[
+    Boolean! contains: aRectangle [
+     	^Boolean <- ((self origin <= aRectangle origin) and: [self corner >= aRectangle corner]) ]
+
+    Boolean! containsPoint: aPoint [
+     	^Boolean <- (aPoint between: self origin and: self corner) ]
+
+    Boolean! intersects: aRectangle [
+     	^Boolean <- ((self origin <= aRectangle corner) and: [aRectangle origin <= self corner]) ]
+]

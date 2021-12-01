@@ -1,0 +1,47 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Numeric subtype: Floater.
+"A type signature for ANSI Smalltalk Float (sections 5.6.7, 5.6.8)."
+
+Floater type "constants" members:
+[
+    Floater! e  "a value near e" []
+    Floater! pi "a value near pi" []
+]
+
+Floater type "characterization" members:
+[
+    Posit! denormalized "whether de-normalized values are supported" []
+
+    Floater! epsilon "the maximum relative spacing available" []
+    Floater! fmax "the maximum supported value" []
+    Floater! fmin "the minimum supported value" []
+    Floater! fminDenormalized "the minimum de-normalized value supported" []
+    Floater! fminNormalized "the minimum normalized value supported" []
+
+    Ordinal! emax "the largest exponent supported" []
+    Ordinal! emin "the smallest exponent supported" []
+    Ordinal! precision "the precision available" []
+    Ordinal! radix "the radix available" []
+]
+
+Floater "mathematics" members:
+[
+    arcCos "a value = arcCosine(this)" []
+    arcSin "a value = arcSine(this)" []
+    arcTan "a value = arcTangent(this)" []
+
+    cos "a value = cosine(this)" []
+    exp "a value = naturalExponent(this)" []
+    sin "a value = sine(this)" []
+    tan "a value = tangent(this)" []
+    ln  "a value = naturalLog(this)" []
+
+    log: Numeric! radix "a value = log b(this)" []
+    Ordinal! floorLog: Numeric! radix "the largest integer <= log b(this)" []
+
+    degreesToRadians "a value = radians(this)" []
+    radiansToDegrees "a value = degrees(this)" []
+]

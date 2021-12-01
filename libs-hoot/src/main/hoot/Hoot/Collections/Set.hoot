@@ -1,0 +1,144 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Runtime Names Selector import.
+
+Smalltalk Core Subject import.
+Smalltalk Collections importAll.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Streams StreamWriter import.
+
+Java Util Arrays import.
+
+Collection? ElementType subclass: CollectedDistinctly? ElementType!
+Set? ElementType -> Object. "A distinctly collected set of unique elements."
+
+"Supports instantiation with a primitive Set. Uses a native HashSet as the default primitive contents."
+
+Set class members: "creating instances"
+[
+    with: ElementType -> Subject! a [
+        ^Set <- (super with: Object <- a) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b [
+        ^Set <- (self withAll: Object <- a : Object <- b) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b with: ElementType -> Subject! c [
+        ^Set <- (self withAll: Object <- a : Object <- b : Object <- c) ]
+
+    with: ElementType -> Subject! a with: ElementType -> Subject! b
+    with: ElementType -> Subject! c with: ElementType -> Subject! d [
+        ^Set <- (self withAll: Object <- a : Object <- b : Object <- c : Object <- d) ]
+
+    withAll: CollectedReadably? ElementType -> Subject! elements [
+        ^Set <- (super withAll: elements) ]
+
+    Set? ElementType -> Object! withAll: ElementType! ... elements [
+        ^Set from: (Arrays asList: elements) ]
+
+    Set! new [ ^self new: 10 ]
+    Set! new: Ordinal! capacity [ ^Set basicNew: capacity ]
+
+    Set! synchronizedFrom: Java Util Set? ElementType! primitiveSet [
+        "a new Set with contents primitiveSet synchronized"
+        ^Set basicNew: (Java Util Collections synchronizedSet: primitiveSet) ]
+]
+
+Set "constructing" members:
+[
+    "Contains the set elements."
+    Java Util Set? ElementType! contents := Java Util HashSet basicNew.
+
+    @Protected! Set "constructs a new (empty) Set" [ ]
+    @Protected! Set: Ordinal! capacity [ contents := Java Util HashSet basicNew: capacity intValue. ]
+    @Protected! Set: Java Util Set! primitiveSet [ contents := primitiveSet. ]
+
+    @Static Set? ElementType -> Object! from: Java Util Set? ElementType! primitiveSet [
+        ^Set basicNew: primitiveSet ]
+
+    @Static Set? ElementType -> Object! from: Java Util List? ElementType! aList [
+        ^Set from: (Java Util HashSet basicNew: aList) ]
+
+    @Primitive @Static Set? Symbol! fromSelectors: Java Util Set? Selector! selectors [
+        ^Set basicNew: ( [ : Selector! s | ^Symbol from: s name ] evaluateWithEach: selectors ) ]
+]
+
+Set members: "accessing"
+[
+    Java Util Set? ElementType! primitiveContents [ ^contents ]
+    Integer! size [ ^SmallInteger from: contents size ]
+]
+
+Set members: "adding elements"
+[
+    ElementType! add: ElementType! element [
+     	contents add: element.
+        ^element ]
+
+    Collected? ElementType! addAll: Collected? ElementType! elements [
+        "adds all the supplied elements to this collection"
+        elements do: [ : ElementType! element | self add: element ].
+        ^elements ]
+]
+
+Set members: "comparing"
+[
+    Java Lang Int! hashCode [ ^contents hashCode ]
+    Boolean! = Collected? ElementType! aCollection [ ^self = aCollection asSet ]
+    Boolean! = CollectedDistinctly? ElementType! aSet [
+     	^Boolean from: (contents equals: (Set <- aSet) primitiveContents) ]
+]
+
+Set members: "converting"
+[
+    Set? ElementType! asSet [ ^self ]
+]
+
+Set members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        [ : ElementType! element | aBlock value: element ] evaluateWithEach: contents. ]
+]
+
+Set members: "removing elements"
+[
+    Set! removeAll [ contents clear. ]
+
+    ElementType! remove: ElementType! element [
+        "an element removed from this collection"
+        ^self remove: element ifAbsent: [ ^self elementNotFound ] ]
+
+    ElementType! remove: ElementType! element ifAbsent: NiladicValuable! aBlock [
+        "an element removed from this collection, or result produced by aBlock if missing"
+        Java Lang Boolean! removed := contents remove: element.
+        (Boolean from: removed) ifFalse: aBlock.
+        ^element ]
+
+    Collected? ElementType! removeAll: Collected? ElementType! elements [
+        "removes all the supplied elements from this collection"
+        elements do: [ : ElementType! element | self remove: element ].
+        ^elements ]
+
+    Set? ElementType! removeAllSuchThat: MonadicPredicate! criteria [
+        "removes and returns selected elements from this set"
+        @Final Set? ElementType! results := Set type new.
+        self do: [ : ElementType! element |
+            (criteria value: element) ifTrue: [ results add: element. self remove: element ]].
+        ^results ]
+]
+
+Set members: "streaming"
+[
+    "Returns a new stream for appending to the receiver."
+    StreamWriter? ElementType! writeStream [
+     	^null "'smalltalk.stream.WriteStream' resolvedToClass on: self" ]
+]
+
+Set members: "testing"
+[
+    Boolean! isEmpty [ ^Boolean from: contents isEmpty ]
+    Boolean! includes: Subject! element [ ^Boolean from: (contents contains: element) ]
+]

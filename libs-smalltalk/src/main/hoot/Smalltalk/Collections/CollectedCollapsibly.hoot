@@ -1,0 +1,18 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+
+Collected? ElementType subtype: 
+CollectedCollapsibly? ElementType -> Subject.
+"A type signature for ANSI Smalltalk SequencedContractibleCollection (section 5.7.16), which removes its indexed elements."
+
+CollectedCollapsibly type members: []
+
+CollectedCollapsibly "removing elements" members:
+[
+    ElementType! removeAtIndex: Ordinal! index "removes the element at index in this collection" []
+    ElementType! removeFirst "removes the first element from this collection" []
+    ElementType! removeLast "removes the last element from this collection" []
+]

@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+Hoot Magnitudes SmallInteger importStatics.
+
+TestBase subclass: IdDictionaryTest. "ID dictionary regression tests"
+IdDictionaryTest members: "testing ID dictionary"
+[
+    Array! sample := #( 1 2 3 4 5  123456789 ).
+    IdentityDictionary! id := IdentityDictionary new.
+
+    @Static @Final String! ValueReport := 'key %s id %s = %s'.
+    reportKey: key value: value [
+        self log printLine: (ValueReport formatWith: key printString : key identityHash printString : value printString). ]
+
+    Void! runTest [
+        "1st add each cached integer twice"
+        sample do: [ :each |
+            id at: each put: each.
+            id at: each put: each. ].
+
+        "add non-cached integer thrice, each has unique ID"
+        id at: 123456789 put: 123456789.
+        id at: 123456789 put: 123456789.
+        self assertTrue: [ ^sample size + 2 == id size ].
+
+        self log printLine: 'id dictionary size = ', id size printString.
+        id sortedKeysAndValuesDo: [ :key :value | self reportKey: key value: value ].
+
+        id associationsDo: [ :Association! assoc | self assertTrue: [ ^sample includes: assoc value ]. ].
+        self passed: 'id dictionary associates test'.
+
+        id valuesDo: [ :v | self assertTrue: [ ^sample includes: v ]. ].
+        self passed: 'id dictionary values test'.
+
+        id keysDo: [ :Integer! k | self assertTrue: [ ^sample includes: k ]. ].
+        self passed: 'id dictionary keys test'.
+    ]
+]

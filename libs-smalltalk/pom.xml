@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>hoot-smalltalk</groupId>
+    <artifactId>libs-smalltalk</artifactId>
+    <version>2020.0101.0101</version>
+    <packaging>jar</packaging>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt</url>
+        </license>
+    </licenses>
+
+    <parent>
+        <groupId>hoot-smalltalk</groupId>
+        <artifactId>hoot-smalltalk</artifactId>
+        <version>2020</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>hoot-smalltalk</groupId>
+            <artifactId>hoot-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hoot-smalltalk</groupId>
+            <artifactId>hoot-compiler</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/..</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/hoot</directory>
+                <targetPath>META-INF/hoot-sources</targetPath>
+                <includes>
+                    <include>**/*.hoot</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>${version.antlr.maven}</version>
+                <executions>
+                    <execution><goals><goal>antlr4</goal></goals></execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>hoot-smalltalk</groupId>
+                <artifactId>hoot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals><goal>generate</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven.compiler}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,203 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util importAll.
+Hoot Runtime Maps MethodCache import.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Names TypeName import.
+Hoot Runtime Behaviors Typified import.
+Hoot Runtime Behaviors HootRegistry import.
+
+Hoot Collections Set import.
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+
+Smalltalk Core Subject import.
+Smalltalk Core Classified import.
+Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections Collected import.
+Smalltalk Collections CollectedDistinctly import.
+
+Object subclass: @Abstract Classified! Behavior.
+"Provides basic behavior for locating and caching dynamically dispatched methods."
+
+Behavior class members: []
+
+Behavior members: "initializing"
+[
+    "Contains the immediate subclasses of the receiver."
+    @Final HashSet? Behavior! subclasses := HashSet basicNew.
+
+    @Primitive @Protected Behavior! addSubclass: Behavior! subClass [
+        (subClass == null) ifFalse: [
+            (subClass superclass == self) ifTrue: [
+                subclasses add: subClass.
+            ]
+        ].
+        ^subClass ]
+
+    @Primitive @Protected @Final Behavior! registerType [
+        HootRegistry registerType: self.
+        self registerSubclass.
+        self initialize.
+        ^self ]
+
+    @Primitive @Protected Behavior! registerSubclass [
+        self hasHeritage asPrimitive ifFalse: [ ^self ].
+        self superior addSubclass: self.
+        ^self ]
+
+    @Protected Void! initialize "initializes this behavior" []
+]
+
+Behavior members: "constructing instances"
+[
+    "Resolves and caches primitive methods."
+    MethodCache! methodDictionary.
+    MethodCache! methodDictionary [ ^methodDictionary ]
+
+    @Protected Behavior "constructs a new Behavior" [ super. ]
+]
+
+Behavior "comparing" members:
+[
+    Boolean! =  Subject! candidate [ ^self =  (Behavior <- candidate) ]
+    Boolean! <= Scalar! upperBound [ ^self <= (Behavior <- upperBound) ]
+    Boolean! <  Scalar! upperBound [ ^self <  (Behavior <- upperBound) ]
+    Boolean! >  Scalar! lowerBound [ ^self >  (Behavior <- lowerBound) ]
+    Boolean! >= Scalar! lowerBound [ ^self >= (Behavior <- lowerBound) ]
+
+    Boolean! =  Behavior! candidate  [ ^self name = candidate name ]
+    Boolean! <= Behavior! upperBound [ ^self = upperBound or: [ self < upperBound ] ]
+    Boolean! >= Behavior! lowerBound [ ^self = lowerBound or: [ self > lowerBound ] ]
+
+    Boolean! >  Behavior! lowerBound [ ^lowerBound < self ]
+    Boolean! <  Behavior! upperBound [ ^self nameSort < upperBound nameSort ]
+]
+
+Behavior members: "accessing hierarchy"
+[
+    @Primitive CollectedDistinctly? Classified! allSubclasses [
+        "all the subclasses of this behavior"
+        HashSet? Behavior! result := HashSet basicNew.
+        self allSubclassesDo: [ : Behavior! each | result add: each ].
+        ^CollectedDistinctly <- (Set from: result) ]
+
+    @Primitive CollectedDistinctly? Classified! allSuperclasses [
+        "all the superclasses of this behavior"
+        HashSet? Behavior! result := HashSet basicNew.
+        self allSuperclassesDo: [ : Behavior! each | result add: each ].
+        ^CollectedDistinctly <- (Set from: result) ]
+
+    @Primitive CollectedDistinctly? Classified! subclasses [
+        "the immediate subclasses of this behavior"
+        HashSet? Behavior! result := HashSet basicNew.
+        subclasses exclusivelyDoEach: [ : Behavior! each | result add: each. ].
+        ^CollectedDistinctly <- (Set from: result) ]
+
+    CollectedDistinctly? Classified! withAllSubclasses [
+        "this class and all its subclasses"
+        Set? Behavior! results := Set <- self allSubclasses.
+        results add: self.
+        ^CollectedDistinctly <- results ]
+
+    CollectedDistinctly? Classified! withAllSuperclasses [
+        "this class and all its superclasses"
+        Set? Behavior! results := Set <- self allSuperclasses.
+        results add: self.
+        ^CollectedDistinctly <- results ]
+]
+
+Behavior members: "enumerating classes"
+[
+    allSubclassesDo: Closure! aBlock [
+        "evaluates a block with every derived subclass"
+        self subclassesDo: aBlock.
+        self subclassesDo: [ : Behavior! each | each allSubclassesDo: aBlock ]. ]
+
+    @Primitive Behavior! allSuperclassesDo: Closure! aBlock [
+        "evaluates a block with every (only!) superclass"
+        self superclass isEmpty ifTrue: [ ^self ]. "bail out"
+        (Behavior <- self superclass) onlySuperclassesDo: aBlock.
+        ^self ]
+
+    @Private @Primitive Behavior! onlySuperclassesDo: Closure! aBlock [
+        aBlock value: self yourself.
+        self superclass isEmpty ifTrue: [ ^self ]. "bail out"
+        (Behavior <- self superclass) onlySuperclassesDo: aBlock.
+        ^self ]
+
+    subclassesDo: Closure! aBlock [
+        "evaluates a block with each derived subclass"
+        self subclasses do: aBlock. ]
+
+    withAllSubclassesDo: Closure! aBlock [
+        "evaluates a block with this and each derived subclass"
+        aBlock value: self.
+        self allSubclassesDo: aBlock. ]
+
+    withAllSuperclassesDo: Closure! aBlock [
+        "evaluates a block with this and each superclass"
+        aBlock value: self.
+        self allSuperclassesDo: aBlock. ]
+]
+
+Behavior members: "creating instances"
+[
+    @Primitive @Protected @Static @Final Object! ... EmptyArray := #( ).
+
+    Collected? ElementType -> Subject! new: Ordinal! capacity [ ^Array new: capacity ]
+    ResultType -> Subject! new [ ^(Primitive newInstance: self primitiveClass) ]
+]
+
+Behavior members: "reflecting behavior"
+[
+    Set? Symbol! allSelectors [
+        "all the public method names of this behavior"
+        ^Set fromSelectors: methodDictionary allSelectors ]
+
+    Set? Symbol! selectors [
+        "the public method names defined by this behavior"
+        ^Set fromSelectors: methodDictionary selectors ]
+
+    @Final @Primitive Java Lang Class! primitiveClass [ ^self methodDictionary cachedType ]
+    @Final @Primitive Java Lang Class! primitiveSuperclass [ ^self primitiveClass getSuperclass ]
+
+    @Primitive Boolean! hasHeritage [
+        (self primitiveSuperclass == nil) ifTrue: [ ^False literal ].
+        Typified! result := HootRegistry getType: self primitiveSuperclass.
+        result isEmpty ifTrue: [ ^False literal ].
+        ^True literal ]
+
+    @Final Behavior! superior "the superclass as a Behavior" [ ^Behavior <- self superclass ]
+    @Primitive Classified! superclass [
+        self hasHeritage asPrimitive ifFalse: [ ^null ].
+        Typified! result := HootRegistry getType: self primitiveSuperclass.
+        result isEmpty ifTrue: [ ^null ].
+        ^result ]
+]
+
+Behavior members: "testing behavior"
+[
+    Boolean! isBehavior "indicates whether this is a (kind of) Behavior" [ ^true ]
+    Boolean! inheritsFrom: Behavior! candidateClass [
+        "indicates whether this inherits from a candidate class"
+        (Object isNull: candidateClass) ifTrue: [ ^false ].
+        ^Boolean from: (candidateClass primitiveClass isAssignableFrom: self primitiveClass) ]
+]
+
+Behavior members: "accessing values"
+[
+    @Abstract String! namePrefix []
+
+    String! name [ ^String from: self typeName hootName ]
+    String! nameSpace [ ^String from: self typeName hootPackage ]
+    String! simpleName [ ^String from: self typeName shortName ]
+    String! nameSort [ ^self nameSpace, self depth printString, self simpleName ]
+    TypeName! typeName [ ^TypeName fromName: self primitiveClass getName ]
+
+    NumericType -> Number! zero [ ^NumericType <- 0 "derived behaviors override this" ]
+    Integer! depth [ ^SmallInteger from: (Primitive hierarchyDepth: self primitiveClass) ]
+]

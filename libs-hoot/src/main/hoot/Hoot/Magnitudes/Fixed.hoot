@@ -1,0 +1,135 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Math BigDecimal import.
+Smalltalk Magnitudes importAll.
+Smalltalk Streams StreamedSink import.
+Hoot Runtime Names Primitive import.
+
+Rational subclass: Fractional! ScaledDecimal! Fixed. "A scaled, fixed point decimal number."
+
+Fixed class members:
+[
+    Character! exponentCharacter [ ^$s ]
+
+    Fixed! numerator: Number! upper denominator: Number! lower [
+        ^(Fraction type numerator: upper asInteger denominator: lower asInteger) scaledZero ]
+
+    Fixed! numerator: Ordinal! upper denominator: Ordinal! lower [
+        ^(Fraction type numerator: upper denominator: lower) scaledZero ]
+
+    Fixed! numerator: Number! upper denominator: Number! lower scale: Number! scale [
+        ^(Fraction type numerator: upper asInteger denominator: lower asInteger) scaledAt: scale asInteger ]
+]
+
+Fixed members: "constructing instances"
+[
+    "Used for numeric coercions."
+    @Static SmallInteger! Generality := 50.
+
+    Integer! scale := 0.
+    Integer! numerator := 0.
+    Integer! denominator := 1.
+
+    Fixed [ self : 0 : 1. ]
+    Fixed: Integer! upper : Integer! lower [ numerator := upper. denominator := lower. ]
+    Fixed: Integer! upper : Integer! lower : Integer! s [ self : upper : lower. scale := s. ]
+
+    @Static @Primitive Fixed! from: Java Lang String! value [
+        Long! ... parts := Primitive parseDecimal: value.
+        ^Fixed basicNew:
+            (LongInteger from: (parts at: 0)):
+            (LongInteger from: (parts at: 1)):
+            (LongInteger from: (parts at: 2))
+    ]
+]
+
+Fixed members: "accessing"
+[
+    Integer! scale [ ^scale ]
+    Integer! numerator [ ^numerator ]
+    Integer! denominator [ ^denominator ]
+
+    scaledAt: Integer! otherScale [ ^Fixed basicNew: numerator : denominator : otherScale ]
+]
+
+Fixed members: "converting"
+[
+    Java Lang Byte! primitiveByte [ ^Byte <- self primitiveLong ]
+    Java Lang Short! primitiveShort [ ^Short <- self primitiveLong ]
+    Java Lang Char! primitiveCharacter [ ^Char <- self primitiveLong ]
+    Java Lang Int! primitiveInteger [ ^Int <- self primitiveLong ]
+
+    @Primitive Java Lang Long! primitiveLong [
+        ^(self lessThan: SmallInteger Zero)
+            ifTrue:  [ Long <- (Java Lang Math ceil: self primitiveDouble) ]
+            ifFalse: [ Long <- (Java Lang Math floor: self primitiveDouble) ] ]
+
+    @Primitive Java Lang Float! primitiveFloat [ ^numerator primitiveFloat / denominator primitiveFloat ]
+    @Primitive Java Lang Double! primitiveDouble [ ^numerator primitiveDouble / denominator primitiveDouble ]
+    @Primitive Java Lang Number! elementaryNumber [ ^self primitiveDouble ]
+
+    Fraction! asFraction [ ^Fraction basicNew: numerator asSmallInteger : denominator asSmallInteger ]
+
+    @Primitive BigDecimal! asDecimal: Integer! scale [
+        ^Primitive decimalFrom: numerator primitiveLong : denominator primitiveLong : scale intValue ]
+
+    @Primitive BigDecimal! asDecimal [
+        Int! n := numerator printString length.
+        Int! d := denominator printString length.
+        ^self asDecimal: scale ]
+
+    Integer! generality [ ^Generality ]
+]
+
+Fixed members: "truncation"
+[
+    @Primitive SmallInteger! ceiling [
+        ^SmallInteger from: Int <- (Java Lang Math ceil: self primitiveDouble) ]
+
+    @Primitive SmallInteger! floor [
+        ^SmallInteger from: Int <- (Java Lang Math floor: self primitiveDouble) ]
+]
+
+Fixed members: "arithmetic"
+[
+    + aFixed [ "this + aFixed"
+    	denominator = aFixed denominator ifTrue: [
+            ^self class numerator: numerator + aFixed numerator
+                denominator: denominator scale: Number <- (scale max: aFixed scale) ].
+        ^self class
+            numerator: (numerator * aFixed denominator) + (denominator * aFixed numerator)
+            denominator: (denominator * aFixed denominator) scale: Number <- (scale max: aFixed scale) ]
+
+    * aFixed [ "this * aFixed"
+    	^self class
+            numerator: (numerator * aFixed numerator)
+            denominator: (denominator * aFixed denominator)
+            scale: Number <- (scale max: aFixed scale) ]
+
+    / aFixed [ "this / aFixed"
+    	^self class
+            numerator: (numerator * aFixed denominator)
+            denominator: (denominator * aFixed numerator)
+            scale: Number <- (scale max: aFixed scale) ]
+
+    + aNumber [ "this + aFixed"
+        self generality < aNumber generality ifTrue: [  ^(aNumber asScaledDecimal: scale) + self  ].
+        ^self + (aNumber asScaledDecimal: scale) ]
+
+    * aNumber [ "this * aFixed"
+        self generality < aNumber generality ifTrue: [ ^aNumber * self ].
+        ^self * (aNumber asScaledDecimal: scale) ]
+
+    / aNumber [ "this / aFixed"
+        self generality < aNumber generality ifTrue: [ ^(self coerceTo: aNumber class) / aNumber ].
+        ^self / (aNumber asScaledDecimal: scale) ]
+]
+
+Fixed members: "printing"
+[
+    printOn: StreamedSink! aStream [ aStream nextPutAll: self printString. ]
+    String! printString [ ^String from: self toString ]
+    Java Lang String! toString [ ^self asDecimal toString ]
+]

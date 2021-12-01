@@ -1,0 +1,98 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Lang Runtime import.
+Hoot Streams Transcript import.
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Runtime Blocks MultiValuable import.
+Hoot Metrics MetricsSnapshot import.
+
+Object subclass: Testable! MultiValuable! TestableClosure. "Defines a testable closure."
+
+TestableClosure "constructing" members:
+[
+    TestableClosure [] "make directly usable by derived classes"
+
+    @Protected Closure! closure.
+    with: Closure! c [ closure := c. ]
+    @Static TestableClosure! closure: Closure! c [ ^TestableClosure basicNew: c ]
+
+    value [ self runTest. ] "MultiValuable needs value"
+    @Protected Closure! createClosure [ ^[ self runTest. ] ]
+    @Primitive Closure! testableClosure [
+        (closure == null) ifTrue: [ closure := self createClosure ]. ^closure ]
+
+    @Property String! name := String emptyString.
+    @Static TestableClosure! named: String! name [ ^TestableClosure basicNew: name ]
+    String! description [ ^name isEmpty ifTrue: [ String from: self getClass getSimpleName ] ifFalse: [ name ] ]
+
+    "also make instantiable by other classes"
+    @Protected! TestableClosure: String! nameString [ name := nameString. ]
+    @Protected! TestableClosure: Closure! c [ closure := c. ]
+
+    @Static TestableClosure! named: String! name
+    repeat: SmallInteger! count closure: Closure! c [
+        ^((TestableClosure basicNew: name) with: c) reportAfterRepeated: count ]
+]
+
+TestableClosure "cleanup" members:
+[
+    Void! recycleGarbage [ Java Lang Runtime getRuntime gc. ]
+]
+
+TestableClosure "snapshot" members:
+[
+    MetricsSnapshot! beforeTest := MetricsSnapshot basicNew.
+    Void! snapshotBeforeTest [ beforeTest := MetricsSnapshot basicNew. ]
+
+    MetricsSnapshot! afterTest := MetricsSnapshot basicNew.
+    Void! snapshotAfterTest [ afterTest := MetricsSnapshot basicNew. ]
+
+    Array? MetricsSnapshot! snapshots [ ^#( beforeTest afterTest ) ]
+    reportSnapshots [
+        beforeTest reportUsage: 'afore test'.
+        afterTest  reportUsage: 'after test'.
+        afterTest  reportHeapUsage.
+        self log cr.
+    ]
+]
+
+TestableClosure "reporting" members:
+[
+    doIt [
+        self snapshotBeforeTest.
+        self runTest.
+        self snapshotAfterTest.
+    ]
+
+    Void! prepare "override this as needed" []
+    Void! runTest "override this as needed" []
+    Void! cleanUp "override this as needed" []
+
+    Transcript! log [ ^Transcript log ]
+    @Static @Final String! MsecsReport := '%s %s = %s msecs'.
+    @Static @Final String! SecsReport := '%s %s = %s secs'.
+
+    reportAfterRun [
+        self prepare. "don't include preparation in overall measurement"
+        self snapshotBeforeTest.
+        duration := LongInteger from: self testableClosure millisecondsToRun.
+        self snapshotAfterTest.
+        self cleanUp.
+
+        self log printLine: (MsecsReport formatWith:
+            Unity printString : (self description rightPadded: 20) : duration printString).
+    ]
+
+    reportAfterRepeated: SmallInteger! count [
+        self prepare. "don't include preparation in overall measurement"
+        self snapshotBeforeTest.
+        duration := LongInteger from: (self testableClosure millisecondsToRepeat: count).
+        self snapshotAfterTest.
+        self cleanUp.
+
+        self log printLine: (SecsReport formatWith: count printString :
+            (self description rightPadded: 20) : ((duration / 1000) asScaledDecimal: 3) printString).
+    ]
+]

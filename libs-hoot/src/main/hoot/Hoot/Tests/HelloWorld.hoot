@@ -1,0 +1,18 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util importAll.
+
+TestableClosure subclass: HelloWorld. "prints 'Hello World' on the console"
+HelloWorld members:
+[
+    printHello [ self log print: 'Hello World!'. ]
+    printWithArgs: String! joinedArgs [ joinedArgs isEmpty ifFalse: [ self log print: ' with ', joinedArgs. ] ]
+
+    Void! runTest [ self runWithArgs: (String listWithEach: self arguments). ]
+    Void! runWithArgs: List? String! args [
+        String! joinedArgs := (String join: args with: ' ').
+        self printHello. self printWithArgs: joinedArgs. self log cr.
+    ]
+]

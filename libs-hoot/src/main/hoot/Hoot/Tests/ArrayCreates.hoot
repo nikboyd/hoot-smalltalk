@@ -1,0 +1,12 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+TestableClosure subclass: ArrayCreates. "basic array allocation"
+
+ArrayCreates members:
+[
+    String! description [ ^'Array allocations' ]
+    Void! runTest [ Array! x := Array new: 10. ] "on the stack!"
+    Void! cleanUp [ self recycleGarbage. ] "suggest recycling the garbage"
+]

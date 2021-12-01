@@ -1,0 +1,81 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Associated import.
+Smalltalk Magnitudes Scalar import.
+
+Collected? ElementType subtype: 
+CollectedDictionary? KeyType -> Scalar : ElementType -> Subject.
+"A type signature for ANSI Smalltalk Dictionary (sections 5.7.2, 5.7.21)."
+
+CollectedDictionary type "accessing hierarchy" members:
+[
+    CollectedDictionary? KeyType -> Scalar : ElementType -> Subject!
+    withAll: CollectedDictionary? KeyType : ElementType! pairedElements
+    "a new Dictionary containing all the supplied pairedElements" []
+]
+
+CollectedDictionary "accessing keys" members:
+[
+    CollectedDistinctly? KeyType! keys "the keys" []
+
+    KeyType! keyAtValue: ElementType! element "the index associated with an element" []
+
+    KeyType! keyAtValue: ElementType! element ifAbsent: NiladicValuable! aBlock
+    "the index associated with an element, or result produced by aBlock if not present" []
+]
+
+CollectedDictionary "accessing elements" members:
+[
+    CollectedSequentially? ElementType! values "the value elements, ordered by their keys" []
+
+    ElementType! at: KeyType! key
+    "the element value associated with the supplied key" []
+
+    ElementType! at: KeyType! key put: ElementType! element
+    "stores the element value associated with the supplied key" []
+
+    ElementType! at: KeyType! key ifAbsent: NiladicValuable! aBlock
+    "the element value associated with the supplied key,
+    or the value produced by aBlock if key is absent" []
+
+    ElementType! at: KeyType! key ifAbsentPut: NiladicValuable! aBlock
+    "the element value associated with the supplied key,
+    or stores the value produced by aBlock if key is absent" []
+
+    Associated! add: Associated! elementPair "adds elementPair to this dictionary" []
+
+    CollectedDictionary! addAll: CollectedDictionary? KeyType : ElementType! elementPairs
+    "adds some elementPairs from another to this dictionary" []
+]
+
+CollectedDictionary "enumerating" members:
+[
+    ResultType -> Subject! keysDo: MonadicValuable! aBlock "evaluates aBlock with each element key" []
+
+    ResultType -> Subject! valuesDo: MonadicValuable! aBlock "evaluates aBlock with each element value" []
+
+    ResultType -> Subject! keysAndValuesDo: DyadicValuable! aBlock
+    "evaluates aBlock with each key and value element pair" []
+]
+
+CollectedDictionary "removing elements" members:
+[
+    ElementType! removeKey: KeyType! key
+    "removes and returns the element value associated with the supplied key" []
+
+    ElementType! removeKey: KeyType! key ifAbsent: NiladicValuable! aBlock
+    "removes the element associated with the supplied key, or evaluates aBlock if the key is missing" []
+
+    removeAllKeys: CollectedDistinctly? KeyType! keys
+    "removes all elements identified by the supplied keys" []
+
+    removeAllKeys: CollectedDistinctly? KeyType! keys ifAbsent: MonadicValuable! aBlock
+    "removes all elements identified by the supplied keys, and evaluates aBlock with every missing key" []
+]
+
+CollectedDictionary "testing" members:
+[
+    Posit! includesKey: KeyType! key "whether this includes the supplied key" []
+]

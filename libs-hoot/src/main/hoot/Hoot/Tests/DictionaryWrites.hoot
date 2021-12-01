@@ -1,0 +1,40 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes SmallInteger importStatics.
+Hoot Magnitudes Integer import.
+
+TestableClosure subclass: DictionaryWrites. "writing into a dictionary"
+
+DictionaryWrites members:
+[
+    "allocate the keys used"
+    Integer! key1 := 1.
+    Integer! key2 := 2.
+    Integer! key3 := 3.
+    Integer! key4 := 4.
+    Integer! key5 := 5.
+    Integer! key6 := 6.
+    Integer! key7 := 7.
+    Integer! key8 := 8.
+    Integer! key9 := 9.
+    Integer! key10 := 10.
+
+    String! description [ ^'Dictionary writes' ]
+    Dictionary! dict := Dictionary new: 20.
+    Void! prepare [ dict removeAll. ]
+    Void! runTest [
+        dict
+        at: key1 put: Zero;
+        at: key2 put: Zero;
+        at: key3 put: Zero;
+        at: key4 put: Zero;
+        at: key5 put: Zero;
+        at: key6 put: Zero;
+        at: key7 put: Zero;
+        at: key8 put: Zero;
+        at: key9 put: Zero;
+        at: key10 put: Zero.
+    ]
+]

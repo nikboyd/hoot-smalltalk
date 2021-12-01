@@ -1,0 +1,56 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Collections ReadableString import.
+
+Scalar subtype: Duration.
+"A type signature for ANSI Smalltalk Duration (sections 5.8.2, 5.8.3)."
+
+Duration type "creating instances" members:
+[
+    Duration!
+        days: Ordinal! days
+        hours: Ordinal! hours
+        minutes: Ordinal! minutes
+        seconds: Numeric! seconds
+        "a new duration of the given length" []
+
+    Duration! seconds: Numeric! seconds "a new duration of the given length" []
+    Duration! zero "a duration of length zero" []
+]
+
+Duration "converting" members:
+[
+    Ordinal! days "the number of complete days in this duration" []
+    Ordinal! hours "the number of complete hours in this duration" []
+    Ordinal! minutes "the number of complete minutes in this duration" []
+
+    Numeric! seconds "the number of complete seconds in this duration" []
+    Numeric! asSeconds "the total number of seconds in this duration" []
+]
+
+Duration "arithmetic" members:
+[
+    + aDuration "a value = (this + aDuration)" []
+    - aDuration "a value = (this - aDuration)" []
+    * aDuration "a value = (this * aDuration)" []
+    / aDuration "a value = (this / aDuration)" []
+]
+
+Duration "mathematics" members:
+[
+    abs "a value = |this|" []
+    negated "arithmetic inverse, a value = (0 - this)" []
+]
+
+Duration "testing" members:
+[
+    Posit! negative "whether (this < 0)" []
+    Posit! positive "whether (this >= 0)" []
+]
+
+Duration "printing" members:
+[
+    @Override ReadableString! printString "a formatted duration" []
+]

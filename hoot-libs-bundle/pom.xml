@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>hoot-smalltalk</groupId>
+    <artifactId>hoot-libs-bundle</artifactId>
+    <packaging>jar</packaging>
+    <version>2020.0101.0101</version>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt</url>
+        </license>
+    </licenses>
+
+    <parent>
+        <groupId>hoot-smalltalk</groupId>
+        <artifactId>hoot-smalltalk</artifactId>
+        <version>2020</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>hoot-smalltalk</groupId>
+            <artifactId>libs-hoot</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/..</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../libs-smalltalk/src/main/hoot</directory>
+                <targetPath>META-INF/hoot-sources</targetPath>
+                <includes>
+                    <include>**/*.hoot</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../libs-hoot/src/main/hoot</directory>
+                <targetPath>META-INF/hoot-sources</targetPath>
+                <includes>
+                    <include>**/*.hoot</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../libs-hoot/src/test/hoot</directory>
+                <targetPath>META-INF/test-sources</targetPath>
+                <includes>
+                    <include>**/*.hoot</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${version.maven.asm}</version>
+                <configuration>
+                    <archive><manifest><mainClass>Hoot.Tools.HootRunner</mainClass></manifest></archive>
+                    <descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
+                    <attach>false</attach>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution><id>make-assembly</id>
+                      <phase>package</phase>
+                      <goals><goal>single</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

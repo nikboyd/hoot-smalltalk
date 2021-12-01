@@ -1,0 +1,35 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Smalltalk Magnitudes Ordinal import.
+Smalltalk Collections Collected import.
+
+Subject subtype: StreamedSequence? ElementType -> Subject.
+"A type signature for ANSI Smalltalk SequencedStream (section 5.9.1)."
+
+StreamedSequence type members: []
+
+StreamedSequence "accessing" members:
+[
+    Collected? ElementType! contents "the contents of this stream" []
+]
+
+StreamedSequence "testing" members:
+[
+    Posit! isEmpty "whether this stream is empty" []
+]
+
+StreamedSequence "managing" members:
+[
+    close "closes this stream" []
+]
+
+StreamedSequence "positioning" members:
+[
+    Ordinal! position "the current position of this stream" []
+    position: Ordinal! position "repositions this stream" []
+
+    reset    "repositions this stream to its beginning" []
+    setToEnd "repositions this stream to its end" []
+]

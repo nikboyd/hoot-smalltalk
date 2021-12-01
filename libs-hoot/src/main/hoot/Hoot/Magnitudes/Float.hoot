@@ -1,0 +1,145 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Math BigInteger import.
+Hoot Runtime Names Primitive import.
+Smalltalk Magnitudes Numeric import.
+
+Number subclass: Float. "A single precision, real number."
+
+Float class "coercing" members:
+[
+    @Static Float! Zero := 0.0.
+    Float! zero [ ^Zero ]
+
+    @Static Float! Unity := 1.0.
+    Float! unity [ ^Unity ]
+
+    coerce: aNumber [ "a Float value = aNumber" ^aNumber asFloat ]
+]
+
+Float members: "constants"
+[
+    @Static SmallInteger! Significance := 8.
+
+    @Static Java Lang Float! FloatZero := 0.0 primitiveFloat.
+    @Static Java Lang Float! FloatUnity := 1.0 primitiveFloat.
+
+    @Static SmallInteger! Generality := 60.
+    Integer! generality [ ^Generality ]
+]
+
+Float members: "constructing instances"
+[
+    Java Lang Float! primitiveValue.
+    Float: Java Lang Float! primitiveFloat [ primitiveValue := primitiveFloat. ]
+    Float: Java Lang Double! primitiveDouble [ primitiveValue := primitiveDouble floatValue. ]
+    @Static Float! from: Java Lang Float! primitiveFloat [ ^Float basicNew: primitiveFloat ]
+]
+
+Float members: "comparing values - final"
+[
+    @Primitive @Final Boolean! = Double! aNumber [
+        ^Boolean from: primitiveValue == aNumber primitiveFloat ]
+
+    @Primitive @Final Boolean! < Double! aNumber [
+        ^Boolean from: primitiveValue < aNumber primitiveFloat ]
+
+    @Primitive @Final Boolean! > Double! aNumber [
+        ^Boolean from: primitiveValue > aNumber primitiveFloat ]
+]
+
+Float members: "comparing values"
+[
+    Boolean! = Magnitude! aNumber [ ^self = (Float <- aNumber) ]
+    Boolean! = Numeric! aNumber [ ^(Number <- aNumber) asFloat = self ]
+    @Primitive Boolean! < Number! aNumber [ ^Boolean from: (aNumber asFloat primitiveFloat > self primitiveFloat) ]
+    @Primitive Boolean! > Number! aNumber [ ^Boolean from: (aNumber asFloat primitiveFloat < self primitiveFloat) ]
+]
+
+Float "converting" members:
+[
+    asFloat [ ^self ]
+
+    Java Lang Float! asPrimitive [ ^self primitiveFloat ]
+    Java Lang Float! primitiveFloat [ ^primitiveValue ]
+    Java Lang Double! primitiveDouble [ ^primitiveValue doubleValue ]
+
+    @Primitive Fraction! asFraction [ "a fractional approximation"
+        BigInteger! ... parts := Primitive fractionalize: primitiveValue : Significance primitiveInteger.
+        ^Fraction basicNew: (LargeInteger from: (parts at: 0)) : (LargeInteger from: (parts at: 1)) ]
+
+    Java Lang Number! elementaryNumber [ ^primitiveValue ]
+    @Primitive Java Lang Long! primitiveLong [ ^Long <- (Math floor: primitiveValue) ]
+]
+
+Float members: "arithmetic"
+[
+    @Primitive @Final Float! negated [ ^Float from: (FloatZero - primitiveValue) ]
+    @Primitive @Final Float! + Float! aNumber [ ^Float from: (primitiveValue + aNumber asPrimitive) ]
+    @Primitive @Final Float! - Float! aNumber [ ^Float from: (primitiveValue - aNumber asPrimitive) ]
+    @Primitive @Final Float! * Float! aNumber [ ^Float from: (primitiveValue * aNumber asPrimitive) ]
+    @Primitive @Final Float! / Float! aNumber [
+        FloatZero == aNumber asPrimitive ifTrue: [ self zeroDivide. ^self ].
+        ^Float from: (self asPrimitive / aNumber asPrimitive) ]
+
+    + Numeric! aNumber [ "this + aNumber"
+        Number! n := Number <- aNumber. ^self generality > n generality
+            ifTrue: [ (n class coerce: self) + n ] ifFalse: [ self + n asFloat ]]
+
+    - Numeric! aNumber [ "this - aNumber"
+        Number! n := Number <- aNumber. ^self generality > n generality
+            ifTrue: [ (n class coerce: self) - n ] ifFalse: [ self - n asFloat ]]
+
+    * Numeric! aNumber [ "this * aNumber"
+        Number! n := Number <- aNumber. ^self generality > n generality
+            ifTrue: [ (n class coerce: self) * n ] ifFalse: [ self * n asFloat ]]
+
+    / Numeric! aNumber [ "this / aNumber"
+        Number! n := Number <- aNumber. ^self generality > n generality
+            ifTrue: [ (n class coerce: self) / n ] ifFalse: [ self / n asFloat ]]
+]
+
+Float members: "mathematics"
+[
+    ** Float! power [ ^Float basicNew: (Math pow: primitiveValue : power primitiveFloat) ]
+
+    arcCos [ ^Float basicNew: (Math acos: primitiveValue) ]
+    arcSin [ ^Float basicNew: (Math sin: primitiveValue) ]
+    arcTan [ ^Float basicNew: (Math atan: primitiveValue) ]
+
+    cos [ ^Float basicNew: (Math cos: primitiveValue) ]
+    exp [ ^Float basicNew: (Math exp: primitiveValue) ]
+    Double! sin [ ^Double basicNew: (Math sin: primitiveValue) ]
+    Double! tan [ ^Double basicNew: (Math tan: primitiveValue) ]
+    Double! ln [ ^Double basicNew: (Math log: primitiveValue) ]
+
+    Double! log: Numeric! radix [ ^self ln / radix asFloat ln ]
+    Integer! floorLog: Numeric! radix [ ^(self log: radix asFloat) floor ]
+
+    Double! degreesToRadians [ ^Double basicNew: (primitiveValue * Primitive radiansPerDegree) ]
+    Double! radiansToDegrees [ ^Double basicNew: (primitiveValue * Primitive degreesPerRadian) ]
+]
+
+Float members: "truncation"
+[
+    Integer! floor [ ^SmallInteger from: Int <- (Math floor: primitiveValue) ]
+    Integer! ceiling [ ^SmallInteger from: Int <- (Math ceil: primitiveValue) ]
+]
+
+Float "printing" members:
+[
+    @Static @Final String! FloatReport := '%.9f'.
+    String! printString [ ^String from: (Java Lang String format: FloatReport primitiveString : self asPrimitive) ]
+]
+
+Float members: "testing behavior"
+[
+    Boolean! isFloat [ ^true ]
+    Boolean! isLiteral [ ^true ]
+
+    @Primitive Boolean! negative [ ^Boolean from: FloatZero > primitiveValue  ]
+    @Primitive Boolean! positive [ ^Boolean from: FloatZero <= primitiveValue ]
+    @Primitive Boolean! strictlyPositive [ ^Boolean from: FloatZero < primitiveValue ]
+]

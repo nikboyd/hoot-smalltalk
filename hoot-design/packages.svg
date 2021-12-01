@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="12cm" height="5cm" viewBox="178 96 443 165" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="180" y="97.8334" width="160" height="42.1667"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="180" y="97.8334" width="160" height="42.1667"/>
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="260" y="121.033">
+      <tspan x="260" y="121.033">package directory</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="460" y="100" width="160" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="100" width="160" height="40"/>
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="540" y="122.117">
+      <tspan x="540" y="122.117">class file</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="460" y="220" width="160" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="220" width="160" height="40"/>
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="540" y="242.117">
+      <tspan x="540" y="242.117">class</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="180" y="220" width="160" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="180" y="220" width="160" height="40"/>
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="260" y="242.117">
+      <tspan x="260" y="242.117">package</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="260" y1="140" x2="260" y2="210.264"/>
+    <polygon style="fill: #000000" points="260,217.764 255,207.764 260,210.264 265,207.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="260,217.764 255,207.764 260,210.264 265,207.764 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="540" y1="140" x2="540" y2="210.264"/>
+    <polygon style="fill: #000000" points="540,217.764 535,207.764 540,210.264 545,207.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="540,217.764 535,207.764 540,210.264 545,207.764 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="340" y1="118.917" x2="440.001" y2="119.819"/>
+    <polygon style="fill: #000000" points="449.955,124.91 460,120 450.046,114.91 "/>
+    <polygon style="fill: #000000" points="439.956,124.819 450,119.91 440.046,114.82 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="340" y1="240" x2="440" y2="240"/>
+    <polygon style="fill: #000000" points="450,245 460,240 450,235 "/>
+    <polygon style="fill: #000000" points="440,245 450,240 440,235 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="372" y="100.4" width="56.7" height="16.45"/>
+    <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:italic;font-weight:normal" x="372" y="114">
+      <tspan x="372" y="114">contains</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="368.8" y="219.1" width="56.7" height="16.45"/>
+    <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:italic;font-weight:normal" x="368.8" y="232.7">
+      <tspan x="368.8" y="232.7">contains</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="223.6" y="170.2" width="65.15" height="16.45"/>
+    <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:italic;font-weight:normal" x="223.6" y="183.8">
+      <tspan x="223.6" y="183.8">embodies</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="507.8" y="169.1" width="65.15" height="16.45"/>
+    <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:italic;font-weight:normal" x="507.8" y="182.7">
+      <tspan x="507.8" y="182.7">embodies</tspan>
+    </text>
+  </g>
+</svg>

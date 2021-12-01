@@ -1,0 +1,36 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Java Util HashSet import.
+
+Hoot Collections Set import.
+
+Smalltalk Core Posit import.
+Smalltalk Core Subject import.
+Smalltalk Exceptions importAll.
+
+"Represents an exception raised by a thread."
+Object subclass: ExceptionalSet! ExceptionSet.
+
+ExceptionSet class members:
+[
+    with: ExceptionSelector Metatype! exceptionClass [
+        ^ExceptionSet basicNew , exceptionClass
+    ]
+]
+
+ExceptionSet members:
+[
+    HashSet? ExceptionSelector Metatype! exceptions := HashSet basicNew.
+
+    , ExceptionSelector Metatype! exceptionClass [
+        exceptions add: exceptionClass.
+    ]
+
+    @Primitive Boolean! handles: SignaledException! anException [
+        ^Boolean from:
+            ([ : ExceptionDescription Metatype! exceptionClass |
+                (anException isKindOf: exceptionClass) primitiveBoolean ] testWithEach: exceptions)
+    ]
+]

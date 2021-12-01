@@ -1,0 +1,34 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Magnitudes Integer import.
+Hoot Magnitudes SmallInteger importStatics.
+
+TestBase subclass: BasicDictionaryTest. "dictionary regression tests"
+BasicDictionaryTest members: "testing dictionary"
+[
+    Array! sample := #( 5 4 3 2 1 ).
+    Dictionary! d := Dictionary new.
+
+    @Static @Final String! ValueReport := 'key %s = %s'. "note BUG! = quote count at end when doubled"
+    reportKey: key value: value [ self log printLine: (ValueReport formatWith: key printString : value printString). ]
+
+    Void! runTest [
+        self log print: 'dictionary = '.
+        sample do: [ :each | d at: each printString put: each ]. "1st fill d"
+        self assertTrue: [ self log printLine: 'sampled'. ^d size == sample size ].
+
+        d keysAndValuesDo: [ :key :value | self reportKey: key value: value ].
+        self passed: 'dictionary key-value test'.
+
+        d associationsDo: [ :Association! assoc | self assertTrue: [ ^sample includes: assoc value ]. ].
+        self passed: 'dictionary associates test'.
+
+        d valuesDo: [ :v | self assertTrue: [ ^sample includes: v ]. ].
+        self passed: 'dictionary values test'.
+
+        d keysDo: [ :String! k | self assertTrue: [ ^sample includes: k toInteger ]. ].
+        self passed: 'dictionary keys test'.
+    ]
+]

@@ -1,0 +1,375 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Exceptions importAll.
+Hoot Magnitudes importAll.
+Hoot Magnitudes Number import.
+Hoot Magnitudes Integer import.
+Hoot Collections String import.
+Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors HootRegistry import.
+
+Samples Core Subject import.
+Smalltalk Collections ReadableString import.
+Smalltalk Streams StreamedSink import.
+
+Java IO Serializable import.
+
+Java Lang Object subclass: @Abstract Cloneable! Serializable! Subject! Object.
+"Object is the base of the class hierarchy, and defines many basic operations."
+
+Object class members: [
+
+    "all classes must implement new, but abstracts cannot"
+    @Override Object! new [ ^null ]
+]
+
+Object members: "constructing instances"
+[
+    @Protected Object [ "constructs a new instance" ]
+]
+
+Object members: "synchronizing threads"
+[
+    @Synchronized Object! acquireMonitorDuring: NiladicValuable! aBlock [
+        "acquires a monitor on this resource while evaluating aBlock"
+        aBlock value.
+    ]
+
+    @Synchronized Object! awakenAllWaitingThreads [
+        "awakens all threads waiting for this resource"
+        self notifyAll.
+    ]
+
+    @Synchronized Object! awakenOneWaitingThread [
+        "awakens a single thread waiting for this resource"
+        self notify.
+    ]
+
+    @Primitive @Synchronized Object! waitForChange: Number! duration ifInterrupted: NiladicValuable! aBlock [
+        "waits for a change and evaluates aBlock if the wait is interrupted"
+        [ self wait: duration primitiveLong ] on: InterruptedException do: [ :e | aBlock value ].
+        ^self
+    ]
+
+    @Primitive @Synchronized Object! waitForChangeIfInterrupted: NiladicValuable! aBlock [
+        "waits for a change and evaluates aBlock if the wait is interrupted"
+        [ self wait ] on: InterruptedException do: [ :e | aBlock value ].
+        ^self
+    ]
+]
+
+Object members: "accessing values"
+[
+    @Override Subject! value "this value" [
+        ^self
+    ]
+
+    @Override ResultType -> Subject! yourself "this object" [
+        ^ResultType <- self
+    ]
+
+    Behavior! species [
+        "the behavior associated with this object"
+        ^Behavior <- self class
+    ]
+]
+
+Object members: "associating"
+[
+    Association! >> Object! associate [
+        "a new association (this >> associate)"
+    	^Association withKey: self withValue: associate
+    ]
+]
+
+Object members: "comparing values"
+[
+    @Override @Primitive Java Lang Boolean!
+    equals: Java Lang Object! candidate [
+        "indicates whether (this = candidate)"
+        (candidate == nil) ifTrue: [ ^false ].
+        ^(self equals: (Subject <- candidate)) asPrimitive
+    ]
+
+    @Override @Primitive Java Lang Int! hashCode [
+        "a value used for basic equivalence tests"
+        ^super hashCode
+    ]
+
+    @Override Boolean! = Subject! candidate
+    [	"indicates whether (this = candidate)"
+        "note: derived classes generally override this behavior"
+        ^self == candidate
+    ]
+
+    @Override @Primitive Boolean! == Subject! candidate [
+        "indicates whether this is a candidate"
+        ^Boolean from: self == candidate
+    ]
+
+    @Override Boolean! ~= Subject! candidate
+    [	"indicates whether (this ~= candidate)"
+        ^Boolean <- (self = candidate) not
+    ]
+
+    @Override Boolean! ~~ Subject! candidate
+    [	"indicates whether this differs from a candidate"
+        ^Boolean <- (self == candidate) not
+    ]
+
+    @Override @Final Integer! hash [
+        "a value used for basic equivalence tests"
+        ^(SmallInteger from: self hashCode) "derived classes should override hashCode"
+    ]
+
+    @Override @Final Integer! identityHash [
+        "a value for use in identity tests"
+        ^(SmallInteger from: super hashCode) "not overridden"
+    ]
+]
+
+Object members: "copying"
+[
+    @Override copy [
+        "a (typically shallow) copy of this"
+        ^self shallowCopy
+    ]
+
+    ResultType -> Object! deepCopy [
+        "a deep copy of this"
+        ^ResultType <- (Primitive deepCopyOf: self)
+    ]
+
+    ResultType -> Object! shallowCopy [
+        "a shallow copy of this"
+        ^ResultType <- (Primitive shallowCopyOf: self)
+    ]
+]
+
+Object members: "enumerating"
+[
+    do: MonadicValuable! aBlock [
+        "the result of evaluating aBlock with this"
+        ^Object <- (aBlock value: self)
+    ]
+]
+
+Object members: "performing methods"
+[
+    perform: Selector! selector : Subject! ... arguments [
+        ^(MessageSend basicNew: self : selector : arguments) perform
+    ]
+
+    @Override perform: Selector! selector
+    withArguments: Subject! ... arguments [
+        "the result of invoking the selected method of the receiver"
+        ^(MessageSend basicNew: self : selector : arguments) perform
+    ]
+
+    perform: Selector! selector
+    with: Subject! a0
+    with: Subject! a1
+    with: Subject! a2
+    with: Subject! a3 [
+        ^self perform: selector : a0 : a1 : a2 : a3
+    ]
+
+    @Override
+    perform: Selector! selector
+    with: Subject! a0
+    with: Subject! a1
+    with: Subject! a2  [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0 : a1 : a2
+    ]
+
+    @Override
+    perform: Selector! selector with: Subject! a0 with: Subject! a1 [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0 : a1
+    ]
+
+    @Override
+    perform: Selector! selector with: Subject! a0 [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : a0
+    ]
+
+    @Override
+    perform: Selector! selector [
+        "the result of invoking the selected method of the receiver"
+        ^self perform: selector : Subject arrayNew
+    ]
+]
+
+Object members: "printing"
+[
+    @Override printOn: StreamedSink! aStream [
+    	"prints this on a stream"
+        aStream nextPutAll: self printString.
+    ]
+
+    @Override String! printString [
+    	"a printable representation of this"
+        ^self species namePrefix , self class name
+    ]
+
+    String! printTerm [
+    	"a printable term for a formula"
+        ^'( ',
+            self printString ,
+        ' )'
+    ]
+]
+
+Object members: "handling errors"
+[
+    @Override doesNotUnderstand: SentMessage! message [
+        "signals a message not understood exception"
+        ^(MessageNotUnderstood basicNew: (MessageSend basicNew: self : message selector : message arguments)) "signal"
+    ]
+
+    @Override @Primitive Void! error: ReadableString! messageText [
+        Primitive printError: messageText asSelector name.
+        (IllegalStateException basicNew: messageText asSelector name) throw.
+    ]
+
+    Void! invalidMessage [
+        self error: 'An unsupported message was sent to this object'.
+    ]
+]
+
+Object members: "testing"
+[
+    ifNil: NiladicValuable! nilBlock [
+        "nil (because this exists)"
+        ^nil
+    ]
+
+    ifNil: NiladicValuable! nilBlock
+    ifExtant: NiladicValuable! extantBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value
+    ]
+
+    ifExtant: NiladicValuable! extantBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value
+    ]
+
+    ifExtant: NiladicValuable! extantBlock
+    ifNil: NiladicValuable! nilBlock [
+        "the value of extantBlock (because this exists)"
+        ^Object <- extantBlock value
+    ]
+]
+
+Object members: "testing behaviors"
+[
+    Boolean! isBehavior [
+    	"indicates whether this is a (kind of) Behavior"
+        ^false
+    ]
+
+    Boolean! isClass [
+    	"indicates whether this is a Class"
+        ^false
+    ]
+
+    Boolean! instanceOf: Java Lang Class! aClass [
+        Behavior! aType := Behavior <- (HootRegistry getType: aClass).
+        ^self isMemberOf: aType "placeholder"
+    ]
+
+    @Override Boolean! isKindOf: Classified! candidateClass [
+    	"indicates whether this is derived from a candidateClass"
+        ^self species inheritsFrom: Behavior <- candidateClass
+    ]
+
+    @Override Boolean! isMemberOf: Classified! candidateClass [
+    	"indicates whether this a member of a candidateClass"
+        ^(Behavior <- candidateClass) == (Subject <- self class)
+    ]
+
+    Boolean! isMetaclass [
+    	"indicates whether this is a (kind of) Metaclass"
+        ^false
+    ]
+
+    @Override @Primitive Boolean! respondsTo: Selector! selector
+    [   "indicates whether this has a method named: selector"
+        ^Boolean from: (Primitive class: self class primitiveClass hasMethod: selector name)
+    ]
+]
+
+Object members: "testing literals"
+[
+    Boolean! isArray [
+    	"indicates whether this is a (kind of) Array"
+        ^false
+    ]
+
+    Boolean! isBoolean [
+    	"indicates whether this is a Boolean"
+        ^false
+    ]
+
+    Boolean! isCharacter [
+    	"indicates whether this is a Character"
+        ^false
+    ]
+
+    Boolean! isCollection [
+    	"indicates whether this is a (kind of) Collection"
+        ^false
+    ]
+
+    Boolean! isFloat [
+    	"indicates whether this is a Float"
+        ^false
+    ]
+
+    Boolean! isInteger [
+    	"indicates whether this is a (kind of) Integer"
+        ^false
+    ]
+
+    Boolean! isLiteral [
+    	"indicates whether this is a (kind of) literal"
+        ^false
+    ]
+
+    @Override Boolean! isNil [
+    	"indicates whether this is nil"
+        ^false
+    ]
+
+    Boolean! isSmallInteger [
+    	"indicates whether this is a SmallInteger"
+        ^false
+    ]
+
+    Boolean! isString [
+    	"indicates whether this is a (kind of) String"
+        ^false
+    ]
+
+    @Override Boolean! notNil [
+    	"indicates whether this is not nil"
+        ^true
+    ]
+
+    @Primitive @Static Boolean! isNull: Object! candidate [
+        "indicates whether (candidate == null)"
+         ^Boolean from: candidate == nil
+    ]
+]
+
+Object members: "accessing literals"
+[
+    @Static Nil! literalNil [
+       ^Nil literal
+    ]
+]

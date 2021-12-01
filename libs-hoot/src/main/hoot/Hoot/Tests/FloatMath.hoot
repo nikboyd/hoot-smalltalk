@@ -1,0 +1,19 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+TestableClosure subclass: FloatMath. "test some float math"
+
+FloatMath members:
+[
+    Float! a := 87.0.
+    Float! b := 53.0.
+    Float! c := 87.0 negated.
+    Float! d := 42461.0.
+    Float! e := 5.0.
+
+    String! description [ ^'Float ops' ]
+    Void! runTest [
+        f := (e * a + b) * c + d.
+    ]
+]

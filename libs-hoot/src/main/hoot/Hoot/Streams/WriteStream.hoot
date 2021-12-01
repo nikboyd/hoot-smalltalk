@@ -1,0 +1,58 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Collections OrderedCollection import.
+Hoot Runtime Names Primitive import.
+
+Smalltalk Core Subject import.
+Smalltalk Streams StreamWriter import.
+Smalltalk Collections importAll.
+
+CollectionStream? ElementType subclass: StreamWriter? ElementType! 
+WriteStream? ElementType -> Object. "A write-able stream (on a collection)."
+
+WriteStream class members:
+[
+    WriteStream! with: CollectedVariably? ElementType -> Subject! aCollection [ ^WriteStream basicNew: aCollection ]
+
+    String! lineSeparator [ ^LineSeparator ]
+]
+
+WriteStream members: "constructing instances"
+[
+    "Contains the platform line separator."
+    @Static @Final @Primitive Java Lang String! SeparatorName := 'line.separator'.
+    @Static @Final String! LineSeparator := String from: (Primitive systemValue: SeparatorName).
+
+    "Constructs a new WriteStream given (aCollection)."
+    @Protected WriteStream: CollectedVariably? ElementType! aCollection [
+     	super : aCollection. ]
+
+    CollectedVariably? ElementType! contents [ ^CollectedVariably <- contents ]
+]
+
+WriteStream "writing" members:
+[
+    flush [ ^self ]
+
+    cr [ self nextPutAll: CollectedReadably <- LineSeparator. ]
+    tab [ self nextPut: ElementType <- Character type tab. ]
+    space [ self nextPut: ElementType <- Character type space. ]
+
+    nextPut: ElementType! element [
+        (self collectsElements: Object <- element) ifTrue: [
+            self contents add: element.
+            position := position + 1.
+        ].
+    ]
+
+    nextPutAll: CollectedReadably? ElementType! elements [
+        elements isEmpty ifFalse: [
+            (self collectsElements: Object <- elements first) ifTrue: [
+                self contents addAll: elements.
+                position := position + elements size.
+            ]
+        ].
+    ]
+]

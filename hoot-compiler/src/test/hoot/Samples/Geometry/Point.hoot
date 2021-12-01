@@ -1,0 +1,286 @@
+@Notice :'Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for more details.'!
+
+Hoot Behaviors False import.
+Hoot Behaviors Object import.
+Hoot Behaviors Boolean import.
+Hoot Magnitudes Number import.
+Samples Magnitudes Magnitude import.
+Hoot Magnitudes SmallInteger import.
+Hoot Collections String import.
+
+Samples Core Subject import.
+Smalltalk Magnitudes Scalar import.
+
+Magnitude subclass: Point. "A point on a 2-dimensional plane."
+
+Point class members: "creating instances"
+[
+    @Override Point! new
+    [   "a new Point = (0 @ 0)"
+        ^Point basicNew x: 0 y: 0
+    ]
+
+    Point! x: Number! x  y: Number! y
+    [   "a new Point = (x @ y)"
+        ^Point basicNew x: x y: y
+    ]
+]
+
+Point members: "knowing coordinates"
+[
+    "X coordinate"
+    @Property Number! x := 0.
+
+    "Y coordinate"
+    @Property Number! y := 0.
+
+    x: Number! x y: Number! y
+    [   "constructs a Point = (x @ y)"
+        ^self
+            x: x;
+            y: y;
+            yourself
+    ]
+
+    @Static Point! from: Number! scalar
+    [   "a new Point = (scalar @ scalar)"
+        ^Point basicNew x: scalar y: scalar
+    ]
+]
+
+Point members: "point arithmetic"
+[
+    + aPoint
+    [   "a new Point = (this + aPoint)"
+        ^self class
+            x: x + aPoint x
+            y: y + aPoint y
+    ]
+
+    - aPoint
+    [   "a new Point = (this - aPoint)"
+        ^self class
+            x: x - aPoint x
+            y: y - aPoint y
+    ]
+
+    * aPoint
+    [   "a new Point = (this * aPoint)"
+        ^self class
+            x: x * aPoint x
+            y: y * aPoint y
+    ]
+
+    / aPoint
+    [   "a new Point = (this / aPoint)"
+        ^self class
+            x: x / aPoint x
+            y: y / aPoint y
+    ]
+
+    // aPoint
+    [   "a new Point = (this // aPoint)"
+        ^self class
+            x: x // aPoint x
+            y: y // aPoint y
+    ]
+
+    \\ aPoint
+    [   "a new Point = (this \\ aPoint)"
+        ^self class
+            x: x \\ aPoint x
+            y: y \\ aPoint y
+    ]
+]
+
+Point members: "scalar arithmetic"
+[
+    + Number! scalar
+    [   "a new Point = (this + (Point from: scalar))"
+        ^self + (Point from: scalar)
+    ]
+
+    - Number! scalar
+    [   "a new Point = (this - (Point from: scalar))"
+        ^self - (Point from: scalar)
+    ]
+
+    * Number! scalar
+    [   "a new Point = (this * (Point from: scalar))"
+        ^self * (Point from: scalar)
+    ]
+
+    / Number! scalar
+    [   "a new Point = (this / (Point from: scalar))"
+        ^self / (Point from: scalar)
+    ]
+
+    // Number! scalar
+    [   "a new Point = (this // (Point from: scalar))"
+        ^self // (Point from: scalar)
+    ]
+
+    \\ Number! scalar
+    [   "a new Point = (this \\ (Point from: scalar))"
+        ^self \\ (Point from: scalar)
+    ]
+]
+
+Point members: "comparing points"
+[
+    Boolean! = aPoint
+    [   "indicates whether (this = aPoint)"
+        ^Boolean <- (( x = aPoint x ) and: [ y = aPoint y ])
+    ]
+
+    Boolean! < aPoint
+    [   "indicates whether (this < aPoint)"
+        ^Boolean <- (( x < aPoint x ) and: [ y < aPoint y ])
+    ]
+
+    Boolean! <= aPoint
+    [   "indicates whether ~(aPoint < this)"
+        ^Boolean <- (( aPoint x < x ) not and: [ ( aPoint y < y ) not ])
+    ]
+
+    Boolean! > aPoint
+    [   "indicates whether (this > aPoint)"
+        ^Boolean <- (( x > aPoint x ) and: [ y > aPoint y ])
+    ]
+
+    Boolean! >= aPoint
+    [   "indicates whether ~(aPoint > this)"
+        ^Boolean <- (( aPoint x > x ) not and: [ ( aPoint y > y ) not ])
+    ]
+
+    @Override Point! min: Scalar! aPoint [
+        ^self min: Point <- aPoint
+    ]
+
+    Point! min: Point! aPoint [
+        "the lesser of this versus aPoint"
+        (aPoint == null) ifTrue: [ [ aPoint x ] value. ^self ].
+        (self lessThan: aPoint) ifTrue: [ ^self ].
+        ^aPoint
+    ]
+
+    @Override Point! max: Scalar! aPoint [
+        ^self max: Point <- aPoint
+    ]
+
+    @Primitive Point! max: Point! aPoint [
+        "the greater of this versus aPoint"
+        (aPoint == null) ifTrue: [ ^self ].
+        (self moreThan: aPoint) ifTrue: [ ^self ].
+        ^aPoint
+    ]
+]
+
+Point members: "comparing with scalars"
+[
+    @Override @Primitive Boolean! = Subject! value
+    [   "indicates whether (this = value)"
+        (value instanceOf: Point) ifTrue: [ ^self equals: (Point <- value) ].
+        ^False literal
+    ]
+
+    @Override @Primitive Boolean! < Scalar! value
+    [   "indicates whether (this < value)"
+        (value instanceOf: Point) ifTrue: [ ^self lessThan: (Point <- value) ].
+        ^False literal
+    ]
+
+    @Override @Primitive Boolean! <= Scalar! value
+    [   "indicates whether (this <= value)"
+        (value instanceOf: Point) ifTrue: [ ^self notMore: (Point <- value) ].
+        ^False literal
+    ]
+
+    @Override @Primitive Boolean! > Scalar! value
+    [   "indicates whether (this > value)"
+        (value instanceOf: Point) ifTrue: [ ^self moreThan: (Point <- value) ].
+        ^False literal
+    ]
+
+    @Override @Primitive Boolean! >= Scalar! value
+    [   "indicates whether (this >= value)"
+        (value instanceOf: Point) ifTrue: [ ^self notLess: (Point <- value) ].
+        ^False literal
+    ]
+]
+
+Point members: "converting types"
+[
+    Point! asPoint
+    [   "this Point"
+        ^self
+    ]
+
+    Java Awt Point! primitivePoint [
+        ^Java Awt Point basicNew: x primitiveInteger : y primitiveInteger
+    ]
+
+    Java Awt Dimension! primitiveDimension [
+        ^Java Awt Dimension basicNew: x primitiveInteger : y primitiveInteger
+    ]
+
+    @Override String! printString
+    [   "a printable representation of this Point"
+        ^x printString, ' @ ', y printString
+    ]
+
+    @Override Java Lang Int! hashCode
+    [   "an integer value for equivalence tests"
+        ^(x hash bitXor: y hash) primitiveInteger
+    ]
+
+    Rectangle! extent: Point! extentPoint
+    [   "a new Rectangle with origin = this, extent = extentPoint"
+        ^Rectangle origin: self extent: extentPoint
+    ]
+
+    Rectangle! corner: Point! cornerPoint
+    [   "a new Rectangle with origin = this, corner = cornerPoint"
+        ^Rectangle origin: self corner: cornerPoint
+    ]
+]
+
+Point members: "functional arithmetic"
+[
+    abs
+    [   "a new Point = (x abs @ y abs)"
+        ^x abs @ y abs
+    ]
+
+    negated
+    [   "a new Point = (x negated @ y negated)"
+        ^x negated @ y negated
+    ]
+
+    truncated
+    [   "a new Point = (x truncated @ y truncated)"
+        ^x truncated @ y truncated
+    ]
+
+    truncatedTo: aNumber
+    [   "a new Point = ((x truncatedTo: aNumber) @ (y truncatedTo: aNumber))"
+        ^(x truncatedTo: aNumber) @ (y truncatedTo: aNumber)
+    ]
+
+    rounded
+    [   "a new Point = (x rounded @ y rounded)"
+        ^x rounded @ y rounded
+    ]
+
+    transpose
+    [   "a new Point = (y @ x)"
+        ^y @ x
+    ]
+
+    Number! dotProduct: aPoint
+    [   "a Number = ((x * aPoint x) + (y * aPoint y))"
+        ^(x * aPoint x) + (y * aPoint y)
+    ]
+]
