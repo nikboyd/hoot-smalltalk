@@ -19,4 +19,4 @@ jobs:
       - name: build-main-branch
         run: |
           mvn --version
-          mvn -U -B clean install
+          shell/build-all-mods.sh
