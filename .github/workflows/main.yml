@@ -16,7 +16,9 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
-      - run: |
+      - name: build-main-branch
+        run: |
           pwd
+          ls -al
           mvn --version
           sysctl -n hw.physicalcpu
