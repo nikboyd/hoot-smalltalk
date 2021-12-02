@@ -11,10 +11,9 @@ import static Hoot.Runtime.Emissions.Emission.emit;
  * @author nik <nikboyd@sonic.net>
  * @see "Copyright 2010,2019 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
- * @see <a href="https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt">LICENSE for more details</a>
  */
 public interface EmissionSource extends Logging {
-    
+
     // 0 = file level
     // 1 = face level = type, meta-type, class, meta-class
     // 2 = member level = variable, method
@@ -50,7 +49,7 @@ public interface EmissionSource extends Logging {
     default Emission emitQuoted(String value) { return emit("Quoted").value(value); }
     default Emission emitAnswer(Emission value) { return emit("Answer").value(value); }
     default Emission emitResult(Emission type, Emission value) { return emit("Result").type(type).value(value); }
-    default Emission emitExit(Emission value, Emission type) { 
+    default Emission emitExit(Emission value, Emission type) {
         return emit("Exit").type(type).value(value).with("level", (nestLevel()-1)+""); }
 
     default Emission emitExpression(Emission operand, Emission... messages) {

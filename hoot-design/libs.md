@@ -186,7 +186,6 @@ You can find more details about the mapping of the ANSI standard in the
 Copyright 2010,2021 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
-See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
 
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
@@ -203,5 +202,5 @@ See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for
 [hoot-ansi]: ANSI-X3J20-1.9.pdf
 [squeak-ansi]: https://wiki.squeak.org/squeak/172
 [st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
-[type-diagram]: https://gitlab.com/hoot-smalltalk/hoot-smalltalk/raw/master/hoot-design/behaviors.svg "Metaclasses"
-[packages]: https://gitlab.com/hoot-smalltalk/hoot-smalltalk/raw/master/hoot-design/packages.svg "Packaging"
+[type-diagram]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/behaviors.svg "Metaclasses"
+[packages]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/packages.svg "Packaging"

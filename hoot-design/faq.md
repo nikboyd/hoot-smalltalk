@@ -266,7 +266,6 @@ Re-order the bits of code so that variable declarations **always precede their u
 Copyright 2010,2021 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
-See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
 
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
@@ -302,7 +301,7 @@ See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for
 [hoot-ansi]: ANSI-X3J20-1.9.pdf
 [squeak-ansi]: https://wiki.squeak.org/squeak/172
 [st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
-[eco-depot]: https://gitlab.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
+[eco-depot]: https://github.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
 
 [objects]: https://educery.dev/papers/software-metaphors/#objects
 [using-natural-language]: https://educery.dev/papers/modeling/natural-language-software-development/#head

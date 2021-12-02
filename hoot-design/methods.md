@@ -142,7 +142,6 @@ The workings of JNI and how that can made to work with Hoot Smalltalk are (way) 
 Copyright 2010,2021 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
-See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"

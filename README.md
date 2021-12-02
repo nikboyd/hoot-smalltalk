@@ -456,7 +456,7 @@ Each link below leads to discussions of the specific language feature design det
 Copyright 2010,2021 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
-See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
+See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
 
 
 [logo]: hoot-design/hoot-owl.svg "Hoot Owl"
@@ -465,7 +465,7 @@ See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
 [st-syntax]: https://en.wikipedia.org/wiki/Smalltalk#Syntax "Smalltalk Syntax"
 [st-imps]: https://en.wikipedia.org/wiki/Smalltalk#List_of_implementations "Smalltalk Implementations"
-[eco-depot]: https://gitlab.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
+[eco-depot]: https://github.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
 
 [jdk8]: https://openjdk.java.net/projects/jdk8/
 [jdk11]: https://openjdk.java.net/projects/jdk/11/

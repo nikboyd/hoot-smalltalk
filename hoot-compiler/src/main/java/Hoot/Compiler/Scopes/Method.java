@@ -20,7 +20,6 @@ import Hoot.Compiler.Expressions.*;
  * @author nik <nikboyd@sonic.net>
  * @see "Copyright 1999,2021 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
- * @see <a href="https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt">LICENSE for more details</a>
  */
 public class Method extends Block {
 
@@ -124,7 +123,7 @@ public class Method extends Block {
     }
 
     public Emission emitSimple() {
-        return emitMethodScope(comment(), emitExitVariables(), emptyIf(signature().hasResult()), 
+        return emitMethodScope(comment(), emitExitVariables(), emptyIf(signature().hasResult()),
                 emitSignature(), emitContents(), emptyIf(needsFrame()), emitConstruct()); }
 
     public Emission emitAbstract() {

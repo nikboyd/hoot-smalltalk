@@ -18,7 +18,6 @@ import static Hoot.Runtime.Names.Name.MetaMember;
  * @author nik <nikboyd@sonic.net>
  * @see "Copyright 1999,2021 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
- * @see <a href="https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt">LICENSE for more details</a>
  */
 public class Mirror extends Item implements Typified {
 

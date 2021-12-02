@@ -80,7 +80,6 @@ ExceptionDescription, ExceptionSignaler subtype: ExceptionBuilder.
 Copyright 2010,2021 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
-See https://gitlab.com/hoot-smalltalk/hoot-smalltalk/tree/master/LICENSE.txt for LICENSE details.
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
 [images]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence "Image Persistence"
