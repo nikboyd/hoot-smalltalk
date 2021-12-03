@@ -22,15 +22,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: build-main-branch
-        run: |
-          mvn --version
-          shell/build-all-mods.sh
-      - name: upload-bundles
         env:
           MAVEN_REPO_USER: ${{ secrets.MAVEN_REPO_USER }}
           MAVEN_REPO_PASS: ${{ secrets.MAVEN_REPO_PASS }}
         run: |
-          shell/deploy-libs.sh
+          mvn --version
+          shell/build-all-mods.sh
 
 #      - name: stage-bundles
 #        run: |
