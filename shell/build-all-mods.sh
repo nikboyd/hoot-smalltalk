@@ -25,7 +25,11 @@ mvn $maven_opts versions:set -DgroupId=hoot-smalltalk -DartifactId=* -DoldVersio
 mvn $maven_opts install
 mvn_code=$?
 
+# push bundles to package registry
 shell/deploy-libs.sh $mvn_code $stamp
+
+# build and push version tag
+shell/build-git-tag.sh $mvn_code $stamp
 
 if [ -d /workspace ]; then
 

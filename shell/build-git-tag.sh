@@ -10,17 +10,18 @@ else
 fi
 
 work=$( pwd )
-LAB_NAME="Nik Boyd"
-LAB_MAIL="nikboyd@sonic.net"
+HUB_NAME="Nik Boyd"
+HUB_MAIL="nikboyd@sonic.net"
 echo "version = $version"
 
-git config --global user.email "$LAB_MAIL"
-git config --global user.name  "$LAB_NAME"
+HUB_URL="https://$MAVEN_REPO_USER:$MAVEN_REPO_PASS@gitlab.com/nikboyd/hoot-smalltalk"
+
+git config --global user.email "$HUB_MAIL"
+git config --global user.name  "$HUB_NAME"
 
 # generate version tag if build passed
 if [[ $mvn_code == 0 ]]; then
-    LAB_SECRET=$( cat $work/hoot-secret-gitlab.txt | tr -d '[:space:]' )
-    git config remote.origin.url "https://hoot-smalltalk:$LAB_SECRET@gitlab.com/hoot-smalltalk/hoot-smalltalk"
+    git config remote.origin.url "$HUB_URL"
 
     git tag -a $version -m "built by pipeline"
     git push origin --tags
