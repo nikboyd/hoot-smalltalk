@@ -14,7 +14,7 @@ HUB_NAME="Nik Boyd"
 HUB_MAIL="nikboyd@sonic.net"
 echo "version = $version"
 
-HUB_URL="https://$MAVEN_REPO_USER:$MAVEN_REPO_PASS@gitlab.com/nikboyd/hoot-smalltalk"
+HUB_URL="https://$MAVEN_REPO_USER:$MAVEN_REPO_PASS@github.com/nikboyd/hoot-smalltalk"
 
 git config --global user.email "$HUB_MAIL"
 git config --global user.name  "$HUB_NAME"
