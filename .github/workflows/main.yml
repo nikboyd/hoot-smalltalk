@@ -27,7 +27,7 @@ jobs:
           shell/build-all-mods.sh
       - name: upload-bundles
         run: |
-          mvn -U -B -pl hoot-compiler-bundle,hoot-maven-plugin,hoot-libs-bundle deploy
+          mvn -U -B deploy:deploy-file -DrepositoryId=github -Dfile=hoot-compiler-bundle/target/hoot-compiler-bundle*.jar -Durl=https://maven.pkg.github.com/nikboyd/hoot-smalltalk/ -DpomFile=hoot-compiler-bundle/pom.xml
 
 #      - name: stage-bundles
 #        run: |
