@@ -26,6 +26,7 @@ jobs:
           MAVEN_REPO_USER: ${{ secrets.MAVEN_REPO_USER }}
           MAVEN_REPO_PASS: ${{ secrets.MAVEN_REPO_PASS }}
         run: |
+          echo "$MAVEN_REPO_USER"
           mvn --version
           shell/build-all-mods.sh
 
