@@ -29,14 +29,11 @@ jobs:
           echo "$MAVEN_REPO_USER"
           mvn --version
           shell/build-all-mods.sh
-
-#      - name: stage-bundles
-#        run: |
-#          mkdir bundle-stage
-#          cp hoot-maven-plugin/target/*.jar bundle-stage
-#          cp hoot-libs-bundle/target/*.jar  bundle-stage
-#          cp hoot-compiler-bundle/target/*.jar bundle-stage
-#      - uses: actions/upload-artifact@v2
-#        with:
-#          name: Package
-#          path: bundle-stage
+      - name: stage-coverage
+        run: |
+          mkdir coverage-stage
+          cp coverage.zip coverge-stage
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Coverage
+          path: coverge-stage

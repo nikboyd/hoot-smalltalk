@@ -31,6 +31,9 @@ shell/deploy-libs.sh $mvn_code $stamp
 # build and push version tag
 shell/build-git-tag.sh $mvn_code $stamp
 
+# zip coverage for later upload
+shell/build-cover-zip.sh $mvn_code $stamp
+
 if [ -d /workspace ]; then
 
    # build badges after tests
