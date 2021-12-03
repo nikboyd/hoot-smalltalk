@@ -26,8 +26,11 @@ jobs:
           mvn --version
           shell/build-all-mods.sh
       - name: upload-bundles
+        env:
+          MAVEN_REPO_USER: ${{ secrets.MAVEN_REPO_USER }}
+          MAVEN_REPO_PASS: ${{ secrets.MAVEN_REPO_PASS }}
         run: |
-          mvn -U -B deploy:deploy-file -DrepositoryId=github -Dfile=hoot-compiler-bundle/target/hoot-compiler-bundle*.jar -Durl=https://maven.pkg.github.com/nikboyd/hoot-smalltalk/ -DpomFile=hoot-compiler-bundle/pom.xml
+          shell/deploy-libs.sh
 
 #      - name: stage-bundles
 #        run: |

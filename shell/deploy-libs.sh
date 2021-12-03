@@ -1,5 +1,5 @@
 #!/bin/bash
-# deploy-libs.sh deploy built JARs to gitlab package registry, $1=build result, $2=version
+# deploy-libs.sh deploy built JARs to package registry, $1=build result, $2=version
 
 mvn_code=$1
 version=""

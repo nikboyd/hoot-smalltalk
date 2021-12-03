@@ -25,8 +25,9 @@ mvn $maven_opts versions:set -DgroupId=hoot-smalltalk -DartifactId=* -DoldVersio
 mvn $maven_opts install
 mvn_code=$?
 
+shell/deploy-libs.sh $mvn_code $stamp
+
 if [ -d /workspace ]; then
-   shell/deploy-libs.sh $mvn_code $stamp
 
    # build badges after tests
    shell/build-mvn-badge.sh $mvn_code $stamp
