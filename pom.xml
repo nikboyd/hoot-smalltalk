@@ -64,32 +64,59 @@
         <memory-args>-Xmx1024m -Xms1024m</memory-args>
         <no-path-check>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</no-path-check>
         <test-args>${memory-args} ${no-path-check} ${run-headless}</test-args>
+        
+        <cloudsmith-libs>https://maven.cloudsmith.io/educery/hoot-libs/</cloudsmith-libs>
+        <github-hosted-libs>https://maven.pkg.github.com/nikboyd/hoot-smalltalk/</github-hosted-libs>
 
     </properties>
 
     <repositories>
         <repository>
-            <id>hoot-libs</id>
-            <url>https://maven.cloudsmith.io/educery/hoot-libs/</url>
+            <id>github</id>
+            <url>${github-hosted-libs}</url>
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>false</enabled></snapshots>
         </repository>
+<!--
+        <repository>
+            <id>hoot-libs</id>
+            <url>${cloudsmith-libs}</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>hoot-libs</id>
-            <url>https://maven.cloudsmith.io/educery/hoot-libs/</url>
+            <id>github</id>
+            <url>${github-hosted-libs}</url>
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>false</enabled></snapshots>
         </pluginRepository>
+<!--
+        <pluginRepository>
+            <id>hoot-libs</id>
+            <url>${cloudsmith-libs}</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </pluginRepository>
+-->
     </pluginRepositories>
     <distributionManagement>
         <repository>
-            <id>hoot-libs</id>
-            <url>https://maven.cloudsmith.io/educery/hoot-libs/</url>
+            <id>github</id>
+            <url>${github-hosted-libs}</url>
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>false</enabled></snapshots>
         </repository>
+<!--
+        <repository>
+            <id>hoot-libs</id>
+            <url>${cloudsmith-libs}</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+-->
     </distributionManagement>
 
     <dependencyManagement>
