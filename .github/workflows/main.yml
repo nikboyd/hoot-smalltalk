@@ -25,3 +25,13 @@ jobs:
         run: |
           mvn --version
           shell/build-all-mods.sh
+      - name: stage-bundles
+        run: |
+          mkdir bundle-stage
+          cp hoot-maven-plugin/target/*.jar bundle-stage
+          cp hoot-libs-bundle/target/*.jar  bundle-stage
+          cp hoot-compiler-bundle/target/*.jar bundle-stage
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: bundle-stage
