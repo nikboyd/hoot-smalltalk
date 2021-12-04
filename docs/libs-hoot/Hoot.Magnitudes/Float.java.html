@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Float.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">Float.java</span></div><h1>Float.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.math.BigInteger;
+import Hoot.Runtime.Names.Primitive;
+import Smalltalk.Magnitudes.Numeric;
+
+public class Float extends Number
+{
+<span class="fc" id="L28">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L29">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Number.Metaclass
+  {
+<span class="fc" id="L32">    static final Float.Metaclass $class = new Float.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L34">      this(Float.Metaclass.class);</span>
+<span class="fc" id="L35">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L38">      super(aClass);</span>
+<span class="fc" id="L39">    }</span>
+
+<span class="fc" id="L41">    @Override public java.lang.Class outerClass() { return Float.class; }</span>
+
+<span class="fc" id="L43">    protected static Float Zero = ((Float)Float.from(0.0f));</span>
+<span class="fc" id="L44">    protected static Float Unity = ((Float)Float.from(1.0f));</span>
+    /**
+     * @return 
+     */
+    @Override public   Float zero()
+    {
+<span class="nc" id="L50">      java.lang.String exitID = &quot;FloatMetatype&gt;&gt;zero&quot;;</span>
+<span class="nc" id="L51">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L52">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L53">      return (Float)f0.exit(exitID, Zero);</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Float unity()
+    {
+<span class="fc" id="L62">      java.lang.String exitID = &quot;FloatMetatype&gt;&gt;unity&quot;;</span>
+<span class="fc" id="L63">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L64">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L65">      return (Float)f0.exit(exitID, Unity);</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Float coerce(final Number aNumber)
+    {
+<span class="nc" id="L74">      java.lang.String exitID = &quot;FloatMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L75">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L76">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L77">      return (Float)f0.exit(exitID, aNumber.asFloat());</span>
+      });
+    }
+  }
+
+
+<span class="fc" id="L83">  protected static SmallInteger Significance = SmallInteger.from(8);</span>
+<span class="fc" id="L84">  protected static java.lang.Float FloatZero = ((Float)Float.from(0.0f)).primitiveFloat();</span>
+<span class="fc" id="L85">  protected static java.lang.Float FloatUnity = ((Float)Float.from(1.0f)).primitiveFloat();</span>
+<span class="fc" id="L86">  protected static SmallInteger Generality = SmallInteger.from(60);</span>
+  protected java.lang.Float primitiveValue;
+<span class="fc" id="L88">  protected static final String FloatReport = String.from(&quot;%.9f&quot;);</span>
+  /**
+   * @return 
+   */
+  @Override public   Integer generality()
+  {
+<span class="fc" id="L94">    java.lang.String exitID = &quot;Float&gt;&gt;generality&quot;;</span>
+<span class="fc" id="L95">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L96">    return (Integer)Generality;</span>
+  }
+
+  /**
+   * 
+   */
+  public    Float(final java.lang.Float primitiveFloat)
+<span class="fc" id="L103">  {</span>
+<span class="fc" id="L104">    java.lang.String exitID = &quot;Float&gt;&gt;Float&quot;;</span>
+<span class="fc" id="L105">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L106">     primitiveValue = primitiveFloat;</span>
+<span class="fc" id="L107">  }</span>
+
+  /**
+   * 
+   */
+  public    Float(final java.lang.Double primitiveDouble)
+<span class="nc" id="L113">  {</span>
+<span class="nc" id="L114">    java.lang.String exitID = &quot;Float&gt;&gt;Float&quot;;</span>
+<span class="nc" id="L115">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L116">     primitiveValue = primitiveDouble.floatValue();</span>
+<span class="nc" id="L117">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   Float from(final java.lang.Float primitiveFloat)
+  {
+<span class="fc" id="L124">    java.lang.String exitID = &quot;Float&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L126">    return (Float)new Float(primitiveFloat);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Boolean equals(final Double aNumber)
+  {
+<span class="nc" id="L134">    java.lang.String exitID = &quot;Float&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L135">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">    return (Boolean)Boolean.from((primitiveValue == aNumber.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Boolean lessThan(final Double aNumber)
+  {
+<span class="nc" id="L144">    java.lang.String exitID = &quot;Float&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L145">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">    return (Boolean)Boolean.from((primitiveValue &lt; aNumber.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Boolean moreThan(final Double aNumber)
+  {
+<span class="nc" id="L154">    java.lang.String exitID = &quot;Float&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L155">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">    return (Boolean)Boolean.from((primitiveValue &gt; aNumber.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude aNumber)
+  {
+<span class="nc" id="L164">    java.lang.String exitID = &quot;Float&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L165">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L166">    return (Boolean)(this.equals(((Float)aNumber)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Numeric aNumber)
+  {
+<span class="nc" id="L174">    java.lang.String exitID = &quot;Float&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L175">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L176">    return (Boolean)(((Number)aNumber).asFloat().equals(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Number aNumber)
+  {
+<span class="fc" id="L184">    java.lang.String exitID = &quot;Float&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L185">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">    return (Boolean)Boolean.from((aNumber.asFloat().primitiveFloat() &gt; this.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Number aNumber)
+  {
+<span class="nc" id="L194">    java.lang.String exitID = &quot;Float&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L195">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">    return (Boolean)Boolean.from((aNumber.asFloat().primitiveFloat() &lt; this.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float asFloat()
+  {
+<span class="fc" id="L204">    java.lang.String exitID = &quot;Float&gt;&gt;asFloat&quot;;</span>
+<span class="fc" id="L205">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L206">    return (Float)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   java.lang.Float asPrimitive()
+  {
+<span class="fc" id="L214">    java.lang.String exitID = &quot;Float&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L215">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L216">    return (java.lang.Float)this.primitiveFloat();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Float primitiveFloat()
+  {
+<span class="fc" id="L224">    java.lang.String exitID = &quot;Float&gt;&gt;primitiveFloat&quot;;</span>
+<span class="fc" id="L225">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L226">    return (java.lang.Float)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Double primitiveDouble()
+  {
+<span class="fc" id="L234">    java.lang.String exitID = &quot;Float&gt;&gt;primitiveDouble&quot;;</span>
+<span class="fc" id="L235">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L236">    return (java.lang.Double)primitiveValue.doubleValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Fraction asFraction()
+  {
+<span class="nc" id="L244">    java.lang.String exitID = &quot;Float&gt;&gt;asFraction&quot;;</span>
+<span class="nc" id="L245">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L246">    BigInteger [] parts = Primitive.fractionalize(primitiveValue, Significance.primitiveInteger());</span>
+<span class="nc" id="L247">    return (Fraction)new Fraction(LargeInteger.from(parts[0]), LargeInteger.from(parts[1]));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Number elementaryNumber()
+  {
+<span class="nc" id="L255">    java.lang.String exitID = &quot;Float&gt;&gt;elementaryNumber&quot;;</span>
+<span class="nc" id="L256">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L257">    return (java.lang.Number)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   long primitiveLong()
+  {
+<span class="nc" id="L265">    java.lang.String exitID = &quot;Float&gt;&gt;primitiveLong&quot;;</span>
+<span class="nc" id="L266">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L267">    return (long)((long)Math.floor(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public final   Float negated()
+  {
+<span class="fc" id="L275">    java.lang.String exitID = &quot;Float&gt;&gt;negated&quot;;</span>
+<span class="fc" id="L276">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L277">    return (Float)Float.from((FloatZero - primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Float plus(final Float aNumber)
+  {
+<span class="fc" id="L285">    java.lang.String exitID = &quot;Float&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L286">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L287">    return (Float)Float.from((primitiveValue + aNumber.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Float minus(final Float aNumber)
+  {
+<span class="fc" id="L295">    java.lang.String exitID = &quot;Float&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L296">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L297">    return (Float)Float.from((primitiveValue - aNumber.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Float times(final Float aNumber)
+  {
+<span class="fc" id="L305">    java.lang.String exitID = &quot;Float&gt;&gt;times&quot;;</span>
+<span class="fc" id="L306">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L307">    return (Float)Float.from((primitiveValue * aNumber.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Float divideWith(final Float aNumber)
+  {
+<span class="nc" id="L315">    java.lang.String exitID = &quot;Float&gt;&gt;divideWith&quot;;</span>
+<span class="nc" id="L316">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">    if ((FloatZero == aNumber.asPrimitive())) {</span>
+<span class="nc" id="L318">      this.zeroDivide();</span>
+<span class="nc" id="L319">      return this;</span>
+    };
+<span class="nc" id="L321">    return (Float)Float.from((this.asPrimitive() / aNumber.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float plus(final Numeric aNumber)
+  {
+<span class="fc" id="L329">    java.lang.String exitID = &quot;Float&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L330">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L331">    Number n = ((Number)aNumber);</span>
+<span class="fc" id="L332">    return (Float)(this.generality().moreThan(n.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L333">      return (n.$class().coerce(this).plus(n));</span>
+<span class="fc" id="L334">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L335">      return (this.plus(n.asFloat()));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float minus(final Numeric aNumber)
+  {
+<span class="fc" id="L344">    java.lang.String exitID = &quot;Float&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L345">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L346">    Number n = ((Number)aNumber);</span>
+<span class="fc" id="L347">    return (Float)(this.generality().moreThan(n.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L348">      return (n.$class().coerce(this).minus(n));</span>
+<span class="fc" id="L349">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L350">      return (this.minus(n.asFloat()));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float times(final Numeric aNumber)
+  {
+<span class="fc" id="L359">    java.lang.String exitID = &quot;Float&gt;&gt;times&quot;;</span>
+<span class="fc" id="L360">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L361">    Number n = ((Number)aNumber);</span>
+<span class="fc" id="L362">    return (Float)(this.generality().moreThan(n.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L363">      return (n.$class().coerce(this).times(n));</span>
+<span class="fc" id="L364">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L365">      return (this.times(n.asFloat()));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float divideWith(final Numeric aNumber)
+  {
+<span class="nc" id="L374">    java.lang.String exitID = &quot;Float&gt;&gt;divideWith&quot;;</span>
+<span class="nc" id="L375">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L376">    Number n = ((Number)aNumber);</span>
+<span class="nc" id="L377">    return (Float)(this.generality().moreThan(n.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L378">      return (n.$class().coerce(this).divideWith(n));</span>
+<span class="nc" id="L379">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L380">      return (this.divideWith(n.asFloat()));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  public   Float raisedTo(final Float power)
+  {
+<span class="nc" id="L389">    java.lang.String exitID = &quot;Float&gt;&gt;raisedTo&quot;;</span>
+<span class="nc" id="L390">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L391">    return (Float)new Float(Math.pow(primitiveValue, power.primitiveFloat()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float arcCos()
+  {
+<span class="nc" id="L399">    java.lang.String exitID = &quot;Float&gt;&gt;arcCos&quot;;</span>
+<span class="nc" id="L400">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L401">    return (Float)new Float(Math.acos(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float arcSin()
+  {
+<span class="nc" id="L409">    java.lang.String exitID = &quot;Float&gt;&gt;arcSin&quot;;</span>
+<span class="nc" id="L410">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L411">    return (Float)new Float(Math.sin(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float arcTan()
+  {
+<span class="nc" id="L419">    java.lang.String exitID = &quot;Float&gt;&gt;arcTan&quot;;</span>
+<span class="nc" id="L420">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L421">    return (Float)new Float(Math.atan(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float cos()
+  {
+<span class="nc" id="L429">    java.lang.String exitID = &quot;Float&gt;&gt;cos&quot;;</span>
+<span class="nc" id="L430">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L431">    return (Float)new Float(Math.cos(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Float exp()
+  {
+<span class="nc" id="L439">    java.lang.String exitID = &quot;Float&gt;&gt;exp&quot;;</span>
+<span class="nc" id="L440">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L441">    return (Float)new Float(Math.exp(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double sin()
+  {
+<span class="nc" id="L449">    java.lang.String exitID = &quot;Float&gt;&gt;sin&quot;;</span>
+<span class="nc" id="L450">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L451">    return (Double)new Double(Math.sin(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double tan()
+  {
+<span class="nc" id="L459">    java.lang.String exitID = &quot;Float&gt;&gt;tan&quot;;</span>
+<span class="nc" id="L460">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L461">    return (Double)new Double(Math.tan(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double ln()
+  {
+<span class="nc" id="L469">    java.lang.String exitID = &quot;Float&gt;&gt;ln&quot;;</span>
+<span class="nc" id="L470">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L471">    return (Double)new Double(Math.log(primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double log(final Numeric radix)
+  {
+<span class="nc" id="L479">    java.lang.String exitID = &quot;Float&gt;&gt;log&quot;;</span>
+<span class="nc" id="L480">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L481">    return (Double)(this.ln().divideWith(radix.asFloat().ln()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer floorLog(final Numeric radix)
+  {
+<span class="nc" id="L489">    java.lang.String exitID = &quot;Float&gt;&gt;floorLog&quot;;</span>
+<span class="nc" id="L490">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L491">    return (Integer)this.log(radix.asFloat()).floor();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double degreesToRadians()
+  {
+<span class="nc" id="L499">    java.lang.String exitID = &quot;Float&gt;&gt;degreesToRadians&quot;;</span>
+<span class="nc" id="L500">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L501">    return (Double)new Double((primitiveValue * Primitive.radiansPerDegree()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Double radiansToDegrees()
+  {
+<span class="nc" id="L509">    java.lang.String exitID = &quot;Float&gt;&gt;radiansToDegrees&quot;;</span>
+<span class="nc" id="L510">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L511">    return (Double)new Double((primitiveValue * Primitive.degreesPerRadian()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer floor()
+  {
+<span class="nc" id="L519">    java.lang.String exitID = &quot;Float&gt;&gt;floor&quot;;</span>
+<span class="nc" id="L520">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L521">    return (Integer)SmallInteger.from(((int)Math.floor(primitiveValue)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer ceiling()
+  {
+<span class="nc" id="L529">    java.lang.String exitID = &quot;Float&gt;&gt;ceiling&quot;;</span>
+<span class="nc" id="L530">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L531">    return (Integer)SmallInteger.from(((int)Math.ceil(primitiveValue)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String printString()
+  {
+<span class="fc" id="L539">    java.lang.String exitID = &quot;Float&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L540">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L541">    return (String)String.from(java.lang.String.format(FloatReport.primitiveString(), this.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isFloat()
+  {
+<span class="nc" id="L549">    java.lang.String exitID = &quot;Float&gt;&gt;isFloat&quot;;</span>
+<span class="nc" id="L550">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L551">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isLiteral()
+  {
+<span class="nc" id="L559">    java.lang.String exitID = &quot;Float&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L560">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L561">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean negative()
+  {
+<span class="nc" id="L569">    java.lang.String exitID = &quot;Float&gt;&gt;negative&quot;;</span>
+<span class="nc" id="L570">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">    return (Boolean)Boolean.from((FloatZero &gt; primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean positive()
+  {
+<span class="nc" id="L579">    java.lang.String exitID = &quot;Float&gt;&gt;positive&quot;;</span>
+<span class="nc" id="L580">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">    return (Boolean)Boolean.from((FloatZero &lt;= primitiveValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean strictlyPositive()
+  {
+<span class="nc" id="L589">    java.lang.String exitID = &quot;Float&gt;&gt;strictlyPositive&quot;;</span>
+<span class="nc" id="L590">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L591" title="All 2 branches missed.">    return (Boolean)Boolean.from((FloatZero &lt; primitiveValue));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Character.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">Character.java</span></div><h1>Character.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
+import Hoot.Collections.Interval;
+import Hoot.Magnitudes.Integer;
+import Smalltalk.Core.Subject;
+import Smalltalk.Magnitudes.Code;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Streams.StreamedSink;
+
+public class Character extends Integer implements Code
+{
+<span class="fc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Integer.Metaclass implements Code.Metatype
+  {
+<span class="fc" id="L38">    static final Character.Metaclass $class = new Character.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L40">      this(Character.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return Character.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   Character nullCode()
+    {
+<span class="fc" id="L54">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;nullCode&quot;;</span>
+<span class="fc" id="L55">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L56">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L57">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(0)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character backspace()
+    {
+<span class="nc" id="L66">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;backspace&quot;;</span>
+<span class="nc" id="L67">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L68">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L69">      return (Character)f0.exit(exitID, this.bsCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character bsCode()
+    {
+<span class="nc" id="L78">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;bsCode&quot;;</span>
+<span class="nc" id="L79">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L80">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L81">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(8)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character cr()
+    {
+<span class="nc" id="L90">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;cr&quot;;</span>
+<span class="nc" id="L91">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L92">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L93">      return (Character)f0.exit(exitID, this.crCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character carriageReturn()
+    {
+<span class="nc" id="L102">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;carriageReturn&quot;;</span>
+<span class="nc" id="L103">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L104">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L105">      return (Character)f0.exit(exitID, this.crCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character crCode()
+    {
+<span class="nc" id="L114">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;crCode&quot;;</span>
+<span class="nc" id="L115">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L116">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L117">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(13)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character lf()
+    {
+<span class="nc" id="L126">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;lf&quot;;</span>
+<span class="nc" id="L127">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L128">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L129">      return (Character)f0.exit(exitID, this.lfCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character lineFeed()
+    {
+<span class="nc" id="L138">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;lineFeed&quot;;</span>
+<span class="nc" id="L139">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L141">      return (Character)f0.exit(exitID, this.lfCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character newLine()
+    {
+<span class="nc" id="L150">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;newLine&quot;;</span>
+<span class="nc" id="L151">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L152">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L153">      return (Character)f0.exit(exitID, this.lfCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character lfCode()
+    {
+<span class="nc" id="L162">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;lfCode&quot;;</span>
+<span class="nc" id="L163">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L164">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L165">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(10)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character delete()
+    {
+<span class="nc" id="L174">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;delete&quot;;</span>
+<span class="nc" id="L175">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L176">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L177">      return (Character)f0.exit(exitID, this.delCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character delCode()
+    {
+<span class="nc" id="L186">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;delCode&quot;;</span>
+<span class="nc" id="L187">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L188">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L189">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(127)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character escape()
+    {
+<span class="nc" id="L198">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;escape&quot;;</span>
+<span class="nc" id="L199">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L200">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L201">      return (Character)f0.exit(exitID, this.esc());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character esc()
+    {
+<span class="nc" id="L210">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;esc&quot;;</span>
+<span class="nc" id="L211">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L212">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L213">      return (Character)f0.exit(exitID, this.escCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character escCode()
+    {
+<span class="nc" id="L222">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;escCode&quot;;</span>
+<span class="nc" id="L223">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L224">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L225">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(27)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character newPage()
+    {
+<span class="nc" id="L234">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;newPage&quot;;</span>
+<span class="nc" id="L235">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L236">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L237">      return (Character)f0.exit(exitID, this.ffCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character formFeed()
+    {
+<span class="nc" id="L246">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;formFeed&quot;;</span>
+<span class="nc" id="L247">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L248">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L249">      return (Character)f0.exit(exitID, this.ffCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character ffCode()
+    {
+<span class="nc" id="L258">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;ffCode&quot;;</span>
+<span class="nc" id="L259">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L260">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L261">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(12)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character space()
+    {
+<span class="fc" id="L270">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;space&quot;;</span>
+<span class="fc" id="L271">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L272">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L273">      return (Character)f0.exit(exitID, this.spaceCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character spaceCode()
+    {
+<span class="fc" id="L282">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;spaceCode&quot;;</span>
+<span class="fc" id="L283">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L284">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L285">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(32)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character tab()
+    {
+<span class="nc" id="L294">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;tab&quot;;</span>
+<span class="nc" id="L295">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L296">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L297">      return (Character)f0.exit(exitID, this.tabCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character tabCode()
+    {
+<span class="nc" id="L306">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;tabCode&quot;;</span>
+<span class="nc" id="L307">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L308">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L309">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(9)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character quote()
+    {
+<span class="nc" id="L318">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;quote&quot;;</span>
+<span class="nc" id="L319">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L320">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L321">      return (Character)f0.exit(exitID, this.quoteCode());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character quoteCode()
+    {
+<span class="nc" id="L330">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;quoteCode&quot;;</span>
+<span class="nc" id="L331">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L332">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L333">      return (Character)f0.exit(exitID, this.codePoint(SmallInteger.from(39)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Boolean isAlphaNumeric(final Character aCharacter)
+    {
+<span class="nc" id="L342">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;isAlphaNumeric&quot;;</span>
+<span class="nc" id="L343">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L344">      return Boolean.from(java.lang.Character.isLetterOrDigit(aCharacter.primitiveCharacter()));</span>
+    }
+
+    /**
+     * @return 
+     */
+    public   Boolean isDigit(final Character aCharacter)
+    {
+<span class="fc" id="L352">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;isDigit&quot;;</span>
+<span class="fc" id="L353">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L354">      return Boolean.from(java.lang.Character.isDigit(aCharacter.primitiveCharacter()));</span>
+    }
+
+    /**
+     * @return 
+     */
+    public   Boolean isLetter(final Character aCharacter)
+    {
+<span class="nc" id="L362">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;isLetter&quot;;</span>
+<span class="nc" id="L363">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L364">      return Boolean.from(java.lang.Character.isLetter(aCharacter.primitiveCharacter()));</span>
+    }
+
+    /**
+     * @return 
+     */
+    public   Boolean isLowercase(final Character aCharacter)
+    {
+<span class="nc" id="L372">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;isLowercase&quot;;</span>
+<span class="nc" id="L373">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L374">      return Boolean.from(java.lang.Character.isLowerCase(aCharacter.primitiveCharacter()));</span>
+    }
+
+    /**
+     * @return 
+     */
+    public   Boolean isUppercase(final Character aCharacter)
+    {
+<span class="nc" id="L382">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;isUppercase&quot;;</span>
+<span class="nc" id="L383">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L384">      return Boolean.from(java.lang.Character.isUpperCase(aCharacter.primitiveCharacter()));</span>
+    }
+
+    /**
+     * @return 
+     */
+    public   java.lang.String toString(final Character aCharacter)
+    {
+<span class="fc" id="L392">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L393">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L394">      return java.lang.String.valueOf(aCharacter.primitiveCharacter());</span>
+    }
+
+    /**
+     * @return 
+     */
+    @Override protected   void initialize()
+    {
+<span class="fc" id="L402">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;initialize&quot;;</span>
+<span class="fc" id="L403">      Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">      if (AsciiCharacters.isEmpty()) {</span>
+<span class="fc" id="L405">        Character.initializeFlyweights();</span>
+      };
+<span class="fc" id="L407">    }</span>
+
+    /**
+     * @return 
+     */
+    public   Character codePoint(final Ordinal codePoint)
+    {
+<span class="fc" id="L414">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;codePoint&quot;;</span>
+<span class="fc" id="L415">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L416">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L417">      return (Character)f0.exit(exitID, this.from(codePoint.intValue()));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character value(final Ordinal codePoint)
+    {
+<span class="nc" id="L426">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;value&quot;;</span>
+<span class="nc" id="L427">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L428">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L429">      return (Character)f0.exit(exitID, this.codePoint(codePoint));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Character coerce(final Number aNumber)
+    {
+<span class="nc" id="L438">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L439">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L440">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L441">      return (Character)f0.exit(exitID, this.from(aNumber.primitiveInteger()));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character from(final SmallInteger anInteger)
+    {
+<span class="nc" id="L450">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;from&quot;;</span>
+<span class="nc" id="L451">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L452">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L453">      return (Character)f0.exit(exitID, this.from(anInteger.intValue()));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character from(final int intValue)
+    {
+<span class="fc" id="L462">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;from&quot;;</span>
+<span class="fc" id="L463">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L464">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L465">      return (Character)f0.exit(exitID, this.from(((char)intValue)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Character from(final char charValue)
+    {
+<span class="fc" id="L474">      java.lang.String exitID = &quot;CharacterMetatype&gt;&gt;from&quot;;</span>
+<span class="fc" id="L475">      Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">      if ((charValue &lt; AsciiMaximum)) {</span>
+<span class="fc" id="L477">        return AsciiCharacters.get(charValue);</span>
+      };
+<span class="nc" id="L479">      return new Character(charValue);</span>
+    }
+  }
+
+
+<span class="fc" id="L484">  protected static SmallInteger Generality = SmallInteger.from(5);</span>
+<span class="fc" id="L485">  private static final int AsciiMaximum = SmallInteger.from(256).primitiveInteger();</span>
+<span class="fc" id="L486">  private static final List&lt;Character&gt; AsciiCharacters = new ArrayList();</span>
+<span class="fc" id="L487">  private char primitiveValue = SmallInteger.from(0).primitiveCharacter();</span>
+<span class="fc" id="L488">  private static final String [] Vowels = {</span>
+<span class="fc" id="L489">    String.from(&quot;a&quot;), String.from(&quot;e&quot;), String.from(&quot;i&quot;), String.from(&quot;o&quot;), String.from(&quot;u&quot;)</span>
+  };
+<span class="fc" id="L491">  private static final List&lt;String&gt; VowelList = Arrays.asList(Vowels);</span>
+  /**
+   * @return 
+   */
+  private static   void initializeFlyweights()
+  {
+<span class="fc" id="L497">    java.lang.String exitID = &quot;Character&gt;&gt;$initializeFlyweights&quot;;</span>
+<span class="fc" id="L498">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L499">    int charValue = 0;</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">    while((charValue &lt; AsciiMaximum)) {</span>
+<span class="fc" id="L501">      AsciiCharacters.add(new Character(((char)charValue)));</span>
+<span class="fc" id="L502">      charValue += 1;</span>
+    };
+<span class="fc" id="L504">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   Character from(final SmallInteger anInteger)
+  {
+<span class="nc" id="L511">    java.lang.String exitID = &quot;Character&gt;&gt;$from&quot;;</span>
+<span class="nc" id="L512">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L513">    return (Character)new Character(anInteger.primitiveCharacter());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public static   Character from(final char aCharacter)
+  {
+<span class="fc" id="L521">    java.lang.String exitID = &quot;Character&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L522">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L523">    return (Character)new Character(aCharacter);</span>
+  }
+
+  /**
+   * 
+   */
+  protected    Character(final char charValue)
+  {
+<span class="fc" id="L531">    this();</span>
+<span class="fc" id="L532">    java.lang.String exitID = &quot;Character&gt;&gt;Character&quot;;</span>
+<span class="fc" id="L533">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L534">     primitiveValue = charValue;</span>
+<span class="fc" id="L535">  }</span>
+
+  /**
+   * 
+   */
+  protected    Character()
+  {
+<span class="fc" id="L542">    super();</span>
+<span class="fc" id="L543">    java.lang.String exitID = &quot;Character&gt;&gt;Character&quot;;</span>
+<span class="fc" id="L544">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L545">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   char primitiveCharacter()
+  {
+<span class="fc" id="L552">    java.lang.String exitID = &quot;Character&gt;&gt;primitiveCharacter&quot;;</span>
+<span class="fc" id="L553">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L554">    return (char)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   char asPrimitive()
+  {
+<span class="fc" id="L562">    java.lang.String exitID = &quot;Character&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L563">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L564">    return (char)this.primitiveCharacter();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int primitiveInteger()
+  {
+<span class="nc" id="L572">    java.lang.String exitID = &quot;Character&gt;&gt;primitiveInteger&quot;;</span>
+<span class="nc" id="L573">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L574">    return (int)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Number elementaryNumber()
+  {
+<span class="fc" id="L582">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryNumber&quot;;</span>
+<span class="fc" id="L583">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L584">    return (java.lang.Number)this.elementaryInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Integer elementaryInteger()
+  {
+<span class="fc" id="L592">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryInteger&quot;;</span>
+<span class="fc" id="L593">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L594">    return (java.lang.Integer)((int)primitiveValue);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Character asCharacter()
+  {
+<span class="nc" id="L602">    java.lang.String exitID = &quot;Character&gt;&gt;asCharacter&quot;;</span>
+<span class="nc" id="L603">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L604">    return (Character)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer asInteger()
+  {
+<span class="nc" id="L612">    java.lang.String exitID = &quot;Character&gt;&gt;asInteger&quot;;</span>
+<span class="nc" id="L613">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L614">    return (Integer)SmallInteger.from(this.primitiveInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String asString()
+  {
+<span class="fc" id="L622">    java.lang.String exitID = &quot;Character&gt;&gt;asString&quot;;</span>
+<span class="fc" id="L623">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L624">    return (String)String.from(Character.type().toString(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Character asLowerCase()
+  {
+<span class="nc" id="L632">    java.lang.String exitID = &quot;Character&gt;&gt;asLowerCase&quot;;</span>
+<span class="nc" id="L633">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L634">    return (Character)this.asLowercase();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Character asLowercase()
+  {
+<span class="nc" id="L642">    java.lang.String exitID = &quot;Character&gt;&gt;asLowercase&quot;;</span>
+<span class="nc" id="L643">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L644">    return (Character)Character.type().from(java.lang.Character.toLowerCase(this.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Character asUpperCase()
+  {
+<span class="nc" id="L652">    java.lang.String exitID = &quot;Character&gt;&gt;asUpperCase&quot;;</span>
+<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L654">    return (Character)this.asUppercase();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Character asUppercase()
+  {
+<span class="fc" id="L662">    java.lang.String exitID = &quot;Character&gt;&gt;asUppercase&quot;;</span>
+<span class="fc" id="L663">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L664">    return (Character)Character.type().from(java.lang.Character.toUpperCase(this.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer codePoint()
+  {
+<span class="nc" id="L672">    java.lang.String exitID = &quot;Character&gt;&gt;codePoint&quot;;</span>
+<span class="nc" id="L673">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L674">    return (Integer)this.asInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   SmallInteger generality()
+  {
+<span class="nc" id="L682">    java.lang.String exitID = &quot;Character&gt;&gt;generality&quot;;</span>
+<span class="nc" id="L683">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L684">    return (SmallInteger)Generality;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude aNumber)
+  {
+<span class="nc" id="L692">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L693">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L694">    return (Boolean)(this.equals(((Number)aNumber)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Number aNumber)
+  {
+<span class="nc" id="L702">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L703">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">    if ((aNumber == null)) {</span>
+<span class="nc" id="L705">      return False.literal();</span>
+    };
+<span class="nc bnc" id="L707" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() == aNumber.asCharacter().primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Number aNumber)
+  {
+<span class="nc" id="L715">    java.lang.String exitID = &quot;Character&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L716">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L717" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &lt; aNumber.asCharacter().primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notMore(final Number aNumber)
+  {
+<span class="nc" id="L725">    java.lang.String exitID = &quot;Character&gt;&gt;notMore&quot;;</span>
+<span class="nc" id="L726">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L727" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &lt;= aNumber.asCharacter().primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Number aNumber)
+  {
+<span class="nc" id="L735">    java.lang.String exitID = &quot;Character&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L736">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &gt; aNumber.asCharacter().primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notLess(final Number aNumber)
+  {
+<span class="nc" id="L745">    java.lang.String exitID = &quot;Character&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L746">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L747" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &gt;= aNumber.asCharacter().primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean in(final Interval aRange)
+  {
+<span class="nc" id="L755">    java.lang.String exitID = &quot;Character&gt;&gt;in&quot;;</span>
+<span class="nc" id="L756">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L757">    return (Boolean)aRange.includes(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="nc" id="L765">    java.lang.String exitID = &quot;Character&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L766">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L767">    return (int)this.primitiveInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Character printOn(final StreamedSink aStream)
+  {
+<span class="nc" id="L775">    java.lang.String exitID = &quot;Character&gt;&gt;printOn&quot;;</span>
+<span class="nc" id="L776">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L777">    aStream.nextPut(this);</span>
+<span class="nc" id="L778">    return (Character)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String printString()
+  {
+<span class="fc" id="L786">    java.lang.String exitID = &quot;Character&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L787">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L788">    return (String)String.from(java.lang.String.valueOf(this.primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isDigit()
+  {
+<span class="fc" id="L796">    java.lang.String exitID = &quot;Character&gt;&gt;isDigit&quot;;</span>
+<span class="fc" id="L797">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L798">    return (Boolean)Character.type().isDigit(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isLetter()
+  {
+<span class="nc" id="L806">    java.lang.String exitID = &quot;Character&gt;&gt;isLetter&quot;;</span>
+<span class="nc" id="L807">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L808">    return (Boolean)Character.type().isLetter(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isAlphaNumeric()
+  {
+<span class="nc" id="L816">    java.lang.String exitID = &quot;Character&gt;&gt;isAlphaNumeric&quot;;</span>
+<span class="nc" id="L817">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L818">    return (Boolean)Character.type().isAlphaNumeric(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isLowercase()
+  {
+<span class="nc" id="L826">    java.lang.String exitID = &quot;Character&gt;&gt;isLowercase&quot;;</span>
+<span class="nc" id="L827">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L828">    return (Boolean)Character.type().isLowercase(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isLowerCase()
+  {
+<span class="nc" id="L836">    java.lang.String exitID = &quot;Character&gt;&gt;isLowerCase&quot;;</span>
+<span class="nc" id="L837">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L838">    return (Boolean)this.isLowercase();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isUppercase()
+  {
+<span class="nc" id="L846">    java.lang.String exitID = &quot;Character&gt;&gt;isUppercase&quot;;</span>
+<span class="nc" id="L847">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L848">    return (Boolean)Character.type().isUppercase(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isUpperCase()
+  {
+<span class="nc" id="L856">    java.lang.String exitID = &quot;Character&gt;&gt;isUpperCase&quot;;</span>
+<span class="nc" id="L857">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L858">    return (Boolean)this.isUppercase();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isVowel()
+  {
+<span class="nc" id="L866">    java.lang.String exitID = &quot;Character&gt;&gt;isVowel&quot;;</span>
+<span class="nc" id="L867">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L868">    return (Boolean)Boolean.from(VowelList.contains(this.asString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isLiteral()
+  {
+<span class="nc" id="L876">    java.lang.String exitID = &quot;Character&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L877">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L878">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isCharacter()
+  {
+<span class="nc" id="L886">    java.lang.String exitID = &quot;Character&gt;&gt;isCharacter&quot;;</span>
+<span class="nc" id="L887">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L888">    return (Boolean)True.literal();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

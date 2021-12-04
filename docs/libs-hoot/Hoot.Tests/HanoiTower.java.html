@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HanoiTower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Tests</a> &gt; <span class="el_source">HanoiTower.java</span></div><h1>HanoiTower.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Tests;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Hoot.Magnitudes.Number;
+import Hoot.Magnitudes.Integer;
+import Hoot.Runtime.Behaviors.Mirror;
+import Hoot.Runtime.Behaviors.Typified;
+import Hoot.Runtime.Behaviors.HootRegistry;
+import static Hoot.Magnitudes.SmallInteger.*;
+
+<span class="fc" id="L34">public class HanoiTower extends TestableClosure</span>
+{
+
+<span class="fc" id="L37">  protected static final String CountReport = String.from(&quot;Transfering %s disks&quot;);</span>
+<span class="fc" id="L38">    protected Number count = HanoiTower.initialCount();</span>
+<span class="nc" id="L39">    public Number count() { return this.count; }</span>
+<span class="nc" id="L40">    public Object getCount() { return (Object)this.count; }</span>
+
+<span class="fc" id="L42">    public HanoiTower count(Number value) { this.count = value; return this; }</span>
+<span class="nc" id="L43">    public void setCount(Object value) { this.count = (Number)value; }</span>
+
+  ;
+<span class="fc" id="L46">    protected Boolean usePrimitive = False.literal();</span>
+<span class="fc" id="L47">    public Boolean usePrimitive() { return this.usePrimitive; }</span>
+<span class="nc" id="L48">    public Object getUsePrimitive() { return (Object)this.usePrimitive; }</span>
+
+<span class="fc" id="L50">    public HanoiTower usePrimitive(Boolean value) { this.usePrimitive = value; return this; }</span>
+<span class="nc" id="L51">    public void setUsePrimitive(Object value) { this.usePrimitive = (Boolean)value; }</span>
+
+  ;
+  /**
+   * @return 
+   */
+  @Override public   HanoiTower value()
+  {
+<span class="nc" id="L59">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;value&quot;;</span>
+<span class="nc" id="L60">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L61">    this.reportCount();</span>
+<span class="nc" id="L62">    this.reportAfterRun();</span>
+<span class="nc" id="L63">    return (HanoiTower)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   void runTest()
+  {
+<span class="fc" id="L71">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;runTest&quot;;</span>
+<span class="fc" id="L72">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L73">    this.move_from_to_via(count, SmallInteger.from(1), SmallInteger.from(2), SmallInteger.from(3));</span>
+<span class="fc" id="L74">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   Integer initialCount()
+  {
+<span class="fc" id="L81">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;$initialCount&quot;;</span>
+<span class="fc" id="L82">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L83">    return (Integer)SmallInteger.from(18);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   HanoiTower reportCount()
+  {
+<span class="fc" id="L91">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;reportCount&quot;;</span>
+<span class="fc" id="L92">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L93">    this.log().printLine(CountReport.formatWith(HanoiTower.initialCount().printString()));</span>
+<span class="fc" id="L94">    return (HanoiTower)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public static   HanoiTower withFloat()
+  {
+<span class="fc" id="L102">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;$withFloat&quot;;</span>
+<span class="fc" id="L103">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L104">    return (HanoiTower)new HanoiTower().count(HanoiTower.initialCount().asFloat());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public static   HanoiTower withCount(final Number count)
+  {
+<span class="nc" id="L112">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;$withCount&quot;;</span>
+<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L114">    return (HanoiTower)new HanoiTower().count(count);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public static   HanoiTower withPrimitive()
+  {
+<span class="fc" id="L122">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;$withPrimitive&quot;;</span>
+<span class="fc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L124">    return (HanoiTower)new HanoiTower().usePrimitive(True.literal());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String description()
+  {
+<span class="fc" id="L132">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;description&quot;;</span>
+<span class="fc" id="L133">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L134">    return (String)(String.from(&quot;Tower of Hanoi with &quot;).append(this.typeName()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String typeName()
+  {
+<span class="fc" id="L142">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;typeName&quot;;</span>
+<span class="fc" id="L143">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L144">    return (String)this.usePrimitive().ifFalse_ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L145">      return String.from(count.$class().outerClass().getName());</span>
+<span class="fc" id="L146">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L147">      return String.from(count.elementaryInteger().getClass().getName());</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  protected   HanoiTower move_from_to_via(final Number diskCount, final Hoot.Behaviors.Object source, final Hoot.Behaviors.Object target, final Hoot.Behaviors.Object transfer)
+  {
+<span class="fc" id="L156">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;move_from_to_via&quot;;</span>
+<span class="fc" id="L157">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">    if (this.usePrimitive().asPrimitive()) {</span>
+<span class="fc" id="L159">      this.move_from_to_via(diskCount.elementaryInteger(), 1, 2, 3);</span>
+<span class="fc" id="L160">      return this;</span>
+    };
+<span class="fc bfc" id="L162" title="All 2 branches covered.">    if (diskCount.isKindOf(SmallInteger.type()).asPrimitive()) {</span>
+<span class="fc" id="L163">      this.move_from_to_via(diskCount.asInteger(), source, target, transfer);</span>
+    }
+    else {
+<span class="fc" id="L166">      this.move_from_to_via(diskCount.asFloat(), source, target, transfer);</span>
+    };
+<span class="fc" id="L168">    return (HanoiTower)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   HanoiTower move_from_to_via(final Integer diskCount, final Hoot.Behaviors.Object source, final Hoot.Behaviors.Object target, final Hoot.Behaviors.Object transfer)
+  {
+<span class="fc" id="L176">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;move_from_to_via&quot;;</span>
+<span class="fc" id="L177">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L178">    (Unity.lessThan(diskCount)).ifTrue(Closure.with(f2 -&gt; {</span>
+      
+<span class="fc" id="L180">    Integer disks = (diskCount.minus(Unity));</span>
+    {
+<span class="fc" id="L182">    HanoiTower prime = this;</span>
+<span class="fc" id="L183">    prime.move_from_to_via(disks, source, transfer, target); </span>
+
+<span class="fc" id="L185">    prime.move_from_to_via(disks, transfer, target, source);</span>
+    };
+<span class="fc" id="L187">    }, &quot;&quot;));</span>
+<span class="fc" id="L188">    return (HanoiTower)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   HanoiTower move_from_to_via(final Float diskCount, final Hoot.Behaviors.Object source, final Hoot.Behaviors.Object target, final Hoot.Behaviors.Object transfer)
+  {
+<span class="fc" id="L196">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;move_from_to_via&quot;;</span>
+<span class="fc" id="L197">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L198">    (Float.type().unity().lessThan(diskCount)).ifTrue(Closure.with(f2 -&gt; {</span>
+      
+<span class="fc" id="L200">    Float disks = (diskCount.minus(Float.type().unity()));</span>
+    {
+<span class="fc" id="L202">    HanoiTower prime = this;</span>
+<span class="fc" id="L203">    prime.move_from_to_via(disks, source, transfer, target); </span>
+
+<span class="fc" id="L205">    prime.move_from_to_via(disks, transfer, target, source);</span>
+    };
+<span class="fc" id="L207">    }, &quot;&quot;));</span>
+<span class="fc" id="L208">    return (HanoiTower)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   void move_from_to_via(final java.lang.Integer diskCount, final int source, final int target, final int transfer)
+  {
+<span class="fc" id="L216">    java.lang.String exitID = &quot;HanoiTower&gt;&gt;move_from_to_via&quot;;</span>
+<span class="fc" id="L217">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">    if ((Unity.asPrimitive() &lt; diskCount)) {</span>
+<span class="fc" id="L219">      int disks = (diskCount - Unity.asPrimitive());</span>
+<span class="fc" id="L220">      this.move_from_to_via(disks, source, transfer, target);</span>
+<span class="fc" id="L221">      this.move_from_to_via(disks, transfer, target, source);</span>
+    };
+<span class="fc" id="L223">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

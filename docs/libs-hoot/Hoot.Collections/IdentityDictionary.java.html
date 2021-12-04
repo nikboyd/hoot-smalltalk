@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IdentityDictionary.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">IdentityDictionary.java</span></div><h1>IdentityDictionary.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import java.util.IdentityHashMap;
+import Hoot.Behaviors.Ordered;
+import Smalltalk.Core.Subject;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.Collected;
+
+public class IdentityDictionary&lt;KeyType extends Magnitude, ElementType extends Object&gt; extends Dictionary&lt;KeyType, ElementType&gt;
+{
+<span class="fc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Dictionary.Metaclass
+  {
+<span class="fc" id="L37">    static final IdentityDictionary.Metaclass $class = new IdentityDictionary.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L39">      this(IdentityDictionary.Metaclass.class);</span>
+<span class="fc" id="L40">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L43">      super(aClass);</span>
+<span class="fc" id="L44">    }</span>
+
+<span class="fc" id="L46">    @Override public java.lang.Class outerClass() { return IdentityDictionary.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   IdentityDictionary $new()
+    {
+<span class="fc" id="L53">      java.lang.String exitID = &quot;IdentityDictionaryMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L54">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L55">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L56">      return (IdentityDictionary)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   IdentityDictionary $new(final Ordinal capacity)
+    {
+<span class="fc" id="L65">      java.lang.String exitID = &quot;IdentityDictionaryMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L66">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L67">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L68">      return (IdentityDictionary)f0.exit(exitID, new IdentityDictionary(capacity));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   IdentityDictionary from(final java.util.Map primitiveMap)
+    {
+<span class="nc" id="L77">      java.lang.String exitID = &quot;IdentityDictionaryMetatype&gt;&gt;from&quot;;</span>
+<span class="nc" id="L78">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L79">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L80">      return (IdentityDictionary)f0.exit(exitID, new IdentityDictionary(primitiveMap));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  protected    IdentityDictionary()
+<span class="nc" id="L90">  {</span>
+<span class="nc" id="L91">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;IdentityDictionary&quot;;</span>
+<span class="nc" id="L92">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L93">     contents = new IdentityHashMap();</span>
+<span class="nc" id="L94">  }</span>
+
+  /**
+   * 
+   */
+  protected    IdentityDictionary(final Ordinal capacity)
+<span class="fc" id="L100">  {</span>
+<span class="fc" id="L101">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;IdentityDictionary&quot;;</span>
+<span class="fc" id="L102">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L103">     contents = new IdentityHashMap(capacity.intValue());</span>
+<span class="fc" id="L104">  }</span>
+
+  /**
+   * 
+   */
+  protected    IdentityDictionary(final java.util.Map primitiveMap)
+<span class="nc" id="L110">  {</span>
+<span class="nc" id="L111">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;IdentityDictionary&quot;;</span>
+<span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L113">     contents = new IdentityHashMap(primitiveMap.size());</span>
+<span class="nc" id="L114">    contents.putAll(primitiveMap);</span>
+<span class="nc" id="L115">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   Set&lt;KeyType&gt; keys()
+  {
+<span class="fc" id="L122">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;keys&quot;;</span>
+<span class="fc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L124">    java.util.Set&lt;KeyType&gt; s = contents.keySet();</span>
+    {
+<span class="fc" id="L126">    IdentitySet prime = (IdentitySet)IdentitySet.type().$new(SmallInteger.from(s.size()));</span>
+<span class="fc" id="L127">    prime.addAll(Set.from(s)); </span>
+
+<span class="fc" id="L129">    return prime.yourself();</span>
+    }
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final IdentityDictionary aCollection)
+  {
+<span class="nc" id="L138">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Collected aCollection)
+  {
+<span class="nc" id="L148">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L151">    aCollection.isKindOf(IdentityDictionary.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L152">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L154">    return (Boolean)f0.exit(exitID, (this.equals(((IdentityDictionary)aCollection))));</span>
+    });
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

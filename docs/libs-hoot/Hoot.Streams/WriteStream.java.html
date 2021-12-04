@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WriteStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">WriteStream.java</span></div><h1>WriteStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Hoot.Collections.OrderedCollection;
+import Hoot.Runtime.Names.Primitive;
+import Smalltalk.Core.Subject;
+import Smalltalk.Streams.StreamWriter;
+import Smalltalk.Collections.*;
+
+public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStream&lt;ElementType&gt; implements StreamWriter&lt;ElementType&gt;
+{
+<span class="fc" id="L35">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L36">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends CollectionStream.Metaclass implements StreamWriter.Metatype
+  {
+<span class="fc" id="L39">    static final WriteStream.Metaclass $class = new WriteStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L41">      this(WriteStream.Metaclass.class);</span>
+<span class="fc" id="L42">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L45">      super(aClass);</span>
+<span class="fc" id="L46">    }</span>
+
+<span class="fc" id="L48">    @Override public java.lang.Class outerClass() { return WriteStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    public  &lt;ElementType extends Subject&gt; WriteStream with(final CollectedVariably&lt;ElementType&gt; aCollection)
+    {
+<span class="nc" id="L55">      java.lang.String exitID = &quot;WriteStreamMetatype&gt;&gt;with&quot;;</span>
+<span class="nc" id="L56">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L57">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L58">      return (WriteStream)f0.exit(exitID, new WriteStream(aCollection));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   String lineSeparator()
+    {
+<span class="fc" id="L67">      java.lang.String exitID = &quot;WriteStreamMetatype&gt;&gt;lineSeparator&quot;;</span>
+<span class="fc" id="L68">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L69">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L70">      return (String)f0.exit(exitID, LineSeparator);</span>
+      });
+    }
+  }
+
+
+  protected static final java.lang.String SeparatorName = &quot;line.separator&quot;;
+<span class="fc" id="L77">  protected static final String LineSeparator = String.from(Primitive.systemValue(SeparatorName));</span>
+  /**
+   * 
+   */
+  protected    WriteStream(final CollectedVariably&lt;ElementType&gt; aCollection)
+  {
+<span class="fc" id="L83">    super(aCollection);</span>
+<span class="fc" id="L84">    java.lang.String exitID = &quot;WriteStream&gt;&gt;WriteStream&quot;;</span>
+<span class="fc" id="L85">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L86">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   CollectedVariably&lt;ElementType&gt; contents()
+  {
+<span class="nc" id="L93">    java.lang.String exitID = &quot;WriteStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L95">    return (CollectedVariably&lt;ElementType&gt;)((CollectedVariably)contents);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream flush()
+  {
+<span class="nc" id="L103">    java.lang.String exitID = &quot;WriteStream&gt;&gt;flush&quot;;</span>
+<span class="nc" id="L104">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L105">    return (WriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream cr()
+  {
+<span class="nc" id="L113">    java.lang.String exitID = &quot;WriteStream&gt;&gt;cr&quot;;</span>
+<span class="nc" id="L114">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L115">    this.nextPutAll(((CollectedReadably)LineSeparator));</span>
+<span class="nc" id="L116">    return (WriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream tab()
+  {
+<span class="nc" id="L124">    java.lang.String exitID = &quot;WriteStream&gt;&gt;tab&quot;;</span>
+<span class="nc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L126">    this.nextPut(((ElementType)Character.type().tab()));</span>
+<span class="nc" id="L127">    return (WriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream space()
+  {
+<span class="nc" id="L135">    java.lang.String exitID = &quot;WriteStream&gt;&gt;space&quot;;</span>
+<span class="nc" id="L136">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L137">    this.nextPut(((ElementType)Character.type().space()));</span>
+<span class="nc" id="L138">    return (WriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream nextPut(final ElementType element)
+  {
+<span class="nc" id="L146">    java.lang.String exitID = &quot;WriteStream&gt;&gt;nextPut&quot;;</span>
+<span class="nc" id="L147">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L148">    this.collectsElements(((Object)element)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L149">      this.contents().add(element);</span>
+
+<span class="nc" id="L151">     position = (position.plus(SmallInteger.from(1)));</span>
+<span class="nc" id="L152">    }, &quot;&quot;));</span>
+<span class="nc" id="L153">    return (WriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream nextPutAll(final CollectedReadably&lt;ElementType&gt; elements)
+  {
+<span class="nc" id="L161">    java.lang.String exitID = &quot;WriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L163">    elements.isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L164">      return this.collectsElements(((Object)elements.first())).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L165">      this.contents().addAll(elements);</span>
+
+<span class="nc" id="L167">     position = (position.plus(elements.size()));</span>
+<span class="nc" id="L168">    }, &quot;&quot;));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L170">    return (WriteStream)this;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

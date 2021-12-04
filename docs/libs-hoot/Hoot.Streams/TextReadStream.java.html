@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextReadStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">TextReadStream.java</span></div><h1>TextReadStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Smalltalk.Magnitudes.Code;
+import Smalltalk.Collections.*;
+
+public class TextReadStream extends ReadStream&lt;Character&gt;
+{
+<span class="fc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends ReadStream.Metaclass
+  {
+<span class="fc" id="L36">    static final TextReadStream.Metaclass $class = new TextReadStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L38">      this(TextReadStream.Metaclass.class);</span>
+<span class="fc" id="L39">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L42">      super(aClass);</span>
+<span class="fc" id="L43">    }</span>
+
+<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return TextReadStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   TextReadStream on(final String aString)
+    {
+<span class="nc" id="L52">      java.lang.String exitID = &quot;TextReadStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="nc" id="L53">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L54">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L55">      return (TextReadStream)f0.exit(exitID, this.with(aString));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   TextReadStream with(final String aString)
+    {
+<span class="fc" id="L64">      java.lang.String exitID = &quot;TextReadStreamMetatype&gt;&gt;with&quot;;</span>
+<span class="fc" id="L65">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L66">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L67">      return (TextReadStream)f0.exit(exitID, new TextReadStream(aString));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  protected    TextReadStream(final String aString)
+  {
+<span class="fc" id="L78">    super(aString);</span>
+<span class="fc" id="L79">    java.lang.String exitID = &quot;TextReadStream&gt;&gt;TextReadStream&quot;;</span>
+<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L81">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   String contents()
+  {
+<span class="fc" id="L88">    java.lang.String exitID = &quot;TextReadStream&gt;&gt;contents&quot;;</span>
+<span class="fc" id="L89">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L90">    return (String)String.from(contents.toString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Character next()
+  {
+<span class="fc" id="L98">    java.lang.String exitID = &quot;TextReadStream&gt;&gt;next&quot;;</span>
+<span class="fc" id="L99">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L100">     position = (SmallInteger.from(1).plus(position));</span>
+<span class="fc" id="L101">    return (Character)this.contents().at(position);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String nextLine()
+  {
+<span class="nc" id="L109">    java.lang.String exitID = &quot;TextReadStream&gt;&gt;nextLine&quot;;</span>
+<span class="nc" id="L110">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L111">    return (String)this.upTo(Character.type().newLine());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String upTo(final Character target)
+  {
+<span class="nc" id="L119">    java.lang.String exitID = &quot;TextReadStream&gt;&gt;upTo&quot;;</span>
+<span class="nc" id="L120">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L121">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L122">    String result = String.emptyString();</span>
+<span class="nc" id="L123">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L124">      return this.atEnd();</span>
+<span class="nc" id="L125">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+      
+<span class="nc" id="L127">    Character c = this.next();</span>
+<span class="nc" id="L128">    (target.equals(c)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L129">      return (String)f0.exit(exitID, result);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L131">    result.at_put((result.size().plus(SmallInteger.from(1))), c);</span>
+<span class="nc" id="L132">    }, &quot;&quot;));</span>
+<span class="nc" id="L133">    return (String)f0.exit(exitID, result);</span>
+    });
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

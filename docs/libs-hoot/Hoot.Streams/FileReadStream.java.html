@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileReadStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">FileReadStream.java</span></div><h1>FileReadStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.io.RandomAccessFile;
+import Hoot.Magnitudes.Integer;
+import Hoot.Runtime.Names.Primitive;
+import static Hoot.Streams.WriteStream.*;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.CollectedReadably;
+import Smalltalk.Collections.ReadableString;
+import Smalltalk.Streams.*;
+
+public abstract class FileReadStream&lt;ElementType extends Object&gt; extends FileStream&lt;ElementType&gt; implements FileStreamReader&lt;ElementType&gt;
+{
+<span class="fc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends FileStream.Metaclass implements FileStreamReader.Metatype
+  {
+<span class="fc" id="L42">    static final FileReadStream.Metaclass $class = new FileReadStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L44">      this(FileReadStream.Metaclass.class);</span>
+<span class="fc" id="L45">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L48">      super(aClass);</span>
+<span class="fc" id="L49">    }</span>
+
+<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return FileReadStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   FileReadStream read(final ReadableString fileName)
+    {
+<span class="nc" id="L58">      java.lang.String exitID = &quot;FileReadStreamMetatype&gt;&gt;read&quot;;</span>
+<span class="nc" id="L59">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L60">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L61">      return (FileReadStream)f0.exit(exitID, this.read_type(fileName, Symbol.from(&quot;text&quot;)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   FileReadStream read_type(final ReadableString fileName, final ReadableString fileType)
+    {
+<span class="fc" id="L70">      java.lang.String exitID = &quot;FileReadStreamMetatype&gt;&gt;read_type&quot;;</span>
+<span class="fc" id="L71">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L72">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L73">      return (FileReadStream)f0.exit(exitID, this.open_type(((String)fileName), ((Symbol)fileType)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   FileReadStream open_type(final String fileName, final Symbol fileType)
+    {
+<span class="fc" id="L82">      java.lang.String exitID = &quot;FileReadStreamMetatype&gt;&gt;open_type&quot;;</span>
+<span class="fc" id="L83">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L84">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L85">      (Symbol.from(&quot;binary&quot;).isSame(fileType)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L86">        return (FileReadStream)f0.exit(exitID, BinaryFileReadStream.type().on(Primitive.readFile(fileName.primitiveString())));</span>
+      }, &quot;&quot;));
+<span class="fc" id="L88">      return (FileReadStream)f0.exit(exitID, TextFileReadStream.type().on(Primitive.readFile(fileName.primitiveString())));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  public    FileReadStream(final RandomAccessFile primitiveFile)
+  {
+<span class="fc" id="L99">    super(primitiveFile);</span>
+<span class="fc" id="L100">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;FileReadStream&quot;;</span>
+<span class="fc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L102">  }</span>
+
+  /**
+   * @return 
+   */
+  public   FileReadStream skip(final Ordinal count)
+  {
+<span class="nc" id="L109">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;skip&quot;;</span>
+<span class="nc" id="L110">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L111">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L112">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L113">      file.skipBytes(count.intValue());</span>
+<span class="nc" id="L114">    return (FileReadStream)f0.exit(exitID, null);</span>
+<span class="nc" id="L115">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L116">    return (FileReadStream)this;</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean skipTo(final ElementType target)
+  {
+<span class="nc" id="L125">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;skipTo&quot;;</span>
+<span class="nc" id="L126">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L127">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L128">      return (target.equals(this.next()));</span>
+<span class="nc" id="L129">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+      
+<span class="nc" id="L131">    }, &quot;&quot;));</span>
+<span class="nc" id="L132">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean nextMatchFor(final ElementType target)
+  {
+<span class="nc" id="L140">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;nextMatchFor&quot;;</span>
+<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L142">    return (Boolean)(this.next().equals(target));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean peekFor(final ElementType target)
+  {
+<span class="nc" id="L150">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;peekFor&quot;;</span>
+<span class="nc" id="L151">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L152">    return (Boolean)(this.peek().equals(target));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType peek()
+  {
+<span class="nc" id="L160">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;peek&quot;;</span>
+<span class="nc" id="L161">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L162">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L163">    this.atEnd().ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L164">      return (ElementType)f0.exit(exitID, Nil.literal());</span>
+    }, &quot;&quot;));
+
+<span class="nc" id="L167">    Integer position = this.position();</span>
+
+<span class="nc" id="L169">    ElementType result = this.next();</span>
+<span class="nc" id="L170">    this.position(position);</span>
+<span class="nc" id="L171">    return (ElementType)f0.exit(exitID, result);</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   FileReadStream $do(final MonadicValuable aBlock)
+  {
+<span class="nc" id="L180">    java.lang.String exitID = &quot;FileReadStream&gt;&gt;$do&quot;;</span>
+<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L182">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L183">      return this.atEnd();</span>
+<span class="nc" id="L184">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L185">      return aBlock.value(this.next());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L187">    return (FileReadStream)this;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
