@@ -121,9 +121,9 @@ mvn -U -B -pl libs-hoot test -Dtest=BenchmarkTest
 ```
 
 See the included [tests folder][hoot-tests] for a list of the available tests you can run.
-
 There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
 See the additional [notes][tests] about using this way of running tests with the bundle.
+You can also review the uploaded [test results](https://nikboyd.github.io/hoot-smalltalk/).
 
 #### Project Structure
 
