@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Note.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Notes</a> &gt; <span class="el_source">Note.java</span></div><h1>Note.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Notes;
+
+import Hoot.Runtime.Emissions.Emission;
+import static Hoot.Runtime.Names.Keyword.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+
+/**
+ * A notation.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Note implements NoteSource {
+
+<span class="fc" id="L16">    protected Note(String name) { this.name = name; }</span>
+<span class="fc" id="L17">    public static Note with(String name) { return new Note(name); }</span>
+
+<span class="fc" id="L19">    protected String name = Empty;</span>
+<span class="nc" id="L20">    public String name() { return this.name; }</span>
+<span class="nc" id="L21">    public String decor() { return name().toLowerCase(); }</span>
+
+<span class="nc" id="L23">    public boolean isStacked() { return Stacked.equals(name()); }</span>
+<span class="nc" id="L24">    public boolean isAccess() { return Decor.AccessNotes.contains(name()); }</span>
+<span class="nc" id="L25">    public boolean isStatic() { return Static.equals(name()); }</span>
+<span class="nc" id="L26">    public boolean isProperty() { return Property.equals(name()); }</span>
+<span class="nc" id="L27">    public boolean isPublic() { return Public.equals(name()); }</span>
+<span class="nc" id="L28">    public boolean isTransient() { return Transient.equals(name()); }</span>
+<span class="nc" id="L29">    public boolean isProtected() { return Protected.equals(name()); }</span>
+<span class="nc" id="L30">    public boolean isPrivate() { return Private.equals(name()); }</span>
+<span class="nc" id="L31">    public boolean isNotice() { return Notice.equals(name()); }</span>
+<span class="nc" id="L32">    public boolean isPrimitive() { return Primitive.equals(name()); }</span>
+<span class="nc" id="L33">    public boolean isAbstract() { return Abstract.equals(name()); }</span>
+<span class="nc" id="L34">    public boolean isNative() { return Native.equals(name()); }</span>
+<span class="nc" id="L35">    public boolean isVoid() { return Void.equals(name()); }</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">    public boolean isTypeDecorOnly() { return !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L38" title="All 4 branches missed.">    public boolean isClassDecorOnly() { return Decor.classNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">    public boolean isClassNoteOnly() { return !Decor.classNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">    public boolean isMethodDecorOnly() { return Decor.methodNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L41" title="All 4 branches missed.">    public boolean isMethodNoteOnly() { return !Decor.methodNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">    public boolean isVariableDecorOnly() { return Decor.variableNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">    public boolean isArgumentDecorOnly() { return Decor.argumentNote(name()) &amp;&amp; !Decor.hootNote(name()); }</span>
+
+<span class="nc" id="L45">    public Emission emitDecor() { return emitItem(decor()); }</span>
+<span class="nc" id="L46">    public Emission emitNote() { return emitNote(name()); }</span>
+<span class="nc" id="L47">    @Override public Emission emitItem() { return emitNote().values(NoValue); }</span>
+
+<span class="nc" id="L49">    public String notice() { return Empty; } // override this!</span>
+
+<span class="fc" id="L51">    public static final Note StaticNote = Note.with(Static);</span>
+<span class="fc" id="L52">    public static final Note TransientNote = Note.with(Transient);</span>
+<span class="fc" id="L53">    public static final Note ProtectedNote = Note.with(Protected);</span>
+<span class="fc" id="L54">    public static final Note OverrideNote = Note.with(Override);</span>
+
+    /**
+     * A note list source.
+     */
+    public static interface ListSource {
+
+        public NoteList notes();
+
+    } // ListSource
+
+} // Note
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

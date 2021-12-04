@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enclosure.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Blocks</a> &gt; <span class="el_source">Enclosure.java</span></div><h1>Enclosure.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Blocks;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Values.Frame;
+import Hoot.Runtime.Values.Cacheable;
+import Hoot.Runtime.Values.CachedStack;
+import Hoot.Runtime.Exceptions.ExceptionBase;
+import Hoot.Runtime.Exceptions.ExceptionContext;
+import Hoot.Runtime.Exceptions.HandledException;
+import Hoot.Runtime.Exceptions.UnhandledException;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Functions.Exceptional.*;
+import static Hoot.Runtime.Functions.Exceptional.Result.*;
+import static Hoot.Runtime.Names.Primitive.normalPriority;
+import java.util.function.Predicate;
+
+/**
+ * A block enclosure.
+ *
+ * &lt;h4&gt;Enclosure Responsibilities:&lt;/h4&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;knows a block&lt;/li&gt;
+ * &lt;li&gt;knows a block argument count&lt;/li&gt;
+ * &lt;li&gt;evaluates a block to produce a result&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Enclosure implements NiladicValuable, MonadicValuable, DyadicValuable, Cacheable&lt;Enclosure&gt; {
+
+<span class="fc" id="L39">    static final Consumer&lt;Frame&gt; DoNothing = (Frame f) -&gt; {};</span>
+<span class="fc" id="L40">    static final Enclosure DefaultContinuation = Enclosure.withBlock(DoNothing);</span>
+<span class="fc" id="L41">    public static Enclosure defaultContinuation() { return DefaultContinuation; }</span>
+
+    // convert closures to stack-based! --nik
+<span class="fc" id="L44">    static final CachedStack&lt;Enclosure&gt; ClosureStack = new CachedStack&lt;&gt;();</span>
+<span class="fc" id="L45">    static { ClosureStack.defaultIfEmpty(defaultContinuation()); }</span>
+
+<span class="fc" id="L47">    @Override public CachedStack&lt;Enclosure&gt; itemStack() { return closureStack(); }</span>
+<span class="fc" id="L48">    protected static CachedStack&lt;Enclosure&gt; closureStack() { return ClosureStack; }</span>
+
+<span class="nc" id="L50">    protected static Stack&lt;Enclosure&gt; closures() { return closureStack().cachedStack(); }</span>
+<span class="fc" id="L51">    static public Enclosure currentClosure() { return closureStack().top(); }</span>
+
+<span class="fc" id="L53">    private int stackIndex = 0;</span>
+<span class="fc" id="L54">    @Override public int stackIndex() { return this.stackIndex; }</span>
+<span class="fc" id="L55">    @Override public void stackIndex(int value) { this.stackIndex = value; }</span>
+
+<span class="fc" id="L57">    protected Enclosure(Function&lt;Frame,?&gt; block) { this.block = block; }</span>
+
+    public static Enclosure withBlock(Supplier&lt;?&gt; block) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (block == null) throw new IllegalArgumentException(&quot;block missing&quot;);</span>
+<span class="fc" id="L61">        return withBlock(f -&gt; { return block.get(); }); }</span>
+
+    public static Enclosure withBlock(Consumer&lt;Frame&gt; block) {
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (block == null) throw new IllegalArgumentException(&quot;block missing&quot;);</span>
+<span class="fc" id="L65">        return new Enclosure(f -&gt; { block.accept(f); return null; }); }</span>
+
+    public static Enclosure withBlock(Function&lt;Frame,?&gt; block) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (block == null) throw new IllegalArgumentException(&quot;block missing&quot;);</span>
+<span class="fc" id="L69">        return new Enclosure(block); }</span>
+
+    public static Enclosure withQuiet(Argued&lt;Frame,?&gt; block) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (block == null) throw new IllegalArgumentException(&quot;block missing&quot;);</span>
+<span class="nc" id="L73">        return new Enclosure(f -&gt; Exceptional.nullOrTryQuietly(block, f)); }</span>
+
+    public static Enclosure withQuieted(Runner block) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (block == null) throw new IllegalArgumentException(&quot;block missing&quot;);</span>
+<span class="nc" id="L77">        return new Enclosure(f -&gt; { Exceptional.runQuietly(block); return null; }); }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L80">    public &lt;V&gt; Function&lt;Frame,V&gt; block() { return (Function&lt;Frame,V&gt;)this.block; }</span>
+    private final Function&lt;Frame,?&gt; block;
+
+<span class="fc" id="L83">    private Frame frame = new Frame();</span>
+<span class="fc" id="L84">    public Frame frame() { return this.frame; }</span>
+<span class="fc" id="L85">    public Enclosure withFrame(Frame frame) { this.frame = frame; return this; }</span>
+<span class="nc" id="L86">    @Override public IntegerValue argumentCount() { return IntegerValue.with(frame().countArguments()); }</span>
+
+<span class="nc" id="L88">    public Enclosure runQuiet() { Exceptional.runQuietly(() -&gt; value()); return this; }</span>
+<span class="nc" id="L89">    public Enclosure runLoud()  { Exceptional.runLoudly(() -&gt; value()); return this; }</span>
+
+    /**
+     * @return a value resulting from the base block, after the termination block is also evaluated
+     * @param terminationBlock always evaluated (finally)
+     */
+<span class="nc" id="L95">    public Valued ensure(Valuable terminationBlock) { unwindBlock(terminationBlock); return value(); }</span>
+
+    public Enclosure $catch(MonadicValuable terminationBlock) {
+<span class="nc" id="L98">        runLoudly(() -&gt; value(), caughtBy(terminationBlock)); return this; }</span>
+
+    private Handler&lt;Throwable&gt; caughtBy(MonadicValuable terminationBlock) {
+<span class="nc" id="L101">        return (Throwable ex) -&gt; { terminationBlock.value(ex); }; }</span>
+
+    public Valued defaultIfCurtailed(Valued defaultValue) {
+<span class="nc" id="L104">        return defaultOrTrySurely(() -&gt; value(), DebugHandler, defaultValue); }</span>
+
+    /**
+     * @return a value resulting either from the base block, or the termination block if the base fails
+     * @param terminationBlock evaluated only if an exception occurs (catch)
+     */
+    public Valued ifCurtailed(Valuable terminationBlock) {
+<span class="nc" id="L111">        return this.on_do(ExceptionBase.type(), curtailed(terminationBlock)); }</span>
+
+    private MonadicValuable curtailed(Valuable terminationBlock) {
+<span class="nc" id="L114">        return new MonadicValuable(){</span>
+<span class="nc" id="L115">            @Override public &lt;V, R&gt; R value(V value) { return terminationBlock.value(); }</span>
+<span class="nc" id="L116">            @Override public IntegerValue argumentCount() { return IntegerValue.with(1); }</span>
+        };
+    }
+
+    private Handler&lt;Throwable&gt; curtailment(Valuable terminationBlock) {
+<span class="nc" id="L121">        return (Throwable ex) -&gt; { terminationBlock.value(); }; }</span>
+
+<span class="nc" id="L123">    public &lt;V&gt; boolean testWithEach(Set&lt;V&gt; values) { return values.stream().anyMatch(each -&gt; value(each)); }</span>
+<span class="nc" id="L124">    public &lt;V&gt; Set&lt;?&gt;  evaluateWithEach(Set&lt;V&gt; values) { return mapSet(values, each -&gt; value(each)); }</span>
+//    public &lt;V&gt; List&lt;?&gt; evaluateWithEach(V ... values) { return evaluateWithEach(wrap(values)); }
+<span class="fc" id="L126">    public &lt;V&gt; List&lt;?&gt; evaluateWithEach(List&lt;V&gt; values) { return map(values, each -&gt; value(each)); }</span>
+<span class="fc" id="L127">    public &lt;V,R&gt; List&lt;R&gt; evaluateEach(List&lt;V&gt; values, Class&lt;R&gt; itemType) { return map(values, each -&gt; value(each)); }</span>
+    public &lt;V&gt; List&lt;String&gt; collectStringsFrom(List&lt;V&gt; items) {
+<span class="nc" id="L129">        return collectWith(emptyList(String.class), items, (list,each) -&gt; { value_value(list, each); }); }</span>
+
+<span class="fc" id="L131">    @Override public &lt;R&gt; R value() { return $return(evaluated()); }</span>
+<span class="fc" id="L132">    @Override public &lt;V, R&gt; R value(V value) { return valueWith(value); }</span>
+<span class="nc" id="L133">    @Override public &lt;A, B, R&gt; R value_value(A a, B b) { return valueWith(a, b); }</span>
+
+<span class="fc" id="L135">    static final Object Placeholder = new Object();</span>
+<span class="nc" id="L136">    public Enclosure valueNames(String... valueNames) { return valueNames(wrap(valueNames)); }</span>
+    public Enclosure valueNames(List&lt;String&gt; valueNames) {
+<span class="nc" id="L138">        valueNames.forEach(vn -&gt; frame().bind(vn, Placeholder)); return this; }</span>
+
+    public &lt;R&gt; R valueWith(Object... values) {
+<span class="fc" id="L141">        return nullOrTryLoudly(</span>
+<span class="fc" id="L142">                () -&gt; { frame().withAll(values); return value(); },</span>
+<span class="fc" id="L143">                () -&gt; { frame().purge(); }); }</span>
+
+<span class="nc" id="L145">    public Thread fork() { return forkAt(normalPriority()); }</span>
+<span class="nc" id="L146">    public Thread forkAt(IntegerValue priority) { return forkAt(priority.intValue()); }</span>
+    public Thread forkAt(int priority) {
+<span class="nc" id="L148">        Thread result = new Thread(() -&gt; value());</span>
+<span class="nc" id="L149">        result.setPriority(priority);</span>
+<span class="nc" id="L150">        result.start();</span>
+<span class="nc" id="L151">        return result; }</span>
+
+<span class="fc" id="L153">    private Enclosure unwindBlock = DefaultContinuation;</span>
+<span class="fc" id="L154">    public Enclosure unwindBlock() { return this.unwindBlock; }</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">    protected void activateUnwind() { if (hasAny(unwindBlock())) unwindBlock().value(); }</span>
+    protected Enclosure unwindBlock(Valuable unwindBlock) {
+<span class="nc" id="L157">        this.unwindBlock = (Enclosure)unwindBlock; return unwindBlock(); }</span>
+
+<span class="fc" id="L159">    private void makeCurrent() { closureStack().push(this); }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;R&gt; R evaluated() {
+        try {
+<span class="fc" id="L164">            makeCurrent();</span>
+<span class="fc" id="L165">            return (R)block().apply(frame());</span>
+        }
+        finally {
+<span class="fc" id="L168">            unwindIfStacked();</span>
+        }
+    }
+
+<span class="fc" id="L172">    private void popIfStacked() { closureStack().popIfTop(this); }</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">    protected void unwindIfStacked() { if (onStack()) { activateUnwind(); popIfStacked(); } }</span>
+    protected void unwindTo(Frame target) {
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (hasNo(target)) return;</span>
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">        if (target.knowsMethod() &amp;&amp; !frame().matches(target)) {</span>
+<span class="fc" id="L177">            whisper(&quot;skipping &quot; + frame().describe());</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if (hasPrior()) {</span>
+<span class="fc" id="L179">                Enclosure parent = priorItem();</span>
+<span class="fc" id="L180">                unwindIfStacked();</span>
+<span class="fc" id="L181">                parent.unwindTo(target);</span>
+<span class="fc" id="L182">            }</span>
+            else {
+<span class="nc" id="L184">                unwindIfStacked();</span>
+            }
+        }
+<span class="fc" id="L187">    }</span>
+
+    public &lt;R&gt; R exitMethod(Frame methodFrame, R result) {
+<span class="fc" id="L190">        whisper(&quot;seeking &quot; + methodFrame.describe());</span>
+<span class="fc" id="L191">        unwindTo(methodFrame);</span>
+<span class="fc" id="L192">        return result;</span>
+    }
+
+    // knows which kinds of exceptions it handles, where kind = exception type primitive class
+<span class="fc" id="L196">    private final Set&lt;Class&lt;?&gt;&gt; handledExceptions = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L197">    private void clearExceptions() { handledExceptions().clear(); }</span>
+<span class="nc" id="L198">    private Set&lt;Class&lt;?&gt;&gt; handledExceptions() { return this.handledExceptions; }</span>
+<span class="nc" id="L199">    public Set&lt;Class&lt;?&gt;&gt; coveredExceptions() { return copySet(handledExceptions()); }</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">    private boolean handlesAny() { return !handledExceptions().isEmpty(); }</span>
+<span class="nc" id="L201">    private boolean handlesNone() { return handledExceptions().isEmpty(); }</span>
+<span class="nc" id="L202">    private boolean handledMatch(Predicate&lt;Class&lt;?&gt;&gt; p) { return matchAny(handledExceptions(), p); }</span>
+<span class="nc" id="L203">    private boolean under(Class&lt;?&gt; type) { return handledMatch((ht) -&gt; type.isAssignableFrom(ht)); }</span>
+<span class="nc" id="L204">    private boolean covers(Class&lt;?&gt; type) { return handledMatch((ht) -&gt; ht.isAssignableFrom(type)); }</span>
+<span class="nc" id="L205">    private Class&lt;?&gt; covered(Class&lt;?&gt; type) { return findFirst(handledExceptions(), (ht) -&gt; type.isAssignableFrom(ht)); }</span>
+
+    // only adopt distinct exception types which have no heritage relationship with others
+    // if there is a relationship, adopt only the most general type over those collected
+    public Enclosure asHandlerOf(HandledException.Metatype ... exceptionTypes) {
+<span class="nc" id="L210">        List&lt;HandledException.Metatype&gt; types = wrap(exceptionTypes);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        if (types.isEmpty()) return this;</span>
+<span class="nc" id="L212">        types.forEach((type) -&gt; {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (hasAny(type)) {</span>
+<span class="nc" id="L214">                Class&lt;?&gt; typeClass = type.outerClass();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">                if (handlesNone()) {</span>
+<span class="nc" id="L216">                    handledExceptions().add(typeClass);</span>
+<span class="nc" id="L217">                    enableAsHandler();</span>
+                }
+                else {
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                    while (under(typeClass)) { // clean out any covered types</span>
+<span class="nc" id="L221">                        handledExceptions().remove(covered(typeClass));</span>
+                    }
+<span class="nc" id="L223">                    handledExceptions().add(typeClass);</span>
+<span class="nc" id="L224">                    enableAsHandler();</span>
+                }
+            }
+<span class="nc" id="L227">        });</span>
+<span class="nc" id="L228">        return this; }</span>
+
+<span class="nc" id="L230">    public boolean handles(HandledException ex) { return handles(ex.valueType()); }</span>
+<span class="nc bnc" id="L231" title="All 6 branches missed.">    public boolean handles(Class type) { return hasAny(type) &amp;&amp; covers(type) &amp;&amp; isActive(); }</span>
+
+<span class="fc" id="L233">    private boolean activeAsHandler = false;</span>
+<span class="nc" id="L234">    public boolean isActive() { return this.activeAsHandler; }</span>
+<span class="nc" id="L235">    public void disableAsHandler() { this.activeAsHandler = false; }</span>
+<span class="nc" id="L236">    public void enableAsHandler() { this.activeAsHandler = true; }</span>
+
+<span class="nc" id="L238">    protected void adoptAsHandlerFor(HandledException ex) { ex.currentHandler(this); disableAsHandler(); }</span>
+<span class="nc" id="L239">    protected void releaseHandlerFor(HandledException ex) { ex.currentHandler(null); enableAsHandler(); }</span>
+    protected &lt;R&gt; R fireHandler(HandledException exception) {
+<span class="nc" id="L241">        adoptAsHandlerFor(exception); frame().bind(0, exception);</span>
+<span class="nc" id="L242">        R value = nullOrTryLoudly(() -&gt; evaluated(), () -&gt; releaseHandlerFor(exception));</span>
+<span class="nc" id="L243">        return $return(value); }</span>
+
+    public Valued handleSignaled(HandledException exception) {
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        if (handles(exception)) return fireHandler(exception);</span>
+<span class="nc" id="L247">        UnhandledException.type().raise(exception); return this; }</span>
+
+<span class="nc" id="L249">    public ExceptionContext resume(Valued value) { return context().resume(value); }</span>
+<span class="nc" id="L250">    public ExceptionContext retry(NiladicValuable aBlock) { return context().retry(aBlock); }</span>
+<span class="nc" id="L251">    public ExceptionContext retry() { return context().retry(); }</span>
+
+    public &lt;R&gt; R $return(R v) {
+//        unwindIfNeeded();
+<span class="fc" id="L255">        return (R)v;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override public Valued on_do(Valued.Metatype exceptionType, MonadicValuable handler) {
+<span class="nc" id="L260">        Enclosure alias = (Enclosure)handler;</span>
+<span class="nc" id="L261">        alias.asHandlerOf((HandledException.Metatype)exceptionType);</span>
+<span class="nc" id="L262">        return nullOrTryQuietly(</span>
+<span class="nc" id="L263">            () -&gt; ExceptionContext.during_handle(this, handler),</span>
+<span class="nc" id="L264">            () -&gt; alias.clearExceptions()); }</span>
+
+    private ExceptionContext context;
+<span class="nc" id="L267">    public ExceptionContext context() { return this.context; }</span>
+<span class="nc" id="L268">    public Enclosure context(ExceptionContext ctx) { this.context = ctx; return this; }</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    public void passFrom(HandledException ex) { if (hasAny(context())) context().passFrom(ex); }</span>
+
+} // Enclosure
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

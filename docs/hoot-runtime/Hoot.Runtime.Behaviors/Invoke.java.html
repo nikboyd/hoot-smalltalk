@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Invoke.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Behaviors</a> &gt; <span class="el_source">Invoke.java</span></div><h1>Invoke.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Behaviors;
+
+import java.util.*;
+import java.lang.invoke.MethodType;
+import java.lang.invoke.MethodHandle;
+import static java.lang.invoke.MethodHandles.lookup;
+
+import Hoot.Runtime.Values.Value;
+import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Faces.Selector;
+import Hoot.Runtime.Blocks.MultiValuable;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Functions.Exceptional.*;
+
+/**
+ * A method (or constructor) invoker.
+ *
+ * &lt;h4&gt;Invoke Responsibilities:&lt;/h4&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;knows a method selector&lt;/li&gt;
+ * &lt;li&gt;knows a method result type&lt;/li&gt;
+ * &lt;li&gt;knows a method receiver and its argument values&lt;/li&gt;
+ * &lt;li&gt;calls a method to produce a result&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+<span class="fc" id="L30">public class Invoke implements Logging {</span>
+
+    /**
+     * @return a new Invoker
+     * @param values a method receiver and arguments.
+     */
+    public static Invoke withValues(Object... values) {
+<span class="fc" id="L37">        List&lt;Value&gt; results = map(wrap(values), each -&gt; Value.with(each));</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (!results.isEmpty()) results.get(0).makeSelfish(); // mark receiver</span>
+<span class="fc" id="L39">        return with(unwrap(results, NoValues));</span>
+    }
+
+    /**
+     * @return a new Invoker
+     * @param values a method receiver and argument values
+     */
+    public static Invoke with(Value&lt;?&gt; ... values) {
+<span class="fc" id="L47">        Invoke result = new Invoke();</span>
+<span class="fc" id="L48">        result.values = values;</span>
+<span class="fc" id="L49">        return result;</span>
+    }
+
+    /**
+     * @return this Invoker configured
+     * @param resultType a result type
+     */
+<span class="fc" id="L56">    public Invoke result(Class&lt;?&gt; resultType) { this.resultType = resultType; return this; }</span>
+
+    /**
+     * @return this Invoker configured
+     * @param selector a selector
+     */
+<span class="fc" id="L62">    public Invoke with(Selector selector) { this.selector = selector; return this; }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;R&gt; R callWith(Object... arguments) {
+<span class="fc" id="L66">        return nullOrTryLoudly(() -&gt; {</span>
+//            report(arguments.getClass().getCanonicalName());
+<span class="fc" id="L68">            return (R) methodHandle().invokeWithArguments(arguments); }); }</span>
+
+    /**
+     * @return the result of a method call, or null
+     * @param &lt;R&gt; a result type
+     */
+<span class="fc" id="L74">    public &lt;R&gt; R call() { return callWith(unwrap(methodArguments(), NoObjects)); }</span>
+
+    /**
+     * @return the result of a method call, or null
+     * @param &lt;R&gt; a result type
+     * @param selector a method selector
+     */
+<span class="fc" id="L81">    public &lt;R&gt; R call(Selector selector) { return with(selector).call(); }</span>
+
+    /**
+     * @return the result of a method call, or null
+     * @param &lt;R&gt; a result type
+     * @param selector a method selector
+     * @param arguments method arguments
+     */
+    public &lt;R&gt; R call_with(Selector selector, Object ... arguments) {
+<span class="nc" id="L90">        return with(selector).callWith(arguments); }</span>
+
+    /**
+     * @return the result of a method call, or null
+     * @param &lt;R&gt; a result type
+     * @param resultType a result type
+     */
+    public &lt;R&gt; R call(Class&lt;?&gt; resultType) {
+<span class="fc" id="L98">        return with(selector).result(resultType).call(); }</span>
+
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">    private Object receiver() { return (count() == 0 ? null : values().get(0).value()); }</span>
+    private Class&lt;?&gt; receiverType() {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (count() == 0) return void.class;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        return (this.values[0].isSelfish() ?</span>
+<span class="pc" id="L104">                this.values[0].value().getClass() : void.class); }</span>
+
+<span class="fc" id="L106">    private MethodType constructorType() { return MethodType.methodType(VoidClass, argumentTypes()); }</span>
+    private Class&lt;?&gt; constructorClass() {
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (selector() != null) return selectedClass();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (receiver() == null) reportMissingReceiver();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (receiver() instanceof Class) return (Class)receiver();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (receiver() instanceof Typified) return typifiedReceiver().primitiveClass();</span>
+
+<span class="nc" id="L113">        return null;</span>
+    }
+
+<span class="fc" id="L116">    private List&lt;Class&lt;?&gt;&gt; argumentTypes() { return map(argumentValues(), each -&gt; each.value().getClass()); }</span>
+    private List&lt;Value&lt;?&gt;&gt; argumentValues() {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (count() == 0) return new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L119">        List&lt;Value&lt;?&gt;&gt; results = values();</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        return (results.get(0).isSelfish() ? results.subList(1, count()) : results); }</span>
+
+
+    private List&lt;Object&gt; methodArguments() {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (count() == 0) return emptyList(Object.class);</span>
+<span class="fc" id="L125">        List&lt;Value&lt;?&gt;&gt; results = values();</span>
+
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (results.get(0).isSelfish() &amp;&amp;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            results.get(0).valueType().getName().equals(Class.class.getName())) {</span>
+<span class="fc" id="L129">            results = results.subList(1, count());</span>
+        }
+
+<span class="fc" id="L132">        return map(results, each -&gt; each.value());</span>
+    }
+
+    static final String HandleReport = &quot;lookup: %s! %s#%s%s&quot;;
+    private void reportHandle(Class aClass, MethodType mType) {
+<span class="nc" id="L137">        report(format(HandleReport,</span>
+<span class="nc" id="L138">            mType.returnType().getSimpleName(),</span>
+<span class="nc" id="L139">            aClass.getSimpleName(), selector().name(),</span>
+<span class="nc" id="L140">            map(wrap(mType.parameterArray()), (p) -&gt; p.getSimpleName()))); }</span>
+
+    private MethodHandle methodHandle() throws Throwable {
+<span class="fc" id="L143">        Class&lt;?&gt; receiverType = receiverType();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (receiverType == VoidClass) {</span>
+//            reportHandle(constructorClass(), constructorType());
+<span class="fc" id="L146">            return lookup().findConstructor(constructorClass(), constructorType());</span>
+        }
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (Class.class.isAssignableFrom(receiverType)) {</span>
+//            reportHandle(classifiedReceiver(), methodType());
+<span class="fc" id="L151">            return lookup().findStatic(classifiedReceiver(), selector().name(), methodType());</span>
+        }
+
+//        reportHandle(receiverType, methodType());
+<span class="fc" id="L155">        return lookup().findVirtual(receiverType, selector().name(), methodType());</span>
+    }
+
+<span class="fc" id="L158">    private Value&lt;?&gt;[] values = { };</span>
+<span class="fc" id="L159">    private List&lt;Value&lt;?&gt;&gt; values() { return wrap(this.values); }</span>
+<span class="fc" id="L160">    private int count() { return this.values.length; }</span>
+
+    private Selector selector;
+<span class="fc" id="L163">    private Selector selector() { return this.selector; }</span>
+<span class="fc" id="L164">    private Class&lt;?&gt; selectedClass() { return selector().toClass(); }</span>
+
+<span class="fc" id="L166">    private Class&lt;?&gt; classifiedReceiver() { return (Class&lt;?&gt;)receiver(); }</span>
+<span class="nc" id="L167">    private Typified typifiedReceiver() { return (Typified)receiver(); }</span>
+
+<span class="fc" id="L169">    private Class&lt;?&gt; resultType = Object.class;</span>
+<span class="fc" id="L170">    private Class&lt;?&gt; resultType() { return this.resultType; }</span>
+<span class="fc" id="L171">    private MethodType methodType() { return MethodType.methodType(resultType(), argumentTypes()); }</span>
+
+    private void reportMissingReceiver() {
+<span class="nc" id="L174">        throw new IllegalArgumentException(&quot;expected a Class or TypeDescription&quot;); }</span>
+
+<span class="fc" id="L176">    public static final Value[] NoValues = { };</span>
+<span class="fc" id="L177">    public static final Object[] NoObjects = { };</span>
+
+<span class="fc" id="L179">    public static final Class VoidClass = void.class;</span>
+<span class="fc" id="L180">    public static final String[] AllEmpty = { Empty, Empty };</span>
+<span class="fc" id="L181">    static final Selector MainSelector = Hoot.Runtime.Names.Selector.named(&quot;main&quot;);</span>
+    public static void mainOn(Class aClass) {
+<span class="nc" id="L183">        Invoke.withValues(aClass, AllEmpty).result(VoidClass).with(MainSelector).call(); }</span>
+
+} // Invoker
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

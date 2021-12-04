@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Emissions</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Emissions;
+
+import java.util.*;
+import java.util.function.Predicate;
+
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.tree.Tree;
+
+import Hoot.Runtime.Faces.Named;
+import Hoot.Runtime.Notes.Note;
+import Hoot.Runtime.Notes.NoteList;
+import Hoot.Runtime.Values.Operand;
+import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Runtime.Names.TypeName;
+import Hoot.Runtime.Names.TypeName.Resolver;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * An item with its associated parse context and parent.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public abstract class Item implements EmissionSource, Resolver {
+
+<span class="fc" id="L28">    protected Item() { super(); }</span>
+<span class="fc" id="L29">    protected Item(Item container) { this(); inside(container); }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L32">    protected &lt;T extends Item&gt; Class&lt;T&gt; itemType() { return (Class&lt;T&gt;)getClass(); }</span>
+<span class="fc" id="L33">    public final &lt;T extends Item&gt; T inside(Item container) { container(container); return asType(itemType()); }</span>
+
+<span class="nc" id="L35">    public void clean() { } // derived classes sometimes override this</span>
+    public void release() { // derived classes sometimes override this
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (hasOne(container())) {</span>
+            // breaks cycles, if needed, to promote proper garbage collection
+<span class="nc" id="L39">            container().release();</span>
+<span class="nc" id="L40">            this.container = null;</span>
+        }
+<span class="nc" id="L42">    }</span>
+
+    protected Item container;
+<span class="nc" id="L45">    public Item container() { return this.container; }</span>
+<span class="fc" id="L46">    public void container(Item container) { this.container = container; scope(container); }</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">    protected void contain(Item item) { if (hasOne(item)) item.container(this); }</span>
+    protected &lt;T extends Item&gt; void containAll(List&lt;T&gt; items) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (hasAny(items)) items.forEach(item -&gt; this.contain(item)); }</span>
+
+    protected Scope itemScope;
+<span class="nc" id="L52">    public Scope scope() { return this.itemScope; }</span>
+<span class="nc" id="L53">    protected void scope(Scope s) { this.itemScope = s; }</span>
+<span class="pc bpc" id="L54" title="3 of 4 branches missed.">    protected void scope(Item it) { if (hasOne(it)) scope(hasInstance(it) ? (Scope)it : it.containerScope()); }</span>
+
+<span class="nc" id="L56">    public Scope containerScope() { return findParent(Scope.class); }</span>
+<span class="nc" id="L57">    public static boolean hasInstance(Item item) { return Scope.class.isInstance(item); }</span>
+
+<span class="fc" id="L59">    protected NoteList notes = new NoteList();</span>
+<span class="nc" id="L60">    public NoteList notes() { return this.notes; }</span>
+<span class="nc" id="L61">    public void note(Note note) { this.notes.note(note); }</span>
+<span class="nc" id="L62">    public void noteAll(List&lt;Note&gt; notes) { notes().noteAll(notes); }</span>
+
+    @Override public TypeName resolveTypeNamed(Named reference) {
+<span class="nc" id="L65">        return nullOr(s -&gt; s.resolveTypeNamed(reference), containerScope()); }</span>
+
+<span class="nc" id="L67">    public boolean isVoidedContext() { return false; }</span>
+    public boolean hasVoidedContext() {
+<span class="nc" id="L69">        Scope m = methodScope();</span>
+<span class="nc" id="L70">        Operand v = variableContainer();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (hasOne(m)) return m.isVoidedContext();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (hasOne(v)) return v.isVoidedContext();</span>
+<span class="nc" id="L73">        return false;</span>
+    }
+
+    public boolean hasPrimitiveContext() {
+<span class="nc" id="L77">        Scope m = methodScope();</span>
+<span class="nc" id="L78">        Operand v = variableContainer();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (hasOne(m)) return m.isPrimitive();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (hasOne(v)) return v.isPrimitive();</span>
+<span class="nc" id="L81">        return false;</span>
+    }
+
+<span class="nc" id="L84">    protected Scope findScope(Predicate&lt;Item&gt; p) { return findItem(Scope.class, p); }</span>
+<span class="nc" id="L85">    public Operand variableContainer() { return findItem(Operand.class, s -&gt; s.isVariable()); }</span>
+
+<span class="nc" id="L87">    public Scope blockScope() { return findScope(s -&gt; s.isBlock()); }</span>
+<span class="nc" id="L88">    public Scope methodScope() { return findScope(s -&gt; s.isMethod()); }</span>
+<span class="nc" id="L89">    public Scope facialScope() { return findScope(s -&gt; s.isFacial()); }</span>
+<span class="nc" id="L90">    public Scope fileScope() { return findScope(s -&gt; s.isFile()); }</span>
+
+    public List&lt;Scope&gt; blockScopes() {
+<span class="nc" id="L93">        Scope b = blockScope();</span>
+<span class="nc" id="L94">        Scope m = methodScope();</span>
+<span class="nc" id="L95">        List&lt;Scope&gt; results = emptyList(Scope.class);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (hasOne(m)) { // collect all block scopes within a method</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            while (b != m) { results.add(b); b = b.containerScope(); }</span>
+<span class="nc" id="L98">            results.add(m); // including the method scope</span>
+        }
+<span class="nc" id="L100">        return results;</span>
+    }
+
+    @Override public int nestLevel() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        int level = (hasNone(container())) ? 0 : container().nestLevel();</span>
+<span class="nc" id="L105">        whisper(&quot;level &quot; + level); return level; }</span>
+
+<span class="nc" id="L107">    public &lt;T extends Item&gt; T parentItem(Class&lt;T&gt; itemType) { return itemType.cast(container()); }</span>
+<span class="fc" id="L108">    public &lt;T extends Item&gt; T asType(Class&lt;T&gt; itemType) { return itemType.cast(this); }</span>
+<span class="nc" id="L109">    public &lt;R extends Item&gt; R itemNotes() { return null; } // override this!</span>
+<span class="nc" id="L110">    public List&lt;String&gt; knownTypes() { return emptyList(String.class); } // override this</span>
+
+<span class="nc" id="L112">    public boolean isEmpty() { return false; }</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">    public boolean missingAny(Item... items) { for (Item item : items) if (hasNone(item)) return true; return false; }</span>
+
+<span class="nc" id="L115">    public boolean isStatic() { return notes().isStatic(); }</span>
+<span class="nc" id="L116">    public boolean isAbstract() { return notes().isAbstract(); }</span>
+<span class="nc" id="L117">    public boolean isStacked() { return notes().isStacked(); }</span>
+<span class="nc" id="L118">    public boolean isPrimitive() { return notes().isPrimitive(); }</span>
+
+<span class="nc" id="L120">    public boolean isFramed() { return false; }</span>
+<span class="nc" id="L121">    public boolean isVariable() { return false; }</span>
+<span class="nc" id="L122">    public boolean isBlock() { return false; }</span>
+<span class="nc" id="L123">    public boolean isMethod() { return false; }</span>
+<span class="nc" id="L124">    public boolean isFacial() { return false; }</span>
+<span class="nc" id="L125">    public boolean isFile() { return false; }</span>
+
+<span class="nc bnc" id="L127" title="All 4 branches missed.">    protected boolean matchesExactly(Class&lt;?&gt; itemType) { return hasOne(itemType) &amp;&amp; itemType.equals(getClass()); }</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">    protected boolean matches(Class&lt;?&gt; itemType) { return hasOne(itemType) &amp;&amp; itemType.isAssignableFrom(getClass()); }</span>
+
+    /**
+     * @return an item of a specific kind, within limits, or null
+     * @param &lt;T&gt; an item type
+     * @param itemType an item type
+     * @param limitTypes limit types that truncate search
+     */
+    public &lt;T extends Item&gt; T findItem(Class&lt;T&gt; itemType, Class&lt;?&gt;... limitTypes) {
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (hasNone(itemType)) return null;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        return this.matches(itemType) ? asType(itemType) : this.findParent(itemType, limitTypes); }</span>
+
+    protected &lt;R extends Item&gt; R findItem(Class&lt;R&gt; itemType, Predicate&lt;Item&gt; p) {
+<span class="nc bnc" id="L141" title="All 4 branches missed.">        Item item = this; while (hasOne(item) &amp;&amp; !p.test(item)) item = item.container();</span>
+<span class="nc" id="L142">        return itemType.cast(item); }</span>
+
+    /**
+     * @return whether a parent of the given kind exists
+     * @param &lt;T&gt; a parent type
+     * @param itemType a parent type
+     * @param limitTypes limit types
+     */
+    public &lt;T extends Item&gt; boolean hasParent(Class&lt;T&gt; itemType, Class&lt;?&gt;... limitTypes) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        return findParent(itemType, limitTypes) != null; }</span>
+
+    /**
+     * @return a parent item of a specific kind, within limits, or null
+     * @param &lt;T&gt; a parent item type
+     * @param itemType a parent item type
+     * @param limitTypes limit types that truncate search
+     */
+    public &lt;T extends Item&gt; T findParent(Class&lt;T&gt; itemType, Class&lt;?&gt;... limitTypes) {
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (hasNone(itemType)) return null;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (hasNone(container())) return null;</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (limitTypes.length &gt; 0) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            for (Class&lt;?&gt; testType : limitTypes) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                if (container().matches(testType)) {</span>
+<span class="nc" id="L166">                    return null; // limit search scope</span>
+                }
+            }
+        }
+
+<span class="nc" id="L171">        return container().findItem(itemType, limitTypes);</span>
+    }
+
+    public &lt;T extends Item&gt; T findParentExactly(Class&lt;T&gt; itemType, Class&lt;?&gt;... limitTypes) {
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (hasNone(itemType)) return null;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (hasNone(container())) return null;</span>
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (limitTypes.length &gt; 0) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            for (Class&lt;?&gt; testType : limitTypes) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">                if (container().matchesExactly(testType)) {</span>
+<span class="nc" id="L181">                    return null; // limit search scope</span>
+                }
+            }
+        }
+
+<span class="nc" id="L186">        return container().findExactly(itemType, limitTypes);</span>
+    }
+
+    public &lt;T extends Item&gt; T findExactly(Class&lt;T&gt; itemType, Class&lt;?&gt;... limitTypes) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        return nullOr(it -&gt; matchesExactly(it) ? asType(it) : findParentExactly(it, limitTypes), itemType); }</span>
+
+<span class="fc" id="L192">    protected int sourceLine = 0;</span>
+<span class="nc" id="L193">    public int sourceLine() { return sourceLine; }</span>
+<span class="nc" id="L194">    public void sourceLine(int lineNumber) { sourceLine = lineNumber + 1; }</span>
+<span class="nc" id="L195">    public &lt;T extends Item&gt; T withLine(int line) { sourceLine(line); return asType(itemType()); }</span>
+
+<span class="nc" id="L197">    public String description() { return getClass().getName(); }</span>
+<span class="nc" id="L198">    public String commentFrom(Tree node) { return nullOr(hidden -&gt; hidden.getText(), hiddenToken((Tree) node)); }</span>
+<span class="nc" id="L199">    public TokenStream tokenStream() { return null; } // dervied classes override!!</span>
+<span class="nc" id="L200">    public Token tokenFrom(Tree node) { return (Token)node.getPayload(); }</span>
+<span class="nc" id="L201">    public Token hiddenToken(Tree node) { return nullOr(n -&gt; hiddenToken(tokenFrom(n)), node); }</span>
+    public Token hiddenToken(Token token) {
+<span class="nc bnc" id="L203" title="All 4 branches missed.">        if (hasNone(token) || hasNone(tokenStream())) return null;</span>
+<span class="nc" id="L204">        Token candidate = tokenStream().get(token.getTokenIndex() - 1);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        return (candidate.getChannel() == Token.HIDDEN_CHANNEL ? candidate : null);</span>
+    }
+
+    protected static final String ALL = &quot;ALL&quot;;
+    protected static final String Wild = &quot;*&quot;;
+    protected static final String Hash = &quot;#&quot;;
+    protected static final String Blank = &quot; &quot;;
+    protected static final String Quote = &quot;\&quot;&quot;;
+    protected static final String Trophe = &quot;'&quot;;
+    protected static final String Arrayed = &quot;[]&quot;;
+    protected static final String Etc = &quot;...&quot;;
+
+<span class="fc" id="L217">    protected static final Emission[] EmptyArgs = {};</span>
+<span class="fc" id="L218">    protected static final List&lt;Emission&gt; EmptyList = wrap(EmptyArgs);</span>
+
+} // Item
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

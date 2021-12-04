@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeName.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Names</a> &gt; <span class="el_source">TypeName.java</span></div><h1>TypeName.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Names;
+
+import java.util.*;
+import java.lang.reflect.Type;
+import static java.lang.Character.*;
+
+import Hoot.Runtime.Notes.Decor;
+import Hoot.Runtime.Faces.Named;
+import Hoot.Runtime.Maps.Library;
+import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Behaviors.Typified;
+import Hoot.Runtime.Notes.DetailedType;
+
+import static Hoot.Runtime.Functions.Exceptional.*;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Faces.Logging.*;
+import static Hoot.Runtime.Names.Operator.*;
+
+import static Hoot.Runtime.Names.Keyword.Array;
+import static Hoot.Runtime.Names.Keyword.Arrayed;
+import static Hoot.Runtime.Names.Keyword.Behaviors;
+import static Hoot.Runtime.Names.Keyword.Collections;
+import static Hoot.Runtime.Names.Keyword.TypeSuffix;
+import static Hoot.Runtime.Names.Keyword.Object;
+import static Hoot.Runtime.Names.Keyword.Hoot;
+import static Hoot.Runtime.Names.Name.removeTail;
+import static Hoot.Runtime.Names.Primitive.Blank;
+import static Hoot.Runtime.Notes.Decor.Generic;
+
+/**
+ * Identifies a type, including (possibly) its package.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class TypeName implements Named {
+
+<span class="fc" id="L39">    private TypeName(List&lt;String&gt; heads, List&lt;String&gt; tails) { headNames.addAll(heads); tailNames.addAll(tails); }</span>
+    private TypeName(TypeName source) {
+<span class="nc" id="L41">        this(source.headNames, source.tailNames); decor.makeNote(source.decor.notes()); makeArrayed(source.isArrayed()); }</span>
+
+<span class="fc" id="L43">    private static TypeName from(Typified type) { return fromCache(type.fullName()); }</span>
+<span class="nc" id="L44">    private static TypeName from(Named item) { return fromName(item.fullName()); }</span>
+    public static TypeName from(Class&lt;?&gt; aClass) {
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (aClass == null) return EmptyType;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        return aClass.getName().contains(Dollar) ?</span>
+<span class="fc" id="L48">            TypeName.fromName(aClass.getName()) :</span>
+<span class="fc" id="L49">            TypeName.fromName(aClass.getCanonicalName()); }</span>
+
+    public static TypeName fromOther(Object item) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (item == null) return EmptyType;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (item instanceof TypeName) return new TypeName((TypeName)item);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (item instanceof Typified) return TypeName.from((Typified)item);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (item instanceof Named) return TypeName.from((Named)item);</span>
+<span class="fc" id="L56">        return TypeName.from(item.getClass()); }</span>
+
+<span class="fc" id="L58">    public static TypeName withTails(List&lt;String&gt; names) { return new TypeName(emptyList(String.class), copyList(names)); }</span>
+<span class="nc" id="L59">    public static List&lt;TypeName&gt; listFrom(List&lt;String&gt; names) { return map(names, n -&gt; fromName(n)); }</span>
+<span class="fc" id="L60">    public static TypeName fromType(Type aType) { return DetailedType.from(aType).toTypeName(); }</span>
+<span class="fc" id="L61">    public static TypeName fromTail(String typeName) { return withTails(wrap(typeName.split(WildDot))); }</span>
+<span class="fc" id="L62">    public static TypeName fromName(String typeName) { return with(typeName); }</span>
+<span class="fc" id="L63">    public static TypeName with(String... names) { return with(wrap(names)); }</span>
+
+    static final String TypeTail = &quot; type&quot;;
+    static final String ClassTail = &quot; class&quot;;
+    public static TypeName with(List&lt;String&gt; names) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (names.isEmpty()) return EmptyType;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (1 == names.size()) {</span>
+<span class="fc" id="L70">            String fullName = names.get(0);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (fullName.contains(Dot)) {</span>
+<span class="fc" id="L72">                names = wrap(fullName.split(WildDot));</span>
+            }
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            else if (names.get(0).contains(Blank)) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                if (fullName.endsWith(TypeTail)) {</span>
+<span class="nc" id="L76">                    fullName = fullName.substring(0, fullName.length() - TypeTail.length());</span>
+                }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if (fullName.endsWith(ClassTail)) {</span>
+<span class="nc" id="L79">                    fullName = fullName.substring(0, fullName.length() - ClassTail.length());</span>
+                }
+<span class="nc" id="L81">                names = wrap(fullName.split(Blank));</span>
+            }
+        }
+
+<span class="fc" id="L85">        ArrayList&lt;String&gt; heads = copyList(names);</span>
+<span class="fc" id="L86">        String tail = heads.remove(heads.size() - 1);</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (tail.equals(Wild + Wild)) {</span>
+<span class="fc" id="L89">            tail = heads.remove(heads.size() - 1);</span>
+<span class="fc" id="L90">            String[] tails = { tail, Wild };</span>
+<span class="fc" id="L91">            return new TypeName(heads, wrap(tails));</span>
+        }
+
+<span class="fc" id="L94">        boolean arrayed = tail.endsWith(Arrayed);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (arrayed) tail = removeTail(tail, Arrayed);</span>
+<span class="fc" id="L96">        String[] tails = tail.split(Dollar);</span>
+
+<span class="fc" id="L98">        return new TypeName(heads, wrap(tails)).makeArrayed(arrayed); }</span>
+
+    public static TypeName inferFrom(String variableName) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (isEmpty(variableName)) return RootType();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (String article : Articles) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            if (variableName.startsWith(article)) {</span>
+<span class="fc" id="L104">                String result = variableName.substring(article.length());</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                if (isCapitalized(result)) {</span>
+<span class="fc" id="L106">                    return TypeName.fromName(result);</span>
+                }
+            }
+        }
+<span class="fc" id="L110">        return RootType(); }</span>
+
+
+<span class="fc" id="L113">    public Global toGlobal() { return Global.withList(allNames()).makeArrayed(arrayedType); }</span>
+    public List&lt;String&gt; allNames() {
+<span class="fc" id="L115">        ArrayList&lt;String&gt; results = emptyList(String.class);</span>
+<span class="fc" id="L116">        results.addAll(headNames);</span>
+<span class="fc" id="L117">        results.addAll(tailNames);</span>
+<span class="fc" id="L118">        return results; }</span>
+
+<span class="fc" id="L120">    private final Decor decor = new Decor();</span>
+<span class="fc" id="L121">    public TypeName withNotes(List&lt;String&gt; notes) { decor.makeNote(notes); return this; }</span>
+<span class="fc" id="L122">    public TypeName withNotes(String... notes) { return this.withNotes(wrap(notes)); }</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">    public boolean isNotedPrimitive() { return !this.isUnknown() &amp;&amp; decor.hasPrimitive(); }</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">    public boolean isNotedGeneric() { return !this.isUnknown() &amp;&amp; decor.hasGeneric(); }</span>
+<span class="fc" id="L125">    public TypeName noteGeneric() { return this.withNotes(Generic); }</span>
+
+<span class="fc" id="L127">    private final List&lt;String&gt; headNames = emptyList(String.class);</span>
+<span class="nc" id="L128">    protected int headCount() { return headNames.size(); }</span>
+<span class="fc" id="L129">    public boolean isUnpackaged() { return headNames.isEmpty(); }</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">    protected String headMost() { return (this.isUnpackaged()) ? Empty : headNames.get(0); }</span>
+<span class="fc" id="L131">    public boolean fromElementaryPackage() { return Primitive.fromElementaryPackage(headMost() + Dot); }</span>
+
+<span class="fc" id="L133">    private final List&lt;String&gt; tailNames = emptyList(String.class);</span>
+<span class="fc" id="L134">    protected int tailCount() { return tailNames.size(); }</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">    protected String tailMost() { return tailNames.isEmpty() ? Empty : tailNames.get(tailCount() - 1); }</span>
+<span class="pc bpc" id="L136" title="1 of 4 branches missed.">    private static boolean isCapitalized(String name) { return !isEmpty(name) &amp;&amp; isUpperCase(name.charAt(0)); }</span>
+
+<span class="fc" id="L138">    protected boolean arrayedType = false;</span>
+<span class="fc" id="L139">    public boolean isArrayed() { return arrayedType; }</span>
+<span class="fc" id="L140">    public TypeName makeArrayed(boolean value) { this.arrayedType = value; return this; }</span>
+
+<span class="fc" id="L142">    public boolean isAny() { return Any.equals(tailMost()); }</span>
+<span class="fc" id="L143">    public boolean isWild() { return Wild.equals(tailMost()); }</span>
+<span class="fc" id="L144">    public boolean isUnknown() { return tailMost().isEmpty(); }</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">    public boolean isNested() { return !this.isUnknown() &amp;&amp; tailCount() &gt; 1; }</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">    public boolean isGeneric() { return isGenericType() || isNotedGeneric(); }</span>
+<span class="fc" id="L147">    public boolean isGenericType() { return tailMost().endsWith(TypeSuffix); }</span>
+
+    static final String SigsReport = &quot;types %s %s %s %s&quot;;
+    protected boolean reportMatch(TypeName type, boolean matched) {
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        String similarity = (matched ? &quot;~=&quot; : &quot;!=&quot;);</span>
+<span class="fc" id="L152">        String realName = Name.asMetaMember(tailName());</span>
+<span class="pc bpc" id="L153" title="2 of 4 branches missed.">        String gen = (isGeneric() || type.isGeneric() ? &quot;generically&quot; : &quot;&quot;);</span>
+<span class="fc" id="L154">        whisper(format(SigsReport, realName, similarity, type.shortName(), gen));</span>
+<span class="fc" id="L155">        return matched;</span>
+    }
+
+    public boolean matches(TypeName match) {
+<span class="fc" id="L159">        boolean result = false;</span>
+<span class="pc bpc" id="L160" title="3 of 4 branches missed.">        if (isArrayed() &amp;&amp; !match.isArrayed()) {</span>
+<span class="nc" id="L161">            return reportMatch(match, false);</span>
+        }
+
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">        if (!isArrayed() &amp;&amp; match.isArrayed()) {</span>
+<span class="nc" id="L165">            return reportMatch(match, false);</span>
+        }
+
+<span class="fc" id="L168">        String realName = Name.asMetaMember(tailName());</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">        if (isGeneric() &amp;&amp; match.isGeneric()) {</span>
+<span class="nc" id="L170">            return reportMatch(match, true);</span>
+        }
+
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (isUnpackaged()) {</span>
+<span class="nc" id="L174">            result = match.tailName().startsWith(realName);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            if (result) { reportMatch(match, true); }</span>
+<span class="nc" id="L176">            result = realName.equals(match.tailName());</span>
+<span class="nc" id="L177">            return reportMatch(match, result);</span>
+        }
+
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (match.isUnpackaged()) {</span>
+<span class="nc" id="L181">            result = realName.startsWith(match.tailName());</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (result) { reportMatch(match, true); }</span>
+<span class="nc" id="L183">            result = realName.equals(match.tailName());</span>
+<span class="nc" id="L184">            return reportMatch(match, result);</span>
+        }
+
+<span class="fc" id="L187">        realName = Name.asMetaMember(typeName());</span>
+<span class="fc" id="L188">        result = match.tailName().startsWith(realName);</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (result) { reportMatch(match, true); }</span>
+<span class="fc" id="L190">        result = realName.equals(match.typeName());</span>
+<span class="fc" id="L191">        return reportMatch(match, result);</span>
+    }
+
+<span class="nc" id="L194">    protected boolean matches(Named item) { return matches(item.fullName()); }</span>
+    public boolean matches(String match) {
+<span class="nc bnc" id="L196" title="All 6 branches missed.">        return !isEmpty(match) &amp;&amp; match.equals(match.contains(Dot) ? fullName() : shortName()); }</span>
+
+<span class="nc" id="L198">    @Override public int hashCode() { return fullName().hashCode(); }</span>
+    @Override public boolean equals(Object candidate) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        if (hasNone(candidate)) return false;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (candidate instanceof TypeName) return matches((TypeName)candidate);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        if (candidate instanceof String) return matches((String)candidate);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (candidate instanceof Named) return matches((Named)candidate);</span>
+<span class="nc" id="L204">        return false;</span>
+    }
+
+<span class="fc" id="L207">    public static Class&lt;?&gt; findPrimitiveClass(String name) { return nullOrTryQuietly(n -&gt; Class.forName(n), name); }</span>
+<span class="nc" id="L208">    public Class&lt;?&gt; findPrimitiveClass() { return findPrimitiveClass(fullName()); }</span>
+<span class="pc" id="L209">    public Class&lt;?&gt; findClass() { return nullOr(f -&gt; f.primitiveClass(), findType()); }</span>
+    public Typified findType() {
+<span class="pc bpc" id="L211" title="2 of 6 branches missed.">        if (this.isAny() || this.isWild() || this.isUnknown()) return null;</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">        if (this.isGeneric()) return ObjectType().findType();</span>
+<span class="fc" id="L213">        return Library.findFace(typeName()); }</span>
+
+<span class="nc" id="L215">    @Override public String name() { return fullName(); }</span>
+<span class="fc" id="L216">    @Override public String shortName() { return tailName(); }</span>
+    @Override public String fullName() {
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (this.isUnknown()) return RootType().fullName();</span>
+<span class="fc" id="L219">        String packageName = packageName();</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        return packageName.isEmpty() ? tailName() :</span>
+<span class="fc" id="L221">                Name.formType(packageName, tailName()); }</span>
+
+<span class="nc" id="L223">    public String hootPackage() { return packageName().replace(Dot, Blank); }</span>
+    public String hootName() {
+<span class="fc" id="L225">        String fullName = fullName();</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">        if (!Name.isMetaNamed(fullName)) return fullName.replace(Dot, Blank);</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">        String tail = Name.isMetaclassNamed(fullName)? &quot; class&quot; : &quot; type&quot;;</span>
+<span class="fc" id="L228">        return Name.withoutMeta(fullName).replace(Dot, Blank) + tail; }</span>
+
+    public String javaName() {
+<span class="nc" id="L231">        String fullName = fullName();</span>
+<span class="nc" id="L232">        return fullName.replace(Blank, Dot);</span>
+    }
+
+<span class="nc" id="L235">    public String convertedTail() { return Primitive.convertType(packagedTail()); }</span>
+    public String packagedTail() {
+<span class="nc" id="L237">        String packageName = packageName();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        return packageName.isEmpty() ? markedUpTail() :</span>
+<span class="nc" id="L239">                Name.formType(packageName, markedUpTail()); }</span>
+
+
+<span class="fc bfc" id="L242" title="All 2 branches covered.">    private String tailMark() { return isWild() ? Dot : Dollar; }</span>
+<span class="fc" id="L243">    public String markedUpTail() { return joinWith(tailMark(), tailNames); }</span>
+
+<span class="fc bfc" id="L245" title="All 2 branches covered.">    private String trailer() { return isArrayed() ? Arrayed : Empty; }</span>
+<span class="fc" id="L246">    private String tailName() { return markedUpTail() + trailer(); }</span>
+
+    public String typeName() {
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (isUnknown()) return RootType().shortName();</span>
+
+<span class="fc" id="L251">        String fullName = fullName();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (Primitive.convertsType(fullName)) {</span>
+<span class="fc" id="L253">            return Primitive.convertType(fullName);</span>
+        }
+
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (!isNested()) {</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">            if (isAny()) return Quest;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">            if (isPrimitiveType()) return tailName().toLowerCase();</span>
+        }
+
+<span class="fc" id="L261">        return fullName;</span>
+    }
+
+    public String packageName() {
+<span class="fc" id="L265">        String packageName = Name.formType(headNames);</span>
+<span class="fc bfc" id="L266" title="All 4 branches covered.">        return this.isUnpackaged() ? Empty : fromElementaryPackage() ? packageName.toLowerCase() : packageName; }</span>
+
+<span class="fc" id="L268">    public boolean isObjectType() { return this.matches(ObjectType()); }</span>
+<span class="nc" id="L269">    public boolean isRootType() { return this.matches(RootType()); }</span>
+    public boolean isPrimitiveType() {
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (this.isUnknown()) return false;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (isUnpackaged()) return Primitive.isPrimitiveType(tailMost());</span>
+<span class="fc bfc" id="L273" title="All 4 branches covered.">        if (isElementaryType() || !fromElementaryPackage()) return false;</span>
+<span class="fc" id="L274">        return Primitive.isPrimitiveType(tailMost()); }</span>
+
+<span class="fc" id="L276">    public boolean isElementaryType() { return Primitive.isElementaryType(fullName()); }</span>
+<span class="nc" id="L277">    public boolean isEraseableType() { return Primitive.isEraseableType(tailMost()); }</span>
+
+    public static TypeName fromCache(String... names) {
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        if (hasNo(names)) return EmptyType;</span>
+<span class="fc" id="L281">        TypeName test = TypeName.with(names);</span>
+<span class="fc" id="L282">        String typeName = test.typeName();</span>
+<span class="pc bpc" id="L283" title="1 of 4 branches missed.">        if (!TypeCache.containsKey(typeName) &amp;&amp; !test.isUnpackaged()) {</span>
+<span class="fc" id="L284">            TypeCache.put(typeName, test);</span>
+        }
+<span class="fc" id="L286">        return TypeCache.get(typeName);</span>
+    }
+
+    private static final String Quest = &quot;?&quot;;
+    private static final String Any = &quot;Any&quot;;
+    private static final String Wild = &quot;*&quot;;
+    private static final String Dollar = &quot;$&quot;;
+<span class="fc" id="L293">    private static final String[] Articles = { &quot;an&quot;, &quot;a&quot; };</span>
+
+<span class="fc" id="L295">    public static final Class&lt;?&gt; JavaRoot = java.lang.Object.class;</span>
+<span class="fc" id="L296">    public static final TypeName ObjectType = TypeName.from(JavaRoot);</span>
+<span class="fc" id="L297">    public static final TypeName VoidType = TypeName.from(void.class);</span>
+<span class="fc" id="L298">    public static final TypeName EmptyType = new TypeName(emptyList(String.class), emptyList(String.class));</span>
+<span class="fc" id="L299">    static final HashMap&lt;String, TypeName&gt; TypeCache = emptyMap(TypeName.class);</span>
+    static {
+<span class="fc" id="L301">        TypeCache.put(Empty, EmptyType);</span>
+<span class="fc" id="L302">        TypeCache.put(VoidType.typeName(), VoidType);</span>
+<span class="fc" id="L303">        TypeCache.put(ObjectType.typeName(), ObjectType);</span>
+<span class="fc" id="L304">    }</span>
+
+<span class="fc" id="L306">    public static TypeName ObjectType() { return TypeName.fromCache(JavaRoot.getCanonicalName()); }</span>
+<span class="fc" id="L307">    public static TypeName RootType() { return TypeName.fromCache(Hoot, Behaviors, Object); }</span>
+<span class="fc" id="L308">    public static TypeName ArrayType() { return TypeName.fromCache(Hoot, Collections, Array); }</span>
+
+    /**
+     * Resolves a type from its references.
+     */
+    public static interface Resolver extends Logging {
+
+        public TypeName resolveTypeNamed(Named reference);
+
+    } // Resolver
+
+} // TypeName
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

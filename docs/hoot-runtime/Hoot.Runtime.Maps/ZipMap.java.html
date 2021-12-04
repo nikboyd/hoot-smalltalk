@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ZipMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Maps</a> &gt; <span class="el_source">ZipMap.java</span></div><h1>ZipMap.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Maps;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * Maps the classes located in an element of a class path.
+ * Locates all package directories relative to an archive from the class path.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class ZipMap extends PathMap {
+
+<span class="fc" id="L18">    public ZipMap(String pathname) { super(pathname); }</span>
+
+    /**
+     * @return whether the supplied pathname identifies a support file type.
+     * @param pathname the pathname of a potential archive file.
+     */
+    public static boolean supports(String pathname) {
+<span class="fc" id="L25">        return matchAny(FileTypes, type -&gt; pathname.endsWith(type)); }</span>
+
+<span class="fc" id="L27">    public static final String[] SupportedFileTypes = { &quot;.zip&quot;, &quot;.ZIP&quot;, &quot;.jar&quot;, &quot;.JAR&quot; };</span>
+<span class="fc" id="L28">    public static final List&lt;String&gt; FileTypes = wrap(SupportedFileTypes);</span>
+
+    /**
+     * @return null - file operations are not supported in archives.
+     * @param folderName the name of a Java/Hoot package directory.
+     */
+<span class="nc" id="L34">    @Override public File locate(String folderName) { return (null); }</span>
+
+    @Override public void load() {
+<span class="fc" id="L37">        try (ZipFile zipFile = new ZipFile(basePath)) {</span>
+<span class="fc" id="L38">            Enumeration e = zipFile.entries();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            while (e.hasMoreElements()) {</span>
+<span class="fc" id="L40">                load((ZipEntry) e.nextElement());</span>
+            }
+        }
+<span class="nc" id="L43">        catch (IOException ex) {</span>
+<span class="nc" id="L44">            error(ex.getMessage(), ex);</span>
+        }
+        finally {
+<span class="fc" id="L47">            reportAdded();</span>
+        }
+<span class="fc" id="L49">    }</span>
+
+    protected void load(ZipEntry entry) {
+<span class="fc" id="L52">        String fullName = entry.getName();</span>
+<span class="fc" id="L53">        File f = new File(fullName);</span>
+<span class="fc" id="L54">        String folderName = f.getParent();</span>
+<span class="fc" id="L55">        String fileName = f.getName();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (namesClass(fileName)) {</span>
+<span class="fc" id="L57">            addMapped(folderName, classNameWithoutType(fileName));</span>
+        }
+<span class="fc" id="L59">    }</span>
+
+} // ZipMap
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
