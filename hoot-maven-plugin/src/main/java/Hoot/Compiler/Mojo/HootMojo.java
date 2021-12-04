@@ -2,11 +2,7 @@ package Hoot.Compiler.Mojo;
 
 import java.io.*;
 import java.util.*;
-import Hoot.Runtime.Faces.Logging;
 import static Hoot.Compiler.HootMain.*;
-import static Hoot.Runtime.Functions.Utils.*;
-import static Hoot.Runtime.Names.Primitive.printLine;
-import static Hoot.Runtime.Names.Primitive.systemValue;
 
 import org.apache.maven.plugin.*;
 import org.apache.maven.plugins.annotations.*;
@@ -20,7 +16,7 @@ import org.apache.maven.project.MavenProject;
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 @Mojo(name = HootMojo.Generate, defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class HootMojo extends AbstractMojo implements Logging {
+public class HootMojo extends AbstractMojo {
 
     public static final String Generate = "generate";
     @Override public void execute() throws MojoExecutionException, MojoFailureException { runChoice(); }
@@ -36,7 +32,7 @@ public class HootMojo extends AbstractMojo implements Logging {
     String getProjectFolderTail() { return getProjectFolder().getName(); }
 
     File findFolder(String folderPath) { return new File(getTargetFolder(), folderPath); }
-    File getTargetFolder() { return new File(systemValue(BasePath), getArg(Folder)); }
+    File getTargetFolder() { return new File(System.getProperty(BasePath), getArg(Folder)); }
     void addTargetFolder() { if (!hasArg(Source)) project.addCompileSourceRoot(findFolder(TargetPath).getPath()); }
 
     /**
@@ -49,7 +45,7 @@ public class HootMojo extends AbstractMojo implements Logging {
     void addDefaultArgs() {
         if (!hasArg(Folder)) {
             mainArgs.put(Folder, getProjectFolderTail());
-            report(format(TargetReport, getArg(Folder)));
+            report(String.format(TargetReport, getArg(Folder)));
         }
     }
 
@@ -60,17 +56,18 @@ public class HootMojo extends AbstractMojo implements Logging {
     /**
      * Contains a list of (optional) package names sent to the Hoot compiler.
      */
-    @Parameter() List<String> packages = emptyList();
+    @Parameter() List<String> packages = new ArrayList();
     void addPackages() { commandArgs.add(shortened(Packages)); packages.forEach(p -> commandArgs.add(p)); }
 
     static final String[] NoArgs = { };
     String[] buildCommandArgs() {
         if (packages.isEmpty()) packages.add(WildCard);
-        addArgs(); addPackages(); return unwrap(commandArgs, NoArgs); }
+        addArgs(); addPackages(); return commandArgs.toArray(NoArgs); }
 
     static final String Dashed = "--";
     static final String ShowHelp = Dashed + Help;
     static final String Testing = "testing Hoot compiler ...";
+    void report(String... s) { if (s != null && s.length > 0) System.out.println(s[0]); else System.out.println(); }
     void reportOptions() { report(Testing); runCompile(); report(Empty); main(ShowHelp); }
     void runCompile() {
         addDefaultArgs();
@@ -79,12 +76,12 @@ public class HootMojo extends AbstractMojo implements Logging {
 
         // check for tests
         if (findFolder(SourceTest).exists()) {
-            printLine();
+            report();
             main(buildTestCompile());
         }
     }
 
-    List<String> commandArgs = emptyList();
+    List<String> commandArgs = new ArrayList();
     void addOption(String k, String v) {
         if (OptionalBools.containsKey(k)) {
             if (True.equals(v)) { // map 'test' to 'only-test'
@@ -101,7 +98,6 @@ public class HootMojo extends AbstractMojo implements Logging {
     String[] buildTestCompile() {
         String testSource = findFolder(SourceTest).getPath();
         String testTarget = findFolder(TargetTest).getPath();
-        whisper("adding target: " + testTarget);
         project.addTestCompileSourceRoot(testTarget);
 
         packages.clear();
