@@ -301,7 +301,7 @@ You'll need to add the following server section to your **settings.xml**.
         <id>hoot-libs</id>
         <!-- read github package registry -->
         <username>nikboyd</username>
-        <password>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</password>
+        <password>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</password>
     </server>
 </servers>
 ```
