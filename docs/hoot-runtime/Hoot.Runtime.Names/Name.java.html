@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Name.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Names</a> &gt; <span class="el_source">Name.java</span></div><h1>Name.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Names;
+
+import java.util.*;
+
+import static Hoot.Runtime.Names.Keyword.Java;
+import static Hoot.Runtime.Faces.Logging.*;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * Maps between Hoot Smalltalk selectors and Java method names.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+<span class="nc" id="L16">public class Name {</span>
+
+    static final char DOT = '.';
+    static final String Dot = Operator.Dot;
+    static final String Escape = &quot;\\&quot;;
+
+    static final char COLON = ':';
+    static final String Colon = &quot;:&quot;;
+
+    static final char UNDER = '_';
+    static final String Under = &quot;_&quot;;
+
+    static final char DOLLAR = '$';
+    static final String Dollar = &quot;$&quot;;
+
+    public static final String Public = &quot;public&quot;;
+    public static final String Protected = &quot;protected&quot;;
+    public static final String Private = &quot;private&quot;;
+    public static final String Transient = &quot;transient&quot;;
+    public static final String Static = &quot;static&quot;;
+    public static final String Abstract = &quot;abstract&quot;;
+    public static final String Wrapped = &quot;wrapped&quot;;
+
+    /**
+     * Internal meta member names.
+     */
+    public static final String Metatype = &quot;Metatype&quot;;
+    public static final String Metaclass = &quot;Metaclass&quot;;
+    public static final String MetaMember = &quot;$class&quot;;
+
+<span class="fc" id="L46">    static final List&lt;String&gt; ReservedWords = emptyList(String.class);</span>
+<span class="fc" id="L47">    public static final Properties BinaryOperators = new Properties();</span>
+<span class="fc" id="L48">    public static final char[] Vowels = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };</span>
+
+    /**
+     * Initializes (reservedWords), (binaryOperators), (controlClasses).
+     */
+    static {
+<span class="fc" id="L54">        ReservedWords.add(&quot;package&quot;);</span>
+<span class="fc" id="L55">        ReservedWords.add(&quot;import&quot;);</span>
+<span class="fc" id="L56">        ReservedWords.add(&quot;class&quot;);</span>
+<span class="fc" id="L57">        ReservedWords.add(&quot;interface&quot;);</span>
+<span class="fc" id="L58">        ReservedWords.add(&quot;if&quot;);</span>
+<span class="fc" id="L59">        ReservedWords.add(&quot;else&quot;);</span>
+<span class="fc" id="L60">        ReservedWords.add(&quot;while&quot;);</span>
+<span class="fc" id="L61">        ReservedWords.add(&quot;new&quot;);</span>
+<span class="fc" id="L62">        ReservedWords.add(&quot;return&quot;);</span>
+<span class="fc" id="L63">        ReservedWords.add(&quot;do&quot;);</span>
+<span class="fc" id="L64">        ReservedWords.add(&quot;case&quot;);</span>
+<span class="fc" id="L65">        ReservedWords.add(&quot;continue&quot;);</span>
+<span class="fc" id="L66">        ReservedWords.add(&quot;switch&quot;);</span>
+<span class="fc" id="L67">        ReservedWords.add(Public);</span>
+<span class="fc" id="L68">        ReservedWords.add(Private);</span>
+<span class="fc" id="L69">        ReservedWords.add(Protected);</span>
+<span class="fc" id="L70">        ReservedWords.add(&quot;synchronized&quot;);</span>
+<span class="fc" id="L71">        ReservedWords.add(&quot;native&quot;);</span>
+<span class="fc" id="L72">        ReservedWords.add(&quot;volatile&quot;);</span>
+<span class="fc" id="L73">        ReservedWords.add(Static);</span>
+<span class="fc" id="L74">        ReservedWords.add(&quot;null&quot;);</span>
+<span class="fc" id="L75">        ReservedWords.add(&quot;byte&quot;);</span>
+<span class="fc" id="L76">        ReservedWords.add(&quot;char&quot;);</span>
+<span class="fc" id="L77">        ReservedWords.add(&quot;short&quot;);</span>
+<span class="fc" id="L78">        ReservedWords.add(&quot;int&quot;);</span>
+<span class="fc" id="L79">        ReservedWords.add(&quot;long&quot;);</span>
+<span class="fc" id="L80">        ReservedWords.add(&quot;float&quot;);</span>
+<span class="fc" id="L81">        ReservedWords.add(&quot;double&quot;);</span>
+
+<span class="fc" id="L83">        BinaryOperators.put(&quot;:=&quot;, &quot; = &quot;);</span>
+<span class="fc" id="L84">        BinaryOperators.put(&quot;^&quot;, &quot;return&quot;);</span>
+
+<span class="fc" id="L86">        BinaryOperators.put(&quot;@&quot;, &quot;$at&quot;);</span>
+<span class="fc" id="L87">        BinaryOperators.put(&quot;,&quot;, &quot;$append&quot;);</span>
+<span class="fc" id="L88">        BinaryOperators.put(&quot;&amp;&quot;, &quot;$and&quot;);</span>
+<span class="fc" id="L89">        BinaryOperators.put(&quot;|&quot;, &quot;$or&quot;);</span>
+<span class="fc" id="L90">        BinaryOperators.put(&quot;+&quot;, &quot;$plus&quot;);</span>
+<span class="fc" id="L91">        BinaryOperators.put(&quot;-&quot;, &quot;$minus&quot;);</span>
+<span class="fc" id="L92">        BinaryOperators.put(&quot;+=&quot;, &quot;$incremented&quot;);</span>
+<span class="fc" id="L93">        BinaryOperators.put(&quot;-=&quot;, &quot;$decremented&quot;);</span>
+<span class="fc" id="L94">        BinaryOperators.put(&quot;*&quot;, &quot;$times&quot;);</span>
+<span class="fc" id="L95">        BinaryOperators.put(&quot;*=&quot;, &quot;$magnified&quot;);</span>
+<span class="fc" id="L96">        BinaryOperators.put(&quot;/&quot;, &quot;$dividedBy&quot;);</span>
+<span class="fc" id="L97">        BinaryOperators.put(&quot;/=&quot;, &quot;$divided&quot;);</span>
+<span class="fc" id="L98">        BinaryOperators.put(&quot;//&quot;, &quot;$idiv&quot;);</span>
+<span class="fc" id="L99">        BinaryOperators.put(&quot;\\&quot;, &quot;$into&quot;);</span>
+<span class="fc" id="L100">        BinaryOperators.put(&quot;\\\\&quot;, &quot;$imod&quot;);</span>
+<span class="fc" id="L101">        BinaryOperators.put(&quot;**&quot;, &quot;$raised&quot;);</span>
+<span class="fc" id="L102">        BinaryOperators.put(&quot;%&quot;, &quot;$modulus&quot;);</span>
+<span class="fc" id="L103">        BinaryOperators.put(&quot;&lt;&quot;, &quot;$lessThan&quot;);</span>
+<span class="fc" id="L104">        BinaryOperators.put(&quot;&lt;=&quot;, &quot;$lessEqual&quot;);</span>
+<span class="fc" id="L105">        BinaryOperators.put(&quot;&gt;&quot;, &quot;$moreThan&quot;);</span>
+<span class="fc" id="L106">        BinaryOperators.put(&quot;&gt;=&quot;, &quot;$moreEqual&quot;);</span>
+<span class="fc" id="L107">        BinaryOperators.put(&quot;=&quot;, &quot;$equal&quot;);</span>
+<span class="fc" id="L108">        BinaryOperators.put(&quot;~=&quot;, &quot;$notEqual&quot;);</span>
+<span class="fc" id="L109">        BinaryOperators.put(&quot;==&quot;, &quot;$is&quot;);</span>
+<span class="fc" id="L110">        BinaryOperators.put(&quot;~~&quot;, &quot;$isnt&quot;);</span>
+<span class="fc" id="L111">        BinaryOperators.put(&quot;&gt;&gt;&quot;, &quot;$associateWith&quot;);</span>
+
+<span class="fc" id="L113">        BinaryOperators.put(&quot;$at&quot;, &quot;@&quot;);</span>
+<span class="fc" id="L114">        BinaryOperators.put(&quot;$append&quot;, &quot;,&quot;);</span>
+<span class="fc" id="L115">        BinaryOperators.put(&quot;$and&quot;, &quot;&amp;&quot;);</span>
+<span class="fc" id="L116">        BinaryOperators.put(&quot;$or&quot;, &quot;|&quot;);</span>
+<span class="fc" id="L117">        BinaryOperators.put(&quot;$plus&quot;, &quot;+&quot;);</span>
+<span class="fc" id="L118">        BinaryOperators.put(&quot;$minus&quot;, &quot;-&quot;);</span>
+<span class="fc" id="L119">        BinaryOperators.put(&quot;$incremented&quot;, &quot;+=&quot;);</span>
+<span class="fc" id="L120">        BinaryOperators.put(&quot;$decremented&quot;, &quot;-=&quot;);</span>
+<span class="fc" id="L121">        BinaryOperators.put(&quot;$times&quot;, &quot;*&quot;);</span>
+<span class="fc" id="L122">        BinaryOperators.put(&quot;$magnified&quot;, &quot;*=&quot;);</span>
+<span class="fc" id="L123">        BinaryOperators.put(&quot;$dividedBy&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L124">        BinaryOperators.put(&quot;$divided&quot;, &quot;/=&quot;);</span>
+<span class="fc" id="L125">        BinaryOperators.put(&quot;$idiv&quot;, &quot;//&quot;);</span>
+<span class="fc" id="L126">        BinaryOperators.put(&quot;$into&quot;, &quot;\\&quot;);</span>
+<span class="fc" id="L127">        BinaryOperators.put(&quot;$imod&quot;, &quot;\\\\&quot;);</span>
+<span class="fc" id="L128">        BinaryOperators.put(&quot;$raised&quot;, &quot;**&quot;);</span>
+<span class="fc" id="L129">        BinaryOperators.put(&quot;$modulus&quot;, &quot;%&quot;);</span>
+<span class="fc" id="L130">        BinaryOperators.put(&quot;$lessThan&quot;, &quot;&lt;&quot;);</span>
+<span class="fc" id="L131">        BinaryOperators.put(&quot;$lessEqual&quot;, &quot;&lt;=&quot;);</span>
+<span class="fc" id="L132">        BinaryOperators.put(&quot;$moreThan&quot;, &quot;&gt;&quot;);</span>
+<span class="fc" id="L133">        BinaryOperators.put(&quot;$moreEqual&quot;, &quot;&gt;=&quot;);</span>
+<span class="fc" id="L134">        BinaryOperators.put(&quot;$equal&quot;, &quot;=&quot;);</span>
+<span class="fc" id="L135">        BinaryOperators.put(&quot;$notEqual&quot;, &quot;~=&quot;);</span>
+<span class="fc" id="L136">        BinaryOperators.put(&quot;$is&quot;, &quot;==&quot;);</span>
+<span class="fc" id="L137">        BinaryOperators.put(&quot;$isnt&quot;, &quot;~~&quot;);</span>
+<span class="fc" id="L138">        BinaryOperators.put(&quot;$associateWith&quot;, &quot;&gt;&gt;&quot;);</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * @return a primitive String
+     * @param selector a Hoot selector
+     */
+    public static String from(String selector) {
+<span class="fc" id="L146">        String op = BinaryOperators.getProperty(selector);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (op != null) {</span>
+<span class="nc" id="L148">            return op;</span>
+        }
+<span class="fc" id="L150">        int tail = selector.length() - 1;</span>
+<span class="pc bpc" id="L151" title="2 of 4 branches missed.">        while (tail &gt; 0 &amp;&amp; selector.charAt(tail) == COLON) {</span>
+<span class="nc" id="L152">            tail--;</span>
+        }
+<span class="fc" id="L154">        selector = selector.substring(0, tail + 1);</span>
+<span class="fc" id="L155">        selector = selector.replace(COLON, UNDER);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (ReservedWords.contains(selector)) {</span>
+<span class="nc" id="L157">            selector = Dollar + selector;</span>
+        }
+<span class="fc" id="L159">        return selector;</span>
+    }
+
+    /**
+     * @return a selector
+     * @param methodName the name of a Java method.
+     * @param argumentCount the number of method arguments.
+     */
+    public static String from(String methodName, int argumentCount) {
+<span class="nc" id="L168">        String op = BinaryOperators.getProperty(methodName);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (op != null) {</span>
+<span class="nc" id="L170">            return op;</span>
+        }
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (methodName.startsWith(Dollar)) {</span>
+<span class="nc" id="L173">            methodName = methodName.substring(1);</span>
+        }
+<span class="nc" id="L175">        methodName = methodName.replace(UNDER, COLON);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (argumentCount &gt; 0) {</span>
+<span class="nc" id="L177">            methodName = methodName + Colon;</span>
+        }
+<span class="nc" id="L179">        return methodName;</span>
+    }
+
+    /**
+     * Returns the root package name from a (fully qualified) name.
+     * @param fullName a (fully qualified) name
+     * @return a root name if present, or empty
+     */
+    public static String rootPackage(String fullName) {
+<span class="nc" id="L188">        String packageName = packageName(fullName);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        if (!packageName.contains(Dot)) return packageName;</span>
+<span class="nc" id="L190">        String[] parts = packageName.split(Escape + Dot);</span>
+<span class="nc" id="L191">        return parts[0];</span>
+    }
+
+    /**
+     * Returns the package name from a (fully qualified) name.
+     * @param fullName a (fully qualified) name
+     * @return a package name if present, or empty
+     */
+    public static String packageName(String fullName) {
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (isEmpty(fullName)) return Empty;</span>
+<span class="fc" id="L201">        fullName = Name.asMetaMember(fullName.trim());</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">        if (!fullName.contains(Dot)) return Empty;</span>
+
+<span class="fc" id="L204">        String[] parts = fullName.split(Escape + Dot);</span>
+<span class="fc" id="L205">        String lastPart = parts[parts.length - 1];</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (Character.isLowerCase(lastPart.charAt(0)) &amp;&amp;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            !Primitive.isPrimitiveType(lastPart)) return fullName;</span>
+
+<span class="fc" id="L209">        int headLength = fullName.length() - lastPart.length();</span>
+<span class="fc" id="L210">        return fullName.substring(0, headLength - 1);</span>
+    }
+
+    /**
+     * Returns the full type name from a (fully qualified) name.
+     * @param fullName a (fully qualified) name
+     * @return a type name if present, or empty
+     */
+    public static String typeName(String fullName) {
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        if (isEmpty(fullName)) return Empty;</span>
+<span class="fc" id="L220">        fullName = Name.asMetaMember(fullName.trim());</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        if (!fullName.contains(Dot)) return fullName;</span>
+
+<span class="fc" id="L223">        String[] parts = fullName.split(Escape + Dot);</span>
+<span class="fc" id="L224">        String lastPart = parts[parts.length - 1];</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        if (Character.isLowerCase(lastPart.charAt(0)) &amp;&amp;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">            !Primitive.isPrimitiveType(lastPart)) return Empty;</span>
+
+<span class="fc" id="L228">        return lastPart;</span>
+    }
+
+//    public static boolean isSimple(String name) {
+//        if (isEmpty(name)) return false;
+//        if (isProper(name)) return false;
+//        return packageName(name).isEmpty();
+//    }
+
+    public static boolean isProper(String name) {
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (isEmpty(name)) return false;</span>
+<span class="nc" id="L239">        return Character.isUpperCase(name.charAt(0));</span>
+    }
+
+    public static boolean isQualified(String name) {
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        if (isEmpty(name)) return false;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">        return !packageName(name).isEmpty();</span>
+    }
+
+<span class="fc bfc" id="L247" title="All 4 branches covered.">    public static boolean isMetaNamed(String name) { return isMetaclassNamed(name) || isMetatypeNamed(name); }</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">    public static boolean isMetaclassNamed(String name) { return !isEmpty(name) &amp;&amp; name.endsWith(Metaclass); }</span>
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">    public static boolean isMetatypeNamed(String name) { return !isEmpty(name) &amp;&amp; name.endsWith(Metatype); }</span>
+
+    public static String asMetaMember(String name) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (isMetaclassNamed(name)) return name.replace(Dot + Metaclass, Dollar + Metaclass);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        if (isMetatypeNamed(name)) return name.replace(Dot + Metatype, Dollar + Metatype);</span>
+<span class="fc" id="L254">        return name; // not really a meta-member</span>
+    }
+
+    public static String withoutMeta(String name) {
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">        if (isMetaclassNamed(name)) return removeTail(name, Metaclass);</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        if (isMetatypeNamed(name)) return removeTail(name, Metatype);</span>
+<span class="nc" id="L260">        return name; // not really a meta-member</span>
+    }
+
+    public static String formType(String... names) {
+<span class="fc" id="L264">        return formType(wrap(names));</span>
+    }
+
+    public static String formType(List&lt;String&gt; names) {
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (names.isEmpty()) return Empty;</span>
+
+<span class="fc" id="L270">        String tailMost = names.get(names.size() - 1);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (names.size() == 1) {</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            return Primitive.isPrimitiveType(tailMost) ?</span>
+<span class="nc" id="L273">                    tailMost.toLowerCase() : tailMost;</span>
+        }
+
+<span class="fc" id="L276">        List&lt;String&gt; heads = names.subList(0, names.size() - 1);</span>
+<span class="fc" id="L277">        String joinedHeads = joinWith(Dot, heads);</span>
+<span class="fc" id="L278">        String joinedLowers = joinedHeads.toLowerCase();</span>
+
+<span class="fc" id="L280">        String headMost = names.get(0);</span>
+<span class="fc" id="L281">        String fullName = joinWith(Dot, names);</span>
+
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (headMost.startsWith(Java)) {</span>
+<span class="fc" id="L284">            String[] fullerNames = { joinedLowers, tailMost };</span>
+<span class="fc" id="L285">            return joinWith(Dot, wrap(fullerNames));</span>
+        }
+<span class="fc" id="L287">        return fullName;</span>
+    }
+
+    public static String removeTail(String name, String tail) {
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        if (!name.endsWith(tail)) return name;</span>
+<span class="fc" id="L292">        String result = name.substring(0, name.length() - tail.length());</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">        if (result.endsWith(Dot)) result = result.substring(0, result.length() - 1);</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        if (result.endsWith(Dollar)) result = result.substring(0, result.length() - 1);</span>
+<span class="fc" id="L295">        return result.trim(); // no tailing blank(s) either</span>
+    }
+
+} // Name
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

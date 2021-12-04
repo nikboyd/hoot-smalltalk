@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SortedCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">SortedCollection.java</span></div><h1>SortedCollection.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import java.util.ArrayList;
+import java.util.Collections;
+import Hoot.Magnitudes.Integer;
+import Hoot.Streams.WriteStream;
+import Smalltalk.Core.Subject;
+import Smalltalk.Collections.*;
+import Smalltalk.Magnitudes.Scalar;
+import Smalltalk.Magnitudes.Ordinal;
+
+public class SortedCollection&lt;ElementType extends Object&gt; extends SequencedCollection&lt;ElementType&gt; implements CollectedSortably&lt;ElementType&gt;
+{
+<span class="fc" id="L36">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L37">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends SequencedCollection.Metaclass implements CollectedSortably.Metatype
+  {
+<span class="fc" id="L40">    static final SortedCollection.Metaclass $class = new SortedCollection.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L42">      this(SortedCollection.Metaclass.class);</span>
+<span class="fc" id="L43">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L46">      super(aClass);</span>
+<span class="fc" id="L47">    }</span>
+
+<span class="fc" id="L49">    @Override public java.lang.Class outerClass() { return SortedCollection.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   SortedCollection $new()
+    {
+<span class="nc" id="L56">      java.lang.String exitID = &quot;SortedCollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L57">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L58">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L59">      return (SortedCollection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   SortedCollection $new(final Ordinal capacity)
+    {
+<span class="fc" id="L68">      java.lang.String exitID = &quot;SortedCollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L69">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L70">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L71">      return (SortedCollection)f0.exit(exitID, new SortedCollection(capacity));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   SortedCollection from(final java.util.List primitiveList)
+    {
+<span class="nc" id="L80">      java.lang.String exitID = &quot;SortedCollectionMetatype&gt;&gt;from&quot;;</span>
+<span class="nc" id="L81">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L82">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L83">      return (SortedCollection)f0.exit(exitID, new SortedCollection(primitiveList));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   SortedCollection synchronizedFrom(final java.util.List primitiveList)
+    {
+<span class="nc" id="L92">      java.lang.String exitID = &quot;SortedCollectionMetatype&gt;&gt;synchronizedFrom&quot;;</span>
+<span class="nc" id="L93">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L94">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L95">      return (SortedCollection)f0.exit(exitID, new SortedCollection(java.util.Collections.synchronizedList(primitiveList)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   DyadicPredicate sortBlock()
+    {
+<span class="fc" id="L104">      java.lang.String exitID = &quot;SortedCollectionMetatype&gt;&gt;sortBlock&quot;;</span>
+<span class="fc" id="L105">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L106">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L107">      return Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L108">        Ordered a = f3.getValue(0).value();</span>
+<span class="nc" id="L109">        Ordered b = f3.getValue(1).value();</span>
+<span class="nc" id="L110">        return (a.lessThan(b));</span>
+<span class="fc" id="L111">      }, &quot;a&quot;, &quot;b&quot;).toPredicate();</span>
+      });
+    }
+  }
+
+
+  protected final java.util.List&lt;ElementType&gt; contents;
+<span class="fc" id="L118">  protected Boolean needsSort = False.literal();</span>
+<span class="fc" id="L119">  protected DyadicPredicate sortBlock = SortedCollection.type().sortBlock();</span>
+  /**
+   * 
+   */
+  protected    SortedCollection()
+  {
+<span class="nc" id="L125">    this(new java.util.ArrayList());</span>
+<span class="nc" id="L126">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;SortedCollection&quot;;</span>
+<span class="nc" id="L127">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L128">  }</span>
+
+  /**
+   * 
+   */
+  protected    SortedCollection(final Ordinal capacity)
+  {
+<span class="fc" id="L135">    this(new java.util.ArrayList(capacity.intValue()));</span>
+<span class="fc" id="L136">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;SortedCollection&quot;;</span>
+<span class="fc" id="L137">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L138">  }</span>
+
+  /**
+   * 
+   */
+  protected    SortedCollection(final java.util.List primitiveList)
+<span class="fc" id="L144">  {</span>
+<span class="fc" id="L145">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;SortedCollection&quot;;</span>
+<span class="fc" id="L146">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L147">     contents = java.util.Collections.synchronizedList(primitiveList);</span>
+<span class="fc" id="L148">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override protected   ElementType get(final int index)
+  {
+<span class="fc" id="L155">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;get&quot;;</span>
+<span class="fc" id="L156">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L157">    return (ElementType)contents.get(index);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   java.util.List primitiveContents()
+  {
+<span class="nc" id="L165">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;primitiveContents&quot;;</span>
+<span class="nc" id="L166">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L167">    this.reSort();</span>
+<span class="nc" id="L168">    return (java.util.List)contents;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer size()
+  {
+<span class="fc" id="L176">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;size&quot;;</span>
+<span class="fc" id="L177">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L178">    return (Integer)SmallInteger.from(contents.size());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   DyadicPredicate sortBlock()
+  {
+<span class="nc" id="L186">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;sortBlock&quot;;</span>
+<span class="nc" id="L187">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L188">    return (DyadicPredicate)sortBlock;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   SortedCollection sortBlock(final DyadicPredicate aBlock)
+  {
+<span class="nc" id="L196">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;sortBlock&quot;;</span>
+<span class="nc" id="L197">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L198">     sortBlock = aBlock;</span>
+
+<span class="nc" id="L200">     needsSort = True.literal();</span>
+<span class="nc" id="L201">    return (SortedCollection)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   SortedCollection reSort()
+  {
+<span class="fc" id="L209">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;reSort&quot;;</span>
+<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">    if (needsSort.asPrimitive()) {</span>
+<span class="fc" id="L212">      synchronized (contents) {</span>
+<span class="fc" id="L213">        Collections.sort(contents);</span>
+
+<span class="fc" id="L215">         needsSort = False.literal();</span>
+<span class="fc" id="L216">      };</span>
+    };
+<span class="fc" id="L218">    return (SortedCollection)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType add(final Object element)
+  {
+<span class="fc" id="L226">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;add&quot;;</span>
+<span class="fc" id="L227">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L228">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L229">    Object.isNull(((Object)element)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L230">      return (ElementType)f0.exit(exitID, element);</span>
+    }, &quot;&quot;));
+<span class="fc" id="L232">    this.registerType(((Object)element));</span>
+<span class="fc" id="L233">    contents.add(((ElementType)element));</span>
+
+<span class="fc" id="L235">     needsSort = True.literal();</span>
+<span class="fc" id="L236">    return (ElementType)f0.exit(exitID, ((ElementType)element));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType add_at(final Object element, final int index)
+  {
+<span class="nc" id="L245">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L246">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L247">    return (ElementType)this.add(((ElementType)element));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_afterIndex(final ElementType element, final Ordinal index)
+  {
+<span class="nc" id="L255">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;add_afterIndex&quot;;</span>
+<span class="nc" id="L256">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L257">    return (ElementType)this.add(element);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_beforeIndex(final ElementType element, final Ordinal index)
+  {
+<span class="nc" id="L265">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;add_beforeIndex&quot;;</span>
+<span class="nc" id="L266">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L267">    return (ElementType)this.add(element);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="nc" id="L275">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L276">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L277">    return (int)contents.hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Collected aCollection)
+  {
+<span class="nc" id="L285">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L286">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L287">    return (Boolean)(this.equals(aCollection.asSortedCollection()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final SortedCollection aCollection)
+  {
+<span class="nc" id="L295">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L296">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L297">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   SortedCollection asSortedCollection()
+  {
+<span class="nc" id="L305">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;asSortedCollection&quot;;</span>
+<span class="nc" id="L306">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L307">    return (SortedCollection)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   SortedCollection removeAll()
+  {
+<span class="nc" id="L315">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L316">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L317">    contents.clear();</span>
+<span class="nc" id="L318">    return (SortedCollection)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeAtIndex_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
+  {
+<span class="nc" id="L326">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeAtIndex_ifAbsent&quot;;</span>
+<span class="nc" id="L327">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L328">    this.reSort();</span>
+
+<span class="nc" id="L330">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="nc" id="L331">    return (ElementType)contents.remove(i);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeAtIndex(final Ordinal index)
+  {
+<span class="nc" id="L339">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L340">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L341">    return (ElementType)this.removeAtIndex_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L342">      return this.indexRangeError();</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   OrderedCollection&lt;ElementType&gt; removeAllSuchThat(final MonadicPredicate criteria)
+  {
+<span class="nc" id="L351">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeAllSuchThat&quot;;</span>
+<span class="nc" id="L352">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L353">    ArrayList results = new ArrayList(10);</span>
+<span class="nc" id="L354">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L355">      Ordinal index = f2.getValue(0).value();</span>
+      
+<span class="nc" id="L357">    ElementType element = contents.get((index.intValue() - 1));</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">    if (criteria.value(element).primitiveBoolean()) {</span>
+<span class="nc" id="L359">      results.add(element);</span>
+<span class="nc" id="L360">      this.removeAtIndex(index);</span>
+    };
+<span class="nc" id="L362">    }, &quot;index&quot;));</span>
+<span class="nc" id="L363">    return (OrderedCollection&lt;ElementType&gt;)OrderedCollection.type().from(results);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeFirst()
+  {
+<span class="nc" id="L371">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L372">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L373">    this.emptyCheck();</span>
+<span class="nc" id="L374">    this.reSort();</span>
+<span class="nc" id="L375">    return (ElementType)contents.remove(0);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeLast()
+  {
+<span class="nc" id="L383">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L384">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L385">    this.emptyCheck();</span>
+<span class="nc" id="L386">    this.reSort();</span>
+<span class="nc" id="L387">    return (ElementType)contents.remove((contents.size() - 1));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Collected&lt;ElementType&gt; removeFirst(final Ordinal count)
+  {
+<span class="nc" id="L395">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L396">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L397">    ArrayList results = new ArrayList(count.intValue());</span>
+<span class="nc" id="L398">    ((Integer)count).timesRepeat(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L399">      results.add(this.removeFirst());</span>
+<span class="nc" id="L400">    }, &quot;&quot;));</span>
+<span class="nc" id="L401">    return (Collected&lt;ElementType&gt;)OrderedCollection.type().from(results);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Collected&lt;ElementType&gt; removeLast(final Ordinal count)
+  {
+<span class="nc" id="L409">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L410">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L411">    ArrayList results = new ArrayList(count.intValue());</span>
+<span class="nc" id="L412">    ((Integer)count).timesRepeat(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L413">      results.add(this.removeLast());</span>
+<span class="nc" id="L414">    }, &quot;&quot;));</span>
+<span class="nc" id="L415">    return (Collected&lt;ElementType&gt;)OrderedCollection.type().from(results);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream writeStream()
+  {
+<span class="nc" id="L423">    java.lang.String exitID = &quot;SortedCollection&gt;&gt;writeStream&quot;;</span>
+<span class="nc" id="L424">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L425">    return (WriteStream)WriteStream.type().with(this);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

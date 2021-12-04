@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Association.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">Association.java</span></div><h1>Association.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Smalltalk.Core.Subject;
+import Smalltalk.Core.Posit;
+import Smalltalk.Magnitudes.Scalar;
+import Smalltalk.Magnitudes.Associated;
+
+public class Association extends Magnitude implements Associated
+{
+<span class="nc" id="L29">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L30">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Magnitude.Metaclass implements Associated.Metatype
+  {
+<span class="fc" id="L33">    static final Association.Metaclass $class = new Association.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L35">      this(Association.Metaclass.class);</span>
+<span class="fc" id="L36">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L39">      super(aClass);</span>
+<span class="fc" id="L40">    }</span>
+
+<span class="fc" id="L42">    @Override public java.lang.Class outerClass() { return Association.class; }</span>
+
+  }
+
+
+<span class="fc" id="L47">    protected Object key = Nil.literal();</span>
+<span class="nc" id="L48">    public Object key() { return this.key; }</span>
+<span class="nc" id="L49">    public Object getKey() { return (Object)this.key; }</span>
+
+<span class="nc" id="L51">    public Association key(Object value) { this.key = value; return this; }</span>
+<span class="nc" id="L52">    public void setKey(Object value) { this.key = (Object)value; }</span>
+
+  ;
+<span class="fc" id="L55">    protected Object value = Nil.literal();</span>
+<span class="fc" id="L56">    public Object value() { return this.value; }</span>
+<span class="nc" id="L57">    public Object getValue() { return (Object)this.value; }</span>
+
+<span class="nc" id="L59">    public Association value(Object value) { this.value = value; return this; }</span>
+<span class="nc" id="L60">    public void setValue(Object value) { this.value = (Object)value; }</span>
+
+  ;
+  /**
+   * @return 
+   */
+  public   Association key(final Subject aKey)
+  {
+<span class="nc" id="L68">    java.lang.String exitID = &quot;Association&gt;&gt;key&quot;;</span>
+<span class="nc" id="L69">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L70">     key = ((Object)aKey);</span>
+<span class="nc" id="L71">    return (Association)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Association value(final Subject aValue)
+  {
+<span class="nc" id="L79">    java.lang.String exitID = &quot;Association&gt;&gt;value&quot;;</span>
+<span class="nc" id="L80">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L81">     value = ((Object)aValue);</span>
+<span class="nc" id="L82">    return (Association)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Association key_value(final Object aKey, final Object aValue)
+  {
+<span class="nc" id="L90">    java.lang.String exitID = &quot;Association&gt;&gt;key_value&quot;;</span>
+<span class="nc" id="L91">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L92">     key = aKey;</span>
+
+<span class="nc" id="L94">     value = aValue;</span>
+<span class="nc" id="L95">    return (Association)this;</span>
+  }
+
+  /**
+   * 
+   */
+  protected    Association(final Object aKey, final Object aValue)
+<span class="fc" id="L102">  {</span>
+<span class="fc" id="L103">    java.lang.String exitID = &quot;Association&gt;&gt;Association&quot;;</span>
+<span class="fc" id="L104">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L105">     key = aKey;</span>
+
+<span class="fc" id="L107">     value = aValue;</span>
+<span class="fc" id="L108">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   Association withKey_withValue(final Subject aKey, final Subject aValue)
+  {
+<span class="fc" id="L115">    java.lang.String exitID = &quot;Association&gt;&gt;$withKey_withValue&quot;;</span>
+<span class="fc" id="L116">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L117">    return (Association)new Association(((Object)aKey), ((Object)aValue));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="nc" id="L125">    java.lang.String exitID = &quot;Association&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L126">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L127">    return (int)key.hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude candidate)
+  {
+<span class="nc" id="L135">    java.lang.String exitID = &quot;Association&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L136">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L138">      return False.literal();</span>
+    };
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    if (!(candidate instanceof Association)) {</span>
+<span class="nc" id="L141">      return False.literal();</span>
+    };
+<span class="nc" id="L143">    return (Boolean)this.equals(((Association)candidate));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final Association candidate)
+  {
+<span class="nc" id="L151">    java.lang.String exitID = &quot;Association&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L152">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L154">      return False.literal();</span>
+    };
+<span class="nc bnc" id="L156" title="All 2 branches missed.">    if (!(this.key().equals(candidate.key()).primitiveBoolean())) {</span>
+<span class="nc" id="L157">      return False.literal();</span>
+    };
+<span class="nc bnc" id="L159" title="All 2 branches missed.">    if (!(this.value().equals(candidate.value()).primitiveBoolean())) {</span>
+<span class="nc" id="L160">      return False.literal();</span>
+    };
+<span class="nc" id="L162">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar candidate)
+  {
+<span class="nc" id="L170">    java.lang.String exitID = &quot;Association&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L171">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L173">      return False.literal();</span>
+    };
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    if (!(candidate instanceof Association)) {</span>
+<span class="nc" id="L176">      return False.literal();</span>
+    };
+<span class="nc" id="L178">    return (Boolean)this.lessThan(((Association)candidate));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Association candidate)
+  {
+<span class="nc" id="L186">    java.lang.String exitID = &quot;Association&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L187">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L189">      return False.literal();</span>
+    };
+<span class="nc" id="L191">    return (Boolean)Boolean.from(((Scalar)this.key()).lessThan(((Scalar)candidate.key())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.String toString()
+  {
+<span class="fc" id="L199">    java.lang.String exitID = &quot;Association&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L200">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L201">    return (java.lang.String)this.printTerm().primitiveString();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String printString()
+  {
+<span class="fc" id="L209">    java.lang.String exitID = &quot;Association&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L211">    return (String)key.printString().append(String.from(&quot; &gt;&gt; &quot;)).append(value.printString());</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

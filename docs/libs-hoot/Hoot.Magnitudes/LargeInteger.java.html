@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LargeInteger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">LargeInteger.java</span></div><h1>LargeInteger.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.math.BigInteger;
+import Hoot.Runtime.Names.Primitive;
+import Smalltalk.Magnitudes.Ordinal;
+
+public class LargeInteger extends Integer
+{
+<span class="nc" id="L28">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L29">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Integer.Metaclass
+  {
+<span class="fc" id="L32">    static final LargeInteger.Metaclass $class = new LargeInteger.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L34">      this(LargeInteger.Metaclass.class);</span>
+<span class="fc" id="L35">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L38">      super(aClass);</span>
+<span class="fc" id="L39">    }</span>
+
+<span class="fc" id="L41">    @Override public java.lang.Class outerClass() { return LargeInteger.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   LargeInteger coerce(final Number aNumber)
+    {
+<span class="nc" id="L48">      java.lang.String exitID = &quot;LargeIntegerMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L49">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L50">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L51">      return (LargeInteger)f0.exit(exitID, LargeInteger.from(BigInteger.valueOf(aNumber.primitiveLong())));</span>
+      });
+    }
+  }
+
+
+<span class="fc" id="L57">  protected static SmallInteger Generality = SmallInteger.from(30);</span>
+  protected BigInteger primitiveValue;
+  /**
+   * @return 
+   */
+  public   BigInteger primitiveValue()
+  {
+<span class="nc" id="L64">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;primitiveValue&quot;;</span>
+<span class="nc" id="L65">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L66">    return (BigInteger)primitiveValue;</span>
+  }
+
+  /**
+   * 
+   */
+  public    LargeInteger(final BigInteger aValue)
+<span class="fc" id="L73">  {</span>
+<span class="fc" id="L74">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;LargeInteger&quot;;</span>
+<span class="fc" id="L75">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L76">     primitiveValue = aValue;</span>
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   LargeInteger from(final BigInteger aValue)
+  {
+<span class="fc" id="L84">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L85">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L86">    return (LargeInteger)new LargeInteger(aValue);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   LargeInteger asLargeInteger()
+  {
+<span class="nc" id="L94">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;asLargeInteger&quot;;</span>
+<span class="nc" id="L95">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L96">    return (LargeInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   BigInteger asBigInteger()
+  {
+<span class="nc" id="L104">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;asBigInteger&quot;;</span>
+<span class="nc" id="L105">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L106">    return (BigInteger)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Number elementaryNumber()
+  {
+<span class="fc" id="L114">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;elementaryNumber&quot;;</span>
+<span class="fc" id="L115">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L116">    return (java.lang.Number)primitiveValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   LongInteger asLongInteger()
+  {
+<span class="nc" id="L124">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;asLongInteger&quot;;</span>
+<span class="nc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L126">    return (LongInteger)LongInteger.from(this.narrowGenerality().longValue());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer generality()
+  {
+<span class="nc" id="L134">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;generality&quot;;</span>
+<span class="nc" id="L135">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L136">    return (Integer)Generality;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer narrowGenerality()
+  {
+<span class="fc" id="L144">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;narrowGenerality&quot;;</span>
+<span class="fc" id="L145">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L146">    int bits = primitiveValue.bitLength();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">    if ((bits &lt; 32)) {</span>
+<span class="fc" id="L148">      return SmallInteger.from(primitiveValue.intValue());</span>
+    };
+<span class="nc bnc" id="L150" title="All 2 branches missed.">    if ((bits &lt; 64)) {</span>
+<span class="nc" id="L151">      return LongInteger.from(primitiveValue.longValue());</span>
+    };
+<span class="nc" id="L153">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   LargeInteger gcd(final LargeInteger anInteger)
+  {
+<span class="nc" id="L161">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;gcd&quot;;</span>
+<span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L163">    return (LargeInteger)LargeInteger.from(primitiveValue.gcd(anInteger.primitiveValue()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   LargeInteger gcd(final Ordinal anInteger)
+  {
+<span class="nc" id="L171">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;gcd&quot;;</span>
+<span class="nc" id="L172">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L173">    return (LargeInteger)this.gcd(((Integer)anInteger).asLargeInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   LargeInteger raisedToInteger(final Integer anInteger)
+  {
+<span class="nc" id="L181">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;raisedToInteger&quot;;</span>
+<span class="nc" id="L182">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L183">    return (LargeInteger)this.raisedToInteger(anInteger.asSmallInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   LargeInteger raisedToInteger(final SmallInteger anInteger)
+  {
+<span class="nc" id="L191">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;raisedToInteger&quot;;</span>
+<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L193">    return (LargeInteger)LargeInteger.from(primitiveValue.pow(anInteger.primitiveInteger()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String printString()
+  {
+<span class="fc" id="L201">    java.lang.String exitID = &quot;LargeInteger&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L202">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L203">    return (String)String.from(primitiveValue.toString());</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

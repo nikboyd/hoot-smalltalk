@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DictionaryWrites.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Tests</a> &gt; <span class="el_source">DictionaryWrites.java</span></div><h1>DictionaryWrites.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Tests;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import static Hoot.Magnitudes.SmallInteger.*;
+import Hoot.Magnitudes.Integer;
+
+<span class="fc" id="L30">public class DictionaryWrites extends TestableClosure</span>
+{
+
+<span class="fc" id="L33">  protected Integer key1 = SmallInteger.from(1);</span>
+<span class="fc" id="L34">  protected Integer key2 = SmallInteger.from(2);</span>
+<span class="fc" id="L35">  protected Integer key3 = SmallInteger.from(3);</span>
+<span class="fc" id="L36">  protected Integer key4 = SmallInteger.from(4);</span>
+<span class="fc" id="L37">  protected Integer key5 = SmallInteger.from(5);</span>
+<span class="fc" id="L38">  protected Integer key6 = SmallInteger.from(6);</span>
+<span class="fc" id="L39">  protected Integer key7 = SmallInteger.from(7);</span>
+<span class="fc" id="L40">  protected Integer key8 = SmallInteger.from(8);</span>
+<span class="fc" id="L41">  protected Integer key9 = SmallInteger.from(9);</span>
+<span class="fc" id="L42">  protected Integer key10 = SmallInteger.from(10);</span>
+<span class="fc" id="L43">  protected Dictionary dict = Dictionary.type().$new(SmallInteger.from(20));</span>
+  /**
+   * @return 
+   */
+  @Override public   String description()
+  {
+<span class="fc" id="L49">    java.lang.String exitID = &quot;DictionaryWrites&gt;&gt;description&quot;;</span>
+<span class="fc" id="L50">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L51">    return (String)String.from(&quot;Dictionary writes&quot;);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   void prepare()
+  {
+<span class="fc" id="L59">    java.lang.String exitID = &quot;DictionaryWrites&gt;&gt;prepare&quot;;</span>
+<span class="fc" id="L60">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L61">    dict.removeAll();</span>
+<span class="fc" id="L62">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void runTest()
+  {
+<span class="fc" id="L69">    java.lang.String exitID = &quot;DictionaryWrites&gt;&gt;runTest&quot;;</span>
+<span class="fc" id="L70">    Frame f0 = new Frame(exitID);</span>
+    {
+<span class="fc" id="L72">    Dictionary prime = (Dictionary)dict;</span>
+<span class="fc" id="L73">    prime.at_put(key1, Zero); </span>
+<span class="fc" id="L74">    prime.at_put(key2, Zero); </span>
+<span class="fc" id="L75">    prime.at_put(key3, Zero); </span>
+<span class="fc" id="L76">    prime.at_put(key4, Zero); </span>
+<span class="fc" id="L77">    prime.at_put(key5, Zero); </span>
+<span class="fc" id="L78">    prime.at_put(key6, Zero); </span>
+<span class="fc" id="L79">    prime.at_put(key7, Zero); </span>
+<span class="fc" id="L80">    prime.at_put(key8, Zero); </span>
+<span class="fc" id="L81">    prime.at_put(key9, Zero); </span>
+
+<span class="fc" id="L83">    prime.at_put(key10, Zero);</span>
+    };
+<span class="fc" id="L85">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

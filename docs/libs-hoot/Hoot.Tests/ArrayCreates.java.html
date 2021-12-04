@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayCreates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Tests</a> &gt; <span class="el_source">ArrayCreates.java</span></div><h1>ArrayCreates.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Tests;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+
+<span class="fc" id="L28">public class ArrayCreates extends TestableClosure</span>
+{
+
+  /**
+   * @return 
+   */
+  @Override public   String description()
+  {
+<span class="fc" id="L36">    java.lang.String exitID = &quot;ArrayCreates&gt;&gt;description&quot;;</span>
+<span class="fc" id="L37">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L38">    return (String)String.from(&quot;Array allocations&quot;);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   void runTest()
+  {
+<span class="fc" id="L46">    java.lang.String exitID = &quot;ArrayCreates&gt;&gt;runTest&quot;;</span>
+<span class="fc" id="L47">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L48">    Array x = Array.type().$new(SmallInteger.from(10));</span>
+<span class="fc" id="L49">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void cleanUp()
+  {
+<span class="fc" id="L56">    java.lang.String exitID = &quot;ArrayCreates&gt;&gt;cleanUp&quot;;</span>
+<span class="fc" id="L57">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L58">    this.recycleGarbage();</span>
+<span class="fc" id="L59">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

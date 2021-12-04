@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiteralSource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Constants</a> &gt; <span class="el_source">LiteralSource.java</span></div><h1>LiteralSource.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Constants;
+
+import java.util.*;
+import Hoot.Runtime.Emissions.*;
+import static Hoot.Runtime.Names.Keyword.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+
+/**
+ * A source of literal emissions.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public interface LiteralSource extends EmissionSource {
+
+<span class="fc" id="L17">    default Emission emitArrayPrim(List&lt;Emission&gt; values) { return emit(&quot;Array&quot;).values(values); }</span>
+<span class="nc" id="L18">    default Emission emitArray(List&lt;Emission&gt; values) { return emit(&quot;ArrayWith&quot;).values(values); }</span>
+<span class="nc" id="L19">    default Emission emitNewArray(List&lt;Emission&gt; values) { return emit(&quot;NewArray&quot;).values(values); }</span>
+<span class="nc" id="L20">    default Emission emitNamedValue(String name, Emission type) { return emit(&quot;NamedValue&quot;).name(name).type(type); }</span>
+<span class="nc" id="L21">    default Emission emitScalar(String s, String factory) { return emit(&quot;Scalar&quot;).value(s).with(&quot;factory&quot;, factory); }</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">    default Emission emitBoolean(String value) { return emit(value.equals(&quot;true&quot;) ? &quot;True&quot; : &quot;False&quot;); }</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">    default Emission emitInteger(String value) { return (value.length() &gt; 9) ? emitLong(value) : emitSmall(value); }</span>
+<span class="fc" id="L24">    default Emission emitSmall(String value) { return emit(Integer).value(value); }</span>
+<span class="nc" id="L25">    default Emission emitLong(String value) { return emit(&quot;Long&quot;).value(value); }</span>
+
+} // LiteralSource
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

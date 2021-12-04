@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Symbol.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">Symbol.java</span></div><h1>Symbol.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Runtime.Faces.Selector;
+import Smalltalk.Core.Subject;
+import Smalltalk.Magnitudes.Code;
+import Smalltalk.Magnitudes.Ordinal;
+
+public class Symbol extends CharacterString implements Selector
+{
+<span class="nc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends CharacterString.Metaclass implements Selector.Metatype
+  {
+<span class="fc" id="L36">    static final Symbol.Metaclass $class = new Symbol.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L38">      this(Symbol.Metaclass.class);</span>
+<span class="fc" id="L39">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L42">      super(aClass);</span>
+<span class="fc" id="L43">    }</span>
+
+<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return Symbol.class; }</span>
+
+  }
+
+
+<span class="fc" id="L50">  protected java.lang.String contents = &quot;&quot;;</span>
+  /**
+   * @return 
+   */
+  public static   Symbol from(final java.lang.String aString)
+  {
+<span class="fc" id="L56">    java.lang.String exitID = &quot;Symbol&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L57">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L58">    return (Symbol)new Symbol(aString);</span>
+  }
+
+  /**
+   * 
+   */
+  protected    Symbol(final java.lang.String primitiveString)
+<span class="fc" id="L65">  {</span>
+<span class="fc" id="L66">    java.lang.String exitID = &quot;Symbol&gt;&gt;Symbol&quot;;</span>
+<span class="fc" id="L67">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L68">     contents = primitiveString.intern();</span>
+<span class="fc" id="L69">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.String primitiveString()
+  {
+<span class="fc" id="L76">    java.lang.String exitID = &quot;Symbol&gt;&gt;primitiveString&quot;;</span>
+<span class="fc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L78">    return (java.lang.String)contents;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override protected   Character get(final int index)
+  {
+<span class="nc" id="L86">    java.lang.String exitID = &quot;Symbol&gt;&gt;get&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (Character)Character.from(contents.charAt(index));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Character at_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
+  {
+<span class="nc" id="L96">    java.lang.String exitID = &quot;Symbol&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L98">    this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="nc" id="L99">    return (Character)Character.from(contents.charAt(index.intValue()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final CharacterString aString)
+  {
+<span class="nc" id="L107">    java.lang.String exitID = &quot;Symbol&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L108">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L109">    return (Boolean)Boolean.from(contents.equals(aString.primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isLiteral()
+  {
+<span class="nc" id="L117">    java.lang.String exitID = &quot;Symbol&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L118">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L119">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String printString()
+  {
+<span class="nc" id="L127">    java.lang.String exitID = &quot;Symbol&gt;&gt;printString&quot;;</span>
+<span class="nc" id="L128">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L129">    return (String)((String)(String.from(&quot;#&quot;).append(this.asString())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Character add(final Subject element)
+  {
+<span class="nc" id="L137">    java.lang.String exitID = &quot;Symbol&gt;&gt;add&quot;;</span>
+<span class="nc" id="L138">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L139">    this.immutabilityError();</span>
+<span class="nc" id="L140">    return (Character)element;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override protected   Character add_at(final Object element, final int index)
+  {
+<span class="nc" id="L148">    java.lang.String exitID = &quot;Symbol&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    this.immutabilityError();</span>
+<span class="nc" id="L151">    return (Character)element;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Symbol removeAll()
+  {
+<span class="nc" id="L159">    java.lang.String exitID = &quot;Symbol&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L160">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L161">    this.immutabilityError();</span>
+<span class="nc" id="L162">    return (Symbol)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Code removeFirst()
+  {
+<span class="nc" id="L170">    java.lang.String exitID = &quot;Symbol&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L171">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L172">    this.immutabilityError();</span>
+<span class="nc" id="L173">    return (Code)SmallInteger.from(0).asCharacter();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Code removeLast()
+  {
+<span class="nc" id="L181">    java.lang.String exitID = &quot;Symbol&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L182">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L183">    this.immutabilityError();</span>
+<span class="nc" id="L184">    return (Code)SmallInteger.from(0).asCharacter();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Code removeAtIndex(final Ordinal index)
+  {
+<span class="nc" id="L192">    java.lang.String exitID = &quot;Symbol&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L193">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L194">    this.immutabilityError();</span>
+<span class="nc" id="L195">    return (Code)SmallInteger.from(0).asCharacter();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

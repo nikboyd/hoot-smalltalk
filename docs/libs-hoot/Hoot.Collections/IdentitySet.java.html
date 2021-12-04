@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IdentitySet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">IdentitySet.java</span></div><h1>IdentitySet.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Magnitudes.Integer;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.*;
+import Smalltalk.Core.Subject;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+
+public class IdentitySet&lt;ElementType extends Object&gt; extends Set&lt;ElementType&gt;
+{
+<span class="fc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Set.Metaclass
+  {
+<span class="fc" id="L38">    static final IdentitySet.Metaclass $class = new IdentitySet.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L40">      this(IdentitySet.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return IdentitySet.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   IdentitySet $new()
+    {
+<span class="nc" id="L54">      java.lang.String exitID = &quot;IdentitySetMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L57">      return (IdentitySet)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   IdentitySet $new(final Ordinal capacity)
+    {
+<span class="fc" id="L66">      java.lang.String exitID = &quot;IdentitySetMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L67">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L68">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L69">      return (IdentitySet)f0.exit(exitID, new IdentitySet(capacity));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   IdentitySet from(final java.util.Set primitiveSet)
+    {
+<span class="nc" id="L78">      java.lang.String exitID = &quot;IdentitySetMetatype&gt;&gt;from&quot;;</span>
+<span class="nc" id="L79">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L80">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L81">      return (IdentitySet)f0.exit(exitID, new IdentitySet(primitiveSet, False.literal()));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   IdentitySet synchronizedFrom(final java.util.Set primitiveSet)
+    {
+<span class="nc" id="L90">      java.lang.String exitID = &quot;IdentitySetMetatype&gt;&gt;synchronizedFrom&quot;;</span>
+<span class="nc" id="L91">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L92">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L93">      return (IdentitySet)f0.exit(exitID, new IdentitySet(primitiveSet, True.literal()));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  protected    IdentitySet()
+<span class="nc" id="L103">  {</span>
+<span class="nc" id="L104">    java.lang.String exitID = &quot;IdentitySet&gt;&gt;IdentitySet&quot;;</span>
+<span class="nc" id="L105">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L106">     contents = Collections.newSetFromMap(new IdentityHashMap());</span>
+<span class="nc" id="L107">  }</span>
+
+  /**
+   * 
+   */
+  protected    IdentitySet(final Ordinal capacity)
+<span class="fc" id="L113">  {</span>
+<span class="fc" id="L114">    java.lang.String exitID = &quot;IdentitySet&gt;&gt;IdentitySet&quot;;</span>
+<span class="fc" id="L115">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L116">     contents = Collections.newSetFromMap(new IdentityHashMap(capacity.intValue()));</span>
+<span class="fc" id="L117">  }</span>
+
+  /**
+   * 
+   */
+  protected    IdentitySet(final java.util.Set primitiveSet, final Boolean syncSet)
+  {
+<span class="nc" id="L124">    this(SmallInteger.from(primitiveSet.size()));</span>
+<span class="nc" id="L125">    java.lang.String exitID = &quot;IdentitySet&gt;&gt;IdentitySet&quot;;</span>
+<span class="nc" id="L126">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L127">    syncSet.ifTrue(Closure.with(f2 -&gt; {</span>
+      
+<span class="nc" id="L129">     contents = Collections.synchronizedSet(contents);</span>
+<span class="nc" id="L130">    }, &quot;&quot;));</span>
+<span class="nc" id="L131">    this.addAll(Set.from(primitiveSet));</span>
+<span class="nc" id="L132">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

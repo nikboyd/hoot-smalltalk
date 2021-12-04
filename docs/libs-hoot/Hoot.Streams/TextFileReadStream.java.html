@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextFileReadStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">TextFileReadStream.java</span></div><h1>TextFileReadStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.io.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Collections.CharacterString;
+import Hoot.Runtime.Functions.Exceptional.Handler;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.ReadableString;
+import Smalltalk.Collections.CollectedReadably;
+import Smalltalk.Streams.*;
+
+public class TextFileReadStream extends FileReadStream&lt;Character&gt;
+{
+<span class="fc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends FileReadStream.Metaclass
+  {
+<span class="fc" id="L43">    static final TextFileReadStream.Metaclass $class = new TextFileReadStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L45">      this(TextFileReadStream.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
+
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return TextFileReadStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   TextFileReadStream on(final RandomAccessFile primitiveFile)
+    {
+<span class="fc" id="L59">      java.lang.String exitID = &quot;TextFileReadStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="fc" id="L60">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L61">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L62">      return (TextFileReadStream)f0.exit(exitID, new TextFileReadStream(primitiveFile));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  protected    TextFileReadStream(final RandomAccessFile primitiveFile)
+  {
+<span class="fc" id="L73">    super(primitiveFile);</span>
+<span class="fc" id="L74">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;TextFileReadStream&quot;;</span>
+<span class="fc" id="L75">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L76">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   TextFileReadStream read(final String fileName)
+  {
+<span class="fc" id="L83">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;$read&quot;;</span>
+<span class="fc" id="L84">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L85">    return (TextFileReadStream)FileReadStream.type().read(fileName);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String contents()
+  {
+<span class="nc" id="L93">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L95">    Integer pose = this.position();</span>
+<span class="nc" id="L96">    this.reset();</span>
+
+<span class="nc" id="L98">    String result = this.nextString(this.length());</span>
+<span class="nc" id="L99">    this.position(pose);</span>
+<span class="nc" id="L100">    return (String)result;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isText()
+  {
+<span class="nc" id="L108">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;isText&quot;;</span>
+<span class="nc" id="L109">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L110">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isBinary()
+  {
+<span class="nc" id="L118">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;isBinary&quot;;</span>
+<span class="nc" id="L119">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L120">    return (Boolean)False.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Symbol externalType()
+  {
+<span class="nc" id="L128">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;externalType&quot;;</span>
+<span class="nc" id="L129">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L130">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String next(final Ordinal count)
+  {
+<span class="nc" id="L138">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;next&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (String)this.nextString(((Integer)count));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String nextLine()
+  {
+<span class="nc" id="L148">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;nextLine&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    return (String)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L151">      return String.from(file.readLine());</span>
+<span class="nc" id="L152">    }, &quot;&quot;).defaultIfCurtailed(String.emptyString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Character next()
+  {
+<span class="fc" id="L160">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;next&quot;;</span>
+<span class="fc" id="L161">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L162">    return (Character)Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L163">      return Character.from(((char)file.readUnsignedByte()));</span>
+<span class="fc" id="L164">    }, &quot;&quot;).defaultIfCurtailed(Character.type().nullCode());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String upTo(final Character target)
+  {
+<span class="fc" id="L172">    java.lang.String exitID = &quot;TextFileReadStream&gt;&gt;upTo&quot;;</span>
+<span class="fc" id="L173">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L174">    String result = String.emptyString();</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">    while(!(this.atEnd().asPrimitive())) {</span>
+<span class="fc" id="L176">      Character c = this.next();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">      if (target.equals(c).asPrimitive()) {</span>
+<span class="fc" id="L178">        return result;</span>
+      };
+<span class="fc" id="L180">      result.add(c);</span>
+<span class="fc" id="L181">    };</span>
+<span class="fc" id="L182">    return (String)result;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

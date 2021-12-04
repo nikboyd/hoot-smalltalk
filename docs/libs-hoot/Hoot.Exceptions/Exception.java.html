@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Exception.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Exceptions</a> &gt; <span class="el_source">Exception.java</span></div><h1>Exception.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Exceptions;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Hoot.Runtime.Behaviors.HootRegistry;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Exceptions.*;
+import Smalltalk.Core.Posit;
+import Smalltalk.Core.Subject;
+import Smalltalk.Exceptions.*;
+import Smalltalk.Collections.ReadableString;
+
+public class Exception extends Object implements ExceptionBuilder, SignaledException
+{
+<span class="nc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Object.Metaclass implements ExceptionBuilder.Metatype, SignaledException.Metatype
+  {
+<span class="fc" id="L41">    static final Exception.Metaclass $class = new Exception.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L43">      this(Exception.Metaclass.class);</span>
+<span class="fc" id="L44">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L47">      super(aClass);</span>
+<span class="fc" id="L48">    }</span>
+
+<span class="fc" id="L50">    @Override public java.lang.Class outerClass() { return Exception.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   ExceptionSet append(final ExceptionSelector.Metatype argument)
+    {
+<span class="nc" id="L57">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;append&quot;;</span>
+<span class="nc" id="L58">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L59">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L60">      return (ExceptionSet)f0.exit(exitID, (ExceptionSet.type().with(this).append(argument)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Boolean handles(final SignaledException exception)
+    {
+<span class="nc" id="L69">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;handles&quot;;</span>
+<span class="nc" id="L70">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L71">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L72">      return (Boolean)f0.exit(exitID, exception.$class().isKindOf(this));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Boolean isKindOf(final ExceptionDescription.Metatype superType)
+    {
+<span class="nc" id="L81">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;isKindOf&quot;;</span>
+<span class="nc" id="L82">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L83">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L84">      return (Boolean)f0.exit(exitID, Boolean.from(superType.getClass().isAssignableFrom(this.getClass())));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   void handleWith_during(final MonadicValuable handler, final Closure aBlock)
+    {
+<span class="nc" id="L93">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;handleWith_during&quot;;</span>
+<span class="nc" id="L94">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L95">      ExceptionContext.during_handle(aBlock, ((Enclosure)handler).asHandlerOf(((HandledException.Metatype)this.type())));</span>
+<span class="nc" id="L96">    }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   Exception signal()
+    {
+<span class="nc" id="L103">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;signal&quot;;</span>
+<span class="nc" id="L104">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L105">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L106">      return (Exception)f0.exit(exitID, ((Exception)this.$new()).signal());</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   Exception signal(final ReadableString message)
+    {
+<span class="nc" id="L115">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;signal&quot;;</span>
+<span class="nc" id="L116">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L117">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L118">      return (Exception)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L119">      Exception prime = (Exception)this.$new();</span>
+<span class="nc" id="L120">      prime.messageText(message); </span>
+
+<span class="nc" id="L122">      return prime.signal();</span>
+      });
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   Exception $new()
+    {
+<span class="fc" id="L132">      java.lang.String exitID = &quot;ExceptionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L133">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L134">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L135">      return (Exception)f0.exit(exitID, Primitive.newInstance(this.outerClass()));</span>
+      });
+    }
+  }
+
+
+  protected Enclosure theHandler;
+<span class="fc" id="L142">  protected String messageText = String.from(&quot;&quot;);</span>
+<span class="fc" id="L143">  protected String tag = String.from(&quot;&quot;);</span>
+    protected Exception replacementException;
+<span class="fc" id="L145">    public Exception replacementException() { return this.replacementException; }</span>
+<span class="nc" id="L146">    public Object getReplacementException() { return (Object)this.replacementException; }</span>
+
+<span class="fc" id="L148">    public Exception replacementException(Exception value) { this.replacementException = value; return this; }</span>
+<span class="nc" id="L149">    public void setReplacementException(Object value) { this.replacementException = (Exception)value; }</span>
+
+  ;
+  protected NiladicValuable resignalBlock;
+  /**
+   * @return 
+   */
+  public   ExceptionSet append(final ExceptionSelector.Metatype argument)
+  {
+<span class="nc" id="L158">    java.lang.String exitID = &quot;Exception&gt;&gt;append&quot;;</span>
+<span class="nc" id="L159">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L160">    return (ExceptionSet)(this.$class().append(argument));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ExceptionContext environment()
+  {
+<span class="nc" id="L168">    java.lang.String exitID = &quot;Exception&gt;&gt;environment&quot;;</span>
+<span class="nc" id="L169">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L170">    return (ExceptionContext)ExceptionContext.environment();</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Enclosure registeredHandler()
+  {
+<span class="nc" id="L178">    java.lang.String exitID = &quot;Exception&gt;&gt;registeredHandler&quot;;</span>
+<span class="nc" id="L179">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L180">    return (Enclosure)this.environment().findHandler(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Enclosure activeHandler()
+  {
+<span class="nc" id="L188">    java.lang.String exitID = &quot;Exception&gt;&gt;activeHandler&quot;;</span>
+<span class="nc" id="L189">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L190">    return (Enclosure)ExceptionContext.findHandler(this.valueType());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Enclosure currentHandler()
+  {
+<span class="fc" id="L198">    java.lang.String exitID = &quot;Exception&gt;&gt;currentHandler&quot;;</span>
+<span class="fc" id="L199">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L200">    return (Enclosure)theHandler;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Enclosure currentHandler(final Enclosure handler)
+  {
+<span class="fc" id="L208">    java.lang.String exitID = &quot;Exception&gt;&gt;currentHandler&quot;;</span>
+<span class="fc" id="L209">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L210">     theHandler = handler;</span>
+<span class="fc" id="L211">    return (Enclosure)handler;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isSignaled()
+  {
+<span class="fc" id="L219">    java.lang.String exitID = &quot;Exception&gt;&gt;isSignaled&quot;;</span>
+<span class="fc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L221">    return (Boolean)Boolean.from(this.hasAny(this.currentHandler()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   void exit(final Subject value)
+  {
+<span class="nc" id="L229">    java.lang.String exitID = &quot;Exception&gt;&gt;exit&quot;;</span>
+<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L231">    this.isResumable().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L232">      this.resume(value);</span>
+<span class="nc" id="L233">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L234">      this.$return(value);</span>
+<span class="nc" id="L235">    }, &quot;&quot;));</span>
+<span class="nc" id="L236">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void resume()
+  {
+<span class="nc" id="L243">    java.lang.String exitID = &quot;Exception&gt;&gt;resume&quot;;</span>
+<span class="nc" id="L244">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L245">    this.resume(Nil.literal());</span>
+<span class="nc" id="L246">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void resume(final Subject value)
+  {
+<span class="nc" id="L253">    java.lang.String exitID = &quot;Exception&gt;&gt;resume&quot;;</span>
+<span class="nc" id="L254">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L255">    this.isResumable().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L256">      ControlError.type().signal(String.from(&quot;Attempt to resume from a non-resumable exception&quot;));</span>
+<span class="nc" id="L257">    }, &quot;&quot;));</span>
+<span class="nc" id="L258">    this.activeHandler().resume(value);</span>
+<span class="nc" id="L259">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void $return()
+  {
+<span class="nc" id="L266">    java.lang.String exitID = &quot;Exception&gt;&gt;$return&quot;;</span>
+<span class="nc" id="L267">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L268">    this.$return(Nil.literal());</span>
+<span class="nc" id="L269">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   void $return(final Subject value)
+  {
+<span class="nc" id="L276">    java.lang.String exitID = &quot;Exception&gt;&gt;$return&quot;;</span>
+<span class="nc" id="L277">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L278">    this.activeHandler().$return(value);</span>
+<span class="nc" id="L279">  }</span>
+
+  /**
+   * @return 
+   */
+  public   String messageText()
+  {
+<span class="fc" id="L286">    java.lang.String exitID = &quot;Exception&gt;&gt;messageText&quot;;</span>
+<span class="fc" id="L287">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L288">    return (String)messageText;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String messageText(final ReadableString aMessage)
+  {
+<span class="nc" id="L296">    java.lang.String exitID = &quot;Exception&gt;&gt;messageText&quot;;</span>
+<span class="nc" id="L297">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L298">     messageText = String.from(aMessage);</span>
+<span class="nc" id="L299">    return (String)messageText;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String tag(final String aTag)
+  {
+<span class="nc" id="L307">    java.lang.String exitID = &quot;Exception&gt;&gt;tag&quot;;</span>
+<span class="nc" id="L308">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L309">     tag = aTag;</span>
+<span class="nc" id="L310">    return (String)tag;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String tag()
+  {
+<span class="nc" id="L318">    java.lang.String exitID = &quot;Exception&gt;&gt;tag&quot;;</span>
+<span class="nc" id="L319">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L320">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L321">    tag.isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L322">      return (String)f0.exit(exitID, tag);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L324">    messageText.isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L325">      return (String)f0.exit(exitID, messageText);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L327">    return (String)f0.exit(exitID, String.from(&quot;&quot;));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  protected   String defaultDescriptionString()
+  {
+<span class="fc" id="L336">    java.lang.String exitID = &quot;Exception&gt;&gt;defaultDescriptionString&quot;;</span>
+<span class="fc" id="L337">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L338">    return (String)this.$class().name();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String description()
+  {
+<span class="fc" id="L346">    java.lang.String exitID = &quot;Exception&gt;&gt;description&quot;;</span>
+<span class="fc" id="L347">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">    return (String)(Boolean.primitiveValue(this.messageText().isEmpty()) ? this.defaultDescriptionString() : this.messageText());</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Subject activateHandler()
+  {
+<span class="nc" id="L356">    java.lang.String exitID = &quot;Exception&gt;&gt;activateHandler&quot;;</span>
+<span class="nc" id="L357">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L358">    return (Subject)ExceptionContext.activateHandler(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Exception defaultAction()
+  {
+<span class="nc" id="L366">    java.lang.String exitID = &quot;Exception&gt;&gt;defaultAction&quot;;</span>
+<span class="nc" id="L367">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L368">    UnhandledException.type().raise(this);</span>
+<span class="nc" id="L369">    return (Exception)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Exception abandonAction()
+  {
+<span class="nc" id="L377">    java.lang.String exitID = &quot;Exception&gt;&gt;abandonAction&quot;;</span>
+<span class="nc" id="L378">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L379">    UnhandledException.type().raise(new UnresumableException());</span>
+<span class="nc" id="L380">    return (Exception)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Subject handle()
+  {
+<span class="fc" id="L388">    java.lang.String exitID = &quot;Exception&gt;&gt;handle&quot;;</span>
+<span class="fc" id="L389">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L390">    Valued result = ExceptionContext.activateHandler(this);</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">    if (this.wasResignaled().primitiveBoolean()) {</span>
+<span class="fc" id="L392">      return this.replacementException().signal();</span>
+    };
+<span class="pc bpc" id="L394" title="1 of 2 branches missed.">    if (!(this.isResumable().primitiveBoolean())) {</span>
+<span class="nc" id="L395">      this.abandonAction();</span>
+    };
+<span class="fc" id="L397">    return (Subject)result;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Subject outer()
+  {
+<span class="nc" id="L405">    java.lang.String exitID = &quot;Exception&gt;&gt;outer&quot;;</span>
+<span class="nc" id="L406">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L407">    this.activeHandler().passFrom(this);</span>
+<span class="nc" id="L408">    return (Subject)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   void pass()
+  {
+<span class="fc" id="L416">    java.lang.String exitID = &quot;Exception&gt;&gt;pass&quot;;</span>
+<span class="fc" id="L417">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L418">    this.currentHandler().passFrom(this);</span>
+<span class="fc" id="L419">  }</span>
+
+  /**
+   * @return 
+   */
+  protected   Boolean wasResignaled()
+  {
+<span class="fc" id="L426">    java.lang.String exitID = &quot;Exception&gt;&gt;wasResignaled&quot;;</span>
+<span class="fc" id="L427">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L428">    return (Boolean)this.hasAny(replacementException);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   void resignalAs(final ExceptionDescription anException)
+  {
+<span class="fc" id="L436">    java.lang.String exitID = &quot;Exception&gt;&gt;resignalAs&quot;;</span>
+<span class="fc" id="L437">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L438">    this.replacementException(((Exception)anException));</span>
+<span class="fc" id="L439">  }</span>
+
+  /**
+   * @return 
+   */
+  protected   NiladicValuable resignalContinuation()
+  {
+<span class="nc" id="L446">    java.lang.String exitID = &quot;Exception&gt;&gt;resignalContinuation&quot;;</span>
+<span class="nc" id="L447">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L448">    return (NiladicValuable)resignalBlock;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Exception resignalContinuation(final NiladicValuable aBlock)
+  {
+<span class="fc" id="L456">    java.lang.String exitID = &quot;Exception&gt;&gt;resignalContinuation&quot;;</span>
+<span class="fc" id="L457">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L458">     resignalBlock = aBlock;</span>
+<span class="fc" id="L459">    return (Exception)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Exception initializeResignal()
+  {
+<span class="fc" id="L467">    java.lang.String exitID = &quot;Exception&gt;&gt;initializeResignal&quot;;</span>
+<span class="fc" id="L468">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L469">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L470">    this.resignalContinuation(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L471">      return (Exception)f0.exit(exitID, this.resignalContinuation());</span>
+    }, &quot;&quot;));
+<span class="fc" id="L473">    return (Exception)this;</span>
+    });
+  }
+
+  /**
+   * 
+   */
+  public    Exception()
+<span class="fc" id="L481">  {</span>
+<span class="fc" id="L482">    java.lang.String exitID = &quot;Exception&gt;&gt;Exception&quot;;</span>
+<span class="fc" id="L483">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L484">    this.initializeResignal();</span>
+<span class="fc" id="L485">  }</span>
+
+  /**
+   * @return 
+   */
+  public   void retry()
+  {
+<span class="nc" id="L492">    java.lang.String exitID = &quot;Exception&gt;&gt;retry&quot;;</span>
+<span class="nc" id="L493">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L494">    this.activeHandler().retry();</span>
+<span class="nc" id="L495">  }</span>
+
+  /**
+   * @return 
+   */
+  public   void retryUsing(final NiladicValuable aBlock)
+  {
+<span class="nc" id="L502">    java.lang.String exitID = &quot;Exception&gt;&gt;retryUsing&quot;;</span>
+<span class="nc" id="L503">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L504">    this.activeHandler().retry(aBlock);</span>
+<span class="nc" id="L505">  }</span>
+
+  /**
+   * @return 
+   */
+  public   Exception signal()
+  {
+<span class="fc" id="L512">    java.lang.String exitID = &quot;Exception&gt;&gt;signal&quot;;</span>
+<span class="fc" id="L513">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L514">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L515">    this.isSignaled().ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L516">      return (Exception)f0.exit(exitID, ControlError.type().signal(String.from(&quot;Signaling an already signaled exception&quot;)));</span>
+    }, &quot;&quot;));
+<span class="fc" id="L518">    this.handle();</span>
+<span class="fc" id="L519">    return (Exception)this;</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   Exception signal(final ReadableString message)
+  {
+<span class="nc" id="L528">    java.lang.String exitID = &quot;Exception&gt;&gt;signal&quot;;</span>
+<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
+    {
+<span class="nc" id="L531">    Exception prime = this;</span>
+<span class="nc" id="L532">    prime.messageText(message); </span>
+
+<span class="nc" id="L534">    return prime.signal();</span>
+    }
+  }
+
+  /**
+   * @return 
+   */
+  protected   Boolean hasNo(final Valued item)
+  {
+<span class="nc" id="L543">    java.lang.String exitID = &quot;Exception&gt;&gt;hasNo&quot;;</span>
+<span class="nc" id="L544">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L545">    return (Boolean)Boolean.from(Utils.hasNo(item));</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Boolean hasAny(final Valued item)
+  {
+<span class="fc" id="L553">    java.lang.String exitID = &quot;Exception&gt;&gt;hasAny&quot;;</span>
+<span class="fc" id="L554">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L555">    return (Boolean)Boolean.from(Utils.hasAny(item));</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Boolean hasHandler()
+  {
+<span class="nc" id="L563">    java.lang.String exitID = &quot;Exception&gt;&gt;hasHandler&quot;;</span>
+<span class="nc" id="L564">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L565">    return (Boolean)this.hasAny(this.registeredHandler());</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Boolean isActive()
+  {
+<span class="nc" id="L573">    java.lang.String exitID = &quot;Exception&gt;&gt;isActive&quot;;</span>
+<span class="nc" id="L574">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L575">    return (Boolean)this.isSignaled();</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Boolean hasActiveHandler()
+  {
+<span class="nc" id="L583">    java.lang.String exitID = &quot;Exception&gt;&gt;hasActiveHandler&quot;;</span>
+<span class="nc" id="L584">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L585">    Enclosure handler = this.registeredHandler();</span>
+<span class="nc" id="L586">    return (Boolean)this.hasAny(handler);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isResumable()
+  {
+<span class="nc" id="L594">    java.lang.String exitID = &quot;Exception&gt;&gt;isResumable&quot;;</span>
+<span class="nc" id="L595">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L596">    return (Boolean)False.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isNested()
+  {
+<span class="nc" id="L604">    java.lang.String exitID = &quot;Exception&gt;&gt;isNested&quot;;</span>
+<span class="nc" id="L605">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L606">    return (Boolean)this.hasAny(ExceptionContext.findPriorHandler(this.valueType()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isKindOf(final ExceptionDescription.Metatype superType)
+  {
+<span class="nc" id="L614">    java.lang.String exitID = &quot;Exception&gt;&gt;isKindOf&quot;;</span>
+<span class="nc" id="L615">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L616">    return (Boolean)this.$class().isKindOf(superType);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

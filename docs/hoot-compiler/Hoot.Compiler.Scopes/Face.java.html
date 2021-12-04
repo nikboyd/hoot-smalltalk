@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Face.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">Face.java</span></div><h1>Face.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+
+import Hoot.Runtime.Names.*;
+import Hoot.Runtime.Faces.Named;
+import Hoot.Runtime.Maps.Package;
+import Hoot.Runtime.Maps.Library;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Emissions.*;
+
+import static Hoot.Runtime.Emissions.Emission.*;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import static Hoot.Runtime.Names.Name.Metaclass;
+import static Hoot.Runtime.Names.Name.Metatype;
+import static Hoot.Runtime.Names.Primitive.Dollar;
+import static Hoot.Runtime.Names.Operator.Dot;
+import static Hoot.Runtime.Names.Keyword.Nil;
+import static Hoot.Runtime.Functions.Exceptional.*;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * A class or type (interface) definition.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSource {
+
+<span class="fc" id="L31">    public Face(Scope container) { super(container); }</span>
+    protected String cachedDescription; // helps debugging
+
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">    @Override public int hashCode() { return isSigned() ? signature().hashCode() : super.hashCode(); }</span>
+<span class="nc bnc" id="L35" title="All 6 branches missed.">    protected boolean equals(Face f) { return isSigned() &amp;&amp; f.isSigned() &amp;&amp; signature().equals(f.signature()); }</span>
+    @Override public boolean equals(Object face) {
+<span class="nc bnc" id="L37" title="All 6 branches missed.">        return hasAny(face) &amp;&amp; getClass() == face.getClass() &amp;&amp; falseOr(f -&gt; this.equals(f), (Face) face); }</span>
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">    @Override public boolean isEmpty() { return !isSigned(); }</span>
+    @Override public void clean() {
+<span class="fc" id="L41">        super.clean();</span>
+<span class="fc" id="L42">        cleanMethods();</span>
+
+<span class="fc" id="L44">        buildMethodMap();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (this.isInterface()) {</span>
+<span class="fc" id="L46">            return;</span>
+        }
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (this.hasMetaface()) {</span>
+<span class="fc" id="L50">            metaFace().clean();</span>
+        }
+<span class="fc" id="L52">    }</span>
+
+<span class="fc" id="L54">    public static Face currentFace() { return from(Scope.current()); }</span>
+<span class="fc" id="L55">    public static Face from(Item item) { return nullOr(f -&gt; (Face)f, item.facialScope()); }</span>
+<span class="fc" id="L56">    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }</span>
+
+<span class="nc" id="L58">    public static Typified named(TypeName type) { return named(type.fullName()); }</span>
+<span class="nc" id="L59">    public static Typified named(String faceName) { return Library.findFace(faceName); }</span>
+<span class="nc" id="L60">    public static Typified from(Class type) { return named(type.getCanonicalName()); }</span>
+<span class="fc" id="L61">    public Typified faceNamed(String name) { return File.from(this).faceNamed(name); }</span>
+
+    /**
+     * Java package root.
+     */
+    protected static final String rootPackage = &quot;java.&quot;;
+
+    /**
+     * Separates metaClass names from their associated class names.
+     */
+    protected static final String metaSeparator = &quot;.&quot;;
+
+    static final String ClassType = &quot;class&quot;;
+    static final String TypeType = &quot;interface&quot;;
+<span class="nc bnc" id="L75" title="All 2 branches missed.">    public String type() { return this.isInterface() ? TypeType : ClassType; }</span>
+
+    /**
+     * Returns the root base metaClass name.
+     *
+     * @return the root base metaClass name.
+     */
+    public static String baseMetaclassName() {
+<span class="nc" id="L83">        return &quot;smalltalk.behavior.Class&quot;;</span>
+    }
+
+    /**
+     * Returns a meta-name for the supplied (name).
+     *
+     * @param name the name of some Hoot entity.
+     * @return a meta-name
+     */
+    public static String metaName(String name) {
+<span class="fc" id="L93">        return name + Name.Metatype;</span>
+    }
+
+    /**
+     * Returns whether the supplied (faceName) has a metaFace.
+     *
+     * @param faceName the name of a Hoot face (class or type).
+     * @return whether the indicated face has a metaFace
+     */
+    public static boolean metafaceExists(String faceName) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (faceName.isEmpty()) {</span>
+<span class="nc" id="L104">            return false;</span>
+        }
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (faceName.equals(Nil)) {</span>
+<span class="nc" id="L107">            return false;</span>
+        }
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (faceName.startsWith(rootPackage)) {</span>
+<span class="nc" id="L110">            return false;</span>
+        }
+<span class="nc" id="L112">        Typified aFace = Library.findFace(faceName);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (aFace == null) {</span>
+<span class="nc" id="L114">            return true; // assumed by default</span>
+        }
+<span class="nc" id="L116">        Mirror mirror = aFace.typeMirror();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (mirror == null) {</span>
+<span class="nc" id="L118">            return true; // assumed by default</span>
+        }
+<span class="nc" id="L120">        return mirror.hasMetaclass();</span>
+    }
+
+    /**
+     * Returns a metaClass name for the supplied (className).
+     *
+     * @param className the name of a Hoot class.
+     * @return a metaClass name
+     */
+    public static String metaclassName(String className) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        return (metafaceExists(className) ? metaName(className) : baseMetaclassName());</span>
+    }
+
+    /**
+     * Returns a metaType name for the supplied (typeName).
+     *
+     * @param typeName the name of a Hoot type.
+     * @return a metaType name
+     */
+    public static String metatypeName(String typeName) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        return (metafaceExists(typeName) ? metaName(typeName) : Empty);</span>
+    }
+
+
+//    static final String TypeFile = &quot;java-type.ftl&quot;;
+//    static final String ClassFile = &quot;java-class.ftl&quot;;
+//    public String codeFile() {
+//        return isInterface() ? TypeFile : ClassFile;
+//    }
+
+    NamedItem faceSignature;
+<span class="fc" id="L151">    public boolean isSigned() { return hasAny(faceSignature); }</span>
+    public NamedItem signature() {
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        if (!isSigned()) { file().parse(); }</span>
+<span class="fc" id="L154">        return this.faceSignature; }</span>
+
+    public void signature(NamedItem signature) {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (hasNo(signature)) return;</span>
+<span class="fc" id="L158">        this.faceSignature = signature.inside(this);</span>
+<span class="fc" id="L159">        this.cachedDescription = description();</span>
+
+        // now, collect all the related notes here
+<span class="fc" id="L162">        notes().noteAll(this.faceSignature.notes().notes());</span>
+<span class="fc" id="L163">        reportScope();</span>
+<span class="fc" id="L164">    }</span>
+
+<span class="fc" id="L166">    @Override public String description() { return &quot;Face &quot; + signedDescription(); }</span>
+<span class="fc" id="L167">    @Override public String baseName() { return emptyOr(s -&gt; s.baseName(), signature()); }</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">    public String signedDescription() { return isSigned() ? signature().description() : fileScope().name(); }</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">    @Override public String name() { return isSigned() ? signature().name() : fileScope().name(); }</span>
+<span class="fc" id="L170">    @Override public String shortName() { return signature().shortName(); }</span>
+    @Override public String fullName() {
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        return typePackage().qualify(this.isMetaface() ? metaName() : name()); }</span>
+
+    @Override public List&lt;String&gt; knownTypes() {
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        return this.isMetaface() ?</span>
+<span class="nc" id="L176">                this.typeFace().signature().knownTypes() :</span>
+<span class="fc" id="L177">                this.signature().knownTypes(); }</span>
+
+<span class="fc" id="L179">    List&lt;ProtocolScope&gt; memberScopes = emptyList(ProtocolScope.class);</span>
+    public List&lt;ProtocolScope&gt; memberScopes() {
+<span class="nc" id="L181">        return this.memberScopes;</span>
+    }
+
+    public void addScope(ProtocolScope scope) {
+<span class="nc" id="L185">        this.memberScopes.add(scope);</span>
+<span class="nc" id="L186">    }</span>
+
+<span class="fc" id="L188">    List&lt;Method&gt; methods = emptyList(Method.class);</span>
+<span class="nc" id="L189">    public int methodCount() { return methods.size(); }</span>
+<span class="fc" id="L190">    public List&lt;Method&gt; methods() { return copyList(methods); }</span>
+<span class="fc" id="L191">    protected void cleanMethods() { methods.forEach(m -&gt; m.clean()); }</span>
+
+<span class="fc" id="L193">    HashMap&lt;String, Method&gt; methodMap = emptyMap(Method.class);</span>
+    private void buildMethodMap() {
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (!methodMap.isEmpty()) return;</span>
+
+<span class="fc" id="L197">        methods().forEach(m -&gt; {</span>
+<span class="fc" id="L198">            int count = m.argumentCount();</span>
+<span class="fc" id="L199">            String sig = m.matchSignature();</span>
+<span class="fc" id="L200">            methodMap.put(sig, m);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (count &gt; 0) {</span>
+<span class="fc" id="L202">                sig = m.matchErasure();</span>
+<span class="fc" id="L203">                methodMap.put(sig, m);</span>
+            }
+<span class="fc" id="L205">        });</span>
+<span class="fc" id="L206">    }</span>
+
+    public List&lt;Method&gt; cleanedMethods() {
+<span class="nc" id="L209">        ArrayList&lt;Method&gt; results = emptyList(Method.class);</span>
+<span class="nc" id="L210">        methods.stream()</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        .filter((m) -&gt; (!m.isEmpty()))</span>
+<span class="nc" id="L212">        .forEachOrdered((m) -&gt; {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (m.argumentCount() &gt; 0) {</span>
+<span class="nc" id="L214">                results.add(methodMap.get(m.matchErasure()));</span>
+            }
+            else {
+<span class="nc" id="L217">                results.add(methodMap.get(m.matchSignature()));</span>
+            }
+<span class="nc" id="L219">        });</span>
+
+<span class="nc" id="L221">        return results;</span>
+    }
+
+    public static Face from(Typified source) {
+<span class="nc" id="L225">        return null;</span>
+    }
+
+<span class="fc" id="L228">    protected Face metaFace = null;</span>
+<span class="fc" id="L229">    @Override public Typified $class() { return this.metaFace; }</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">    @Override public boolean hasMetaface() { return this.metaFace != null; }</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">    public Face addMetaface() { if (!this.hasMetaface()) metaFace(new Face(this)); return this.metaFace; }</span>
+<span class="fc" id="L232">    public Face metaFace() { return this.metaFace; }</span>
+    public void metaFace(Face aFace) {
+<span class="fc" id="L234">        this.metaFace = aFace;</span>
+<span class="fc" id="L235">        this.metaFace.signature(signature().metaSignature());</span>
+<span class="fc" id="L236">    }</span>
+
+    public Face selectFace(String selector) {
+        // selector == 'class' or empty from parser
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        if (selector.isEmpty()) return typeFace().makeCurrent();</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">        if (this.isMetaface()) return makeCurrent();</span>
+        // add metaFace (1st encounter)
+<span class="fc" id="L243">        return addMetaface().makeCurrent();</span>
+    }
+
+<span class="nc" id="L246">    public Typified baseFace() { return faceNamed(typeFace().baseName()); }</span>
+<span class="fc" id="L247">    @Override public Typified superclass() { return faceNamed(baseName()); }</span>
+<span class="nc" id="L248">    @Override public Class&lt;?&gt; primitiveClass() { return typeClass(); }</span>
+
+<span class="fc bfc" id="L250" title="All 2 branches covered.">    public String metaFaceType() { return (this.isInterface() ? Metatype : Metaclass); }</span>
+
+<span class="nc" id="L252">    @Override public String comment() { return signature().comment(); }</span>
+<span class="fc" id="L253">    @Override public Scope facialScope() { return this; }</span>
+
+    /**
+     * Adds a (method) to those defined by this face.
+     *
+     * @param method a Hoot method definition.
+     */
+    public void addMethod(Method method) {
+<span class="fc" id="L261">        method.container(this);</span>
+<span class="fc" id="L262">        methods.add(method);</span>
+<span class="fc" id="L263">    }</span>
+
+    /**
+     * Adds a new method to those defined by this face.
+     */
+    public void addMethod() {
+<span class="nc" id="L269">        addMethod(new Method(this));</span>
+<span class="nc" id="L270">    }</span>
+
+    public boolean isPackaged() {
+<span class="nc" id="L273">        return (typePackage() instanceof Package);</span>
+    }
+
+    /**
+     * Returns whether this face is derived from a Java class.
+     *
+     * @return whether this face is derived from a Java class.
+     */
+    public boolean hasElementaryBase() {
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        return !baseMirror().hasMetaclass();</span>
+    }
+
+<span class="nc" id="L285">    public boolean isInnard() { return (container() instanceof Block); }</span>
+
+<span class="nc bnc" id="L287" title="All 4 branches missed.">    @Override public boolean isAbstract() { return this.isInterface() || super.isAbstract(); }</span>
+<span class="fc" id="L288">    @Override public boolean isInterface() { return signature().isInterface(); }</span>
+<span class="fc" id="L289">    @Override public boolean isFacial() { return true; }</span>
+<span class="nc" id="L290">    @Override public boolean isReflective() { return false; }</span>
+<span class="fc" id="L291">    @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }</span>
+
+<span class="nc" id="L293">    public boolean isClassType() { return typeResolver().equals(ClassType()); }</span>
+<span class="fc" id="L294">    public boolean isMetaface() { return containerScope().isFacial(); }</span>
+<span class="fc" id="L295">    public boolean isMetaclassBase() { return this.name().equals(Metaclass + &quot;Base&quot;); }</span>
+
+<span class="nc bnc" id="L297" title="All 2 branches missed.">    public String className() { return this.isMetaface() ? typeFace().name() + &quot; class&quot; : name(); }</span>
+<span class="fc" id="L298">    private String metaName() { return typeFace().name() + Dollar + metaFaceType(); }</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">    public String defaultName() { return this.isMetaface() ? typeFace().name() : name(); }</span>
+
+<span class="fc" id="L301">    @Override public int nestLevel() { return scope().nestLevel() + 1; }</span>
+<span class="nc bnc" id="L302" title="All 4 branches missed.">    @Override public boolean hasHeritage() { return (hasAny(baseName()) &amp;&amp; !Nil.equals(baseName())); }</span>
+<span class="nc bnc" id="L303" title="All 4 branches missed.">    @Override public boolean hasNoHeritage() { return (hasNo(baseName()) || Nil.equals(baseName())); }</span>
+
+<span class="fc" id="L305">    @Override public List&lt;Typified&gt; simpleHeritage() { return signature().simpleHeritage(); }</span>
+<span class="fc" id="L306">    @Override public List&lt;Typified&gt; typeHeritage() { return signature().typeHeritage(); }</span>
+
+<span class="nc" id="L308">    public String basePackageName() { return Name.packageName(fullBaseName()); }</span>
+<span class="nc" id="L309">    public String fullBaseName() { return emptyOr(f -&gt; f.fullName(), baseFace()); }</span>
+
+<span class="nc" id="L311">    public Class typeClass() { return TypeName.findPrimitiveClass(typeFace().fullName()); }</span>
+<span class="nc" id="L312">    public Class baseClass() { return TypeName.findPrimitiveClass(fullBaseName()); }</span>
+<span class="nc" id="L313">    public Mirror baseMirror() { return Mirror.forClass(baseClass()); }</span>
+
+<span class="fc" id="L315">    @Override public String packageName() { return typePackage().fullName(); }</span>
+<span class="fc" id="L316">    public Package typePackage() { return File.from(this).facePackage(); }</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">    public Face typeFace() { return (this.isMetaface() ? container().asType(Face.class) : this); }</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">    public String typeName() { return (this.isMetaface() ? metaName(typeFace().name()) : name()); }</span>
+<span class="nc" id="L319">    @Override public Mirror typeMirror() { return Mirror.forClass(typeClass()); }</span>
+
+    public String metaInstance() {
+<span class="nc bnc" id="L322" title="All 2 branches missed.">        return (metaFace == null</span>
+<span class="nc" id="L323">                ? &quot;new Metaclass( &quot; + typeFace().name() + &quot;.$class() );&quot;</span>
+<span class="nc" id="L324">                : &quot;new &quot; + metaFace.name() + &quot;( &quot; + name() + &quot;.class );&quot;);</span>
+    }
+
+    /**
+     * Returns a revised identifier derived from the supplied (identifier).
+     *
+     * @param identifier identifies a named entity.
+     * @return a revised identifier derived from the supplied (identifier).
+     */
+    @Override
+    public String qualify(String identifier) {
+<span class="nc bnc" id="L335" title="All 4 branches missed.">        if (identifier.startsWith(&quot;this&quot;) || identifier.startsWith(&quot;super&quot;)) {</span>
+<span class="nc" id="L336">            return typeName() + Dot + identifier;</span>
+        } else {
+<span class="nc" id="L338">            return typeName() + &quot;.this.&quot; + identifier;</span>
+        }
+    }
+
+<span class="fc" id="L342">    private final Map&lt;String, Typified&gt; heritageMap = emptyMap(Typified.class);</span>
+    private void buildHeritageMap() {
+<span class="nc bnc" id="L344" title="All 2 branches missed.">        if (!heritageMap.isEmpty()) return;</span>
+<span class="nc" id="L345">        fullInheritance().stream().map((type) -&gt; {</span>
+<span class="nc" id="L346">            heritageMap.put(type.fullName(), type);</span>
+<span class="nc" id="L347">            return type;</span>
+<span class="nc" id="L348">        }).forEachOrdered((type) -&gt; {</span>
+<span class="nc" id="L349">            heritageMap.put(type.shortName(), type);</span>
+<span class="nc" id="L350">        });</span>
+<span class="nc" id="L351">    }</span>
+
+    @Override
+    public String matchSignatures(Signed m) {
+<span class="nc" id="L355">        buildMethodMap();</span>
+<span class="nc" id="L356">        String fullSig = m.matchSignature();</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        if (methodMap.containsKey(fullSig)) {</span>
+<span class="nc" id="L358">            return fullSig;</span>
+        }
+
+<span class="nc" id="L361">        String erasedSig = m.matchErasure();</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">        if (methodMap.containsKey(erasedSig)) {</span>
+<span class="nc" id="L363">            return erasedSig;</span>
+        }
+
+<span class="nc" id="L366">        String shortSig = m.methodName();</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">        if (m.argumentCount() &gt; 0) {</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">            for (String sig : methodMap.keySet()) {</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">                if (sig.startsWith(shortSig)) {</span>
+<span class="nc" id="L370">                    return sig;</span>
+                }
+<span class="nc" id="L372">            }</span>
+        }
+
+<span class="nc" id="L375">        return Empty;</span>
+    }
+
+    public Signed resolveMethod(Method m) {
+<span class="nc" id="L379">        String s = matchSignatures(m);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">        if (!s.isEmpty()) {</span>
+<span class="nc" id="L381">            return methodMap.get(s);</span>
+        }
+
+<span class="nc" id="L384">        List&lt;Typified&gt; heritage = fullInheritance();</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">        for (Typified aFace : heritage) {</span>
+<span class="nc" id="L386">            s = aFace.matchSignatures(m);</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">            if (!s.isEmpty()) {</span>
+<span class="nc" id="L388">                return aFace.getSigned(s);</span>
+            }
+<span class="nc" id="L390">        }</span>
+
+<span class="nc" id="L392">        return null;</span>
+    }
+
+    @Override public Signed getSigned(Signed s) {
+<span class="fc" id="L396">        Signed signed = getSigned(s.matchSignature());</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        if (hasAny(signed)) return signed;</span>
+<span class="fc" id="L398">        Signed erased = getSigned(s.matchErasure());</span>
+<span class="fc" id="L399">        return erased;</span>
+    }
+
+    @Override public Signed getSigned(String s) {
+<span class="fc" id="L403">        buildMethodMap();</span>
+<span class="fc" id="L404">        return methodMap.get(s); }</span>
+
+<span class="nc" id="L406">    @Override public boolean overridenBy(Signed s) { return this.overridenBy((Method)s); }</span>
+    public boolean overridenBy(Method m) {
+<span class="nc" id="L408">        Face methodFace = m.face();</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (methodFace.inheritsFrom(this)) {</span>
+<span class="nc" id="L410">            Signed result = resolveMethod(m);</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">            if (result == null) return false;</span>
+<span class="nc" id="L412">            return m.overrides(result);</span>
+        }
+<span class="nc" id="L414">        return false;</span>
+    }
+
+
+<span class="fc" id="L418">    public List&lt;Emission&gt; emitMethods() { return map(methods(), m -&gt; m.emitScope()); }</span>
+    @Override public List&lt;Emission&gt; emitLocalVariables() {
+<span class="fc" id="L420">        return map(locals().definedSymbols(), v -&gt; emitStatement(v.emitItem())); }</span>
+
+    @Override public Emission emitScope() {
+<span class="nc" id="L423">        return emitLibraryType(NoValue, emitSignature(), emitLocalVariables(), emitMetaFace(), emitMethods()); }</span>
+
+    public Emission emitScope(Emission libs) {
+<span class="fc" id="L426">        return emitLibraryType(libs, emitSignature(), emitLocalVariables(), emitMetaFace(), emitMethods()); }</span>
+
+    public Emission emitSignature() {
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">        return this.isMetaface() ? typeFace().signature().emitMetaItem() : signature().emitItem(); }</span>
+
+    public Emission emitMetaFace() {
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">        if (this.isMetaface()) return null;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        if (this.hasMetaface()) {</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">            if (this.isInterface()) {</span>
+<span class="fc" id="L435">                return emitMetatype(signature().emitMetaItem(), metaFace().emitMethods());</span>
+            }
+            else {
+<span class="fc" id="L438">                return emitMetaclass(signature().name(), signature().baseName(),</span>
+<span class="fc" id="L439">                    signature().emitMetaItem(), metaFace().emitLocalVariables(), metaFace().emitMethods());</span>
+            }
+        }
+<span class="fc" id="L442">        return null;</span>
+    }
+
+//    public Emission emitMetaInstance() {
+//        if (this.isInterface()) {
+//            if (!this.isMetaface()) {
+//                return emit(&quot;TypeMembers&quot;);
+//            }
+//
+//            return null;
+//        }
+//
+//        if (this.isMetaface()) {
+//            return emit(&quot;MetaMembers&quot;).name(name());
+//        }
+//
+//        if (this.hasMetaface()) {
+//            TypeName rootType = RootType();
+//            boolean overrides = !rootType.equals(this) &amp;&amp; inheritsFrom(named(rootType));
+//            return emit(&quot;FaceMembers&quot;)
+//                    .type(type()).name(name())
+//                    .with(&quot;metaName&quot;, metaFace().name())
+//                    .with(&quot;member&quot;, this.isClassType() ? &quot;metaclass&quot; : &quot;$class&quot;)
+//                    .with(&quot;override&quot;, overrides ? &quot;override&quot; : null);
+//        }
+//
+//        return null;
+//    }
+
+
+    public void reportBuildingWrapper(Method m) {
+<span class="nc" id="L473">        report(format(BuildingWrapper, className(), m.name()));</span>
+<span class="nc" id="L474">    }</span>
+
+    public void reportAlreadyWrapped(Method m) {
+<span class="nc" id="L477">        report(format(AlreadyWrapped, className(), m.name()));</span>
+<span class="nc" id="L478">    }</span>
+
+    public void reportExtraneousWrapper(Method m) {
+<span class="nc" id="L481">        report(format(ExtraneousWrapper, className(), m.name()));</span>
+<span class="nc" id="L482">    }</span>
+
+    static final String BuildingWrapper = &quot;Building wrapper method for %s &gt;&gt; %s&quot;;
+    static final String AlreadyWrapped = &quot;Warning! %s &gt;&gt; %s was declared wrapped, but already has wrapper&quot;;
+    static final String ExtraneousWrapper = &quot;Warning! %s &gt;&gt; %s was declared wrapped, but needs no wrapper&quot;;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
