@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Integer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">Integer.java</span></div><h1>Integer.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.math.BigInteger;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Faces.IntegerValue;
+import Hoot.Streams.TextWriteStream;
+import Smalltalk.Core.Posit;
+import Smalltalk.Magnitudes.Code;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Magnitudes.Numeric;
+import Smalltalk.Streams.StreamedSink;
+
+public abstract class Integer extends Rational implements Ordinal, IntegerValue
+{
+<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Rational.Metaclass implements Ordinal.Metatype, IntegerValue.Metatype
+  {
+<span class="fc" id="L38">    static final Integer.Metaclass $class = new Integer.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L40">      this(Integer.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return Integer.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   char radixDigit(final Number index)
+    {
+<span class="nc" id="L54">      java.lang.String exitID = &quot;IntegerMetatype&gt;&gt;radixDigit&quot;;</span>
+<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L57">      return (char)f0.exit(exitID, RadixDigits.charAt(index.asSmallInteger().primitiveInteger()));</span>
+      });
+    }
+  }
+
+
+<span class="fc" id="L63">  private static java.lang.String RadixDigits = String.from(&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;).primitiveString();</span>
+  /**
+   * 
+   */
+  protected    Integer()
+  {
+<span class="fc" id="L69">    super();</span>
+<span class="fc" id="L70">    java.lang.String exitID = &quot;Integer&gt;&gt;Integer&quot;;</span>
+<span class="fc" id="L71">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L72">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   Integer numerator()
+  {
+<span class="fc" id="L79">    java.lang.String exitID = &quot;Integer&gt;&gt;numerator&quot;;</span>
+<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L81">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer denominator()
+  {
+<span class="fc" id="L89">    java.lang.String exitID = &quot;Integer&gt;&gt;denominator&quot;;</span>
+<span class="fc" id="L90">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L91">    return (Integer)((Integer)this.$class().unity());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude aNumber)
+  {
+<span class="nc" id="L99">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L100">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L101">    return (Boolean)(this.equals(((Integer)aNumber)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final Integer aNumber)
+  {
+<span class="fc" id="L109">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L110">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 == this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Integer aNumber)
+  {
+<span class="fc" id="L119">    java.lang.String exitID = &quot;Integer&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L120">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &gt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Integer aNumber)
+  {
+<span class="fc" id="L129">    java.lang.String exitID = &quot;Integer&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L130">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &lt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="fc" id="L139">    java.lang.String exitID = &quot;Integer&gt;&gt;hashCode&quot;;</span>
+<span class="fc" id="L140">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L141">    return (int)this.elementaryNumber().hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer asInteger()
+  {
+<span class="fc" id="L149">    java.lang.String exitID = &quot;Integer&gt;&gt;asInteger&quot;;</span>
+<span class="fc" id="L150">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L151">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int intValue()
+  {
+<span class="fc" id="L159">    java.lang.String exitID = &quot;Integer&gt;&gt;intValue&quot;;</span>
+<span class="fc" id="L160">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L161">    return (int)this.primitiveInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   long longValue()
+  {
+<span class="fc" id="L169">    java.lang.String exitID = &quot;Integer&gt;&gt;longValue&quot;;</span>
+<span class="fc" id="L170">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L171">    return (long)this.primitiveLong();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitAnd(final Ordinal anInteger)
+  {
+<span class="nc" id="L179">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAnd&quot;;</span>
+<span class="nc" id="L180">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L181">    return (Integer)((Integer)anInteger).asSmallInteger().bitAnd(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitOr(final Ordinal anInteger)
+  {
+<span class="nc" id="L189">    java.lang.String exitID = &quot;Integer&gt;&gt;bitOr&quot;;</span>
+<span class="nc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L191">    return (Integer)((Integer)anInteger).asSmallInteger().bitOr(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitXor(final Ordinal anInteger)
+  {
+<span class="nc" id="L199">    java.lang.String exitID = &quot;Integer&gt;&gt;bitXor&quot;;</span>
+<span class="nc" id="L200">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L201">    return (Integer)((Integer)anInteger).asSmallInteger().bitXor(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitInvert()
+  {
+<span class="nc" id="L209">    java.lang.String exitID = &quot;Integer&gt;&gt;bitInvert&quot;;</span>
+<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L211">    return (Integer)SmallInteger.from(Primitive.invertBits(this.primitiveInteger()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer and(final Ordinal anInteger)
+  {
+<span class="nc" id="L219">    java.lang.String exitID = &quot;Integer&gt;&gt;and&quot;;</span>
+<span class="nc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L221">    return (Integer)this.bitAnd(anInteger);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer or(final Ordinal anInteger)
+  {
+<span class="nc" id="L229">    java.lang.String exitID = &quot;Integer&gt;&gt;or&quot;;</span>
+<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L231">    return (Integer)this.bitOr(anInteger);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean allMask(final Ordinal mask)
+  {
+<span class="nc" id="L239">    java.lang.String exitID = &quot;Integer&gt;&gt;allMask&quot;;</span>
+<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L241">    return (Boolean)(this.bitAnd(mask).equals(mask));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean anyMask(final Ordinal mask)
+  {
+<span class="nc" id="L249">    java.lang.String exitID = &quot;Integer&gt;&gt;anyMask&quot;;</span>
+<span class="nc" id="L250">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L251">    return (Boolean)(this.bitAnd(mask).notEqual(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean noMask(final Ordinal mask)
+  {
+<span class="nc" id="L259">    java.lang.String exitID = &quot;Integer&gt;&gt;noMask&quot;;</span>
+<span class="nc" id="L260">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L261">    return (Boolean)(this.bitAnd(mask).isSame(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitAt(final Ordinal index)
+  {
+<span class="nc" id="L269">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt&quot;;</span>
+<span class="nc" id="L270">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L271">    return (Integer)this.bitAt(((Integer)index).asSmallInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitAt_put(final Ordinal index, final Ordinal bitValue)
+  {
+<span class="nc" id="L279">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt_put&quot;;</span>
+<span class="nc" id="L280">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L281">    return (Integer)this.bitAt_put(((Integer)index).asSmallInteger(), ((Integer)bitValue).asSmallInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer bitShift(final Ordinal count)
+  {
+<span class="nc" id="L289">    java.lang.String exitID = &quot;Integer&gt;&gt;bitShift&quot;;</span>
+<span class="nc" id="L290">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L291">    return (Integer)this.bitAt(((Integer)count).asSmallInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer highBit()
+  {
+<span class="nc" id="L299">    java.lang.String exitID = &quot;Integer&gt;&gt;highBit&quot;;</span>
+<span class="nc" id="L300">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L301">    return (Integer)this.asLargeInteger().highBit();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean odd()
+  {
+<span class="nc" id="L309">    java.lang.String exitID = &quot;Integer&gt;&gt;odd&quot;;</span>
+<span class="nc" id="L310">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L311">    return (Boolean)this.even().not();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean even()
+  {
+<span class="nc" id="L319">    java.lang.String exitID = &quot;Integer&gt;&gt;even&quot;;</span>
+<span class="nc" id="L320">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L321">    return (Boolean)((this.remainderFrom(SmallInteger.from(2))).isSame(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isInteger()
+  {
+<span class="nc" id="L329">    java.lang.String exitID = &quot;Integer&gt;&gt;isInteger&quot;;</span>
+<span class="nc" id="L330">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L331">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer minus(final Ordinal aNumber)
+  {
+<span class="nc" id="L339">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="nc" id="L340">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L341">    return (Integer)(this.minus(((Integer)aNumber)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer plus(final Ordinal aNumber)
+  {
+<span class="nc" id="L349">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L350">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L351">    return (Integer)(((Integer)aNumber).plus(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer times(final Ordinal aNumber)
+  {
+<span class="nc" id="L359">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="nc" id="L360">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L361">    return (Integer)(((Integer)aNumber).times(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer minus(final Numeric aNumber)
+  {
+<span class="fc" id="L369">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L370">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L371">    return (Integer)(this.minus(((Number)aNumber).asInteger()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer plus(final Numeric aNumber)
+  {
+<span class="nc" id="L379">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L380">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L381">    return (Integer)(((Number)aNumber).asInteger().plus(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer times(final Numeric aNumber)
+  {
+<span class="nc" id="L389">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="nc" id="L390">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L391">    return (Integer)(((Number)aNumber).asInteger().times(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer minus(final Integer anInteger)
+  {
+<span class="fc" id="L399">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L400">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L401">    return (Integer)new LargeInteger(this.asBigInteger().subtract(anInteger.asBigInteger())).narrowGenerality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer plus(final Integer anInteger)
+  {
+<span class="fc" id="L409">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L410">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L411">    return (Integer)new LargeInteger(this.asBigInteger().add(anInteger.asBigInteger())).narrowGenerality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer times(final Integer anInteger)
+  {
+<span class="fc" id="L419">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="fc" id="L420">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L421">    return (Integer)new LargeInteger(this.asBigInteger().multiply(anInteger.asBigInteger())).narrowGenerality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer floor()
+  {
+<span class="nc" id="L429">    java.lang.String exitID = &quot;Integer&gt;&gt;floor&quot;;</span>
+<span class="nc" id="L430">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L431">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer ceiling()
+  {
+<span class="nc" id="L439">    java.lang.String exitID = &quot;Integer&gt;&gt;ceiling&quot;;</span>
+<span class="nc" id="L440">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L441">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer truncated()
+  {
+<span class="fc" id="L449">    java.lang.String exitID = &quot;Integer&gt;&gt;truncated&quot;;</span>
+<span class="fc" id="L450">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L451">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer rounded()
+  {
+<span class="nc" id="L459">    java.lang.String exitID = &quot;Integer&gt;&gt;rounded&quot;;</span>
+<span class="nc" id="L460">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L461">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer integerPart()
+  {
+<span class="nc" id="L469">    java.lang.String exitID = &quot;Integer&gt;&gt;integerPart&quot;;</span>
+<span class="nc" id="L470">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L471">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer negated()
+  {
+<span class="nc" id="L479">    java.lang.String exitID = &quot;Integer&gt;&gt;negated&quot;;</span>
+<span class="nc" id="L480">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L481">    return (Integer)(SmallInteger.from(0).minus(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer raisedToInteger(final Integer anInteger)
+  {
+<span class="nc" id="L489">    java.lang.String exitID = &quot;Integer&gt;&gt;raisedToInteger&quot;;</span>
+<span class="nc" id="L490">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L491">    return (Integer)this.asLargeInteger().raisedToInteger(anInteger).narrowGenerality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer factorial()
+  {
+<span class="nc" id="L499">    java.lang.String exitID = &quot;Integer&gt;&gt;factorial&quot;;</span>
+<span class="nc" id="L500">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L501">    (this.lessThan(this.$class().zero())).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L502">      this.error(String.from(&quot;Negative integers cannot use #factorial&quot;));</span>
+<span class="nc" id="L503">    }, &quot;&quot;));</span>
+
+<span class="nc" id="L505">    FastInteger result = this.$class().unity();</span>
+<span class="nc" id="L506">    this.$class().unity().to_do(this, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L507">      SmallInteger n = f2.getValue(0).value();</span>
+<span class="nc" id="L508">      return result.multiplyBy(n);</span>
+    }, &quot;n&quot;));
+<span class="nc" id="L510">    return (Integer)result.asInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer gcd(final Ordinal aNumber)
+  {
+<span class="nc" id="L518">    java.lang.String exitID = &quot;Integer&gt;&gt;gcd&quot;;</span>
+<span class="nc" id="L519">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L520">    return (Integer)this.asLargeInteger().gcd(aNumber).narrowGenerality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer lcm(final Ordinal aNumber)
+  {
+<span class="nc" id="L528">    java.lang.String exitID = &quot;Integer&gt;&gt;lcm&quot;;</span>
+<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L530">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L531">    Integer gcd = this.gcd(((Integer)aNumber));</span>
+<span class="nc" id="L532">    (gcd.equals(SmallInteger.from(0))).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L533">      return (Integer)f0.exit(exitID, this.truncateWith(gcd).times(aNumber).abs());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L535">    return (Integer)f0.exit(exitID, SmallInteger.from(1));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer timesRepeat(final NiladicValuable aBlock)
+  {
+<span class="nc" id="L544">    java.lang.String exitID = &quot;Integer&gt;&gt;timesRepeat&quot;;</span>
+<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L546">    FastInteger count = this.$class().unity();</span>
+
+<span class="nc" id="L548">    SmallInteger unity = this.$class().unity();</span>
+<span class="nc" id="L549">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L550">      return (count.notMore(this));</span>
+<span class="nc" id="L551">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L552">      aBlock.value();</span>
+<span class="nc" id="L553">    count.add(unity);</span>
+<span class="nc" id="L554">    }, &quot;&quot;));</span>
+<span class="nc" id="L555">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer printOn(final StreamedSink aStream)
+  {
+<span class="nc" id="L563">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn&quot;;</span>
+<span class="nc" id="L564">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L565">    this.printOn_base_showRadix(aStream, SmallInteger.from(10), False.literal());</span>
+<span class="nc" id="L566">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer printOn_base_showRadix(final StreamedSink aStream, final Ordinal radix, final Posit showRadix)
+  {
+<span class="nc" id="L574">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn_base_showRadix&quot;;</span>
+<span class="nc" id="L575">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L576">    this.negative().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L577">      aStream.nextPut(((Character)Character.from('-')));</span>
+<span class="nc" id="L578">    this.negated().asInteger().printOn_base_showRadix(aStream, radix, showRadix);</span>
+<span class="nc" id="L579">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L580">      showRadix.ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L581">      radix.printOn(aStream);</span>
+<span class="nc" id="L582">    aStream.nextPut(((Character)Character.from('r')));</span>
+<span class="nc" id="L583">    }, &quot;&quot;));</span>
+<span class="nc" id="L584">    this.printDigitsOn_base(aStream, radix);</span>
+<span class="nc" id="L585">    }, &quot;&quot;));</span>
+<span class="nc" id="L586">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer printDigitsOn_base(final StreamedSink aStream, final Ordinal radix)
+  {
+<span class="nc" id="L594">    java.lang.String exitID = &quot;Integer&gt;&gt;printDigitsOn_base&quot;;</span>
+<span class="nc" id="L595">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L596">    (this.notLess(radix)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L597">      (this.truncateWith(radix)).printDigitsOn_base(aStream, radix);</span>
+<span class="nc" id="L598">    }, &quot;&quot;));</span>
+<span class="nc" id="L599">    aStream.nextPut(Character.from(this.$class().radixDigit((this.remainderFrom(radix)))));</span>
+<span class="nc" id="L600">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String printStringRadix(final Ordinal radix)
+  {
+<span class="nc" id="L608">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix&quot;;</span>
+<span class="nc" id="L609">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L610">    return (String)this.printStringRadix_showRadix(radix, True.literal());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String printStringRadix_showRadix(final Ordinal radix, final Boolean showRadix)
+  {
+<span class="nc" id="L618">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix_showRadix&quot;;</span>
+<span class="nc" id="L619">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L620">    TextWriteStream aStream = String.type().writeStream(SmallInteger.from(16));</span>
+<span class="nc" id="L621">    this.printOn_base_showRadix(aStream, radix, showRadix);</span>
+<span class="nc" id="L622">    return (String)aStream.contents();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

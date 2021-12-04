@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Message.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Expressions</a> &gt; <span class="el_source">Message.java</span></div><h1>Message.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Expressions;
+
+import java.util.*;
+import static java.lang.Integer.min;
+
+import Hoot.Runtime.Emissions.*;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Values.Operand;
+import Hoot.Runtime.Names.Selector;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Names.Keyword.*;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import Hoot.Compiler.Scopes.*;
+
+/**
+ * A message (method invocation).
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Message extends Expression implements MessageSource {
+
+<span class="fc" id="L24">    public Message(NamedItem container) { super(container); }</span>
+
+<span class="fc" id="L26">    protected static final HashMap&lt;String, String&gt; LoopMap = emptyMap(String.class);</span>
+<span class="fc" id="L27">    public boolean needsPredicate() { return LoopMap.containsKey(methodName()); }</span>
+    static {
+<span class="fc" id="L29">        LoopMap.put(WhileTrue, &quot;WhileTrue&quot;);</span>
+<span class="fc" id="L30">        LoopMap.put(WhileFalse, &quot;WhileFalse&quot;);</span>
+    }
+
+
+    static final String basicNew = &quot;basicNew&quot;;
+    static final String ensurePhrase = &quot;ensure:&quot;;
+    static final String catchPhrase = &quot;catch:&quot;;
+
+<span class="fc" id="L38">    static final String performs[] = {</span>
+        &quot;.perform&quot;,
+        &quot;.perform_with&quot;,
+        &quot;.perform_with_with&quot;,
+        &quot;.perform_with_with_with&quot;,
+        &quot;.perform_with_with_with_with&quot;,
+        &quot;.perform_withArguments&quot;
+    };
+
+//    static Class[] blockClass = {Block.class};
+<span class="fc" id="L48">    Selector selector = new Selector();</span>
+<span class="fc" id="L49">    public Selector selector() { return selector; }</span>
+<span class="nc" id="L50">    public void selector(String name) { selector.append(name); }</span>
+
+<span class="nc" id="L52">    public String methodName() { return selector().methodName(); }</span>
+<span class="nc" id="L53">    @Override public String name() { return selector().contents(); }</span>
+<span class="nc" id="L54">    @Override public String description() { return getClass().getName() + &quot; = &quot; + name(); }</span>
+
+<span class="fc" id="L56">    Class resultType = null;</span>
+
+
+    @Override public void container(Item container) {
+<span class="fc" id="L60">        super.container(container);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (hasOperands()) {</span>
+<span class="fc" id="L62">            operands().forEach(op -&gt; this.contain(op));</span>
+        }
+<span class="fc" id="L64">    }</span>
+
+    public void cleanOperands() {
+<span class="fc" id="L67">        List&lt;Operand&gt; copy = operands();</span>
+<span class="fc" id="L68">        operands.clear();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Operand o : copy) {</span>
+<span class="fc" id="L70">            operands.add(o.cleanTerm());</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">    }</span>
+
+    @Override public void clean() {
+<span class="fc" id="L75">        super.clean();</span>
+<span class="fc" id="L76">        cleanOperands();</span>
+<span class="fc" id="L77">        String faceName = this.facialScope().name();</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">        if (!&quot;Object&quot;.equals(faceName) &amp;&amp; !selector.isEmpty()) {</span>
+<span class="nc" id="L79">            resolveType();</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    public void resolveType() {
+<span class="nc" id="L84">        int ax = 0;</span>
+<span class="nc" id="L85">        Class[] argumentTypes = new Class[operandCount() - 1];</span>
+
+        // first, try to resolve a method based on the argument types
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (Operand argument : arguments()) {</span>
+<span class="nc" id="L89">            argumentTypes[ax++] = argument.resolvedType();</span>
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">        Mirror mirror = Mirror.forClass(receiver().resolvedType());</span>
+<span class="nc" id="L92">        resultType = mirror.methodType(methodName(), argumentTypes);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (resultType != null) {</span>
+<span class="nc" id="L94">            return;</span>
+        }
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (resultType == null) {</span>
+<span class="nc" id="L97">            return;</span>
+        }
+
+        // finally, try to resolve a method with type erasure
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        for (int i = 0; i &lt; argumentTypes.length; i++) {</span>
+<span class="nc" id="L102">            Class aClass = argumentTypes[i];</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            while ((aClass = aClass.getSuperclass()) != null) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                if (RootType().equals(aClass.getName())) {</span>
+<span class="nc" id="L105">                    argumentTypes[i] = aClass;</span>
+                }
+            }
+        }
+<span class="nc" id="L109">        resultType = mirror.methodType(methodName(), argumentTypes);</span>
+<span class="nc" id="L110">    }</span>
+
+    public boolean canOptimizeInvocation() {
+<span class="nc bnc" id="L113" title="All 4 branches missed.">        return receiver().optimizes(selector()) || (resultType != null); }</span>
+
+    @Override public Class resolvedType() {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        return (resultType == null ? super.resolvedType() : resultType); }</span>
+
+    @Override public String resolvedTypeName() {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        return (resultType == null ? super.resolvedTypeName() : resultType.getName()); }</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">    public Operand firstArgument() { return (operands.size() &lt; 2) ? null : operands.get(1); }</span>
+<span class="nc" id="L122">    public Operand finalOperand() { return operands.get(operands.size() - 1); }</span>
+<span class="nc" id="L123">    public void receiver(Operand receiver) { operands.add(0, receiver); }</span>
+
+    public Operand removeReceiver() {
+<span class="nc" id="L126">        Operand result = receiver();</span>
+<span class="nc" id="L127">        operands.remove(0);</span>
+<span class="nc" id="L128">        return result;</span>
+    }
+
+    public void replaceReceiver(Operand receiver) {
+<span class="nc" id="L132">        removeReceiver();</span>
+<span class="nc" id="L133">        receiver(receiver);</span>
+<span class="nc" id="L134">    }</span>
+
+<span class="fc" id="L136">    ArrayList&lt;Operand&gt; operands = emptyList(Operand.class);</span>
+<span class="nc" id="L137">    public int operandCount() { return operands.size(); }</span>
+<span class="nc" id="L138">    public void addOperand(Object operand) { addOperand((Operand)operand); }</span>
+<span class="nc" id="L139">    public void addOperand(Operand operand) { operands.add(operand); }</span>
+<span class="fc" id="L140">    public List&lt;Operand&gt; operands() { return copyList(this.operands); }</span>
+<span class="fc" id="L141">    public boolean hasOperands() { return hasAny(this.operands); }</span>
+
+    public List&lt;Operand&gt; arguments() {
+<span class="nc" id="L144">        List&lt;Operand&gt; results = operands();</span>
+<span class="nc" id="L145">        results.remove(0);</span>
+<span class="nc" id="L146">        return results;</span>
+    }
+
+<span class="nc" id="L149">    @Override public boolean isMessage() { return true; }</span>
+
+<span class="nc" id="L151">    public String performString() { return performs[min(operands.size(), 6) - 1]; }</span>
+<span class="nc" id="L152">    public Emission performedMethodName() { return selector.emitQuotedMethodName(); }</span>
+
+    /**
+     * @return whether the receiver has elementary type.
+     */
+    public boolean elementaryReceiver() {
+<span class="nc" id="L158">        Operand receiver = receiver();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (receiver.resolvesToPrimitive()) return true;</span>
+
+<span class="nc" id="L161">        Typified typeFace = Face.named(receiver.resolvedTypeName());</span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">        return (typeFace != null &amp;&amp; typeFace.isElementaryType());</span>
+    }
+
+    public boolean isPrimitiveOperation() {
+<span class="nc bnc" id="L166" title="All 6 branches missed.">        return (operandCount() == 2) &amp;&amp; selector().isPrimitive() &amp;&amp; receiver().resolvesToPrimitive(); }</span>
+
+
+    @Override public Emission emitOperand() {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        return elementaryReceiver() ? emitElementary() : emitInvocation(); }</span>
+
+    public Emission emitElementary() {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        return selector().isPrimitive() ? emitPrimitive() : emitOptimized(); }</span>
+
+    public Emission emitInvocation() {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        return canOptimizeInvocation() ? emitOptimized() : emitPerform(); }</span>
+
+    public Emission emitPerform() {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        if (selector().isEmpty()) return receiver().emitOperand();</span>
+<span class="nc" id="L180">        return emitPerform(receiver().emitOperand(), performString(), performedMethodName(), emitArguments()); }</span>
+
+<span class="nc" id="L182">    public List&lt;Emission&gt; emitArguments() { return map(arguments(), arg -&gt; arg.emitOperand()); }</span>
+
+    public Emission emitOpPrim() {
+<span class="nc" id="L185">        return emitOperation(selector().asPrimitiveOperator(), firstArgument().emitPrimitive()); }</span>
+
+    public Emission emitOp() {
+<span class="nc" id="L188">        return emitOperation(selector().asPrimitiveOperator(), firstArgument().emitOperand()); }</span>
+
+<span class="fc" id="L190">    public Emission emitCall() { return emitCall(methodName()); }</span>
+<span class="fc" id="L191">    public Emission emitCall(String methodName) { return emitCall(methodName, emitArguments()); }</span>
+<span class="nc" id="L192">    public Emission emitExpression() { return emitExpression(receiver().emitOperand(), emitCall()); }</span>
+
+    @Override public Emission emitPrimitive() {
+<span class="nc" id="L195">        return emitExpression(receiver().emitPrimitive(), emitOpPrim()); }</span>
+
+    @Override public Emission emitOptimized() {
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        if (selector().isEmpty()) return receiver().emitOperand();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        if (selector().isSelfish()) return emitCall();</span>
+<span class="nc" id="L200">        return emitExpression(); }</span>
+
+    public Emission emitAlternatives(boolean positively, Operand trueBlock, Operand falseBlock) {
+<span class="nc" id="L203">        return emitAlternatives(emitGuarded(receiver(), positively),</span>
+<span class="nc" id="L204">                emitOptimizedBlock(trueBlock), emitOptimizedBlock(falseBlock));</span>
+    }
+
+    public Emission emitGuardedStatement(boolean positively, Operand aBlock) {
+<span class="nc" id="L208">        return emitGuardedBlock(emitGuarded(receiver(), positively), emitStatement(emitOptimizedBlock(aBlock)));</span>
+    }
+
+    public Emission emitGuardedStatement(boolean positively, Operand trueBlock, Operand falseBlock) {
+<span class="nc" id="L212">        return emitGuardedPair(emitGuarded(receiver(), positively),</span>
+<span class="nc" id="L213">                emitStatement(emitOptimizedBlock(trueBlock)), emitStatement(emitOptimizedBlock(falseBlock)));</span>
+    }
+
+    public Emission emitWhileLoop(boolean positively, Operand guardedBlock) {
+<span class="nc" id="L217">        return emitWhileLoop(emitGuardedValue(receiver(), positively),</span>
+<span class="nc" id="L218">                emitStatement(emitClosureValue(emitOptimizedBlock(guardedBlock))));</span>
+    }
+
+    public Emission emitGuardedValue(Operand value, boolean positively) {
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        return positively ?</span>
+<span class="nc" id="L223">                emitTrueGuard(emitClosureValue(value.emitOperand())) :</span>
+<span class="nc" id="L224">                emitFalseGuard(emitClosureValue(value.emitOperand())); }</span>
+
+    public Emission emitGuarded(Operand value, boolean positively) {
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        return positively ? emitTrueGuard(value.emitOperand()) : emitFalseGuard(value.emitOperand()); }</span>
+
+    public Emission emitOptimizedBlock(Operand aBlock) {
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        return aBlock == null ? emitNil() : emitClosureValue(aBlock.emitOptimized()); }</span>
+
+} // Message
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

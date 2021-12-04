@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharacterString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">CharacterString.java</span></div><h1>CharacterString.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import java.util.List;
+import Hoot.Runtime.Names.TypeName;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Behaviors.HootRegistry;
+import Hoot.Behaviors.Class;
+import Hoot.Behaviors.Ordered;
+import Hoot.Magnitudes.Integer;
+import Hoot.Streams.TextReadStream;
+import Smalltalk.Collections.*;
+import Smalltalk.Magnitudes.Code;
+import Smalltalk.Magnitudes.Scalar;
+
+<span class="fc" id="L37">public abstract class CharacterString extends SequencedCollection implements Ordered, ReadableString</span>
+{
+<span class="fc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends SequencedCollection.Metaclass implements Ordered.Metatype, ReadableString.Metatype
+  {
+<span class="fc" id="L43">    static final CharacterString.Metaclass $class = new CharacterString.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L45">      this(CharacterString.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
+
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return CharacterString.class; }</span>
+
+  }
+
+
+  /**
+   * @return 
+   */
+  public abstract   java.lang.String primitiveString();
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.String toString()
+  {
+<span class="nc" id="L67">    java.lang.String exitID = &quot;CharacterString&gt;&gt;toString&quot;;</span>
+<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L69">    return (java.lang.String)this.primitiveString();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   java.lang.String asPrimitive()
+  {
+<span class="fc" id="L77">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L78">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L79">    return (java.lang.String)this.primitiveString();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer size()
+  {
+<span class="nc" id="L87">    java.lang.String exitID = &quot;CharacterString&gt;&gt;size&quot;;</span>
+<span class="nc" id="L88">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L89">    return (Integer)SmallInteger.from(this.primitiveString().length());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Class resolvedToClass()
+  {
+<span class="nc" id="L97">    java.lang.String exitID = &quot;CharacterString&gt;&gt;resolvedToClass&quot;;</span>
+<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L99">    return (Class)((Class)HootRegistry.getType(this.resolvedToPrimitiveClass()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   java.lang.Class resolvedToPrimitiveClass()
+  {
+<span class="nc" id="L107">    java.lang.String exitID = &quot;CharacterString&gt;&gt;resolvedToPrimitiveClass&quot;;</span>
+<span class="nc" id="L108">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L109">    return (java.lang.Class)TypeName.fromName(this.primitiveString()).findPrimitiveClass();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="fc" id="L117">    java.lang.String exitID = &quot;CharacterString&gt;&gt;hashCode&quot;;</span>
+<span class="fc" id="L118">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L119">    return (int)this.primitiveString().hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Collected candidate)
+  {
+<span class="fc" id="L127">    java.lang.String exitID = &quot;CharacterString&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L128">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">    if (!(candidate instanceof CharacterString)) {</span>
+<span class="nc" id="L130">      return False.literal();</span>
+    };
+<span class="fc" id="L132">    return (Boolean)this.equals(((CharacterString)candidate));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final CharacterString aString)
+  {
+<span class="fc" id="L140">    java.lang.String exitID = &quot;CharacterString&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L141">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L142">    return (Boolean)Boolean.from(this.primitiveString().equals(aString.primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final ReadableString upperBound)
+  {
+<span class="fc" id="L150">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L151">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L152">    CharacterString boundary = ((CharacterString)upperBound);</span>
+
+<span class="fc" id="L154">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="fc" id="L155">    return (Boolean)(SmallInteger.from(comparison).lessThan(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notMore(final ReadableString upperBound)
+  {
+<span class="nc" id="L163">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
+<span class="nc" id="L164">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L165">    CharacterString boundary = ((CharacterString)upperBound);</span>
+
+<span class="nc" id="L167">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="nc" id="L168">    return (Boolean)(SmallInteger.from(comparison).notMore(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final ReadableString lowerBound)
+  {
+<span class="nc" id="L176">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L177">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L178">    CharacterString boundary = ((CharacterString)lowerBound);</span>
+
+<span class="nc" id="L180">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="nc" id="L181">    return (Boolean)(SmallInteger.from(comparison).moreThan(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notLess(final ReadableString lowerBound)
+  {
+<span class="nc" id="L189">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L191">    CharacterString boundary = ((CharacterString)lowerBound);</span>
+
+<span class="nc" id="L193">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="nc" id="L194">    return (Boolean)(SmallInteger.from(comparison).notLess(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean sameAs(final ReadableString candidate)
+  {
+<span class="nc" id="L202">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
+<span class="nc" id="L203">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L204">    CharacterString boundary = ((CharacterString)candidate);</span>
+
+<span class="nc" id="L206">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="nc" id="L207">    return (Boolean)(SmallInteger.from(comparison).equals(SmallInteger.from(0)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean between_and(final Scalar lowerBound, final Scalar upperBound)
+  {
+<span class="nc" id="L215">    java.lang.String exitID = &quot;CharacterString&gt;&gt;between_and&quot;;</span>
+<span class="nc" id="L216">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L217">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L218">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L219">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L221">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L222">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L224">    (this.lessThan(((CharacterString)lowerBound))).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L225">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L227">    (this.moreThan(((CharacterString)upperBound))).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L228">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L230">    return (Boolean)f0.exit(exitID, True.literal());</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Ordered max(final Scalar value)
+  {
+<span class="nc" id="L239">    java.lang.String exitID = &quot;CharacterString&gt;&gt;max&quot;;</span>
+<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L241">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L242">    value.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L243">      return (Ordered)f0.exit(exitID, this.max(value.printString()));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L245">    (this.moreThan(((CharacterString)value))).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L246">      return (Ordered)f0.exit(exitID, this);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L248">    return (Ordered)f0.exit(exitID, value);</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Ordered min(final Scalar value)
+  {
+<span class="nc" id="L257">    java.lang.String exitID = &quot;CharacterString&gt;&gt;min&quot;;</span>
+<span class="nc" id="L258">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L259">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L260">    value.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L261">      return (Ordered)f0.exit(exitID, this.min(value.printString()));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L263">    (this.lessThan(((CharacterString)value))).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L264">      return (Ordered)f0.exit(exitID, this);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L266">    return (Ordered)f0.exit(exitID, value);</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar upperBound)
+  {
+<span class="fc" id="L275">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L276">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L277">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L278">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L279">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="fc" id="L281">    return (Boolean)f0.exit(exitID, (this.lessThan(((CharacterString)upperBound))));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean notMore(final Scalar upperBound)
+  {
+<span class="nc" id="L290">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
+<span class="nc" id="L291">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L292">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L293">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L294">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L296">    return (Boolean)f0.exit(exitID, (this.notMore(((CharacterString)upperBound))));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean moreThan(final Scalar lowerBound)
+  {
+<span class="nc" id="L305">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L306">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L307">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L308">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L309">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L311">    return (Boolean)f0.exit(exitID, (this.moreThan(((CharacterString)lowerBound))));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean notLess(final Scalar lowerBound)
+  {
+<span class="nc" id="L320">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L321">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L322">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L323">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L324">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L326">    return (Boolean)f0.exit(exitID, (this.notLess(((CharacterString)lowerBound))));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isString()
+  {
+<span class="nc" id="L335">    java.lang.String exitID = &quot;CharacterString&gt;&gt;isString&quot;;</span>
+<span class="nc" id="L336">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L337">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean sameAs(final String aString)
+  {
+<span class="nc" id="L345">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
+<span class="nc" id="L346">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L347">    return (Boolean)aString.sameAsString(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean sameAsString(final CharacterString aString)
+  {
+<span class="nc" id="L355">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAsString&quot;;</span>
+<span class="nc" id="L356">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L357">    return (Boolean)Boolean.from(this.primitiveString().equalsIgnoreCase(aString.primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean includes(final Subject anObject)
+  {
+<span class="nc" id="L365">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="nc" id="L366">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L367">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L368">    anObject.isKindOf(String.type()).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L369">      return (Boolean)f0.exit(exitID, this.includes(((String)anObject)));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L371">    anObject.isKindOf(Character.type()).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L372">      return (Boolean)f0.exit(exitID, this.includes(((Character)anObject)));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L374">    return (Boolean)f0.exit(exitID, False.literal());</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean includes(final String s)
+  {
+<span class="nc" id="L383">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="nc" id="L384">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L385">    return (Boolean)Boolean.from(this.primitiveString().contains(s.primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean includes(final Character c)
+  {
+<span class="fc" id="L393">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L394">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L395">    return (Boolean)Boolean.from(this.primitiveString().contains(c.asString().primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   String reverse()
+  {
+<span class="nc" id="L403">    java.lang.String exitID = &quot;CharacterString&gt;&gt;reverse&quot;;</span>
+<span class="nc" id="L404">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L405">    return (String)String.from(Primitive.reverse(this.primitiveString()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   CharacterString append(final CollectedReadably aString)
+  {
+<span class="nc" id="L413">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
+<span class="nc" id="L414">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L415">    return (CharacterString)(this.append(((CharacterString)aString)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CharacterString append(final CharacterString aString)
+  {
+<span class="nc" id="L423">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
+<span class="nc" id="L424">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L425">    return (CharacterString)String.from((this.primitiveString() + aString.asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String asString()
+  {
+<span class="fc" id="L433">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asString&quot;;</span>
+<span class="fc" id="L434">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L435">    return (String)String.from(this.primitiveString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Symbol asSymbol()
+  {
+<span class="nc" id="L443">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSymbol&quot;;</span>
+<span class="nc" id="L444">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L445">    return (Symbol)Symbol.from(this.primitiveString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Symbol asSelector()
+  {
+<span class="nc" id="L453">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSelector&quot;;</span>
+<span class="nc" id="L454">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L455">    return (Symbol)this.asSymbol();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CharacterString asLowercase()
+  {
+<span class="fc" id="L463">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asLowercase&quot;;</span>
+<span class="fc" id="L464">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L465">    return (CharacterString)String.from(this.primitiveString().toLowerCase());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CharacterString asUppercase()
+  {
+<span class="fc" id="L473">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asUppercase&quot;;</span>
+<span class="fc" id="L474">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L475">    return (CharacterString)String.from(this.primitiveString().toUpperCase());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   TextReadStream readStream()
+  {
+<span class="fc" id="L483">    java.lang.String exitID = &quot;CharacterString&gt;&gt;readStream&quot;;</span>
+<span class="fc" id="L484">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L485">    return (TextReadStream)TextReadStream.type().with(this.asString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean matches(final String aString)
+  {
+<span class="nc" id="L493">    java.lang.String exitID = &quot;CharacterString&gt;&gt;matches&quot;;</span>
+<span class="nc" id="L494">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L495">    return (Boolean)new StringPattern(this).accepts(aString);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   List&lt;String&gt; subStrings()
+  {
+<span class="nc" id="L503">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L504">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L505">    return (List&lt;String&gt;)this.subStrings(Character.type().space().asString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Array subStrings(final ReadableString separators)
+  {
+<span class="nc" id="L513">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L514">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L515">    return (Array)new Array(this.subStrings(((String)separators)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   List&lt;String&gt; subStrings(final String separators)
+  {
+<span class="nc" id="L523">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L524">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L525">    return (List&lt;String&gt;)String.listWith(this.tokenized(separators));</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   List&lt;java.lang.String&gt; tokenized(final String separators)
+  {
+<span class="nc" id="L533">    java.lang.String exitID = &quot;CharacterString&gt;&gt;tokenized&quot;;</span>
+<span class="nc" id="L534">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L535">    return (List&lt;java.lang.String&gt;)Primitive.tokenize(this.primitiveString(), separators.primitiveString());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   int length()
+  {
+<span class="fc" id="L543">    java.lang.String exitID = &quot;CharacterString&gt;&gt;length&quot;;</span>
+<span class="fc" id="L544">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L545">    return (int)this.primitiveString().length();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   char charAt(final int index)
+  {
+<span class="nc" id="L553">    java.lang.String exitID = &quot;CharacterString&gt;&gt;charAt&quot;;</span>
+<span class="nc" id="L554">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L555">    return (char)this.primitiveString().charAt(index);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CharacterString subSequence(final int start, final int end)
+  {
+<span class="nc" id="L563">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subSequence&quot;;</span>
+<span class="nc" id="L564">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L565">    return (CharacterString)String.from(this.primitiveString().subSequence(start, end).toString());</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

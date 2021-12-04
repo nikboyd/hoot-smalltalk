@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FastInteger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Magnitudes</a> &gt; <span class="el_source">FastInteger.java</span></div><h1>FastInteger.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Magnitudes;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+
+public final class FastInteger extends SmallInteger
+{
+<span class="nc" id="L25">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L26">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends SmallInteger.Metaclass
+  {
+<span class="fc" id="L29">    static final FastInteger.Metaclass $class = new FastInteger.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L31">      this(FastInteger.Metaclass.class);</span>
+<span class="fc" id="L32">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L35">      super(aClass);</span>
+<span class="fc" id="L36">    }</span>
+
+<span class="fc" id="L38">    @Override public java.lang.Class outerClass() { return FastInteger.class; }</span>
+
+  }
+
+
+  /**
+   * 
+   */
+  protected    FastInteger(final Integer anInteger)
+  {
+<span class="fc" id="L48">    super(anInteger.primitiveInteger());</span>
+<span class="fc" id="L49">    java.lang.String exitID = &quot;FastInteger&gt;&gt;FastInteger&quot;;</span>
+<span class="fc" id="L50">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L51">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   FastInteger fromInteger(final Integer anInteger)
+  {
+<span class="fc" id="L58">    java.lang.String exitID = &quot;FastInteger&gt;&gt;$fromInteger&quot;;</span>
+<span class="fc" id="L59">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L60">    return (FastInteger)new FastInteger(anInteger);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger value(final IntegerValue.Source source)
+  {
+<span class="nc" id="L68">    java.lang.String exitID = &quot;FastInteger&gt;&gt;value&quot;;</span>
+<span class="nc" id="L69">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L70">     cachedValue = source.intValue();</span>
+<span class="nc" id="L71">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger add(final SmallInteger aNumber)
+  {
+<span class="fc" id="L79">    java.lang.String exitID = &quot;FastInteger&gt;&gt;add&quot;;</span>
+<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L81">    cachedValue += aNumber.primitiveInteger();</span>
+<span class="fc" id="L82">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger subtract(final SmallInteger aNumber)
+  {
+<span class="fc" id="L90">    java.lang.String exitID = &quot;FastInteger&gt;&gt;subtract&quot;;</span>
+<span class="fc" id="L91">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L92">    cachedValue -= aNumber.primitiveInteger();</span>
+<span class="fc" id="L93">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger multiplyBy(final SmallInteger aNumber)
+  {
+<span class="nc" id="L101">    java.lang.String exitID = &quot;FastInteger&gt;&gt;multiplyBy&quot;;</span>
+<span class="nc" id="L102">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L103">    cachedValue *= aNumber.primitiveInteger();</span>
+<span class="nc" id="L104">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger divideBy(final SmallInteger aNumber)
+  {
+<span class="nc" id="L112">    java.lang.String exitID = &quot;FastInteger&gt;&gt;divideBy&quot;;</span>
+<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L114">    cachedValue /= aNumber.primitiveInteger();</span>
+<span class="nc" id="L115">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger bitXorWith(final SmallInteger aNumber)
+  {
+<span class="nc" id="L123">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitXorWith&quot;;</span>
+<span class="nc" id="L124">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L125">    cachedValue ^= aNumber.primitiveInteger();</span>
+<span class="nc" id="L126">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger bitShiftWith(final SmallInteger aNumber)
+  {
+<span class="nc" id="L134">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitShiftWith&quot;;</span>
+<span class="nc" id="L135">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L136">    cachedValue &lt;&lt;= aNumber.primitiveInteger();</span>
+<span class="nc" id="L137">    return (FastInteger)this;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

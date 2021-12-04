@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Expression.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Expressions</a> &gt; <span class="el_source">Expression.java</span></div><h1>Expression.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Expressions;
+
+import java.util.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Emissions.*;
+import Hoot.Runtime.Names.TypeName;
+import static Hoot.Runtime.Functions.Utils.*;
+import Hoot.Compiler.Scopes.*;
+import static Hoot.Runtime.Names.Keyword.NewMessage;
+
+/**
+ * An expression.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Expression extends Operand implements ScopeSource, MessageSource {
+
+<span class="fc" id="L21">    public Expression(NamedItem container) { super(container); }</span>
+<span class="fc" id="L22">    @Override public void clean() { super.clean(); cleanFormula(); cleanMessage(); cleanCascades(); }</span>
+    @Override public void container(Item container) {
+<span class="fc" id="L24">        super.container(container);</span>
+<span class="fc" id="L25">        this.contain(this.term);</span>
+<span class="fc" id="L26">        this.contain(this.message);</span>
+<span class="fc" id="L27">        this.containAll(cascadedMessages());</span>
+<span class="fc" id="L28">    }</span>
+
+    public static Expression frameNew() {
+<span class="fc" id="L31">        return Expression.with(Formula.frameReference(), KeywordMessage.frameNew()); }</span>
+
+    public static Expression with(Formula term, KeywordMessage message, Message... cascades) {
+<span class="fc" id="L34">        return Expression.with(term, message, wrap(cascades)); }</span>
+
+    public static Expression with(Formula term, KeywordMessage message, List&lt;Message&gt; cascades) {
+<span class="fc" id="L37">        Expression result = new Expression(Scope.current());</span>
+<span class="fc" id="L38">        result.message = message;</span>
+<span class="fc" id="L39">        result.cascades.addAll(cascades);</span>
+<span class="fc" id="L40">        return result.withTerm(term);</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;ResultType extends Expression&gt; ResultType withTerm(Formula term) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (term.isLoopy()) makeLoopy(term);</span>
+<span class="fc" id="L46">        this.term = term.inside(this);</span>
+<span class="fc" id="L47">        return (ResultType)this;</span>
+    }
+
+    protected Formula term;
+<span class="fc" id="L51">    public Formula formula() { return this.term; }</span>
+<span class="nc" id="L52">    public Operand receiver() { return formula(); }</span>
+<span class="fc" id="L53">    public UnarySequence primaryTerm() { return formula().primaryTerm(); }</span>
+<span class="nc" id="L54">    @Override public TypeName typeResolver() { return formula().typeResolver(); }</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">    public void cleanFormula() { if (this.term != null) this.term.clean(); }</span>
+
+    protected KeywordMessage message;
+<span class="fc" id="L58">    public KeywordMessage keywordMessage() { return this.message; }</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">    public boolean hasMessage() { return keywordMessage() != null; }</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">    protected void cleanMessage() { if (hasMessage()) keywordMessage().clean(); }</span>
+<span class="nc" id="L61">    protected void makeLoopy(Formula term) { this.message = term.toLoopMessage().inside(this); }</span>
+
+<span class="fc" id="L63">    protected List&lt;Message&gt; cascades = emptyList(Message.class);</span>
+<span class="fc" id="L64">    public List&lt;Message&gt; cascadedMessages() { return this.cascades; }</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    @Override public boolean hasCascades() { return !cascadedMessages().isEmpty(); }</span>
+<span class="fc" id="L66">    protected void cleanCascades() { this.cascades.forEach(m -&gt; m.clean()); }</span>
+
+<span class="fc" id="L68">    protected boolean isEvaluated = false;</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">    public boolean isEvaluated() { return !this.exitsMethod() &amp;&amp; this.isEvaluated; }</span>
+<span class="fc" id="L70">    public Expression makeEvaluated() { this.isEvaluated = true; return this; }</span>
+
+<span class="fc" id="L72">    protected boolean isAssigned = false;</span>
+<span class="nc" id="L73">    public boolean isAssigned() { return this.isAssigned; }</span>
+<span class="fc" id="L74">    @Override public Operand makeAssigned() { this.isAssigned = true; return this; }</span>
+
+<span class="fc" id="L76">    protected boolean exitsMethod = false;</span>
+<span class="fc" id="L77">    @Override public boolean isExit() { return this.exitsMethod; }</span>
+    @Override public boolean containsExit() {
+<span class="pc bpc" id="L79" title="3 of 4 branches missed.">        if (hasCascades() &amp;&amp; matchAny(cascadedMessages(), m -&gt; m.exitsMethod())) return true;</span>
+<span class="fc bfc" id="L80" title="All 4 branches covered.">        if (hasMessage() &amp;&amp; keywordMessage().exitsMethod()) return true;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (formula() == null) return false;</span>
+<span class="fc" id="L82">        return formula().exitsMethod();</span>
+    }
+
+    public Expression makeExit() {
+<span class="fc" id="L86">        this.exitsMethod = true;</span>
+<span class="fc" id="L87">        makeResult();</span>
+<span class="fc" id="L88">        return this;</span>
+    }
+
+    @Override public boolean producesPredicate() {
+<span class="pc bpc" id="L92" title="3 of 4 branches missed.">        if (hasCascades() &amp;&amp; matchAny(cascadedMessages(), m -&gt; m.producesPredicate())) return true;</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">        if (hasMessage() &amp;&amp; keywordMessage().producesPredicate()) return true;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (formula() == null) return false;</span>
+<span class="fc" id="L95">        return formula().producesPredicate();</span>
+    }
+
+    @Override public boolean isFramed() {
+<span class="pc bpc" id="L99" title="2 of 4 branches missed.">        return hasParent(Block.class) &amp;&amp; findParent(Block.class).needsFrame(); }</span>
+
+    public boolean parentExits() {
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">        return hasParent(Expression.class, Block.class) &amp;&amp; findParent(Expression.class).isResult(); }</span>
+
+    public boolean hasPredicateTerm(Block aBlock) {
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">        return blockIsPrimary() &amp;&amp; hasMessage() &amp;&amp;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                keywordMessage().needsPredicate() &amp;&amp;</span>
+<span class="pc bnc" id="L107" title="All 2 branches missed.">                primaryTerm().primary().isBlock(aBlock); }</span>
+
+    public boolean hasPredicateArgument(Block aBlock) {
+<span class="fc bfc" id="L110" title="All 4 branches covered.">        return hasMessage() &amp;&amp; keywordMessage().takesPredicate(aBlock); }</span>
+
+    @Override public boolean hasOnlyValue() {
+<span class="nc bnc" id="L113" title="All 6 branches missed.">        return !hasCascades() &amp;&amp; !this.hasMessage() &amp;&amp; formula().hasOnlyValue(); }</span>
+
+    public boolean isConstructed() {
+<span class="nc bnc" id="L116" title="All 6 branches missed.">        return !isResult() &amp;&amp; !hasMessage() &amp;&amp; formula().isConstructed(); }</span>
+
+    public boolean answersYourself() {
+<span class="nc bnc" id="L119" title="All 4 branches missed.">        return selfIsPrimary() &amp;&amp; primaryTerm().containsOnlyYourself(); }</span>
+
+<span class="nc" id="L121">    public boolean variableIsPrimary() { return primaryTerm().primary().isLiteralName(); }</span>
+<span class="fc" id="L122">    public boolean blockIsPrimary() { return primaryTerm().primary().isBlock(); }</span>
+<span class="fc" id="L123">    @Override public boolean selfIsPrimary() { return formula().selfIsPrimary(); }</span>
+<span class="fc" id="L124">    @Override public boolean throwsException() { return primaryTerm().throwsException(); }</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">    public boolean optimizesAlternatives() { return this.isResult() || this.isAssigned(); }</span>
+
+<span class="nc" id="L127">    public boolean hasTypeNewPrimary() { return formula().primaryTerm().endsWith(NewMessage); }</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">    public boolean hasTypeNewMessage() { return hasMessage() &amp;&amp; this.keywordMessage().methodName().equals(NewMessage); }</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">    public boolean startsWithTypeNew() { return hasTypeNewPrimary() || formula().primaryTerm().hasTypeNewMessage(); }</span>
+
+    @Override public Emission emitResult() {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        return !block().needsFrame() ? super.emitResult() :</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                exitsMethod() ? super.emitResult() : super.emitResult(); }</span>
+
+<span class="fc bfc" id="L135" title="All 2 branches covered.">    @Override public Emission emitOperand() { return hasCascades() ? emitCascades() : emitSimply(); }</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">    public Emission emitSimply() { return this.hasPrimitiveContext() ? emitPrimitive() : emitMessages(); }</span>
+
+    private Emission emitMessages() {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        return hasMessage() ? keywordMessage().emitCall(formula()) : formula().emitOperand(); }</span>
+
+    @Override public Emission emitPrimitive() {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (hasMessage()) {</span>
+            try {
+<span class="fc" id="L144">                return keywordMessage().emitPrimitive(formula());</span>
+            }
+<span class="nc" id="L146">            catch (Exception e) {</span>
+<span class="nc" id="L147">                String problem = method().description() + &quot; &quot; + e.getMessage();</span>
+<span class="nc" id="L148">                report(problem);</span>
+<span class="nc" id="L149">                throw e;</span>
+            }
+        }
+
+<span class="fc" id="L153">        return formula().emitPrimitive();</span>
+    }
+
+    private Emission emitCascades() {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (selfIsPrimary()) {</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (formula().hasOnlyValue()) {</span>
+<span class="fc" id="L159">                String typeName = face().typeFace().shortName();</span>
+<span class="fc" id="L160">                return emitSelfCascades(emitAllCascades(), typeName, isResult(), isFramed());</span>
+            }
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            if (hasTypeNewPrimary()) {</span>
+<span class="nc" id="L164">                String typeName = face().typeFace().shortName();</span>
+<span class="nc" id="L165">                return emitExitCascades(emitAllCascades(), typeName, isResult(), isFramed());</span>
+            }
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            if (primaryTerm().primary().isExpression() &amp;&amp;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                primaryTerm().primary().expression().hasTypeNewMessage()) {</span>
+<span class="nc" id="L170">                String typeName = face().typeFace().shortName();</span>
+<span class="nc" id="L171">                return emitExitCascades(emitAllCascades(), typeName, isResult(), isFramed());</span>
+            }
+        }
+
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (isAssigned()) {</span>
+<span class="nc" id="L177">            Variable v = variable();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (v.hasTypeNote()) {</span>
+<span class="nc" id="L179">                String typeName = v.notedType().simpleName();</span>
+<span class="nc" id="L180">                return emitAssignedCascades(emitAllCascades(), typeName, v.name());</span>
+            }
+            else {
+<span class="nc" id="L183">                Variable ref = v.referencedLocal();</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">                if (ref != null &amp;&amp; ref.hasTypeNote()) {</span>
+<span class="nc" id="L185">                    String typeName = ref.notedType().simpleName();</span>
+<span class="nc" id="L186">                    return emitAssignedCascades(emitAllCascades(), typeName, v.name());</span>
+                }
+            }
+        }
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        if (isResult()) {</span>
+<span class="nc" id="L192">            String typeName = typeResolver().shortName();</span>
+<span class="nc" id="L193">            return emitExitCascades(emitAllCascades(), typeName, isResult(), isFramed());</span>
+        }
+
+<span class="nc" id="L196">        String typeName = formula().resolvedTypeName();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (!typeName.endsWith(&quot;.Object&quot;)) {</span>
+<span class="nc" id="L198">            return emitExitCascades(emitAllCascades(), typeName, isResult(), isFramed());</span>
+        }
+
+<span class="nc" id="L201">        return emitSimply();</span>
+    }
+
+<span class="fc" id="L204">    private List&lt;Emission&gt; emitAllCascades() { return emitCascades(formula()); }</span>
+    private List&lt;Emission&gt; emitCascades(Formula f) {
+<span class="fc" id="L206">        List&lt;Emission&gt; messages = map(cascadedMessages(), m -&gt; m.emitItem());</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        if (hasMessage()) messages.add(0, keywordMessage().emitItem());</span>
+<span class="fc" id="L208">        messages.add(0, f.emitOperand());</span>
+<span class="fc" id="L209">        return messages; }</span>
+
+} // Expression
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

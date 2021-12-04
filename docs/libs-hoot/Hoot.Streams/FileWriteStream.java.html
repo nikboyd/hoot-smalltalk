@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileWriteStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">FileWriteStream.java</span></div><h1>FileWriteStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.io.*;
+import static Hoot.Streams.WriteStream.*;
+import Hoot.Runtime.Names.Primitive;
+import static Hoot.Runtime.Names.Primitive.*;
+import Hoot.Exceptions.FileCheckError;
+import Smalltalk.Collections.CollectedReadably;
+import Smalltalk.Collections.ReadableString;
+import Smalltalk.Streams.*;
+
+public abstract class FileWriteStream&lt;ElementType extends Object&gt; extends FileStream&lt;ElementType&gt; implements FileStreamWriter&lt;ElementType&gt;
+{
+<span class="fc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends FileStream.Metaclass implements FileStreamWriter.Metatype
+  {
+<span class="fc" id="L42">    static final FileWriteStream.Metaclass $class = new FileWriteStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L44">      this(FileWriteStream.Metaclass.class);</span>
+<span class="fc" id="L45">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L48">      super(aClass);</span>
+<span class="fc" id="L49">    }</span>
+
+<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return FileWriteStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    public   FileWriteStream write(final ReadableString fileName)
+    {
+<span class="nc" id="L58">      java.lang.String exitID = &quot;FileWriteStreamMetatype&gt;&gt;write&quot;;</span>
+<span class="nc" id="L59">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L60">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L61">      return (FileWriteStream)f0.exit(exitID, this.write_mode(fileName, Symbol.from(&quot;create&quot;)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   FileWriteStream write_mode(final ReadableString fileName, final ReadableString mode)
+    {
+<span class="nc" id="L70">      java.lang.String exitID = &quot;FileWriteStreamMetatype&gt;&gt;write_mode&quot;;</span>
+<span class="nc" id="L71">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L72">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L73">      return (FileWriteStream)f0.exit(exitID, this.open_type_mode_check(((String)fileName), Symbol.from(&quot;text&quot;), ((Symbol)mode), False.literal()));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   FileWriteStream write_mode_check_type(final ReadableString fileName, final ReadableString mode, final Posit check, final ReadableString fileType)
+    {
+<span class="fc" id="L82">      java.lang.String exitID = &quot;FileWriteStreamMetatype&gt;&gt;write_mode_check_type&quot;;</span>
+<span class="fc" id="L83">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L84">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L85">      return (FileWriteStream)f0.exit(exitID, this.open_type_mode_check(((String)fileName), ((Symbol)fileType), ((Symbol)mode), ((Boolean)check)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   FileWriteStream open_type_mode_check(final String fileName, final Symbol fileType, final Symbol mode, final Boolean check)
+    {
+<span class="fc" id="L94">      java.lang.String exitID = &quot;FileWriteStreamMetatype&gt;&gt;open_type_mode_check&quot;;</span>
+<span class="fc" id="L95">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L96">      File file = new File(fileName.primitiveString());</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">      if (file.exists()) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (check.primitiveBoolean()) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">          if (CreateMode.equals(mode.primitiveString())) {</span>
+<span class="nc" id="L100">            FileCheckError.type().presentFile(fileName);</span>
+<span class="nc" id="L101">            return null;</span>
+          };
+        };
+      }
+      else {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (check.primitiveBoolean()) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">          if (!(CreateMode.equals(mode.primitiveString()))) {</span>
+<span class="nc" id="L108">            FileCheckError.type().missingFile(fileName);</span>
+<span class="nc" id="L109">            return null;</span>
+          };
+        };
+      };
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">      if (&quot;binary&quot;.equals(fileType.primitiveString())) {</span>
+<span class="nc" id="L114">        return BinaryFileWriteStream.type().on(Primitive.writeFile(fileName.primitiveString(), mode.primitiveString()));</span>
+      };
+<span class="fc" id="L116">      return TextFileWriteStream.type().on(Primitive.writeFile(fileName.primitiveString(), mode.primitiveString()));</span>
+    }
+  }
+
+
+  /**
+   * 
+   */
+  public    FileWriteStream(final RandomAccessFile primitiveFile)
+  {
+<span class="fc" id="L126">    super(primitiveFile);</span>
+<span class="fc" id="L127">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;FileWriteStream&quot;;</span>
+<span class="fc" id="L128">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L129">  }</span>
+
+  /**
+   * @return 
+   */
+  public   FileWriteStream flush()
+  {
+<span class="nc" id="L136">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;flush&quot;;</span>
+<span class="nc" id="L137">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L138">    return (FileWriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FileWriteStream cr()
+  {
+<span class="fc" id="L146">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;cr&quot;;</span>
+<span class="fc" id="L147">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L148">    this.nextPutAll(((CollectedReadably)LineSeparator));</span>
+<span class="fc" id="L149">    return (FileWriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FileWriteStream tab()
+  {
+<span class="nc" id="L157">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;tab&quot;;</span>
+<span class="nc" id="L158">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L159">    this.nextPut(((ElementType)Character.type().tab()));</span>
+<span class="nc" id="L160">    return (FileWriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FileWriteStream space()
+  {
+<span class="nc" id="L168">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;space&quot;;</span>
+<span class="nc" id="L169">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L170">    this.nextPut(((ElementType)Character.type().space()));</span>
+<span class="nc" id="L171">    return (FileWriteStream)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FileWriteStream nextPutLine(final String line)
+  {
+<span class="nc" id="L179">    java.lang.String exitID = &quot;FileWriteStream&gt;&gt;nextPutLine&quot;;</span>
+<span class="nc" id="L180">    Frame f0 = new Frame(exitID);</span>
+    {
+<span class="nc" id="L182">    FileWriteStream prime = this;</span>
+<span class="nc" id="L183">    prime.nextPutAll(line); </span>
+
+<span class="nc" id="L185">    prime.cr();</span>
+    };
+<span class="nc" id="L187">    return (FileWriteStream)this;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

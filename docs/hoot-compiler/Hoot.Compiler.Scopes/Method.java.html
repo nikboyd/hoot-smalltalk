@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Method.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">Method.java</span></div><h1>Method.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+import Hoot.Runtime.Emissions.*;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Values.Variable;
+import static Hoot.Runtime.Names.Name.*;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Names.Keyword.Object;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import static Hoot.Runtime.Names.Signature.formatTerm;
+import static Hoot.Runtime.Notes.Note.OverrideNote;
+import static Hoot.Runtime.Names.Keyword.Colon;
+
+import Hoot.Compiler.Expressions.*;
+
+/**
+ * A method.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Method extends Block {
+
+<span class="fc" id="L26">    public Method() { this(Face.currentFace()); }</span>
+<span class="fc" id="L27">    public Method(Face face) { super(face); this.content = new BlockContent(this); }</span>
+
+<span class="fc" id="L29">    @Override public void clean() { super.clean(); noteOverride(); }</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">    protected void noteOverride() { if (this.needsOverrideNote()) notes().note(OverrideNote); }</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">    public boolean needsOverrideNote() { return overridesHeritage() || matchesStandardOverride(); }</span>
+
+<span class="fc" id="L33">    @Override public Method makeCurrent() { super.makeCurrent(); Face.currentFace().addMethod(this); return this; }</span>
+<span class="nc" id="L34">    public static Method currentMethod() { return from(Scope.current()); }</span>
+<span class="fc" id="L35">    public static Method from(Item item) { return nullOr(m -&gt; (Method)m, item.methodScope()); }</span>
+<span class="fc" id="L36">    public void construct(Construct c) { content().add(c); }</span>
+
+<span class="fc" id="L38">    @Override public String faceName() { return face().typeName(); }</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">    @Override public String description() { return isSigned() ? signature().description() : faceName() + &quot;&gt;&gt;unknown&quot;; }</span>
+<span class="nc" id="L40">    public String scopeID() { return Quote + description() + Quote; }</span>
+
+    @Override public void signature(BasicSignature s) {
+<span class="fc" id="L43">        super.signature(s);</span>
+<span class="fc" id="L44">        this.sig.mergeDetails();</span>
+
+<span class="fc" id="L46">        addLocal(Variable.exitFrom(this, UnarySequence.exitFrom(this)));</span>
+<span class="fc" id="L47">        addLocal(Variable.frame(this, Expression.frameNew()));</span>
+<span class="fc" id="L48">    }</span>
+
+<span class="nc bnc" id="L50" title="All 4 branches missed.">    public boolean isVoid() { return notes().isVoid() || signature().returnsVoid(); }</span>
+
+<span class="fc" id="L52">    @Override public boolean isMethod() { return true; }</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">    @Override public boolean isAbstract() { return (face().isInterface()) ? true : super.isAbstract(); }</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">    @Override public boolean isConstructor() { return name().equals(face().defaultName()) || Metaclass.equals(name()); }</span>
+<span class="fc" id="L55">    @Override public boolean isPrimitive() { return notes().isPrimitive(); }</span>
+
+<span class="nc" id="L57">    @Override public Method method() { return this; }</span>
+    @Override public String qualify(String identifier) {
+        // will this method use an inner class for its block?
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        return (this.hasLocals() ? super.qualify(identifier) : identifier); }</span>
+
+
+    static final String NewSignature = Object + &quot;:$new&quot;;
+    static final String InitSignature = &quot;void:initialize&quot;;
+<span class="fc" id="L65">    static final String[] OverrideSignatures = {</span>
+        &quot;int:hashCode&quot;,
+//        &quot;boolean:equals&quot;,
+        &quot;void:printStackTrace&quot;,
+    };
+
+    public boolean matchesStandardOverride() {
+<span class="fc" id="L72">        String shortSig = shortSignature();</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">        if (shortSig.equals(InitSignature)) return !BehaviorType().equals(face());</span>
+<span class="fc" id="L74">        return matchAny(wrap(OverrideSignatures), sig -&gt; shortSig.startsWith(sig)); }</span>
+
+<span class="fc" id="L76">    @Override public String matchSignature() { return methodName() + formatTerm(argumentSignatures()); }</span>
+<span class="fc" id="L77">    @Override public String matchErasure() { return methodName() + formatTerm(argumentErasures()); }</span>
+<span class="fc" id="L78">    @Override public String shortSignature() { return signature().resolvedType().simpleName() + Colon + methodName(); }</span>
+<span class="nc" id="L79">    @Override public String fullSignature() { return shortSignature() + formatTerm(argumentSignatures()); }</span>
+<span class="nc" id="L80">    @Override public String erasedSignature() { return shortSignature() + formatTerm(argumentErasures()); }</span>
+
+<span class="fc" id="L82">    private List&lt;String&gt; argumentErasures() { return map(arguments(), arg -&gt; Object); }</span>
+<span class="fc" id="L83">    private List&lt;String&gt; argumentSignatures() { return map(arguments(), arg -&gt; arg.typeResolver().shortName()); }</span>
+
+<span class="fc" id="L85">    public Emission emitNotes() { return emitSequence(notes().methodNotesWithoutDecor()); }</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">    @Override public Emission emitScope() { return isAbstract() ? emitAbstract() : emitSimple(); }</span>
+
+    @Override public boolean needsFrame() {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (isEmpty()) return false;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (isPrimitive()) return false;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (isVoidedContext()) return false;</span>
+
+<span class="fc" id="L93">        return super.needsFrame();</span>
+    }
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">    private String emptyIf(boolean value) { return value ? Empty : null; }</span>
+
+    public List&lt;Emission&gt; emitExitVariables() {
+<span class="fc" id="L99">        return mapList(</span>
+<span class="fc" id="L100">                locals().definedSymbols(),</span>
+<span class="fc" id="L101">                v -&gt; v.isForExiting(),</span>
+<span class="fc" id="L102">                v -&gt; emitStatement(v.emitLocal()));</span>
+    }
+
+<span class="fc" id="L105">    public Emission emitConstruct() { return content().emitConstruct(); }</span>
+
+    @Override public Emission emitSignature() {
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (signature() == null) return emitEmpty();</span>
+<span class="fc" id="L109">        return emitSequence(emitNotes(), signature().emitItem()); }</span>
+
+    public Emission emitMethodContents() {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (this.hasLocals()) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (this.returnsVoid()) {</span>
+<span class="nc" id="L114">                return emitStatement(emitClosureValue(emitClosure()));</span>
+            }
+            else {
+<span class="nc" id="L117">                return emitContents();</span>
+            }
+        }
+        else {
+<span class="nc" id="L121">            return emitContents();</span>
+        }
+    }
+
+    public Emission emitSimple() {
+<span class="fc" id="L126">        return emitMethodScope(comment(), emitExitVariables(), emptyIf(signature().hasResult()),</span>
+<span class="fc" id="L127">                emitSignature(), emitContents(), emptyIf(needsFrame()), emitConstruct()); }</span>
+
+    public Emission emitAbstract() {
+<span class="fc" id="L130">        return emitMethodEmpty(comment(), emptyIf(signature().hasResult()), emitSignature()); }</span>
+
+} // Method
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

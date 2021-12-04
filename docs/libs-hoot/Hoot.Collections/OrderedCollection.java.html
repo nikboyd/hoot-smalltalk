@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderedCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Collections</a> &gt; <span class="el_source">OrderedCollection.java</span></div><h1>OrderedCollection.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Collections;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Magnitudes.Number;
+import Hoot.Magnitudes.Integer;
+import Hoot.Streams.WriteStream;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.*;
+import Smalltalk.Core.Subject;
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
+
+public class OrderedCollection&lt;ElementType extends Object&gt; extends ArrayedCollection&lt;ElementType&gt; implements CollectedOrdinally&lt;ElementType&gt;
+{
+<span class="fc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends ArrayedCollection.Metaclass implements CollectedOrdinally.Metatype
+  {
+<span class="fc" id="L41">    static final OrderedCollection.Metaclass $class = new OrderedCollection.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L43">      this(OrderedCollection.Metaclass.class);</span>
+<span class="fc" id="L44">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L47">      super(aClass);</span>
+<span class="fc" id="L48">    }</span>
+
+<span class="fc" id="L50">    @Override public java.lang.Class outerClass() { return OrderedCollection.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public  &lt;ElementType extends Subject&gt; OrderedCollection with(final ElementType a)
+    {
+<span class="nc" id="L57">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;with&quot;;</span>
+<span class="nc" id="L58">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L59">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L60">      return (OrderedCollection)f0.exit(exitID, ((OrderedCollection)super.with(a)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public  &lt;ElementType extends Subject&gt; OrderedCollection with_with(final ElementType a, final ElementType b)
+    {
+<span class="nc" id="L69">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;with_with&quot;;</span>
+<span class="nc" id="L70">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L71">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L72">      return (OrderedCollection)f0.exit(exitID, ((OrderedCollection)this.withAll(((Object)a), ((Object)b))));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public  &lt;ElementType extends Subject&gt; OrderedCollection with_with_with(final ElementType a, final ElementType b, final ElementType c)
+    {
+<span class="nc" id="L81">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;with_with_with&quot;;</span>
+<span class="nc" id="L82">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L83">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L84">      return (OrderedCollection)f0.exit(exitID, ((OrderedCollection)this.withAll(((Object)a), ((Object)b), ((Object)c))));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public  &lt;ElementType extends Subject&gt; OrderedCollection with_with_with_with(final ElementType a, final ElementType b, final ElementType c, final ElementType d)
+    {
+<span class="nc" id="L93">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;with_with_with_with&quot;;</span>
+<span class="nc" id="L94">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L95">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L96">      return (OrderedCollection)f0.exit(exitID, ((OrderedCollection)this.withAll(((Object)a), ((Object)b), ((Object)c), ((Object)d))));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public  &lt;ElementType extends Subject&gt; OrderedCollection withAll(final CollectedReadably&lt;ElementType&gt; elements)
+    {
+<span class="nc" id="L105">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;withAll&quot;;</span>
+<span class="nc" id="L106">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L107">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L108">      return (OrderedCollection)f0.exit(exitID, ((OrderedCollection)super.withAll(elements)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public  &lt;ElementType extends Object&gt; OrderedCollection&lt;ElementType&gt; withAll(final ElementType ... elements)
+    {
+<span class="nc" id="L117">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;withAll&quot;;</span>
+<span class="nc" id="L118">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L119">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L120">      return (OrderedCollection&lt;ElementType&gt;)f0.exit(exitID, new OrderedCollection(Arrays.asList(elements)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   OrderedCollection $new()
+    {
+<span class="fc" id="L129">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L130">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L131">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L132">      return (OrderedCollection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    @Override public   OrderedCollection $new(final Ordinal capacity)
+    {
+<span class="fc" id="L141">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L142">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L143">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L144">      return (OrderedCollection)f0.exit(exitID, new OrderedCollection(capacity));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   OrderedCollection from(final java.util.List primitiveList)
+    {
+<span class="nc" id="L153">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;from&quot;;</span>
+<span class="nc" id="L154">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L155">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L156">      return (OrderedCollection)f0.exit(exitID, new OrderedCollection(primitiveList));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   OrderedCollection synchronizedFrom(final java.util.List primitiveList)
+    {
+<span class="nc" id="L165">      java.lang.String exitID = &quot;OrderedCollectionMetatype&gt;&gt;synchronizedFrom&quot;;</span>
+<span class="nc" id="L166">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L167">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L168">      return (OrderedCollection)f0.exit(exitID, new OrderedCollection(java.util.Collections.synchronizedList(primitiveList)));</span>
+      });
+    }
+  }
+
+
+<span class="pc" id="L174">  protected java.util.List&lt;ElementType&gt; contents = new ArrayList(10);</span>
+  /**
+   * 
+   */
+  protected    OrderedCollection()
+<span class="nc" id="L179">  {</span>
+<span class="nc" id="L180">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;OrderedCollection&quot;;</span>
+<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L182">  }</span>
+
+  /**
+   * 
+   */
+  protected    OrderedCollection(final Ordinal capacity)
+<span class="fc" id="L188">  {</span>
+<span class="fc" id="L189">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;OrderedCollection&quot;;</span>
+<span class="fc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L191">     contents = new ArrayList(capacity.intValue());</span>
+<span class="fc" id="L192">  }</span>
+
+  /**
+   * 
+   */
+  protected    OrderedCollection(final java.util.List primitiveList)
+<span class="nc" id="L198">  {</span>
+<span class="nc" id="L199">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;OrderedCollection&quot;;</span>
+<span class="nc" id="L200">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L201">    contents.addAll(primitiveList);</span>
+<span class="nc" id="L202">  }</span>
+
+  /**
+   * @return 
+   */
+  public   java.util.List primitiveContents()
+  {
+<span class="nc" id="L209">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;primitiveContents&quot;;</span>
+<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L211">    return (java.util.List)contents;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   SmallInteger size()
+  {
+<span class="fc" id="L219">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;size&quot;;</span>
+<span class="fc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L221">    return (SmallInteger)SmallInteger.from(contents.size());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType at_put(final Ordinal index, final ElementType element)
+  {
+<span class="nc" id="L229">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;at_put&quot;;</span>
+<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L231">    int i = this.checkRange(index);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">    if ((this.size().primitiveInteger() &gt; i)) {</span>
+<span class="nc" id="L233">      contents.set(i, element);</span>
+    }
+    else {
+<span class="nc" id="L236">      contents.add(element);</span>
+    };
+<span class="nc" id="L238">    return (ElementType)element;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override protected   ElementType get(final int index)
+  {
+<span class="fc" id="L246">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;get&quot;;</span>
+<span class="fc" id="L247">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L248">    return (ElementType)contents.get(index);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType at_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
+  {
+<span class="fc" id="L256">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="fc" id="L257">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L258">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="fc" id="L259">    return (ElementType)this.get(i);</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   List&lt;ElementType&gt; asList()
+  {
+<span class="nc" id="L267">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;asList&quot;;</span>
+<span class="nc" id="L268">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L269">    return (List&lt;ElementType&gt;)new ArrayList(this.primitiveContents());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override protected   ElementType add_at(final ElementType element, final int index)
+  {
+<span class="nc" id="L277">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L278">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L279">    Object.isNull(((Object)element)).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L280">      this.registerType(((Object)element));</span>
+<span class="nc" id="L281">    contents.add(index, element);</span>
+<span class="nc" id="L282">    }, &quot;&quot;));</span>
+<span class="nc" id="L283">    return (ElementType)element;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType add(final ElementType element)
+  {
+<span class="fc" id="L291">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add&quot;;</span>
+<span class="fc" id="L292">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L293">    contents.add(element);</span>
+<span class="fc" id="L294">    return (ElementType)element;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedReadably&lt;ElementType&gt; addAll(final CollectedReadably&lt;ElementType&gt; elements)
+  {
+<span class="fc" id="L302">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;addAll&quot;;</span>
+<span class="fc" id="L303">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L304">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L305">      ElementType element = f2.getValue(0).value();</span>
+<span class="fc" id="L306">      return this.add(element);</span>
+    }, &quot;element&quot;));
+<span class="fc" id="L308">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_after(final ElementType element, final ElementType target)
+  {
+<span class="nc" id="L316">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add_after&quot;;</span>
+<span class="nc" id="L317">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L318">    return (ElementType)this.add_afterIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L319">      this.elementNotFound();</span>
+<span class="nc" id="L320">    }, &quot;&quot;)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_afterIndex(final ElementType element, final Ordinal index)
+  {
+<span class="nc" id="L328">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add_afterIndex&quot;;</span>
+<span class="nc" id="L329">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L330">    return (ElementType)this.add_at(element, this.checkRange((SmallInteger.from(1).plus(index))));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_before(final ElementType element, final ElementType target)
+  {
+<span class="nc" id="L338">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add_before&quot;;</span>
+<span class="nc" id="L339">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L340">    return (ElementType)this.add_beforeIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L341">      this.elementNotFound();</span>
+<span class="nc" id="L342">    }, &quot;&quot;)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType add_beforeIndex(final ElementType element, final Ordinal index)
+  {
+<span class="nc" id="L350">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;add_beforeIndex&quot;;</span>
+<span class="nc" id="L351">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L352">    return (ElementType)this.add_at(element, this.checkRange(index));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   CollectedReadably&lt;ElementType&gt; addAll_after(final CollectedReadably&lt;ElementType&gt; elements, final ElementType target)
+  {
+<span class="nc" id="L360">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;addAll_after&quot;;</span>
+<span class="nc" id="L361">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L362">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_afterIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L363">      this.elementNotFound();</span>
+<span class="nc" id="L364">    }, &quot;&quot;)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   CollectedReadably&lt;ElementType&gt; addAll_before(final CollectedReadably&lt;ElementType&gt; elements, final ElementType target)
+  {
+<span class="nc" id="L372">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;addAll_before&quot;;</span>
+<span class="nc" id="L373">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L374">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_beforeIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L375">      return this.elementNotFound();</span>
+    }, &quot;&quot;)));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int hashCode()
+  {
+<span class="nc" id="L384">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L385">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L386">    return (int)contents.hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Collected aCollection)
+  {
+<span class="nc" id="L394">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L395">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L396">    return (Boolean)(this.equals(aCollection.asOrderedCollection()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final CollectedReadably aCollection)
+  {
+<span class="nc" id="L404">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L405">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L406">    return (Boolean)Boolean.from(contents.equals(((OrderedCollection)aCollection).primitiveContents()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   OrderedCollection removeAll()
+  {
+<span class="fc" id="L414">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeAll&quot;;</span>
+<span class="fc" id="L415">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L416">    contents.clear();</span>
+<span class="fc" id="L417">    return (OrderedCollection)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeAtIndex_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
+  {
+<span class="nc" id="L425">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeAtIndex_ifAbsent&quot;;</span>
+<span class="nc" id="L426">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L427">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="nc" id="L428">    return (ElementType)((ElementType)contents.remove(i));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeAtIndex(final Ordinal index)
+  {
+<span class="nc" id="L436">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L437">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L438">    return (ElementType)this.removeAtIndex_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L439">      this.indexRangeError();</span>
+<span class="nc" id="L440">    return Nil.literal();</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType remove(final ElementType element)
+  {
+<span class="nc" id="L449">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;remove&quot;;</span>
+<span class="nc" id="L450">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L451">    return (ElementType)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L452">      this.elementNotFound();</span>
+<span class="nc" id="L453">    return Nil.literal();</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   ElementType remove_ifAbsent(final ElementType element, final NiladicValuable aBlock)
+  {
+<span class="nc" id="L462">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;remove_ifAbsent&quot;;</span>
+<span class="nc" id="L463">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L464">    return (ElementType)this.removeAtIndex(this.indexOf_ifAbsent(element, aBlock));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedReadably&lt;ElementType&gt; removeAll(final CollectedReadably&lt;ElementType&gt; elements)
+  {
+<span class="nc" id="L472">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L473">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L474">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L475">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L476">      return this.remove(element);</span>
+    }, &quot;element&quot;));
+<span class="nc" id="L478">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   OrderedCollection&lt;ElementType&gt; removeAllSuchThat(final MonadicPredicate criteria)
+  {
+<span class="nc" id="L486">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeAllSuchThat&quot;;</span>
+<span class="nc" id="L487">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L488">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new();</span>
+<span class="nc" id="L489">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L490">      Ordinal index = f2.getValue(0).value();</span>
+      
+<span class="nc" id="L492">    ElementType element = this.at(index);</span>
+<span class="nc" id="L493">    return criteria.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L494">      results.add(element);</span>
+<span class="nc" id="L495">    return this.removeAtIndex(index);</span>
+    }, &quot;&quot;));
+    }, &quot;index&quot;));
+<span class="nc" id="L498">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeFirst()
+  {
+<span class="nc" id="L506">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L508">    this.emptyCheck();</span>
+<span class="nc" id="L509">    return (ElementType)((ElementType)contents.remove(SmallInteger.from(0).asPrimitive()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ElementType removeLast()
+  {
+<span class="nc" id="L517">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L518">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L519">    this.emptyCheck();</span>
+<span class="nc" id="L520">    return (ElementType)((ElementType)contents.remove((contents.size() - 1)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   OrderedCollection&lt;ElementType&gt; removeFirst(final Ordinal count)
+  {
+<span class="nc" id="L528">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L530">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new(count);</span>
+<span class="nc" id="L531">    ((Integer)count).timesRepeat(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L532">      return results.add(this.removeFirst());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L534">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   OrderedCollection&lt;ElementType&gt; removeLast(final Ordinal count)
+  {
+<span class="nc" id="L542">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L543">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L544">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new(count);</span>
+<span class="nc" id="L545">    ((Integer)count).timesRepeat(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L546">      return results.add(this.removeLast());</span>
+    }, &quot;&quot;));
+<span class="nc" id="L548">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   WriteStream writeStream()
+  {
+<span class="nc" id="L556">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;writeStream&quot;;</span>
+<span class="nc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L558">    return (WriteStream)WriteStream.type().with(this);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

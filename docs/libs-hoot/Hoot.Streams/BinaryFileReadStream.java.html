@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BinaryFileReadStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Streams</a> &gt; <span class="el_source">BinaryFileReadStream.java</span></div><h1>BinaryFileReadStream.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Streams;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Behaviors.*;
+import Hoot.Behaviors.Nil;
+import Hoot.Behaviors.Object;
+import Hoot.Behaviors.True;
+import Hoot.Behaviors.False;
+import Hoot.Behaviors.Boolean;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.io.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Collections.CharacterString;
+import Hoot.Runtime.Functions.Exceptional.Handler;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.ReadableString;
+import Smalltalk.Collections.CollectedReadably;
+import Smalltalk.Streams.*;
+
+public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
+{
+<span class="nc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends FileReadStream.Metaclass
+  {
+<span class="fc" id="L43">    static final BinaryFileReadStream.Metaclass $class = new BinaryFileReadStream.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L45">      this(BinaryFileReadStream.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
+
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return BinaryFileReadStream.class; }</span>
+
+    /**
+     * @return 
+     */
+    @Override public   BinaryFileReadStream read(final ReadableString fileName)
+    {
+<span class="nc" id="L59">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;read&quot;;</span>
+<span class="nc" id="L60">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L61">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L62">      return (BinaryFileReadStream)f0.exit(exitID, super.read(fileName));</span>
+      });
+    }
+
+    /**
+     * @return 
+     */
+    public   BinaryFileReadStream on(final RandomAccessFile primitiveFile)
+    {
+<span class="nc" id="L71">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="nc" id="L72">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L73">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L74">      return (BinaryFileReadStream)f0.exit(exitID, new BinaryFileReadStream(primitiveFile));</span>
+      });
+    }
+  }
+
+
+  /**
+   * 
+   */
+  protected    BinaryFileReadStream(final RandomAccessFile primitiveFile)
+  {
+<span class="nc" id="L85">    super(primitiveFile);</span>
+<span class="nc" id="L86">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;BinaryFileReadStream&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">  }</span>
+
+  /**
+   * @return 
+   */
+  public   ByteArray contents()
+  {
+<span class="nc" id="L95">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L96">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L97">    Integer pose = this.position();</span>
+<span class="nc" id="L98">    this.reset();</span>
+
+<span class="nc" id="L100">    ByteArray result = this.nextBytes(this.length());</span>
+<span class="nc" id="L101">    this.position(pose);</span>
+<span class="nc" id="L102">    return (ByteArray)result;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isText()
+  {
+<span class="nc" id="L110">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isText&quot;;</span>
+<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L112">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean isBinary()
+  {
+<span class="nc" id="L120">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isBinary&quot;;</span>
+<span class="nc" id="L121">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L122">    return (Boolean)False.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Symbol externalType()
+  {
+<span class="nc" id="L130">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;externalType&quot;;</span>
+<span class="nc" id="L131">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L132">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer next()
+  {
+<span class="nc" id="L140">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
+<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L142">    return (Integer)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L143">      return SmallInteger.from(((int)file.readUnsignedByte()));</span>
+<span class="nc" id="L144">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.type().zero());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String nextLine()
+  {
+<span class="nc" id="L152">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;nextLine&quot;;</span>
+<span class="nc" id="L153">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L154">    return (String)String.emptyString();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ByteArray next(final Ordinal count)
+  {
+<span class="nc" id="L162">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
+<span class="nc" id="L163">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L164">    return (ByteArray)this.nextBytes(((Integer)count));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   ByteArray upTo(final Integer target)
+  {
+<span class="nc" id="L172">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;upTo&quot;;</span>
+<span class="nc" id="L173">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L174">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L175">    String results = String.emptyString();</span>
+<span class="nc" id="L176">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L177">      return this.atEnd();</span>
+<span class="nc" id="L178">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+      
+<span class="nc" id="L180">    Integer v = this.next();</span>
+<span class="nc" id="L181">    (target.equals(v)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L182">      return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
+    }, &quot;&quot;));
+<span class="nc" id="L184">    results.add(v.asCharacter());</span>
+<span class="nc" id="L185">    }, &quot;&quot;));</span>
+<span class="nc" id="L186">    return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
+    });
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

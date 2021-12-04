@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Table.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Values</a> &gt; <span class="el_source">Table.java</span></div><h1>Table.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Values;
+
+import java.util.*;
+
+import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Runtime.Behaviors.Typified;
+import Hoot.Runtime.Emissions.Item;
+import Hoot.Runtime.Maps.Library;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Names.TypeName;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import Hoot.Runtime.Emissions.NamedItem;
+
+/**
+ * Maintains an ordered and index-able collection of local variables as a symbol table.
+ * Supports symbol lookup by name and writes variables in the order of their definition.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Table extends NamedItem {
+
+<span class="nc" id="L25">    public Table(Scope container) { super(container); }</span>
+
+    /**
+     * Maintains an indexed collection of symbols.
+     */
+<span class="nc" id="L30">    protected Map&lt;String, Variable&gt; contents = emptyMap(Variable.class);</span>
+<span class="nc" id="L31">    public int size() { return contents.size(); }</span>
+
+    /**
+     * Maintains symbols in the order of their definition.
+     */
+<span class="nc" id="L36">    protected List&lt;Variable&gt; order = emptyList(Variable.class);</span>
+<span class="nc" id="L37">    public List&lt;Variable&gt; symbols() { return copyList(order); }</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">    public List&lt;Variable&gt; definedSymbols() { return select(order, v -&gt; !v.isEmpty()); }</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">    @Override public boolean isEmpty() { return this.order == null || this.order.isEmpty(); }</span>
+
+    /**
+     * Establishes (container) as the container for this scope.
+     *
+     * @param container the container scope.
+     */
+    @Override public void container(Item container) {
+<span class="nc" id="L47">        super.container(container);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (!isEmpty()) {</span>
+<span class="nc" id="L49">            symbols().forEach(symbol -&gt; symbol.container(container));</span>
+        }
+<span class="nc" id="L51">    }</span>
+
+    public Table withAll(Table table) {
+<span class="nc" id="L54">        table.order.forEach(v -&gt; addSymbol(v));</span>
+<span class="nc" id="L55">        return this;</span>
+    }
+
+    public Table withAll(Map&lt;String, Variable&gt; map) {
+<span class="nc" id="L59">        map.values().forEach(v -&gt; addSymbol(v));</span>
+<span class="nc" id="L60">        return this;</span>
+    }
+
+    public Table withAll(List&lt;Variable&gt; symbols) {
+<span class="nc" id="L64">        symbols.forEach(s -&gt; addSymbol(s));</span>
+<span class="nc" id="L65">        return this;</span>
+    }
+
+//    public String createSymbol() {
+//        int nest = containerScope().nestLevel();
+//        int size = size();
+//        String name = &quot;local&quot; + nest + &quot;_&quot; + size;
+//        Variable v = new Variable(containerScope());
+//        v.name(name);
+//        v.clean();
+//        addSymbol(v);
+//        return name;
+//    }
+
+    protected boolean captureSymbol(Variable symbol) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (!symbol.isEmpty()) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (!contents.containsKey(symbol.name())) {</span>
+<span class="nc" id="L82">                contents.put(symbol.name(), symbol);</span>
+<span class="nc" id="L83">                return true;</span>
+            }
+        }
+<span class="nc" id="L86">        return false;</span>
+    }
+
+    /**
+     * Adds a new (empty) symbol to the table.
+     */
+    public void prepareSymbol() {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (!order.isEmpty()) {</span>
+            // first capture any existing symbol
+<span class="nc" id="L95">            captureSymbol(currentSymbol());</span>
+        }
+<span class="nc" id="L97">        order.add(new Variable(containerScope()));</span>
+<span class="nc" id="L98">    }</span>
+
+    /**
+     * Adds a new (symbol) to the table.
+     *
+     * @param symbol a named symbol.
+     */
+    public void addSymbol(Variable symbol) {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (captureSymbol(symbol)) {</span>
+<span class="nc" id="L107">            order.add(symbol);</span>
+        }
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Returns the current symbol being defined by the compiler.
+     *
+     * @return the current symbol being defined by the compiler.
+     */
+    public Variable currentSymbol() {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (order.isEmpty()) {</span>
+<span class="nc" id="L118">            order.add(new Variable(containerScope()));</span>
+        }
+
+<span class="nc" id="L121">        return order.get(order.size() - 1);</span>
+    }
+
+    /**
+     * Returns whether the local symbol table contains the named symbol.
+     *
+     * @param name the name of the desired symbol.
+     * @return whether the local symbol table contains the named symbol.
+     */
+    public boolean containsSymbol(String name) {
+<span class="nc" id="L131">        return contents.containsKey(name);</span>
+    }
+
+    /**
+     * Returns the named symbol.
+     *
+     * @param name the name of the desired symbol.
+     * @return the named symbol, or null if the table does not contain the named symbol.
+     */
+    public Variable symbolNamed(String name) {
+<span class="nc" id="L141">        return (Variable) contents.get(name);</span>
+    }
+
+    /**
+     * Cleans out any residue left from the parsing process and prepares the receiver for code generation.
+     */
+    @Override
+    public void clean() {
+<span class="nc" id="L149">        super.clean();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (order.isEmpty()) {</span>
+<span class="nc" id="L151">            return;</span>
+        }
+
+<span class="nc" id="L154">        Variable end = order.get(order.size() - 1);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (end.isEmpty()) {</span>
+<span class="nc" id="L156">            order.remove(end);</span>
+        }
+
+<span class="nc" id="L159">        symbols().forEach(symbol -&gt; symbol.clean());</span>
+<span class="nc" id="L160">    }</span>
+
+    /**
+     * Removes all the symbols from the table.
+     */
+    public void clear() {
+<span class="nc" id="L166">        contents.clear();</span>
+<span class="nc" id="L167">        order.clear();</span>
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Returns whether any of the symbols has a resolved type.
+     *
+     * @return whether any of the symbols has a resolved type.
+     */
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    public boolean hasTypedNames() { return matchAny(symbols(), s -&gt; !RootType().matches(s.type())); }</span>
+
+    /**
+     * @return whether all of the symbols have erasable types
+     */
+    public boolean hasErasableTypes() {
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (Variable symbol : symbols()) {</span>
+<span class="nc" id="L182">            TypeName resolver = symbol.typeResolver();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            if (resolver.isUnknown()) return false;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (resolver.isEraseableType()) return true;</span>
+
+<span class="nc" id="L186">            Typified typeFace = Library.findFace(resolver.fullName());</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (typeFace == null) return false;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (!typeFace.isEraseableType()) return false;</span>
+<span class="nc" id="L189">        }</span>
+<span class="nc" id="L190">        return true;</span>
+    }
+
+    /**
+     * Copies the symbols from the receiver to (aTable) without types.
+     *
+     * @param aTable a symbol table.
+     */
+//    public void eraseTypes(Table aTable) {
+//        for (Variable symbol : symbols()) {
+//            Variable newSymbol = Variable.named(symbol.name(), &quot;&quot;, aTable.containerScope());
+//            aTable.addSymbol(newSymbol);
+//        }
+//    }
+
+    /**
+     * Returns whether any of the symbols resolve to elementary type.
+     *
+     * @return whether any of the symbols resolve to elementary type.
+     */
+    public boolean hasElementaryNames() {
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (Variable symbol : symbols()) {</span>
+<span class="nc" id="L212">            String typeName = symbol.type();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (Primitive.isElementaryType(typeName)) {</span>
+<span class="nc" id="L214">                return true;</span>
+            }
+
+<span class="nc" id="L217">            Typified typeFace = Library.findFace(typeName);</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">            if (typeFace != null &amp;&amp; Primitive.isElementaryType(typeFace.fullName())) {</span>
+<span class="nc" id="L219">                return true;</span>
+            }
+<span class="nc" id="L221">        }</span>
+<span class="nc" id="L222">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

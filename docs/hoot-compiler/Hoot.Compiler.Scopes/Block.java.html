@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Block.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">Block.java</span></div><h1>Block.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+import Hoot.Runtime.Notes.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Emissions.*;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Names.TypeName;
+import Hoot.Runtime.Behaviors.Scope;
+import static Hoot.Runtime.Emissions.Emission.*;
+import static Hoot.Runtime.Names.Keyword.Dollar;
+import static Hoot.Runtime.Functions.Utils.*;
+
+import Hoot.Compiler.Expressions.*;
+
+/**
+ * A block scope, which may contain a sequence of statements.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Block extends Scope implements Signed, ClosureSource {
+
+<span class="fc" id="L25">    public Block() { this(Block.currentBlock()); }</span>
+<span class="fc" id="L26">    public Block(Scope aScope) { super(aScope); checkScope(); }</span>
+<span class="fc" id="L27">    public static Block currentBlock() { return from(Scope.current()); }</span>
+<span class="fc" id="L28">    public static Block from(Item item) { return nullOr(b -&gt; (Block)b, item.blockScope()); }</span>
+    public static Block emptyBlock() {
+<span class="nc" id="L30">        Block result = new Block();</span>
+<span class="nc" id="L31">        result.signature(KeywordSignature.emptyNiladic());</span>
+<span class="nc" id="L32">        result.content(BlockContent.emptyBlock());</span>
+<span class="nc" id="L33">        return result;</span>
+    }
+
+<span class="fc" id="L36">    @Override public void clean() { sig.clean(); content.clean(); super.clean(); }</span>
+<span class="fc" id="L37">    @Override public Block makeCurrent() { super.makeCurrent(); return this; }</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">    private void checkScope() { if (hasNone(container())) warn(&quot;null parent scope in Block&quot;); }</span>
+
+<span class="fc" id="L40">    @Override public boolean isBlock() { return true; }</span>
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">    @Override public boolean isEmpty() { return hasNone(content()) || content().isEmpty(); }</span>
+<span class="fc" id="L42">    @Override public int nestLevel() { return scope().nestLevel() + 1; }</span>
+
+    public static final int MethodLevel = 2;
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    public boolean isNested() { return nestLevel() &gt; MethodLevel; }</span>
+<span class="fc" id="L46">    public Nest withNest() { return new Nest(this); }</span>
+
+<span class="fc" id="L48">    @Override public Typified faceType() { return face(); }</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">    @Override public String name() { return hasNone(signature()) ? Empty : signature().name(); }</span>
+<span class="nc" id="L50">    @Override public String qualify(String identifier) { return facialScope().qualify(identifier); }</span>
+
+<span class="fc" id="L52">    public List&lt;Variable&gt; arguments() { return signature().arguments(); }</span>
+<span class="nc" id="L53">    public List&lt;String&gt; argumentNames() { return map(arguments(), arg -&gt; arg.name()); }</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">    @Override public int argumentCount() { return isSigned() ? arguments().size() : 0; }</span>
+<span class="nc" id="L55">    @Override public List&lt;Typified&gt; argumentTypes() { return map(arguments(), arg -&gt; arg.typeFace()); }</span>
+<span class="fc" id="L56">    @Override public List&lt;TypeName&gt; argumentTypeNames() { return map(arguments(), arg -&gt; arg.typeResolver()); }</span>
+
+    protected BlockContent content;
+<span class="fc" id="L59">    public BlockContent content() { return this.content; }</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">    public void content(BlockContent content) { if (hasOne(content)) this.content = content; }</span>
+
+    protected BasicSignature sig;
+<span class="fc" id="L63">    public BasicSignature signature() { return sig; }</span>
+<span class="fc" id="L64">    public boolean isSigned() { return hasOne(sig); }</span>
+<span class="fc" id="L65">    public void signature(BasicSignature s) { this.sig = s.inside(this); reportScope(); }</span>
+<span class="fc" id="L66">    @Override public String description() { return method().description() + &quot;::&quot; + blockName(); }</span>
+
+    @Override public boolean hasLocal(String symbolName) {
+<span class="fc bfc" id="L69" title="All 4 branches covered.">        return super.hasLocal(symbolName) || signature().hasLocal(symbolName); }</span>
+
+    @Override public Variable localNamed(String symbolName) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (super.hasLocal(symbolName)) return super.localNamed(symbolName);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (signature().hasLocal(symbolName)) return signature().localNamed(symbolName);</span>
+<span class="nc" id="L74">        return null; }</span>
+
+<span class="nc" id="L76">    public DetailedType resolvedType() { return signature().resolvedType(); }</span>
+
+<span class="fc" id="L78">    public boolean needsFrame() { return content().needsFrame(); }</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">    public boolean matches(Block scope) { return !missingAny(scope, content()) &amp;&amp; content() == scope.content(); }</span>
+
+<span class="nc" id="L81">    public boolean isConstructor() { return false; }</span>
+<span class="fc" id="L82">    public boolean returnsVoid() { return signature().returnsVoid(); }</span>
+<span class="nc" id="L83">    public boolean receiverNeedsTerm() { return true; }</span>
+
+<span class="fc bfc" id="L85" title="All 4 branches covered.">    @Override public boolean isVoidedContext() { return this.isConstructor() || this.returnsVoid(); }</span>
+<span class="fc" id="L86">    @Override public boolean containsExit() { return content().containsExit(); }</span>
+
+<span class="nc" id="L88">    @Override public Block parentBlock() { return findParentExactly(Block.class, Method.class, Face.class); }</span>
+<span class="fc" id="L89">    public Expression parentExpression() { return findParentExactly(Expression.class, Method.class, Face.class); }</span>
+<span class="nc" id="L90">    public boolean hasParentExpression() { return hasOne(parentExpression()); }</span>
+<span class="nc" id="L91">    public boolean expressionHasResult() { return falseOr(x -&gt; x.isResult(), parentExpression()); }</span>
+<span class="nc" id="L92">    public boolean expressionExitsMethod() { return falseOr(x -&gt; x.exitsMethod(), parentExpression()); }</span>
+    public boolean needsPredicateWrapper() {
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">        return falseOr(x -&gt; x.hasPredicateTerm(this) || x.hasPredicateArgument(this), parentExpression()); }</span>
+
+<span class="fc" id="L96">    public String closureType() { return closureType(needsPredicateWrapper()); }</span>
+<span class="nc" id="L97">    public Emission emitClosure() { return emitOptimized(); }</span>
+
+    @Override public Emission emitOptimized() {
+<span class="fc" id="L100">        return emitOptimizedBlock(emitEmpty(), nestLevel() - 1, closureType(),</span>
+<span class="fc" id="L101">            emitLines(emitBlockArguments()), emitContents(), emitArgumentNames()); }</span>
+
+<span class="nc" id="L103">    public List&lt;Emission&gt; emitCastedArguments() { return map(arguments(), arg -&gt; arg.emitCast()); }</span>
+<span class="fc" id="L104">    public List&lt;Emission&gt; emitBlockArguments() { final int[] index = { 0 };</span>
+<span class="fc" id="L105">        return map(arguments(), arg -&gt; arg.emitBlockArgument(index[0]++, nestLevel() - 1)); }</span>
+
+<span class="nc" id="L107">    public List&lt;Emission&gt; emitArguments() { return emitArguments(true); }</span>
+<span class="nc" id="L108">    public List&lt;Emission&gt; emitArguments(boolean useFinal) { return map(arguments(), arg -&gt; arg.emitArgument(useFinal)); }</span>
+<span class="nc" id="L109">    public List&lt;Emission&gt; emitErasedArguments() { return map(arguments(), arg -&gt; arg.emitErasedArgument()); }</span>
+    public List&lt;Emission&gt; emitArgumentNames() {
+<span class="fc" id="L111">        List&lt;Emission&gt; results = map(arguments(), arg -&gt; emitQuoted(arg.name()));</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (results.isEmpty()) results.add(emitQuoted(Empty));</span>
+<span class="fc" id="L113">        return results; }</span>
+
+    public Emission emitResultType() {
+<span class="fc bfc" id="L116" title="All 4 branches covered.">        if (needsPredicateWrapper() || isNested()) return null;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        return isSigned() ? signature().emitResultType() : emitItem(face().defaultName()); }</span>
+
+    public Emission emitSignature() {
+<span class="nc" id="L120">        Emission erasure = null;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (needsErasure()) erasure = emitErasure();</span>
+<span class="nc" id="L122">        return emitBlockSignature(blockName(), erasure, emitList(emitArguments()), emitEmpty()); }</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">    public Emission emitFinalValue() { return isEmpty() ? emitEmpty() : content().emitFinalValue(); }</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">    public Emission emitContents() { return isEmpty() ? emitEmpty() : content().emitItem(); }</span>
+
+<span class="fc" id="L127">    static final String[] valueMessages = { &quot;value&quot;, &quot;value&quot;, &quot;value_value&quot; };</span>
+<span class="fc" id="L128">    private String valueMessage() { return valueMessages[argumentCount()]; }</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">    public String blockName() { return needsErasure() ? Dollar + valueMessage() : valueMessage(); }</span>
+
+<span class="fc" id="L131">    public boolean needsErasure() { return needsErasure(argumentCount()); }</span>
+    public boolean needsErasure(int argumentCount) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (this.isMethod()) return false;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (argumentCount == 0) return false;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        return (signature().args().hasTypedNames() &amp;&amp;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">               !signature().args().hasElementaryNames()); }</span>
+
+    public Emission emitErasedCall() {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        return returnsVoid() ?</span>
+<span class="nc" id="L140">                emitErasedVoid(valueMessage(), emitCastedArguments()) :</span>
+<span class="nc" id="L141">                emitErasedCall(valueMessage(), emitCastedArguments()) ; }</span>
+
+    public Emission emitErasure() {
+<span class="nc" id="L144">        return emitErasedBlock(valueMessage(), emitErasedArguments(), emitErasedCall()) ; }</span>
+
+<span class="nc" id="L146">    public Emission emitTry() { return emitOnlyTry(emitLocalVariables(), emitContents()); }</span>
+<span class="nc" id="L147">    public Emission emitCatch() { return emitOnlyCatch(emitArguments(false), emitLocalVariables(), emitContents()); }</span>
+<span class="nc" id="L148">    public Emission emitFinally() { return emitOnlyEnsure(emitLocalVariables(), emitContents()); }</span>
+<span class="nc" id="L149">    public Emission emitNewClosure() { return emitNewClosure(closureType(), nestLevel() - 1, emitArgumentNames()); }</span>
+
+} // Block
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

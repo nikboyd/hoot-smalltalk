@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Frame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Values</a> &gt; <span class="el_source">Frame.java</span></div><h1>Frame.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Values;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import Hoot.Runtime.Faces.Valued;
+import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Faces.Selector;
+import Hoot.Runtime.Blocks.Enclosure;
+import Hoot.Runtime.Behaviors.Invoke;
+import static Hoot.Runtime.Blocks.Enclosure.*;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Faces.Logging.*;
+
+/**
+ * A block closure stack frame. Presumes usage by a single thread.
+ * Contains an ordered, named list of values, and a value stack.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Frame implements Logging {
+
+<span class="fc" id="L27">    public Frame() { }</span>
+<span class="fc" id="L28">    public Frame(String scopeID) { this.scopeID = scopeID; } //makeCurrent(); }</span>
+<span class="fc" id="L29">    public static Frame withValues(Value&lt;?&gt; ... values) { return new Frame().with(values); }</span>
+<span class="nc" id="L30">    public static final String className() { return Frame.class.getSimpleName(); }</span>
+<span class="nc" id="L31">    public static final String name(int scopeLevel) { return &quot;f&quot; + scopeLevel; }</span>
+<span class="fc" id="L32">    public void purge() { valueMap().clear(); values().clear(); stack().clear(); }</span>
+
+<span class="fc" id="L34">    private String scopeID = Empty;</span>
+<span class="fc" id="L35">    public String scope() { return this.scopeID; }</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">    public String describe() { return knowsMethod() ? scope() : &quot;&quot;+this.hashCode(); }</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">    public boolean matches(Frame frame) { return hasAny(frame) &amp;&amp; scope().equals(frame.scope()); }</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">    public boolean knowsMethod() { return !scope().isEmpty(); }</span>
+
+<span class="fc" id="L40">    public &lt;R&gt; R exit(String scopeID, R result) { return currentClosure().exitMethod(this, result); }</span>
+    public &lt;R&gt; R exit(String scopeID, Function&lt;Frame,R&gt; block) {
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        return currentClosure().exitMethod(this, hasNone(block)? null : block.apply(this)); }</span>
+
+<span class="fc" id="L44">    private final Stack&lt;Value&lt;?&gt;&gt; stack = new Stack&lt;&gt;();</span>
+<span class="fc" id="L45">    private Stack&lt;Value&lt;?&gt;&gt; stack() { return this.stack; }</span>
+<span class="fc" id="L46">    private Value&lt;?&gt; stackAt(int index) { return stack().get(index); }</span>
+<span class="fc" id="L47">    private int selfIndex() { return findSelf(stackDepth() - 1); }</span>
+<span class="fc" id="L48">    private boolean selfAt(int index) { return stackAt(index).isSelfish(); }</span>
+    private int findSelf(int index) { // note: index result after loop
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">        for (; index &gt; 0; index--) if (selfAt(index)) return index; return index; }</span>
+
+<span class="fc" id="L52">    public int stackDepth() { return stack().size(); }</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">    public boolean hasResult() { return (stackDepth() &gt; 0); }</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">    public Value&lt;?&gt; result() { return (stack().empty() ? null : top()); }</span>
+
+<span class="fc" id="L56">    public void push(Value&lt;?&gt; v) { stack().push(v); }</span>
+<span class="fc" id="L57">    public &lt;V&gt; V push(V value) { push(Value.with(value)); return value; }</span>
+<span class="fc" id="L58">    public &lt;V&gt; V topValue() { return top().value(); }</span>
+<span class="nc" id="L59">    public &lt;V&gt; V topValue(Class&lt;V&gt; valueType) { return topValue(); }</span>
+<span class="fc" id="L60">    public &lt;V&gt; V popValue() { return pop().value(); }</span>
+<span class="nc" id="L61">    public &lt;V&gt; V popValue(Class&lt;V&gt; valueType) { return popValue(); }</span>
+<span class="fc" id="L62">    public Value&lt;?&gt; top() { return stack().peek(); }</span>
+<span class="fc" id="L63">    public Value&lt;?&gt; pop() { return stack().pop(); }</span>
+
+<span class="nc" id="L65">    public Frame popFrame(int count) { return new Frame().with(popReversed(count)); }</span>
+<span class="nc" id="L66">    public Value&lt;?&gt;[] popForward(int count) { return popOut(count, true); }</span>
+<span class="fc" id="L67">    public Value&lt;?&gt;[] popReversed(int count) { return popOut(count, false); }</span>
+
+<span class="fc" id="L69">    private static final Value&lt;?&gt;[] EmptyResult = { };</span>
+    private Value&lt;?&gt;[] popOut(int count, boolean forward) {
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">        if (count &lt; 0 || count &gt; stackDepth()) return EmptyResult;</span>
+<span class="fc" id="L72">        Value&lt;?&gt;[] results = new Value&lt;?&gt;[count]; int index = 0;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (forward)</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            while (index &lt; count) results[index++] = pop();</span>
+        else // reversed
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            while (count &gt; 0) results[--count] = pop();</span>
+
+<span class="fc" id="L78">        return results;</span>
+    }
+
+
+    // a map of named values for lookups
+<span class="fc" id="L83">    private final HashMap&lt;String, Value&lt;?&gt;&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L84">    private HashMap&lt;String, Value&lt;?&gt;&gt; valueMap() { return this.map; }</span>
+<span class="fc" id="L85">    private boolean isMapped(Value&lt;?&gt; v) { return valueMap().containsKey(v.name()); }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L88">    private static &lt;V&gt; Class&lt;Value&lt;V&gt;&gt; getType(Value&lt;?&gt; v) { return (Class&lt;Value&lt;V&gt;&gt;)v.getClass(); }</span>
+<span class="fc" id="L89">    private &lt;V&gt; Value&lt;V&gt; get(String name) { Value&lt;?&gt; v = map.get(name); return Value.asValue(getType(v), v); }</span>
+<span class="fc" id="L90">    private &lt;V&gt; Value&lt;V&gt; get(int index) { Value&lt;?&gt; v = values.get(index); return Value.asValue(getType(v), v); }</span>
+
+    // values held by this frame
+<span class="fc" id="L93">    private final List&lt;Value&lt;?&gt;&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L94">    private List&lt;Value&lt;?&gt;&gt; values() { return this.values; }</span>
+<span class="pc bpc" id="L95" title="1 of 4 branches missed.">    public boolean valid(int index) { return (index &gt;= 0 &amp;&amp; index &lt; countValues()); }</span>
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">    public boolean hasValue(String name) { return !isEmpty(name) &amp;&amp; valueMap().containsKey(name); }</span>
+<span class="fc" id="L97">    private &lt;V&gt; Value&lt;V&gt; value(String name) { return get(name); }</span>
+<span class="fc" id="L98">    private &lt;V&gt; Value&lt;V&gt; value(int index) { return get(index); }</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">    public &lt;V&gt; Value&lt;V&gt; getValue(int index) { return valid(index) ? value(index) : null; }</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">    public &lt;V&gt; Value&lt;V&gt; getValue(String name) { return hasValue(name) ? value(name) : null; }</span>
+<span class="nc" id="L101">    public &lt;V&gt; V getValue(int index, Class&lt;V&gt; valueType) { return Value.as(valueType, getValue(index)); }</span>
+<span class="nc" id="L102">    public &lt;V&gt; V getValue(String name, Class&lt;V&gt; valueType) { return Value.as(valueType, getValue(name)); }</span>
+<span class="fc" id="L103">    public int countValues() { return values().size(); }</span>
+
+<span class="fc" id="L105">    public Frame with(Value&lt;?&gt; ... values) { return this.with(wrap(values)); }</span>
+<span class="fc" id="L106">    public Frame with(List&lt;Value&lt;?&gt;&gt; values) { values.forEach((v) -&gt; { adopt(v); }); return this; }</span>
+    public Frame withAll(Object... values) {
+<span class="fc" id="L108">        int[] index = {0}; wrap(values).forEach(v -&gt; bind(index[0]++, v)); return this; }</span>
+
+    public &lt;V&gt; Frame bind(String valueName, V value) {
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        return valueName.isEmpty() ? this : with(Value.named(valueName, value)); }</span>
+
+    public &lt;V&gt; Frame bind(int index, V value) {
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (valid(index)) value(index).bind(value);</span>
+<span class="fc" id="L115">        else adopt(Value.from(index).bind(value));</span>
+<span class="fc" id="L116">        return this; }</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">    private void adopt(Value&lt;?&gt; v) { if (isMapped(v)) { bind(v); } else { add(v); mapValue(v); } }</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">    private void add(Value&lt;?&gt; v) { if (v.isSelfish()) values().add(0, v); else values().add(v); }</span>
+<span class="fc" id="L120">    private void bind(Value&lt;?&gt; v) { getValue(v.name()).bind(v.value()); }</span>
+<span class="fc" id="L121">    private void mapValue(Value&lt;?&gt; v) { valueMap().put(v.name(), v); }</span>
+
+<span class="fc" id="L123">    public &lt;R&gt; R evaluate(Supplier block) { return evaluate(Enclosure.withBlock(block)); }</span>
+<span class="nc" id="L124">    public &lt;R&gt; R evaluate(Consumer&lt;Frame&gt; block) { return evaluate(Enclosure.withBlock(block)); }</span>
+<span class="nc" id="L125">    public &lt;R&gt; R evaluate(Function&lt;Frame,Valued&gt; block) { return evaluate(Enclosure.withBlock(block)); }</span>
+<span class="fc" id="L126">    public &lt;R&gt; R evaluate(Enclosure closure) { return closure.withFrame(this).value(); }</span>
+
+    static final String Comma = &quot;, &quot;;
+    static final String FrameReport = &quot;Frame&lt;%s&gt;:[ %s ]&quot;;
+    @Override public String toString() {
+<span class="fc" id="L131">        String types = joinWith(Comma, map(values(), v -&gt; v.valueType().getSimpleName()));</span>
+<span class="fc" id="L132">        String valued = joinWith(Comma, map(values(), v -&gt; v.toString()));</span>
+<span class="fc" id="L133">        String result = format(FrameReport, types, valued); return result; }</span>
+
+
+    /**
+     * Pops message operands from the stack, and calls the selected receiver method with its arguments.
+     * @param &lt;R&gt; a result type
+     * @param selector a method selector
+     * @return the result of the method call
+     * @throws Throwable if raised
+     */
+    public &lt;R&gt; R perform(Selector selector) throws Throwable {
+<span class="fc" id="L144">        return Invoke.with(popReversed(countArguments())).call(selector); }</span>
+
+    public int countArguments() {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        return (stackDepth() == 0) ? 0 :</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">               (selfIndex() &lt; 0) ? stackDepth() : stackDepth() - selfIndex(); }</span>
+
+} // Frame
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

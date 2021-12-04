@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Behavior.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Behaviors</a> &gt; <span class="el_source">Behavior.java</span></div><h1>Behavior.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Behaviors;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import java.util.*;
+import Hoot.Runtime.Maps.MethodCache;
+import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Names.TypeName;
+import Hoot.Runtime.Behaviors.Typified;
+import Hoot.Runtime.Behaviors.HootRegistry;
+import Hoot.Collections.Set;
+import Hoot.Magnitudes.Number;
+import Hoot.Magnitudes.Integer;
+import Smalltalk.Core.Subject;
+import Smalltalk.Core.Classified;
+import Smalltalk.Magnitudes.Scalar;
+import Smalltalk.Magnitudes.Ordinal;
+import Smalltalk.Collections.Collected;
+import Smalltalk.Collections.CollectedDistinctly;
+
+public abstract class Behavior extends Object implements Classified
+{
+<span class="nc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+  public static class Metaclass extends Object.Metaclass implements Classified.Metatype
+  {
+<span class="fc" id="L43">    static final Behavior.Metaclass $class = new Behavior.Metaclass();</span>
+    public Metaclass() {
+<span class="fc" id="L45">      this(Behavior.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
+
+    public Metaclass(java.lang.Class aClass) {
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
+
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return Behavior.class; }</span>
+
+  }
+
+
+<span class="fc" id="L57">  protected final HashSet&lt;Behavior&gt; subclasses = new HashSet();</span>
+  protected MethodCache methodDictionary;
+<span class="fc" id="L59">  protected static final Object [] EmptyArray = {</span>
+  };
+  /**
+   * @return 
+   */
+  protected   Behavior addSubclass(final Behavior subClass)
+  {
+<span class="fc" id="L66">    java.lang.String exitID = &quot;Behavior&gt;&gt;addSubclass&quot;;</span>
+<span class="fc" id="L67">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">    if (!((subClass == null))) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">      if ((subClass.superclass() == this)) {</span>
+<span class="fc" id="L70">        subclasses.add(subClass);</span>
+      };
+    };
+<span class="fc" id="L73">    return (Behavior)subClass;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected final   Behavior registerType()
+  {
+<span class="fc" id="L81">    java.lang.String exitID = &quot;Behavior&gt;&gt;registerType&quot;;</span>
+<span class="fc" id="L82">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L83">    HootRegistry.registerType(this);</span>
+<span class="fc" id="L84">    this.registerSubclass();</span>
+<span class="fc" id="L85">    this.initialize();</span>
+<span class="fc" id="L86">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   Behavior registerSubclass()
+  {
+<span class="fc" id="L94">    java.lang.String exitID = &quot;Behavior&gt;&gt;registerSubclass&quot;;</span>
+<span class="fc" id="L95">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">    if (!(this.hasHeritage().asPrimitive())) {</span>
+<span class="fc" id="L97">      return this;</span>
+    };
+<span class="fc" id="L99">    this.superior().addSubclass(this);</span>
+<span class="fc" id="L100">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  protected   void initialize()
+  {
+<span class="fc" id="L108">    java.lang.String exitID = &quot;Behavior&gt;&gt;initialize&quot;;</span>
+<span class="fc" id="L109">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L110">  }</span>
+
+  /**
+   * @return 
+   */
+  public   MethodCache methodDictionary()
+  {
+<span class="fc" id="L117">    java.lang.String exitID = &quot;Behavior&gt;&gt;methodDictionary&quot;;</span>
+<span class="fc" id="L118">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L119">    return (MethodCache)methodDictionary;</span>
+  }
+
+  /**
+   * 
+   */
+  protected    Behavior()
+  {
+<span class="fc" id="L127">    super();</span>
+<span class="fc" id="L128">    java.lang.String exitID = &quot;Behavior&gt;&gt;Behavior&quot;;</span>
+<span class="fc" id="L129">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L130">  }</span>
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Subject candidate)
+  {
+<span class="fc" id="L137">    java.lang.String exitID = &quot;Behavior&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L138">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L139">    return (Boolean)(this.equals(((Behavior)candidate)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean notMore(final Scalar upperBound)
+  {
+<span class="nc" id="L147">    java.lang.String exitID = &quot;Behavior&gt;&gt;notMore&quot;;</span>
+<span class="nc" id="L148">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L149">    return (Boolean)(this.notMore(((Behavior)upperBound)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar upperBound)
+  {
+<span class="fc" id="L157">    java.lang.String exitID = &quot;Behavior&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L158">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L159">    return (Boolean)(this.lessThan(((Behavior)upperBound)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean moreThan(final Scalar lowerBound)
+  {
+<span class="nc" id="L167">    java.lang.String exitID = &quot;Behavior&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L168">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L169">    return (Boolean)(this.moreThan(((Behavior)lowerBound)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean notLess(final Scalar lowerBound)
+  {
+<span class="nc" id="L177">    java.lang.String exitID = &quot;Behavior&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L178">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L179">    return (Boolean)(this.notLess(((Behavior)lowerBound)));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final Behavior candidate)
+  {
+<span class="fc" id="L187">    java.lang.String exitID = &quot;Behavior&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L188">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L189">    return (Boolean)(this.name().equals(candidate.name()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notMore(final Behavior upperBound)
+  {
+<span class="nc" id="L197">    java.lang.String exitID = &quot;Behavior&gt;&gt;notMore&quot;;</span>
+<span class="nc" id="L198">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L199">    return (Boolean)(this.equals(upperBound)).or(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L200">      return (this.lessThan(upperBound));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean notLess(final Behavior lowerBound)
+  {
+<span class="nc" id="L209">    java.lang.String exitID = &quot;Behavior&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L211">    return (Boolean)(this.equals(lowerBound)).or(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L212">      return (this.moreThan(lowerBound));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Behavior lowerBound)
+  {
+<span class="nc" id="L221">    java.lang.String exitID = &quot;Behavior&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L222">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L223">    return (Boolean)(lowerBound.lessThan(this));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Behavior upperBound)
+  {
+<span class="fc" id="L231">    java.lang.String exitID = &quot;Behavior&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L232">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L233">    return (Boolean)(this.nameSort().lessThan(upperBound.nameSort()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedDistinctly&lt;Classified&gt; allSubclasses()
+  {
+<span class="fc" id="L241">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSubclasses&quot;;</span>
+<span class="fc" id="L242">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L243">    HashSet&lt;Behavior&gt; result = new HashSet();</span>
+<span class="fc" id="L244">    this.allSubclassesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L245">      Behavior each = f2.getValue(0).value();</span>
+<span class="fc" id="L246">      result.add(each);</span>
+<span class="fc" id="L247">    }, &quot;each&quot;));</span>
+<span class="fc" id="L248">    return (CollectedDistinctly&lt;Classified&gt;)((CollectedDistinctly)Set.from(result));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedDistinctly&lt;Classified&gt; allSuperclasses()
+  {
+<span class="nc" id="L256">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSuperclasses&quot;;</span>
+<span class="nc" id="L257">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L258">    HashSet&lt;Behavior&gt; result = new HashSet();</span>
+<span class="nc" id="L259">    this.allSuperclassesDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L260">      Behavior each = f2.getValue(0).value();</span>
+<span class="nc" id="L261">      result.add(each);</span>
+<span class="nc" id="L262">    }, &quot;each&quot;));</span>
+<span class="nc" id="L263">    return (CollectedDistinctly&lt;Classified&gt;)((CollectedDistinctly)Set.from(result));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedDistinctly&lt;Classified&gt; subclasses()
+  {
+<span class="fc" id="L271">    java.lang.String exitID = &quot;Behavior&gt;&gt;subclasses&quot;;</span>
+<span class="fc" id="L272">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L273">    HashSet&lt;Behavior&gt; result = new HashSet();</span>
+<span class="fc" id="L274">    synchronized (subclasses) {</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">      for (Behavior each : subclasses) {</span>
+<span class="fc" id="L276">        result.add(each);</span>
+<span class="fc" id="L277">      }</span>
+<span class="fc" id="L278">    };</span>
+<span class="fc" id="L279">    return (CollectedDistinctly&lt;Classified&gt;)((CollectedDistinctly)Set.from(result));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedDistinctly&lt;Classified&gt; withAllSubclasses()
+  {
+<span class="fc" id="L287">    java.lang.String exitID = &quot;Behavior&gt;&gt;withAllSubclasses&quot;;</span>
+<span class="fc" id="L288">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L289">    Set&lt;Behavior&gt; results = ((Set)this.allSubclasses());</span>
+<span class="fc" id="L290">    results.add(this);</span>
+<span class="fc" id="L291">    return (CollectedDistinctly&lt;Classified&gt;)((CollectedDistinctly)results);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   CollectedDistinctly&lt;Classified&gt; withAllSuperclasses()
+  {
+<span class="nc" id="L299">    java.lang.String exitID = &quot;Behavior&gt;&gt;withAllSuperclasses&quot;;</span>
+<span class="nc" id="L300">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L301">    Set&lt;Behavior&gt; results = ((Set)this.allSuperclasses());</span>
+<span class="nc" id="L302">    results.add(this);</span>
+<span class="nc" id="L303">    return (CollectedDistinctly&lt;Classified&gt;)((CollectedDistinctly)results);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Behavior allSubclassesDo(final Closure aBlock)
+  {
+<span class="fc" id="L311">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSubclassesDo&quot;;</span>
+<span class="fc" id="L312">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L313">    this.subclassesDo(aBlock);</span>
+<span class="fc" id="L314">    this.subclassesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L315">      Behavior each = f2.getValue(0).value();</span>
+<span class="fc" id="L316">      return each.allSubclassesDo(aBlock);</span>
+    }, &quot;each&quot;));
+<span class="fc" id="L318">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Behavior allSuperclassesDo(final Closure aBlock)
+  {
+<span class="nc" id="L326">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSuperclassesDo&quot;;</span>
+<span class="nc" id="L327">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">    if (this.superclass().isEmpty()) {</span>
+<span class="nc" id="L329">      return this;</span>
+    };
+<span class="nc" id="L331">    ((Behavior)this.superclass()).onlySuperclassesDo(aBlock);</span>
+<span class="nc" id="L332">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  private   Behavior onlySuperclassesDo(final Closure aBlock)
+  {
+<span class="nc" id="L340">    java.lang.String exitID = &quot;Behavior&gt;&gt;onlySuperclassesDo&quot;;</span>
+<span class="nc" id="L341">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L342">    aBlock.value(this.yourself());</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">    if (this.superclass().isEmpty()) {</span>
+<span class="nc" id="L344">      return this;</span>
+    };
+<span class="nc" id="L346">    ((Behavior)this.superclass()).onlySuperclassesDo(aBlock);</span>
+<span class="nc" id="L347">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Behavior subclassesDo(final Closure aBlock)
+  {
+<span class="fc" id="L355">    java.lang.String exitID = &quot;Behavior&gt;&gt;subclassesDo&quot;;</span>
+<span class="fc" id="L356">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L357">    this.subclasses().$do(aBlock);</span>
+<span class="fc" id="L358">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Behavior withAllSubclassesDo(final Closure aBlock)
+  {
+<span class="nc" id="L366">    java.lang.String exitID = &quot;Behavior&gt;&gt;withAllSubclassesDo&quot;;</span>
+<span class="nc" id="L367">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L368">    aBlock.value(this);</span>
+<span class="nc" id="L369">    this.allSubclassesDo(aBlock);</span>
+<span class="nc" id="L370">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Behavior withAllSuperclassesDo(final Closure aBlock)
+  {
+<span class="nc" id="L378">    java.lang.String exitID = &quot;Behavior&gt;&gt;withAllSuperclassesDo&quot;;</span>
+<span class="nc" id="L379">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L380">    aBlock.value(this);</span>
+<span class="nc" id="L381">    this.allSuperclassesDo(aBlock);</span>
+<span class="nc" id="L382">    return (Behavior)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public  &lt;ElementType extends Subject&gt; Collected&lt;ElementType&gt; $new(final Ordinal capacity)
+  {
+<span class="nc" id="L390">    java.lang.String exitID = &quot;Behavior&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L391">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L392">    return (Collected&lt;ElementType&gt;)Array.type().$new(capacity);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public  &lt;ResultType extends Subject&gt; ResultType $new()
+  {
+<span class="nc" id="L400">    java.lang.String exitID = &quot;Behavior&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L401">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L402">    return (ResultType)Primitive.newInstance(this.primitiveClass());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Set&lt;Symbol&gt; allSelectors()
+  {
+<span class="nc" id="L410">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSelectors&quot;;</span>
+<span class="nc" id="L411">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L412">    return (Set&lt;Symbol&gt;)Set.fromSelectors(methodDictionary.allSelectors());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Set&lt;Symbol&gt; selectors()
+  {
+<span class="nc" id="L420">    java.lang.String exitID = &quot;Behavior&gt;&gt;selectors&quot;;</span>
+<span class="nc" id="L421">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L422">    return (Set&lt;Symbol&gt;)Set.fromSelectors(methodDictionary.selectors());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   java.lang.Class primitiveClass()
+  {
+<span class="fc" id="L430">    java.lang.String exitID = &quot;Behavior&gt;&gt;primitiveClass&quot;;</span>
+<span class="fc" id="L431">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L432">    return (java.lang.Class)this.methodDictionary().cachedType();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   java.lang.Class primitiveSuperclass()
+  {
+<span class="fc" id="L440">    java.lang.String exitID = &quot;Behavior&gt;&gt;primitiveSuperclass&quot;;</span>
+<span class="fc" id="L441">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L442">    return (java.lang.Class)this.primitiveClass().getSuperclass();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean hasHeritage()
+  {
+<span class="fc" id="L450">    java.lang.String exitID = &quot;Behavior&gt;&gt;hasHeritage&quot;;</span>
+<span class="fc" id="L451">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">    if ((this.primitiveSuperclass() == null)) {</span>
+<span class="nc" id="L453">      return False.literal();</span>
+    };
+
+<span class="fc" id="L456">    Typified result = HootRegistry.getType(this.primitiveSuperclass());</span>
+<span class="fc bfc" id="L457" title="All 2 branches covered.">    if (result.isEmpty()) {</span>
+<span class="fc" id="L458">      return False.literal();</span>
+    };
+<span class="fc" id="L460">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Behavior superior()
+  {
+<span class="fc" id="L468">    java.lang.String exitID = &quot;Behavior&gt;&gt;superior&quot;;</span>
+<span class="fc" id="L469">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L470">    return (Behavior)((Behavior)this.superclass());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Classified superclass()
+  {
+<span class="fc" id="L478">    java.lang.String exitID = &quot;Behavior&gt;&gt;superclass&quot;;</span>
+<span class="fc" id="L479">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">    if (!(this.hasHeritage().asPrimitive())) {</span>
+<span class="nc" id="L481">      return null;</span>
+    };
+
+<span class="fc" id="L484">    Typified result = HootRegistry.getType(this.primitiveSuperclass());</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">    if (result.isEmpty()) {</span>
+<span class="nc" id="L486">      return null;</span>
+    };
+<span class="fc" id="L488">    return (Classified)result;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean isBehavior()
+  {
+<span class="nc" id="L496">    java.lang.String exitID = &quot;Behavior&gt;&gt;isBehavior&quot;;</span>
+<span class="nc" id="L497">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L498">    return (Boolean)True.literal();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean inheritsFrom(final Behavior candidateClass)
+  {
+<span class="fc" id="L506">    java.lang.String exitID = &quot;Behavior&gt;&gt;inheritsFrom&quot;;</span>
+<span class="fc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L508">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L509">    Object.isNull(candidateClass).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L510">      return (Boolean)f0.exit(exitID, False.literal());</span>
+    }, &quot;&quot;));
+<span class="fc" id="L512">    return (Boolean)f0.exit(exitID, Boolean.from(candidateClass.primitiveClass().isAssignableFrom(this.primitiveClass())));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public abstract   String namePrefix();
+
+  /**
+   * @return 
+   */
+  public   String name()
+  {
+<span class="fc" id="L526">    java.lang.String exitID = &quot;Behavior&gt;&gt;name&quot;;</span>
+<span class="fc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L528">    return (String)String.from(this.typeName().hootName());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String nameSpace()
+  {
+<span class="fc" id="L536">    java.lang.String exitID = &quot;Behavior&gt;&gt;nameSpace&quot;;</span>
+<span class="fc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L538">    return (String)String.from(this.typeName().hootPackage());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String simpleName()
+  {
+<span class="fc" id="L546">    java.lang.String exitID = &quot;Behavior&gt;&gt;simpleName&quot;;</span>
+<span class="fc" id="L547">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L548">    return (String)String.from(this.typeName().shortName());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String nameSort()
+  {
+<span class="fc" id="L556">    java.lang.String exitID = &quot;Behavior&gt;&gt;nameSort&quot;;</span>
+<span class="fc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L558">    return (String)this.nameSpace().append(this.depth().printString()).append(this.simpleName());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   TypeName typeName()
+  {
+<span class="fc" id="L566">    java.lang.String exitID = &quot;Behavior&gt;&gt;typeName&quot;;</span>
+<span class="fc" id="L567">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L568">    return (TypeName)TypeName.fromName(this.primitiveClass().getName());</span>
+  }
+
+  /**
+   * @return 
+   */
+  public  &lt;NumericType extends Number&gt; NumericType zero()
+  {
+<span class="nc" id="L576">    java.lang.String exitID = &quot;Behavior&gt;&gt;zero&quot;;</span>
+<span class="nc" id="L577">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L578">    return (NumericType)((NumericType)SmallInteger.from(0));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer depth()
+  {
+<span class="fc" id="L586">    java.lang.String exitID = &quot;Behavior&gt;&gt;depth&quot;;</span>
+<span class="fc" id="L587">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L588">    return (Integer)SmallInteger.from(Primitive.hierarchyDepth(this.primitiveClass()));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
