@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiteralBoolean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Constants</a> &gt; <span class="el_source">LiteralBoolean.java</span></div><h1>LiteralBoolean.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Constants;
+
+import Hoot.Runtime.Emissions.*;
+import static Hoot.Runtime.Names.Keyword.*;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+
+/**
+ * A literal Boolean.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class LiteralBoolean extends Scalar {
+
+<span class="nc" id="L16">    public LiteralBoolean() { super(); }</span>
+<span class="fc" id="L17">    public LiteralBoolean(String value) { super(value); }</span>
+<span class="nc" id="L18">    public LiteralBoolean(NamedItem container, java.lang.String aValue) { super(container, aValue); }</span>
+<span class="fc" id="L19">    public static LiteralBoolean with(String value, int line) { return new LiteralBoolean(value).withLine(line); }</span>
+
+<span class="nc" id="L21">    @Override public Class primitiveType() { return boolean.class; }</span>
+<span class="nc" id="L22">    @Override public java.lang.String primitiveFactoryName() { return Boolean; }</span>
+<span class="nc" id="L23">    @Override public String resolvedTypeName() { return BooleanType().fullName(); }</span>
+    @Override public java.lang.String encodedValue() {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        return &quot;Hoot.&quot; + (value.equals(&quot;true&quot;) ? &quot;True()&quot; : &quot;False()&quot;); }</span>
+
+
+<span class="fc" id="L28">    @Override public Emission emitPrimitive() { return emitItem(rawValue()); }</span>
+<span class="fc" id="L29">    @Override public Emission emitOperand() { return emitBoolean(value); }</span>
+
+} // LiteralBoolean
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

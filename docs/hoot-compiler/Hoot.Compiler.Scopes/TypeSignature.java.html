@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeSignature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">TypeSignature.java</span></div><h1>TypeSignature.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+import Hoot.Runtime.Notes.*;
+import Hoot.Runtime.Behaviors.*;
+import Hoot.Runtime.Emissions.*;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+import static Hoot.Runtime.Names.Name.Metatype;
+
+/**
+ * A type definition signature.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class TypeSignature extends NamedItem implements ScopeSource {
+
+<span class="fc" id="L20">    public TypeSignature() { super(Scope.current()); }</span>
+<span class="fc" id="L21">    @Override public boolean isInterface() { return true; }</span>
+
+    public static TypeSignature with(
+            TypeList heritage, DetailedType subtype,
+            NoteList notes, String keyword, String comment) {
+<span class="fc" id="L26">        TypeSignature result = new TypeSignature();</span>
+<span class="fc" id="L27">        result.notes = notes;</span>
+<span class="fc" id="L28">        result.heritage = heritage;</span>
+<span class="fc" id="L29">        result.subtype = subtype;</span>
+<span class="fc" id="L30">        result.keyword = keyword;</span>
+<span class="fc" id="L31">        result.comment = comment;</span>
+<span class="fc" id="L32">        return result;</span>
+    }
+
+    @Override public TypeSignature metaSignature() {
+<span class="fc" id="L36">        TypeSignature result = new TypeSignature();</span>
+<span class="fc" id="L37">        result.heritage = TypeList.withDetails(heritage().listMetaTypes());</span>
+<span class="fc" id="L38">        result.subtype = DetailedType.MetaType;</span>
+<span class="fc" id="L39">        result.keyword = keyword;</span>
+<span class="fc" id="L40">        return result;</span>
+    }
+
+<span class="fc" id="L43">    @Override public int hashCode() { return subType().hashCode(); }</span>
+    @Override public boolean equals(Object sign) {
+<span class="nc bnc" id="L45" title="All 6 branches missed.">        return hasAny(sign) &amp;&amp; getClass() == sign.getClass() &amp;&amp; falseOr(s -&gt; this.equals(s), (TypeSignature) sign); }</span>
+
+    protected boolean equals(TypeSignature s) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (!subType().equals(s.subType())) return false;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (hasNoHeritage()) return s.hasNoHeritage();</span>
+<span class="nc" id="L50">        return heritage().equals(s.heritage()); }</span>
+
+    String comment;
+<span class="nc" id="L53">    @Override public String comment() { return this.comment; }</span>
+
+    String keyword;
+<span class="nc" id="L56">    public String subtypeKeyword() { return this.keyword; }</span>
+
+    DetailedType subtype;
+<span class="fc" id="L59">    public DetailedType subType() { return this.subtype; }</span>
+<span class="fc" id="L60">    public TypeList details() { return subType().details(); }</span>
+<span class="fc" id="L61">    public String subtypeName() { return subType().typeName().name(); }</span>
+
+    TypeList heritage;
+<span class="fc" id="L64">    public TypeList heritage() { return this.heritage; }</span>
+<span class="fc" id="L65">    @Override public boolean hasNoHeritage() { return heritage().isEmpty(); }</span>
+    @Override public List&lt;Typified&gt; typeHeritage() {
+<span class="fc" id="L67">        Set&lt;Typified&gt; results = emptySet(Typified.class);</span>
+<span class="fc" id="L68">        heritage().list().forEach(type -&gt; {</span>
+<span class="fc" id="L69">            Typified superType = faceNamed(type.simpleName());</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (hasSome(superType)) {</span>
+<span class="fc" id="L71">                results.add(superType);</span>
+<span class="fc" id="L72">                results.addAll(superType.typeHeritage());</span>
+            }
+<span class="fc" id="L74">        });</span>
+<span class="fc" id="L75">        return copyList(results);</span>
+    }
+
+<span class="fc" id="L78">    public Typified faceNamed(String name) { return faceScope().faceNamed(name); }</span>
+<span class="fc" id="L79">    public Face faceScope() { return containerScope().asType(Face.class); }</span>
+
+<span class="fc" id="L81">    @Override public String description() { return name() + &quot; -&gt; &quot; + baseName(); }</span>
+<span class="fc" id="L82">    @Override public String name() { return subtypeName(); }</span>
+<span class="nc" id="L83">    @Override public String fullName() { return faceScope().fullName(); }</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">    @Override public String baseName() { return !hasHeritage() ? Empty : heritage().list().get(0).toTypeName().fullName(); }</span>
+
+<span class="nc" id="L86">    public List&lt;String&gt; decor() { return notes().typeDecor(); }</span>
+
+    @Override public List&lt;String&gt; knownTypes() {
+<span class="fc" id="L89">        HashSet&lt;String&gt; results = emptySet(String.class);</span>
+<span class="fc" id="L90">        results.addAll(details().inferGenerics());</span>
+<span class="fc" id="L91">        results.addAll(heritage().inferGenerics());</span>
+<span class="fc" id="L92">        return copyList(results);</span>
+    }
+
+<span class="fc" id="L95">    public Emission decorators() { return emitEmpty(); }</span>
+<span class="nc" id="L96">    public Emission emitDetails() { return details().emitItem(); }</span>
+<span class="fc" id="L97">    public Emission metaDecorators() { return emitItems(notes().metaNotesOnlyDecor()); }</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">    Emission emitHeritage() { return hasHeritage() ? heritage().emitItem() : NoValue; }</span>
+    @Override public Emission emitItem() {
+<span class="fc" id="L101">        return emitTypeSignature(decorators(), subtypeName(), details().emitDetails(true), emitHeritage()); }</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">    Emission emitMetaHeritage() { return hasHeritage() ? heritage().emitMetaNames() : NoValue; }</span>
+    @Override public Emission emitMetaItem() {
+<span class="fc" id="L105">        return emitTypeSignature(metaDecorators(), Metatype, NoValue, emitMetaHeritage()); }</span>
+
+} // TypeSignature
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

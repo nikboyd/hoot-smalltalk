@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Scalar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Constants</a> &gt; <span class="el_source">Scalar.java</span></div><h1>Scalar.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Constants;
+
+import Hoot.Runtime.Emissions.Emission;
+import Hoot.Runtime.Emissions.NamedItem;
+import static Hoot.Runtime.Functions.Exceptional.*;
+
+/**
+ * A scalar constant.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public abstract class Scalar extends Constant {
+
+<span class="fc" id="L16">    public Scalar() { super(); }</span>
+<span class="fc" id="L17">    public Scalar(String value) { this(); this.value = value; }</span>
+<span class="nc" id="L18">    public Scalar(NamedItem container) { this(container, Empty); }</span>
+<span class="nc" id="L19">    public Scalar(NamedItem container, String aString) { super(container); value = aString; }</span>
+<span class="nc" id="L20">    @Override public String description() { return getClass().getName() + &quot; = &quot; + rawValue(); }</span>
+
+<span class="pc" id="L22">    protected String value = Empty;</span>
+<span class="fc" id="L23">    public String rawValue() { return this.value; }</span>
+<span class="nc" id="L24">    public void value(String value) { this.value = value; }</span>
+<span class="fc" id="L25">    public String encodedValue() { return rawValue(); }</span>
+
+    public abstract Class primitiveType();
+    public abstract String primitiveFactoryName();
+<span class="nc" id="L29">    public String declaredType() { return primitiveFactoryName(); }</span>
+
+<span class="nc" id="L31">    @Override public Emission emitOperand() { return emitScalar(); }</span>
+<span class="fc" id="L32">    @Override public Emission emitPrimitive() { return emitItem(encodedValue()); }</span>
+<span class="nc" id="L33">    public Emission emitScalar() { return emitScalar(encodedValue(), primitiveFactoryName()); }</span>
+
+<span class="fc" id="L35">    static final Class DefaultType = java.lang.Object.class;</span>
+    @Override public Class resolvedType() {
+<span class="nc" id="L37">        return defaultOrTryQuietly(() -&gt; Class.forName(resolvedTypeName()), DefaultType); }</span>
+
+} // Scalar
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KeywordMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Expressions</a> &gt; <span class="el_source">KeywordMessage.java</span></div><h1>KeywordMessage.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Expressions;
+
+import java.util.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Names.Keyword;
+import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Runtime.Emissions.Emission;
+import static Hoot.Runtime.Emissions.Emission.*;
+import static Hoot.Runtime.Names.Keyword.*;
+import static Hoot.Runtime.Functions.Utils.*;
+import Hoot.Compiler.Scopes.*;
+
+/**
+ * A keyword message.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class KeywordMessage extends Message {
+
+<span class="fc" id="L22">    public KeywordMessage() { super(Scope.current()); }</span>
+    protected KeywordMessage(List&lt;String&gt; heads, List&lt;String&gt; tails, List&lt;Formula&gt; items) {
+<span class="fc" id="L24">        this(); this.heads.addAll(heads); this.tails.addAll(tails); this.terms.addAll(items); }</span>
+
+<span class="fc" id="L26">    public static KeywordMessage frameNew() { return KeywordMessage.with(BasicNew, Formula.with(UnarySequence.frame())); }</span>
+    public static KeywordMessage with(String head, Formula... items) {
+<span class="fc" id="L28">        int count = items.length - 1;</span>
+<span class="fc" id="L29">        List&lt;String&gt; tails = emptyList(String.class);</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        while (count &gt; 0) { tails.add(Colon); count--; }</span>
+<span class="fc" id="L31">        return with(wrap(head), tails, wrap(items));</span>
+    }
+
+    public static KeywordMessage with(List&lt;String&gt; heads, List&lt;String&gt; tails, List&lt;Formula&gt; items) {
+<span class="fc" id="L35">        return new KeywordMessage(heads, tails, items).initialize(); }</span>
+
+//    @Override public void clean() { super.clean(); cleanTerms(); }
+    private KeywordMessage initialize() {
+<span class="fc" id="L39">        this.operands.clear();</span>
+<span class="fc" id="L40">        this.operands.addAll(formulas());</span>
+<span class="fc" id="L41">        this.containAll(formulas());</span>
+<span class="fc" id="L42">        return this; }</span>
+
+
+<span class="fc" id="L45">    List&lt;String&gt; heads = emptyList(String.class);</span>
+<span class="fc" id="L46">    public List&lt;String&gt; heads() { return heads; }</span>
+<span class="fc" id="L47">    List&lt;String&gt; tails = emptyList(String.class);</span>
+<span class="fc" id="L48">    public List&lt;String&gt; tails() { return tails; }</span>
+
+<span class="fc" id="L50">    public Keyword methodKeyword() { return Keyword.with(heads(), tails()); }</span>
+<span class="fc" id="L51">    @Override public String methodName() { return methodKeyword().methodName(); }</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    @Override public boolean needsStatement() { return !this.hasPrimitiveBlock(); }</span>
+<span class="fc" id="L53">    @Override public boolean containsExit() { return matchAny(formulas(), f -&gt; f.exitsMethod()); }</span>
+
+<span class="fc" id="L55">    public boolean needsPrimitiveCall() { return PrimitiveCode.containsKey(methodName()); }</span>
+<span class="fc" id="L56">    public boolean accessesElement() { return ElementMap.containsKey(methodName()); }</span>
+<span class="fc" id="L57">    public boolean hasPrimitiveBlock() { return PrimitiveMap.containsKey(methodName()); }</span>
+<span class="nc" id="L58">    public boolean isLogical() { return Keyword.LogicKeywords.contains(methodName()); }</span>
+<span class="nc" id="L59">    public boolean isPredicated() { return Keyword.PredicatedKeywords.contains(methodName()); }</span>
+<span class="fc" id="L60">    public boolean isExclusivelyDone() { return methodName().startsWith(Keyword.ExclusivelyDo); }</span>
+<span class="fc" id="L61">    public boolean isTypeNew() { return methodName().startsWith(Keyword.NewMessage); }</span>
+<span class="fc" id="L62">    public boolean handlesCurtailment() { return CurtailmentList.contains(methodName()); }</span>
+<span class="nc" id="L63">    public boolean messageExits() { return ExitMap.containsKey(methodName()); }</span>
+
+<span class="fc" id="L65">    List&lt;Formula&gt; terms = emptyList(Formula.class);</span>
+<span class="fc" id="L66">    public List&lt;Formula&gt; formulas() { return terms; }</span>
+<span class="nc" id="L67">    protected void cleanTerms() { formulas().forEach(f -&gt; f.clean()); }</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">    public boolean primaryBlockExits() { return !terms.isEmpty() &amp;&amp; terms.get(0).exitsMethod(); }</span>
+    public boolean takesPredicate(Block aBlock) {
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">        return PredicateMap.containsKey(methodName()) &amp;&amp; matchAny(formulas(),</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">                f -&gt; f.blockIsPrimary() &amp;&amp; f.primaryTerm().primary().isBlock(aBlock)); }</span>
+
+<span class="fc" id="L73">    @Override public List&lt;Emission&gt; emitArguments() { return formulaCodes(); }</span>
+<span class="fc" id="L74">    public List&lt;Emission&gt; formulaPrims() { return map(formulas(), f -&gt; f.emitPrimitive()); }</span>
+<span class="fc" id="L75">    public List&lt;Emission&gt; formulaCodes() { return map(formulas(), f -&gt; f.emitOperand()); }</span>
+<span class="nc" id="L76">    public List&lt;Emission&gt; primaryBlockValues() { return map(formulas(), f -&gt; f.primaryBlock().emitFinalValue()); }</span>
+<span class="fc" id="L77">    public List&lt;Emission&gt; primaryBlockContents() { return map(formulas(), f -&gt; f.primaryBlock().emitContents()); }</span>
+
+<span class="fc" id="L79">    public Emission primaryTermCode() { return formulas().get(0).emitOperand(); }</span>
+<span class="nc" id="L80">    public Emission primaryBlockContent() { return formulas().get(0).primaryBlock().emitContents(); }</span>
+<span class="fc" id="L81">    public Emission secondaryBlockContent() { return formulas().get(1).primaryBlock().emitContents(); }</span>
+
+    protected Emission emitCurtailment(Emission term) {
+<span class="nc" id="L84">        Emission tryBlock = emitCodes(PrimitiveMap, Keyword.Try, term);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (terms.size() &gt; 1) {</span>
+<span class="nc" id="L86">            Emission catchBlock = emitCodes(PrimitiveMap, methodName(), primaryTermCode(), secondaryBlockContent());</span>
+<span class="nc" id="L87">            Emission[] blocks = { tryBlock, catchBlock };</span>
+<span class="nc" id="L88">            return emitSequence(wrap(blocks));</span>
+        }
+        else {
+<span class="nc" id="L91">            Emission finallyBlock = emitCodes(PrimitiveMap, methodName(), primaryBlockContent());</span>
+<span class="nc" id="L92">            Emission[] blocks = { tryBlock, finallyBlock };</span>
+<span class="nc" id="L93">            return emitSequence(wrap(blocks));</span>
+        }
+    }
+
+    protected Emission emitExclusivelyDo(String exclusiveName, Emission term, Block block) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        return exclusiveName.equals(PrimitiveMap.get(Keyword.ExclusivelyDoEach)) ?</span>
+<span class="fc" id="L99">            emitExclusivelyDoEach(exclusiveName, term, block.arguments().get(0), block) :</span>
+<span class="nc" id="L100">            emitExclusively(exclusiveName, term, block.emitContents()); }</span>
+
+    protected Emission emitExclusivelyDoEach(String exclusiveName, Emission term, Variable v, Block block) {
+<span class="fc" id="L103">        return emitExclusively(exclusiveName, term, v.emitType(), emitItem(v.name()), block.emitContents()); }</span>
+
+    protected Emission emitCode(Map&lt;String, String&gt; nameMap, Emission term, List&lt;Emission&gt; arguments) {
+<span class="nc" id="L106">        String methodName = methodName();</span>
+<span class="nc" id="L107">        String codeName = nameMap.get(methodName);</span>
+<span class="nc" id="L108">        String[] argumentNames = ArgumentMap.get(methodName);</span>
+<span class="nc" id="L109">        return emitCode(codeName, argumentNames, term, arguments.get(0));</span>
+    }
+
+    protected Emission emitCode(String codeName, String[] termNames, Emission term, Emission argument) {
+<span class="nc" id="L113">        return emit(codeName).with(termNames[0], term).with(termNames[1], argument); }</span>
+
+    protected Emission emitSingleCode(Map&lt;String, String&gt; nameMap, Emission term, List&lt;Emission&gt; arguments) {
+<span class="nc" id="L116">        String methodName = methodName();</span>
+<span class="nc" id="L117">        String codeName = nameMap.get(methodName);</span>
+<span class="nc" id="L118">        String[] argumentNames = ArgumentMap.get(methodName);</span>
+<span class="nc" id="L119">        return emitSingleCode(codeName, argumentNames, term, arguments);</span>
+    }
+
+    protected Emission emitSingleCode(String codeName, String[] termNames, Emission term, List&lt;Emission&gt; arguments) {
+<span class="nc" id="L123">        return emit(codeName).with(termNames[0], term).with(termNames[1], arguments); }</span>
+
+    protected Emission emitCodes(Map&lt;String, String&gt; nameMap, Emission term, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L126">        String methodName = methodName();</span>
+<span class="fc" id="L127">        String codeName = nameMap.get(methodName);</span>
+<span class="fc" id="L128">        String[] argumentNames = ArgumentMap.get(methodName);</span>
+<span class="fc" id="L129">        return emitCodes(codeName, argumentNames, term, arguments);</span>
+    }
+
+    protected Emission emitCodes(Map&lt;String, String&gt; nameMap, String methodName, Emission term) {
+<span class="fc" id="L133">        return emitCodes(nameMap, methodName, term, emptyList(Emission.class)); }</span>
+
+    protected Emission emitCodes(Map&lt;String, String&gt; nameMap, String methodName, Emission term, Emission... arguments) {
+<span class="fc" id="L136">        return emitCodes(nameMap, methodName, term, wrap(arguments)); }</span>
+
+    protected Emission emitCodes(Map&lt;String, String&gt; nameMap, String methodName, Emission term, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L139">        return emitCodes(nameMap.get(methodName), ArgumentMap.get(methodName), term, arguments); }</span>
+
+    protected Emission emitCodes(String codeName, String[] termNames, Emission term, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L142">        int names = termNames.length; // names</span>
+<span class="fc" id="L143">        int count = arguments.size() + 1; // terms</span>
+
+<span class="fc" id="L145">        Emission result = emit(codeName).with(termNames[0], term);</span>
+<span class="fc bfc" id="L146" title="All 4 branches covered.">        if (names == 2 &amp;&amp; count &gt; names) {</span>
+<span class="fc" id="L147">            result.with(termNames[1], arguments); // single list</span>
+        }
+        else {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            for (int index = 1; index &lt; termNames.length; index++) {</span>
+<span class="fc" id="L151">                result.with(termNames[index], arguments.get(index - 1));</span>
+            }
+        }
+<span class="fc" id="L154">        return result;</span>
+    }
+
+    public boolean emitsAlternative() {
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">        return parentExits() &amp;&amp; Keyword.AlternativesList.contains(methodName()); }</span>
+
+    public Emission emitAlternatives(Emission condition) {
+<span class="nc" id="L161">        return emitAlternatives(condition, primaryBlockValues()); }</span>
+
+    public Emission emitAlternatives(Emission condition, List&lt;Emission&gt; terms) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (terms.size() &lt; 2) terms.add(emitNil());</span>
+<span class="nc" id="L165">        return emitAlternatives(condition, terms.get(0), terms.get(1)); }</span>
+
+    @Override public Emission emitOperand() {
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (emitsAlternative()) return emitAlternatives(emitGuard(formula()));</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (hasPrimitiveBlock())</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            return (handlesCurtailment()) ? emitCurtailedBlocks(formula()) : emitPrimitiveBlock(formula());</span>
+
+<span class="fc" id="L172">        return emitCall(); }</span>
+
+    public Emission emitCall(Formula receiver) {
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (this.hasPrimitiveContext()) return emitPrimitive(receiver);</span>
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">        if (this.needsPrimitiveCall() &amp;&amp; !this.accessesElement()) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (isTypeNew()) { // handle new: message</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">                return receiver.selfIsPrimary()?</span>
+<span class="nc" id="L179">                    emitExpression(receiver.emitOperand(), emitCall()) :</span>
+<span class="fc" id="L180">                    emitTypeNew(receiver.emitOperand(), emitArguments()) ;</span>
+            }
+<span class="fc" id="L182">            return emitPrimitiveCall(receiver);</span>
+        }
+
+<span class="fc" id="L185">        return emitExpression(receiver.emitOperand(), emitCall()); }</span>
+
+    public Emission emitPrimitive(Formula receiver) {
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (emitsAlternative()) return emitAlternatives(emitGuard(receiver));</span>
+
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (isExclusivelyDone())</span>
+<span class="fc" id="L191">            return emitExclusivelyDo(PrimitiveMap.get(methodName()),</span>
+<span class="fc" id="L192">                receiver.emitPrimitive(), formulas().get(0).primaryBlock());</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (hasPrimitiveBlock())</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            return (handlesCurtailment()) ? emitCurtailedBlocks(receiver) : emitPrimitiveBlock(receiver);</span>
+
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (needsPrimitiveCall()) return emitPrimitiveCall(receiver);</span>
+<span class="fc" id="L198">        return emitExpression(receiver.emitPrimitive(), emitCall()); }</span>
+
+    private Emission emitValue(Formula receiver) {
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        return needsPredicate() ? receiver.primaryBlock().emitFinalValue() : receiver.emitPrimitive(); }</span>
+
+<span class="nc" id="L203">    private Emission emitGuard(Formula receiver) { return emitTrueGuard(receiver.emitPrimitive()); }</span>
+    private Emission emitExitBlock(Formula receiver) {
+<span class="nc" id="L205">        return emitCodes(ExitMap, emitGuard(receiver), primaryBlockContents()); }</span>
+
+    private Emission emitPrimitiveBlock(Formula receiver) {
+<span class="fc" id="L208">        return emitCodes(PrimitiveMap, emitValue(receiver), primaryBlockContents()); }</span>
+
+    private Emission emitPrimitiveCall(Formula receiver) {
+<span class="fc" id="L211">        return emitCodes(PrimitiveCode, receiver.emitPrimitive(), formulaPrims()); }</span>
+
+    private Emission emitCurtailedBlocks(Formula receiver) {
+<span class="fc" id="L214">        Emission tryBlock = emitCodes(PrimitiveMap, Keyword.Try, receiver.primaryBlock().emitContents());</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">        if (terms.size() &gt; 1) {</span>
+<span class="fc" id="L216">            Emission catchBlock = emitCodes(PrimitiveMap, methodName(), primaryTermCode(), secondaryBlockContent());</span>
+<span class="fc" id="L217">            Emission[] blocks = { tryBlock, catchBlock };</span>
+<span class="fc" id="L218">            return emitSequence(wrap(blocks));</span>
+        }
+        else {
+<span class="nc" id="L221">            Emission finallyBlock = emitCodes(PrimitiveMap, methodName(), primaryBlockContent());</span>
+<span class="nc" id="L222">            Emission[] blocks = { tryBlock, finallyBlock };</span>
+<span class="nc" id="L223">            return emitSequence(wrap(blocks));</span>
+        }
+    }
+
+
+<span class="fc" id="L228">    static final HashMap&lt;String, String&gt; ExitMap = emptyWordMap();</span>
+<span class="fc" id="L229">    static final HashMap&lt;String, String&gt; ElementMap = emptyWordMap();</span>
+<span class="fc" id="L230">    static final HashMap&lt;String, String&gt; PredicateMap = emptyWordMap();</span>
+<span class="fc" id="L231">    static final HashMap&lt;String, String&gt; PrimitiveMap = emptyWordMap();</span>
+<span class="fc" id="L232">    static final HashMap&lt;String, String&gt; PrimitiveCode = emptyWordMap();</span>
+
+<span class="fc" id="L234">    static final HashMap&lt;String, String[]&gt; ArgumentMap = emptyMap(String[].class);</span>
+<span class="fc" id="L235">    static final ArrayList&lt;String&gt; CurtailmentList = emptyList(String.class);</span>
+
+    static {
+<span class="fc" id="L238">        ElementMap.put(Keyword.At, &quot;ElementGet&quot;);</span>
+<span class="fc" id="L239">        ElementMap.put(Keyword.AtPut, &quot;ElementSet&quot;);</span>
+
+<span class="fc" id="L241">        PredicateMap.put(Or, &quot;Or&quot;);</span>
+<span class="fc" id="L242">        PredicateMap.put(And, &quot;And&quot;);</span>
+<span class="fc" id="L243">        PredicateMap.put(Detect, &quot;Detect&quot;);</span>
+<span class="fc" id="L244">        PredicateMap.put(Detect + &quot;_ifNone&quot;, &quot;DetectIfNone&quot;);</span>
+
+<span class="fc" id="L246">        ExitMap.put(Keyword.IfTrue, &quot;TrueExit&quot;);</span>
+<span class="fc" id="L247">        ExitMap.put(Keyword.IfFalse, &quot;FalseExit&quot;);</span>
+<span class="fc" id="L248">        ExitMap.put(Keyword.IfTrueFalse, &quot;TrueFalseExit&quot;);</span>
+
+<span class="fc" id="L250">        PrimitiveCode.put(Keyword.As, &quot;Cast&quot;);</span>
+<span class="fc" id="L251">        PrimitiveCode.put(Keyword.At, &quot;ElementGet&quot;);</span>
+<span class="fc" id="L252">        PrimitiveCode.put(Keyword.AtPut, &quot;ElementSet&quot;);</span>
+<span class="fc" id="L253">        PrimitiveCode.put(Keyword.InstanceOf, &quot;InstanceOf&quot;);</span>
+<span class="fc" id="L254">        PrimitiveCode.put(Keyword.BasicNew, &quot;New&quot;);</span>
+<span class="fc" id="L255">        PrimitiveCode.put(Keyword.ArrayNew, &quot;NewArray&quot;);</span>
+<span class="fc" id="L256">        PrimitiveCode.put(Keyword.NewMessage, &quot;TypeNew&quot;);</span>
+
+<span class="fc" id="L258">        PrimitiveMap.put(Keyword.WhileTrue, &quot;WhileTrue&quot;);</span>
+<span class="fc" id="L259">        PrimitiveMap.put(Keyword.WhileFalse, &quot;WhileFalse&quot;);</span>
+<span class="fc" id="L260">        PrimitiveMap.put(Keyword.IfTrue, &quot;IfTrue&quot;);</span>
+<span class="fc" id="L261">        PrimitiveMap.put(Keyword.IfFalse, &quot;IfFalse&quot;);</span>
+<span class="fc" id="L262">        PrimitiveMap.put(Keyword.IfTrueFalse, &quot;IfTrueFalse&quot;);</span>
+<span class="fc" id="L263">        PrimitiveMap.put(Keyword.IfFalseTrue, &quot;IfFalseTrue&quot;);</span>
+
+<span class="fc" id="L265">        PrimitiveMap.put(Keyword.Try, &quot;OnlyTry&quot;);</span>
+<span class="fc" id="L266">        PrimitiveMap.put(Keyword.OnDo, &quot;OnlyCatch&quot;);</span>
+<span class="fc" id="L267">        PrimitiveMap.put(Keyword.Ensure, &quot;OnlyEnsure&quot;);</span>
+<span class="fc" id="L268">        PrimitiveMap.put(Keyword.Usage, &quot;UseResource&quot;);</span>
+<span class="fc" id="L269">        PrimitiveMap.put(Keyword.ExclusivelyDo, &quot;ExclusivelyDo&quot;);</span>
+<span class="fc" id="L270">        PrimitiveMap.put(Keyword.ExclusivelyDoEach, &quot;ExclusivelyDoEach&quot;);</span>
+
+<span class="fc" id="L272">        CurtailmentList.add(Keyword.OnDo);</span>
+<span class="fc" id="L273">        CurtailmentList.add(Keyword.Ensure);</span>
+
+<span class="fc" id="L275">        ArgumentMap.put(Keyword.WhileTrue, new String[]{ &quot;condition&quot;, &quot;guardedBlock&quot; });</span>
+<span class="fc" id="L276">        ArgumentMap.put(Keyword.WhileFalse, new String[]{ &quot;condition&quot;, &quot;guardedBlock&quot; });</span>
+
+<span class="fc" id="L278">        ArgumentMap.put(Keyword.IfTrue, new String[]{ &quot;condition&quot;, &quot;trueValue&quot; });</span>
+<span class="fc" id="L279">        ArgumentMap.put(Keyword.IfFalse, new String[]{ &quot;condition&quot;, &quot;falseValue&quot; });</span>
+
+<span class="fc" id="L281">        ArgumentMap.put(Keyword.IfTrueFalse, new String[]{ &quot;condition&quot;, &quot;trueValue&quot;, &quot;falseValue&quot; });</span>
+<span class="fc" id="L282">        ArgumentMap.put(Keyword.IfFalseTrue, new String[]{ &quot;condition&quot;, &quot;falseValue&quot;, &quot;trueValue&quot; });</span>
+
+<span class="fc" id="L284">        ArgumentMap.put(Keyword.Try, new String[]{ &quot;tryBlock&quot; });</span>
+<span class="fc" id="L285">        ArgumentMap.put(Keyword.OnDo, new String[]{ &quot;exceptionClass&quot;, &quot;catchBlock&quot; });</span>
+<span class="fc" id="L286">        ArgumentMap.put(Keyword.Ensure, new String[]{ &quot;finallyBlock&quot; });</span>
+<span class="fc" id="L287">        ArgumentMap.put(Keyword.Usage, new String[]{ &quot;resource&quot;, &quot;block&quot; });</span>
+<span class="fc" id="L288">        ArgumentMap.put(Keyword.ExclusivelyDo, new String[]{&quot;resource&quot;, &quot;block&quot;});</span>
+
+<span class="fc" id="L290">        ArgumentMap.put(Keyword.Throw, new String[]{ &quot;item&quot; });</span>
+<span class="fc" id="L291">        ArgumentMap.put(Keyword.BasicNew, new String[]{ &quot;className&quot;, &quot;arguments&quot; });</span>
+<span class="fc" id="L292">        ArgumentMap.put(Keyword.ArrayNew, new String[]{ &quot;className&quot;, &quot;size&quot; });</span>
+<span class="fc" id="L293">        ArgumentMap.put(Keyword.NewMessage, new String[]{ &quot;className&quot;, &quot;arguments&quot; });</span>
+
+<span class="fc" id="L295">        ArgumentMap.put(Keyword.As, new String[]{ &quot;type&quot;, &quot;value&quot; });</span>
+<span class="fc" id="L296">        ArgumentMap.put(Keyword.At, new String[]{ &quot;name&quot;, &quot;index&quot; });</span>
+<span class="fc" id="L297">        ArgumentMap.put(Keyword.AtPut, new String[]{ &quot;name&quot;, &quot;index&quot;, &quot;value&quot; });</span>
+<span class="fc" id="L298">        ArgumentMap.put(Keyword.InstanceOf, new String[]{ &quot;name&quot;, &quot;className&quot; });</span>
+<span class="fc" id="L299">    }</span>
+
+} // KeywordMessage
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

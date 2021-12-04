@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicSignature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">BasicSignature.java</span></div><h1>BasicSignature.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+import Hoot.Runtime.Notes.NoteList;
+import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Notes.DetailedType;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Names.Operator.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+import Hoot.Runtime.Emissions.*;
+
+/**
+ * A basic method signature.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public abstract class BasicSignature extends NamedItem implements ScopeSource {
+
+<span class="fc" id="L22">    public BasicSignature() { super(Scope.current()); }</span>
+<span class="fc" id="L23">    protected Table args = new Table(Scope.current());</span>
+<span class="fc" id="L24">    public Table args() { return this.args; }</span>
+<span class="fc" id="L25">    public List&lt;Variable&gt; arguments() { return args().definedSymbols(); }</span>
+<span class="fc" id="L26">    @Override public void clean() { super.clean(); args().clean(); }</span>
+<span class="fc" id="L27">    public boolean hasLocal(String symbolName) { return args().containsSymbol(symbolName); }</span>
+<span class="fc" id="L28">    public Variable localNamed(String symbolName) { return args().symbolNamed(symbolName); }</span>
+
+    protected DetailedType resultType;
+<span class="fc" id="L31">    public DetailedType resultType() { return this.resultType; }</span>
+<span class="fc" id="L32">    public boolean needsDefaultType() { return hasNo(resultType()); }</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    public boolean hasResultType() { return !needsDefaultType(); }</span>
+    public boolean returnsVoid() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        return needsDefaultType() ? false : resultType().typeName().isVoid(); }</span>
+
+    @Override public String description() {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        return method().isStatic() ?</span>
+<span class="fc" id="L39">                face().typeName() + AssociateStatic + name() :</span>
+<span class="fc" id="L40">                face().typeName() + Associate + name();</span>
+    }
+
+<span class="fc" id="L43">    @Override public NoteList notes() { return method().notes(); }</span>
+<span class="nc" id="L44">    public BasicSignature eraseTypes() { return this; }</span>
+<span class="fc" id="L45">    public Emission emitDecorators() { return emitItems(notes().methodNotesOnlyDecor()); }</span>
+<span class="pc bpc" id="L46" title="1 of 4 branches missed.">    public boolean hasResult() { return !(method().isConstructor() &amp;&amp; !returnsVoid()); }</span>
+
+<span class="fc" id="L48">    public String defaultTypeName() { return face().defaultName(); }</span>
+<span class="fc" id="L49">    public DetailedType defaultType() { return DetailedType.named(defaultTypeName()); }</span>
+<span class="fc" id="L50">    public List&lt;Emission&gt; emitArguments() { return map(arguments(), a -&gt; a.emitArgument()); }</span>
+
+    static final String Details = &quot;Details&quot;;
+<span class="fc" id="L53">    public Emission emitDetails() { return emitItems(emit(Details).values(emitGenericDetails())); }</span>
+
+    public DetailedType resolvedType() {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (method().isConstructor()) return defaultType();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        return needsDefaultType() ?  defaultType() : resultType(); }</span>
+
+    public Emission emitResultType() {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (method().isConstructor()) return null;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return needsDefaultType() ?</span>
+<span class="fc" id="L62">                emitItem(defaultTypeName()) : // default type</span>
+<span class="fc" id="L63">                resultType().emitCode(false); // specified type</span>
+    }
+
+<span class="fc" id="L66">    protected HashMap&lt;String, Emission&gt; knownTypes = emptyMap(Emission.class);</span>
+    public void mergeDetails(Map&lt;String, Emission&gt; map) {
+<span class="fc" id="L68">        map.keySet().forEach(key -&gt; {</span>
+<span class="fc" id="L69">            knownTypes.putIfAbsent(key, map.get(key));</span>
+<span class="fc" id="L70">        });</span>
+<span class="fc" id="L71">    }</span>
+
+    public void mergeDetails() {
+<span class="fc" id="L74">        mergeDetails(resultType());</span>
+//        for (Variable v : arguments()) {
+//            if (v.hasTypeNote()) mergeDetails(v.notedType());
+//        }
+<span class="fc" id="L78">        selectList(arguments(),</span>
+<span class="fc" id="L79">            v -&gt; v.hasTypeNote()).forEach(</span>
+<span class="fc" id="L80">                v -&gt; mergeDetails(v.notedType()));</span>
+<span class="fc" id="L81">    }</span>
+
+    public void mergeDetails(DetailedType type) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (type == null) return;</span>
+<span class="fc" id="L85">        boolean wantsBases = true;</span>
+<span class="fc" id="L86">        mergeDetails(type.extractGenerics(wantsBases));</span>
+<span class="fc" id="L87">    }</span>
+
+    private List&lt;Emission&gt; emitGenericDetails() {
+<span class="fc" id="L90">        HashSet&lt;String&gt; types = copySet(knownTypes.keySet());</span>
+<span class="fc bfc" id="L91" title="All 4 branches covered.">        if (!method().isStatic() &amp;&amp; !face().isMetaface()) {</span>
+<span class="fc" id="L92">            types.removeAll(facialScope().knownTypes());</span>
+        }
+
+<span class="fc" id="L95">        List&lt;Emission&gt; results = emptyList(Emission.class);</span>
+<span class="fc" id="L96">        types.forEach(typeName -&gt; results.add(knownTypes.get(typeName)));</span>
+<span class="fc" id="L97">        return results;</span>
+    }
+
+<span class="fc" id="L100">    @Override public Emission emitItem() { return emitMethodSignature(</span>
+<span class="fc" id="L101">        name(), emitDecorators(), emitDetails(), emitResultType(), emitArguments()); }</span>
+
+} // BasicSignature
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

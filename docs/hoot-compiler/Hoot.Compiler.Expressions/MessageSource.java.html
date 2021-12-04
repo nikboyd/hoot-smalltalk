@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageSource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Expressions</a> &gt; <span class="el_source">MessageSource.java</span></div><h1>MessageSource.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Expressions;
+
+import java.util.*;
+import Hoot.Runtime.Emissions.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+
+/**
+ * A source of emissions for messages.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public interface MessageSource extends EmissionSource {
+
+<span class="nc" id="L16">    default Emission emitTrueGuard(Emission value) { return emit(&quot;TrueGuard&quot;).value(value); }</span>
+<span class="nc" id="L17">    default Emission emitFalseGuard(Emission value) { return emit(&quot;FalseGuard&quot;).value(value); }</span>
+<span class="nc" id="L18">    default Emission emitClosureValue(Emission aBlock) { return emit(&quot;ClosureValue&quot;).with(&quot;closure&quot;, aBlock); }</span>
+
+    default Emission emitAlternatives(Emission condition, Emission trueBlock, Emission falseBlock) {
+<span class="nc" id="L21">        return emit(&quot;Alternatives&quot;).with(&quot;condition&quot;, condition)</span>
+<span class="nc" id="L22">                .with(&quot;trueValue&quot;, trueBlock).with(&quot;falseValue&quot;, falseBlock); }</span>
+
+    default Emission emitGuardedBlock(Emission condition, Emission aBlock) {
+<span class="nc" id="L25">        return emit(&quot;GuardedBlock&quot;).with(&quot;condition&quot;, condition).with(&quot;aBlock&quot;, aBlock); }</span>
+
+    default Emission emitGuardedPair(Emission condition, Emission trueBlock, Emission falseBlock) {
+<span class="nc" id="L28">        return emit(&quot;GuardedPair&quot;).with(&quot;condition&quot;, condition)</span>
+<span class="nc" id="L29">                .with(&quot;trueValue&quot;, trueBlock).with(&quot;falseValue&quot;, falseBlock); }</span>
+
+    default Emission emitWhileLoop(Emission condition, Emission guardedBlock) {
+<span class="nc" id="L32">        return emit(&quot;WhileLoop&quot;).with(&quot;condition&quot;, condition).with(&quot;guardedBlock&quot;, guardedBlock); }</span>
+
+    default Emission emitExclusively(String item, Emission term, Emission aBlock) {
+<span class="nc" id="L35">        return emit(item).with(&quot;resource&quot;, term).with(&quot;block&quot;, aBlock); }</span>
+
+    default Emission emitExclusively(String item, Emission term, Emission type, Emission name, Emission aBlock) {
+<span class="fc" id="L38">        return emit(item).with(&quot;resource&quot;, term).with(&quot;elementType&quot;, type).with(&quot;elementName&quot;, name).with(&quot;block&quot;, aBlock); }</span>
+
+    default Emission emitOperation(String operator, Emission argument) {
+<span class="fc" id="L41">        return emit(&quot;Operation&quot;).with(&quot;operator&quot;, operator).with(&quot;argument&quot;, argument); }</span>
+
+    default Emission emitCall(String methodName, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L44">        return emit(&quot;Call&quot;).with(&quot;methodName&quot;, methodName).with(&quot;arguments&quot;, arguments); }</span>
+
+    default Emission emitPerform(Emission item, String name, Emission m, List&lt;Emission&gt; args) {
+<span class="nc" id="L47">        return emit(&quot;Perform&quot;).with(&quot;operand&quot;, item).with(&quot;name&quot;, name).with(&quot;methodName&quot;, m).with(&quot;arguments&quot;, args); }</span>
+
+    default Emission emitConstruct(Emission reference, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L50">        return emit(&quot;Construct&quot;).with(&quot;reference&quot;, reference).with(&quot;arguments&quot;, arguments); }</span>
+
+    default Emission emitTypeNew(Emission className, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L53">        return emit(&quot;TypeNew&quot;).with(&quot;className&quot;, className).with(&quot;arguments&quot;, arguments); }</span>
+
+    default Emission emitNew(Emission className, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L56">        return emit(&quot;New&quot;).with(&quot;className&quot;, className).with(&quot;arguments&quot;, arguments); }</span>
+
+    default Emission emitNewArray(Emission className) {
+<span class="fc" id="L59">        return emit(&quot;NewArray&quot;).with(&quot;className&quot;, className).with(&quot;size&quot;, emitItem(&quot;0&quot;)); }</span>
+
+<span class="fc" id="L61">    default Emission emitPath(String path) { return emit(&quot;Path&quot;).value(path); }</span>
+<span class="fc" id="L62">    default Emission emitThrow(Emission item) { return emit(&quot;Throw&quot;).with(&quot;item&quot;, item); }</span>
+<span class="nc" id="L63">    default Emission emitThrowSelf() { return emit(&quot;ThrowSelf&quot;); }</span>
+
+    static final String TypeAsClass = &quot;%s.class&quot;;
+    static final String TypeAssigned = &quot;%s %s =&quot;;
+    default Emission emitAssignedCascades(List&lt;Emission&gt; messages, String className, String variableName) {
+<span class="nc" id="L68">        return emitCascades(messages, className, format(TypeAssigned, className, variableName), null); }</span>
+
+    default Emission emitExitCascades(List&lt;Emission&gt; messages, String className, boolean isResult, boolean framed) {
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        return emitCascades(messages, className, isResult ? &quot;return&quot; : null, framed ? &quot;framed&quot; : null); }</span>
+
+    default Emission emitSelfCascades(List&lt;Emission&gt; messages, String className, boolean isResult, boolean framed) {
+<span class="fc" id="L74">        return emit(&quot;CascadesOnSelf&quot;).with(&quot;messages&quot;, messages)</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">            .with(&quot;resultType&quot;, className).with(&quot;exit&quot;,  isResult ? &quot;return&quot; : null).with(&quot;framed&quot;, framed ? &quot;framed&quot; : null); }</span>
+
+    default Emission emitCascades(List&lt;Emission&gt; messages, String typeName, String exit, String framed) {
+<span class="nc" id="L78">        return emit(&quot;Cascades&quot;).with(&quot;messages&quot;, messages).with(&quot;resultType&quot;, typeName).with(&quot;exit&quot;, exit).with(&quot;framed&quot;, framed); }</span>
+
+} // MessageSource
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

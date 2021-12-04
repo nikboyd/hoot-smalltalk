@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Nest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">Nest.java</span></div><h1>Nest.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import Hoot.Runtime.Emissions.Emission;
+import Hoot.Runtime.Values.Operand;
+
+/**
+ * A nested blocked.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Nest extends Operand {
+
+<span class="fc" id="L15">    public Nest(Block aBlock) { super(aBlock.container()); nestedBlock = aBlock.inside(this); }</span>
+<span class="nc" id="L16">    public static Nest emptyBlock() { return new Nest(Block.emptyBlock()); }</span>
+
+    Block nestedBlock;
+<span class="fc" id="L19">    public Block nestedBlock() { return nestedBlock; }</span>
+<span class="fc" id="L20">    @Override public void clean() { super.clean(); nestedBlock.clean(); }</span>
+<span class="nc" id="L21">    @Override public boolean isNest() { return true; }</span>
+//    @Override public boolean isExit() { return nestedBlock().isExit(); }
+<span class="fc" id="L23">    @Override public boolean containsExit() { return nestedBlock().containsExit(); }</span>
+
+<span class="fc" id="L25">    @Override public Emission emitOperand() { return emitOptimized(); }</span>
+<span class="fc" id="L26">    @Override public Emission emitOptimized() { return nestedBlock().emitOptimized(); }</span>
+
+} // Nest
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

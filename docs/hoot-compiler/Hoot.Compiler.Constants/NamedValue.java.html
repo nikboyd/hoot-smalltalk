@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NamedValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Constants</a> &gt; <span class="el_source">NamedValue.java</span></div><h1>NamedValue.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Constants;
+
+import Hoot.Runtime.Emissions.*;
+import Hoot.Runtime.Faces.Named;
+
+/**
+ * A named value.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class NamedValue extends Constant implements Named {
+
+<span class="fc" id="L15">    public NamedValue() { super(); }</span>
+<span class="fc" id="L16">    public NamedValue(String name, Item value) { this(); this.name = name; this.value = value; }</span>
+<span class="fc" id="L17">    public static NamedValue with(String name, Item value) { return new NamedValue(name, value); }</span>
+
+    protected String name;
+<span class="fc" id="L20">    @Override public String name() { return name; }</span>
+
+    protected Item value;
+<span class="fc" id="L23">    public Item itemValue() { return value; }</span>
+<span class="fc" id="L24">    public Scalar scalarValue() { return (Scalar)itemValue(); }</span>
+
+    @Override public Emission emitItem() {
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        return (name().isEmpty()) ? itemValue().emitItem() : emitPair(name(), itemValue().emitItem()); }</span>
+
+} // NamedValue
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

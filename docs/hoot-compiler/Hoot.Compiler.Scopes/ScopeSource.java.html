@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScopeSource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Scopes</a> &gt; <span class="el_source">ScopeSource.java</span></div><h1>ScopeSource.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Scopes;
+
+import java.util.*;
+import Hoot.Runtime.Values.Variable;
+
+import Hoot.Runtime.Emissions.*;
+import static Hoot.Runtime.Emissions.Emission.*;
+
+/**
+ * Grafts scopes and their emissions onto items of different kinds.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public interface ScopeSource extends EmissionSource {
+
+<span class="fc" id="L18">    default File file() { return File.from((Item)this); }</span>
+<span class="fc" id="L19">    default Face face() { return Face.from((Item)this); }</span>
+<span class="nc" id="L20">    default Variable variable() { return Variable.from((Item)this); }</span>
+<span class="fc" id="L21">    default Method method() { return Method.from((Item)this); }</span>
+<span class="fc" id="L22">    default Block block() { return Block.from((Item)this); }</span>
+<span class="nc" id="L23">    default Block parentBlock() { return Block.from(((Item)this).parentItem(Block.class)); }</span>
+
+    default Emission emitOptimizedBlock(Emission locals, int level, String type, Emission arguments, Emission content, List&lt;Emission&gt; argNames) {
+<span class="fc" id="L26">        return emit(&quot;OptimizedBlock&quot;).with(&quot;locals&quot;, locals).with(&quot;argNames&quot;, emitList(argNames))</span>
+<span class="fc" id="L27">                .with(&quot;level&quot;, emitItem(level+&quot;&quot;)).with(&quot;prior&quot;, (level-1)+&quot;&quot;)</span>
+<span class="fc" id="L28">                .with(&quot;closureType&quot;, type).with(&quot;arguments&quot;, arguments).with(&quot;content&quot;, content); }</span>
+
+    default Emission emitBlockSignature(String name, Emission erasure, Emission arguments, Emission exceptions) {
+<span class="nc" id="L31">        return emit(&quot;BlockSignature&quot;).name(name).with(&quot;erasure&quot;, erasure)</span>
+<span class="nc" id="L32">                .with(&quot;arguments&quot;, arguments).with(&quot;exceptions&quot;, exceptions); }</span>
+
+    default Emission emitMethodSignature(String name, Emission notes, Emission details, Emission type, List&lt;Emission&gt; arguments) {
+<span class="fc" id="L35">        return emit(&quot;MethodSignature&quot;).name(name).notes(notes).details(details).type(type).with(&quot;arguments&quot;, arguments); }</span>
+
+    default Emission emitMethodScope(
+            String text, List&lt;Emission&gt; locals, String name, Emission s, Emission c, String f, Emission con) {
+<span class="fc" id="L39">        return emit(&quot;MethodScope&quot;).with(&quot;comment&quot;, text).with(&quot;locals&quot;, locals)</span>
+<span class="fc" id="L40">                .with(&quot;type&quot;, name).with(&quot;signature&quot;, s).with(&quot;content&quot;, c)</span>
+<span class="fc" id="L41">                .with(&quot;framed&quot;, f).with(&quot;construct&quot;, con); }</span>
+
+    default Emission emitMethodEmpty(String text, String name, Emission s) {
+<span class="fc" id="L44">        return emit(&quot;MethodEmpty&quot;).with(&quot;comment&quot;, text).with(&quot;type&quot;, name).with(&quot;signature&quot;, s); }</span>
+
+    default Emission emitNilSubclassSignature(
+            Emission notes, String name, Emission details, Emission faces) {
+<span class="nc" id="L48">        return emit(&quot;NilSubclassSignature&quot;).with(&quot;notes&quot;, notes).with(&quot;className&quot;, name)</span>
+<span class="nc" id="L49">                .with(&quot;details&quot;, details).with(&quot;faces&quot;, faces); }</span>
+
+    default Emission emitClassSignature(
+            Emission notes, String name, Emission details, Emission superClass, Emission faces) {
+<span class="fc" id="L53">        return emit(&quot;ClassSignature&quot;).with(&quot;notes&quot;, notes).with(&quot;className&quot;, name)</span>
+<span class="fc" id="L54">                .with(&quot;details&quot;, details).with(&quot;superClass&quot;, superClass).with(&quot;faces&quot;, faces); }</span>
+
+    default Emission emitTypeSignature(Emission notes, String name, Emission details, Emission heritage) {
+<span class="fc" id="L57">        return emit(&quot;TypeSignature&quot;).with(&quot;notes&quot;, notes).with(&quot;typeName&quot;, name)</span>
+<span class="fc" id="L58">                .with(&quot;details&quot;, details).with(&quot;superTypes&quot;, heritage); }</span>
+
+    default Emission emitLibraryScope(String notice, Emission pkgName, List&lt;Emission&gt; imports) {
+<span class="fc" id="L61">        return emit(&quot;LibraryScope&quot;).with(&quot;notice&quot;, notice).with(&quot;packageName&quot;, pkgName).with(&quot;imports&quot;, imports); }</span>
+
+    default Emission emitLibraryType(Emission libs, Emission sig, List&lt;Emission&gt; locals, Emission metaFace, List&lt;Emission&gt; methods) {
+<span class="fc" id="L64">        return emit(&quot;LibraryType&quot;)</span>
+<span class="fc" id="L65">                .with(&quot;libs&quot;, libs)</span>
+<span class="fc" id="L66">                .with(&quot;signature&quot;, sig)</span>
+<span class="fc" id="L67">                .with(&quot;metaFace&quot;, metaFace)</span>
+<span class="fc" id="L68">                .with(&quot;locals&quot;, locals)</span>
+<span class="fc" id="L69">                .with(&quot;methods&quot;, emitLines(methods));</span>
+    }
+
+    default Emission emitMetaclass(String name, String superClass, Emission sig, List&lt;Emission&gt; locals, List&lt;Emission&gt; methods) {
+<span class="fc" id="L73">        return emit(&quot;Metaclass&quot;)</span>
+<span class="fc" id="L74">                .with(&quot;className&quot;, name)</span>
+<span class="fc" id="L75">                .with(&quot;superClass&quot;, superClass)</span>
+<span class="fc" id="L76">                .with(&quot;signature&quot;, sig)</span>
+<span class="fc" id="L77">                .with(&quot;locals&quot;, locals)</span>
+<span class="fc" id="L78">                .with(&quot;methods&quot;, emitLines(methods));</span>
+    }
+
+    default Emission emitMetatype(Emission sig, List&lt;Emission&gt; methods) {
+<span class="fc" id="L82">        return emit(&quot;Metatype&quot;)</span>
+<span class="fc" id="L83">                .with(&quot;signature&quot;, sig)</span>
+<span class="fc" id="L84">                .with(&quot;methods&quot;, emitLines(methods));</span>
+    }
+
+} // ScopeSource
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

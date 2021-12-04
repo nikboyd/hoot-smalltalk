@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Constant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-compiler</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Constants</a> &gt; <span class="el_source">Constant.java</span></div><h1>Constant.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Constants;
+
+import Hoot.Runtime.Faces.Selector;
+import Hoot.Runtime.Values.Operand;
+import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Compiler.Scopes.ScopeSource;
+import Hoot.Runtime.Emissions.NamedItem;
+
+/**
+ * A constant value.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 1999,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public abstract class Constant extends Operand implements ScopeSource, LiteralSource {
+
+<span class="fc" id="L18">    public Constant() { this(Scope.current()); }</span>
+<span class="fc" id="L19">    public Constant(NamedItem container) { super(container); }</span>
+
+<span class="nc" id="L21">    @Override public boolean isLiteral() { return true; }</span>
+<span class="nc" id="L22">    @Override public boolean optimizes(Selector selector) { return true; }</span>
+
+} // Constant
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
