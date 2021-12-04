@@ -149,7 +149,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 #### Bundled Libraries
 
 Notice the last two projects listed above.
-These are the bundled libraries that are hosted in [GitHub](#bundle-repository).
+These are the bundled libraries that are hosted in [GitHub][hub-bundles].
 
 To simplify library dependencies in [other projects][eco-depot], it was decided to bundle the Hoot
 libraries resulting from the Maven build process.
@@ -164,7 +164,7 @@ Running a resulting [application][console-apps] needs the Hoot Smalltalk librari
 This scenario uses the [hoot-libs-bundle][libs-bundle].
 
 GitHub provides a package registry for hosting Maven artifacts.
-The bundles and compiler plugin are hosted in the [package registry][packed-bundles] for this repository.
+The bundles and compiler plugin are hosted in the [package registry][hub-bundles] for this repository.
 
 #### Build and Coverage Pipelines
 
@@ -179,17 +179,7 @@ runs-on: macos-latest
 
 After reviewing some alternatives for hosting the build, [GitHub Actions][hub-build]
 was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
-
-
-And so, the Hoot Smalltalk build was migrated from GitLab over to Google.
-A few interesting challenges were then tackled and solved, including [how to cache][build-cache]
-the local Maven JAR repository, so that repeated builds were not required to download **all**
-the library JARs used in the build from scratch every time the build runs.
-This caching improved the build cycle time substantially.
-
-That said, a GitLab [pipeline][lab-pipe] is used to publish test coverage reports linked to the badges above.
-The [build pipeline][build-pipe] collects the coverage reports into a ZIP file, uploads that to GitLab, and then
-[triggers][lab-trigger] the publication of the coverage reports.
+Thereafter, the [test coverage reports][hub-coverage] were hosted in GitHub with Pages.
 
 #### Hoot Smalltalk Compiler
 
@@ -524,7 +514,8 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [cloud-build]: https://cloud.google.com/cloud-build
 [cloud-smith]: https://cloudsmith.com/
 
-[packed-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
+[hub-coverage]: https://nikboyd.github.io/hoot-smalltalk/
+[hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
 [hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
 [hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
 [hub-pipe]: .github/workflows/main.yml#L11
