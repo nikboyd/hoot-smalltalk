@@ -10,7 +10,7 @@ with those of Java and its virtual machine VM.
 | [Introduction](#introduction) | some background for Hoot Smalltalk |
 | [Platform Requirements](#platform-requirements) | tools needed to build Hoot Smalltalk and work with it |
 | [Project Structure](#project-structure) | structure of this project repository |
-| [Bundle Repository](#bundle-repository) | location and configuration of the project bundles |
+| [Bundled Libraries](#bundled-libraries) | location and configuration of the project bundles |
 | [Hoot Smalltalk Compiler](#hoot-smalltalk-compiler) | tools used to construct the compiler |
 | [Source Code Inclusion](#source-code-inclusion) | following in the footsteps of long-standing Smalltalk tradition |
 | [Project Planning](#project-planning) | recommendations for how to structure _your_ Hoot Smalltalk projects |
@@ -149,7 +149,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 #### Bundled Libraries
 
 Notice the last two projects listed above.
-These are the bundled libraries that are hosted in [Cloudsmith](#bundle-repository).
+These are the bundled libraries that are hosted in [GitHub](#bundle-repository).
 
 To simplify library dependencies in [other projects][eco-depot], it was decided to bundle the Hoot
 libraries resulting from the Maven build process.
@@ -160,46 +160,26 @@ Two scenarios are most often used:
 Compiling Hoot Smalltalk code needs the Hoot Smalltalk compiler with its associated Maven plugin
 and support libraries. This scenario needs the [hoot-maven-plugin](#hoot-compiler-plugin)
 and [hoot-compiler-bundle](#hoot-smalltalk-compiler).
-
 Running a resulting [application][console-apps] needs the Hoot Smalltalk libraries and supporting runtime libraries.
 This scenario uses the [hoot-libs-bundle][libs-bundle].
 
-#### Bundle Repository
-
-During development, it was discovered that GitLab's package repository was not working well for hosting the Maven
-artifacts that were being built.
-After surveying the available providers, plans and pricing, and some experiments, [Cloudsmith][cloud-smith] was chosen
-to host the Maven [artifacts][cloud-repo] that result from the build process.
-[Cloudsmith][cloud-smith] provides a complete suite of tools for managing hosted binary repositories, including
-its website, a command line tool, and proper integration with Maven.
-
-Here are sections for your base **pom.xml** recommended for getting access to the bundles and plugin.
-
-```xml
-<repositories>
-    <repository>
-        <id>hoot-libs</id>
-        <url>https://maven.cloudsmith.io/educery/hoot-libs/</url>
-    </repository>
-</repositories>
-
-<pluginRepositories>
-    <pluginRepository>
-        <id>hoot-libs</id>
-        <url>https://maven.cloudsmith.io/educery/hoot-libs/</url>
-    </pluginRepository>
-</pluginRepositories>
-```
+GitHub provides a package registry for hosting Maven artifacts.
+The bundles and compiler plugin are hosted in the [package registry][packed-bundles] for this repository.
 
 #### Build and Coverage Pipelines
 
 The project build process is driven by a set of [shell scripts](shell/README.md#shell-scripts).
 During development, it was discovered the Maven builds were a bit compute hungry
 and really run _much_ faster with more than one core.
-After reviewing some alternatives for hosting the build, [Google Cloud Build][cloud-build]
-was chosen to host the Hoot Smalltalk [build pipeline][build-pipe],
-in part because it supports [Docker][maven-docker], but also because it was easy to get a custom
-OpenJDK + Maven container running with [multiple cores (8)][multi-core].
+Fortunately, GitHub supports builds using [**macOS** with 3 cores][hub-runners] in its workflows.
+
+```
+runs-on: macos-latest
+```
+
+After reviewing some alternatives for hosting the build, [GitHub Actions][hub-build]
+was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
+
 
 And so, the Hoot Smalltalk build was migrated from GitLab over to Google.
 A few interesting challenges were then tackled and solved, including [how to cache][build-cache]
@@ -543,6 +523,12 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [cloud-repo]: https://cloudsmith.io/~educery/repos/hoot-libs/packages/
 [cloud-build]: https://cloud.google.com/cloud-build
 [cloud-smith]: https://cloudsmith.com/
+
+[packed-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
+[hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
+[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+[hub-pipe]: .github/workflows/main.yml#L11
+
 [build]: shell/build-all-mods.sh
 [build-pipe]: cloudbuild.yaml#L4
 [build-cache]: cloudbuild.yaml#L36
