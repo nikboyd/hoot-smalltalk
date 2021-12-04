@@ -20,9 +20,9 @@ if [[ $mvn_code == 0 ]]; then
 
         if [[ -d docs/$lib_name ]]; then rm -R docs/$lib_name/ ; fi
         cp -R $cover_folder docs/$lib_name/
-
-        git add -A
-        git commit -m "generated test coverage reports"
-        git push
     done
+
+    git add -A
+    git commit -m "generated test coverage reports"
+    git push
 fi
