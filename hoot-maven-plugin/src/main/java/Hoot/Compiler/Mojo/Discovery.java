@@ -1,4 +1,4 @@
-package Hoot.Runtime.Maps;
+package Hoot.Compiler.Mojo;
 
 
 import java.io.*;

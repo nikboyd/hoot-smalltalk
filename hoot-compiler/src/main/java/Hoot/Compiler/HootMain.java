@@ -49,7 +49,7 @@ public class HootMain implements Logging {
     CommandLine parseArgs(String[] args) { return nullOrTryLoudly(() -> parser.parse(availableOptions(), args)); }
 
     CommandLine command;
-    HootMain parseCommand(String[] args) { command = parseArgs(args); return this; }
+    HootMain parseCommand(String[] args) { command = parseArgs(args); report("compiler args: " + wrap(args).toString()); return this; }
     HootMain runCommand() { if (helpWanted()) printHelp(); else compilePackages(); return this; }
 
     boolean helpWanted() { return falseOr((c) -> c.hasOption(Help), command); }
@@ -84,22 +84,24 @@ public class HootMain implements Logging {
     boolean noPackages() { return packages().isEmpty(); }
     boolean somePackages() { return !noPackages(); }
 
-    public static final String WildCard = "*";
     List<String> packageList() { return wrap(command.getOptionValues(Packages)); }
     void cachePackages() {
-        packages().addAll(selectList(packageList(), p -> !p.isEmpty() && !WildCard.equals(p)));
-        if (noPackages()) packages().addAll(collectPackagesUnder(sourceFolder));
+        packages().addAll(selectList(packageList(), p -> !p.isEmpty()));
+        if (noPackages()) {
+            packages().addAll(collectPackagesUnder(sourceFolder));
+        }
     }
 
     List<String> collectPackagesUnder(File hootFolder) {
         return collectList(list -> {
             File[] subFolders = hootFolder.listFiles(FolderFilter);
             wrap(subFolders).forEach(f -> {
-                String folderName = f.getName();
-                File resultFolder = new File(hootFolder, folderName);
-                String packageName = Package.nameFrom(sourceFolder, resultFolder);
-                list.addAll(collectPackagesUnder(resultFolder));
-                list.add(packageName);
+                File packageFolder = new File(hootFolder, f.getName());
+                if (packageFolder.isDirectory()) {
+                    String packageName = Package.nameFrom(sourceFolder, packageFolder);
+                    list.addAll(collectPackagesUnder(packageFolder));
+                    list.add(packageName);
+                }
             });
         });
     }
@@ -124,7 +126,7 @@ public class HootMain implements Logging {
     Options availableOptions() { return collectWith(new Options(), listOptions(), (opts,opt) -> opts.addOption(opt)); }
     List<Option> listOptions() { return wrap(
         baseOption(), sourceOption(), targetOption(), packageOption(),
-        testSourceOption(), testOption(), helpOption() //cleanOption(),
+        testSourceOption(), testOption(), helpOption()
         ); }
 
     String basePath;
@@ -158,7 +160,6 @@ public class HootMain implements Logging {
         basicPaths.addAll(wrap(paths));
         loadBasePaths(wrap(paths));
         UnitFactory = StandardUnitFactory;
-//        report(Empty);
     }
 
     static final String Comparison = "comparing: '%s' and '%s'";
@@ -221,7 +222,7 @@ public class HootMain implements Logging {
     static final String Translation = "translating %s";
     void compilePackage(Package p) {
         if (!p.sourceFaces().isEmpty()) {
-            report(Empty); //cleanUp(p);
+            report(Empty);
             report(format(Translation, p.name()));
             runLoudly(() -> { // any throwable is seriously jacked! --nik
                 Map<String, UnitFile> fileMap = p.parseSources();
@@ -229,26 +230,6 @@ public class HootMain implements Logging {
             });
         }
     }
-
-    // clean option no longer needed due to maven integration! --nik
-
-//    public static final String Clean = "clean";
-//    static String clean() { return shortened(Clean); }
-//    Option cleanOption() { return buildOption(Clean, "optional: removes any previously generated code").build(); }
-//    boolean cleanWanted() { return falseOr((c) -> c.hasOption(Clean), command); }
-
-//    static final String Cleaning = "cleaning %s";
-//    void cleanUp(Package p) {
-//        File javaFolder = p.targetFolder();
-//        if (javaFolder.exists() && cleanWanted()) {
-//            report(format(Cleaning, p.name()));
-//            deleteQuietly(javaFolder);
-//        }
-//
-//        if (!javaFolder.exists()) {
-//            javaFolder.mkdirs();
-//        }
-//    }
 
     static final String Dash = "-";
     static final String Optional = Dash + Dash;
@@ -262,35 +243,34 @@ public class HootMain implements Logging {
     public static final String[] Optionals = { Help, Test };
     public static final Map<String, String> OptionalBools = emptyMap();
     static {
-//        OptionalBools.put(Clean, "true");
         OptionalBools.put(Help, "false");
         OptionalBools.put(Test, "false");
     }
 
     static final String Base = "base";
-    Option baseOption() { return baseOptBuilder().hasArg().build(); }
+    Option baseOption() { return baseOptBuilder().optionalArg(true).hasArg().build(); }
     Builder baseOptBuilder() { return buildOption(Base, Base+Path, "optional: base folder path, assumes 'user.dir' value"); }
 
-    Option sourceOption() { return sourceOptBuilder().hasArg().build(); }
+    Option sourceOption() { return sourceOptBuilder().optionalArg(true).hasArg().build(); }
     Builder sourceOptBuilder() { return buildOption(Source, Source+Path, "optional: Hoot sources folder path"); }
 
-    Option testSourceOption() { return testSourceBuilder().hasArg().build(); }
+    Option testSourceOption() { return testSourceBuilder().optionalArg(true).hasArg().build(); }
     Builder testSourceBuilder() { return buildOption(TestSource, Source+Path, "optional: Hoot test sources folder path"); }
 
     static final String Path = "Path";
     public static final String Folder = "folder";
-    Option targetOption() { return targetOptBuilder().hasArg().build(); }
+    Option targetOption() { return targetOptBuilder().optionalArg(false).hasArg().build(); }
     Builder targetOptBuilder() { return buildOption(Folder, Target+Path, "required: Java target folder path"); }
 
     static final char BLANK = ' ';
     static final String Libs = "libs";
-    Option libsOption() { return libsOptBuilder().valueSeparator(BLANK).hasArgs().build(); }
+    Option libsOption() { return libsOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }
     Builder libsOptBuilder() { return buildOption(Libs, Libs+Path, "library JARs"); }
 
     static final String PackNames = "packageNames";
     public static final String Packages = "packages";
-    Option packageOption() { return packageOptBuilder().valueSeparator(BLANK).hasArgs().build(); }
-    Builder packageOptBuilder() { return buildOption(Packages, PackNames, "required: packages to compile, * = all"); }
+    Option packageOption() { return packageOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }
+    Builder packageOptBuilder() { return buildOption(Packages, PackNames, "optional: packages to compile, none = all"); }
 
     public static String shortened(String optionName) { return Dash + shortOption(optionName); }
     static String shortOption(String optionName) { return optionName.substring(0, 1); }

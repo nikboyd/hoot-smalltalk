@@ -21,6 +21,7 @@
         <module>hoot-abstracts</module>
         <module>hoot-runtime</module>
         <module>hoot-compiler</module>
+        <module>hoot-compiler-boot</module>
         <module>hoot-maven-plugin</module>
         <module>hoot-compiler-bundle</module>
         <module>libs-smalltalk</module>

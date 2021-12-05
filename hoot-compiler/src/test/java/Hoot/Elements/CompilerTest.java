@@ -25,7 +25,7 @@ public class CompilerTest implements Logging {
     @Test public void sampleCompile() { main(buildSampleCommand()); sampleLookups(); }
 
     static final String Code = "../sample-code";
-    String[] buildSampleCommand() { return buildCommand(Code, "-p", "*", "-s", "src/test/hoot"); }
+    String[] buildSampleCommand() { return buildCommand(Code, "-s", "src/test/hoot"); }
 
     void sampleLookups() {
         Typified point = Library.findFace("Samples.Geometry.Point");
