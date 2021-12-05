@@ -294,6 +294,7 @@ Hoot Smalltalk that folds together with the corresponding Java code and classes 
 This way you can take advantage of the natural capabilities of Maven for building and testing your code.
 
 You'll need to add the following server section to your **settings.xml**.
+To get the password, please contact the author at nikboyd @ sonic.net.
 
 ```xml
 <servers>
@@ -301,7 +302,7 @@ You'll need to add the following server section to your **settings.xml**.
         <id>hoot-libs</id>
         <!-- read github package registry -->
         <username>nikboyd</username>
-        <password>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</password>
+        <password>************</password>
     </server>
 </servers>
 ```
