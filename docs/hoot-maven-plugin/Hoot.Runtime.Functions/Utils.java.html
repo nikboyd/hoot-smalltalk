@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-maven-plugin</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Functions</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Functions;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.Collectors;
+import static java.util.Arrays.asList;
+import static java.util.Collections.reverse;
+
+import static Hoot.Runtime.Faces.Logging.Empty;
+import static Hoot.Runtime.Functions.Exceptional.*;
+import static java.util.Collections.sort;
+
+/**
+ * Convenience methods for streams and such.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2019 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public interface Utils {
+
+    // NOTE: in the following T = ItemType and R = ResultType
+
+<span class="nc bnc" id="L24" title="All 2 branches missed.">    public static void doIf(boolean p, Runnable r) { if (p) runSafely(r); }</span>
+
+    // set a value if needed and return the currently set value
+<span class="nc bnc" id="L27" title="All 2 branches missed.">    public static &lt;R&gt; R getSet(Supplier&lt;R&gt; f, Runnable c) { if (hasOne(f.get())) c.run(); return f.get(); }</span>
+
+    // set a value safely: when a replacement value exists
+    public static &lt;R&gt; R setSafely(Supplier&lt;R&gt; f, Consumer&lt;R&gt; c) {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        R value = f.get(); if (hasOne(value)) c.accept(value); return value; }</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    public static &lt;T&gt; T itemOr(T defaultValue, T item) { return hasNone(item) ? defaultValue : item; }</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">    public static &lt;T&gt; T itemOr(Supplier&lt;T&gt; f, T item) { return hasNone(item) ? f.get() : item; }</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">    public static &lt;T, R&gt; R nullOr(Function&lt;? super T, ? extends R&gt; f, T item) { return hasNone(item) ? null : f.apply(item); }</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">    public static &lt;T&gt; String emptyOr(Function&lt;? super T, String&gt; f, T item) { return hasNone(item) ? Empty : f.apply(item); }</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">    public static &lt;T&gt; boolean falseOr(Predicate&lt;? super T&gt; p, T item) { return hasNone(item) ? false : p.test(item); }</span>
+
+    @SafeVarargs public static &lt;T&gt; boolean hasSome(T... items) {
+<span class="pc bpc" id="L40" title="2 of 6 branches missed.">        return (items != null &amp;&amp; items.length &gt; 0 &amp;&amp; items[0] != null); }</span>
+
+    @SafeVarargs public static &lt;T&gt; boolean hasNo(T... items) {
+<span class="pc bpc" id="L43" title="3 of 6 branches missed.">        return (items == null || items.length == 0 || items[0] == null); }</span>
+
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    static Predicate&lt;Object&gt; HasItem = (item) -&gt; (item != null);</span>
+<span class="fc" id="L46">    public static &lt;T&gt; boolean hasOne(T item) { return HasItem.test(item); }</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">    public static &lt;T&gt; boolean hasNone(T item) { return (item == null); }</span>
+
+    public static &lt;T&gt; boolean hasSome(Collection&lt;T&gt; items) {
+<span class="nc bnc" id="L50" title="All 6 branches missed.">        return items != null &amp;&amp; !items.isEmpty() &amp;&amp; hasOne(items.iterator().next()); }</span>
+
+    public static &lt;T&gt; boolean hasNo(Collection&lt;T&gt; items) {
+<span class="nc bnc" id="L53" title="All 6 branches missed.">        return items == null || items.isEmpty() || hasNone(items.iterator().next()); }</span>
+
+<span class="fc" id="L55">    @SafeVarargs public static &lt;T&gt; boolean hasAny(T... items) { return hasSome(items); }</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    public static &lt;T&gt; boolean hasAny(Collection&lt;T&gt; items) { return !hasNo(items); }</span>
+<span class="nc bnc" id="L57" title="All 4 branches missed.">    public static &lt;K,V&gt; boolean hasKeys(Map&lt;K,V&gt; map) { return hasOne(map) &amp;&amp; !map.isEmpty(); }</span>
+
+    @SafeVarargs public static &lt;R&gt; List&lt;R&gt; wrapLast(int count, R... items) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (count &lt; 1) return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L61">        int size = items.length; int index = size - Math.min(size, count);</span>
+<span class="nc" id="L62">        return wrap(Arrays.copyOfRange(items, index, size)); }</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    public static &lt;R&gt; R[] unwrap(List&lt;R&gt; items, R[] sample) { return hasNo(items) ? sample : items.toArray(sample); }</span>
+    @SafeVarargs public static &lt;R&gt; List&lt;R&gt; wrap(R... items) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        return hasNo(items) ? new ArrayList&lt;&gt;() : copyList(asList(items)); }</span>
+
+    public static &lt;R&gt; R findFirst(Collection&lt;R&gt; items, Predicate&lt;? super R&gt; p) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        return hasNo(items) ? null : items.stream().filter(p).findFirst().orElse(null); }</span>
+
+<span class="nc" id="L71">    public static &lt;R&gt; List&lt;R&gt; select(Collection&lt;R&gt; items, Predicate&lt;? super R&gt; p) { return selectList(items, p); }</span>
+    public static &lt;R&gt; List&lt;R&gt; selectList(Collection&lt;R&gt; items, Predicate&lt;? super R&gt; p) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        return hasNo(items) ? new ArrayList&lt;&gt;() : items.stream().filter(p).collect(Collectors.toList()); }</span>
+
+    public static &lt;R&gt; Set&lt;R&gt; selectSet(Collection&lt;R&gt; items, Predicate&lt;? super R&gt; p) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        return hasNo(items) ? new HashSet&lt;&gt;() : items.stream().filter(p).collect(Collectors.toSet()); }</span>
+
+<span class="nc" id="L78">    public static &lt;T, R&gt; List&lt;R&gt; map(Collection&lt;T&gt; items, Function&lt;? super T, ? extends R&gt; m) { return mapList(items, m); }</span>
+    public static &lt;T, R&gt; List&lt;R&gt; mapList(Collection&lt;T&gt; items, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc" id="L80">        return mapList(items, HasItem, m); }</span>
+
+    public static &lt;T, R&gt; List&lt;R&gt; mapList(Collection&lt;T&gt; items, Predicate&lt;? super T&gt; p, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        return hasNo(items) ? new ArrayList&lt;&gt;() : items.stream().filter(p).map(m).collect(Collectors.toList()); }</span>
+
+    public static &lt;T, R&gt; Set&lt;R&gt; mapSet(Collection&lt;T&gt; items, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        return hasNo(items) ? new HashSet&lt;&gt;() : mapSet(items, HasItem, m); }</span>
+
+    public static &lt;T, R&gt; Set&lt;R&gt; mapSet(Collection&lt;T&gt; items, Predicate&lt;? super T&gt; p, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        return hasNo(items) ? new HashSet&lt;&gt;() : items.stream().filter(p).map(m).collect(Collectors.toSet()); }</span>
+
+    public static &lt;T&gt; int countAny(Collection&lt;T&gt; items, Predicate&lt;? super T&gt; p) {
+<span class="nc" id="L92">        return (int)items.stream().filter(p).count(); }</span>
+
+    public static &lt;T&gt; boolean matchAny(Collection&lt;T&gt; items, Predicate&lt;? super T&gt; p) {
+<span class="nc bnc" id="L95" title="All 4 branches missed.">        return hasSome(items) &amp;&amp; items.stream().anyMatch(p); }</span>
+
+    public static &lt;T&gt; boolean matchAll(Collection&lt;T&gt; items, Predicate&lt;? super T&gt; p) {
+<span class="nc bnc" id="L98" title="All 4 branches missed.">        return hasSome(items) &amp;&amp; items.stream().allMatch(p); }</span>
+
+    public static String joinWith(String joint, List&lt;String&gt; names) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        return hasNo(names) ? Empty : names.stream().collect(Collectors.joining(joint)); }</span>
+
+    public static &lt;R&gt; R reduce(Collection&lt;R&gt; items, BinaryOperator&lt;R&gt; op, R identity) {
+<span class="nc" id="L104">        return items.stream().reduce(identity, op); }</span>
+
+<span class="fc" id="L106">    public static &lt;T&gt; ArrayList&lt;T&gt; copyList(Collection&lt;T&gt; list) { return new ArrayList&lt;&gt;(list); }</span>
+<span class="fc" id="L107">    public static &lt;T&gt; ArrayList&lt;T&gt; emptyList(Class&lt;T&gt; itemType) { return new ArrayList&lt;&gt;(); }</span>
+<span class="nc" id="L108">    public static &lt;T&gt; ArrayList&lt;T&gt; emptyList() { return new ArrayList&lt;&gt;(); }</span>
+
+<span class="nc" id="L110">    public static &lt;T&gt; HashSet&lt;T&gt; copySet(Collection&lt;T&gt; set) { return new HashSet&lt;&gt;(set); }</span>
+<span class="nc" id="L111">    public static &lt;T&gt; HashSet&lt;T&gt; emptySet(Class&lt;T&gt; itemType) { return new HashSet&lt;&gt;(); }</span>
+<span class="nc" id="L112">    public static &lt;T&gt; HashSet&lt;T&gt; emptySet() { return new HashSet&lt;&gt;(); }</span>
+
+<span class="nc" id="L114">    public static HashMap&lt;String,String&gt; emptyWordMap() { return emptyMap(String.class, String.class); }</span>
+<span class="nc" id="L115">    public static &lt;T&gt; HashMap&lt;String,T&gt; emptyMap(Class&lt;T&gt; itemType) { return emptyMap(String.class, itemType); }</span>
+<span class="nc" id="L116">    public static &lt;K,V&gt; HashMap&lt;K,V&gt; emptyMap(Class&lt;K&gt; keyType, Class&lt;V&gt; itemType) { return new HashMap&lt;&gt;(); }</span>
+<span class="nc" id="L117">    public static &lt;K,V&gt; HashMap&lt;K,V&gt; emptyMap() { return new HashMap&lt;&gt;(); }</span>
+
+<span class="nc" id="L119">    public static &lt;R&gt; Set&lt;R&gt; collectSet(Consumer&lt;Collection&lt;R&gt;&gt; c) { return collectInto(new HashSet&lt;&gt;(), c); }</span>
+<span class="nc" id="L120">    public static &lt;R&gt; List&lt;R&gt; collectList(Consumer&lt;Collection&lt;R&gt;&gt; c) { return collectInto(new ArrayList&lt;&gt;(), c); }</span>
+    public static &lt;T, R extends Collection&lt;T&gt;&gt;
+<span class="nc" id="L122">        R collectInto(final R r, Consumer&lt;Collection&lt;T&gt;&gt; c) { c.accept(r); return r; }</span>
+
+    public static &lt;R, T, CT extends Collection&lt;T&gt;&gt;
+<span class="nc" id="L125">        R collectWith(final R r, final CT items, BiConsumer&lt;R, T&gt; b) { items.forEach(it -&gt; b.accept(r, it)); return r; }</span>
+
+    public static &lt;K, V, M extends Map&lt;K, V&gt;&gt; Map&lt;K, V&gt; selectFrom(M m, BiPredicate&lt;K, V&gt; p) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        HashMap&lt;K, V&gt; results = new HashMap&lt;&gt;(); if (hasNo(m)) return results;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        m.forEach((k,v) -&gt; { if (p.test(k, v)) results.put(k, v); }); return results; }</span>
+
+    public static &lt;R&gt; ArrayList&lt;R&gt; fillList(int count, R item) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        return collectInto(new ArrayList&lt;&gt;(), (results) -&gt; { int size = count; while (size-- &gt; 0) results.add(item); }); }</span>
+
+    public static &lt;T, R&gt; List&lt;R&gt; listAll(Collection&lt;T&gt; items, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc" id="L135">        return collectList((results) -&gt; results.addAll(mapList(items, m))); }</span>
+
+    public static &lt;T, R&gt; Set&lt;R&gt; selectAll(Collection&lt;T&gt; items, Function&lt;? super T, ? extends R&gt; m) {
+<span class="nc" id="L138">        return collectSet((results) -&gt; results.addAll(mapSet(items, m))); }</span>
+
+<span class="nc" id="L140">    public static &lt;T&gt; List&lt;T&gt; reverseList(List&lt;T&gt; list) { reverse(list); return list; }</span>
+<span class="nc" id="L141">    public static &lt;T extends Comparable&lt;? super T&gt;&gt; List&lt;T&gt; sortList(List&lt;T&gt; list) { sort(list); return list; }</span>
+
+} // Utils
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

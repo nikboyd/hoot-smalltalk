@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Exceptional.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-maven-plugin</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Functions</a> &gt; <span class="el_source">Exceptional.java</span></div><h1>Exceptional.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Functions;
+
+import java.util.function.Consumer;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Functions.Exceptional.Runner.*;
+import static Hoot.Runtime.Functions.Exceptional.Result.*;
+import static Hoot.Runtime.Functions.Exceptional.Argued.*;
+import Hoot.Runtime.Faces.Logging;
+
+/**
+ * Common standard utility functions for executing closures and handling exceptions.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2019 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public interface Exceptional extends Logging {
+
+<span class="fc" id="L19">    static Exceptional StandardReporter = new Exceptional(){};</span>
+    public static interface Handler&lt;T extends Throwable&gt; extends Consumer&lt;T&gt;, Logging {}
+<span class="pc" id="L21">    public static Handler&lt;Throwable&gt; ErrorHandler = (Throwable ex) -&gt; { StandardReporter.error(ex); };</span>
+<span class="pc" id="L22">    public static Handler&lt;Throwable&gt; DebugHandler = (Throwable ex) -&gt; { StandardReporter.whisper(ex.toString()); };</span>
+
+<span class="nc bnc" id="L24" title="All 2 branches missed.">    static void handleSafely(Throwable ex, Handler&lt;Throwable&gt; handler) { if (hasOne(handler)) handler.accept(ex); }</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">    static void runSafely(Runnable... r) { if (hasAny(r)) r[0].run(); }</span>
+<span class="pc" id="L26">    static final Runnable NoOp = () -&gt; { }; // does nothing</span>
+
+<span class="nc" id="L28">    static &lt;R&gt; R defaultAfter(Throwable ex, Handler&lt;Throwable&gt; h, R defaultValue) { handleSafely(ex, h); return defaultValue; }</span>
+<span class="nc" id="L29">    static String emptyAfter(Throwable ex, Handler&lt;Throwable&gt; handler) { return defaultAfter(ex, handler, Empty); }</span>
+
+<span class="nc" id="L31">    static &lt;R&gt; R nullAfter(Runnable... r) { runSafely(r); return null; }</span>
+<span class="nc" id="L32">    static &lt;R&gt; R nullAfter(Throwable ex, Handler&lt;Throwable&gt; handler) { handleSafely(ex, handler); return null; }</span>
+
+<span class="nc" id="L34">    public static void runLoudly(Runner r, Handler&lt;Throwable&gt; h) { runLoudly(r, h, NoOp); }</span>
+<span class="fc" id="L35">    public static void runLoudly(Runner r, Runnable... finish) { runLoudly(r, ErrorHandler, finish); }</span>
+<span class="fc" id="L36">    public static void runLoudly(Runner r, Handler&lt;Throwable&gt; h, Runnable... finish) { runSurely(r, h, finish); }</span>
+<span class="nc" id="L37">    public static void runQuietly(Runner r, Runnable... finish) { runSurely(r, DebugHandler, finish); }</span>
+
+<span class="fc" id="L39">    public static &lt;R&gt; R nullOrTryLoudly(Result&lt;? extends R&gt; r, Runnable... finish) { return defaultOrTryLoudly(r, null, finish); }</span>
+<span class="fc" id="L40">    public static &lt;R&gt; R nullOrTryQuietly(Result&lt;? extends R&gt; r, Runnable... finish) { return defaultOrTryQuietly(r, null, finish); }</span>
+
+<span class="nc" id="L42">    public static String emptyOrTryLoudly(Result&lt;String&gt; r, Runnable... finish) { return defaultOrTryLoudly(r, Empty, finish); }</span>
+<span class="nc" id="L43">    public static String emptyOrTryQuietly(Result&lt;String&gt; r, Runnable... finish) { return defaultOrTryQuietly(r, Empty, finish); }</span>
+
+<span class="nc" id="L45">    public static &lt;R&gt; R defaultOrTryLoudly(Result&lt;R&gt; r, R defaultValue) { return defaultOrTryLoudly(r, defaultValue, NoOp); }</span>
+<span class="nc" id="L46">    public static &lt;R&gt; R defaultOrTryQuietly(Result&lt;R&gt; r, R defaultValue) { return defaultOrTryQuietly(r, defaultValue, NoOp); }</span>
+
+    public static &lt;R&gt; R defaultOrTryLoudly(Result&lt;R&gt; r, R defaultValue, Runnable... finish) {
+<span class="fc" id="L49">        return defaultOrTrySurely(r, ErrorHandler, defaultValue, finish); }</span>
+
+    public static &lt;R&gt; R defaultOrTryQuietly(Result&lt;R&gt; r, R defaultValue, Runnable... finish) {
+<span class="fc" id="L52">        return defaultOrTrySurely(r, DebugHandler, defaultValue, finish); }</span>
+
+    public static &lt;T, R&gt; R defaultOrTryLoudly(Argued&lt;T, R&gt; r, T item, R defaultValue, Runnable... finish) {
+<span class="nc" id="L55">        return defaultOrTrySurely(r, item, ErrorHandler, defaultValue, finish); }</span>
+
+    public static &lt;T, R&gt; R defaultOrTryQuietly(Argued&lt;T, R&gt; r, T item, R defaultValue, Runnable... finish) {
+<span class="nc" id="L58">        return defaultOrTrySurely(r, item, DebugHandler, defaultValue, finish); }</span>
+
+    public static &lt;T, R&gt; R nullOrTryLoudly(Argued&lt;T, ? extends R&gt; r, T item, Runnable... finish) {
+<span class="nc" id="L61">        return defaultOrTryLoudly(r, item, null, finish); }</span>
+
+    public static &lt;T, R&gt; R nullOrTryQuietly(Argued&lt;T, ? extends R&gt; r, T item, Runnable... finish) {
+<span class="nc" id="L64">        return defaultOrTryQuietly(r, item, null, finish); }</span>
+
+    public static &lt;T&gt; String emptyOrTryLoudly(Argued&lt;T, String&gt; r, T item, Runnable... finish) {
+<span class="nc" id="L67">        return defaultOrTryLoudly(r, item, Empty, finish); }</span>
+
+    public static &lt;T&gt; String emptyOrTryQuietly(Argued&lt;T, String&gt; r, T item, Runnable... finish) {
+<span class="nc" id="L70">        return defaultOrTryQuietly(r, item, Empty, finish); }</span>
+
+
+    /**
+     * Runs a closure without result.
+     */
+    public static interface Runner {
+        void run() throws Throwable; // augments standard Runnable interface
+
+        default void runSurely(Handler&lt;Throwable&gt; handler, Runnable... finish) {
+<span class="pc" id="L80">            try { run(); } catch (Throwable ex) { handleSafely(ex, handler); } finally { runSafely(finish); } }</span>
+
+        static void runSurely(Runner r, Handler&lt;Throwable&gt; handler, Runnable... finish) {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (hasOne(r)) r.runSurely(handler, finish); else runSafely(finish); }</span>
+
+    } // Runner
+
+    /**
+     * Runs a closure producing a result.
+     * @param &lt;R&gt; a result type
+     */
+    public static interface Result&lt;R&gt; {
+        R apply() throws Throwable; // augments standard Supplier interface
+
+        default R valueSurely(Handler&lt;Throwable&gt; handler, R defaultValue, Runnable... finish) {
+<span class="pc" id="L95">            try { return apply(); } catch (Throwable ex) { return defaultAfter(ex, handler, defaultValue); }</span>
+<span class="fc" id="L96">            finally { runSafely(finish); } }</span>
+
+        static &lt;R&gt; R defaultOrTrySurely(Result&lt;R&gt; r, Handler&lt;Throwable&gt; handler, R defaultValue, Runnable... finish) {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (hasNone(r)) { runSafely(finish); return defaultValue; }</span>
+<span class="fc" id="L100">            return r.valueSurely(handler, defaultValue, finish); }</span>
+
+    } // Result&lt;R&gt;
+
+    /**
+     * Runs a closure producing a result from an argument.
+     * @param &lt;T&gt; an item type
+     * @param &lt;R&gt; a result type
+     */
+    public static interface Argued&lt;T, R&gt; {
+        R apply(T item) throws Throwable; // augments standard Function interface
+
+        default R valueSurely(T item, Handler&lt;Throwable&gt; handler, R defaultValue, Runnable... finish) {
+<span class="nc" id="L113">            try { return apply(item); } catch (Throwable ex) { return defaultAfter(ex, handler, defaultValue); }</span>
+<span class="nc" id="L114">            finally { runSafely(finish); } }</span>
+
+        static &lt;T, R&gt; R defaultOrTrySurely(Argued&lt;T, R&gt; r, T item, Handler&lt;Throwable&gt; handler, R defaultValue, Runnable... finish) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if (hasNone(r)) { runSafely(finish); return defaultValue; }</span>
+<span class="nc" id="L118">            return r.valueSurely(item, handler, defaultValue, finish); }</span>
+
+    } // Argued&lt;T, R&gt;
+
+} // Exceptional
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
