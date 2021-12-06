@@ -23,6 +23,9 @@ if [[ $USER == runner ]]; then
     # push bundles to package registry
     shell/deploy-libs.sh $mvn_code $stamp
 
+    # clear build changes from file system
+    git stash
+
     # build badges after tests
     shell/build-mvn-badge.sh $mvn_code $stamp
     shell/build-cover-badges.sh $mvn_code

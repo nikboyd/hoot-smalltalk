@@ -1,5 +1,13 @@
 ### Test Results
 
-* [Hoot Runtime](https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/)
-* [Hoot Compiler](https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/)
-* [Hoot Maven Plugin](https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/)
+| Coverage | Test Results |
+|:-------- |:------------ |
+| ![Runtime Coverage][runtime-coverage] | [Hoot Runtime Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/) |
+| ![Compiler Coverage][compiler-coverage] | [Hoot Compiler Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/) |
+| ![Plugin Coverage][compiler-coverage] | [Hoot Maven Plugin Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/) |
+| ![Library Coverage][compiler-coverage] | [Hoot Library Tests](https://nikboyd.github.io/hoot-smalltalk/libs-hoot/) |
+
+[runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.svg
+[compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.svg
+[plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.svg
+[libs-coverage]: https://nikboyd.github.io/hoot-smalltalk/libs-hoot/coverage_badge.svg
