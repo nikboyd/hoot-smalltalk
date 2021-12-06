@@ -32,6 +32,7 @@ if [[ $USER == runner ]]; then
 
     # copy coverage reports
     shell/copy-coverage.sh $mvn_code
+    ls docs/hoot-runtime/
 
     # push test coverage reports
     shell/push-coverage.sh $mvn_code
