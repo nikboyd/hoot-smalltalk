@@ -140,6 +140,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 | [hoot-abstracts][hoot-abstracts] | abstractions | Java | mostly interfaces for the runtime, with a few basic classes |
 | [hoot-runtime][hoot-runtime]     | runtime | Java | essential Hoot runtime foundation classes |
 | [hoot-compiler][hoot-compiler]   | compiler | Java | Hoot [grammar][grammar], code [templates][code-lib], AST elements, compiler |
+| [hoot-compiler-boot][hoot-compiler-boot] | launch | Java | Spring Boot app to launch the compiler from a command |
 | [hoot-maven-plugin][hoot-maven-plugin] | compiler plugin | Java | runs the compiler to generate Java code from a library project |
 | [libs-smalltalk][libs-smalltalk] | Smalltalk types | Hoot | Hoot sources for Smalltalk library types + compile via the plugin |
 | [libs-hoot][libs-hoot]           | Hoot classes | Hoot | Hoot sources + tests for library classes + compile via the plugin |
@@ -150,6 +151,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 
 Notice the last two projects listed above.
 These are the bundled libraries that are hosted in [GitHub][hub-bundles].
+Also, notice the Spring Boot application project listed above.
 
 To simplify library dependencies in [other projects][eco-depot], it was decided to bundle the Hoot
 libraries resulting from the Maven build process.
@@ -159,12 +161,16 @@ Two scenarios are most often used:
 
 Compiling Hoot Smalltalk code needs the Hoot Smalltalk compiler with its associated Maven plugin
 and support libraries. This scenario needs the [hoot-maven-plugin](#hoot-compiler-plugin)
-and [hoot-compiler-bundle](#hoot-smalltalk-compiler).
+and [hoot-compiler-boot](#hoot-smalltalk-compiler).
 Running a resulting [application][console-apps] needs the Hoot Smalltalk libraries and supporting runtime libraries.
 This scenario uses the [hoot-libs-bundle][libs-bundle].
 
 GitHub provides a package registry for hosting Maven artifacts.
 The bundles and compiler plugin are hosted in the [package registry][hub-bundles] for this repository.
+
+The [hoot-maven-plugin](#hoot-compiler-plugin) runs the Hoot compiler from the command line as a sub-task using
+the **hoot-compiler-boot** Spring Boot application to launch the compiler.
+This mimics what you would do to run the compiler from the command line.
 
 #### Build and Coverage Pipelines
 
@@ -177,7 +183,7 @@ Fortunately, GitHub supports builds using [**macOS** with 3 cores][hub-runners] 
 runs-on: macos-latest
 ```
 
-After reviewing some alternatives for hosting the build, [GitHub Actions][hub-build]
+After reviewing and using some alternatives for hosting the build, [GitHub Actions][hub-build]
 was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
 Thereafter, the [test coverage reports][hub-coverage] were hosted in GitHub with Pages.
 
@@ -294,15 +300,15 @@ Hoot Smalltalk that folds together with the corresponding Java code and classes 
 This way you can take advantage of the natural capabilities of Maven for building and testing your code.
 
 You'll need to add the following server section to your **settings.xml**.
-To get the password, please contact the author at nikboyd @ sonic.net.
+To get the indicated GitHub credentials, please contact the author at nikboyd @ sonic.net.
 
 ```xml
 <servers>
     <server>
         <id>hoot-libs</id>
         <!-- read github package registry -->
-        <username>nikboyd</username>
-        <password>************</password>
+        <username>${env.GITHUB_USER}</username>
+        <password>${env.GITHUB_PASS}</password>
     </server>
 </servers>
 ```
@@ -327,13 +333,13 @@ In your project base **pom.xml**, you'll want to include references to the Hoot 
 
 In your project base **pom.xml**, you'll also want to include the latest version of the bundles.
 Mind you, the latest Hoot Smalltalk version will likely change over time.
-So, you may need to adjust that, and replace **2021.1204.0235** below with the latest released version of
+So, you may need to adjust that, and replace **2021.1206.0930** below with the latest released version of
 [Hoot Smalltalk][hub-package].
 
 ```xml
 <properties>
   ...
-  <hoot-bundles-version>2021.1204.0235</hoot-bundles-version>
+  <hoot-bundles-version>2021.1206.0930</hoot-bundles-version>
   ...
 </properties>
 ```
@@ -368,8 +374,18 @@ And, you'll want to mention the latest version of the compiler plugin.
                 <version>${hoot-bundles-version}</version>
                 <dependencies>
                     <dependency>
+                        <groupId>org.eclipse.aether</groupId>
+                        <artifactId>aether-transport-file</artifactId>
+                        <version>1.1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.aether</groupId>
+                        <artifactId>aether-transport-http</artifactId>
+                        <version>1.1.0</version>
+                    </dependency>
+                    <dependency>
                         <groupId>hoot-smalltalk</groupId>
-                        <artifactId>hoot-compiler-bundle</artifactId>
+                        <artifactId>hoot-compiler-boot</artifactId>
                         <version>${hoot-bundles-version}</version>
                     </dependency>
                 </dependencies>
@@ -522,6 +538,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [hoot-abstracts]: hoot-abstracts/README.md#hoot-abstractions
 [hoot-runtime]: hoot-runtime/README.md#hoot-runtime-library
 [hoot-compiler]: hoot-compiler/README.md#hoot-compiler-library
+[hoot-compiler-boot]: hoot-compiler-boot/README.md#hoot-compiler-boot
 [hoot-maven-plugin]: hoot-maven-plugin/README.md#hoot-maven-plugin
 [libs-hoot]: libs-hoot/README.md#hoot-class-library
 [hoot-tests]: libs-hoot/src/test/hoot/Hoot/Tests
