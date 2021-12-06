@@ -69,7 +69,7 @@
                 <configuration>
                     <archive><manifest><mainClass>Hoot.Compiler.HootMain</mainClass></manifest></archive>
                     <descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
-                    <attach>false</attach>
+                    <!--<attach>false</attach>-->
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
