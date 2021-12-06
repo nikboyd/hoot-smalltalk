@@ -24,7 +24,7 @@ if [[ $USER == runner ]]; then
     shell/deploy-libs.sh $mvn_code $stamp
 
     # clear build changes from file system
-    git stash
+    git stash -u
 
     # build badges after tests
     shell/build-mvn-badge.sh $mvn_code $stamp

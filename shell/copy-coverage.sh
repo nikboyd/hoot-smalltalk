@@ -1,6 +1,8 @@
 #!/bin/bash
 # copy-coverage.sh build coverage reports, $1=build result
 
+mvn_code=$1
+
 if [[ $mvn_code == 0 ]]; then
     lib_folders="hoot-runtime hoot-compiler hoot-maven-plugin libs-hoot"
     for lib_name in $lib_folders; do
