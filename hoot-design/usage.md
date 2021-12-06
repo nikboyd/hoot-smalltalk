@@ -5,7 +5,7 @@ the Hoot Smalltalk compiler.
 Please refer to those notes. The remainder of this page provides a context for those notes.
 
 The Hoot Smalltalk compiler has a command line interface CLI.
-Running `hoot-compiler --help` produces the following:
+Running `java -jar hoot-compiler-boot/target/hoot-compiler-boot*.jar --help` produces the following:
 
 ```
 usage: hoot-compiler
@@ -13,7 +13,7 @@ usage: hoot-compiler
  -f,--folder <targetPath>       required: target Java folder path
  -h,--help                      optional: displays this help
  -o,--only-test                 optional: only tests compile arguments
- -p,--packages <packageNames>   required: packages to compile, * = all
+ -p,--packages <packageNames>   optional: packages to compile, none = all
  -s,--source <sourcePath>       optional: Hoot Smalltalk sources folder path
  -t,--test-source <sourcePath>  optional: Hoot Smalltalk test sources folder path
 ```
