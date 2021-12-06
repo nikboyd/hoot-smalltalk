@@ -49,7 +49,7 @@ import static Hoot.Runtime.Maps.Library.loadBasePaths;
 <span class="fc" id="L49">    CommandLine parseArgs(String[] args) { return nullOrTryLoudly(() -&gt; parser.parse(availableOptions(), args)); }</span>
 
     CommandLine command;
-<span class="fc" id="L52">    HootMain parseCommand(String[] args) { command = parseArgs(args); report(&quot;compiler args: &quot; + wrap(args).toString()); return this; }</span>
+<span class="fc" id="L52">    HootMain parseCommand(String[] args) { command = parseArgs(args); return this; }</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">    HootMain runCommand() { if (helpWanted()) printHelp(); else compilePackages(); return this; }</span>
 
 <span class="fc" id="L55">    boolean helpWanted() { return falseOr((c) -&gt; c.hasOption(Help), command); }</span>

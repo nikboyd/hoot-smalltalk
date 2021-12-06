@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Servant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-maven-plugin</a> &gt; <a href="index.source.html" class="el_package">Hoot.Compiler.Mojo</a> &gt; <span class="el_source">Servant.java</span></div><h1>Servant.java</h1><pre class="source lang-java linenums">package Hoot.Compiler.Mojo;
 
 import java.io.*;
+import java.util.Properties;
 import Hoot.Runtime.Faces.Logging;
 import org.eclipse.aether.resolution.ArtifactResult;
 import static Hoot.Runtime.Functions.Exceptional.*;
@@ -12,39 +13,42 @@ import static Hoot.Runtime.Functions.Exceptional.*;
  * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
  * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
  */
-<span class="fc" id="L15">public class Servant implements Logging {</span>
+<span class="fc" id="L16">public class Servant implements Logging {</span>
 
-<span class="fc" id="L17">    private Process remoteProcess = null;</span>
-<span class="fc" id="L18">    private InputStream processStream() { return remoteProcess.getInputStream(); }</span>
-<span class="fc" id="L19">    private BufferedReader processReader() { return new BufferedReader(new InputStreamReader(processStream())); }</span>
+<span class="fc" id="L18">    private Process remoteProcess = null;</span>
+<span class="fc" id="L19">    private InputStream processStream() { return remoteProcess.getInputStream(); }</span>
+<span class="fc" id="L20">    private BufferedReader processReader() { return new BufferedReader(new InputStreamReader(processStream())); }</span>
 
     private void pipeShellOutput() {
-<span class="fc" id="L22">        String line; BufferedReader reader = processReader();</span>
-<span class="fc bfc" id="L23" title="All 2 branches covered.">        try { while((line = reader.readLine()) != null) report(line); }</span>
-<span class="pc" id="L24">        catch (IOException x) { error(x); }</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L23">        String line; BufferedReader reader = processReader();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        try { while((line = reader.readLine()) != null) report(line); }</span>
+<span class="pc" id="L25">        catch (IOException x) { error(x); }</span>
+<span class="fc" id="L26">    }</span>
+<span class="fc" id="L27">    Properties p = new Properties();</span>
+    static final String Version = &quot;version&quot;; // loaded value name
+    static final String MojoVersion = &quot;/version.properties&quot;;
+<span class="fc" id="L30">    String version() { runLoudly(() -&gt; loadVersion(p)); return p.getProperty(Version); }</span>
+<span class="fc" id="L31">    void loadVersion(Properties p) throws IOException { try (InputStream in = versionStream()) { p.load(in); } }</span>
+<span class="fc" id="L32">    InputStream versionStream() throws IOException { return getClass().getResourceAsStream(MojoVersion); }</span>
 
-    static final String CompilerSpec = &quot;hoot-smalltalk:hoot-compiler-boot:LATEST&quot;;
+    static final String CompilerSpec = &quot;hoot-smalltalk:hoot-compiler-boot:&quot;;
     private String locateCompiler() {
-<span class="fc" id="L29">        ArtifactResult result = Discovery.lookup(CompilerSpec);</span>
-//        report(&quot;found compiler: &quot; + result.getArtifact().getFile().getAbsolutePath());
-<span class="fc" id="L31">        return result.getArtifact().getFile().getAbsolutePath();</span>
+<span class="fc" id="L36">        ArtifactResult result = Discovery.lookup(CompilerSpec + version());</span>
+<span class="fc" id="L37">        return result.getArtifact().getFile().getAbsolutePath();</span>
     }
 
     static final String Shell = &quot;/bin/sh&quot;;
     static final String ServiceCommand = &quot;java -jar %s&quot;;
     public void runCompiler(String... args) {
-<span class="fc" id="L37">        runLoudly(() -&gt; {</span>
-<span class="fc" id="L38">            String launchCommand = format(ServiceCommand, locateCompiler());</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (String s : args) { launchCommand += &quot; &quot; + s; }</span>
-
-<span class="fc" id="L41">            report(&quot;launch command: &quot; + launchCommand);</span>
-<span class="fc" id="L42">            ProcessBuilder pb = new ProcessBuilder(Shell, &quot;-c&quot;, launchCommand);</span>
-<span class="fc" id="L43">            remoteProcess = pb.start();</span>
-<span class="fc" id="L44">            new Thread(() -&gt; pipeShellOutput()).start();</span>
-<span class="fc" id="L45">            remoteProcess.waitFor();</span>
-<span class="fc" id="L46">        });</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L43">        runLoudly(() -&gt; {</span>
+<span class="fc" id="L44">            String launchCommand = format(ServiceCommand, locateCompiler());</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (String s : args) { launchCommand += &quot; &quot; + s; }</span>
+<span class="fc" id="L46">            ProcessBuilder pb = new ProcessBuilder(Shell, &quot;-c&quot;, launchCommand);</span>
+<span class="fc" id="L47">            remoteProcess = pb.start();</span>
+<span class="fc" id="L48">            new Thread(() -&gt; pipeShellOutput()).start();</span>
+<span class="fc" id="L49">            remoteProcess.waitFor();</span>
+<span class="fc" id="L50">        });</span>
+<span class="fc" id="L51">    }</span>
 
 } // Servant
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
