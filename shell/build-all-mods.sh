@@ -23,23 +23,17 @@ if [[ $USER == runner ]]; then
     # push bundles to package registry
     shell/deploy-libs.sh $mvn_code $stamp
 
-    # copy and push test coverage reports
+    # build badges after tests
+    shell/build-mvn-badge.sh $mvn_code $stamp
+    shell/build-cover-badges.sh $mvn_code
+
+    # copy coverage reports
+    shell/copy-coverage.sh $mvn_code
+
+    # push test coverage reports
     shell/push-coverage.sh $mvn_code
 
     # build and push version tag
     shell/build-git-tag.sh $mvn_code $stamp
 
-    # build badges after tests
-#   shell/build-mvn-badge.sh $mvn_code $stamp
-#   shell/build-cover-badges.sh $mvn_code
-
-    # zip coverage and upload
-#   shell/build-cover-zip.sh $mvn_code $stamp
-
-    # build and push version tag
-#   shell/build-git-tag.sh $mvn_code $stamp
-
-    # publish coverage reports
-#   shell/push-cover-zip.sh $stamp
-#   shell/trigger-cover-pub.sh $stamp
 fi
