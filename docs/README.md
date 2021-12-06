@@ -1,4 +1,6 @@
-### Test Results
+**Build Result**
+
+![Maven Result][maven-badge] 
 
 | Coverage | Test Results |
 |:-------- |:------------ |
@@ -7,6 +9,7 @@
 | ![Plugin Coverage][plugin-coverage] | [Hoot Maven Plugin Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/) |
 | ![Library Coverage][libs-coverage] | [Hoot Library Tests](https://nikboyd.github.io/hoot-smalltalk/libs-hoot/) |
 
+[maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.svg
 [runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.svg
 [compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.svg
 [plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.svg

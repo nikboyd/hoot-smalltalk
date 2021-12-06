@@ -5,6 +5,11 @@
 Hoot Smalltalk is a variation of [Smalltalk][smalltalk] that integrates the best features of Smalltalk
 with those of Java and its virtual machine VM.
 
+[Coverage Test Results][hub-coverage] 
+
+![Runtime Coverage][runtime-coverage] ![Compiler Coverage][compiler-coverage] ![Plugin Coverage][plugin-coverage] ![Library Coverage][libs-coverage] ![Maven Result][maven-badge] 
+
+
 | **Section** | **Discussions** |
 | ----------- | --------------- |
 | [Introduction](#introduction) | some background for Hoot Smalltalk |
@@ -567,3 +572,9 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [lab-pipe]: .gitlab-ci.yml#L11
 [lab-trigger]: shell/build-all-mods.sh#L42
 [install-tools]: shell/install-tools.sh#L4
+
+[maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.svg
+[runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.svg
+[compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.svg
+[plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.svg
+[libs-coverage]: https://nikboyd.github.io/hoot-smalltalk/libs-hoot/coverage_badge.svg
