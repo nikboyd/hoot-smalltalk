@@ -11,7 +11,7 @@ fi
 
 # publish built JARs if build passed
 if [[ $mvn_code == 0 ]]; then
-    hoot_libs="hoot-compiler-boot hoot-libs-bundle hoot-maven-plugin"
+    hoot_libs="hoot-compiler-boot hoot-maven-plugin hoot-compiler-bundle hoot-libs-bundle"
     for lib_name in $hoot_libs; do
         shell/deploy-lib.sh "$lib_name" jar $version
     done
