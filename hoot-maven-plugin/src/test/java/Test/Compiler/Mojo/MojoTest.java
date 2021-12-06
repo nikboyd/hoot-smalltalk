@@ -22,11 +22,9 @@ public class MojoTest implements Logging {
 
     // file paths
     static final String TestPOM = "src/test/resources/test-pom.xml";
-    static final String MojoVersion = "target/classes/version.properties";
 
     // configured files
     static final File PomFile = new File(TestPOM);
-    static final File VersionFile = new File(MojoVersion);
 
     @Test public void testMojo() throws Exception { loadMojo().execute(); }
     HootMojo loadMojo() { return nullOrTryLoudly(() -> (HootMojo)lookupMojo()); }
@@ -38,6 +36,8 @@ public class MojoTest implements Logging {
 
     Properties p = new Properties();
     static final String Version = "version"; // loaded value name
+    static final String MojoVersion = "target/classes/version.properties";
+    static final File VersionFile = new File(MojoVersion);
     String version() { runLoudly(() -> loadVersion(p)); return p.getProperty(Version); }
     void loadVersion(Properties p) throws IOException { try (InputStream in = versionStream()) { p.load(in); } }
     InputStream versionStream() throws IOException { return VersionFile.toURI().toURL().openStream(); }

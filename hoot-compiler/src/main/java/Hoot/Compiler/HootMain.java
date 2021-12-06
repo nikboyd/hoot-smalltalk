@@ -49,7 +49,7 @@ public class HootMain implements Logging {
     CommandLine parseArgs(String[] args) { return nullOrTryLoudly(() -> parser.parse(availableOptions(), args)); }
 
     CommandLine command;
-    HootMain parseCommand(String[] args) { command = parseArgs(args); report("compiler args: " + wrap(args).toString()); return this; }
+    HootMain parseCommand(String[] args) { command = parseArgs(args); return this; }
     HootMain runCommand() { if (helpWanted()) printHelp(); else compilePackages(); return this; }
 
     boolean helpWanted() { return falseOr((c) -> c.hasOption(Help), command); }

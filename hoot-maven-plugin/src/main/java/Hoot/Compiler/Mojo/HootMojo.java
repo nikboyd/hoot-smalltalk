@@ -94,9 +94,7 @@ public class HootMojo extends AbstractMojo implements Logging {
     }
 
     static final Servant mainServant = new Servant();
-    void runMain(String... s) {
-        report("calling compiler with: " + wrap(s).toString());
-        mainServant.runCompiler(s); } //  HootMain.main(s); }
+    void runMain(String... s) { mainServant.runCompiler(s); }
 
     static final String[] NoArgs = { };
     List<String> commandArgs = new ArrayList();

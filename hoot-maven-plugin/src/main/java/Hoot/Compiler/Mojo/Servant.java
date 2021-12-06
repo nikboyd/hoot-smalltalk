@@ -1,6 +1,7 @@
 package Hoot.Compiler.Mojo;
 
 import java.io.*;
+import java.util.Properties;
 import Hoot.Runtime.Faces.Logging;
 import org.eclipse.aether.resolution.ArtifactResult;
 import static Hoot.Runtime.Functions.Exceptional.*;
@@ -23,11 +24,16 @@ public class Servant implements Logging {
         try { while((line = reader.readLine()) != null) report(line); }
         catch (IOException x) { error(x); }
     }
+    Properties p = new Properties();
+    static final String Version = "version"; // loaded value name
+    static final String MojoVersion = "/version.properties";
+    String version() { runLoudly(() -> loadVersion(p)); return p.getProperty(Version); }
+    void loadVersion(Properties p) throws IOException { try (InputStream in = versionStream()) { p.load(in); } }
+    InputStream versionStream() throws IOException { return getClass().getResourceAsStream(MojoVersion); }
 
-    static final String CompilerSpec = "hoot-smalltalk:hoot-compiler-boot:LATEST";
+    static final String CompilerSpec = "hoot-smalltalk:hoot-compiler-boot:";
     private String locateCompiler() {
-        ArtifactResult result = Discovery.lookup(CompilerSpec);
-//        report("found compiler: " + result.getArtifact().getFile().getAbsolutePath());
+        ArtifactResult result = Discovery.lookup(CompilerSpec + version());
         return result.getArtifact().getFile().getAbsolutePath();
     }
 
@@ -37,8 +43,6 @@ public class Servant implements Logging {
         runLoudly(() -> {
             String launchCommand = format(ServiceCommand, locateCompiler());
             for (String s : args) { launchCommand += " " + s; }
-
-            report("launch command: " + launchCommand);
             ProcessBuilder pb = new ProcessBuilder(Shell, "-c", launchCommand);
             remoteProcess = pb.start();
             new Thread(() -> pipeShellOutput()).start();
