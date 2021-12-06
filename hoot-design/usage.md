@@ -5,7 +5,12 @@ the Hoot Smalltalk compiler.
 Please refer to those notes. The remainder of this page provides a context for those notes.
 
 The Hoot Smalltalk compiler has a command line interface CLI.
-Running `java -jar hoot-compiler-boot/target/hoot-compiler-boot*.jar --help` produces the following:
+
+```shell
+java -jar hoot-compiler-boot/target/hoot-compiler-boot*.jar --help
+```
+
+... from the project base folder after a build produces the following:
 
 ```
 usage: hoot-compiler
