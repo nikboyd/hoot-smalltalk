@@ -8,8 +8,8 @@
         <server>
             <id>hoot-libs</id>
             <!--cloudsmith repository-->
-            <username>${env.MAVEN_REPO_USER}</username>
-            <password>${env.MAVEN_REPO_PASS}</password>
+            <username>${env.MAVEN_CLOUD_USER}</username>
+            <password>${env.MAVEN_CLOUD_PASS}</password>
         </server>
         <server>
             <id>github</id>
