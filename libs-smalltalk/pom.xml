@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>${version.antlr.maven}</version>
+                <version>4.5</version>
                 <executions>
                     <execution><goals><goal>antlr4</goal></goals></execution>
                 </executions>
