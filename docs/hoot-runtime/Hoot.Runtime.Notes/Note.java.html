@@ -13,10 +13,10 @@ import static Hoot.Runtime.Emissions.Emission.*;
  */
 public class Note implements NoteSource {
 
-<span class="fc" id="L16">    protected Note(String name) { this.name = name; }</span>
-<span class="fc" id="L17">    public static Note with(String name) { return new Note(name); }</span>
+<span class="nc" id="L16">    protected Note(String name) { this.name = name; }</span>
+<span class="nc" id="L17">    public static Note with(String name) { return new Note(name); }</span>
 
-<span class="fc" id="L19">    protected String name = Empty;</span>
+<span class="nc" id="L19">    protected String name = Empty;</span>
 <span class="nc" id="L20">    public String name() { return this.name; }</span>
 <span class="nc" id="L21">    public String decor() { return name().toLowerCase(); }</span>
 
@@ -48,10 +48,10 @@ public class Note implements NoteSource {
 
 <span class="nc" id="L49">    public String notice() { return Empty; } // override this!</span>
 
-<span class="fc" id="L51">    public static final Note StaticNote = Note.with(Static);</span>
-<span class="fc" id="L52">    public static final Note TransientNote = Note.with(Transient);</span>
-<span class="fc" id="L53">    public static final Note ProtectedNote = Note.with(Protected);</span>
-<span class="fc" id="L54">    public static final Note OverrideNote = Note.with(Override);</span>
+<span class="nc" id="L51">    public static final Note StaticNote = Note.with(Static);</span>
+<span class="nc" id="L52">    public static final Note TransientNote = Note.with(Transient);</span>
+<span class="nc" id="L53">    public static final Note ProtectedNote = Note.with(Protected);</span>
+<span class="nc" id="L54">    public static final Note OverrideNote = Note.with(Override);</span>
 
     /**
      * A note list source.

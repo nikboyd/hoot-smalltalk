@@ -171,10 +171,10 @@ public class Package implements Named, Logging {
 <span class="fc" id="L171">    }</span>
 
     protected void registerMetaface(Typified face) {
-<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (face.hasMetaface()) {</span>
-<span class="fc" id="L175">            Typified metaFace = face.$class();</span>
-<span class="fc" id="L176">            CurrentLib.addFace(metaFace);</span>
-<span class="fc" id="L177">            packageMetaface(metaFace);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (face.hasMetaface()) {</span>
+<span class="nc" id="L175">            Typified metaFace = face.$class();</span>
+<span class="nc" id="L176">            CurrentLib.addFace(metaFace);</span>
+<span class="nc" id="L177">            packageMetaface(metaFace);</span>
         }
 <span class="fc" id="L179">    }</span>
 
@@ -210,29 +210,31 @@ public class Package implements Named, Logging {
      * @param importName the name of an imported class, interface, or package.
      */
 <span class="nc" id="L212">    public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }</span>
+<span class="fc" id="L213">    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }</span>
+    public static String nameFrom(File baseFolder, File packageFolder) {
+<span class="nc" id="L215">        return nameFrom(packageFolder.getPath().substring(baseFolder.getPath().length())); }</span>
 
     public static final String WildCard = &quot;.*&quot;;
-<span class="fc" id="L215">    public static String nameFrom(String packageName) { return nameWithout(WildCard, packageName); }</span>
-<span class="fc" id="L216">    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }</span>
-
-    public static final String Slash = &quot;/&quot;;
-    public static String nameFrom(File baseFolder, File packageFolder) {
-<span class="nc" id="L220">        return packageFolder.getPath()</span>
-<span class="nc" id="L221">            .substring(baseFolder.getPath().length())</span>
-<span class="nc" id="L222">            .replace(Slash, Blank).trim().replace(Blank, Dot); }</span>
+    public static final String Slash = &quot;/&quot;; // cover Unix paths
+    public static final String BackSlash = &quot;\\&quot;; // cover Windows too! --nik
+    public static String nameFrom(String packageName) {
+<span class="fc" id="L221">        return nameWithout(WildCard, packageName)</span>
+<span class="fc" id="L222">            .replace(BackSlash, Blank).trim()</span>
+<span class="fc" id="L223">            .replace(Slash, Blank).trim()</span>
+<span class="fc" id="L224">            .replace(Blank, Dot); }</span>
 
     public void reportReflectively() {
-<span class="fc" id="L225">        report(&quot;&quot;);</span>
-<span class="fc" id="L226">        report(fullName());</span>
-<span class="fc" id="L227">        faceNames().forEach(n -&gt; {</span>
-<span class="fc" id="L228">            Typified type = faceNamed(n);</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            if (hasSome(type)) {</span>
-<span class="fc" id="L230">                report(format(Clss, type.name()));</span>
-<span class="fc" id="L231">                reportHeritage(type.simpleHeritage(), Xtds);</span>
-<span class="fc" id="L232">                reportHeritage(type.typeHeritage(), Imps);</span>
+<span class="fc" id="L227">        report(&quot;&quot;);</span>
+<span class="fc" id="L228">        report(fullName());</span>
+<span class="fc" id="L229">        faceNames().forEach(n -&gt; {</span>
+<span class="fc" id="L230">            Typified type = faceNamed(n);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            if (hasSome(type)) {</span>
+<span class="fc" id="L232">                report(format(Clss, type.name()));</span>
+<span class="fc" id="L233">                reportHeritage(type.simpleHeritage(), Xtds);</span>
+<span class="fc" id="L234">                reportHeritage(type.typeHeritage(), Imps);</span>
             }
-<span class="fc" id="L234">        });</span>
-<span class="fc" id="L235">    }</span>
+<span class="fc" id="L236">        });</span>
+<span class="fc" id="L237">    }</span>
 
     static final String Comma = &quot;,&quot;;
     static final String Clss = &quot;  %s&quot;;
@@ -240,19 +242,19 @@ public class Package implements Named, Logging {
     static final String Imps = &quot;    implements %s&quot;;
     static final String Tabs = &quot;               %s&quot;;
     protected void reportHeritage(List&lt;Typified&gt; list, String report) {
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (!list.isEmpty()) {</span>
-<span class="fc" id="L244">            String text = format(report, Typified.names(list).toString());</span>
-<span class="fc" id="L245">            int count = StringUtils.countMatches(text, Comma);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (count &lt; 4) { report(text); return; } // exit early</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (!list.isEmpty()) {</span>
+<span class="fc" id="L246">            String text = format(report, Typified.names(list).toString());</span>
+<span class="fc" id="L247">            int count = StringUtils.countMatches(text, Comma);</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (count &lt; 4) { report(text); return; } // exit early</span>
 
-<span class="fc" id="L248">            String[] parts = text.split(Comma); // take 1st three</span>
-<span class="fc" id="L249">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
+<span class="nc" id="L250">            String[] parts = text.split(Comma); // take 1st three</span>
+<span class="nc" id="L251">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
 
-<span class="fc" id="L251">            text = parts[3]; // take last many</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
-<span class="fc" id="L253">            report(format(Tabs, text));</span>
+<span class="nc" id="L253">            text = parts[3]; // take last many</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
+<span class="nc" id="L255">            report(format(Tabs, text));</span>
         }
-<span class="fc" id="L255">    }</span>
+<span class="fc" id="L257">    }</span>
 
 } // Package
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

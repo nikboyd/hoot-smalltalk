@@ -93,7 +93,7 @@ public class ClassPath implements Logging {
     public void mapLibrary(String libName) {
 <span class="fc" id="L94">        String artifactName = artifactNamed(libName);</span>
 <span class="fc" id="L95">        ArtifactResult result = Discovery.lookup(artifactName);</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (hasSome(result)) { // try maven resolution first</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (hasSome(result)) { // try maven resolution first</span>
 <span class="fc bfc" id="L97" title="All 2 branches covered.">            if (Package.ReportLoads) reportMapping(result, artifactName);</span>
 <span class="fc" id="L98">            File file = result.getArtifact().getFile();</span>
 <span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (file.exists()) {</span>
@@ -105,17 +105,17 @@ public class ClassPath implements Logging {
         }
 
         // try local library class resolution
-<span class="nc" id="L108">        File libFolder = new File(cachedBase(), libName);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (libFolder.exists()) {</span>
-<span class="nc" id="L110">            File classFolder = new File(libFolder, TargetClasses);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (classFolder.exists()) {</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">                if (Package.ReportLoads) reportMapping(libName, classFolder);</span>
-<span class="nc" id="L113">                PathMap m = mapPath(classFolder);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">                if (Package.ReportLoads) printLine();</span>
-<span class="nc" id="L115">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
+<span class="fc" id="L108">        File libFolder = new File(cachedBase(), libName);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (libFolder.exists()) {</span>
+<span class="fc" id="L110">            File classFolder = new File(libFolder, TargetClasses);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (classFolder.exists()) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (Package.ReportLoads) reportMapping(libName, classFolder);</span>
+<span class="fc" id="L113">                PathMap m = mapPath(classFolder);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if (Package.ReportLoads) printLine();</span>
+<span class="fc" id="L115">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
             }
         }
-<span class="nc" id="L118">    }</span>
+<span class="fc" id="L118">    }</span>
 
 <span class="fc" id="L120">    public PathMap mapPath(File folder) { boolean appended = true; return addMapped(folder, appended); }</span>
     public PathMap addMapped(File folder, boolean appended) {
@@ -193,7 +193,7 @@ public class ClassPath implements Logging {
 
     static final String MappingReport = &quot;mapping %s &quot;;
 <span class="fc" id="L195">    public void reportMapping(String name, File folder) { printLine();</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        print(hasNo(folder) ? format(MappingReport, name) : format(ArtReport, name, folder.getAbsolutePath())); }</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        print(hasNo(folder) ? format(MappingReport, name) : format(ArtReport, name, folder.getAbsolutePath())); }</span>
 
 <span class="fc bfc" id="L198" title="All 2 branches covered.">    public void reportMapped() { if (showDots()) print(Dot); }</span>
 <span class="fc bfc" id="L199" title="All 2 branches covered.">    public void println(int count) { while(count-- &gt; 0) printLine(); }</span>
