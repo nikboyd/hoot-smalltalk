@@ -210,16 +210,18 @@ public class Package implements Named, Logging {
      * @param importName the name of an imported class, interface, or package.
      */
     public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }
+    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }
+    public static String nameFrom(File baseFolder, File packageFolder) {
+        return nameFrom(packageFolder.getPath().substring(baseFolder.getPath().length())); }
 
     public static final String WildCard = ".*";
-    public static String nameFrom(String packageName) { return nameWithout(WildCard, packageName); }
-    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }
-
-    public static final String Slash = "/";
-    public static String nameFrom(File baseFolder, File packageFolder) {
-        return packageFolder.getPath()
-            .substring(baseFolder.getPath().length())
-            .replace(Slash, Blank).trim().replace(Blank, Dot); }
+    public static final String Slash = "/"; // cover Unix paths
+    public static final String BackSlash = "\\"; // cover Windows too! --nik
+    public static String nameFrom(String packageName) {
+        return nameWithout(WildCard, packageName)
+            .replace(BackSlash, Blank).trim()
+            .replace(Slash, Blank).trim()
+            .replace(Blank, Dot); }
 
     public void reportReflectively() {
         report("");
