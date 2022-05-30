@@ -22,6 +22,7 @@ import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Exceptions.ExceptionBase.*;
 import static Hoot.Runtime.Names.Name.removeTail;
+import org.apache.commons.lang3.SystemUtils;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -40,7 +41,8 @@ public class Package implements Named, Logging {
     String name;
     @Override public String name() { return name; }
     public void name(String packageName) { name = packageName; }
-    public String pathname() { return name.replace(Dot, Slash); }
+
+    public String pathname() { return pathFrom(name); }
     public String parentName() { return Name.packageName(name); }
     public static Package named(String packageName) { return CurrentLib.packageNamed(nameFrom(packageName)); }
 
@@ -205,23 +207,21 @@ public class Package implements Named, Logging {
         return results;
     }
 
-    /**
-     * @return whether the supplied (importName) ends with a wild card.
-     * @param importName the name of an imported class, interface, or package.
-     */
+    public static final String WildCard = ".*";
     public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }
     public static String nameWithout(String tail, String name) { return removeTail(name, tail); }
     public static String nameFrom(File baseFolder, File packageFolder) {
         return nameFrom(packageFolder.getPath().substring(baseFolder.getPath().length())); }
 
-    public static final String WildCard = ".*";
     public static final String Slash = "/"; // cover Unix paths
     public static final String BackSlash = "\\"; // cover Windows too! --nik
-    public static String nameFrom(String packageName) {
-        return nameWithout(WildCard, packageName)
-            .replace(BackSlash, Blank).trim()
-            .replace(Slash, Blank).trim()
-            .replace(Blank, Dot); }
+    static String slashToDot(String packagePath) { 
+        return packagePath.replace(BackSlash, Blank).trim().replace(Slash, Blank).trim().replace(Blank, Dot); }
+    public static String nameFrom(String packageName) { return slashToDot(nameWithout(WildCard, packageName)); }
+    public static String pathFrom(String packageName) { return packageName.replace(Dot, separator()); }
+    public static String separator() { return SystemUtils.IS_OS_WINDOWS ? BackSlash : Slash; }
+    public static String normalPath(String folderPath) { 
+        return SystemUtils.IS_OS_WINDOWS ? folderPath.replace(Slash, BackSlash) : folderPath; }
 
     public void reportReflectively() {
         report("");

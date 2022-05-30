@@ -25,6 +25,7 @@ public class ClassPath implements Logging {
 
     protected ClassPath() { }
     public static final ClassPath CurrentPath = new ClassPath();
+    static String normalPath(String p) { return Package.normalPath(p); }
 
     static final String WorkPath = "user.dir";
     public static String workPath() { return systemValue(WorkPath); }
@@ -107,7 +108,7 @@ public class ClassPath implements Logging {
         // try local library class resolution
         File libFolder = new File(cachedBase(), libName);
         if (libFolder.exists()) {
-            File classFolder = new File(libFolder, TargetClasses);
+            File classFolder = new File(libFolder, normalPath(TargetClasses));
             if (classFolder.exists()) {
                 if (Package.ReportLoads) reportMapping(libName, classFolder);
                 PathMap m = mapPath(classFolder);

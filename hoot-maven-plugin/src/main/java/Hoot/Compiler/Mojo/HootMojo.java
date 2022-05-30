@@ -33,11 +33,12 @@ public class HootMojo extends AbstractMojo implements Logging {
     File getProjectFolder() { return project.getBasedir(); }
     String getProjectFolderTail() { return getProjectFolder().getName(); }
 
-    File findFolder(String folderPath) { return new File(getTargetFolder(), folderPath); }
+    String normalPath(String p) { return Hoot.Runtime.Maps.Package.normalPath(p); }
+    File findFolder(String folderPath) { return new File(getTargetFolder(), normalPath(folderPath)); }
 
     public static final String Folder = "folder";
     public static final String BasePath = "user.dir";
-    File getTargetFolder() { return new File(System.getProperty(BasePath), getArg(Folder)); }
+    File getTargetFolder() { return new File(System.getProperty(BasePath), normalPath(getArg(Folder))); }
 
     public static final String Source = "source";
     public static final String TargetPath = "target/generated-sources/hoot-maven-plugin";

@@ -20,20 +20,33 @@ public class PathMap implements Logging {
 
     public PathMap(String folderPath) { basePath = folderPath; }
     protected String basePath; // the absolute base path mapped by this instance
+    static String normalPath(String p) { return Package.normalPath(p); }
+    String normalBase() { return normalPath(basePath); }
+
+    public File locate(String folder) { File f = new File(normalBase(), normalPath(folder)); return (f.exists() ? f : null); }
     File locateRelative(String folderPath) { // all paths are relative to the basePath
-        if (folderPath.isEmpty()) return new File(basePath);
-        return folderPath.startsWith(basePath) ? new File(folderPath) : new File(basePath, folderPath) ; }
+        if (folderPath.isEmpty()) return new File(normalBase());
+        return normalPath(folderPath).startsWith(normalBase()) ? 
+            new File(normalPath(folderPath)) : new File(normalBase(), normalPath(folderPath)) ; }
 
     // maps a package folder name to a set of class names.
     protected Map<String, List<String>> map = new HashMap<>();
+    public List<String> classesInPackage(Package p) { return classesInFolder(p.pathname()); }
+    public List<String> classesInFolder(String n) {
+        if (map.isEmpty()) load(); return map.getOrDefault(n, emptyList(String.class)); }
+
+    // maps a face name to its folder path
     protected Map<String, String> faceMap = emptyWordMap();
-    public List<String> listFaces() { return collectList(list -> faceMap.forEach((k,v) -> list.add(v + Slash + k))); }
+    String locateFace(String faceName) { return faceMap.get(faceName); }
+    public boolean hasFace(String faceName) { return faceMap.containsKey(faceName); }
+    String formatPath(String folder, String faceName) { return folder + Package.separator() + faceName; }
+
+    public List<String> listFaces() { return collectList(list -> faceMap.forEach((k,v) -> list.add(formatPath(v,k)))); }
     public Set<Package> getPackages() { return collectSet(set -> faceMap.forEach((k,v) -> set.add(packageNamed(v)))); }
 
-    Package packageNamed(String name) { return Package.named(packageName(name)); }
-    static String packageName(String name) { return name.replace(Slash, Dot); }
-    public String packageContaining(String faceName) {
-        return (!faceMap.containsKey(faceName) ? Empty : packageName(faceMap.get(faceName))); }
+    Package packageNamed(String name) { return Package.named(Package.nameFrom(name)); }
+    private String packageForFace(String faceName) { return Package.nameFrom(locateFace(faceName)); }
+    public String packageContaining(String faceName) { return hasFace(faceName) ? packageForFace(faceName) :  Empty ; }
 
     public static final String ClassFileType = ".class";
     static String classNameWithoutType(String n) { return n.substring(0, n.length() - ClassFileType.length()); }
@@ -79,13 +92,5 @@ public class PathMap implements Logging {
                 report(format(AddReport, faceNames.size(), folderName));
         });
     }
-
-    public File locate(String folderName) {
-        File folder = new File(basePath, folderName); return (folder.exists() ? folder : null); }
-
-    public List<String> classesInFolder(String n) {
-        if (map.isEmpty()) load(); return map.getOrDefault(n, emptyList(String.class)); }
-
-    public List<String> classesInPackage(Package p) { return classesInFolder(p.pathname()); }
 
 } // PathMap

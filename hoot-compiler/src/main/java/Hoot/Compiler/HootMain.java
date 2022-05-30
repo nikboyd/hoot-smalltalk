@@ -59,8 +59,10 @@ public class HootMain implements Logging {
     boolean hasTestSource() { return falseOr((c) -> c.hasOption(TestSource), command); }
     boolean needsDefaultSource() { return !hasMainSource() && !hasTestSource(); }
 
+    static String normalPath(String p) { return Package.normalPath(p); }
     String defaultSourcePath() { return defaultSourceFolder().getPath(); }
-    File defaultSourceFolder() { return new File(removeTail(targetTail(), targetFolder.getPath()), sourceTail()); }
+    File defaultSourceFolder() { 
+        return new File(removeTail(normalPath(targetTail()), targetFolder.getPath()), normalPath(sourceTail())); }
     String removeTail(String tail, String path) {
         return (path.endsWith(tail)) ? path.substring(0, path.length() - tail.length()) : path; }
 
@@ -76,6 +78,7 @@ public class HootMain implements Logging {
     String testTargetPath() { return emptyOr((c) -> c.getOptionValue(Folder, TargetTest), command); }
     String testSourcePath() { return emptyOr((c) -> c.getOptionValue(TestSource, SourceTest), command); }
 
+    static final String WorkPath = "working";
     public static final String BasePath = "user.dir";
     String basePath() { return emptyOr((c) -> c.getOptionValue(Base, systemValue(BasePath)), command); }
 
@@ -137,7 +140,7 @@ public class HootMain implements Logging {
     void prepareFolders() {
         // validate the paths
         basePath = basePath();
-        baseFolder = locate(BasePath, basePath);
+        baseFolder = locate(WorkPath, basePath);
         if (baseFolder == null) return;
 
         targetFolder = locate(Target, targetPath(), targetTail());
@@ -165,12 +168,13 @@ public class HootMain implements Logging {
     static final String Comparison = "comparing: '%s' and '%s'";
     File locate(String name, String... paths) { return reportFolder(name, locateCode(name, paths)); }
     File locateCode(String folderName, String... folderPaths) {
-        File folder = new File(folderPaths[0]);
-        if (BasePath.equals(folderName) || folder.isAbsolute()) return folder;
-        if (folderPaths.length == 1) return new File(baseFolder, folderPaths[0]);
-        return locateRelative(folderName, folderPaths[0], folderPaths[1]) ;
+        File folder = new File(normalPath(folderPaths[0]));
+        if (WorkPath.equals(folderName) || folder.isAbsolute()) return folder;
+        if (folderPaths.length == 1) return new File(baseFolder, normalPath(folderPaths[0]));
+        return locateRelative(folderName, normalPath(folderPaths[0]), normalPath(folderPaths[1])) ;
     }
 
+    // paths have already been normalized
     File locateRelative(String folderName, String relativePath, String soughtPath) {
         File folder = new File(relativePath);
         if (relativePath.endsWith(soughtPath)) return folder;
