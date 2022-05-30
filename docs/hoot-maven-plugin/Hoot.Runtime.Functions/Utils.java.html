@@ -40,7 +40,7 @@ public interface Utils {
 <span class="pc bpc" id="L40" title="2 of 6 branches missed.">        return (items != null &amp;&amp; items.length &gt; 0 &amp;&amp; items[0] != null); }</span>
 
     @SafeVarargs public static &lt;T&gt; boolean hasNo(T... items) {
-<span class="nc bnc" id="L43" title="All 6 branches missed.">        return (items == null || items.length == 0 || items[0] == null); }</span>
+<span class="pc bpc" id="L43" title="3 of 6 branches missed.">        return (items == null || items.length == 0 || items[0] == null); }</span>
 
 <span class="pc bpc" id="L45" title="1 of 2 branches missed.">    static Predicate&lt;Object&gt; HasItem = (item) -&gt; (item != null);</span>
 <span class="fc" id="L46">    public static &lt;T&gt; boolean hasOne(T item) { return HasItem.test(item); }</span>
@@ -63,7 +63,7 @@ public interface Utils {
 
 <span class="nc bnc" id="L64" title="All 2 branches missed.">    public static &lt;R&gt; R[] unwrap(List&lt;R&gt; items, R[] sample) { return hasNo(items) ? sample : items.toArray(sample); }</span>
     @SafeVarargs public static &lt;R&gt; List&lt;R&gt; wrap(R... items) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        return hasNo(items) ? new ArrayList&lt;&gt;() : copyList(asList(items)); }</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        return hasNo(items) ? new ArrayList&lt;&gt;() : copyList(asList(items)); }</span>
 
     public static &lt;R&gt; R findFirst(Collection&lt;R&gt; items, Predicate&lt;? super R&gt; p) {
 <span class="nc bnc" id="L69" title="All 2 branches missed.">        return hasNo(items) ? null : items.stream().filter(p).findFirst().orElse(null); }</span>
@@ -103,7 +103,7 @@ public interface Utils {
     public static &lt;R&gt; R reduce(Collection&lt;R&gt; items, BinaryOperator&lt;R&gt; op, R identity) {
 <span class="nc" id="L104">        return items.stream().reduce(identity, op); }</span>
 
-<span class="nc" id="L106">    public static &lt;T&gt; ArrayList&lt;T&gt; copyList(Collection&lt;T&gt; list) { return new ArrayList&lt;&gt;(list); }</span>
+<span class="fc" id="L106">    public static &lt;T&gt; ArrayList&lt;T&gt; copyList(Collection&lt;T&gt; list) { return new ArrayList&lt;&gt;(list); }</span>
 <span class="fc" id="L107">    public static &lt;T&gt; ArrayList&lt;T&gt; emptyList(Class&lt;T&gt; itemType) { return new ArrayList&lt;&gt;(); }</span>
 <span class="nc" id="L108">    public static &lt;T&gt; ArrayList&lt;T&gt; emptyList() { return new ArrayList&lt;&gt;(); }</span>
 

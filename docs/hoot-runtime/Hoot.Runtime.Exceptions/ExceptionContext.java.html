@@ -14,15 +14,15 @@ import static Hoot.Runtime.Functions.Utils.*;
  * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
  * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
  */
-<span class="nc" id="L17">public class ExceptionContext implements Valued, Cacheable&lt;ExceptionContext&gt; {</span>
+<span class="fc" id="L17">public class ExceptionContext implements Valued, Cacheable&lt;ExceptionContext&gt; {</span>
 
     // an empty marker context for retry
-<span class="nc" id="L20">    protected static final ExceptionContext RetryToken = new ExceptionContext();</span>
-<span class="nc" id="L21">    protected static final ExceptionContext Unhandled = new ExceptionContext();</span>
+<span class="fc" id="L20">    protected static final ExceptionContext RetryToken = new ExceptionContext();</span>
+<span class="fc" id="L21">    protected static final ExceptionContext Unhandled = new ExceptionContext();</span>
 <span class="nc bnc" id="L22" title="All 2 branches missed.">    protected boolean isUnhandled() { return Unhandled == this; }</span>
 
-<span class="nc" id="L24">    private static final CachedStack&lt;ExceptionContext&gt; ContextStack = new CachedStack&lt;&gt;();</span>
-<span class="nc" id="L25">    static { ContextStack.defaultIfEmpty(Unhandled); }</span>
+<span class="fc" id="L24">    private static final CachedStack&lt;ExceptionContext&gt; ContextStack = new CachedStack&lt;&gt;();</span>
+<span class="fc" id="L25">    static { ContextStack.defaultIfEmpty(Unhandled); }</span>
 
 <span class="nc" id="L27">    protected static CachedStack&lt;ExceptionContext&gt; contextStack() { return ContextStack; }</span>
 <span class="nc" id="L28">    @Override public CachedStack&lt;ExceptionContext&gt; itemStack() { return contextStack(); }</span>
@@ -32,7 +32,7 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="nc" id="L32">    protected static ExceptionContext pop() { return contextStack().pop(); }</span>
 <span class="nc" id="L33">    protected void push() { contextStack().push(this); }</span>
 
-<span class="nc" id="L35">    protected int stackIndex = 0;</span>
+<span class="fc" id="L35">    protected int stackIndex = 0;</span>
 <span class="nc" id="L36">    @Override public int stackIndex() { return this.stackIndex; }</span>
 <span class="nc" id="L37">    @Override public void stackIndex(int value) { this.stackIndex = value; }</span>
 
@@ -133,7 +133,7 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="nc" id="L133">        Enclosure handler = findHandler(ex.valueType());</span>
 <span class="nc bnc" id="L134" title="All 2 branches missed.">        return hasAny(handler)? handler.handleSignaled(ex) : ex.defaultAction(); }</span>
 
-<span class="nc" id="L136">    private final HashMap&lt;Class,Enclosure&gt; handlers = emptyMap(Class.class, Enclosure.class);</span>
+<span class="fc" id="L136">    private final HashMap&lt;Class,Enclosure&gt; handlers = emptyMap(Class.class, Enclosure.class);</span>
 <span class="nc" id="L137">    private HashMap&lt;Class,Enclosure&gt; handlerMap() { return this.handlers; }</span>
 <span class="nc" id="L138">    private Collection&lt;Enclosure&gt; handlers() { return handlerMap().values(); }</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">    protected boolean hasHandlers() { return !handlerMap().isEmpty(); }</span>

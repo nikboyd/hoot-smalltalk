@@ -20,73 +20,78 @@ public class PathMap implements Logging {
 
 <span class="fc" id="L21">    public PathMap(String folderPath) { basePath = folderPath; }</span>
     protected String basePath; // the absolute base path mapped by this instance
+<span class="fc" id="L23">    static String normalPath(String p) { return Package.normalPath(p); }</span>
+<span class="fc" id="L24">    String normalBase() { return normalPath(basePath); }</span>
+
+<span class="nc bnc" id="L26" title="All 2 branches missed.">    public File locate(String folder) { File f = new File(normalBase(), normalPath(folder)); return (f.exists() ? f : null); }</span>
     File locateRelative(String folderPath) { // all paths are relative to the basePath
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (folderPath.isEmpty()) return new File(basePath);</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        return folderPath.startsWith(basePath) ? new File(folderPath) : new File(basePath, folderPath) ; }</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (folderPath.isEmpty()) return new File(normalBase());</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        return normalPath(folderPath).startsWith(normalBase()) ? </span>
+<span class="fc" id="L30">            new File(normalPath(folderPath)) : new File(normalBase(), normalPath(folderPath)) ; }</span>
 
     // maps a package folder name to a set of class names.
-<span class="fc" id="L28">    protected Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L29">    protected Map&lt;String, String&gt; faceMap = emptyWordMap();</span>
-<span class="fc" id="L30">    public List&lt;String&gt; listFaces() { return collectList(list -&gt; faceMap.forEach((k,v) -&gt; list.add(v + Slash + k))); }</span>
-<span class="fc" id="L31">    public Set&lt;Package&gt; getPackages() { return collectSet(set -&gt; faceMap.forEach((k,v) -&gt; set.add(packageNamed(v)))); }</span>
+<span class="fc" id="L33">    protected Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L34">    public List&lt;String&gt; classesInPackage(Package p) { return classesInFolder(p.pathname()); }</span>
+    public List&lt;String&gt; classesInFolder(String n) {
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (map.isEmpty()) load(); return map.getOrDefault(n, emptyList(String.class)); }</span>
 
-<span class="fc" id="L33">    Package packageNamed(String name) { return Package.named(packageName(name)); }</span>
-<span class="fc" id="L34">    static String packageName(String name) { return name.replace(Slash, Dot); }</span>
-    public String packageContaining(String faceName) {
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        return (!faceMap.containsKey(faceName) ? Empty : packageName(faceMap.get(faceName))); }</span>
+    // maps a face name to its folder path
+<span class="fc" id="L39">    protected Map&lt;String, String&gt; faceMap = emptyWordMap();</span>
+<span class="nc" id="L40">    String locateFace(String faceName) { return faceMap.get(faceName); }</span>
+<span class="nc" id="L41">    public boolean hasFace(String faceName) { return faceMap.containsKey(faceName); }</span>
+<span class="fc" id="L42">    String formatPath(String folder, String faceName) { return folder + Package.separator() + faceName; }</span>
+
+<span class="fc" id="L44">    public List&lt;String&gt; listFaces() { return collectList(list -&gt; faceMap.forEach((k,v) -&gt; list.add(formatPath(v,k)))); }</span>
+<span class="fc" id="L45">    public Set&lt;Package&gt; getPackages() { return collectSet(set -&gt; faceMap.forEach((k,v) -&gt; set.add(packageNamed(v)))); }</span>
+
+<span class="fc" id="L47">    Package packageNamed(String name) { return Package.named(Package.nameFrom(name)); }</span>
+<span class="nc" id="L48">    private String packageForFace(String faceName) { return Package.nameFrom(locateFace(faceName)); }</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">    public String packageContaining(String faceName) { return hasFace(faceName) ? packageForFace(faceName) :  Empty ; }</span>
 
     public static final String ClassFileType = &quot;.class&quot;;
-<span class="fc" id="L39">    static String classNameWithoutType(String n) { return n.substring(0, n.length() - ClassFileType.length()); }</span>
-<span class="pc bpc" id="L40" title="1 of 4 branches missed.">    public static boolean namesClass(String n) { return hasSome(n) &amp;&amp; n.endsWith(ClassFileType); }</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">    public static String className(String n) { return (!namesClass(n)) ? n : classNameWithoutType(n); }</span>
+<span class="fc" id="L52">    static String classNameWithoutType(String n) { return n.substring(0, n.length() - ClassFileType.length()); }</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">    public static boolean namesClass(String n) { return hasSome(n) &amp;&amp; n.endsWith(ClassFileType); }</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">    public static String className(String n) { return (!namesClass(n)) ? n : classNameWithoutType(n); }</span>
 
     // skip this class that causes problems
     static final String SkippedClass = &quot;MulticastDnsAdvertiser&quot;;
     protected void addMapped(String folderName, String fileName) {
-<span class="fc" id="L46">        String faceName = className(fileName);</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (SkippedClass.equals(faceName)) return;</span>
+<span class="fc" id="L59">        String faceName = className(fileName);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (SkippedClass.equals(faceName)) return;</span>
 
-<span class="fc" id="L49">        List&lt;String&gt; faceNames = map.getOrDefault(folderName, emptyList(String.class));</span>
-<span class="fc" id="L50">        packageNamed(folderName).loadFace(faceName);</span>
-<span class="fc" id="L51">        faceMap.put(faceName, folderName);</span>
-<span class="fc" id="L52">        faceNames.add(faceName);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L62">        List&lt;String&gt; faceNames = map.getOrDefault(folderName, emptyList(String.class));</span>
+<span class="fc" id="L63">        packageNamed(folderName).loadFace(faceName);</span>
+<span class="fc" id="L64">        faceMap.put(faceName, folderName);</span>
+<span class="fc" id="L65">        faceNames.add(faceName);</span>
+<span class="fc" id="L66">    }</span>
 
-<span class="fc" id="L55">    public void load() { load(Empty); reportAdded(); }</span>
+<span class="fc" id="L68">    public void load() { load(Empty); reportAdded(); }</span>
     protected void load(String folderName) {
-<span class="fc" id="L57">        File directory = locateRelative(folderName);</span>
-<span class="fc" id="L58">        String[] list = directory.list();</span>
+<span class="fc" id="L70">        File directory = locateRelative(folderName);</span>
+<span class="fc" id="L71">        String[] list = directory.list();</span>
 
         // note: depth first recursive descent of folders
-<span class="fc" id="L61">        int count = list.length;</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (int n = 0; n &lt; count; n++) {</span>
-<span class="fc" id="L63">            String fileName = list[n];</span>
-<span class="fc" id="L64">            File file = new File(directory, fileName);</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (file.isDirectory()) { // load subdirectory</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">                load(folderName.isEmpty() ? fileName : file.getAbsolutePath());</span>
+<span class="fc" id="L74">        int count = list.length;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int n = 0; n &lt; count; n++) {</span>
+<span class="fc" id="L76">            String fileName = list[n];</span>
+<span class="fc" id="L77">            File file = new File(directory, fileName);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (file.isDirectory()) { // load subdirectory</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                load(folderName.isEmpty() ? fileName : file.getAbsolutePath());</span>
             }
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            else if (namesClass(fileName)) {</span>
-<span class="fc" id="L69">                addMapped(folderName, classNameWithoutType(fileName));</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            else if (namesClass(fileName)) {</span>
+<span class="fc" id="L82">                addMapped(folderName, classNameWithoutType(fileName));</span>
             }
         }
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L85">    }</span>
 
-<span class="nc" id="L74">    public void println() { System.out.println(); }</span>
+<span class="nc" id="L87">    public void println() { System.out.println(); }</span>
     static final String AddReport = &quot;loaded %d faces into %s&quot;;
     protected void reportAdded() {
-<span class="fc" id="L77">        map.forEach((folderName, faceNames) -&gt; {</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">            if (ClassPath.matchHoots(folderName))</span>
-<span class="nc" id="L79">                report(format(AddReport, faceNames.size(), folderName));</span>
-<span class="nc" id="L80">        });</span>
-<span class="fc" id="L81">    }</span>
-
-    public File locate(String folderName) {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        File folder = new File(basePath, folderName); return (folder.exists() ? folder : null); }</span>
-
-    public List&lt;String&gt; classesInFolder(String n) {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (map.isEmpty()) load(); return map.getOrDefault(n, emptyList(String.class)); }</span>
-
-<span class="nc" id="L89">    public List&lt;String&gt; classesInPackage(Package p) { return classesInFolder(p.pathname()); }</span>
+<span class="fc" id="L90">        map.forEach((folderName, faceNames) -&gt; {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (ClassPath.matchHoots(folderName))</span>
+<span class="nc" id="L92">                report(format(AddReport, faceNames.size(), folderName));</span>
+<span class="nc" id="L93">        });</span>
+<span class="fc" id="L94">    }</span>
 
 } // PathMap
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
