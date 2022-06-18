@@ -561,8 +561,8 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [lab-trigger]: shell/build-all-mods.sh#L42
 [install-tools]: shell/install-tools.sh#L4
 
-[maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.svg
-[runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.svg
-[compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.svg
-[plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.svg
-[libs-coverage]: https://nikboyd.github.io/hoot-smalltalk/libs-hoot/coverage_badge.svg
+[maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.png
+[runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.png
+[compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.png
+[plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.png
+[libs-coverage]: https://nikboyd.github.io/hoot-smalltalk/libs-hoot/coverage_badge.png

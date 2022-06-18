@@ -27,12 +27,12 @@ hoot-runtime,Hoot.Runtime.Exceptions,UnhandledException.Metaclass,8,13,0,0,2,3,2
 hoot-runtime,Hoot.Runtime.Exceptions,ExceptionBase.Metaclass,8,12,0,0,4,3,4,3,4,3
 hoot-runtime,Hoot.Runtime.Exceptions,UnhandledException,15,0,0,0,5,0,5,0,5,0
 hoot-runtime,Hoot.Runtime.Maps,Library,293,486,11,11,54,72,48,39,40,36
-hoot-runtime,Hoot.Runtime.Maps,Package,325,438,25,25,49,87,50,40,33,32
-hoot-runtime,Hoot.Runtime.Maps,PathMap,72,234,9,19,10,37,14,28,8,20
+hoot-runtime,Hoot.Runtime.Maps,Package,324,413,23,23,51,83,48,36,33,28
+hoot-runtime,Hoot.Runtime.Maps,PathMap,59,222,9,19,7,34,11,26,5,18
 hoot-runtime,Hoot.Runtime.Maps,MethodCache,348,140,38,4,64,23,37,5,18,3
 hoot-runtime,Hoot.Runtime.Maps,Discovery,19,162,3,5,1,32,3,20,0,19
 hoot-runtime,Hoot.Runtime.Maps,ZipMap,8,80,0,4,3,17,1,8,1,6
-hoot-runtime,Hoot.Runtime.Maps,ClassPath,274,401,37,29,42,66,51,46,27,37
+hoot-runtime,Hoot.Runtime.Maps,ClassPath,270,401,37,29,41,66,50,46,26,37
 hoot-runtime,Hoot.Runtime.Values,Table,301,0,42,0,64,0,48,0,27,0
 hoot-runtime,Hoot.Runtime.Values,Value,39,286,10,20,3,42,11,34,3,27
 hoot-runtime,Hoot.Runtime.Values,Cacheable,8,46,3,7,1,6,4,8,1,6
