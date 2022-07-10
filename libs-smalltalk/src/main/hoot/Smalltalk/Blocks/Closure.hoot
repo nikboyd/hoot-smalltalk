@@ -18,7 +18,7 @@ Enclosure subclass: Closure. "A block closure."
 
 Closure members: "creating instances"
 [
-    @Primitive @Static Closure! with: Argued? Frame : Subject! block : Java Lang String! ... argNames [
+    @Primitive @Static Closure! with: Argued? Frame : ResultType! block : Java Lang String! ... argNames [
         ^(Closure basicNew: (Enclosure withQuiet: block) block) valueNames: argNames ]
 
     @Primitive @Static Closure! with: Runner! block : Java Lang String! ... argNames [

@@ -15,6 +15,7 @@ import static Hoot.Runtime.Maps.Package.*;
 import static Hoot.Runtime.Names.Primitive.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Functions.Exceptional.*;
+import static Hoot.Runtime.Maps.Library.SourceFileType;
 import static Hoot.Runtime.Maps.Library.loadBasePaths;
 
 /**
@@ -61,7 +62,7 @@ public class HootMain implements Logging {
 
     static String normalPath(String p) { return Package.normalPath(p); }
     String defaultSourcePath() { return defaultSourceFolder().getPath(); }
-    File defaultSourceFolder() { 
+    File defaultSourceFolder() {
         return new File(removeTail(normalPath(targetTail()), targetFolder.getPath()), normalPath(sourceTail())); }
     String removeTail(String tail, String path) {
         return (path.endsWith(tail)) ? path.substring(0, path.length() - tail.length()) : path; }
@@ -74,6 +75,7 @@ public class HootMain implements Logging {
 
     String targetPath() { return emptyOr((c) -> c.getOptionValue(Folder, targetTail()), command); }
     String sourcePath() { return emptyOr((c) -> c.getOptionValue(Source, sourceTail()), command); }
+    String sourceType() { return emptyOr((c) -> c.getOptionValue(Language, SourceFileType), command); }
 
     String testTargetPath() { return emptyOr((c) -> c.getOptionValue(Folder, TargetTest), command); }
     String testSourcePath() { return emptyOr((c) -> c.getOptionValue(TestSource, SourceTest), command); }
@@ -129,7 +131,7 @@ public class HootMain implements Logging {
     Options availableOptions() { return collectWith(new Options(), listOptions(), (opts,opt) -> opts.addOption(opt)); }
     List<Option> listOptions() { return wrap(
         baseOption(), sourceOption(), targetOption(), packageOption(),
-        testSourceOption(), testOption(), helpOption()
+        testSourceOption(), testOption(), helpOption(), languageOption()
         ); }
 
     String basePath;
@@ -163,6 +165,7 @@ public class HootMain implements Logging {
         basicPaths.addAll(wrap(paths));
         loadBasePaths(wrap(paths));
         UnitFactory = StandardUnitFactory;
+        Hoot.Compiler.Scopes.File.fileType(sourceType());
     }
 
     static final String Comparison = "comparing: '%s' and '%s'";
@@ -270,6 +273,11 @@ public class HootMain implements Logging {
     static final String Libs = "libs";
     Option libsOption() { return libsOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }
     Builder libsOptBuilder() { return buildOption(Libs, Libs+Path, "library JARs"); }
+
+    static final String LangName = "languageName";
+    static final String Language = "language";
+    Option languageOption() { return languageBuilder().optionalArg(true).hasArg().build(); }
+    Builder languageBuilder() { return buildOption(Language, LangName, "optional: language name, .st or .hoot = default"); }
 
     static final String PackNames = "packageNames";
     public static final String Packages = "packages";

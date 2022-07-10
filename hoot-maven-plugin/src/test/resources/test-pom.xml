@@ -32,6 +32,7 @@
                     <main-args>
                         <source>../hoot-compiler/src/test/hoot</source>
                         <folder>../sample-code</folder>
+                        <language>.hoot</language>
                         <test>true</test>
                     </main-args>
                 </configuration>

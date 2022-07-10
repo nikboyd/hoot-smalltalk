@@ -1,19 +1,14 @@
 package Hoot.Compiler.Scopes;
 
-import java.io.*;
 import java.util.*;
 import org.codehaus.janino.*;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
 
-import Hoot.Compiler.HootLexer;
 import Hoot.Compiler.HootParser;
-import Hoot.Compiler.HootBaseListener;
-import Hoot.Runtime.Faces.Logging;
-import static Hoot.Compiler.HootParser.*;
 import Hoot.Runtime.Behaviors.Scope;
+import Hoot.Compiler.HootBlockParser;
 import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
+import Hoot.Runtime.Faces.Logging;
 
 /**
  * Compiles a Hoot closure from a closure token stream with a parser.
@@ -24,50 +19,39 @@ import static Hoot.Runtime.Functions.Utils.*;
  */
 public class ClosureCompiler implements Logging {
 
+    /**
+     * Evaluate a block of code and return its result.
+     * @param code a code block
+     * @return a result
+     */
+    public static Object evaluate(String code) { return new ClosureCompiler(code).parseClosure().evaluate(); }
+    public ClosureCompiler(String closureCode) { makeScriptScope(closureCode); }
+
+    Method m; // wait to initialize
     File fakeFile = new File("Hoot.Scripts", "Scripted");
-    public ClosureCompiler(String closureCode) { this();  parseClosure(closureCode); }
-    public ClosureCompiler() {
+    private void makeScriptScope(String code) {
         fakeFile.makeCurrent();
         fakeFile.addStandardImports();
         fakeFile.faceScope().makeCurrent();
-        Method m = new Method();
-        m.makeCurrent();
+        m = new Method(); // initialize with faked up scope
+        m.makeCurrent(); // push upper scopes
         m.signature(KeywordSignature.emptyNiladic());
-    }
-
-    String blockCode;
-    private StringReader blockReader() { return new StringReader(blockCode); }
-    private CharStream createInputStream() throws Exception { return new ANTLRInputStream(blockReader()); }
-    private HootParser createParser() throws Exception { return new HootParser(createTokenStream()); }
-    private TokenSource createLexer() throws Exception { return new HootLexer(createInputStream()); }
-
-    CommonTokenStream tokenStream;
-    public CommonTokenStream tokenStream() { return tokenStream; }
-    private CommonTokenStream tokenStream(CommonTokenStream stream) { this.tokenStream = stream; return tokenStream; }
-    private TokenStream createTokenStream() throws Exception { return tokenStream(new CommonTokenStream(createLexer())); }
-
-    HootParser parser;
-    BlockScopeContext blockScope;
-    private String compiledCode() { return blockScope.b.emitContents().render(); }
-    public final void parseClosure(String blockCode) {
-        this.blockCode = blockCode;
-        runLoudly(() -> {
-            parser = createParser();
-            blockScope = parser.blockScope();
-            ParseTreeWalker walker = new ParseTreeWalker();
-            walker.walk(new HootBaseListener(), blockScope);
-        });
+        blockParser = new HootBlockParser(code);
     }
 
     static final Object[] NoArgs = { };
-    public static Object evaluate(String code) { return new ClosureCompiler(code).evaluate(); }
     public Object evaluate() { return nullOrTryLoudly(() ->
         buildEvaluator().evaluate(NoArgs), () -> Scope.currentFile().popScope()); }
 
-    static final String[] EmptyNames = {};
+    HootBlockParser blockParser;
+    ClosureCompiler parseClosure() { this.blockParser.parseTokens(); return this; }
+    HootParser.BlockScopeContext blockScope() { return this.blockParser.blockScope(); }
+    String compiledCode() { return blockScope().b.emitContents().render(); }
+
+    static final String[] NoNames = {};
     private String[] importedTypes() { // only non-static imports
         List<String> results = map(select(fakeFile.faceImports(), imp -> !imp.importsStatics()), imp -> imp.importedName());
-        return unwrap(results, EmptyNames); }
+        return unwrap(results, NoNames); }
 
     String[] argNames = {};
     Class<?>[] argTypes = {};

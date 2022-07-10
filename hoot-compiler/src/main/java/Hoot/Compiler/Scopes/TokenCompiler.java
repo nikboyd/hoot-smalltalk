@@ -1,15 +1,17 @@
 package Hoot.Compiler.Scopes;
 
-import java.io.*;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-
-import Hoot.Compiler.*;
-import static Hoot.Compiler.HootParser.*;
+import Hoot.Runtime.Faces.UnitFile;
+import Hoot.Runtime.Faces.FileParser;
+import Hoot.Runtime.Behaviors.Invoke;
+import Hoot.Runtime.Names.Selector;
+import Hoot.Runtime.Faces.Logging;
 import static Hoot.Compiler.Notes.Comment.*;
 import static Hoot.Runtime.Functions.Exceptional.*;
-import org.stringtemplate.v4.AutoIndentWriter;
-import Hoot.Runtime.Faces.Logging;
+import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Maps.Library.ChunkFileType;
+import static Hoot.Runtime.Maps.Library.SourceFileType;
+import java.util.HashMap;
 
 /**
  * Compiles a Hoot file from a token stream with a parser.
@@ -20,76 +22,52 @@ import Hoot.Runtime.Faces.Logging;
  */
 public class TokenCompiler implements Logging {
 
-    File tokenFile;
-    public TokenCompiler(File aFile) { tokenFile = aFile; }
-    private String tokenFilepath() { return tokenFile.sourceFile().getAbsolutePath(); }
-    private CharStream createInputStream() throws Exception { return new ANTLRFileStream(tokenFilepath()); }
-    private HootParser createParser() throws Exception { return new HootParser(createTokenStream()); }
-    private TokenSource createLexer() throws Exception { return new HootLexer(createInputStream()); }
-    private void popScope() { tokenFile.popScope(); }
+    static final HashMap<String, String> ParserTypes = new HashMap<>();
+    static {
+        ParserTypes.put(SourceFileType, "Hoot.Compiler.HootFileParser");
+        ParserTypes.put(ChunkFileType,  "Smalltalk.Compiler.SmalltalkFileParser");
+    }
 
-    CommonTokenStream tokenStream;
-    public CommonTokenStream tokenStream() { return tokenStream; }
-    private CommonTokenStream tokenStream(CommonTokenStream stream) { this.tokenStream = stream; return tokenStream; }
-    private TokenStream createTokenStream() throws Exception { return tokenStream(new CommonTokenStream(createLexer())); }
+    Selector selectedParser(String fileType) { return Selector.named(ParserTypes.get(fileType)); }
+    private FileParser createParser(String fileType) {
+        return Invoke.with().with(selectedParser(fileType)).call(); }
+
+    public TokenCompiler(File aFile, String fileType) {
+        this.tokenFile = aFile; this.fileParser = createParser(fileType); }
 
     public boolean compile() {
-        java.io.File sourceFile = tokenFile.sourceFile();
-        if (sourceFile == null || !sourceFile.exists()) {
-            reportMissingSource();
-            return false;
-        }
-
-        parseTokens();
-        if (wasParsed()) {
-            emitCode();
-            return true;
-        }
-        else {
-            return false;
-        }
+        java.io.File sourceFile = tokenFile().sourceFile();
+        if (hasNo(sourceFile) || !sourceFile.exists()) { reportMissing(); return false; }
+        parseTokens(); if (wasParsed()) { emitCode(); return true; }
+        return false; // should not arrive here
     }
 
-    HootParser parser;
-    public boolean wasParsed() { return parser != null; }
-    public boolean notParsed() { return parser == null; }
+    public void parseTokens() { if (notParsed()) runLoudly(
+        () -> { makeFileCurrent(); parseUnit(); }, () -> { popScope(); }); }
 
-    CompilationUnitContext resultUnit;
-    private void parseUnit() throws Exception {
-        tokenFile.makeCurrent();
-        report("parsing " + tokenFile.name());
-
-        parser = createParser();
-        resultUnit = parser.compilationUnit();
-        tokenFile.cacheComments(buildComments(tokenStream()));
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(new HootBaseListener(), resultUnit);
+    void emitCode() { tokenFile().writeCode(); }
+    void parseUnit() {
+        reportParsing();
+        fileParser().parseTokens(tokenFile);
+        captureComments();
+        fileParser().walkResult();
     }
 
-    public void parseTokens() { if (wasParsed()) return;
-        runLoudly(() -> { parseUnit(); }, () -> { popScope(); }); }
+    UnitFile tokenFile;
+    UnitFile tokenFile() { return tokenFile; }
 
-    private void emitCode() {
-        tokenFile.clean();
-        java.io.File targetFolder = tokenFile.facePackage().createTarget();
-        if (targetFolder == null) return; // failure already reported
+    FileParser fileParser;
+    FileParser fileParser() { return this.fileParser; }
 
-        report("writing " + tokenFile.targetFilename());
-        emitCodeIn(new java.io.File(targetFolder, tokenFile.targetFilename()));
-    }
+    public CommonTokenStream tokenStream() { return fileParser().tokenStream(); }
+    public boolean wasParsed() { return fileParser().wasParsed(); }
+    public boolean notParsed() { return fileParser().notParsed(); }
 
-    private void emitCodeIn(java.io.File targetFile) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(targetFile))) {
-            tokenFile.emitScope().result().write(new AutoIndentWriter(writer));
-        }
-        catch (Exception ex) {
-            error(ex.getMessage(), ex);
-        }
-    }
+    void captureComments() { tokenFile().acceptComments(buildComments(fileParser().tokenStream())); }
+    void makeFileCurrent() { tokenFile().makeCurrent(); }
+    void popScope() { tokenFile().popScope(); }
 
-    private void reportMissingSource() {
-        String message = "can't find source file for " + tokenFile.faceName();
-        error(message);
-    }
+    void reportParsing() { report("parsing " + tokenFile().sourceFile().getName()); }
+    void reportMissing() { error("can't find source file for " + tokenFile().name()); }
 
 } //  TokenCompiler

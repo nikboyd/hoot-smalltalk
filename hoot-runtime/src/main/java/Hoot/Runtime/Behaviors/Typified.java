@@ -8,9 +8,9 @@ import Hoot.Runtime.Names.TypeName;
 import Hoot.Runtime.Values.Variable;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import static Hoot.Runtime.Names.Primitive.isStatic;
 import Hoot.Runtime.Faces.Logging;
 import Hoot.Runtime.Faces.Valued;
-import static Hoot.Runtime.Names.Primitive.isStatic;
 
 /**
  * An essential type description.

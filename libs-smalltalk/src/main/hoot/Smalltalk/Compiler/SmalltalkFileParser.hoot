@@ -1,0 +1,41 @@
+@Notice :'Copyright 2010,2022 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+'!
+
+Hoot Runtime Faces UnitFile import.
+Hoot Runtime Faces FileParser import.
+
+Org Antlr V4 Runtime lowerCase importAll.
+Org Antlr V4 Runtime Tree lowerCase importAll.
+
+Object subclass: FileParser! SmalltalkFileParser.
+
+SmalltalkFileParser members: "constructing instances"
+[
+    UnitFile! tokenFile.
+    UnitFile! tokenFile [ ^tokenFile ]
+    Java Lang String! tokenFilepath [ ^tokenFile sourceFile getAbsolutePath ]
+
+    @Property CommonTokenStream! tokenStream.
+
+    SmalltalkParser CompilationUnitContext! resultUnit.
+    ParserRuleContext! parseResult [ ^resultUnit ]
+    ParseTreeListener! listener [ ^SmalltalkBaseListener basicNew ]
+
+    SmalltalkParser! parser.
+    SmalltalkParser! createParser [ ^SmalltalkParser basicNew: self createTokenStream ]
+    @Override @Primitive Java Lang Boolean! notParsed [ ^( parser == null ) ]
+
+    TokenSource! source.
+    TokenStream! createTokenStream [ ^self tokenStream: (CommonTokenStream basicNew: source) ]
+    TokenSource! createLexer [ ^SmalltalkLexer basicNew: self createInputStream ]
+    @Primitive CharStream! createInputStream [
+        ^[ ^ANTLRFileStream basicNew: self tokenFilepath ] valueWith ]
+
+    Void! parseTokens: UnitFile! aFile [
+        tokenFile := aFile.
+        source := self createLexer.
+        parser := self createParser.
+        resultUnit := parser compilationUnit.
+    ]
+]

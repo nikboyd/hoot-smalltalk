@@ -26,6 +26,7 @@
         <module>hoot-compiler-bundle</module>
         <module>libs-smalltalk</module>
         <module>libs-hoot</module>
+        <module>libs-port</module>
         <module>hoot-libs-bundle</module>
     </modules>
 
