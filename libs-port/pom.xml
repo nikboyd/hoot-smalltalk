@@ -64,6 +64,7 @@
             </resource>
         </resources>
         <plugins>
+<!--
             <plugin>
                 <groupId>hoot-smalltalk</groupId>
                 <artifactId>hoot-maven-plugin</artifactId>
@@ -75,10 +76,11 @@
                 <configuration>
                     <main-args>
                         <language>.st</language>
-                        <!--<test>true</test>-->
+                        <test>true</test>
                     </main-args>
                 </configuration>
             </plugin>
+-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven.compiler}</version>

@@ -29,14 +29,14 @@ static final String Empty = "";
 // Smalltalk chunk file formats
 //==================================================================================================
 
-compilationUnit : ( chunkReader | chunks )* ;
+compilationUnit : ( chunks | chunkReader )* ;
 
-chunkReader : Bang r=reader Bang   s=codeStream Bang ; // starts with a bang!
-reader      : message ;
+chunkReader : Bang r=reader Bang s=codeStream Bang WhiteSpaces Bang ; // starts with a bang!
 codeStream  : methodSignature ( localVariables )? blockContent ;
+reader      : message ;
 
-chunks      : ( chs+=chunk Bang )* WhiteSpaces Bang ; // starts with a chunk
-chunk       : message ;
+chunks      : ( chs+=chunk Bang )+ ; // starts with a chunk
+chunk       : ( literal | message ) ;
 
 //==================================================================================================
 // method scopes
