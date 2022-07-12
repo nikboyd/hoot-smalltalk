@@ -23,18 +23,17 @@ SmalltalkFileParser members: "constructing instances"
     ParseTreeListener! listener [ ^SmalltalkBaseListener basicNew ]
 
     SmalltalkParser! parser.
-    SmalltalkParser! createParser [ ^SmalltalkParser basicNew: self createTokenStream ]
+    SmalltalkParser! createParser [ ^SmalltalkParser basicNew: self tokenStream ]
     @Override @Primitive Java Lang Boolean! notParsed [ ^( parser == null ) ]
 
     TokenSource! source.
-    TokenStream! createTokenStream [ ^self tokenStream: (CommonTokenStream basicNew: source) ]
     TokenSource! createLexer [ ^SmalltalkLexer basicNew: self createInputStream ]
-    @Primitive CharStream! createInputStream [
-        ^[ ^ANTLRFileStream basicNew: self tokenFilepath ] valueWith ]
+    CommonTokenStream! createTokenStream [ ^CommonTokenStream basicNew: source ]
 
     Void! parseTokens: UnitFile! aFile [
         tokenFile := aFile.
         source := self createLexer.
+        tokenStream :=  self createTokenStream.
         parser := self createParser.
         resultUnit := parser compilationUnit.
     ]
