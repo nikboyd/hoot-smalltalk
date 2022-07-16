@@ -29,18 +29,44 @@ static final String Empty = "";
 // Smalltalk chunk file formats
 //==================================================================================================
 
-compilationUnit : ( chunks | chunkReader )* ;
+compilationUnit : fc=ConstantString Bang cs=classSignature Bang cr=commentReader ( mrs+=methodReader )* ;
 
-chunkReader : Bang r=reader Bang s=codeStream Bang WhiteSpaces Bang ; // starts with a bang!
-codeStream  : methodSignature ( localVariables )? blockContent ;
-reader      : message ;
+//chunkReader : Bang ( methodReader Bang | commentReader ) ; // starts with a bang!
+commentReader : cl=globalName Commented v=literal Prior literal Bang s=Sentences Bang ;
+methodReader  : cl=globalName Protocol v=literal ( Stamp literal )? Bang ms=methodScope Bang ;
 
-chunks      : ( chs+=chunk Bang )+ ; // starts with a chunk
-chunk       : ( literal | message ) ;
+//chunks      : ( chs+=chunk Bang )+ ; // starts with a chunk
+//chunk       : ( literal | classSignature ) Bang ;
+
+//==================================================================================================
+// class scope
+//==================================================================================================
+
+classSignature  : x=expression
+// h=globalName k=Subclass sub=literal InstaVars iVars=literal ClassVars cVars=literal PoolNames pools=literal Category cat=literal
+{
+CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent();
+//Global superGlobal = Global.named($ctx.h.name); Global subGlobal = Global.named($ctx.sub.item.encodedValue());
+//Face.currentFace().signature(ClassSignature.with(superGlobal, subGlobal, $ctx.k.getText()));
+Face.currentFace().makeCurrent();
+} ;
 
 //==================================================================================================
 // method scopes
 //==================================================================================================
+
+methodScope returns [Method item] :
+sign=methodSignature b=methodBeg ( vs=localVariables )? content=blockContent x=methodEnd ;
+
+methodBeg : WhiteSpaces {
+MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
+$methodScope::item = new Method().makeCurrent();
+$methodScope::item.signature(scope.sign.item);} ;
+
+methodEnd : Bang {
+MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
+$methodScope::item.content(scope.content.item);
+$methodScope::item.popScope();} ;
 
 methodSignature returns  [BasicSignature item = null]
 : ksign=keywordSignature {$item = KeywordSignature.with(null, $ctx.ksign.ks.argList, $ctx.ksign.ks.headList, $ctx.ksign.ks.tailList);}
@@ -198,7 +224,7 @@ valueName returns    [String name = Empty]
   )
 ;
 
-localVariables : Bar ( variableName )* Bar ;
+localVariables : Bar ( names+=variableName )* Bar ;
 variableName returns [String name = Empty]
 : v=LocalName        {$name = $v.text;}
 ;
@@ -316,6 +342,16 @@ Super       : 'super' ;
 True        : 'true' ;
 False       : 'false' ;
 
+//Subclass    : 'subclass:' ;
+//InstaVars   : 'instanceVariableNames:' ;
+//ClassVars   : 'classVariableNames:' ;
+//PoolNames   : 'poolDictionaries:' ;
+//Category    : 'category:' ;
+Protocol    : 'methodsFor:' ;
+Commented   : 'commentStamp:' ;
+Stamp       : 'stamp:' ;
+Prior       : 'prior:' ;
+
 KeywordHead : Name Colon ;
 KeywordTail : Colon ;
 GlobalName  : UpperCase Tail* ;
@@ -334,6 +370,7 @@ ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString ;
 ConstantString    : QuotedString ConstantString? ;
 CodeComment       : QuotedComment -> channel(HIDDEN) ;
+Sentences         : ( Name WhiteSpace? )* Dot? ;
 
 fragment QuotedString  : SingleQuote .*? SingleQuote ;
 fragment QuotedComment : DoubleQuote .*? DoubleQuote ;

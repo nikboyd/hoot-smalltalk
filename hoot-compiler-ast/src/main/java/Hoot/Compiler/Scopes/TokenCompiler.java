@@ -24,7 +24,7 @@ public class TokenCompiler implements Logging {
 
     static final HashMap<String, String> ParserTypes = new HashMap<>();
     static {
-        ParserTypes.put(SourceFileType, "Hoot.Compiler.HootFileParser");
+        ParserTypes.put(SourceFileType, "Hoot.Compiler.Parser.HootFileParser");
         ParserTypes.put(ChunkFileType,  "Smalltalk.Compiler.SmalltalkFileParser");
     }
 

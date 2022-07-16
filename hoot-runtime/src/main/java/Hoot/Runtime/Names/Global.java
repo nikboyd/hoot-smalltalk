@@ -1,12 +1,13 @@
 package Hoot.Runtime.Names;
 
-import Hoot.Runtime.Behaviors.Scope;
 import java.util.*;
 
 import Hoot.Runtime.Values.Operand;
+import Hoot.Runtime.Behaviors.Scope;
 import Hoot.Runtime.Emissions.Emission;
 import static Hoot.Runtime.Names.Name.*;
 import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Names.Primitive.trimQuotes;
 
 /**
  * A global reference.
@@ -25,7 +26,7 @@ public class Global extends Operand {
     @Override public boolean equals(Object global) {
         return hasAny(global) && getClass() == global.getClass() && falseOr(g -> this.equals(g), (Global) global); }
 
-    public static Global named(String name) { return Global.with(name); }
+    public static Global named(String name) { return Global.with(trimQuotes(name)); }
     public static Global with(String... names) { return Global.withList(wrap(names)); }
     public static Global withList(List<String> names) { return new Global(names).fixArrayed(); }
 

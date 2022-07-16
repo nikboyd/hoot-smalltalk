@@ -3,10 +3,10 @@ package Hoot.Compiler.Notes;
 import java.util.*;
 import org.antlr.v4.runtime.*;
 
+import Hoot.Compiler.Parser.*;
 import Hoot.Runtime.Emissions.*;
 import Hoot.Compiler.Scopes.File;
 import static Hoot.Runtime.Functions.Utils.*;
-import static Hoot.Compiler.HootParser.CodeComment;
 
 /**
  * Discovers a code comment in proximity to another token.
@@ -30,7 +30,7 @@ public class Comment extends Item {
         return mapList(findCommentTokens(tokens), c -> c != null, c -> Comment.with(c)); }
 
     private static List<Token> findCommentTokens(CommonTokenStream tokens) {
-        return tokens.getTokens(0, tokens.size() - 1, CodeComment); }
+        return tokens.getTokens(0, tokens.size() - 1, HootParser.CodeComment); }
 
     static final String Line = "\n";
     static final String LineMod = Line + Blank + Wild + Blank;

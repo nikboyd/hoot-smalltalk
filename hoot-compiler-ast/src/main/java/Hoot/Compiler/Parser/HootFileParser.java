@@ -1,5 +1,6 @@
-package Hoot.Compiler;
+package Hoot.Compiler.Parser;
 
+import Hoot.Compiler.Parser.*;
 import Hoot.Runtime.Faces.UnitFile;
 import Hoot.Runtime.Faces.FileParser;
 import static Hoot.Runtime.Functions.Utils.*;
@@ -39,4 +40,4 @@ public class HootFileParser implements FileParser {
     HootParser createParser() { return new HootParser(tokenStream()); }
     @Override public boolean wasParsed() { return hasOne(parser); }
 
-} // HootLanguageParse
+} // HootFileParser

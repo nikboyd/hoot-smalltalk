@@ -20,5 +20,6 @@ public abstract class Constant extends Operand implements ScopeSource, LiteralSo
 
     @Override public boolean isLiteral() { return true; }
     @Override public boolean optimizes(Selector selector) { return true; }
+    public String encodedValue() { return emitPrimitive().render(); }
 
 } // Constant

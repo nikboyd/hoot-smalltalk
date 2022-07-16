@@ -1,4 +1,4 @@
-package Hoot.Compiler;
+package Hoot.Compiler.Parser;
 
 import java.io.StringReader;
 import Hoot.Runtime.Faces.LanguageParser;
@@ -29,7 +29,7 @@ public class HootBlockParser implements LanguageParser {
     TokenSource source;
     TokenSource createLexer() { return new HootLexer(createInputStream()); }
     TokenStream createTokenStream() { return tokenStream(new CommonTokenStream(source)); }
-    CharStream createInputStream() { return nullOrTryLoudly(() -> new ANTLRInputStream(blockReader())); }
+    CharStream createInputStream() { return nullOrTryLoudly(() -> CharStreams.fromReader(blockReader())); }
     StringReader blockReader() { return new StringReader(blockCode); }
     String blockCode;
 

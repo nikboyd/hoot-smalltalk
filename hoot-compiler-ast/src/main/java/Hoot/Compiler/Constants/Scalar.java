@@ -22,7 +22,7 @@ public abstract class Scalar extends Constant {
     protected String value = Empty;
     public String rawValue() { return this.value; }
     public void value(String value) { this.value = value; }
-    public String encodedValue() { return rawValue(); }
+    @Override public String encodedValue() { return rawValue(); }
 
     public abstract Class primitiveType();
     public abstract String primitiveFactoryName();

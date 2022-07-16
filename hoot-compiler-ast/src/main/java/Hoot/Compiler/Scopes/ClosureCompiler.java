@@ -3,9 +3,9 @@ package Hoot.Compiler.Scopes;
 import java.util.*;
 import org.codehaus.janino.*;
 
-import Hoot.Compiler.HootParser;
+import Hoot.Compiler.Parser.*;
 import Hoot.Runtime.Behaviors.Scope;
-import Hoot.Compiler.HootBlockParser;
+import Hoot.Compiler.Parser.HootBlockParser;
 import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import Hoot.Runtime.Faces.Logging;

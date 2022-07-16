@@ -3,14 +3,12 @@
 // Permission is granted to copy this work provided this copyright statement is retained in all copies.
 //==================================================================================================
 
-grammar Hoot;
+grammar Hoot; // located in resources/antlr4/Hoot/Compiler/Parser
 
 @header {
 import Hoot.Runtime.Notes.*;
 import Hoot.Runtime.Names.*;
 import Hoot.Runtime.Values.*;
-import Hoot.Runtime.Emissions.Item;
-import Hoot.Runtime.Behaviors.Scope;
 import static Hoot.Runtime.Functions.Utils.*;
 
 import Hoot.Compiler.Notes.*;

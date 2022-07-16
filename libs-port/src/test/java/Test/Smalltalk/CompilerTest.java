@@ -11,7 +11,7 @@ import static Hoot.Compiler.HootMain.*;
 import static Hoot.Runtime.Functions.Utils.*;
 
 /**
- *
+ * Confirms proper operation of the Smalltalk compiler.
  * @author Nik Boyd <nik.boyd@educery.dev>
  */
 public class CompilerTest implements Logging {

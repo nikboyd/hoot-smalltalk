@@ -2,7 +2,6 @@ package Hoot.Compiler.Scopes;
 
 import java.io.*;
 import java.util.*;
-import org.antlr.v4.runtime.*;
 import org.stringtemplate.v4.AutoIndentWriter;
 
 import Hoot.Runtime.Faces.*;
@@ -52,8 +51,8 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     protected Map<String, UnitFile> peerFaces = emptyMap(UnitFile.class);
     protected Map<String, UnitFile> peers() { return this.peerFaces; }
     @Override public void clean() { super.clean(); importAllFaces(); faceScope.clean(); }
-    @Override public void parse() { tokenCompiler().parseTokens(); facePackage.addFace(faceScope()); }
-    @Override public boolean compile() { return tokenCompiler().compile(); }
+    @Override public void parse() {  } // tokenCompiler().parseTokens(); facePackage.addFace(faceScope());
+    @Override public boolean compile() { return true; } // tokenCompiler().compile()
     @Override public void peers(Map<String, UnitFile> peers) {
         if (hasKeys(peers)) {
             peers().putAll(peers);
@@ -182,12 +181,12 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         }
     }
 
-    TokenCompiler tokenCompiler;
-    TokenCompiler tokenCompiler() {
-        if (hasSome(tokenCompiler)) return tokenCompiler;
-        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
+//    TokenCompiler tokenCompiler;
+//    TokenCompiler tokenCompiler() {
+//        if (hasSome(tokenCompiler)) return tokenCompiler;
+//        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
 
-    @Override public TokenStream tokenStream() { return tokenCompiler().tokenStream(); }
+//    @Override public TokenStream tokenStream() { return tokenCompiler().tokenStream(); }
     @Override public boolean isFile() { return true; }
     @Override public int nestLevel() { return 0; }
     public String notice() { return this.faceScope.notes().notice(); }

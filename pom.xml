@@ -20,6 +20,7 @@
     <modules>
         <module>hoot-abstracts</module>
         <module>hoot-runtime</module>
+        <module>hoot-compiler-ast</module>
         <module>hoot-compiler</module>
         <module>hoot-compiler-boot</module>
         <module>hoot-maven-plugin</module>
@@ -57,7 +58,7 @@
         <memory-args>-Xmx1024m -Xms1024m</memory-args>
         <no-path-check>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</no-path-check>
         <test-args>${memory-args} ${no-path-check} ${run-headless}</test-args>
-        
+
         <cloudsmith-libs>https://maven.cloudsmith.io/educery/hoot-libs/</cloudsmith-libs>
         <github-hosted-libs>https://maven.pkg.github.com/nikboyd/hoot-smalltalk/</github-hosted-libs>
 
@@ -126,6 +127,11 @@
             </dependency>
             <dependency>
                 <groupId>hoot-smalltalk</groupId>
+                <artifactId>hoot-compiler-ast</artifactId>
+                <version>2020.0101.0101</version>
+            </dependency>
+            <dependency>
+                <groupId>hoot-smalltalk</groupId>
                 <artifactId>hoot-compiler</artifactId>
                 <version>2020.0101.0101</version>
             </dependency>
@@ -188,12 +194,12 @@
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4</artifactId>
-                <version>4.5</version>
+                <version>4.10.1</version>
             </dependency>
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>ST4</artifactId>
-                <version>4.0.8</version>
+                <version>4.3.3</version>
             </dependency>
 
             <dependency>

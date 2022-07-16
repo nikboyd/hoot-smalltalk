@@ -20,12 +20,14 @@ import static Hoot.Runtime.Names.TypeName.JavaRoot;
 public class ClassSignature extends NamedItem implements ScopeSource {
 
     public ClassSignature() { super(Scope.current()); }
+    public static ClassSignature with(Global superClass, Global subtype, String keyword) {
+        return with(DetailedType.with(superClass), DetailedType.with(subtype), null, null, keyword, ""); }
     public static ClassSignature with(
             DetailedType superClass, DetailedType subtype, TypeList heritage,
             NoteList notes, String keyword, String comment) {
         ClassSignature result = new ClassSignature();
-        result.notes = notes;
-        result.types = heritage;
+        result.notes = hasSome(notes)? notes: new NoteList();
+        result.types = hasSome(heritage)? heritage: TypeList.withDetails();
         result.superClass = superClass;
         result.subclass = subtype;
         result.keyword = keyword;

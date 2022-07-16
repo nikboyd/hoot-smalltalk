@@ -46,7 +46,7 @@ public abstract class Scope extends NamedItem implements Resulting {
     public Scope makeCurrent() { pushScope(this); return this; }
     public static Scope current() { return nullOr(f -> f.currentScope(), currentFile()); }
     private Scope reportScope(Scope scope) { if (hasAny(scope)) scope.reportScope(); return scope; }
-    public Scope reportScope() { whisper("scope now " + description()); return this; }
+    public Scope reportScope() { report("scope now " + description()); return this; }
 
 //    public boolean resolves(Named reference) { return false; }
 //    public Scope scopeResolving(Named reference) { return containerScope().scopeResolving(reference); }
