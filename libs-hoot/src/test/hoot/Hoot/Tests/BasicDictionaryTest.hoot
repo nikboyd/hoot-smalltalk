@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Integer import.
 Hoot Magnitudes SmallInteger importStatics.
+Hoot Collections Dictionary import.
 
 TestBase subclass: BasicDictionaryTest. "dictionary regression tests"
 BasicDictionaryTest members: "testing dictionary"
