@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  * Defines protocols for parsing and walking parse results.
  * @author Nik Boyd <nik.boyd@educery.dev>
  */
-public interface LanguageParser {
+public interface LanguageParser extends Logging {
 
     /**
      * A parser factory.

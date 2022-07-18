@@ -1,8 +1,12 @@
 package Hoot.Runtime.Faces;
 
-import static Hoot.Runtime.Functions.Exceptional.*;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import org.stringtemplate.v4.AutoIndentWriter;
+import static Hoot.Runtime.Functions.Exceptional.*;
+import Hoot.Runtime.Emissions.Emission;
 
 /**
  * Defines protocols for parsing a language file.
@@ -18,5 +22,14 @@ public interface FileParser extends LanguageParser {
 
     default CharStream createInputStream() { return nullOrTryLoudly(() ->
         CharStreams.fromFileName(tokenFile().sourceFile().getAbsolutePath())); }
+
+    default void writeCode(Emission scope) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(tokenFile().targetFile()))) {
+            scope.result().write(new AutoIndentWriter(writer));
+        }
+        catch (Exception ex) {
+            error(ex.getMessage(), ex);
+        }
+    }
 
 } // FileParser

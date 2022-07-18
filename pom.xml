@@ -40,9 +40,9 @@
         <version.hoot>2020.0101.0101</version.hoot>
         <version.hoot.libs>[2020.0101.0101,)</version.hoot.libs>
 
-<!--        <version.antlr>4.5</version.antlr>
-        <version.antlr.st>4.0.8</version.antlr.st>
-        <version.antlr.maven>4.5</version.antlr.maven>-->
+        <!-- keep ANTLR versions in sync -->
+        <version.antlr>4.10.1</version.antlr>
+        <version.antlr.st>4.3.3</version.antlr.st>
 
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
@@ -194,7 +194,7 @@
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4</artifactId>
-                <version>4.10.1</version>
+                <version>${version.antlr}</version>
             </dependency>
             <dependency>
                 <groupId>org.antlr</groupId>
@@ -203,45 +203,25 @@
             </dependency>
 
             <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-api</artifactId>
-                <version>1.1.0</version>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-transport-file</artifactId>
+                <version>1.8.1</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-spi</artifactId>
-                <version>1.1.0</version>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-transport-http</artifactId>
+                <version>1.8.1</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-impl</artifactId>
-                <version>1.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-util</artifactId>
-                <version>1.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-transport-file</artifactId>
-                <version>1.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-transport-http</artifactId>
-                <version>1.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.aether</groupId>
-                <artifactId>aether-transport-wagon</artifactId>
-                <version>1.1.0</version>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-transport-wagon</artifactId>
+                <version>1.8.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.maven</groupId>
-                <artifactId>maven-aether-provider</artifactId>
-                <version>3.3.9</version>
+                <artifactId>maven-resolver-provider</artifactId>
+                <version>3.8.6</version>
             </dependency>
 
             <dependency>

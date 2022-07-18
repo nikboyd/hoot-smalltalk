@@ -2,7 +2,7 @@ package Hoot.Compiler.Scopes;
 
 import java.io.*;
 import java.util.*;
-import org.stringtemplate.v4.AutoIndentWriter;
+//import org.stringtemplate.v4.AutoIndentWriter;
 
 import Hoot.Runtime.Faces.*;
 import Hoot.Runtime.Names.*;
@@ -51,8 +51,8 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     protected Map<String, UnitFile> peerFaces = emptyMap(UnitFile.class);
     protected Map<String, UnitFile> peers() { return this.peerFaces; }
     @Override public void clean() { super.clean(); importAllFaces(); faceScope.clean(); }
-    @Override public void parse() {  } // tokenCompiler().parseTokens(); facePackage.addFace(faceScope());
-    @Override public boolean compile() { return true; } // tokenCompiler().compile()
+    @Override public void parse() {  tokenCompiler().parseTokens(); facePackage.addFace(faceScope()); }
+    @Override public boolean compile() { return tokenCompiler().compile(); }
     @Override public void peers(Map<String, UnitFile> peers) {
         if (hasKeys(peers)) {
             peers().putAll(peers);
@@ -181,10 +181,10 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         }
     }
 
-//    TokenCompiler tokenCompiler;
-//    TokenCompiler tokenCompiler() {
-//        if (hasSome(tokenCompiler)) return tokenCompiler;
-//        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
+    TokenCompiler tokenCompiler;
+    TokenCompiler tokenCompiler() {
+        if (hasSome(tokenCompiler)) return tokenCompiler;
+        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
 
 //    @Override public TokenStream tokenStream() { return tokenCompiler().tokenStream(); }
     @Override public boolean isFile() { return true; }
@@ -219,7 +219,7 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
 
     public java.io.File makeTargetFolder() { return facePackage().createTarget(); }
     public java.io.File targetFolder() { return facePackage.targetFolder(); }
-    public java.io.File targetFile() {
+    @Override public java.io.File targetFile() {
         java.io.File packageFolder = targetFolder();
         if (packageFolder == null) return null;
         return new java.io.File(packageFolder, targetFilename());
@@ -264,12 +264,7 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         clean();
         if (hasSome(makeTargetFolder())) { // any failure already reported
             reportWriting();
-            try (PrintWriter writer = new PrintWriter(new FileWriter(targetFile()))) {
-                emitScope().result().write(new AutoIndentWriter(writer));
-            }
-            catch (Exception ex) {
-                error(ex.getMessage(), ex);
-            }
+            tokenCompiler().fileParser().writeCode(emitScope());
         }
     }
 

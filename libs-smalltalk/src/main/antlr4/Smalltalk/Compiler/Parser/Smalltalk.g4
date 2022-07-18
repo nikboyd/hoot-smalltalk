@@ -382,7 +382,7 @@ fragment SymbolString
 | Name
 ;
 
-fragment DoubleQuote : '\"' ;
+fragment DoubleQuote : '"' ;
 fragment SingleQuote : '\'' ;
 
 //==================================================================================================
