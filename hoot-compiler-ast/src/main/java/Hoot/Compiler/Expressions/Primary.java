@@ -28,6 +28,9 @@ public class Primary extends Operand {
     protected Operand item;
     private void item(Operand item) { this.item = item.inside(this); }
     private LiteralName variable() { return (LiteralName)this.item; }
+    public LiteralSymbol asSymbol() { return (LiteralSymbol)this.item; }
+    public LiteralString asString() { return (LiteralString)this.item; }
+    public Global asGlobal() { return (Global)this.item; }
     private Nest nest() { return (Nest)this.item; }
 
     public Block block() { return isBlock() ? nest().nestedBlock() : null; }

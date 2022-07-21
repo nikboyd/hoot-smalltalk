@@ -282,6 +282,7 @@ public class Primitive implements Logging {
     public static String quoteLiterally(String value) { return quoteWith(SingleQuote, value); }
     public static String trimQuotes(String quote, String value) { return StringUtils.strip(value, quote); }
     public static String trimQuotes(String value) { return StringUtils.strip(value, NativeQuote); }
+    public static String trimQuoted(String value) { return StringUtils.strip(value, SingleQuote); }
 
     public static final String NativeQuote = "\"";
     public static final String DoubledQuotes = "''";

@@ -153,14 +153,14 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         if (!isSigned()) { file().parse(); }
         return this.faceSignature; }
 
-    public void signature(NamedItem signature) {
-        if (hasNo(signature)) return;
+    public Face signature(NamedItem signature) {
+        if (hasNo(signature)) return this;
         this.faceSignature = signature.inside(this);
         this.cachedDescription = description();
 
         // now, collect all the related notes here
         notes().noteAll(this.faceSignature.notes().notes());
-        reportScope();
+        reportScope(); return this;
     }
 
     @Override public String description() { return "Face " + signedDescription(); }

@@ -29,26 +29,51 @@ static final String Empty = "";
 // Smalltalk chunk file formats
 //==================================================================================================
 
-compilationUnit : fc=ConstantString Bang cs=classSignature Bang cr=commentReader ( mrs+=methodReader )* ;
+compilationUnit :
+fc=fileComment    Bang
+cs=classSignature Bang
+cr=commentReader  Bang ( ms+=methodReader Bang )* ;
 
-//chunkReader : Bang ( methodReader Bang | commentReader ) ; // starts with a bang!
-commentReader : cl=globalName Commented v=literal Prior literal Bang s=Sentences Bang ;
-methodReader  : cl=globalName Protocol v=literal ( Stamp literal )? Bang ms=methodScope Bang ;
-
-//chunks      : ( chs+=chunk Bang )+ ; // starts with a chunk
-//chunk       : ( literal | classSignature ) Bang ;
+fileComment : s=ConstantString {
+String c = $s.text;
+Scope s = Scope.current();
+} ;
 
 //==================================================================================================
 // class scope
 //==================================================================================================
 
-classSignature  : x=expression
-// h=globalName k=Subclass sub=literal InstaVars iVars=literal ClassVars cVars=literal PoolNames pools=literal Category cat=literal
-{
+classSignature  : x=expression {
+// Global subclass: Symbol instanceVariableNames: String classVariableNames: String poolDictionaries: String category: String
 CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent();
-//Global superGlobal = Global.named($ctx.h.name); Global subGlobal = Global.named($ctx.sub.item.encodedValue());
-//Face.currentFace().signature(ClassSignature.with(superGlobal, subGlobal, $ctx.k.getText()));
-Face.currentFace().makeCurrent();
+Global superGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
+LiteralSymbol subName = $x.item.keywordMessage().formulas().get(0).primaryTerm().primary().asSymbol();
+Global subGlobal = Global.named(subName.encodedValue());
+String message = $x.item.keywordMessage().methodName();
+Face f = Face.currentFace().signature(ClassSignature.with(superGlobal, subGlobal, message));
+LiteralString iVars = $x.item.keywordMessage().formulas().get(1).primaryTerm().primary().asString();
+String[] vars = iVars.unquotedValue().split(" ");
+for (String v : vars) Variable.from(Face.currentFace(), v, DetailedType.RootType).defineMember();
+Face.currentFace().makeCurrent(); // no op
+} ;
+
+commentReader : Bang commentHeader Bang commentText ;
+commentHeader : x=expression {
+// Global commentStamp: String prior: Integer
+Global classGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
+Face face = Face.currentFace();
+} ;
+
+commentText : s=sentences {
+String msg = $s.text;
+Face face = Face.currentFace();
+} ;
+
+methodReader : Bang pr=protoHeader Bang ms=methodScope ;
+protoHeader : p=expression { // protocol
+// Global methodsFor: String stamp: String
+Global classGlobal = $p.item.formula().primaryTerm().primary().asGlobal();
+Face face = Face.currentFace();
 } ;
 
 //==================================================================================================
@@ -69,9 +94,9 @@ $methodScope::item.content(scope.content.item);
 $methodScope::item.popScope();} ;
 
 methodSignature returns  [BasicSignature item = null]
-: ksign=keywordSignature {$item = KeywordSignature.with(null, $ctx.ksign.ks.argList, $ctx.ksign.ks.headList, $ctx.ksign.ks.tailList);}
-| bsign=binarySignature  {$item = BinarySignature.with(null, map($ctx.bsign.args, arg -> arg.item), $ctx.bsign.bs.op);}
-| usign=unarySignature   {$item = UnarySignature.with(null, $ctx.usign.us.selector);}
+: ksign=keywordSignature {$item = KeywordSignature.with(DetailedType.RootType, $ctx.ksign.ks.argList, $ctx.ksign.ks.headList, $ctx.ksign.ks.tailList);}
+| bsign=binarySignature  {$item = BinarySignature.with(DetailedType.RootType, map($ctx.bsign.args, arg -> arg.item), $ctx.bsign.bs.op);}
+| usign=unarySignature   {$item = UnarySignature.with(DetailedType.RootType, $ctx.usign.us.selector);}
 ;
 
 unarySignature    : us=unarySelector ;
@@ -89,7 +114,7 @@ $tailList = map($ctx.tails, tail -> tail.selector);}
 
 namedArgument returns [Variable item = null]
 : v=variableName {
-$item = Variable.named($ctx.v.name, null)
+$item = Variable.named($ctx.v.name, DetailedType.RootType)
 //.withNotes(map($ctx.notes, n -> n.item))
 ;}
 ;
@@ -241,6 +266,9 @@ globalReference returns [Global item = null]
 // constants
 //==================================================================================================
 
+sentences : sentence+ ;
+sentence  : Words ( Comma | Period )? ;
+
 elementValues returns [LiteralArray list = null]
 : Pound TermInit ( array+=elementValue )* TermExit  {$list = LiteralArray.withItems(map($array, v -> v.item));}
 ;
@@ -342,25 +370,17 @@ Super       : 'super' ;
 True        : 'true' ;
 False       : 'false' ;
 
-//Subclass    : 'subclass:' ;
-//InstaVars   : 'instanceVariableNames:' ;
-//ClassVars   : 'classVariableNames:' ;
-//PoolNames   : 'poolDictionaries:' ;
-//Category    : 'category:' ;
-Protocol    : 'methodsFor:' ;
-Commented   : 'commentStamp:' ;
-Stamp       : 'stamp:' ;
-Prior       : 'prior:' ;
-
 KeywordHead : Name Colon ;
 KeywordTail : Colon ;
 GlobalName  : UpperCase Tail* ;
 LocalName   : LowerCase Tail* ;
+Words       : Word* ;
 
 fragment Colon  : ':' ;
 fragment Name   : Letter Tail* ;
 fragment Tail   : Letter | DecimalDigit ;
 fragment Letter : UpperCase | LowerCase ;
+fragment Word   : Letter+ ;
 
 //==================================================================================================
 // strings
@@ -370,7 +390,6 @@ ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString ;
 ConstantString    : QuotedString ConstantString? ;
 CodeComment       : QuotedComment -> channel(HIDDEN) ;
-Sentences         : ( Name WhiteSpace? )* Dot? ;
 
 fragment QuotedString  : SingleQuote .*? SingleQuote ;
 fragment QuotedComment : DoubleQuote .*? DoubleQuote ;

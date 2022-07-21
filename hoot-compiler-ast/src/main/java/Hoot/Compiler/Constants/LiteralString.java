@@ -19,6 +19,7 @@ public class LiteralString extends LiteralCollection {
     public LiteralString(String value) { this(); this.value = value; }
     public static LiteralString with(String value, int line) { return new LiteralString(value).withLine(line); }
 
+    public String unquotedValue() { return trimQuoted(rawValue()); }
     @Override public Class primitiveType() { return java.lang.String.class; }
     @Override public String primitiveFactoryName() { return String; }
     @Override public String encodedValue() { return getLiteral(rawValue()); }
