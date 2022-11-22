@@ -30,20 +30,24 @@ static final String Empty = "";
 //==================================================================================================
 
 compilationUnit :
-fc=fileComment    Bang
-cs=classSignature Bang
-cr=commentReader  Bang ( ms+=methodReader Bang )* ;
+fc=fileComment cs=classSignature cr=commentReader ( cms+=methodReader )*
+cc=codeComment ms=classSignature                  ( mms+=methodReader )*
+;
 
-fileComment : s=ConstantString {
+fileComment : s=ConstantString banger {
 String c = $s.text;
 Scope s = Scope.current();
+//s.report("fileComment");
+//s.report(c);
 } ;
+
+codeComment : c=CodeComment banger ;
 
 //==================================================================================================
 // class scope
 //==================================================================================================
 
-classSignature  : x=expression {
+classSignature  : x=expression banger {
 // Global subclass: Symbol instanceVariableNames: String classVariableNames: String poolDictionaries: String category: String
 CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent();
 Global superGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
@@ -55,46 +59,57 @@ LiteralString iVars = $x.item.keywordMessage().formulas().get(1).primaryTerm().p
 String[] vars = iVars.unquotedValue().split(" ");
 for (String v : vars) Variable.from(Face.currentFace(), v, DetailedType.RootType).defineMember();
 Face.currentFace().makeCurrent(); // no op
+//f.report("classSignature");
+//f.report(message);
 } ;
 
-commentReader : Bang commentHeader Bang commentText ;
-commentHeader : x=expression {
+commentReader : banger commentHeader commentText ;
+commentHeader : x=expression banger {
 // Global commentStamp: String prior: Integer
 Global classGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
 Face face = Face.currentFace();
+//face.report("commentHeader");
 } ;
 
-commentText : s=sentences {
+commentText : s=allPlaces banger {
 String msg = $s.text;
 Face face = Face.currentFace();
+//face.report("commentText");
+//face.report(msg);
 } ;
 
-methodReader : Bang pr=protoHeader Bang ms=methodScope ;
+methodReader : banger pr=protoHeader banger ms=methodScope banger ;
 protoHeader : p=expression { // protocol
 // Global methodsFor: String stamp: String
 Global classGlobal = $p.item.formula().primaryTerm().primary().asGlobal();
+KeywordMessage kmsg = $p.item.keywordMessage();
+LiteralString name = kmsg.formulas().get(0).primaryTerm().primary().asString();
 Face face = Face.currentFace();
+//face.report("method proto: "+name.unquotedValue());
 } ;
 
 //==================================================================================================
 // method scopes
 //==================================================================================================
 
-methodScope returns [Method item] :
+methodScope returns [Method item = new Method().makeCurrent()] :
 sign=methodSignature b=methodBeg ( vs=localVariables )? content=blockContent x=methodEnd ;
 
-methodBeg : WhiteSpaces {
+methodBeg : WhiteSpace? cc=CodeComment* {
 MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
-$methodScope::item = new Method().makeCurrent();
-$methodScope::item.signature(scope.sign.item);} ;
+$methodScope::item.signature(scope.sign.item);
+//$methodScope::item.report("found block start");
+} ;
 
-methodEnd : Bang {
+methodEnd : banger {
 MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
 $methodScope::item.content(scope.content.item);
-$methodScope::item.popScope();} ;
+$methodScope::item.popScope();
+//$methodScope::item.report("found block end");
+} ;
 
 methodSignature returns  [BasicSignature item = null]
-: ksign=keywordSignature {$item = KeywordSignature.with(DetailedType.RootType, $ctx.ksign.ks.argList, $ctx.ksign.ks.headList, $ctx.ksign.ks.tailList);}
+: ksign=keywordSignature {$item = KeywordSignature.with(DetailedType.RootType, $ctx.ksign.ks.argList, $ctx.ksign.ks.headList, new ArrayList());}
 | bsign=binarySignature  {$item = BinarySignature.with(DetailedType.RootType, map($ctx.bsign.args, arg -> arg.item), $ctx.bsign.bs.op);}
 | usign=unarySignature   {$item = UnarySignature.with(DetailedType.RootType, $ctx.usign.us.selector);}
 ;
@@ -103,13 +118,11 @@ unarySignature    : us=unarySelector ;
 binarySignature   : bs=binaryOperator args+=namedArgument ;
 keywordSignature  : ks=headsAndTails ;
 
-headsAndTails returns   [List<Variable> argList, List<String> headList, List<String> tailList]
+headsAndTails returns   [List<Variable> argList, List<String> headList]
 : heads+=keywordHead args+=namedArgument (
-| ( heads+=keywordHead args+=namedArgument )+
-| ( tails+=keywordTail args+=namedArgument )+ ) {
+| ( heads+=keywordHead args+=namedArgument )+ ) {
 $argList  = map($ctx.args,  arg -> arg.item);
-$headList = map($ctx.heads, head -> head.selector);
-$tailList = map($ctx.tails, tail -> tail.selector);}
+$headList = map($ctx.heads, head -> head.selector);}
 ;
 
 namedArgument returns [Variable item = null]
@@ -137,50 +150,49 @@ $blockScope::item.signature($item);}
 ;
 
 blockContent returns [BlockContent item = null]
-: ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) {
-$item = BlockContent.with(map($ctx.s, term -> term.item), nullOr(ctx -> ctx.item, $ctx.r), $ctx.p.size());}
-;
-
-//==================================================================================================
-// selectors
-//==================================================================================================
-
-unarySelector returns             [String selector = Empty]
-: ( s=LocalName | s=GlobalName )  {$selector = Keyword.with($s.text).methodName();}
-;
-
-binaryOperator returns            [Operator op]
-: ( s=BinaryOperator | s=Usage )  {$op = Operator.with($s.text);}
-;
+: ( s+=statement p+=Period )* ( r=exitResult ( p+=Period )? | s+=statement )? {
+//Scope s = Scope.current(); s.report("block");
+$item = BlockContent.with(map($ctx.s, term -> term.item), nullOr(ctx -> ctx.item, $ctx.r), $ctx.p.size());
+} ;
 
 //==================================================================================================
 // messages + statements
 //==================================================================================================
 
 exitResult returns                  [Expression item = null]
-: Exit value=expression             {$item = $value.item.makeExit();}
+: Exit value=expression             {
+//Scope s = Scope.current(); s.report("exit");
+$item = $value.item.makeExit();}
 ;
 
 statement returns                   [Statement item = null]
-: ( x=assignment | v=evaluation )   {$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);}
-;
-
-evaluation returns                  [Expression item = null]
-: value=expression                  {$item = $value.item.makeEvaluated();}
+: ( x=assignment | v=evaluation )   {
+//Scope s = Scope.current(); s.report("statement");
+$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);}
 ;
 
 assignment returns                  [Variable item = null]
 : v=valueName Assign value=expression {
+//Scope s = Scope.current(); s.report("assignment");
 $item = Variable.named($ctx.v.name, null, nullOr(x -> x.item, $ctx.value)).makeAssignment();}
 ;
 
+evaluation returns                  [Expression item = null]
+: value=expression                  {
+//Scope s = Scope.current(); s.report("evaluation");
+$item = $value.item.makeEvaluated();}
+;
+
 primary returns         [Primary item = null]
-:( term=nestedTerm      {$item = Primary.with($term.item);}
-| block=blockScope      {$item = Primary.with($block.item.withNest());}
-| value=literal         {$item = Primary.with($value.item);}
+:
+( var=variableName      {$item = Primary.with(LiteralName.with($var.name));}
 | type=globalReference  {$item = Primary.with($type.item.makePrimary());}
-| var=variableName      {$item = Primary.with(LiteralName.with($var.name));}
-);
+| block=blockScope      {$item = Primary.with($block.item.withNest());}
+| term=nestedTerm       {$item = Primary.with($term.item);}
+| value=literal         {$item = Primary.with($value.item);}
+) {
+//Scope s = Scope.current(); s.report($item.itemClassName());
+} ;
 
 nestedTerm returns                   [Expression item = null]
 : TermInit term=expression TermExit  {$item = $ctx.term.item;}
@@ -206,12 +218,11 @@ binaryMessage returns                         [BinaryMessage item = null]
 keywordMessage returns [KeywordMessage item = null]
 :   heads+=keywordHead terms+=formula
 ( ( heads+=keywordHead terms+=formula )+
-| ( tails+=keywordTail terms+=formula )+
 | ) {
+//Scope s = Scope.current(); s.report("keyword msg");
 List<String> heads = map($ctx.heads, head -> head.selector);
-List<String> tails = map($ctx.tails, tail -> tail.selector);
 List<Formula> terms = map($ctx.terms, term -> term.item);
-$item = KeywordMessage.with(heads, tails, terms);}
+$item = KeywordMessage.with(heads, new ArrayList(), terms);}
 ;
 
 messageCascade : Cascade m=message ;
@@ -220,6 +231,18 @@ message returns         [Message item = null]
 : kmsg=keywordMessage   {$item = $kmsg.item;} # KeywordSelection
 | bmsg=binaryMessage    {$item = $bmsg.item;} # BinarySelection
 | umsg=unarySelector    {$item = UnarySequence.with($umsg.selector);} # UnarySelection
+;
+
+//==================================================================================================
+// selectors
+//==================================================================================================
+
+unarySelector returns   [String selector = Empty]
+: s=LocalName           {$selector = Keyword.with($s.text).methodName();}
+;
+
+binaryOperator returns  [Operator op]
+: s=BinaryOperator      {$op = Operator.with($s.text);}
 ;
 
 //==================================================================================================
@@ -249,19 +272,6 @@ valueName returns    [String name = Empty]
   )
 ;
 
-localVariables : Bar ( names+=variableName )* Bar ;
-variableName returns [String name = Empty]
-: v=LocalName        {$name = $v.text;}
-;
-
-globalName returns   [String name = Empty]
-: g=GlobalName       {$name = $g.text;}
-;
-
-globalReference returns [Global item = null]
-: ( ns+=globalName )+   {$item = Global.withList(map($ns, n -> n.name));}
-;
-
 //==================================================================================================
 // constants
 //==================================================================================================
@@ -269,18 +279,9 @@ globalReference returns [Global item = null]
 sentences : sentence+ ;
 sentence  : Words ( Comma | Period )? ;
 
-elementValues returns [LiteralArray list = null]
-: Pound TermInit ( array+=elementValue )* TermExit  {$list = LiteralArray.withItems(map($array, v -> v.item));}
-;
-
-elementValue returns    [Constant item = null]
-: lit=literal           {$item = $lit.item;}
-| var=variableName      {$item = LiteralName.with($var.text, $start.getLine());}
-;
-
-selfish returns         [Constant item = null;]
-: refSelf=literalSelf   {$item = LiteralName.with($refSelf.text, $start.getLine());}
-| refSuper=literalSuper {$item = LiteralName.with($refSuper.text, $start.getLine());}
+selfish returns           [Constant item = null;]
+: refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
+| refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
 ;
 
 literal returns           [Constant item = null]
@@ -298,6 +299,17 @@ literal returns           [Constant item = null]
 | value=ConstantString    {$item = LiteralString.with($start.getText(), $start.getLine());}
 ;
 
+elementValues returns [LiteralArray list = null]
+: Pound TermInit ( array+=elementValue )* TermExit  {$list = LiteralArray.withItems(map($array, v -> v.item));}
+|       NoteInit ( array+=elementValue )* NoteExit  {$list = LiteralArray.withItems(map($array, v -> v.item));}
+;
+
+elementValue returns    [Constant item = null]
+: lit=literal           {$item = $lit.item;}
+| var=variableName      {$item = LiteralName.with($var.text, $start.getLine());}
+;
+
+
 //==================================================================================================
 // scopes
 //==================================================================================================
@@ -312,24 +324,6 @@ NoteInit  : '{' ;
 NoteExit  : '}' ;
 
 //==================================================================================================
-// punctuators
-//==================================================================================================
-
-Assign  : Colon Equal ;
-Extends : Minus More ;
-Usage   : Less Minus ;
-Etc     : '...' ;
-
-Exit    : '^' ;
-Cascade : ';' ;
-Bang    : '!' ;
-Quest   : '?' ;
-Pound   : '#' ;
-Comma   : ',' ;
-Bar     : '|' ;
-At      : '@' ;
-
-//==================================================================================================
 // literal numbers
 //==================================================================================================
 
@@ -340,17 +334,16 @@ ConstantOctal   : OctalRadix   OctalDigit+ ;
 ConstantHex     : HexRadix     HexDigit+ ;
 
 ConstantDecimal : CardinalNumber ( Dot CardinalFraction )? Scale ;
-ConstantFloat   : CardinalNumber Dot CardinalFraction Exponent? | CardinalNumber Exponent ;
+ConstantFloat   : CardinalNumber   Dot CardinalFraction Exponent? | CardinalNumber Exponent ;
 ConstantInteger : CardinalNumber ;
 
 Period : Dot ;
 
 fragment OrdinaryNumber   : OrdinalDigit DecimalDigit* ;
 fragment OrdinaryFraction : DecimalDigit* OrdinalDigit ;
-fragment CardinalNumber   : Zero | OrdinaryNumber ;
+fragment CardinalNumber   : Zero | Minus? OrdinaryNumber ;
 fragment CardinalFraction : Zero | OrdinaryFraction ;
 
-fragment Dot      : '.' ;
 fragment Scale    : ScaleMark OrdinaryNumber ;
 fragment Exponent : PowerMark Minus? OrdinaryNumber ;
 
@@ -370,11 +363,24 @@ Super       : 'super' ;
 True        : 'true' ;
 False       : 'false' ;
 
+localVariables : Bar ( names+=variableName )* Bar ;
+variableName returns [String name = Empty]
+: v=LocalName        {$name = $v.text;}
+;
+
+globalReference returns [Global item = null]
+: ( ns+=globalName )+   {$item = Global.withList(map($ns, n -> n.name));}
+;
+
+globalName returns   [String name = Empty]
+: g=GlobalName       {$name = $g.text;}
+;
+
 KeywordHead : Name Colon ;
 KeywordTail : Colon ;
 GlobalName  : UpperCase Tail* ;
 LocalName   : LowerCase Tail* ;
-Words       : Word* ;
+Words       : Word+ ;
 
 fragment Colon  : ':' ;
 fragment Name   : Letter Tail* ;
@@ -387,7 +393,7 @@ fragment Word   : Letter+ ;
 //==================================================================================================
 
 ConstantCharacter : '$' . ;
-ConstantSymbol    : Pound SymbolString ;
+ConstantSymbol    : Pound SymbolString Dot? ;
 ConstantString    : QuotedString ConstantString? ;
 CodeComment       : QuotedComment -> channel(HIDDEN) ;
 
@@ -402,7 +408,31 @@ fragment SymbolString
 ;
 
 fragment DoubleQuote : '"' ;
+fragment NonDouble   : [^"] ;
 fragment SingleQuote : '\'' ;
+fragment NonSingle   : [^'] ;
+
+//==================================================================================================
+// punctuators
+//==================================================================================================
+
+banger : Bang {
+Face face = Face.currentFace();
+//face.report("bang!");
+} ;
+
+Assign  : Colon Equal ;
+Etc     : '...' ;
+
+Exit    : '^' ;
+Cascade : ';' ;
+Bang    : '!' ;
+Quest   : '?' ;
+Pound   : '#' ;
+Bar     : '|' ;
+
+allPlaces : AllPlaces ;
+AllPlaces : [^!]+ ;
 
 //==================================================================================================
 // operators
@@ -413,7 +443,6 @@ BinaryOperator
 | MathOperator
 | LogicalOperator
 | ExtraOperator
-| FastMath
 | ShiftOperator
 | At | Bar | Comma
 ;
@@ -423,7 +452,6 @@ fragment ComparisonOperator
 
 fragment LogicalOperator : And | Or | Less Less | More More ;
 fragment MathOperator    : Times | Times Times | Divide | Divide Divide | Modulo | Plus | Minus ;
-fragment FastMath        : Plus Equal | Minus Equal | Times Equal | Divide Equal ;
 fragment ExtraOperator   : Percent | Quest ;
 fragment ShiftOperator   : More More | Less Less | Less Less Equal | Exit Equal ;
 
@@ -447,6 +475,10 @@ fragment Not      : '~' ;
 
 fragment And      : '&' ;
 fragment Or       : '|' ;
+
+fragment Dot      : '.' ;
+fragment Comma    : ',' ;
+fragment At       : '@' ;
 
 //==================================================================================================
 // letters + digits

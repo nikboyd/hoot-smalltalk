@@ -41,8 +41,8 @@
         <version.hoot.libs>[2020.0101.0101,)</version.hoot.libs>
 
         <!-- keep ANTLR versions in sync -->
-        <version.antlr>4.10.1</version.antlr>
-        <version.antlr.st>4.3.3</version.antlr.st>
+        <version.antlr>4.11.1</version.antlr>
+        <version.antlr.st>4.3.4</version.antlr.st>
 
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
@@ -199,7 +199,7 @@
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>ST4</artifactId>
-                <version>4.3.3</version>
+                <version>${version.antlr.st}</version>
             </dependency>
 
             <dependency>

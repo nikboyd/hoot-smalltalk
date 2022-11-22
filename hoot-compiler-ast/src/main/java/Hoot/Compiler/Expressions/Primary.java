@@ -26,6 +26,7 @@ public class Primary extends Operand {
     @Override public void clean() { super.clean(); this.item.clean(); }
 
     protected Operand item;
+    public String itemClassName() { return this.item.getClass().getSimpleName(); }
     private void item(Operand item) { this.item = item.inside(this); }
     private LiteralName variable() { return (LiteralName)this.item; }
     public LiteralSymbol asSymbol() { return (LiteralSymbol)this.item; }
