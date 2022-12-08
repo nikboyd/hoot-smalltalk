@@ -27,21 +27,36 @@ static final String Empty = "";
 
 //==================================================================================================
 // Smalltalk chunk file formats
+// Requires:
+//      single quotes around header comment, 
+//      removal of comment and class declaration before class methods.
 //==================================================================================================
 
-compilationUnit :
-fc=fileComment cs=classSignature cr=commentReader ( cms+=methodReader )*
-cc=codeComment ms=classSignature                  ( mms+=methodReader )*
-;
+compilationUnit : ( unitHeader?  cms+=methodReader )* ;
 
-fileComment : s=ConstantString banger {
-String c = $s.text;
+unitHeader : ( filedHeader | classHeader ) ;
+filedHeader : fc=filedComment banger cs=classSignature cr=commentHeader ;
+filedComment : fc=ConstantString {
+String c = $fc.text;
 Scope s = Scope.current();
-//s.report("fileComment");
-//s.report(c);
+s.report("filedComment");
+s.report(c);
 } ;
 
-codeComment : c=CodeComment banger ;
+classHeader : cc=codedComment banger ms=classSignature ;
+codedComment : cc=codeComment {
+String c = $cc.text;
+Scope s = Scope.current();
+s.report("codedComment");
+s.report(c);
+} ;
+
+commentHeader : banger x=expression banger c=ConstantString banger {
+// Global commentStamp: String prior: Integer ! comment text !
+Global classGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
+Face face = Face.currentFace();
+face.report("commentHeader");
+} ;
 
 //==================================================================================================
 // class scope
@@ -49,7 +64,7 @@ codeComment : c=CodeComment banger ;
 
 classSignature  : x=expression banger {
 // Global subclass: Symbol instanceVariableNames: String classVariableNames: String poolDictionaries: String category: String
-CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent();
+// CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent();
 Global superGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
 LiteralSymbol subName = $x.item.keywordMessage().formulas().get(0).primaryTerm().primary().asSymbol();
 Global subGlobal = Global.named(subName.encodedValue());
@@ -59,23 +74,8 @@ LiteralString iVars = $x.item.keywordMessage().formulas().get(1).primaryTerm().p
 String[] vars = iVars.unquotedValue().split(" ");
 for (String v : vars) Variable.from(Face.currentFace(), v, DetailedType.RootType).defineMember();
 Face.currentFace().makeCurrent(); // no op
-//f.report("classSignature");
+f.report("classSignature");
 //f.report(message);
-} ;
-
-commentReader : banger commentHeader commentText ;
-commentHeader : x=expression banger {
-// Global commentStamp: String prior: Integer
-Global classGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
-Face face = Face.currentFace();
-//face.report("commentHeader");
-} ;
-
-commentText : s=allPlaces banger {
-String msg = $s.text;
-Face face = Face.currentFace();
-//face.report("commentText");
-//face.report(msg);
 } ;
 
 methodReader : banger pr=protoHeader banger ms=methodScope banger ;
@@ -95,7 +95,7 @@ Face face = Face.currentFace();
 methodScope returns [Method item = new Method().makeCurrent()] :
 sign=methodSignature b=methodBeg ( vs=localVariables )? content=blockContent x=methodEnd ;
 
-methodBeg : WhiteSpace? cc=CodeComment* {
+methodBeg : whiteSpaces? cc=codeComment* {
 MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
 $methodScope::item.signature(scope.sign.item);
 //$methodScope::item.report("found block start");
@@ -105,7 +105,7 @@ methodEnd : banger {
 MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
 $methodScope::item.content(scope.content.item);
 $methodScope::item.popScope();
-//$methodScope::item.report("found block end");
+$methodScope::item.report("found block end");
 } ;
 
 methodSignature returns  [BasicSignature item = null]
@@ -276,9 +276,6 @@ valueName returns    [String name = Empty]
 // constants
 //==================================================================================================
 
-sentences : sentence+ ;
-sentence  : Words ( Comma | Period )? ;
-
 selfish returns           [Constant item = null;]
 : refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
 | refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
@@ -395,7 +392,9 @@ fragment Word   : Letter+ ;
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString Dot? ;
 ConstantString    : QuotedString ConstantString? ;
-CodeComment       : QuotedComment -> channel(HIDDEN) ;
+
+codeComment : CodeComment ;
+CodeComment : QuotedComment -> channel(HIDDEN) ;
 
 fragment QuotedString  : SingleQuote .*? SingleQuote ;
 fragment QuotedComment : DoubleQuote .*? DoubleQuote ;
@@ -408,9 +407,7 @@ fragment SymbolString
 ;
 
 fragment DoubleQuote : '"' ;
-fragment NonDouble   : [^"] ;
 fragment SingleQuote : '\'' ;
-fragment NonSingle   : [^'] ;
 
 //==================================================================================================
 // punctuators
@@ -430,9 +427,6 @@ Bang    : '!' ;
 Quest   : '?' ;
 Pound   : '#' ;
 Bar     : '|' ;
-
-allPlaces : AllPlaces ;
-AllPlaces : [^!]+ ;
 
 //==================================================================================================
 // operators
@@ -498,7 +492,9 @@ fragment Zero         : '0' ;
 // white space
 //==================================================================================================
 
+whiteSpaces : WhiteSpaces ;
 WhiteSpaces : WhiteSpace+ -> skip ;
 fragment WhiteSpace : [ \t\r\n\f] ;
+fragment Blank : [ ] ;
 
 //==================================================================================================
