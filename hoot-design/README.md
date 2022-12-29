@@ -59,4 +59,4 @@ Each link below leads to discussions of the specific language feature design det
 [threads]: blocks.md#threads "Threads"
 [tests]: tests.md#test-framework "Tests"
 [hoot-dotnet]: dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
-[lib]: libs-smalltalk/README.md#hoot-smalltalk-type-library
+[lib]: ../libs-smalltalk/README.md#hoot-smalltalk-type-library
