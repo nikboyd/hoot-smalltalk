@@ -57,6 +57,8 @@ public interface Typified extends Valued.Metatype, Named, Logging {
     default Signed getSigned(Signed s) { return getSigned(s.matchSignature()); }
     default Signed getSigned(String s) { return typeMirror().getSigned(s); }
     default String matchSignatures(Signed s) { return typeMirror().matchSignatures(s); }
+    default boolean matchesTail(String variableName) { return variableName.endsWith(shortName()); }
+    static public Typified from(Scope s) { return (Typified)s; }
 
     default boolean resolves(Named reference) { return false; }
     default Class<?> resolveType(Named reference) { return null; }
