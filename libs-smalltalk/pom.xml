@@ -23,6 +23,10 @@
         <version>2020</version>
     </parent>
 
+    <properties>
+        <jar.module.name>libs.smalltalk</jar.module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>hoot-smalltalk</groupId>
@@ -71,7 +75,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
             </plugin>
         </plugins>
     </build>

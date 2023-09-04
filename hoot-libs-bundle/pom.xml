@@ -23,6 +23,10 @@
         <version>2020</version>
     </parent>
 
+    <properties>
+        <jar.module.name>hoot.libs.bundle</jar.module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>hoot-smalltalk</groupId>

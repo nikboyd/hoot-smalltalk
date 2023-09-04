@@ -23,6 +23,10 @@
         <version>2020</version>
     </parent>
 
+    <properties>
+        <jar.module.name>hoot.compiler</jar.module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
@@ -67,7 +71,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
                 <configuration>
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>

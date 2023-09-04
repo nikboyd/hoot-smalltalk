@@ -24,6 +24,7 @@
     </parent>
 
     <properties>
+        <jar.module.name>hoot.runtime</jar.module.name>
     </properties>
 
     <dependencies>
@@ -86,7 +87,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
                 <configuration>
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>
