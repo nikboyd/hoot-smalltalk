@@ -94,15 +94,15 @@ Exception members: "describing an exception"
     String! tag := ''.
     String! tag: String! aTag [ tag := aTag. ^tag ]
     String! tag [
-        tag isEmpty ifFalse: [ ^tag ].
-        messageText isEmpty ifFalse: [ ^messageText ].
+        tag notEmpty ifTrue: [ ^tag ].
+        messageText notEmpty ifTrue: [ ^messageText ].
         ^'' "both were empty" ]
 
     @Protected String! defaultDescriptionString [ "derived classes often override this method." ^self class name ]
     @Override @Primitive String! description [
-        ^self messageText isEmpty
-            ifTrue: [ self defaultDescriptionString ]
-            ifFalse: [ self messageText ] ]
+        ^self messageText notEmpty
+            ifFalse: [ self defaultDescriptionString ]
+            ifTrue: [ self messageText ] ]
 ]
 
 Exception members: "handling an exception"

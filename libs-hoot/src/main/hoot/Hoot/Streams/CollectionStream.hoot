@@ -38,7 +38,7 @@ CollectionStream "accessing" members:
 CollectionStream "testing" members:
 [
     Boolean! atEnd [ ^position = contents size ]
-    Boolean! isEmpty [ ^Boolean from: contents isEmpty ]
+    Boolean! isEmpty [ ^contents notEmpty ]
 ]
 
 CollectionStream "managing" members:

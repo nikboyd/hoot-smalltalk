@@ -197,10 +197,10 @@ Collection members: "testing"
     Boolean! includes: Subject! anObject [
      	self do: [ :element | element = anObject ifTrue: [ ^true ] ]. ^false ]
 
-    Boolean! isEmpty [ ^Boolean from: 0 = self size ]
-    Boolean! notEmpty [ ^self isEmpty not ]
+    Java Lang Boolean! isEmpty [ ^(0 = self size) primitiveBoolean ]
+    Boolean! notEmpty [ ^(Boolean from: self isEmpty) not ]
 
-    emptyCheck [ self isEmpty ifTrue: [ ^self emptyCollectionError ]. ]
+    emptyCheck [ self notEmpty ifFalse: [ ^self emptyCollectionError ]. ]
     Int! checkRange: Ordinal! index [ ^self checkIndex: index ]
 
     @Primitive Int! checkIndex: Ordinal! index [

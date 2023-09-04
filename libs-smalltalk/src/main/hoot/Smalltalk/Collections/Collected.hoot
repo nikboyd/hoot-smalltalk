@@ -76,7 +76,8 @@ Collected "testing" members:
     Posit! anySatisfy: MonadicPredicate! testBlock
         "whether any element has true == (testBlock value: element)" []
 
-    Posit! isEmpty "whether (this == 0)" []
+    "Java Lang Boolean! isEmpty 'whether (this size == 0)' []" "can't implement this method"
+
     Posit! notEmpty "whether (this size > 0)" []
     Posit! includes: Subject! candidate "whether any element = candidate" []
 
