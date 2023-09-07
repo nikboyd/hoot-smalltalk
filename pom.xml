@@ -31,7 +31,6 @@
 
     <properties>
         <group.name>hoot.smalltalk</group.name>
-        <jar.module.name>hoot.smalltalk</jar.module.name>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyy.MMdd.HHmm</maven.build.timestamp.format>
@@ -278,7 +277,7 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-<!--            <plugin> generate JAR module names from artifact IDs 
+            <plugin><!-- generate JAR module names from artifact IDs -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>3.4.0</version>
@@ -292,12 +291,12 @@
                             <skip>true</skip>
                             <name>jar.module.name</name>
                             <value>${project.artifactId}</value>
-                            <regex>${name.regex}</regex>
-                            <replacement>${name.trans}</replacement>
+                            <regex>\-</regex>
+                            <replacement>\.</replacement>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <plugin><!-- construct and inject module names into JARs -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -336,13 +335,23 @@
             </properties>
         </profile>
         <profile>
-            <id>java-11-plus</id>
+            <id>java-11-16-support-11</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-                <jdk>[11,)</jdk>
+                <jdk>[11,17)</jdk>
             </activation>
             <properties>
                 <maven.compiler.release>11</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-17-plus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>[17,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>17</maven.compiler.release>
             </properties>
         </profile>
     </profiles>
