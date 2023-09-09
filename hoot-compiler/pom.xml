@@ -67,7 +67,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
                 <configuration>
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>

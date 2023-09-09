@@ -23,9 +23,6 @@
         <version>2020</version>
     </parent>
 
-    <properties>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.eclipse.aether</groupId>
@@ -86,7 +83,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
                 <configuration>
                     <compilerArgs>
                         <arg>-Xlint:unchecked</arg>

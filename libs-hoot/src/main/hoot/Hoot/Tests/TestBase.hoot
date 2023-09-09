@@ -10,6 +10,7 @@ TestBase class members: []
 
 TestBase members: "testing" [
 
+    Void! runTest []
     @Test Void! testOnce [ self log cr. self runTest. self log cr. ]
 
     Void! assertTrue:  Closure! test [ Assert assertTrue:  test toPredicate value primitiveBoolean. ]

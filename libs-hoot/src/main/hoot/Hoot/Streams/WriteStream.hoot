@@ -48,7 +48,7 @@ WriteStream "writing" members:
     ]
 
     nextPutAll: CollectedReadably? ElementType! elements [
-        elements isEmpty ifFalse: [
+        elements notEmpty ifTrue: [
             (self collectsElements: Object <- elements first) ifTrue: [
                 self contents addAll: elements.
                 position := position + elements size.

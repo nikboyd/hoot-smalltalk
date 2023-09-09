@@ -5,6 +5,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 Hoot Magnitudes Number import.
 Hoot Magnitudes Integer import.
 Hoot Magnitudes FastInteger import.
+Hoot Magnitudes SmallInteger importStatics.
 
 Smalltalk Core Subject import.
 Smalltalk Core Classified import.
@@ -19,11 +20,13 @@ Interval class members: "creating instances"
 [
     Interval! new [ 
         "a new empty Interval (0, 0, 0)"
-        ^self from: 0 to: 0 by: 0 ]
+        ^self from: Zero to: Zero by: Zero ]
 
     Interval! from: Ordinal! start to: Ordinal! stop [
         "a new Interval (start, stop, 1)"
-    	^self from: start to: stop by: 1 ]
+        (start = stop) ifTrue: [ ^self from: start to: stop by: Zero ].
+        (start < stop) ifTrue: [ ^self from: start to: stop by: Unity ].
+    	^self from: start to: stop by: Negativity ]
 
     Interval! from: Ordinal! start to: Ordinal! stop by: Ordinal! step [
         "a new Interval (start, stop, step)"
@@ -33,13 +36,13 @@ Interval class members: "creating instances"
 Interval members: "constructing instances"
 [
     "The interval start."
-    Ordinal! start := 0.
+    Ordinal! start := Zero.
 
     "The interval stop."
-    Ordinal! stop := 0.
+    Ordinal! stop := Zero.
 
     "The interval step."
-    Ordinal! step := 0.
+    Ordinal! step := Zero.
 
     "Constructs a new Interval."
     @Protected Interval: Ordinal! aStart : Ordinal! aStop : Ordinal! aStep [
@@ -63,9 +66,9 @@ Interval "accessing" members:
         ^(self stop - (self stop - self start \\ step)) asInteger ]
 
     @Primitive Integer! size [
-    	^self isEmpty
-            ifTrue: [ SmallInteger from: 0 ]
-            ifFalse: [ SmallInteger from: self countSteps ] ]
+    	^self notEmpty
+            ifFalse: [ SmallInteger from: Zero ]
+            ifTrue: [ SmallInteger from: self countSteps ] ]
 
     Behavior! species [ ^Behavior <- OrderedCollection type ]
 ]
@@ -129,10 +132,11 @@ Interval members: "enumerating"
 
 Interval members: "testing"
 [
-    @Primitive Boolean! isEmpty [
+    @Primitive Java Lang Boolean! isEmpty [
+        (step intValue == 0) ifTrue: [ ^true ].
     	^step intValue < 0
-            ifTrue: [ Boolean from: (start intValue < stop intValue) ]
-            ifFalse: [ Boolean from: (stop intValue < start intValue) ] ]
+            ifTrue:  [ (start intValue < stop intValue) ]
+            ifFalse: [ (stop intValue < start intValue) ] ]
 
     Boolean! includes: Subject! aValue [
         (aValue isKindOf: Integer type) ifFalse: [ ^false ].

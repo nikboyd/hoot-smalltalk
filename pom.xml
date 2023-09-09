@@ -30,6 +30,8 @@
     </modules>
 
     <properties>
+        <group.name>hoot.smalltalk</group.name>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyy.MMdd.HHmm</maven.build.timestamp.format>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
@@ -45,9 +47,9 @@
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
         <version.maven-plugin>3.6.0</version.maven-plugin>
-        <version.maven.compiler>3.8.1</version.maven.compiler>
+        <version.maven.compiler>3.11.0</version.maven.compiler>
         <version.maven.surefire>2.22.1</version.maven.surefire>
-        <version.maven.jacoco>0.8.5</version.maven.jacoco>
+        <version.maven.jacoco>0.8.8</version.maven.jacoco>
 
         <gitlab-group>9887672</gitlab-group>
         <gitlab-project>10019964</gitlab-project>
@@ -253,10 +255,19 @@
                     <artifactId>hoot-compiler-bundle</artifactId>
                     <version>2020.0101.0101</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.maven.compiler}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -264,6 +275,39 @@
                 <configuration>
                     <deployAtEnd>true</deployAtEnd>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin><!-- generate JAR module names from artifact IDs -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>regex-property</id>
+                        <goals>
+                            <goal>regex-property</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                            <name>jar.module.name</name>
+                            <value>${project.artifactId}</value>
+                            <regex>\-</regex>
+                            <replacement>\.</replacement>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin><!-- construct and inject module names into JARs -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <skip>true</skip>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>${group.name}.${jar.module.name}</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
@@ -291,10 +335,20 @@
             </properties>
         </profile>
         <profile>
-            <id>java-11-plus</id>
+            <id>java-11-16-support-11</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-                <jdk>[11,)</jdk>
+                <jdk>[11,17)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>11</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-17-plus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>[17,)</jdk>
             </activation>
             <properties>
                 <maven.compiler.release>11</maven.compiler.release>
