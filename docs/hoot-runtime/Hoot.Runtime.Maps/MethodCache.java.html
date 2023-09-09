@@ -115,7 +115,7 @@ public class MethodCache implements Valued {
 <span class="nc bnc" id="L115" title="All 2 branches missed.">            || qualifiesAsAbsentia(methodName, types)</span>
 <span class="nc bnc" id="L116" title="All 2 branches missed.">            || qualifiesAsNormal(methodName, types); }</span>
 
-<span class="fc" id="L118">    static final HashMap&lt;String, Class[]&gt; SpecialSelectors = emptyMap(Class[].class);</span>
+<span class="nc" id="L118">    static final HashMap&lt;String, Class[]&gt; SpecialSelectors = emptyMap(Class[].class);</span>
 <span class="nc" id="L119">    protected static Class[] specialSelector(String methodName) { return SpecialSelectors.get(methodName); }</span>
     protected boolean qualifiesAsSpecial(String methodName, Class[] types) {
 <span class="nc" id="L121">        Class[] arguments = specialSelector(methodName);</span>
@@ -140,44 +140,44 @@ public class MethodCache implements Valued {
 <span class="nc" id="L140">        return matchAll(wrap(types), type -&gt; type.equals(Object.class)); }</span>
 
     static final int CacheSize = 11;
-<span class="fc" id="L143">    static Class[][] ObjectClasses = new Class[CacheSize][];</span>
+<span class="nc" id="L143">    static Class[][] ObjectClasses = new Class[CacheSize][];</span>
     protected static Class[] objectClasses(int argumentCount) {
 <span class="nc bnc" id="L145" title="All 2 branches missed.">        return (argumentCount &lt; CacheSize) ? ObjectClasses[argumentCount] : objectClassArray(argumentCount); }</span>
 
-<span class="fc" id="L147">    static Class[] BlockClasses = { Enclosure.class, Enclosure.class, Enclosure.class };</span>
+<span class="nc" id="L147">    static Class[] BlockClasses = { Enclosure.class, Enclosure.class, Enclosure.class };</span>
     protected static Class[] classesWithBlock(int methodArgumentCount, int blockArgumentCount) {
-<span class="fc" id="L149">        Class result[] = objectClassArray(methodArgumentCount);</span>
-<span class="fc" id="L150">        result[methodArgumentCount - 1] = BlockClasses[blockArgumentCount];</span>
-<span class="fc" id="L151">        return result;</span>
+<span class="nc" id="L149">        Class result[] = objectClassArray(methodArgumentCount);</span>
+<span class="nc" id="L150">        result[methodArgumentCount - 1] = BlockClasses[blockArgumentCount];</span>
+<span class="nc" id="L151">        return result;</span>
     }
 
     protected static Class[] objectClassArray(int argumentCount) {
-<span class="fc" id="L155">        Class result[] = new Class[argumentCount];</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        for(int i = 0; i &lt; argumentCount; i++) result[i] = Object.class;</span>
-<span class="fc" id="L157">        return result;</span>
+<span class="nc" id="L155">        Class result[] = new Class[argumentCount];</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        for(int i = 0; i &lt; argumentCount; i++) result[i] = Object.class;</span>
+<span class="nc" id="L157">        return result;</span>
     }
 
     static {
-<span class="fc" id="L161">        SpecialSelectors.put(&quot;do:&quot;, classesWithBlock(1, 1));</span>
-<span class="fc" id="L162">        SpecialSelectors.put(&quot;to:do:&quot;, classesWithBlock(2, 1));</span>
-<span class="fc" id="L163">        SpecialSelectors.put(&quot;from:to:do:&quot;, classesWithBlock(3, 1));</span>
-<span class="fc" id="L164">        SpecialSelectors.put(&quot;to:by:do:&quot;, classesWithBlock(3, 1));</span>
+<span class="nc" id="L161">        SpecialSelectors.put(&quot;do:&quot;, classesWithBlock(1, 1));</span>
+<span class="nc" id="L162">        SpecialSelectors.put(&quot;to:do:&quot;, classesWithBlock(2, 1));</span>
+<span class="nc" id="L163">        SpecialSelectors.put(&quot;from:to:do:&quot;, classesWithBlock(3, 1));</span>
+<span class="nc" id="L164">        SpecialSelectors.put(&quot;to:by:do:&quot;, classesWithBlock(3, 1));</span>
 
-<span class="fc" id="L166">        SpecialSelectors.put(&quot;detect:&quot;, classesWithBlock(1, 1));</span>
-<span class="fc" id="L167">        SpecialSelectors.put(&quot;select:&quot;, classesWithBlock(1, 1));</span>
-<span class="fc" id="L168">        SpecialSelectors.put(&quot;reject:&quot;, classesWithBlock(1, 1));</span>
-<span class="fc" id="L169">        SpecialSelectors.put(&quot;collect:&quot;, classesWithBlock(1, 1));</span>
-<span class="fc" id="L170">        SpecialSelectors.put(&quot;inject:into:&quot;, classesWithBlock(2, 2));</span>
+<span class="nc" id="L166">        SpecialSelectors.put(&quot;detect:&quot;, classesWithBlock(1, 1));</span>
+<span class="nc" id="L167">        SpecialSelectors.put(&quot;select:&quot;, classesWithBlock(1, 1));</span>
+<span class="nc" id="L168">        SpecialSelectors.put(&quot;reject:&quot;, classesWithBlock(1, 1));</span>
+<span class="nc" id="L169">        SpecialSelectors.put(&quot;collect:&quot;, classesWithBlock(1, 1));</span>
+<span class="nc" id="L170">        SpecialSelectors.put(&quot;inject:into:&quot;, classesWithBlock(2, 2));</span>
 
-<span class="fc" id="L172">        SpecialSelectors.put(&quot;ensure:&quot;, classesWithBlock(1, 0));</span>
-<span class="fc" id="L173">        SpecialSelectors.put(&quot;ifCurtailed:&quot;, classesWithBlock(1, 0));</span>
+<span class="nc" id="L172">        SpecialSelectors.put(&quot;ensure:&quot;, classesWithBlock(1, 0));</span>
+<span class="nc" id="L173">        SpecialSelectors.put(&quot;ifCurtailed:&quot;, classesWithBlock(1, 0));</span>
 
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        for(int i = 0; i &lt; CacheSize; i++) {</span>
-<span class="fc" id="L176">            ObjectClasses[i] = objectClassArray(i);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        for(int i = 0; i &lt; CacheSize; i++) {</span>
+<span class="nc" id="L176">            ObjectClasses[i] = objectClassArray(i);</span>
         }
-<span class="fc" id="L178">    }</span>
+<span class="nc" id="L178">    }</span>
 
     private static final String MissingMethod = &quot;%s does not understand %s with %d argument(s)&quot;;
     private static final String MissingConstruct = &quot;%s does not construct with %d argument(s)&quot;;
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

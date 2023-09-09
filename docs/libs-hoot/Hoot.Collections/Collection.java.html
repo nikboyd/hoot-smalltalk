@@ -293,14 +293,14 @@ import java.util.List;
    */
   public   CollectedOrdinally&lt;ElementType&gt; asOrderedCollection()
   {
-<span class="fc" id="L296">    java.lang.String exitID = &quot;Collection&gt;&gt;asOrderedCollection&quot;;</span>
-<span class="fc" id="L297">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L298">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
-<span class="fc" id="L299">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L300">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="fc" id="L301">      return result.addLast(element);</span>
+<span class="nc" id="L296">    java.lang.String exitID = &quot;Collection&gt;&gt;asOrderedCollection&quot;;</span>
+<span class="nc" id="L297">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L298">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
+<span class="nc" id="L299">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L300">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L301">      return result.addLast(element);</span>
     }, &quot;element&quot;));
-<span class="fc" id="L303">    return (CollectedOrdinally&lt;ElementType&gt;)result;</span>
+<span class="nc" id="L303">    return (CollectedOrdinally&lt;ElementType&gt;)result;</span>
   }
 
   /**
@@ -685,11 +685,11 @@ import java.util.List;
   /**
    * @return 
    */
-  public   Boolean isEmpty()
+  public   boolean isEmpty()
   {
 <span class="fc" id="L690">    java.lang.String exitID = &quot;Collection&gt;&gt;isEmpty&quot;;</span>
 <span class="fc" id="L691">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L692">    return (Boolean)Boolean.from((SmallInteger.from(0).equals(this.size())));</span>
+<span class="fc" id="L692">    return (boolean)(SmallInteger.from(0).equals(this.size())).primitiveBoolean();</span>
   }
 
   /**
@@ -697,9 +697,9 @@ import java.util.List;
    */
   public   Boolean notEmpty()
   {
-<span class="nc" id="L700">    java.lang.String exitID = &quot;Collection&gt;&gt;notEmpty&quot;;</span>
-<span class="nc" id="L701">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L702">    return (Boolean)this.isEmpty().not();</span>
+<span class="fc" id="L700">    java.lang.String exitID = &quot;Collection&gt;&gt;notEmpty&quot;;</span>
+<span class="fc" id="L701">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L702">    return (Boolean)Boolean.from(this.isEmpty()).not();</span>
   }
 
   /**
@@ -710,7 +710,7 @@ import java.util.List;
 <span class="nc" id="L710">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCheck&quot;;</span>
 <span class="nc" id="L711">    Frame f0 = new Frame(exitID);</span>
 <span class="nc" id="L712">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L713">    this.isEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L713">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L714">      return (Collection)f0.exit(exitID, this.emptyCollectionError());</span>
     }, &quot;&quot;));
 <span class="nc" id="L716">    return (Collection)this;</span>
@@ -869,4 +869,4 @@ import java.util.List;
     });
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

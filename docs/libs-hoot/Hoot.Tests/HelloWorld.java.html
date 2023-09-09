@@ -47,7 +47,7 @@ import java.util.*;
   {
 <span class="fc" id="L48">    java.lang.String exitID = &quot;HelloWorld&gt;&gt;printWithArgs&quot;;</span>
 <span class="fc" id="L49">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L50">    joinedArgs.isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L50">    joinedArgs.notEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="fc" id="L51">      this.log().print((String.from(&quot; with &quot;).append(joinedArgs)));</span>
 <span class="fc" id="L52">    }, &quot;&quot;));</span>
 <span class="fc" id="L53">    return (HelloWorld)this;</span>
@@ -76,4 +76,4 @@ import java.util.*;
 <span class="fc" id="L76">    this.log().cr();</span>
 <span class="fc" id="L77">  }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

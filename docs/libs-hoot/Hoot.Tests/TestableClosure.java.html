@@ -129,7 +129,7 @@ public class TestableClosure extends Object implements Testable, MultiValuable
   {
 <span class="fc" id="L130">    java.lang.String exitID = &quot;TestableClosure&gt;&gt;description&quot;;</span>
 <span class="fc" id="L131">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L132">    return (String)name.isEmpty().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L132">    return (String)name.notEmpty().ifFalse_ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L133">      return String.from(this.getClass().getSimpleName());</span>
 <span class="fc" id="L134">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
 <span class="fc" id="L135">      return name;</span>
@@ -306,4 +306,4 @@ public class TestableClosure extends Object implements Testable, MultiValuable
 <span class="fc" id="L306">    return (TestableClosure)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -33,109 +33,110 @@ import org.apache.maven.project.MavenProject;
 <span class="nc" id="L33">    File getProjectFolder() { return project.getBasedir(); }</span>
 <span class="nc" id="L34">    String getProjectFolderTail() { return getProjectFolder().getName(); }</span>
 
-<span class="fc" id="L36">    File findFolder(String folderPath) { return new File(getTargetFolder(), folderPath); }</span>
+<span class="fc" id="L36">    String normalPath(String p) { return Hoot.Runtime.Maps.Package.normalPath(p); }</span>
+<span class="fc" id="L37">    File findFolder(String folderPath) { return new File(getTargetFolder(), normalPath(folderPath)); }</span>
 
     public static final String Folder = &quot;folder&quot;;
     public static final String BasePath = &quot;user.dir&quot;;
-<span class="fc" id="L40">    File getTargetFolder() { return new File(System.getProperty(BasePath), getArg(Folder)); }</span>
+<span class="fc" id="L41">    File getTargetFolder() { return new File(System.getProperty(BasePath), normalPath(getArg(Folder))); }</span>
 
     public static final String Source = &quot;source&quot;;
     public static final String TargetPath = &quot;target/generated-sources/hoot-maven-plugin&quot;;
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">    void addTargetFolder() { if (!hasArg(Source)) project.addCompileSourceRoot(findFolder(TargetPath).getPath()); }</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    void addTargetFolder() { if (!hasArg(Source)) project.addCompileSourceRoot(findFolder(TargetPath).getPath()); }</span>
 
     /**
      * Contains (optional) arguments sent to the Hoot compiler main() entry point.
      */
-<span class="fc" id="L49">    @Parameter(name = &quot;main-args&quot;) Map&lt;String,String&gt; mainArgs = new HashMap();</span>
-<span class="fc" id="L50">    void addArgs() { mainArgs.forEach((k,v) -&gt; addOption(k,v)); }</span>
+<span class="fc" id="L50">    @Parameter(name = &quot;main-args&quot;) Map&lt;String,String&gt; mainArgs = new HashMap();</span>
+<span class="fc" id="L51">    void addArgs() { mainArgs.forEach((k,v) -&gt; addOption(k,v)); }</span>
 
     static final String TargetReport = &quot; located folder = ../%s&quot;;
     void addDefaultArgs() {
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (!hasArg(Folder)) {</span>
-<span class="nc" id="L55">            mainArgs.put(Folder, getProjectFolderTail());</span>
-<span class="nc" id="L56">            report(String.format(TargetReport, getArg(Folder)));</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (!hasArg(Folder)) {</span>
+<span class="nc" id="L56">            mainArgs.put(Folder, getProjectFolderTail());</span>
+<span class="nc" id="L57">            report(String.format(TargetReport, getArg(Folder)));</span>
         }
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L59">    }</span>
 
-<span class="fc" id="L60">    boolean hasArg(String argName) { return mainArgs.containsKey(argName); }</span>
-<span class="fc" id="L61">    String getArg(String argName) { return mainArgs.getOrDefault(argName, getDefault(argName)); }</span>
-<span class="fc" id="L62">    String getDefault(String argName) { return OptionalBools.getOrDefault(argName, &quot;&quot;); }</span>
+<span class="fc" id="L61">    boolean hasArg(String argName) { return mainArgs.containsKey(argName); }</span>
+<span class="fc" id="L62">    String getArg(String argName) { return mainArgs.getOrDefault(argName, getDefault(argName)); }</span>
+<span class="fc" id="L63">    String getDefault(String argName) { return OptionalBools.getOrDefault(argName, &quot;&quot;); }</span>
 
     /**
      * Contains a list of (optional) package names sent to the Hoot compiler.
      */
-<span class="fc" id="L67">    @Parameter() List&lt;String&gt; packages = new ArrayList();</span>
+<span class="fc" id="L68">    @Parameter() List&lt;String&gt; packages = new ArrayList();</span>
     public static final String Packages = &quot;packages&quot;;
-<span class="pc" id="L69">    void addPackages() { commandArgs.add(shortened(Packages)); packages.forEach(p -&gt; commandArgs.add(p)); }</span>
-<span class="fc" id="L70">    public static String shortened(String optionName) { return Dash + shortOption(optionName); }</span>
-<span class="fc" id="L71">    static String shortOption(String optionName) { return optionName.substring(0, 1); }</span>
+<span class="pc" id="L70">    void addPackages() { commandArgs.add(shortened(Packages)); packages.forEach(p -&gt; commandArgs.add(p)); }</span>
+<span class="fc" id="L71">    public static String shortened(String optionName) { return Dash + shortOption(optionName); }</span>
+<span class="fc" id="L72">    static String shortOption(String optionName) { return optionName.substring(0, 1); }</span>
 
     String[] buildCommandArgs() {
-<span class="fc" id="L74">        addArgs(); addPackages();</span>
-<span class="fc" id="L75">        return commandArgs(); }</span>
+<span class="fc" id="L75">        addArgs(); addPackages();</span>
+<span class="fc" id="L76">        return commandArgs(); }</span>
 
     static final String Dash = &quot;-&quot;;
     static final String Dashed = &quot;--&quot;;
     public static final String Help = &quot;help&quot;;
     static final String ShowHelp = Dashed + Help;
     static final String Testing = &quot;testing Hoot compiler ...&quot;;
-<span class="fc" id="L82">    void reportOptions() { report(Testing); runCompile(); report(Empty); runMain(ShowHelp); }</span>
+<span class="fc" id="L83">    void reportOptions() { report(Testing); runCompile(); report(Empty); runMain(ShowHelp); }</span>
 
     void runCompile() {
-<span class="fc" id="L85">        addDefaultArgs();</span>
-<span class="fc" id="L86">        addTargetFolder();</span>
-<span class="fc" id="L87">        runMain(buildCommandArgs());</span>
+<span class="fc" id="L86">        addDefaultArgs();</span>
+<span class="fc" id="L87">        addTargetFolder();</span>
+<span class="fc" id="L88">        runMain(buildCommandArgs());</span>
 
         // check for tests
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (findFolder(SourceTest).exists()) {</span>
-<span class="nc" id="L91">            report(&quot;&quot;);</span>
-<span class="nc" id="L92">            runMain(buildTestCompile());</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (findFolder(SourceTest).exists()) {</span>
+<span class="nc" id="L92">            report(&quot;&quot;);</span>
+<span class="nc" id="L93">            runMain(buildTestCompile());</span>
         }
-<span class="fc" id="L94">    }</span>
+<span class="fc" id="L95">    }</span>
 
-<span class="fc" id="L96">    static final Servant mainServant = new Servant();</span>
-<span class="fc" id="L97">    void runMain(String... s) { mainServant.runCompiler(s); }</span>
+<span class="fc" id="L97">    static final Servant mainServant = new Servant();</span>
+<span class="fc" id="L98">    void runMain(String... s) { mainServant.runCompiler(s); }</span>
 
-<span class="fc" id="L99">    static final String[] NoArgs = { };</span>
-<span class="fc" id="L100">    List&lt;String&gt; commandArgs = new ArrayList();</span>
-<span class="fc" id="L101">    String[] commandArgs() { return commandArgs.toArray(NoArgs); }</span>
+<span class="fc" id="L100">    static final String[] NoArgs = { };</span>
+<span class="fc" id="L101">    List&lt;String&gt; commandArgs = new ArrayList();</span>
+<span class="fc" id="L102">    String[] commandArgs() { return commandArgs.toArray(NoArgs); }</span>
 
     public static final String TestOnly = &quot;only-test&quot;;
     void addOption(String k, String v) {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (OptionalBools.containsKey(k)) {</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            if (True.equals(v)) { // map 'test' to 'only-test'</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">                String key = Test.equals(k) ? TestOnly : k;</span>
-<span class="fc" id="L108">                commandArgs.add(Dashed + key);</span>
-<span class="fc" id="L109">            }</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (OptionalBools.containsKey(k)) {</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (True.equals(v)) { // map 'test' to 'only-test'</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                String key = Test.equals(k) ? TestOnly : k;</span>
+<span class="fc" id="L109">                commandArgs.add(Dashed + key);</span>
+<span class="fc" id="L110">            }</span>
         }
         else {
-<span class="fc" id="L112">            commandArgs.add(Dashed + k);</span>
-<span class="fc" id="L113">            commandArgs.add(v);</span>
+<span class="fc" id="L113">            commandArgs.add(Dashed + k);</span>
+<span class="fc" id="L114">            commandArgs.add(v);</span>
         }
-<span class="fc" id="L115">    }</span>
+<span class="fc" id="L116">    }</span>
 
     public static final String TestSource = &quot;test-source&quot;;
     public static final String SourceTest = &quot;src/test/hoot&quot;;
     public static final String TargetTest = &quot;target/generated-test-sources/hoot-maven-plugin&quot;;
     String[] buildTestCompile() {
-<span class="nc" id="L121">        String testSource = findFolder(SourceTest).getPath();</span>
-<span class="nc" id="L122">        String testTarget = findFolder(TargetTest).getPath();</span>
-<span class="nc" id="L123">        project.addTestCompileSourceRoot(testTarget);</span>
+<span class="nc" id="L122">        String testSource = findFolder(SourceTest).getPath();</span>
+<span class="nc" id="L123">        String testTarget = findFolder(TargetTest).getPath();</span>
+<span class="nc" id="L124">        project.addTestCompileSourceRoot(testTarget);</span>
 
-<span class="nc" id="L125">        packages.clear();</span>
-<span class="nc" id="L126">        commandArgs.clear();</span>
-<span class="nc" id="L127">        mainArgs.remove(Source);</span>
-<span class="nc" id="L128">        mainArgs.put(Folder, testTarget);</span>
-<span class="nc" id="L129">        mainArgs.put(TestSource, testSource);</span>
-<span class="nc" id="L130">        return buildCommandArgs();</span>
+<span class="nc" id="L126">        packages.clear();</span>
+<span class="nc" id="L127">        commandArgs.clear();</span>
+<span class="nc" id="L128">        mainArgs.remove(Source);</span>
+<span class="nc" id="L129">        mainArgs.put(Folder, testTarget);</span>
+<span class="nc" id="L130">        mainArgs.put(TestSource, testSource);</span>
+<span class="nc" id="L131">        return buildCommandArgs();</span>
     }
 
-<span class="fc" id="L133">    public static final String[] Optionals = { Help, Test };</span>
-<span class="fc" id="L134">    public static final Map&lt;String, String&gt; OptionalBools = new HashMap();</span>
+<span class="fc" id="L134">    public static final String[] Optionals = { Help, Test };</span>
+<span class="fc" id="L135">    public static final Map&lt;String, String&gt; OptionalBools = new HashMap();</span>
     static {
-<span class="fc" id="L136">        OptionalBools.put(Help, &quot;false&quot;);</span>
-<span class="fc" id="L137">        OptionalBools.put(Test, &quot;false&quot;);</span>
-<span class="fc" id="L138">    }</span>
+<span class="fc" id="L137">        OptionalBools.put(Help, &quot;false&quot;);</span>
+<span class="fc" id="L138">        OptionalBools.put(Test, &quot;false&quot;);</span>
+<span class="fc" id="L139">    }</span>
 
 } // HootMojo
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

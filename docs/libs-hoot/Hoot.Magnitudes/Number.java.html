@@ -1081,14 +1081,14 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
 <span class="fc" id="L1081">    java.lang.String exitID = &quot;Number&gt;&gt;to_by_do&quot;;</span>
 <span class="fc" id="L1082">    Frame f0 = new Frame(exitID);</span>
 <span class="fc" id="L1083">    int index = this.primitiveInteger();</span>
-<span class="pc bpc" id="L1084" title="1 of 2 branches missed.">    if ((delta.intValue() &gt; 0)) {</span>
+<span class="fc bfc" id="L1084" title="All 2 branches covered.">    if ((delta.intValue() &gt; 0)) {</span>
 <span class="fc bfc" id="L1085" title="All 2 branches covered.">      while((index &lt;= aNumber.intValue())) {</span>
 <span class="fc" id="L1086">        aBlock.value(SmallInteger.from(index));</span>
 <span class="fc" id="L1087">        index += delta.intValue();</span>
       };
     }
     else {
-<span class="nc bnc" id="L1091" title="All 2 branches missed.">      while((aNumber.intValue() &lt;= index)) {</span>
+<span class="pc bpc" id="L1091" title="1 of 2 branches missed.">      while((aNumber.intValue() &lt;= index)) {</span>
 <span class="nc" id="L1092">        aBlock.value(SmallInteger.from(index));</span>
 <span class="nc" id="L1093">        index += delta.intValue();</span>
       };
@@ -1096,4 +1096,4 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
 <span class="fc" id="L1096">    return (Number)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

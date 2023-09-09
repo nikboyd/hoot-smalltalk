@@ -43,7 +43,7 @@ public interface Typified extends Valued.Metatype, Named, Logging {
 <span class="nc" id="L43">    default TypeName typeResolver() { return TypeName.fromOther(this); }</span>
 
 <span class="nc" id="L45">    default boolean isEmpty() { return typeMirror().isEmpty(); }</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    default boolean hasMetaface() { return $class() != null; }</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">    default boolean hasMetaface() { return $class() != null; }</span>
 <span class="nc" id="L47">    default boolean isReflective() { return false; }</span>
 
 <span class="nc bnc" id="L49" title="All 4 branches missed.">    default boolean isRoot() { return !isEmpty() &amp;&amp; typeResolver().isRootType(); }</span>
@@ -88,4 +88,4 @@ public interface Typified extends Valued.Metatype, Named, Logging {
 <span class="nc" id="L88">        return results; }</span>
 
 } // Typified
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

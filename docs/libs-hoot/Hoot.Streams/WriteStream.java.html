@@ -160,7 +160,7 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
   {
 <span class="nc" id="L161">    java.lang.String exitID = &quot;WriteStream&gt;&gt;nextPutAll&quot;;</span>
 <span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L163">    elements.isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L163">    elements.notEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L164">      return this.collectsElements(((Object)elements.first())).ifTrue(Closure.with(f3 -&gt; {</span>
 <span class="nc" id="L165">      this.contents().addAll(elements);</span>
 
@@ -170,4 +170,4 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
 <span class="nc" id="L170">    return (WriteStream)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

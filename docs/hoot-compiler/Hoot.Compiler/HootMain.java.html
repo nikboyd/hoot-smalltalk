@@ -59,74 +59,77 @@ import static Hoot.Runtime.Maps.Library.loadBasePaths;
 <span class="fc" id="L59">    boolean hasTestSource() { return falseOr((c) -&gt; c.hasOption(TestSource), command); }</span>
 <span class="nc bnc" id="L60" title="All 4 branches missed.">    boolean needsDefaultSource() { return !hasMainSource() &amp;&amp; !hasTestSource(); }</span>
 
-<span class="nc" id="L62">    String defaultSourcePath() { return defaultSourceFolder().getPath(); }</span>
-<span class="nc" id="L63">    File defaultSourceFolder() { return new File(removeTail(targetTail(), targetFolder.getPath()), sourceTail()); }</span>
+<span class="fc" id="L62">    static String normalPath(String p) { return Package.normalPath(p); }</span>
+<span class="nc" id="L63">    String defaultSourcePath() { return defaultSourceFolder().getPath(); }</span>
+    File defaultSourceFolder() { 
+<span class="nc" id="L65">        return new File(removeTail(normalPath(targetTail()), targetFolder.getPath()), normalPath(sourceTail())); }</span>
     String removeTail(String tail, String path) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        return (path.endsWith(tail)) ? path.substring(0, path.length() - tail.length()) : path; }</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        return (path.endsWith(tail)) ? path.substring(0, path.length() - tail.length()) : path; }</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    String targetTail() { return hasTestSource() ? TargetTest : TargetPath; }</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">    String sourceTail() { return hasTestSource() ? SourceTest : SourcePath; }</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">    String targetTail() { return hasTestSource() ? TargetTest : TargetPath; }</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">    String sourceTail() { return hasTestSource() ? SourceTest : SourcePath; }</span>
     String selectedSource() { // figure intended source from supplied args
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        return hasTestSource() ? testSourcePath() :</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">               hasMainSource() ? sourcePath() : defaultSourcePath(); }</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        return hasTestSource() ? testSourcePath() :</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">               hasMainSource() ? sourcePath() : defaultSourcePath(); }</span>
 
-<span class="fc" id="L73">    String targetPath() { return emptyOr((c) -&gt; c.getOptionValue(Folder, targetTail()), command); }</span>
-<span class="fc" id="L74">    String sourcePath() { return emptyOr((c) -&gt; c.getOptionValue(Source, sourceTail()), command); }</span>
+<span class="fc" id="L75">    String targetPath() { return emptyOr((c) -&gt; c.getOptionValue(Folder, targetTail()), command); }</span>
+<span class="fc" id="L76">    String sourcePath() { return emptyOr((c) -&gt; c.getOptionValue(Source, sourceTail()), command); }</span>
 
-<span class="nc" id="L76">    String testTargetPath() { return emptyOr((c) -&gt; c.getOptionValue(Folder, TargetTest), command); }</span>
-<span class="nc" id="L77">    String testSourcePath() { return emptyOr((c) -&gt; c.getOptionValue(TestSource, SourceTest), command); }</span>
+<span class="nc" id="L78">    String testTargetPath() { return emptyOr((c) -&gt; c.getOptionValue(Folder, TargetTest), command); }</span>
+<span class="nc" id="L79">    String testSourcePath() { return emptyOr((c) -&gt; c.getOptionValue(TestSource, SourceTest), command); }</span>
 
+    static final String WorkPath = &quot;working&quot;;
     public static final String BasePath = &quot;user.dir&quot;;
-<span class="fc" id="L80">    String basePath() { return emptyOr((c) -&gt; c.getOptionValue(Base, systemValue(BasePath)), command); }</span>
+<span class="fc" id="L83">    String basePath() { return emptyOr((c) -&gt; c.getOptionValue(Base, systemValue(BasePath)), command); }</span>
 
-<span class="fc" id="L82">    final List&lt;String&gt; packageList = emptyList(String.class);</span>
-<span class="fc" id="L83">    List&lt;String&gt; packages() { return this.packageList; }</span>
-<span class="fc" id="L84">    boolean noPackages() { return packages().isEmpty(); }</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">    boolean somePackages() { return !noPackages(); }</span>
+<span class="fc" id="L85">    final List&lt;String&gt; packageList = emptyList(String.class);</span>
+<span class="fc" id="L86">    List&lt;String&gt; packages() { return this.packageList; }</span>
+<span class="fc" id="L87">    boolean noPackages() { return packages().isEmpty(); }</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    boolean somePackages() { return !noPackages(); }</span>
 
-<span class="fc" id="L87">    List&lt;String&gt; packageList() { return wrap(command.getOptionValues(Packages)); }</span>
+<span class="fc" id="L90">    List&lt;String&gt; packageList() { return wrap(command.getOptionValues(Packages)); }</span>
     void cachePackages() {
-<span class="pc bnc" id="L89" title="All 2 branches missed.">        packages().addAll(selectList(packageList(), p -&gt; !p.isEmpty()));</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (noPackages()) {</span>
-<span class="fc" id="L91">            packages().addAll(collectPackagesUnder(sourceFolder));</span>
+<span class="pc bnc" id="L92" title="All 2 branches missed.">        packages().addAll(selectList(packageList(), p -&gt; !p.isEmpty()));</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (noPackages()) {</span>
+<span class="fc" id="L94">            packages().addAll(collectPackagesUnder(sourceFolder));</span>
         }
-<span class="fc" id="L93">    }</span>
+<span class="fc" id="L96">    }</span>
 
     List&lt;String&gt; collectPackagesUnder(File hootFolder) {
-<span class="fc" id="L96">        return collectList(list -&gt; {</span>
-<span class="fc" id="L97">            File[] subFolders = hootFolder.listFiles(FolderFilter);</span>
-<span class="fc" id="L98">            wrap(subFolders).forEach(f -&gt; {</span>
-<span class="fc" id="L99">                File packageFolder = new File(hootFolder, f.getName());</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                if (packageFolder.isDirectory()) {</span>
-<span class="fc" id="L101">                    String packageName = Package.nameFrom(sourceFolder, packageFolder);</span>
-<span class="fc" id="L102">                    list.addAll(collectPackagesUnder(packageFolder));</span>
-<span class="fc" id="L103">                    list.add(packageName);</span>
+<span class="fc" id="L99">        return collectList(list -&gt; {</span>
+<span class="fc" id="L100">            File[] subFolders = hootFolder.listFiles(FolderFilter);</span>
+<span class="fc" id="L101">            wrap(subFolders).forEach(f -&gt; {</span>
+<span class="fc" id="L102">                File packageFolder = new File(hootFolder, f.getName());</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                if (packageFolder.isDirectory()) {</span>
+<span class="fc" id="L104">                    String packageName = Package.nameFrom(sourceFolder, packageFolder);</span>
+<span class="fc" id="L105">                    list.addAll(collectPackagesUnder(packageFolder));</span>
+<span class="fc" id="L106">                    list.add(packageName);</span>
                 }
-<span class="fc" id="L105">            });</span>
-<span class="fc" id="L106">        });</span>
+<span class="fc" id="L108">            });</span>
+<span class="fc" id="L109">        });</span>
     }
 
-<span class="fc" id="L109">    static final String[] Skipped = { &quot;resources&quot;, &quot;java&quot; };</span>
-<span class="fc" id="L110">    static final List&lt;String&gt; SkippedFolders = wrap(Skipped);</span>
-<span class="pc bpc" id="L111" title="1 of 4 branches missed.">    static final FileFilter FolderFilter = (f) -&gt; f.isDirectory() &amp;&amp; !SkippedFolders.contains(f.getName());</span>
+<span class="fc" id="L112">    static final String[] Skipped = { &quot;resources&quot;, &quot;java&quot; };</span>
+<span class="fc" id="L113">    static final List&lt;String&gt; SkippedFolders = wrap(Skipped);</span>
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">    static final FileFilter FolderFilter = (f) -&gt; f.isDirectory() &amp;&amp; !SkippedFolders.contains(f.getName());</span>
 
-<span class="fc" id="L113">    final List&lt;String&gt; libsList = emptyList(String.class);</span>
-<span class="fc" id="L114">    List&lt;String&gt; libs() { return this.libsList; }</span>
-<span class="fc" id="L115">    void cacheLibs() { libs().addAll(libsList()); }</span>
-<span class="fc" id="L116">    List&lt;String&gt; libsList() { return wrap(command.getOptionValues(Libs)); }</span>
+<span class="fc" id="L116">    final List&lt;String&gt; libsList = emptyList(String.class);</span>
+<span class="fc" id="L117">    List&lt;String&gt; libs() { return this.libsList; }</span>
+<span class="fc" id="L118">    void cacheLibs() { libs().addAll(libsList()); }</span>
+<span class="fc" id="L119">    List&lt;String&gt; libsList() { return wrap(command.getOptionValues(Libs)); }</span>
 
     public static final String Compiler = &quot;hoot-compiler&quot;;
-<span class="fc" id="L119">    void printHelp() { helpPrinter().printHelp(Compiler, availableOptions()); }</span>
+<span class="fc" id="L122">    void printHelp() { helpPrinter().printHelp(Compiler, availableOptions()); }</span>
     HelpFormatter helpPrinter() {
-<span class="fc" id="L121">        HelpFormatter f = new HelpFormatter();</span>
-<span class="fc" id="L122">        f.setWidth(120);</span>
-<span class="fc" id="L123">        return f;</span>
+<span class="fc" id="L124">        HelpFormatter f = new HelpFormatter();</span>
+<span class="fc" id="L125">        f.setWidth(120);</span>
+<span class="fc" id="L126">        return f;</span>
     }
 
-<span class="fc" id="L126">    Options availableOptions() { return collectWith(new Options(), listOptions(), (opts,opt) -&gt; opts.addOption(opt)); }</span>
-<span class="fc" id="L127">    List&lt;Option&gt; listOptions() { return wrap(</span>
-<span class="fc" id="L128">        baseOption(), sourceOption(), targetOption(), packageOption(),</span>
-<span class="fc" id="L129">        testSourceOption(), testOption(), helpOption()</span>
+<span class="fc" id="L129">    Options availableOptions() { return collectWith(new Options(), listOptions(), (opts,opt) -&gt; opts.addOption(opt)); }</span>
+<span class="fc" id="L130">    List&lt;Option&gt; listOptions() { return wrap(</span>
+<span class="fc" id="L131">        baseOption(), sourceOption(), targetOption(), packageOption(),</span>
+<span class="fc" id="L132">        testSourceOption(), testOption(), helpOption()</span>
         ); }
 
     String basePath;
@@ -136,154 +139,155 @@ import static Hoot.Runtime.Maps.Library.loadBasePaths;
 
     void prepareFolders() {
         // validate the paths
-<span class="fc" id="L139">        basePath = basePath();</span>
-<span class="fc" id="L140">        baseFolder = locate(BasePath, basePath);</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if (baseFolder == null) return;</span>
+<span class="fc" id="L142">        basePath = basePath();</span>
+<span class="fc" id="L143">        baseFolder = locate(WorkPath, basePath);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if (baseFolder == null) return;</span>
 
-<span class="fc" id="L143">        targetFolder = locate(Target, targetPath(), targetTail());</span>
-<span class="fc" id="L144">        sourceFolder = locate(Source, selectedSource(), sourceTail());</span>
-<span class="fc" id="L145">    }</span>
+<span class="fc" id="L146">        targetFolder = locate(Target, targetPath(), targetTail());</span>
+<span class="fc" id="L147">        sourceFolder = locate(Source, selectedSource(), sourceTail());</span>
+<span class="fc" id="L148">    }</span>
 
     static final String Adding = &quot;adding&quot;;
     static final String RelativePrefix = &quot;../&quot;;
     static final String ClassesPath = &quot;target/classes&quot;;
-<span class="fc" id="L150">    final List&lt;File&gt; basicPaths = emptyList(File.class);</span>
-<span class="nc" id="L151">    void addBasicPath(String relativePath) { basicPaths.add(locate(Adding, relativePath, ClassesPath)); }</span>
+<span class="fc" id="L153">    final List&lt;File&gt; basicPaths = emptyList(File.class);</span>
+<span class="nc" id="L154">    void addBasicPath(String relativePath) { basicPaths.add(locate(Adding, relativePath, ClassesPath)); }</span>
     void addQualifiedPath(String relativePath, String qualifier) {
-<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (basePath.endsWith(qualifier)) basicPaths.add(locate(Adding, RelativePrefix + relativePath, ClassesPath)); }</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (basePath.endsWith(qualifier)) basicPaths.add(locate(Adding, RelativePrefix + relativePath, ClassesPath)); }</span>
 
     void addPath(String relativePath, String... qualifiers) {
-<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (hasAny(qualifiers)) addQualifiedPath(relativePath, qualifiers[0]); else addBasicPath(relativePath); }</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (hasAny(qualifiers)) addQualifiedPath(relativePath, qualifiers[0]); else addBasicPath(relativePath); }</span>
 
     void loadPaths() {
-<span class="fc" id="L159">        File[] paths = { sourceFolder, targetFolder, };</span>
-<span class="fc" id="L160">        basicPaths.addAll(wrap(paths));</span>
-<span class="fc" id="L161">        loadBasePaths(wrap(paths));</span>
-<span class="fc" id="L162">        UnitFactory = StandardUnitFactory;</span>
-<span class="fc" id="L163">    }</span>
+<span class="fc" id="L162">        File[] paths = { sourceFolder, targetFolder, };</span>
+<span class="fc" id="L163">        basicPaths.addAll(wrap(paths));</span>
+<span class="fc" id="L164">        loadBasePaths(wrap(paths));</span>
+<span class="fc" id="L165">        UnitFactory = StandardUnitFactory;</span>
+<span class="fc" id="L166">    }</span>
 
     static final String Comparison = &quot;comparing: '%s' and '%s'&quot;;
-<span class="fc" id="L166">    File locate(String name, String... paths) { return reportFolder(name, locateCode(name, paths)); }</span>
+<span class="fc" id="L169">    File locate(String name, String... paths) { return reportFolder(name, locateCode(name, paths)); }</span>
     File locateCode(String folderName, String... folderPaths) {
-<span class="fc" id="L168">        File folder = new File(folderPaths[0]);</span>
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">        if (BasePath.equals(folderName) || folder.isAbsolute()) return folder;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (folderPaths.length == 1) return new File(baseFolder, folderPaths[0]);</span>
-<span class="fc" id="L171">        return locateRelative(folderName, folderPaths[0], folderPaths[1]) ;</span>
+<span class="fc" id="L171">        File folder = new File(normalPath(folderPaths[0]));</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">        if (WorkPath.equals(folderName) || folder.isAbsolute()) return folder;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (folderPaths.length == 1) return new File(baseFolder, normalPath(folderPaths[0]));</span>
+<span class="fc" id="L174">        return locateRelative(folderName, normalPath(folderPaths[0]), normalPath(folderPaths[1])) ;</span>
     }
 
+    // paths have already been normalized
     File locateRelative(String folderName, String relativePath, String soughtPath) {
-<span class="fc" id="L175">        File folder = new File(relativePath);</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        if (relativePath.endsWith(soughtPath)) return folder;</span>
-<span class="fc" id="L177">        File possible = new File(folder, soughtPath);</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (Target.equals(folderName)) return possible;</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        return possible.exists() ? possible : folder;</span>
+<span class="fc" id="L179">        File folder = new File(relativePath);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (relativePath.endsWith(soughtPath)) return folder;</span>
+<span class="fc" id="L181">        File possible = new File(folder, soughtPath);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (Target.equals(folderName)) return possible;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        return possible.exists() ? possible : folder;</span>
     }
 
     static final String Pad = &quot;  &quot;;
     File reportFolder(String folderName, File folder) {
-<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (folderName.length() &lt; Missing.length())</span>
-<span class="fc" id="L185">            folderName = Pad + folderName; // adjust name</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (folderName.length() &lt; Missing.length())</span>
+<span class="fc" id="L189">            folderName = Pad + folderName; // adjust name</span>
 
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (folder.exists()) { // found folder</span>
-<span class="fc" id="L188">            reportLoudly(folderName, folder); return folder; }</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">        else if (Target.equals(folderName.trim())) {</span>
-<span class="nc" id="L190">            folder.mkdirs(); // create a missing target</span>
-<span class="nc" id="L191">            reportLoudly(Created, folder); return folder; }</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (folder.exists()) { // found folder</span>
+<span class="fc" id="L192">            reportLoudly(folderName, folder); return folder; }</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        else if (Target.equals(folderName.trim())) {</span>
+<span class="fc" id="L194">            folder.mkdirs(); // create a missing target</span>
+<span class="fc" id="L195">            reportLoudly(Created, folder); return folder; }</span>
         else { // report missing folder
-<span class="nc" id="L193">            reportLoudly(Missing, folder); return null; }</span>
+<span class="nc" id="L197">            reportLoudly(Missing, folder); return null; }</span>
     }
 
     static final String Created = &quot; CREATED&quot;;
     static final String Missing = &quot; WITHOUT&quot;;
     static final String FolderFound = &quot;%s folder = %s&quot;;
     void reportLoudly(String folderName, File folder) {
-<span class="fc" id="L200">        runLoudly(() -&gt; report(format(FolderFound, folderName, folder.getCanonicalPath()))); }</span>
+<span class="fc" id="L204">        runLoudly(() -&gt; report(format(FolderFound, folderName, folder.getCanonicalPath()))); }</span>
 
 
-<span class="fc" id="L203">    void compilePackages() { prepareCompile(); compileOrTest(); }</span>
-<span class="fc" id="L204">    void prepareCompile() { prepareFolders(); cacheLibs(); cachePackages(); loadPaths(); }</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">    void compileOrTest() { if (testWanted()) reportPackages(); else compileAllPackages(); }</span>
-<span class="fc" id="L206">    void compileAllPackages() { packages().forEach(p -&gt; compilePackage(Package.named(p))); }</span>
+<span class="fc" id="L207">    void compilePackages() { prepareCompile(); compileOrTest(); }</span>
+<span class="fc" id="L208">    void prepareCompile() { prepareFolders(); cacheLibs(); cachePackages(); loadPaths(); }</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">    void compileOrTest() { if (testWanted()) reportPackages(); else compileAllPackages(); }</span>
+<span class="fc" id="L210">    void compileAllPackages() { packages().forEach(p -&gt; compilePackage(Package.named(p))); }</span>
 
     static final String PackageReport = &quot;packages: %s&quot;;
-<span class="nc" id="L209">    void reportPackages() { report(format(PackageReport, joinWith(Blank, packages()))); testPackages(); }</span>
-<span class="nc" id="L210">    void testPackages() { packages().forEach((p) -&gt; { reportPackage(Package.named(p)); }); }</span>
+<span class="nc" id="L213">    void reportPackages() { report(format(PackageReport, joinWith(Blank, packages()))); testPackages(); }</span>
+<span class="nc" id="L214">    void testPackages() { packages().forEach((p) -&gt; { reportPackage(Package.named(p)); }); }</span>
 
     static final String PackageFound = &quot;source folder located: %s&quot;;
     static final String PackageMissing = &quot;no &quot; + PackageFound;
-<span class="nc" id="L214">    void reportPackage(Package p) { File folder = p.sourceFolder();</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">        String reportFormat = folder.exists() ? PackageFound : PackageMissing;</span>
-<span class="nc" id="L216">        runLoudly(() -&gt; report(format(reportFormat, folder.getCanonicalPath()))); }</span>
+<span class="nc" id="L218">    void reportPackage(Package p) { File folder = p.sourceFolder();</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        String reportFormat = folder.exists() ? PackageFound : PackageMissing;</span>
+<span class="nc" id="L220">        runLoudly(() -&gt; report(format(reportFormat, folder.getCanonicalPath()))); }</span>
 
     static final String HootFileType = &quot;.hoot&quot;;
-<span class="pc" id="L219">    static final FileFilter HootFilter = (f) -&gt; isHoot(f);</span>
-<span class="nc bnc" id="L220" title="All 4 branches missed.">    static boolean isHoot(File f) { return f.isFile() &amp;&amp; f.getPath().endsWith(HootFileType); }</span>
+<span class="pc" id="L223">    static final FileFilter HootFilter = (f) -&gt; isHoot(f);</span>
+<span class="nc bnc" id="L224" title="All 4 branches missed.">    static boolean isHoot(File f) { return f.isFile() &amp;&amp; f.getPath().endsWith(HootFileType); }</span>
 
     static final String Translation = &quot;translating %s&quot;;
     void compilePackage(Package p) {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (!p.sourceFaces().isEmpty()) {</span>
-<span class="fc" id="L225">            report(Empty);</span>
-<span class="fc" id="L226">            report(format(Translation, p.name()));</span>
-<span class="fc" id="L227">            runLoudly(() -&gt; { // any throwable is seriously jacked! --nik</span>
-<span class="fc" id="L228">                Map&lt;String, UnitFile&gt; fileMap = p.parseSources();</span>
-<span class="fc" id="L229">                fileMap.values().forEach(f -&gt; f.compile());</span>
-<span class="fc" id="L230">            });</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (!p.sourceFaces().isEmpty()) {</span>
+<span class="fc" id="L229">            report(Empty);</span>
+<span class="fc" id="L230">            report(format(Translation, p.name()));</span>
+<span class="fc" id="L231">            runLoudly(() -&gt; { // any throwable is seriously jacked! --nik</span>
+<span class="fc" id="L232">                Map&lt;String, UnitFile&gt; fileMap = p.parseSources();</span>
+<span class="fc" id="L233">                fileMap.values().forEach(f -&gt; f.compile());</span>
+<span class="fc" id="L234">            });</span>
         }
-<span class="fc" id="L232">    }</span>
+<span class="fc" id="L236">    }</span>
 
     static final String Dash = &quot;-&quot;;
     static final String Optional = Dash + Dash;
     public static final String Help = &quot;help&quot;;
-<span class="fc" id="L237">    Option helpOption() { return buildOption(Help, &quot;optional: displays this help&quot;).build(); }</span>
+<span class="fc" id="L241">    Option helpOption() { return buildOption(Help, &quot;optional: displays this help&quot;).build(); }</span>
 
     public static final String TestOnly = &quot;only-test&quot;;
-<span class="fc" id="L240">    Option testOption() { return buildOption(TestOnly, &quot;optional: only tests compile arguments&quot;).build(); }</span>
+<span class="fc" id="L244">    Option testOption() { return buildOption(TestOnly, &quot;optional: only tests compile arguments&quot;).build(); }</span>
 
     public static final String Test = &quot;test&quot;; // note mojo alias for only-test
-<span class="fc" id="L243">    public static final String[] Optionals = { Help, Test };</span>
-<span class="fc" id="L244">    public static final Map&lt;String, String&gt; OptionalBools = emptyMap();</span>
+<span class="fc" id="L247">    public static final String[] Optionals = { Help, Test };</span>
+<span class="fc" id="L248">    public static final Map&lt;String, String&gt; OptionalBools = emptyMap();</span>
     static {
-<span class="fc" id="L246">        OptionalBools.put(Help, &quot;false&quot;);</span>
-<span class="fc" id="L247">        OptionalBools.put(Test, &quot;false&quot;);</span>
-<span class="fc" id="L248">    }</span>
+<span class="fc" id="L250">        OptionalBools.put(Help, &quot;false&quot;);</span>
+<span class="fc" id="L251">        OptionalBools.put(Test, &quot;false&quot;);</span>
+<span class="fc" id="L252">    }</span>
 
     static final String Base = &quot;base&quot;;
-<span class="fc" id="L251">    Option baseOption() { return baseOptBuilder().optionalArg(true).hasArg().build(); }</span>
-<span class="fc" id="L252">    Builder baseOptBuilder() { return buildOption(Base, Base+Path, &quot;optional: base folder path, assumes 'user.dir' value&quot;); }</span>
+<span class="fc" id="L255">    Option baseOption() { return baseOptBuilder().optionalArg(true).hasArg().build(); }</span>
+<span class="fc" id="L256">    Builder baseOptBuilder() { return buildOption(Base, Base+Path, &quot;optional: base folder path, assumes 'user.dir' value&quot;); }</span>
 
-<span class="fc" id="L254">    Option sourceOption() { return sourceOptBuilder().optionalArg(true).hasArg().build(); }</span>
-<span class="fc" id="L255">    Builder sourceOptBuilder() { return buildOption(Source, Source+Path, &quot;optional: Hoot sources folder path&quot;); }</span>
+<span class="fc" id="L258">    Option sourceOption() { return sourceOptBuilder().optionalArg(true).hasArg().build(); }</span>
+<span class="fc" id="L259">    Builder sourceOptBuilder() { return buildOption(Source, Source+Path, &quot;optional: Hoot sources folder path&quot;); }</span>
 
-<span class="fc" id="L257">    Option testSourceOption() { return testSourceBuilder().optionalArg(true).hasArg().build(); }</span>
-<span class="fc" id="L258">    Builder testSourceBuilder() { return buildOption(TestSource, Source+Path, &quot;optional: Hoot test sources folder path&quot;); }</span>
+<span class="fc" id="L261">    Option testSourceOption() { return testSourceBuilder().optionalArg(true).hasArg().build(); }</span>
+<span class="fc" id="L262">    Builder testSourceBuilder() { return buildOption(TestSource, Source+Path, &quot;optional: Hoot test sources folder path&quot;); }</span>
 
     static final String Path = &quot;Path&quot;;
     public static final String Folder = &quot;folder&quot;;
-<span class="fc" id="L262">    Option targetOption() { return targetOptBuilder().optionalArg(false).hasArg().build(); }</span>
-<span class="fc" id="L263">    Builder targetOptBuilder() { return buildOption(Folder, Target+Path, &quot;required: Java target folder path&quot;); }</span>
+<span class="fc" id="L266">    Option targetOption() { return targetOptBuilder().optionalArg(false).hasArg().build(); }</span>
+<span class="fc" id="L267">    Builder targetOptBuilder() { return buildOption(Folder, Target+Path, &quot;required: Java target folder path&quot;); }</span>
 
     static final char BLANK = ' ';
     static final String Libs = &quot;libs&quot;;
-<span class="nc" id="L267">    Option libsOption() { return libsOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }</span>
-<span class="nc" id="L268">    Builder libsOptBuilder() { return buildOption(Libs, Libs+Path, &quot;library JARs&quot;); }</span>
+<span class="nc" id="L271">    Option libsOption() { return libsOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }</span>
+<span class="nc" id="L272">    Builder libsOptBuilder() { return buildOption(Libs, Libs+Path, &quot;library JARs&quot;); }</span>
 
     static final String PackNames = &quot;packageNames&quot;;
     public static final String Packages = &quot;packages&quot;;
-<span class="fc" id="L272">    Option packageOption() { return packageOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }</span>
-<span class="fc" id="L273">    Builder packageOptBuilder() { return buildOption(Packages, PackNames, &quot;optional: packages to compile, none = all&quot;); }</span>
+<span class="fc" id="L276">    Option packageOption() { return packageOptBuilder().optionalArg(true).valueSeparator(BLANK).hasArgs().build(); }</span>
+<span class="fc" id="L277">    Builder packageOptBuilder() { return buildOption(Packages, PackNames, &quot;optional: packages to compile, none = all&quot;); }</span>
 
-<span class="fc" id="L275">    public static String shortened(String optionName) { return Dash + shortOption(optionName); }</span>
-<span class="fc" id="L276">    static String shortOption(String optionName) { return optionName.substring(0, 1); }</span>
-<span class="fc" id="L277">    Builder buildOption(String optionName, String text) { return buildOption(optionName, Empty, text); }</span>
+<span class="fc" id="L279">    public static String shortened(String optionName) { return Dash + shortOption(optionName); }</span>
+<span class="fc" id="L280">    static String shortOption(String optionName) { return optionName.substring(0, 1); }</span>
+<span class="fc" id="L281">    Builder buildOption(String optionName, String text) { return buildOption(optionName, Empty, text); }</span>
 
     static final String Optioned = &quot;Option&quot;;
     Builder buildOption(String optionName, String argName, String text) {
-<span class="fc" id="L281">        return Option.builder(shortOption(optionName))</span>
-<span class="fc" id="L282">                .longOpt(optionName).required(false).desc(text)</span>
-<span class="fc bfc" id="L283" title="All 2 branches covered.">                .argName(argName.isEmpty() ? optionName+Optioned : argName); }</span>
+<span class="fc" id="L285">        return Option.builder(shortOption(optionName))</span>
+<span class="fc" id="L286">                .longOpt(optionName).required(false).desc(text)</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">                .argName(argName.isEmpty() ? optionName+Optioned : argName); }</span>
 
     public static String[] buildCommand(String path, String... options) {
-<span class="fc" id="L286">        String[] args = { shortened(Folder), path, }; return ArrayUtils.addAll(args, options); }</span>
+<span class="fc" id="L290">        String[] args = { shortened(Folder), path, }; return ArrayUtils.addAll(args, options); }</span>
 
 } // HootMain
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

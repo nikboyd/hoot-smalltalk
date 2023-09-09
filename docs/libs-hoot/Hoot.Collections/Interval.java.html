@@ -25,6 +25,7 @@ import Hoot.Magnitudes.Double;
 import Hoot.Magnitudes.Number;
 import Hoot.Magnitudes.Integer;
 import Hoot.Magnitudes.FastInteger;
+import static Hoot.Magnitudes.SmallInteger.*;
 import Smalltalk.Core.Subject;
 import Smalltalk.Core.Classified;
 import Smalltalk.Magnitudes.Ordinal;
@@ -33,30 +34,30 @@ import Smalltalk.Collections.OrdinalRange;
 
 public class Interval extends SequencedCollection implements OrdinalRange
 {
-<span class="fc" id="L36">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L37">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends SequencedCollection.Metaclass implements OrdinalRange.Metatype
   {
-<span class="fc" id="L40">    static final Interval.Metaclass $class = new Interval.Metaclass();</span>
+<span class="fc" id="L41">    static final Interval.Metaclass $class = new Interval.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L42">      this(Interval.Metaclass.class);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L43">      this(Interval.Metaclass.class);</span>
+<span class="fc" id="L44">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L46">      super(aClass);</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L47">      super(aClass);</span>
+<span class="fc" id="L48">    }</span>
 
-<span class="fc" id="L49">    @Override public java.lang.Class outerClass() { return Interval.class; }</span>
+<span class="fc" id="L50">    @Override public java.lang.Class outerClass() { return Interval.class; }</span>
 
     /**
      * @return 
      */
     @Override public   Interval $new()
     {
-<span class="nc" id="L56">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L57">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L58">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L59">      return (Interval)f0.exit(exitID, this.from_to_by(SmallInteger.from(0), SmallInteger.from(0), SmallInteger.from(0)));</span>
+<span class="nc" id="L57">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L58">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L59">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L60">      return (Interval)f0.exit(exitID, this.from_to_by(Zero, Zero, Zero));</span>
       });
     }
 
@@ -65,10 +66,16 @@ public class Interval extends SequencedCollection implements OrdinalRange
      */
     public   Interval from_to(final Ordinal start, final Ordinal stop)
     {
-<span class="fc" id="L68">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;from_to&quot;;</span>
-<span class="fc" id="L69">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L70">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L71">      return (Interval)f0.exit(exitID, this.from_to_by(start, stop, SmallInteger.from(1)));</span>
+<span class="fc" id="L69">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;from_to&quot;;</span>
+<span class="fc" id="L70">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L71">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L72">      (start.equals(stop)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L73">        return (Interval)f0.exit(exitID, this.from_to_by(start, stop, Zero));</span>
+      }, &quot;&quot;));
+<span class="fc" id="L75">      (start.lessThan(stop)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L76">        return (Interval)f0.exit(exitID, this.from_to_by(start, stop, Unity));</span>
+      }, &quot;&quot;));
+<span class="fc" id="L78">      return (Interval)f0.exit(exitID, this.from_to_by(start, stop, Negativity));</span>
       });
     }
 
@@ -77,40 +84,40 @@ public class Interval extends SequencedCollection implements OrdinalRange
      */
     public   Interval from_to_by(final Ordinal start, final Ordinal stop, final Ordinal step)
     {
-<span class="fc" id="L80">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;from_to_by&quot;;</span>
-<span class="fc" id="L81">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L82">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L83">      return (Interval)f0.exit(exitID, new Interval(start, stop, step));</span>
+<span class="fc" id="L87">      java.lang.String exitID = &quot;IntervalMetatype&gt;&gt;from_to_by&quot;;</span>
+<span class="fc" id="L88">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L89">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L90">      return (Interval)f0.exit(exitID, new Interval(start, stop, step));</span>
       });
     }
   }
 
 
-<span class="fc" id="L89">  protected Ordinal start = SmallInteger.from(0);</span>
-<span class="fc" id="L90">  protected Ordinal stop = SmallInteger.from(0);</span>
-<span class="fc" id="L91">  protected Ordinal step = SmallInteger.from(0);</span>
+<span class="fc" id="L96">  protected Ordinal start = Zero;</span>
+<span class="fc" id="L97">  protected Ordinal stop = Zero;</span>
+<span class="fc" id="L98">  protected Ordinal step = Zero;</span>
   /**
    * 
    */
   protected    Interval(final Ordinal aStart, final Ordinal aStop, final Ordinal aStep)
-<span class="fc" id="L96">  {</span>
-<span class="fc" id="L97">    java.lang.String exitID = &quot;Interval&gt;&gt;Interval&quot;;</span>
-<span class="fc" id="L98">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L99">     start = aStart;</span>
+<span class="fc" id="L103">  {</span>
+<span class="fc" id="L104">    java.lang.String exitID = &quot;Interval&gt;&gt;Interval&quot;;</span>
+<span class="fc" id="L105">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L106">     start = aStart;</span>
 
-<span class="fc" id="L101">     stop = aStop;</span>
+<span class="fc" id="L108">     stop = aStop;</span>
 
-<span class="fc" id="L103">     step = aStep;</span>
-<span class="fc" id="L104">  }</span>
+<span class="fc" id="L110">     step = aStep;</span>
+<span class="fc" id="L111">  }</span>
 
   /**
    * @return 
    */
   private   Integer start()
   {
-<span class="fc" id="L111">    java.lang.String exitID = &quot;Interval&gt;&gt;start&quot;;</span>
-<span class="fc" id="L112">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L113">    return (Integer)((Integer)start);</span>
+<span class="nc" id="L118">    java.lang.String exitID = &quot;Interval&gt;&gt;start&quot;;</span>
+<span class="nc" id="L119">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L120">    return (Integer)((Integer)start);</span>
   }
 
   /**
@@ -118,9 +125,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   private   Integer stop()
   {
-<span class="fc" id="L121">    java.lang.String exitID = &quot;Interval&gt;&gt;stop&quot;;</span>
-<span class="fc" id="L122">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L123">    return (Integer)((Integer)stop);</span>
+<span class="nc" id="L128">    java.lang.String exitID = &quot;Interval&gt;&gt;stop&quot;;</span>
+<span class="nc" id="L129">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L130">    return (Integer)((Integer)stop);</span>
   }
 
   /**
@@ -128,9 +135,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   private   Integer step()
   {
-<span class="fc" id="L131">    java.lang.String exitID = &quot;Interval&gt;&gt;step&quot;;</span>
-<span class="fc" id="L132">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L133">    return (Integer)((Integer)step);</span>
+<span class="nc" id="L138">    java.lang.String exitID = &quot;Interval&gt;&gt;step&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (Integer)((Integer)step);</span>
   }
 
   /**
@@ -138,9 +145,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   private   int countSteps()
   {
-<span class="fc" id="L141">    java.lang.String exitID = &quot;Interval&gt;&gt;countSteps&quot;;</span>
-<span class="fc" id="L142">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L143">    return (int)(this.stop().primitiveInteger() - this.start().primitiveInteger() / this.step().primitiveInteger() + 1);</span>
+<span class="nc" id="L148">    java.lang.String exitID = &quot;Interval&gt;&gt;countSteps&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    return (int)(this.stop().primitiveInteger() - this.start().primitiveInteger() / this.step().primitiveInteger() + 1);</span>
   }
 
   /**
@@ -148,10 +155,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Integer first()
   {
-<span class="nc" id="L151">    java.lang.String exitID = &quot;Interval&gt;&gt;first&quot;;</span>
-<span class="nc" id="L152">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L153">    this.emptyCheck();</span>
-<span class="nc" id="L154">    return (Integer)this.start();</span>
+<span class="nc" id="L158">    java.lang.String exitID = &quot;Interval&gt;&gt;first&quot;;</span>
+<span class="nc" id="L159">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L160">    this.emptyCheck();</span>
+<span class="nc" id="L161">    return (Integer)this.start();</span>
   }
 
   /**
@@ -159,10 +166,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Integer last()
   {
-<span class="nc" id="L162">    java.lang.String exitID = &quot;Interval&gt;&gt;last&quot;;</span>
-<span class="nc" id="L163">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L164">    this.emptyCheck();</span>
-<span class="nc" id="L165">    return (Integer)(this.stop().minus(this.stop().minus(this.start()).remainderFrom(step))).asInteger();</span>
+<span class="nc" id="L169">    java.lang.String exitID = &quot;Interval&gt;&gt;last&quot;;</span>
+<span class="nc" id="L170">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L171">    this.emptyCheck();</span>
+<span class="nc" id="L172">    return (Integer)(this.stop().minus(this.stop().minus(this.start()).remainderFrom(step))).asInteger();</span>
   }
 
   /**
@@ -170,9 +177,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Integer size()
   {
-<span class="fc" id="L173">    java.lang.String exitID = &quot;Interval&gt;&gt;size&quot;;</span>
-<span class="fc" id="L174">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">    return (Integer)(Boolean.primitiveValue(this.isEmpty()) ? SmallInteger.from(0) : SmallInteger.from(this.countSteps()));</span>
+<span class="nc" id="L180">    java.lang.String exitID = &quot;Interval&gt;&gt;size&quot;;</span>
+<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">    return (Integer)(Boolean.primitiveValue(this.notEmpty()) ? SmallInteger.from(Zero) : SmallInteger.from(this.countSteps()));</span>
   }
 
   /**
@@ -180,9 +187,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Behavior species()
   {
-<span class="nc" id="L183">    java.lang.String exitID = &quot;Interval&gt;&gt;species&quot;;</span>
-<span class="nc" id="L184">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L185">    return (Behavior)((Behavior)OrderedCollection.type());</span>
+<span class="nc" id="L190">    java.lang.String exitID = &quot;Interval&gt;&gt;species&quot;;</span>
+<span class="nc" id="L191">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L192">    return (Behavior)((Behavior)OrderedCollection.type());</span>
   }
 
   /**
@@ -190,23 +197,23 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Boolean equals(final Collected aCollection)
   {
-<span class="nc" id="L193">    java.lang.String exitID = &quot;Interval&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L194">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">    if (!(aCollection instanceof Interval)) {</span>
-<span class="nc" id="L196">      return super.equals(aCollection);</span>
+<span class="nc" id="L200">    java.lang.String exitID = &quot;Interval&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L201">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">    if (!(aCollection instanceof Interval)) {</span>
+<span class="nc" id="L203">      return super.equals(aCollection);</span>
     };
 
-<span class="nc" id="L199">    Interval candidate = ((Interval)aCollection);</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">    if (!((candidate.start() == this.start()))) {</span>
-<span class="nc" id="L201">      return False.literal();</span>
+<span class="nc" id="L206">    Interval candidate = ((Interval)aCollection);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">    if (!((candidate.start() == this.start()))) {</span>
+<span class="nc" id="L208">      return False.literal();</span>
     };
-<span class="nc bnc" id="L203" title="All 2 branches missed.">    if (!((candidate.stop() == this.stop()))) {</span>
-<span class="nc" id="L204">      return False.literal();</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">    if (!((candidate.stop() == this.stop()))) {</span>
+<span class="nc" id="L211">      return False.literal();</span>
     };
-<span class="nc bnc" id="L206" title="All 2 branches missed.">    if (!((candidate.step() == this.step()))) {</span>
-<span class="nc" id="L207">      return False.literal();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">    if (!((candidate.step() == this.step()))) {</span>
+<span class="nc" id="L214">      return False.literal();</span>
     };
-<span class="nc" id="L209">    return (Boolean)True.literal();</span>
+<span class="nc" id="L216">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -214,14 +221,14 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L217">    java.lang.String exitID = &quot;Interval&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L218">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L219">    int result = start.hashCode();</span>
-<span class="nc" id="L220">    result &lt;&lt;= 2;</span>
-<span class="nc" id="L221">    result ^= stop.hashCode();</span>
-<span class="nc" id="L222">    result &lt;&lt;= 1;</span>
-<span class="nc" id="L223">    result ^= step.hashCode();</span>
-<span class="nc" id="L224">    return (int)result;</span>
+<span class="nc" id="L224">    java.lang.String exitID = &quot;Interval&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L225">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L226">    int result = start.hashCode();</span>
+<span class="nc" id="L227">    result &lt;&lt;= 2;</span>
+<span class="nc" id="L228">    result ^= stop.hashCode();</span>
+<span class="nc" id="L229">    result &lt;&lt;= 1;</span>
+<span class="nc" id="L230">    result ^= step.hashCode();</span>
+<span class="nc" id="L231">    return (int)result;</span>
   }
 
   /**
@@ -229,9 +236,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override protected   Integer get(final int index)
   {
-<span class="nc" id="L232">    java.lang.String exitID = &quot;Interval&gt;&gt;get&quot;;</span>
-<span class="nc" id="L233">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L234">    return (Integer)this.at((SmallInteger.from(index).plus(SmallInteger.from(1))));</span>
+<span class="nc" id="L239">    java.lang.String exitID = &quot;Interval&gt;&gt;get&quot;;</span>
+<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L241">    return (Integer)this.at((SmallInteger.from(index).plus(SmallInteger.from(1))));</span>
   }
 
   /**
@@ -239,11 +246,11 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Integer at(final Ordinal index)
   {
-<span class="fc" id="L242">    java.lang.String exitID = &quot;Interval&gt;&gt;at&quot;;</span>
-<span class="fc" id="L243">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L244">    return (Integer)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L245">      this.elementNotFound();</span>
-<span class="nc" id="L246">    return SmallInteger.from(0);</span>
+<span class="nc" id="L249">    java.lang.String exitID = &quot;Interval&gt;&gt;at&quot;;</span>
+<span class="nc" id="L250">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L251">    return (Integer)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L252">      this.elementNotFound();</span>
+<span class="nc" id="L253">    return SmallInteger.from(0);</span>
     }, &quot;&quot;));
   }
 
@@ -252,12 +259,12 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Integer at_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
   {
-<span class="fc" id="L255">    java.lang.String exitID = &quot;Interval&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="fc" id="L256">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L257">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
-<span class="fc" id="L258">    i *= step.intValue();</span>
-<span class="fc" id="L259">    i += start.intValue();</span>
-<span class="fc" id="L260">    return (Integer)SmallInteger.from(i);</span>
+<span class="nc" id="L262">    java.lang.String exitID = &quot;Interval&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="nc" id="L263">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L264">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="nc" id="L265">    i *= step.intValue();</span>
+<span class="nc" id="L266">    i += start.intValue();</span>
+<span class="nc" id="L267">    return (Integer)SmallInteger.from(i);</span>
   }
 
   /**
@@ -265,9 +272,9 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Interval reverse()
   {
-<span class="nc" id="L268">    java.lang.String exitID = &quot;Interval&gt;&gt;reverse&quot;;</span>
-<span class="nc" id="L269">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L270">    return (Interval)Interval.type().from_to_by(stop, start, step.negated().asInteger());</span>
+<span class="nc" id="L275">    java.lang.String exitID = &quot;Interval&gt;&gt;reverse&quot;;</span>
+<span class="nc" id="L276">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L277">    return (Interval)Interval.type().from_to_by(stop, start, step.negated().asInteger());</span>
   }
 
   /**
@@ -275,13 +282,13 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Interval $do(final MonadicValuable aBlock)
   {
-<span class="fc" id="L278">    java.lang.String exitID = &quot;Interval&gt;&gt;$do&quot;;</span>
-<span class="fc" id="L279">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L280">    start.to_by_do(stop, step, Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L281">      Ordinal i = f2.getValue(0).value();</span>
-<span class="fc" id="L282">      return aBlock.value(i);</span>
+<span class="fc" id="L285">    java.lang.String exitID = &quot;Interval&gt;&gt;$do&quot;;</span>
+<span class="fc" id="L286">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L287">    start.to_by_do(stop, step, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L288">      Ordinal i = f2.getValue(0).value();</span>
+<span class="nc" id="L289">      return aBlock.value(i);</span>
     }, &quot;i&quot;));
-<span class="fc" id="L284">    return (Interval)this;</span>
+<span class="fc" id="L291">    return (Interval)this;</span>
   }
 
   /**
@@ -289,27 +296,30 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   OrderedCollection collect(final MonadicValuable filterBlock)
   {
-<span class="nc" id="L292">    java.lang.String exitID = &quot;Interval&gt;&gt;collect&quot;;</span>
-<span class="nc" id="L293">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L294">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
+<span class="nc" id="L299">    java.lang.String exitID = &quot;Interval&gt;&gt;collect&quot;;</span>
+<span class="nc" id="L300">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L301">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
 
-<span class="nc" id="L296">    FastInteger index = SmallInteger.from(0).asFastInteger();</span>
-<span class="nc" id="L297">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L298">      Ordinal v = f2.getValue(0).value();</span>
-<span class="nc" id="L299">      index.add(SmallInteger.from(1));</span>
-<span class="nc" id="L300">    result.at_put(index, ((Integer)filterBlock.value(v)));</span>
-<span class="nc" id="L301">    }, &quot;v&quot;));</span>
-<span class="nc" id="L302">    return (OrderedCollection)result;</span>
+<span class="nc" id="L303">    FastInteger index = SmallInteger.from(0).asFastInteger();</span>
+<span class="nc" id="L304">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L305">      Ordinal v = f2.getValue(0).value();</span>
+<span class="nc" id="L306">      index.add(SmallInteger.from(1));</span>
+<span class="nc" id="L307">    result.at_put(index, ((Integer)filterBlock.value(v)));</span>
+<span class="nc" id="L308">    }, &quot;v&quot;));</span>
+<span class="nc" id="L309">    return (OrderedCollection)result;</span>
   }
 
   /**
    * @return 
    */
-  @Override public   Boolean isEmpty()
+  @Override public   boolean isEmpty()
   {
-<span class="fc" id="L310">    java.lang.String exitID = &quot;Interval&gt;&gt;isEmpty&quot;;</span>
-<span class="fc" id="L311">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L312" title="5 of 8 branches missed.">    return (Boolean)(Boolean.primitiveValue((step.intValue() &lt; 0)) ? Boolean.from((start.intValue() &lt; stop.intValue())) : Boolean.from((stop.intValue() &lt; start.intValue())));</span>
+<span class="nc" id="L317">    java.lang.String exitID = &quot;Interval&gt;&gt;isEmpty&quot;;</span>
+<span class="nc" id="L318">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">    if ((step.intValue() == 0)) {</span>
+<span class="nc" id="L320">      return true;</span>
+    };
+<span class="nc bnc" id="L322" title="All 8 branches missed.">    return (boolean)(Boolean.primitiveValue((step.intValue() &lt; 0)) ? (start.intValue() &lt; stop.intValue()) : (stop.intValue() &lt; start.intValue()));</span>
   }
 
   /**
@@ -317,17 +327,17 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   @Override public   Boolean includes(final Subject aValue)
   {
-<span class="nc" id="L320">    java.lang.String exitID = &quot;Interval&gt;&gt;includes&quot;;</span>
-<span class="nc" id="L321">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L322">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L323">    aValue.isKindOf(Integer.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L324">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L330">    java.lang.String exitID = &quot;Interval&gt;&gt;includes&quot;;</span>
+<span class="nc" id="L331">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L332">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L333">    aValue.isKindOf(Integer.type()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L334">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
 
-<span class="nc" id="L327">    Integer candidate = ((Integer)aValue);</span>
-<span class="nc" id="L328">    return (Boolean)f0.exit(exitID, Boolean.from((candidate.lessThan(this.first())).or(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L329">      return (candidate.moreThan(this.last()));</span>
-<span class="nc" id="L330">    }, &quot;&quot;))).not());</span>
+<span class="nc" id="L337">    Integer candidate = ((Integer)aValue);</span>
+<span class="nc" id="L338">    return (Boolean)f0.exit(exitID, Boolean.from((candidate.lessThan(this.first())).or(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L339">      return (candidate.moreThan(this.last()));</span>
+<span class="nc" id="L340">    }, &quot;&quot;))).not());</span>
     });
   }
 
@@ -336,10 +346,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   public   Subject add(final Subject element)
   {
-<span class="nc" id="L339">    java.lang.String exitID = &quot;Interval&gt;&gt;add&quot;;</span>
-<span class="nc" id="L340">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L341">    this.immutabilityError();</span>
-<span class="nc" id="L342">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L349">    java.lang.String exitID = &quot;Interval&gt;&gt;add&quot;;</span>
+<span class="nc" id="L350">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L351">    this.immutabilityError();</span>
+<span class="nc" id="L352">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -347,10 +357,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   protected   Object add_at(final Object element, final int index)
   {
-<span class="nc" id="L350">    java.lang.String exitID = &quot;Interval&gt;&gt;add_at&quot;;</span>
-<span class="nc" id="L351">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L352">    this.immutabilityError();</span>
-<span class="nc" id="L353">    return (Object)SmallInteger.from(0);</span>
+<span class="nc" id="L360">    java.lang.String exitID = &quot;Interval&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L361">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L362">    this.immutabilityError();</span>
+<span class="nc" id="L363">    return (Object)SmallInteger.from(0);</span>
   }
 
   /**
@@ -358,10 +368,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   public   Interval removeAll()
   {
-<span class="nc" id="L361">    java.lang.String exitID = &quot;Interval&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L362">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L363">    this.immutabilityError();</span>
-<span class="nc" id="L364">    return (Interval)this;</span>
+<span class="nc" id="L371">    java.lang.String exitID = &quot;Interval&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L372">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L373">    this.immutabilityError();</span>
+<span class="nc" id="L374">    return (Interval)this;</span>
   }
 
   /**
@@ -369,10 +379,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   public   Subject removeFirst()
   {
-<span class="nc" id="L372">    java.lang.String exitID = &quot;Interval&gt;&gt;removeFirst&quot;;</span>
-<span class="nc" id="L373">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L374">    this.immutabilityError();</span>
-<span class="nc" id="L375">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L382">    java.lang.String exitID = &quot;Interval&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L383">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L384">    this.immutabilityError();</span>
+<span class="nc" id="L385">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -380,10 +390,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   public   Subject removeLast()
   {
-<span class="nc" id="L383">    java.lang.String exitID = &quot;Interval&gt;&gt;removeLast&quot;;</span>
-<span class="nc" id="L384">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L385">    this.immutabilityError();</span>
-<span class="nc" id="L386">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L393">    java.lang.String exitID = &quot;Interval&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L394">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L395">    this.immutabilityError();</span>
+<span class="nc" id="L396">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -391,10 +401,10 @@ public class Interval extends SequencedCollection implements OrdinalRange
    */
   public   Subject removeAtIndex(final Ordinal index)
   {
-<span class="nc" id="L394">    java.lang.String exitID = &quot;Interval&gt;&gt;removeAtIndex&quot;;</span>
-<span class="nc" id="L395">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L396">    this.immutabilityError();</span>
-<span class="nc" id="L397">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L404">    java.lang.String exitID = &quot;Interval&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L405">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L406">    this.immutabilityError();</span>
+<span class="nc" id="L407">    return (Subject)SmallInteger.from(0);</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
