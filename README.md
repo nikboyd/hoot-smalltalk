@@ -5,7 +5,7 @@
 [Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
 * Hoot is [_experimental_](#introduction).
 * Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
-* Hoot integrates the best features of Smalltalk (syntax) with those of Java (VM).
+* Hoot integrates the best [features](#features) of Smalltalk (syntax) with those of Java (VM).
 
 [Coverage Test Results][hub-coverage] 
 
