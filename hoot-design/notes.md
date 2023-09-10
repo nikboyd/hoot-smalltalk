@@ -101,7 +101,7 @@ So, it supports the same protocols defined by that standard library type.
 | [Name Spaces](libs.md#name-spaces) | [Features](../#features) | [Methods](methods.md#methods) |
 
 ```
-Copyright 2010,2021 Nikolas S Boyd.
+Copyright 2010,2023 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
 

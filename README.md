@@ -2,8 +2,10 @@
 
 ![Hoot Owl][logo]
 
-Hoot Smalltalk is a variation of [Smalltalk][smalltalk] that integrates the best features of Smalltalk
-with those of Java and its virtual machine VM.
+[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
+* Hoot is [_experimental_](#introduction).
+* Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
+* Hoot integrates the best features of Smalltalk (syntax) with those of Java (VM).
 
 [Coverage Test Results][hub-coverage] 
 
@@ -464,7 +466,7 @@ Each link below leads to discussions of the specific language feature design det
 | ... | ... | [Language Model](hoot-design/model.md#language-model) |
 
 ```
-Copyright 2010,2021 Nikolas S Boyd.
+Copyright 2010,2023 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
