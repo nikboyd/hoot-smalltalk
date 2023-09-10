@@ -4,10 +4,10 @@ hoot-maven-plugin,Hoot.Runtime.Faces,Logging,104,26,14,0,16,6,19,6,12,6
 hoot-maven-plugin,Hoot.Compiler.Mojo,HootMojo,90,234,6,8,15,45,10,25,4,24
 hoot-maven-plugin,Hoot.Compiler.Mojo,Servant,64,162,3,5,5,26,3,17,1,15
 hoot-maven-plugin,Hoot.Compiler.Mojo,Discovery,20,161,4,4,1,32,4,19,0,19
-hoot-maven-plugin,Hoot.Compiler.Mojo,HelpMojo,802,0,110,0,159,0,71,0,16,0
 hoot-maven-plugin,Hoot.Runtime.Functions,Utils,457,59,74,10,49,9,92,11,51,10
 hoot-maven-plugin,Hoot.Runtime.Functions,Exceptional.Argued,30,0,2,0,4,0,3,0,2,0
 hoot-maven-plugin,Hoot.Runtime.Functions,Exceptional.new Exceptional() {...},0,3,0,0,0,1,0,1,0,1
 hoot-maven-plugin,Hoot.Runtime.Functions,Exceptional.Runner,6,14,1,1,0,2,1,2,0,2
 hoot-maven-plugin,Hoot.Runtime.Functions,Exceptional,128,47,3,1,17,11,22,8,20,8
 hoot-maven-plugin,Hoot.Runtime.Functions,Exceptional.Result,12,16,1,1,0,4,1,2,0,2
+hoot-maven-plugin,hoot_smalltalk.hoot_maven_plugin,HelpMojo,770,0,110,0,155,0,71,0,16,0

@@ -173,10 +173,10 @@ public class Package implements Named, Logging {
 <span class="fc" id="L173">    }</span>
 
     protected void registerMetaface(Typified face) {
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        if (face.hasMetaface()) {</span>
-<span class="nc" id="L177">            Typified metaFace = face.$class();</span>
-<span class="nc" id="L178">            CurrentLib.addFace(metaFace);</span>
-<span class="nc" id="L179">            packageMetaface(metaFace);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (face.hasMetaface()) {</span>
+<span class="fc" id="L177">            Typified metaFace = face.$class();</span>
+<span class="fc" id="L178">            CurrentLib.addFace(metaFace);</span>
+<span class="fc" id="L179">            packageMetaface(metaFace);</span>
         }
 <span class="fc" id="L181">    }</span>
 
@@ -245,14 +245,14 @@ public class Package implements Named, Logging {
 <span class="fc bfc" id="L245" title="All 2 branches covered.">        if (!list.isEmpty()) {</span>
 <span class="fc" id="L246">            String text = format(report, Typified.names(list).toString());</span>
 <span class="fc" id="L247">            int count = StringUtils.countMatches(text, Comma);</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (count &lt; 4) { report(text); return; } // exit early</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            if (count &lt; 4) { report(text); return; } // exit early</span>
 
-<span class="nc" id="L250">            String[] parts = text.split(Comma); // take 1st three</span>
-<span class="nc" id="L251">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
+<span class="fc" id="L250">            String[] parts = text.split(Comma); // take 1st three</span>
+<span class="fc" id="L251">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
 
-<span class="nc" id="L253">            text = parts[3]; // take last many</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
-<span class="nc" id="L255">            report(format(Tabs, text));</span>
+<span class="fc" id="L253">            text = parts[3]; // take last many</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
+<span class="fc" id="L255">            report(format(Tabs, text));</span>
         }
 <span class="fc" id="L257">    }</span>
 
