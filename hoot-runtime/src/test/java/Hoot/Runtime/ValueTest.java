@@ -19,6 +19,20 @@ public class ValueTest implements Logging {
 
     @Test public void sampleVariable() {
         Variable v = Variable.named("sample", null);
+        v.emitOperand();
+        v.emitVariable();
+        v.emitArgument(true);
+        v.emitArgumentType();
+        v.emitType();
+//        v.emitProperty();
+
+        Scope s = new Scope(null) {};
+        s.addLocal(v);
+        s.localNamed("sample");
+        s.locals().definedSymbols();
+        s.locals().hasElementaryNames();
+        s.locals().hasErasableTypes();
+        s.locals().clean();
     }
 
     @Test public void sampleNumber() {

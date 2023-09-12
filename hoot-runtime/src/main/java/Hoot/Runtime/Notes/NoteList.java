@@ -18,6 +18,7 @@ import static Hoot.Runtime.Notes.Note.*;
  */
 public class NoteList implements EmissionSource {
 
+    public static NoteList with(Note... notes) { return with(wrap(notes)); }
     public static NoteList with(List<Note> notes) { return new NoteList().noteAll(notes); }
 
     private final List<Note> notes = emptyList(Note.class);
