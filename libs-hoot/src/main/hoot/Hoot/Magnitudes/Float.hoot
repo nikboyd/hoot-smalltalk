@@ -40,14 +40,9 @@ Float members: "constructing instances"
 
 Float members: "comparing values - final"
 [
-    @Primitive @Final Boolean! = Double! aNumber [
-        ^Boolean from: primitiveValue == aNumber primitiveFloat ]
-
-    @Primitive @Final Boolean! < Double! aNumber [
-        ^Boolean from: primitiveValue < aNumber primitiveFloat ]
-
-    @Primitive @Final Boolean! > Double! aNumber [
-        ^Boolean from: primitiveValue > aNumber primitiveFloat ]
+    @Primitive @Final Boolean! = Double! aNumber [ ^Boolean from: primitiveValue == aNumber primitiveFloat ]
+    @Primitive @Final Boolean! < Double! aNumber [ ^Boolean from: primitiveValue < aNumber primitiveFloat ]
+    @Primitive @Final Boolean! > Double! aNumber [ ^Boolean from: primitiveValue > aNumber primitiveFloat ]
 ]
 
 Float members: "comparing values"
@@ -81,24 +76,12 @@ Float members: "arithmetic"
     @Primitive @Final Float! - Float! aNumber [ ^Float from: (primitiveValue - aNumber asPrimitive) ]
     @Primitive @Final Float! * Float! aNumber [ ^Float from: (primitiveValue * aNumber asPrimitive) ]
     @Primitive @Final Float! / Float! aNumber [
-        FloatZero == aNumber asPrimitive ifTrue: [ self zeroDivide. ^self ].
-        ^Float from: (self asPrimitive / aNumber asPrimitive) ]
+                        aNumber faultIfZero. ^Float from: (self asPrimitive / aNumber asPrimitive) ]
 
-    + Numeric! aNumber [ "this + aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) + n ] ifFalse: [ self + n asFloat ]]
-
-    - Numeric! aNumber [ "this - aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) - n ] ifFalse: [ self - n asFloat ]]
-
-    * Numeric! aNumber [ "this * aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) * n ] ifFalse: [ self * n asFloat ]]
-
-    / Numeric! aNumber [ "this / aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) / n ] ifFalse: [ self / n asFloat ]]
+    + Numeric! aNumber [ ^self + (Float <- aNumber asFloat) ]
+    - Numeric! aNumber [ ^self - (Float <- aNumber asFloat) ]
+    * Numeric! aNumber [ ^self * (Float <- aNumber asFloat) ]
+    / Numeric! aNumber [ ^self / (Float <- aNumber asFloat) ]
 ]
 
 Float members: "mathematics"
@@ -138,6 +121,8 @@ Float members: "testing behavior"
 [
     Boolean! isFloat [ ^true ]
     Boolean! isLiteral [ ^true ]
+    @Primitive Boolean! isZero [ ^Boolean from: FloatZero == self asPrimitive ]
+    faultIfZero [ self isZero ifTrue: [ self zeroDivide. ]. ^self ]
 
     @Primitive Boolean! negative [ ^Boolean from: FloatZero > primitiveValue  ]
     @Primitive Boolean! positive [ ^Boolean from: FloatZero <= primitiveValue ]
