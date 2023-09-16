@@ -16,6 +16,7 @@ IntegersTest members: "testing integers"
         self log cr.
         self testIntegerMath.
         self testIntegerCompares.
+        self testIntervals.
     ]
 
     @Static @Final String! ValueReport := 'value %s = id %s'.
@@ -70,5 +71,16 @@ IntegersTest members: "testing integers"
         self assertTrue: [ 5 < 6 ].
         self assertTrue: [ 7 > 6 ].
         self passed: 'integer comparisons'.
+    ]
+
+    testIntervals [
+        x := 0 to: 50.
+        r := x reverse.
+        x first. x last. x size.
+        self report: x printString.
+        self report: r printString.
+        self assertTrue: [ x notEmpty ].
+        self assertTrue: [ r = x reverse ].
+        self passed: 'intervals tests'.
     ]
 ]

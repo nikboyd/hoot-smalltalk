@@ -153,6 +153,9 @@ SmallInteger members: "comparing values"
     Boolean! = Numeric! aNumber [ ^(Number <- aNumber) asSmallInteger = self ]
     Boolean! < Rational! aNumber [ ^aNumber asSmallInteger > self ]
     Boolean! > Rational! aNumber [ ^aNumber asSmallInteger < self ]
+
+    Boolean! < Scalar! aNumber [ ^self < (Rational <- aNumber) ]
+    Boolean! > Scalar! aNumber [ ^self > (Rational <- aNumber) ]
 ]
 
 SmallInteger members: "converting values"

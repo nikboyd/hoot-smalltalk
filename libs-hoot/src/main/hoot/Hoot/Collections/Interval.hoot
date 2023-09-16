@@ -23,10 +23,8 @@ Interval class members: "creating instances"
         ^self from: Zero to: Zero by: Zero ]
 
     Interval! from: Ordinal! start to: Ordinal! stop [
-        "a new Interval (start, stop, 1)"
-        (start = stop) ifTrue: [ ^self from: start to: stop by: Zero ].
-        (start < stop) ifTrue: [ ^self from: start to: stop by: Unity ].
-    	^self from: start to: stop by: Negativity ]
+        "a new Interval (start, stop, (stop - start) sign)"
+    	^self from: start to: stop by: (stop - start) sign ]
 
     Interval! from: Ordinal! start to: Ordinal! stop by: Ordinal! step [
         "a new Interval (start, stop, step)"
@@ -109,6 +107,12 @@ Interval members: "accessing elements"
         i *= step intValue.
         i += start intValue.
         ^SmallInteger from: i ]
+]
+
+Interval members: "printing"
+[
+    String! printString [
+        ^String <- ('(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
 ]
 
 Interval members: "copying elements"

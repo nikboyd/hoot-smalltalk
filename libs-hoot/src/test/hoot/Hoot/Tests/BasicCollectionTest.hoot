@@ -55,6 +55,10 @@ BasicCollectionTest members:
         self log print: 'lower  = '. self log printLine: aString asUppercase asLowercase.
         self assertTrue: [ ^aString = aString asUppercase asLowercase ].
         self passed: 'string comparison test'.
+
+        self assertTrue: [ ^('aaa.*' matches: 'aaabbbccc') ].
+        self assertTrue: [ ^('a+b+c+' matches: 'aaabbbccc') ].
+        self passed: 'string pattern match tests'.
     ]
 
     Void! report: String! testName value: Boolean! value [

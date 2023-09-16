@@ -2,9 +2,9 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
-Hoot Magnitudes SmallInteger importStatics.
 Hoot Magnitudes Integer import.
 Hoot Magnitudes FastInteger import.
+Hoot Magnitudes SmallInteger importStatics.
 
 Smalltalk Magnitudes Ordinal import.
 Smalltalk Collections importAll.
