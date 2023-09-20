@@ -2,13 +2,18 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
-Hoot Runtime Names Primitive import.
-Java Time LocalDateTime import.
-Java Time Duration import.
 Java Lang System import.
+Java Time Duration import.
+Java Time LocalDateTime import.
+Hoot Runtime Names Primitive import.
+Smalltalk Magnitudes Scalar import.
 
 Magnitude subclass: Time.
-Time class members: []
+Time class members: "creating instances"
+[
+    Time! new [ ^Time basicNew ]
+]
+
 Time members:
 [
     @Static @Primitive Duration! clockPrecision [ 
@@ -16,6 +21,30 @@ Time members:
         ^Duration ofMillis: System currentTimeMillis - now ]
 
     @Static LocalDateTime! now [ ^LocalDateTime now ]
+]
+
+Time members: "knowing local time"
+[
+    LocalDateTime! localTime := Time now.
+    LocalDateTime! localTime [ ^localTime ]
+]
+
+Time members: "comparing times"
+[
+    Boolean! = aTime [ ^Boolean from: (localTime = aTime localTime) ]
+    @Primitive Boolean! < aTime [ ^Boolean from: (localTime isBefore: aTime localTime) ]
+    @Primitive Boolean! > aTime [ ^Boolean from: (localTime isAfter:  aTime localTime) ]
+]
+
+Time members: "comparing with scalars"
+[
+    Boolean! = Magnitude! value [ ^(Time type accepts: value) and: [ self = (Time <- value) ] ]
+    Boolean! <  Scalar! value [ ^(Time type accepts: value) and: [ self < (Time <- value) ] ]
+    Boolean! >  Scalar! value [ ^(Time type accepts: value) and: [ self > (Time <- value) ] ]
+]
+
+Time members: "printing"
+[
     @Static String! printTimeNow [ ^Time printTime: Time now ]
     @Static String! printTime: LocalDateTime! time [ ^String from: (Primitive printTime: time) ]
     @Static String! formatTime: LocalDateTime! time as: String! timeFormat [ 

@@ -31,7 +31,7 @@ Array class members: "creating instances"
     with: ElementType -> Subject! d [ ^Array <- (self withAll: Object <- a : Object <- b : Object <- c : Object <- d) ]
 
     Array? ElementType -> Object! withAll: ElementType! ... elements [ ^Array basicNew: elements ]
-    withAll: CollectedReadably? ElementType -> Subject! aCollection [ ^Array basicNew: aCollection asList ]
+    withThese: CollectedReadably? ElementType -> Subject! aCollection  [ ^Array basicNew: aCollection asList ]
 
     Array! new [ "a new empty Array" ^self new: 0 ]
     Array! new: Ordinal! capacity [ ^Array basicNew: Integer <- capacity ]
@@ -50,12 +50,13 @@ Array members: "constructing instances"
         contents := (Utils fillList: capacity primitiveInteger : none). ]
 
     @Static Array? ElementType -> Object! withAll: ElementType! ... elements [ ^Array basicNew: elements ]
+    @Static withThese: CollectedReadably? ElementType -> Subject! aCollection  [ ^Array basicNew: aCollection asList ]
 ]
 
 Array members: "accessing"
 [
     List? ElementType! primitiveContents [ ^contents ]
-    Integer! size [ ^SmallInteger from: contents size ]
+    @Primitive Integer! size [ ^SmallInteger from: contents size ]
     @Protected ElementType! get: Int! index [ ^(contents get: index) ]
 ]
 

@@ -37,28 +37,18 @@ Association members: "comparing"
 [
     Java Lang Int! hashCode [ ^key hashCode ]
 
-    @Primitive Boolean! = Magnitude! candidate [
-        "whether (this = candidate)"
-        candidate == nil ifTrue: [ ^False literal ].
-        (candidate instanceOf: Association) ifFalse: [ ^False literal ].
-        ^self equals: (Association <- candidate) ]
+    Boolean! = Magnitude! value [
+        ^(Association type accepts: value) and: [ self = (Association <- value) ] ]
 
-    @Primitive Boolean! = Association! candidate [
-        "whether (this = candidate)"
-        candidate == nil ifTrue: [ ^False literal ].
-        (self key equals: candidate key) primitiveBoolean ifFalse: [ ^False literal ].
-        (self value equals: candidate value) primitiveBoolean ifFalse: [ ^False literal ].
-        ^True literal ]
+    Boolean! < Scalar! value [
+        ^(Association type accepts: value) and: [ self < (Association <- value) ] ]
 
-    @Primitive Boolean! < Scalar! candidate [
-        candidate == nil ifTrue: [ ^False literal ].
-        (candidate instanceOf: Association) ifFalse: [ ^False literal ].
-        ^self lessThan: (Association <- candidate) ]
+    Boolean! = Association! assoc [
+        ^(Association type accepts: assoc) and: 
+            [ self key = assoc key and: [ self value = assoc value ] ] ]
 
-    @Primitive Boolean! < Association! candidate [
-        "whether (this key < candidate key)"
-        candidate == nil ifTrue: [ ^False literal ].
-        ^Boolean from: ((Scalar <- self key) lessThan: Scalar <- candidate key) ]
+    Boolean! < Association! assoc [
+        ^(Association type accepts: assoc) and: [ self key < assoc key ] ]
 ]
 
 Association members: "printing"

@@ -63,14 +63,14 @@ Collection members: "accessing"
 
     Integer! size [
         "a contained element count"
-        FastInteger! tally := 0 asFastInteger.
-        self do: [ :element | tally += 1. ].
+        FastInteger! tally := Zero asFastInteger.
+        self do: [ :element | tally += Unity. ].
         ^tally ]
 
     Integer! occurrencesOf: Subject! candidate [
         "an element occurrence count"
-        FastInteger! tally := 0 asFastInteger.
-        self do: [ :element | candidate = element ifTrue: [ tally += 1. ]].
+        FastInteger! tally := Zero asFastInteger.
+        self do: [ :element | candidate = element ifTrue: [ tally += Unity. ]].
         ^tally ]
 ]
 

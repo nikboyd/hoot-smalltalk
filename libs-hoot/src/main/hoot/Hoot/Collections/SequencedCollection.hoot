@@ -101,10 +101,10 @@ SequencedCollection members: "locating elements"
         ^noneBlock value
     ]
 
-    Integer! occurrencesOf: Subject! anObject [
+    "Integer! occurrencesOf: Subject! anObject [
         FastInteger! tally := FastInteger fromInteger: Zero.
         self do: [ : ElementType! element | anObject = element ifTrue: [ tally += Unity ] ].
-        ^tally ]
+        ^tally ]"
 ]
 
 SequencedCollection members: "copying elements"
@@ -237,7 +237,7 @@ SequencedCollection "enumerating" members:
      	self size to: Unity by: Negativity do: [ : Integer! i | aBlock value: (self at: i) ] ]
 
     with: CollectedReadably? ElementType! aCollection do: DyadicValuable! aBlock [
-     	self size == aCollection size ifFalse: [ self error: 'Collections are of different sizes'. ].
+     	(self size = aCollection size) ifFalse: [ self error: 'Collections are of different sizes'. ].
         Unity to: self size do: [ : Integer! index |
             aBlock value: (self at: index) value: (aCollection at: index) ]. ]
 ]
@@ -249,9 +249,8 @@ SequencedCollection "streaming" members:
 
 SequencedCollection "testing" members:
 [
-    @Primitive Boolean! = Collected? ElementType! aCollection [
-     	(aCollection instanceOf: CollectedReadably) ifFalse: [ ^False literal ].
-        ^self equals: (CollectedReadably <- aCollection) ]
+    Boolean! = Collected? ElementType! aCollection [
+     	^(SequencedCollection type accepts: aCollection) and: [ self equals: (CollectedReadably <- aCollection) ]]
 
     Boolean! = CollectedReadably? ElementType! aCollection [
         (self size = aCollection size) ifFalse: [ ^false ].

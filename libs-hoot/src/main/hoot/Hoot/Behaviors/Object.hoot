@@ -22,6 +22,8 @@ Java Lang Object subclass:
 Object class members:
 [
     Subject! new [ ^(Primitive newInstance: self outerClass) ]
+    Boolean! accepts: Java Lang Object! item [
+        ^Boolean from: (self outerClass isInstance: item) ]
 ]
 
 Object members: "constructing instances"

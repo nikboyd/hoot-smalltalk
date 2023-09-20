@@ -37,11 +37,11 @@ BasicCollectionTest members:
         self report: 'after removal  ' elements: s.
 
         self log cr.
+        r := Array withThese: sample reverse.
+        self report: 'sample reverse' elements: r.
         self report: 'range =  ( 1 to: 5 )' elements: ( 1 to: 5 ).
-        "self report: 'range = #( 1 2 3 4 5 )' value: (( 1 to: 5 ) = sample)."
-        "self report: 'range = #( 1 2 3 4 5 ) asOrderedCollection'
-              value: (( 1 to: 5 ) = sample asOrderedCollection)."
-        "self assertTrue: [ ^( 1 to: 5 ) = sample asOrderedCollection ]."
+        self report: 'range = #( 1 2 3 4 5 )' value: ( ( 1 to: 5 ) = r ).
+        self assertTrue: [ ^( 1 to: 5 ) = r ].
         self passed: 'interval range tests'.
 
         self log cr.

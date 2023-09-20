@@ -67,22 +67,6 @@ Number members: "coercing values"
     @Abstract Integer! generality "level of generality for coercion" []
 ]
 
-Number members: "comparing values"
-[
-    Boolean! = Number! aNumber [ ^self = (Magnitude <- aNumber) ]
-
-    Boolean! = Numeric! aNumber "whether (this = aNumber)" [
-        ^Boolean from: (Number <- aNumber) = self ]
-
-    Boolean! < Scalar! aNumber "whether (this < aNumber)" [
-        (aNumber isKindOf: Number type) not ifTrue: [ ^false ].
-        ^Boolean from: (Number <- aNumber) > self ]
-
-    Boolean! > Scalar! aNumber "whether (this > aNumber)" [
-        (aNumber isKindOf: Number type) not ifTrue: [ ^false ].
-        ^Boolean from: (Number <- aNumber) < self ]
-]
-
 Number members: "converting values"
 [
     Java Lang Byte!  primitiveByte [ ^self elementaryNumber byteValue ]
@@ -110,7 +94,7 @@ Number members: "converting values"
     @Abstract Java Lang Number! elementaryNumber "converts this value to a Number" []
 
     Rational! asRational [ ^self asFraction ]
-    Fraction! asFraction [ ^Fraction basicNew: self asInteger ]
+    Fraction! asFraction "default, see overrides" [ ^Fraction basicNew: self asInteger ]
 
     LargeInteger! asLargeInteger [ ^LargeInteger from: self asBigInteger ]
     BigInteger! asBigInteger [ ^BigInteger valueOf: self primitiveLong ]
@@ -221,7 +205,8 @@ Number members: "rounding values"
 
 Number members: "testing"
 [
-    Boolean! isZero [ ^Boolean from: self = self class zero ]
+    faultIfZero [ self isZero ifTrue: [ self zeroDivide. ]. ^self ]
+    Boolean! isZero [ ^(Numeric <- self class zero) = self ]
     Boolean! negative [ ^Boolean from: self < self class zero ]
     Boolean! positive [ ^Boolean from: self >= self class zero ]
     Boolean! strictlyPositive [ ^Boolean from: self > self class zero ]

@@ -4,8 +4,8 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Number import.
 Hoot Magnitudes Magnitude import.
-
 Smalltalk Magnitudes Scalar import.
+Smalltalk Magnitudes Numeric import.
 
 Magnitude subclass: Point. "A point on a 2-dimensional plane."
 
@@ -19,9 +19,11 @@ Point members: "knowing coordinates"
 [
     "X coordinate"
     @Property Number! x := 0.
+    Numeric! xAsNumeric [ ^(Numeric <- x) ]
 
     "Y coordinate"
     @Property Number! y := 0.
+    Numeric! yAsNumeric [ ^(Numeric <- y) ]
 
     x: Number! x y: Number! y [ ^self x: x; y: y; yourself ]
     @Static Point! from: Number! scalar [ ^Point basicNew x: scalar y: scalar ]
@@ -51,7 +53,7 @@ Point members: "scalar arithmetic"
 
 Point members: "comparing points"
 [
-    Boolean! = aPoint [ ^Boolean <- (( x = aPoint x ) and: [ y = aPoint y ]) ]
+    Boolean! = aPoint [ ^Boolean <- (( self xAsNumeric = aPoint x ) and: [ self yAsNumeric = aPoint y ]) ]
     Boolean! < aPoint [ ^Boolean <- (( x < aPoint x ) and: [ y < aPoint y ]) ]
     Boolean! > aPoint [ ^Boolean <- (( x > aPoint x ) and: [ y > aPoint y ]) ]
     Boolean! <= aPoint [ ^Boolean <- (( aPoint x < x ) not and: [ ( aPoint y < y ) not ]) ]
@@ -75,25 +77,13 @@ Point members: "comparing points"
 
 Point members: "comparing with scalars"
 [
-    @Primitive Boolean! = Magnitude! value [
-        (value instanceOf: Point) ifTrue: [ ^self equals: (Point <- value) ].
-        ^False literal ]
+    Boolean! = Magnitude! value [ ^(Point type accepts: value) and: [ self = (Point <- value) ] ]
 
-    @Primitive Boolean! < Scalar! value [
-        (value instanceOf: Point) ifTrue: [ ^self lessThan: (Point <- value) ].
-        ^False literal ]
+    Boolean! <  Scalar! value [ ^(Point type accepts: value) and: [ self < (Point <- value) ] ]
+    Boolean! <= Scalar! value [ ^(Point type accepts: value) and: [ self <= (Point <- value) ] ]
 
-    @Primitive Boolean! <= Scalar! value [
-        (value instanceOf: Point) ifTrue: [ ^self notMore: (Point <- value) ].
-        ^False literal ]
-
-    @Primitive Boolean! > Scalar! value [
-        (value instanceOf: Point) ifTrue: [ ^self moreThan: (Point <- value) ].
-        ^False literal ]
-
-    @Primitive Boolean! >= Scalar! value [
-        (value instanceOf: Point) ifTrue: [ ^self notLess: (Point <- value) ].
-        ^False literal ]
+    Boolean! >  Scalar! value [ ^(Point type accepts: value) and: [ self > (Point <- value) ] ]
+    Boolean! >= Scalar! value [ ^(Point type accepts: value) and: [ self >= (Point <- value) ] ]
 ]
 
 Point members: "converting types"

@@ -50,6 +50,9 @@ String members: "converting"
     @Static String! join: List? String! textStrings with: String! joint [
         ^String from: (Utils joinWith: joint asPrimitive : (String primitiveListFrom: textStrings)) ]
 
+    @Static Java Lang String! ... primitiveArrayFrom: List? String! textStrings [
+        ^(Utils unwrap: (String primitiveListFrom: textStrings) : Primitive EmptyArray) ]
+
     @Primitive @Static List? Java Lang String! primitiveListFrom: List? String! textStrings [
         ^[ :List? Java Lang String! list :String! s | list add: s asPrimitive. ] collectStringsFrom: textStrings ]
 
@@ -213,9 +216,9 @@ String "printing" members:
 [
     printString [ ^String from: (Primitive quoteLiterally: self primitiveString) ]
     rightPadded: Integer! count [ ^String from: (StringUtils rightPad: self asPrimitive : count intValue) ]
-    formatWith: Java Lang String! ... args [ ^String from: (Java Lang String format: self asPrimitive : args) ]
+
     formatWith: String! ... args [ ^String from: (self formatWith: (Utils wrap: args)) ]
-    formatWith: List? String! args [
-        ^String from: (Java Lang String format: self asPrimitive :
-            (Utils unwrap: (String primitiveListFrom: args) : Primitive EmptyArray)) ]
+    formatWith: List? String! args [ ^self formatWith: (String primitiveArrayFrom: args) ]
+    formatWith: Java Lang String! ... args [ Java Lang Object! ... vargs := args. 
+        ^String from: (Java Lang String format: self asPrimitive : vargs) ]
 ]

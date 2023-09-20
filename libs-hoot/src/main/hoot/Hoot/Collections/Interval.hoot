@@ -2,6 +2,9 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Java Util List import.
+Java Util ArrayList import.
+
 Hoot Magnitudes Number import.
 Hoot Magnitudes Integer import.
 Hoot Magnitudes FastInteger import.
@@ -60,26 +63,20 @@ Interval "accessing" members:
         ^(self stop primitiveInteger - self start primitiveInteger / self step primitiveInteger) + 1 ]
 
     Integer! first [ self emptyCheck. ^self start ]
-    Integer! last [ self emptyCheck.
-        ^(self stop - (self stop - self start \\ step)) asInteger ]
-
-    @Primitive Integer! size [
-    	^self notEmpty
-            ifFalse: [ SmallInteger from: Zero ]
-            ifTrue: [ SmallInteger from: self countSteps ] ]
+    Integer! last  [ self emptyCheck. ^(self stop - (self stop - self start \\ step)) asInteger ]
+    Integer! size  [ ^self notEmpty ifTrue: [ SmallInteger from: self countSteps ] ifFalse: [ Zero ] ]
 
     Behavior! species [ ^Behavior <- OrderedCollection type ]
 ]
 
 Interval members: "comparing"
 [
-    @Primitive Boolean! = Collected! aCollection [
-        (aCollection instanceOf: Interval) ifFalse: [ ^super equals: aCollection ].
+    Boolean! = Collected! aCollection [
+        (Interval type accepts: aCollection) ifFalse: [ ^super equals: aCollection ].
         Interval! candidate := Interval <- aCollection.
-        (candidate start == self start) ifFalse: [ ^False literal ].
-        (candidate stop == self stop) ifFalse: [ ^False literal ].
-        (candidate step == self step) ifFalse: [ ^False literal ].
-        ^True literal
+        ^(candidate start == self start) and: [
+         (candidate stop == self stop) and: [
+         (candidate step == self step) ]]
     ]
 
     @Primitive Java Lang Int! hashCode [
@@ -118,6 +115,15 @@ Interval members: "printing"
 Interval members: "copying elements"
 [
     reverse [ ^Interval type from: stop to: start by: step negated asInteger ]
+]
+
+Interval members: "converting"
+[
+    @Primitive List? Ordinal! asList [
+        List? Ordinal! results := ArrayList basicNew.
+        self do: [ : Ordinal! v | results add: v. ].
+        ^results
+    ]
 ]
 
 Interval members: "enumerating"

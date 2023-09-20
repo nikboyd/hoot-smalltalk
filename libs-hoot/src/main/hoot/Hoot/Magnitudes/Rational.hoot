@@ -30,45 +30,13 @@ Rational members: "accessing values"
 
 Rational members: "comparing values"
 [
-    @Primitive Boolean! = Magnitude! value [
-        (value instanceOf: Rational) ifTrue: [ ^self equals: (Rational <- value) ].
-        ^False literal ]
+    Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asRational = self ] ]
+    Boolean! <  Scalar! upperBound [ ^(Number type accepts: upperBound) and: [ (Number <- upperBound) asRational > self ] ]
+    Boolean! >  Scalar! lowerBound [ ^(Number type accepts: lowerBound) and: [ (Number <- lowerBound) asRational < self ] ]
 
-    Boolean! = Rational! aNumber "whether (this = aNumber)" [
-    	^self numerator = aNumber numerator and:
-            [ self denominator = aNumber denominator ]
-    ]
-
-    Boolean! < Rational! aNumber "whether (this < aNumber)" [
-    	^(self crossProduct: aNumber) < (aNumber crossProduct: self)
-    ]
-
-    Boolean! > Rational! aNumber "whether (this > aNumber)" [
-    	^(self crossProduct: aNumber) > (aNumber crossProduct: self)
-    ]
-
-    @Override @Primitive Boolean! = Numeric! aNumber "whether (this = aNumber)" [
-        Number! n := Number <- aNumber.
-    	^(self lessGeneral: n)
-            ifTrue: [ n equals: (self coerceTo: n type) ]
-            ifFalse: [ self equals: n asRational ]
-    ]
-
-    @Primitive Boolean! < Scalar! aNumber "whether (this < aNumber)" [
-        (aNumber isKindOf: Number type) primitiveBoolean ifFalse: [ ^False literal ].
-        Number! n := Number <- aNumber.
-    	^(self lessGeneral: n)
-            ifTrue: [ n moreThan: (self coerceTo: n type) ]
-            ifFalse: [ self lessThan: n asRational ]
-    ]
-
-    @Primitive Boolean! > Scalar! aNumber "whether (this > aNumber)" [
-        (aNumber isKindOf: Number type) primitiveBoolean ifFalse: [ ^False literal ].
-        Number! n := Number <- aNumber.
-    	^(self lessGeneral: n)
-            ifTrue: [ n lessThan: (self coerceTo: n type) ]
-            ifFalse: [ self moreThan: n asRational ]
-    ]
+    Boolean! = Rational! aNumber [ ^self numerator = aNumber numerator and: [ self denominator = aNumber denominator ] ]
+    Boolean! < Rational! aNumber [ ^(self crossProduct: aNumber) < (aNumber crossProduct: self) ]
+    Boolean! > Rational! aNumber [ ^(self crossProduct: aNumber) > (aNumber crossProduct: self) ]
 
     @Primitive Int! hashCode [
         "a value to use for equivalence testing"

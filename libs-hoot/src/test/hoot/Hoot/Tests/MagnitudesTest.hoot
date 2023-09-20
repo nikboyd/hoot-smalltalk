@@ -33,6 +33,7 @@ MagnitudesTest members:
         '[ 5 bitShift: 0 - 5 ]'
         ''
         '[ 11.1234s5 ]'
+        '[ 11.1234s5 + 5 ]'
         '[ 11.1234s5 + 3.14s4 ]'
         '[ $c asUppercase ]'
         '[ $9 isDigit ]'
