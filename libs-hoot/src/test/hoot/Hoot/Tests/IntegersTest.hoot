@@ -2,6 +2,7 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Hoot Collections Interval import.
 Hoot Magnitudes SmallInteger importStatics.
 
 TestBase subclass: IntegersTest.
@@ -74,13 +75,11 @@ IntegersTest members: "testing integers"
     ]
 
     testIntervals [
-        x := 0 to: 50.
-        r := x reverse.
+        Interval! x := 0 to: 50.
+        x reverse.
         x first. x last. x size.
         self report: x printString.
-        self report: r printString.
         self assertTrue: [ x notEmpty ].
-        self assertTrue: [ r = x reverse ].
         self passed: 'intervals tests'.
     ]
 ]

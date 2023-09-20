@@ -32,9 +32,9 @@ public interface IntegerValue extends Valued {
      */
     public static class Cache {
 
-        MonadicValuable valueFactory = new MonadicValuable(){
-            public <V,R> R value(V value) { return (R)new Source((int)value); }
-            public IntegerValue argumentCount() { return new Source(1); }
+        MonadicValuable valueFactory = new MonadicValuable() {
+            @Override public <V,R> R value(V value) { return (R)(new Source((Integer)value)); }
+            @Override public IntegerValue argumentCount() { return new Source(1); }
         };
         public Cache(MonadicValuable f) { valueFactory = f; }
         public Cache() {}
