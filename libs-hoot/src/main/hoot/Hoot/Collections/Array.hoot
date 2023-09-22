@@ -71,8 +71,8 @@ Array members: "accessing elements"
     ElementType! at: Integer! index ifAbsent: NiladicValuable! aBlock [
         ^self get: (self checkIndex: index ifAbsent: aBlock) ]
 
-    ElementType! at: Integer! index put: ElementType! element [
-        contents add: (self checkIndex: index) : element.
+    ElementType! at: Ordinal! index put: ElementType! element [
+        contents set: (self checkIndex: index) : element.
         ^element ]
 ]
 

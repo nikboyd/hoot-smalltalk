@@ -53,7 +53,7 @@ OrderedCollection class members: "creating"
 OrderedCollection members: "constructing instances"
 [
     "Contains the collection elements."
-    Java Util List? ElementType! contents := ArrayList basicNew: 10.
+    Java Util List? ElementType! contents := ArrayList basicNew. "default capacity = 10"
 
     @Protected! OrderedCollection []
     @Protected! OrderedCollection: Ordinal! capacity [ contents := ArrayList basicNew: capacity intValue. ]
@@ -69,10 +69,8 @@ OrderedCollection members: "accessing"
 OrderedCollection members: "accessing elements"
 [
     @Primitive ElementType! at: Ordinal! index put: ElementType! element [
-        Int! i := self checkRange: index.
-        (self size primitiveInteger > i)
-            ifTrue: [ contents set: i : element. ]
-            ifFalse: [ contents add: element. ].
+        Int! i := self checkGrows: index.
+        (i < self primitiveSize) ifTrue:  [ contents set: i : element. ] ifFalse: [ contents add: element. ].
         ^element ]
 
     @Protected ElementType! get: Int! index [ ^contents get: index ]

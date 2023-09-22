@@ -265,32 +265,38 @@ SequencedCollection "testing" members:
 SequencedCollection members: "replacing elements"
 [
     ElementType! at: Ordinal! index put: ElementType! element [
-        ^element
+        ^element "override this!" 
     ]
 
     ElementType! atAll: CollectedReadably? Ordinal! index put: ElementType! element [
-        ^element
+        ^element "override this!" 
     ]
 
     ElementType! atAllPut: ElementType! element [
-        ^element
+        ^element "override this!" 
     ]
 
-    SequencedCollection? ElementType! replaceFrom:
-    Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin [
+    replaceFrom: Ordinal! start to: Ordinal! stop 
+    with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin [
      	Integer! offset := ((Integer <- origin) - (Integer <- start)) asInteger.
         (self == replacements and: [(Integer <- origin) < (Integer <- start)])
         ifTrue: [ "Move within same object overlaps, so do backwards"
-            stop to: start by: Negativity do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] ]
+            stop to: start by: Negativity do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] 
+        ]
         ifFalse: [ "Non-overlapping moves are done forwards"
-            start to: stop do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] ].
-        ^SequencedCollection <- replacements ]
+            start to: stop do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] 
+        ]
+    ]
 
-    SequencedCollection? ElementType! replaceFrom:
-    Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements [
+    replaceFrom: Ordinal! start to: Ordinal! stop 
+    with: CollectedReadably? ElementType! replacements [
      	replacements size == (stop - start + 1) ifFalse: [
-            self error: 'size of replacement incorrect'. ^replacements ].
-        ^self replaceFrom: start to: stop with: replacements startingAt: 1 ]
+            self error: 'size of replacement incorrect'. 
+            ^replacements
+        ].
+        ^self replaceFrom: start to: stop 
+            with: replacements startingAt: 1
+    ]
 
     ElementType! replaceFrom: Ordinal! start to: Ordinal! stop withObject: ElementType! element [
      	Unity to: self size do: [ : Integer! index | self at: index put: element ].

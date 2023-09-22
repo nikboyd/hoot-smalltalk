@@ -83,7 +83,7 @@ String members: "accessing elements"
 
     @Primitive Character! at: Ordinal! index put: Object! element [
         Character! c := Character <- element.
-        Int! i := self checkRange: index.
+        Int! i := self checkGrows: index.
         (i < contents length)
             ifTrue: [ contents setCharAt: i : c primitiveCharacter. ]
             ifFalse: [ contents append: c primitiveCharacter. ].

@@ -61,6 +61,7 @@ Collection members: "accessing"
         "an element capacity count"
     	^self size ]
 
+    Int! primitiveSize [ ^self size primitiveInteger ]
     Integer! size [
         "a contained element count"
         FastInteger! tally := Zero asFastInteger.
@@ -203,21 +204,25 @@ Collection members: "testing"
     emptyCheck [ self notEmpty ifFalse: [ ^self emptyCollectionError ]. ]
     Int! checkRange: Ordinal! index [ ^self checkIndex: index ]
 
+    @Primitive Int! checkGrows: Ordinal! index [
+        Int! i := (Integer <- index) primitiveInteger - 1.
+        (i < 0) ifTrue: [ self indexError: index limit: Unity. ^Negativity primitiveInteger ].
+        ^i
+    ]
+
     @Primitive Int! checkIndex: Ordinal! index [
-        Integer! x := Integer <- index.
-        Integer! size := self size.
-        Int! i := x primitiveInteger - 1.
-        (i < 0) ifTrue: [ self indexError: index limit: Unity. ^0-1 ].
-        (i < size primitiveInteger) ifFalse: [ self indexError: index limit: size. ^0-1 ].
+        Int! i := (Integer <- index) primitiveInteger - 1.
+        (i < 0) ifTrue: 
+            [ self indexError: index limit: Unity. ^Negativity primitiveInteger ].
+        (i < self primitiveSize) ifFalse: 
+            [ self indexError: index limit: self size. ^Negativity primitiveInteger ].
         ^i
     ]
 
     @Primitive Int! checkIndex: Ordinal! index ifAbsent: NiladicValuable! aBlock [
-        Integer! x := Integer <- index.
-        Integer! size := self size.
-        Int! i := x primitiveInteger - 1.
-        (i < 0) ifTrue: [ aBlock value. ^0-1 ].
-        (i < size primitiveInteger) ifFalse: [ aBlock value. ^0-1 ].
+        Int! i := (Integer <- index) primitiveInteger - 1.
+        (i < 0) ifTrue: [ aBlock value. ^Negativity primitiveInteger ].
+        (i < self primitiveSize) ifFalse: [ aBlock value. ^Negativity primitiveInteger ].
         ^i
     ]
 ]

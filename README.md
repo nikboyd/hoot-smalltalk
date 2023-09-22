@@ -114,14 +114,20 @@ More discussions about this will emerge as they gain focus. For now, the opportu
 
 #### Building from Sources ####
 
+Important ADVICE!
+
+* Always ensure you have set **JAVA_HOME** for your chosen JDK version: the Hoot compiler _needs_ this.
+* Always start fresh, with an empty local **.m2/repository**, when switching JDK versions. Don't muddy the waters!
+* Use small cycles when writing new code. Start with working code, then: ...
+* Write a test, write new code, test the code, repeat until the test passes and you have working code again.
+
 Clone this repository, and run the following shell command in the base project folder:
 
 ```
 mvn -U -B clean install
 ```
 
-This also resembles how the associated [build pipeline](#build-and-coverage-pipelines)
-runs in GitHub.
+This also resembles how the associated [build pipeline](#build-and-coverage-pipelines) runs in GitHub.
 This command will build all the Hoot Smalltalk runtime components and compiler, generate Java sources from
 the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
 

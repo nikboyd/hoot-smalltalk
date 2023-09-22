@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Integer import.
 Hoot Magnitudes Number import.
+Hoot Magnitudes SmallInteger importStatics.
 
 Smalltalk Collections importAll.
 Smalltalk Magnitudes Ordinal import.
@@ -38,16 +39,15 @@ ArrayedCollection members: "replacing elements"
      	Integer! offset := ((Integer <- origin) - (Integer <- start)) asInteger.
         (self == replacements and: [(Integer <- origin) < (Integer <- start)])
         ifTrue: [ "Move within same object overlaps, so do backwards"
-            stop to: start by: 0 - 1
-                do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
+            stop to: start by: Negativity do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
         ]
         ifFalse: [ "Non-overlapping moves are done forwards"
-            start to: stop
-                do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
+            start to: stop do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
         ]
     ]
 
-    replaceFrom: Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements [
+    replaceFrom: Ordinal! start to: Ordinal! stop 
+    with: CollectedReadably? ElementType! replacements [
         "replaces elements between start and stop with replacements"
      	replacements size == (stop - start + 1) ifFalse: [
             self error: 'size of replacement incorrect'.
