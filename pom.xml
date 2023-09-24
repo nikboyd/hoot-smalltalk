@@ -40,18 +40,20 @@
         <version.hoot>2020.0101.0101</version.hoot>
         <version.hoot.libs>[2020.0101.0101,)</version.hoot.libs>
 
+        <version.spring-boot>2.5.5</version.spring-boot>
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
-        <version.maven-plugin>3.7.0</version.maven-plugin>
+        <version.maven-plugin>3.9.0</version.maven-plugin>
         <version.maven.compiler>3.11.0</version.maven.compiler>
         <version.maven.surefire>2.22.1</version.maven.surefire>
-        <version.maven.jacoco>0.8.8</version.maven.jacoco>
+        <version.maven.jacoco>0.8.10</version.maven.jacoco>
 
         <gitlab-group>9887672</gitlab-group>
         <gitlab-project>10019964</gitlab-project>
 
         <run-headless>-Djava.awt.headless=true</run-headless>
         <memory-args>-Xmx1024m -Xms1024m</memory-args>
+        <compiler-args></compiler-args> <!-- default = none, see profile for 21 below -->
         <no-path-check>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</no-path-check>
         <test-args>${memory-args} ${no-path-check} ${run-headless}</test-args>
         
@@ -263,6 +265,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>${compiler-args}</compilerArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -328,6 +333,7 @@
             <properties>
                 <maven.compiler.source>1.8</maven.compiler.source>
                 <maven.compiler.target>1.8</maven.compiler.target>
+                <maven.compiler.release>8</maven.compiler.release>
             </properties>
         </profile>
         <profile>
@@ -337,6 +343,8 @@
                 <jdk>[11,17)</jdk>
             </activation>
             <properties>
+                <maven.compiler.source>11</maven.compiler.source>
+                <maven.compiler.target>11</maven.compiler.target>
                 <maven.compiler.release>11</maven.compiler.release>
             </properties>
         </profile>
@@ -344,10 +352,26 @@
             <id>java-17-plus</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-                <jdk>[17,)</jdk>
+                <jdk>[17,21)</jdk>
             </activation>
             <properties>
-                <maven.compiler.release>11</maven.compiler.release>
+                <maven.compiler.source>11</maven.compiler.source>
+                <maven.compiler.target>17</maven.compiler.target>
+                <maven.compiler.release>17</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-21-plus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>[21,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>11</maven.compiler.source>
+                <maven.compiler.target>21</maven.compiler.target>
+                <maven.compiler.release>21</maven.compiler.release>
+                <version.spring-boot>3.1.4</version.spring-boot>
+                <compiler-args>-proc:full</compiler-args>
             </properties>
         </profile>
     </profiles>
