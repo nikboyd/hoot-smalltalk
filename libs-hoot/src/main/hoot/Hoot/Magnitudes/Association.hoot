@@ -49,6 +49,19 @@ Association members: "comparing"
 
     Boolean! < Association! assoc [
         ^(Association type accepts: assoc) and: [ self key < assoc key ] ]
+
+    @Override Association! min: Scalar! assoc [ ^self min: Association <- assoc ]
+    @Override Association! max: Scalar! assoc [ ^self max: Association <- assoc ]
+
+    @Primitive Association! min: Association! assoc [
+        (assoc == null) ifTrue: [ ^self ].
+        (self lessThan: assoc) primitiveBoolean ifTrue: [ ^self ].
+        ^assoc ]
+
+    @Primitive Association! max: Association! assoc [
+        (assoc == null) ifTrue: [ ^self ].
+        (self moreThan: assoc) primitiveBoolean ifTrue: [ ^self ].
+        ^assoc ]
 ]
 
 Association members: "printing"

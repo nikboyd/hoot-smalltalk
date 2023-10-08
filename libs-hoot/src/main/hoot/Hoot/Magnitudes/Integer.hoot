@@ -48,11 +48,25 @@ Integer "comparing" members:
     	^Boolean from: 0 < (self asBigInteger compareTo: aNumber asBigInteger) ]
 
     Java Lang Int! hashCode [ ^self elementaryNumber hashCode ]
+
+    @Override Integer! min: Scalar! index [ ^self min: Integer <- index ]
+    @Override Integer! max: Scalar! index [ ^self max: Integer <- index ]
+
+    @Primitive Integer! min: Integer! index [
+        (index == null) ifTrue: [ ^self ].
+        (self lessThan: index) primitiveBoolean ifTrue: [ ^self ].
+        ^index ]
+
+    @Primitive Integer! max: Integer! index [
+        (index == null) ifTrue: [ ^self ].
+        (self moreThan: index) primitiveBoolean ifTrue: [ ^self ].
+        ^index ]
 ]
 
 Integer "converting" members:
 [
     asInteger [ ^self ]
+    FastInteger! faster [ ^FastInteger fromInteger: self ]
     Int! intValue [ ^self primitiveInteger ]
     Long! longValue [ ^self primitiveLong ]
 ]

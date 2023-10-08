@@ -30,35 +30,3 @@ ArrayedCollection members: "accessing elements"
      	1 to: self size do: [ : Integer! index | self at: index put: element ].
         ^element ]
 ]
-
-ArrayedCollection members: "replacing elements"
-[
-    replaceFrom: Ordinal! start to: Ordinal! stop 
-    with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin [
-        "replaces elements between start and stop with replacements starting at origin"
-     	Integer! offset := ((Integer <- origin) - (Integer <- start)) asInteger.
-        (self == replacements and: [(Integer <- origin) < (Integer <- start)])
-        ifTrue: [ "Move within same object overlaps, so do backwards"
-            stop to: start by: Negativity do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
-        ]
-        ifFalse: [ "Non-overlapping moves are done forwards"
-            start to: stop do: [ : Integer! i | self at: i put: (replacements at: i + offset) ]
-        ]
-    ]
-
-    replaceFrom: Ordinal! start to: Ordinal! stop 
-    with: CollectedReadably? ElementType! replacements [
-        "replaces elements between start and stop with replacements"
-     	replacements size == (stop - start + 1) ifFalse: [
-            self error: 'size of replacement incorrect'.
-            ^replacements
-        ].
-        ^self replaceFrom: start to: stop
-            with: replacements startingAt: 1
-    ]
-
-    ElementType! replaceFrom: Ordinal! start to: Ordinal! stop withObject: ElementType! replacement [
-        "replaces elements between start and stop with a replacement"
-     	1 to: self size do: [ : Integer! index | self at: index put: replacement ].
-        ^replacement ]
-]

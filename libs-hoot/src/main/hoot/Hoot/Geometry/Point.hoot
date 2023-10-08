@@ -59,8 +59,8 @@ Point members: "comparing points"
     Boolean! <= aPoint [ ^Boolean <- (( aPoint x < x ) not and: [ ( aPoint y < y ) not ]) ]
     Boolean! >= aPoint [ ^Boolean <- (( aPoint x > x ) not and: [ ( aPoint y > y ) not ]) ]
 
-    Point! min: Scalar! aPoint [ ^self min: Point <- aPoint ]
-    Point! max: Scalar! aPoint [ ^self max: Point <- aPoint ]
+    @Override Point! min: Scalar! aPoint [ ^self min: Point <- aPoint ]
+    @Override Point! max: Scalar! aPoint [ ^self max: Point <- aPoint ]
 
     @Primitive Point! min: Point! aPoint [
         "the lesser of this versus aPoint"

@@ -17,6 +17,7 @@ IntegersTest members: "testing integers"
         self log cr.
         self testIntegerMath.
         self testIntegerCompares.
+        self log cr.
         self testIntervals.
     ]
 
@@ -75,11 +76,12 @@ IntegersTest members: "testing integers"
     ]
 
     testIntervals [
+        self report: (1 to: 5) printString.
         Interval! x := 0 to: 50.
-        x reverse.
-        x first. x last. x size.
-        self report: x printString.
+        x reverse. x first. x last. x size.
         self assertTrue: [ x notEmpty ].
+        self report: '(1 to: 5) collected = ', 
+            ((1 to: 5) collect: [ : Integer! value | value printString ]) printString.
         self passed: 'intervals tests'.
     ]
 ]

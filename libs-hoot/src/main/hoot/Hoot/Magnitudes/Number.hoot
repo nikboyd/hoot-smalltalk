@@ -19,7 +19,7 @@ Smalltalk Magnitudes Numeric import.
 Smalltalk Magnitudes Floater import.
 
 Magnitude subclass: @Abstract Smalltalk Magnitudes Numeric! Smalltalk Magnitudes Floater! Number.
-"Supports basic arithmetic and mathemetical operations."
+"Supports basic arithmetic and mathematical operations."
 
 Number class members: "accessing constants"
 [

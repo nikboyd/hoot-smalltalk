@@ -55,12 +55,17 @@ Interval members: "constructing instances"
 
 Interval "accessing" members:
 [
+    @Private FastInteger! fastStart [ ^self start asSmallInteger asFastInteger ]
+    @Private SmallInteger! smallStep [ ^self step asSmallInteger ]
+
     @Private Integer! start [ ^Integer <- start ]
     @Private Integer! stop  [ ^Integer <- stop ]
     @Private Integer! step  [ ^Integer <- step ]
 
-    @Private @Primitive Int! countSteps [
-        ^(self stop primitiveInteger - self start primitiveInteger / self step primitiveInteger) + 1 ]
+    @Private @Primitive Int! startPrimly [ ^start intValue ]
+    @Private @Primitive Int! stopPrimly [ ^stop intValue ]    
+    @Private @Primitive Int! stepPrimly [ ^step intValue ]
+    @Private @Primitive Int! countSteps [ ^(self stopPrimly - self startPrimly / self stepPrimly) + 1 ]
 
     Integer! first [ self emptyCheck. ^self start ]
     Integer! last  [ self emptyCheck. ^(self stop - (self stop - self start \\ step)) asInteger ]
@@ -91,25 +96,19 @@ Interval members: "comparing"
 
 Interval members: "accessing elements"
 [
-    @Protected Integer! get: Int! index [
-        ^self at: (SmallInteger from: index) + 1 ]
+    @Protected Integer! get: Int! index [ ^self at: (SmallInteger from: index) + 1 ]
+    Integer! at: Ordinal! index [ ^self at: index ifAbsent: [ self elementNotFound. ^Unity ] ]
 
-    Integer! at: Ordinal! index [
-        ^self at: index ifAbsent: [ self elementNotFound. ^0 ] ]
-
-    "Returns the element at (index), or evaluates (aBlock),
-    if the receiver does not include an (index)."
     @Primitive Integer! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
         Int! i := self checkIndex: index ifAbsent: aBlock.
-        i *= step intValue.
-        i += start intValue.
+        i *= step intValue. i += start intValue.
         ^SmallInteger from: i ]
 ]
 
 Interval members: "printing"
 [
-    String! printString [
-        ^String <- ('(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
+    String! printElements [ ^(self collect: [ : Integer! value | value printString ]) printString ]
+    String! printString [ ^( '(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
 ]
 
 Interval members: "copying elements"
@@ -128,20 +127,28 @@ Interval members: "converting"
 
 Interval members: "enumerating"
 [
-    do: MonadicValuable! aBlock [ start to: stop by: step do: [ : Ordinal! i | aBlock value: i ] ]
+    @Primitive Closure! testBlock: FastInteger! index [ "index ranges based on step"
+        ^self stepsDown ifTrue: [ [ ^(stop moreThan: index) not ] ] ifFalse: [ [ ^(index moreThan: stop) not ] ] ]
+
+    do: MonadicValuable! aBlock [
+        step = 0 ifTrue: [ ^self ]. "do nothing"
+        FastInteger! index := self fastStart.
+        (self testBlock: index) toPredicate whileTrue: [ aBlock value: index. index += self smallStep. ].
+    ]
 
     OrderedCollection! collect: MonadicValuable! filterBlock [
+        FastInteger! index := 0 asFastInteger. 
      	OrderedCollection! result := OrderedCollection new: self size.
-        FastInteger! index := 0 asFastInteger.
-        self do: [ : Ordinal! v |
-            index += 1.
-            result at: index put: Integer <- (filterBlock value: v).
-        ].
-        ^result ]
+        self do: [ : Ordinal! v | index += 1. result at: index put: (filterBlock value: v). ].
+        ^result
+    ]
 ]
 
 Interval members: "testing"
 [
+    Boolean! stepsDown [ ^step < 0 ]
+    @Primitive Java Lang Boolean! stepsDownward [ ^step intValue < 0 ]
+
     @Primitive Java Lang Boolean! isEmpty [
         (step intValue == 0) ifTrue: [ ^true ].
     	^step intValue < 0

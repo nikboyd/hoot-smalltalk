@@ -12,6 +12,7 @@ BasicCollectionTest members:
 [
     Array! sample := #( 5 4 3 2 1 ).
     Array! names := #( 'ddd' 'ccc' 'bbb' 'aaa' ).
+    Array! tames := #( 'zzz' 'yyy' 'xxx' ).
     OrderedCollection! o := OrderedCollection new.
 
     @Override @Test Void! testOnce [ self runTest. ]
@@ -29,6 +30,7 @@ BasicCollectionTest members:
         self log cr.
         self testMatches.
         self log cr.
+        self testCopies.
         self testReplacements.
     ]
 
@@ -82,11 +84,22 @@ BasicCollectionTest members:
         self passed: 'string pattern match tests'.
     ]
 
+    testCopies [
+        self report: 'names' elements: names.
+        self report: 'names with zzz' elements: (names copyWith: 'zzz').
+        self report: 'names without aaa' elements: (names copyWithout: 'aaa').
+        self report: 'names without last' elements: (names copyWithout: names last).
+        self report: 'names without first' elements: (names copyWithout: names first).
+        self report: 'names copy (2 to: 4)' elements: (names copyFrom: 2 to: 4).
+    ]
+
     testReplacements [
-        self report: 'names partial copy' elements: (names copyFrom: 2 to: 4).
-        self report: 'names replacing ccc with eee' elements: 
-            (names copyReplacing: 'ccc' withObject: 'eee') asSortedCollection.
-        self passed: 'element replacement'.
+        rep := Array withThese: (names copyWithout: names first).
+        self report: 'name replacements' elements: tames.
+        self report: 'names replaced' elements: rep.
+        self report: 'copied and replaced' elements: (names copyReplaceAll: rep with: tames).
+        self report: 'names replacing ccc with eee' elements: (names copyReplacing: 'ccc' withObject: 'eee').
+        self passed: 'element replacements'.
     ]
 
     Void! report: String! testName value: Boolean! value [
