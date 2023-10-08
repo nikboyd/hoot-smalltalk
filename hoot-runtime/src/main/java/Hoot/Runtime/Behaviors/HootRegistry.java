@@ -7,10 +7,11 @@ import Hoot.Runtime.Names.TypeName;
 import static Hoot.Runtime.Names.Keyword.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Names.TypeName.*;
+import Hoot.Runtime.Faces.ConditionalValue;
 import Hoot.Runtime.Faces.Logging;
 
 /**
- * Hoot runtime class with registries.
+ * Hoot run-time class with registries.
  *
  * @author nik <nikboyd@sonic.net>
  * @see "Copyright 2010,2021 Nikolas S Boyd."
@@ -74,6 +75,10 @@ public class HootRegistry implements Logging {
     public static Valued Nil() { return getValue(NilType().findClass()); }
     public static Valued True() { return getValue(TrueType().findClass()); }
     public static Valued False() { return getValue(FalseType().findClass()); }
+
+    public static Valued nilValue() { return getValue(NilType().findClass()); }
+    public static ConditionalValue trueValue() { return getValue(TrueType().findClass()); }
+    public static ConditionalValue falseValue() { return getValue(FalseType().findClass()); }
 
     public static boolean isRunning() { return false; }
     public static boolean isReady() { return false; }

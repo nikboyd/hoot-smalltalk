@@ -38,22 +38,16 @@ Double members: "constructing instances"
 
 Double members: "comparing values - final"
 [
-    @Primitive @Final Boolean! = Double! aNumber [
-        ^Boolean from: primitiveValue == aNumber primitiveDouble ]
-
-    @Primitive @Final Boolean! < Double! aNumber [
-        ^Boolean from: primitiveValue < aNumber primitiveDouble ]
-
-    @Primitive @Final Boolean! > Double! aNumber [
-        ^Boolean from: primitiveValue > aNumber primitiveDouble ]
+    @Primitive @Final Boolean! = Double! aNumber [ ^Boolean from: primitiveValue == aNumber primitiveDouble ]
+    @Primitive @Final Boolean! < Double! aNumber [ ^Boolean from: primitiveValue < aNumber primitiveDouble ]
+    @Primitive @Final Boolean! > Double! aNumber [ ^Boolean from: primitiveValue > aNumber primitiveDouble ]
 ]
 
 Double members: "comparing values"
 [
-    Boolean! = Magnitude! aNumber [ ^self = (Double <- aNumber) ]
-    Boolean! = Numeric! aNumber [ ^(Number <- aNumber) asFloatD = self ]
-    Boolean! < Number! aNumber [ ^aNumber asFloatD > self ]
-    Boolean! > Number! aNumber [ ^aNumber asFloatD < self ]
+    Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloatD = self ] ]
+    Boolean! < aNumber [ ^aNumber asFloatD > self ]
+    Boolean! > aNumber [ ^aNumber asFloatD < self ]
 ]
 
 Double members: "converting"

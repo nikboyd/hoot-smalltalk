@@ -100,10 +100,6 @@
         </resources>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler}</version>
-            </plugin>
-            <plugin>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>${version.maven-plugin}</version>
                 <executions>

@@ -2,6 +2,7 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Hoot Collections Interval import.
 Hoot Magnitudes SmallInteger importStatics.
 
 TestBase subclass: IntegersTest.
@@ -16,6 +17,8 @@ IntegersTest members: "testing integers"
         self log cr.
         self testIntegerMath.
         self testIntegerCompares.
+        self log cr.
+        self testIntervals.
     ]
 
     @Static @Final String! ValueReport := 'value %s = id %s'.
@@ -70,5 +73,15 @@ IntegersTest members: "testing integers"
         self assertTrue: [ 5 < 6 ].
         self assertTrue: [ 7 > 6 ].
         self passed: 'integer comparisons'.
+    ]
+
+    testIntervals [
+        self report: (1 to: 5) printString.
+        Interval! x := 0 to: 50.
+        x reverse. x first. x last. x size.
+        self assertTrue: [ x notEmpty ].
+        self report: '(1 to: 5) collected = ', 
+            ((1 to: 5) collect: [ : Integer! value | value printString ]) printString.
+        self passed: 'intervals tests'.
     ]
 ]

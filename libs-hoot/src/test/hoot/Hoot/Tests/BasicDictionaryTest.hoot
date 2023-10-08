@@ -30,5 +30,9 @@ BasicDictionaryTest members: "testing dictionary"
 
         d keysDo: [ :String! k | self assertTrue: [ ^sample includes: k toInteger ]. ].
         self passed: 'dictionary keys test'.
+
+        d associationsDo: [ :Association! assoc | 
+            a := (assoc key associateWith: assoc value). self assertTrue: [ ^a = assoc ]. ].
+        self passed: 'full associates test'.
     ]
 ]
