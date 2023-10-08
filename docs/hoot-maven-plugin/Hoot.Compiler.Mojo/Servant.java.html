@@ -43,28 +43,28 @@ import Hoot.Runtime.Faces.Logging;
     static final String CompilerSpec = &quot;hoot-smalltalk:hoot-compiler-boot:&quot;;
 <span class="fc" id="L44">    Artifact locateArtifact() { return Discovery.lookup(CompilerSpec + version()).getArtifact(); }</span>
 <span class="fc" id="L45">    String locateCompiler() { return locateArtifact().getFile().getAbsolutePath(); }</span>
-    
+
     static final String Quote = &quot;\&quot;&quot;;
     static final String WinShell = &quot;cmd.exe&quot;;
     static final String WinCommand = &quot;'%%JAVA_HOME%%\\bin\\java' -jar %s&quot;;
-    String buildWinCommand(String... args) { 
+    String buildWinCommand(String... args) {
 <span class="nc" id="L51">        String result = format(WinCommand, locateCompiler()).replace(&quot;'&quot;, Quote);</span>
 <span class="nc bnc" id="L52" title="All 2 branches missed.">        for (String s : args) { result += &quot; &quot; + s; }</span>
 <span class="nc" id="L53">        report(&quot;running &quot;+result);</span>
 <span class="nc" id="L54">        return result; }</span>
 
     static final String Shell = &quot;/bin/sh&quot;;
-    static final String JavaCommand = &quot;java -jar %s&quot;;
-    String buildJavaCommand(String... args) { 
+    static final String JavaCommand = &quot;$JAVA_HOME/bin/java -jar %s&quot;;
+    String buildJavaCommand(String... args) {
 <span class="fc" id="L59">        String result = format(JavaCommand, locateCompiler());</span>
 <span class="fc bfc" id="L60" title="All 2 branches covered.">        for (String s : args) { result += &quot; &quot; + s; }</span>
 <span class="fc" id="L61">        report(&quot;running &quot;+result);</span>
 <span class="fc" id="L62">        return result; }</span>
 
     ProcessBuilder buildProcess(String... args) {
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        return SystemUtils.IS_OS_WINDOWS ? </span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        return SystemUtils.IS_OS_WINDOWS ?</span>
 <span class="nc" id="L66">            new ProcessBuilder(WinShell, &quot;/c&quot;, buildWinCommand(args)) :</span>
 <span class="fc" id="L67">            new ProcessBuilder(Shell, &quot;-c&quot;, buildJavaCommand(args)); }</span>
 
 } // Servant
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

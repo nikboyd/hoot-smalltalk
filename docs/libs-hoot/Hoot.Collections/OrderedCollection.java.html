@@ -171,7 +171,7 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
   }
 
 
-<span class="pc" id="L174">  protected java.util.List&lt;ElementType&gt; contents = new ArrayList(10);</span>
+<span class="pc" id="L174">  protected java.util.List&lt;ElementType&gt; contents = new ArrayList();</span>
   /**
    * 
    */
@@ -206,9 +206,9 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
    */
   public   java.util.List primitiveContents()
   {
-<span class="nc" id="L209">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;primitiveContents&quot;;</span>
-<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L211">    return (java.util.List)contents;</span>
+<span class="fc" id="L209">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;primitiveContents&quot;;</span>
+<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L211">    return (java.util.List)contents;</span>
   }
 
   /**
@@ -226,16 +226,16 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
    */
   @Override public   ElementType at_put(final Ordinal index, final ElementType element)
   {
-<span class="nc" id="L229">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L231">    int i = this.checkRange(index);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">    if ((this.size().primitiveInteger() &gt; i)) {</span>
+<span class="fc" id="L229">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;at_put&quot;;</span>
+<span class="fc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L231">    int i = this.checkGrows(index);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">    if ((i &lt; this.primitiveSize())) {</span>
 <span class="nc" id="L233">      contents.set(i, element);</span>
     }
     else {
-<span class="nc" id="L236">      contents.add(element);</span>
+<span class="fc" id="L236">      contents.add(element);</span>
     };
-<span class="nc" id="L238">    return (ElementType)element;</span>
+<span class="fc" id="L238">    return (ElementType)element;</span>
   }
 
   /**
@@ -264,9 +264,9 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
    */
   @Override public   List&lt;ElementType&gt; asList()
   {
-<span class="nc" id="L267">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;asList&quot;;</span>
-<span class="nc" id="L268">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L269">    return (List&lt;ElementType&gt;)new ArrayList(this.primitiveContents());</span>
+<span class="fc" id="L267">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;asList&quot;;</span>
+<span class="fc" id="L268">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L269">    return (List&lt;ElementType&gt;)new ArrayList(this.primitiveContents());</span>
   }
 
   /**
@@ -503,10 +503,10 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
    */
   public   ElementType removeFirst()
   {
-<span class="nc" id="L506">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeFirst&quot;;</span>
-<span class="nc" id="L507">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L508">    this.emptyCheck();</span>
-<span class="nc" id="L509">    return (ElementType)((ElementType)contents.remove(SmallInteger.from(0).asPrimitive()));</span>
+<span class="fc" id="L506">    java.lang.String exitID = &quot;OrderedCollection&gt;&gt;removeFirst&quot;;</span>
+<span class="fc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L508">    this.emptyCheck();</span>
+<span class="fc" id="L509">    return (ElementType)((ElementType)contents.remove(SmallInteger.from(0).asPrimitive()));</span>
   }
 
   /**
@@ -558,4 +558,4 @@ public class OrderedCollection&lt;ElementType extends Object&gt; extends Arrayed
 <span class="nc" id="L558">    return (WriteStream)WriteStream.type().with(this);</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

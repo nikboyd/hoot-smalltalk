@@ -15,7 +15,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  */
 public abstract class Scope extends NamedItem implements Resulting {
 
-<span class="nc" id="L18">    public Scope(NamedItem parentItem) { super(parentItem); }</span>
+<span class="fc" id="L18">    public Scope(NamedItem parentItem) { super(parentItem); }</span>
 <span class="nc" id="L19">    @Override public String description() { return name(); }</span>
 <span class="nc" id="L20">    @Override public void clean() { super.clean(); locals().clean(); whisper(&quot;cleaned &quot; + description()); }</span>
 
@@ -53,12 +53,12 @@ public abstract class Scope extends NamedItem implements Resulting {
 //    public Class resolveType(Named reference) { return containerScope().resolveType(reference); }
 //    public String resolveTypeName(Named reference) { return containerScope().resolveTypeName(reference); }
 
-<span class="nc" id="L56">    protected Table locals = new Table(this);</span>
-<span class="nc" id="L57">    public Table locals() { return this.locals; }</span>
+<span class="fc" id="L56">    protected Table locals = new Table(this);</span>
+<span class="fc" id="L57">    public Table locals() { return this.locals; }</span>
 <span class="nc bnc" id="L58" title="All 2 branches missed.">    public boolean hasLocals() { return !locals().isEmpty(); }</span>
 <span class="nc" id="L59">    public boolean hasLocal(String symbolName) { return locals().containsSymbol(symbolName); }</span>
-<span class="nc" id="L60">    public void addLocal(Variable variable) { locals().addSymbol(variable); }</span>
-<span class="nc" id="L61">    public Variable localNamed(String symbol) { return locals().symbolNamed(symbol); }</span>
+<span class="fc" id="L60">    public void addLocal(Variable variable) { locals().addSymbol(variable); }</span>
+<span class="fc" id="L61">    public Variable localNamed(String symbol) { return locals().symbolNamed(symbol); }</span>
 
 <span class="nc" id="L63">    @Override public Emission emitItem() { return emitScope(); }</span>
 <span class="nc" id="L64">    @Override public Emission emitOptimized() { return emitScope(); }</span>
@@ -68,4 +68,4 @@ public abstract class Scope extends NamedItem implements Resulting {
 <span class="nc" id="L68">    public List&lt;Emission&gt; emitLocalVariables() { return map(locals().definedSymbols(), v -&gt; v.emitLocal()); }</span>
 
 } // Scope
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

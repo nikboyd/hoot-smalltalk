@@ -297,9 +297,9 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
    */
   @Override public   Integer generality()
   {
-<span class="nc" id="L300">    java.lang.String exitID = &quot;Fixed&gt;&gt;generality&quot;;</span>
-<span class="nc" id="L301">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L302">    return (Integer)Generality;</span>
+<span class="fc" id="L300">    java.lang.String exitID = &quot;Fixed&gt;&gt;generality&quot;;</span>
+<span class="fc" id="L301">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L302">    return (Integer)Generality;</span>
   }
 
   /**
@@ -333,7 +333,7 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
 <span class="fc" id="L333">    (denominator.equals(aFixed.denominator())).ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L334">      return (Fixed)f0.exit(exitID, this.$class().numerator_denominator_scale((numerator.plus(aFixed.numerator())), denominator, ((Number)scale.max(aFixed.scale()))));</span>
     }, &quot;&quot;));
-<span class="fc" id="L336">    return (Fixed)f0.exit(exitID, this.$class().numerator_denominator_scale(((numerator.times(aFixed.denominator())).plus((denominator.times(aFixed.numerator())))), (denominator.times(aFixed.denominator())), ((Number)scale.max(aFixed.scale()))));</span>
+<span class="fc" id="L336">    return (Fixed)f0.exit(exitID, this.$class().numerator_denominator_scale(this.crossSum(aFixed), this.underProduct(aFixed), ((Number)scale.max(aFixed.scale()))));</span>
     });
   }
 
@@ -344,7 +344,7 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
   {
 <span class="nc" id="L345">    java.lang.String exitID = &quot;Fixed&gt;&gt;times&quot;;</span>
 <span class="nc" id="L346">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L347">    return (Fixed)this.$class().numerator_denominator_scale((numerator.times(aFixed.numerator())), (denominator.times(aFixed.denominator())), ((Number)scale.max(aFixed.scale())));</span>
+<span class="nc" id="L347">    return (Fixed)this.$class().numerator_denominator_scale(this.overProduct(aFixed), this.underProduct(aFixed), ((Number)scale.max(aFixed.scale())));</span>
   }
 
   /**
@@ -354,7 +354,7 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
   {
 <span class="nc" id="L355">    java.lang.String exitID = &quot;Fixed&gt;&gt;divideWith&quot;;</span>
 <span class="nc" id="L356">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L357">    return (Fixed)this.$class().numerator_denominator_scale((numerator.times(aFixed.denominator())), (denominator.times(aFixed.numerator())), ((Number)scale.max(aFixed.scale())));</span>
+<span class="nc" id="L357">    return (Fixed)this.$class().numerator_denominator_scale(this.crossProduct(aFixed), aFixed.crossProduct(this), ((Number)scale.max(aFixed.scale())));</span>
   }
 
   /**
@@ -362,13 +362,13 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
    */
   public   Fixed plus(final Number aNumber)
   {
-<span class="nc" id="L365">    java.lang.String exitID = &quot;Fixed&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L366">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L367">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L368">    (this.generality().lessThan(aNumber.generality())).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L365">    java.lang.String exitID = &quot;Fixed&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L366">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L367">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L368">    (this.generality().lessThan(aNumber.generality())).ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L369">      return (Fixed)f0.exit(exitID, (aNumber.asScaledDecimal(scale).plus(this)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L371">    return (Fixed)f0.exit(exitID, (this.plus(aNumber.asScaledDecimal(scale))));</span>
+<span class="fc" id="L371">    return (Fixed)f0.exit(exitID, (this.plus(aNumber.asScaledDecimal(scale))));</span>
     });
   }
 
@@ -433,4 +433,4 @@ public class Fixed extends Rational implements Fractional, ScaledDecimal
 <span class="fc" id="L433">    return (java.lang.String)this.asDecimal().toString();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

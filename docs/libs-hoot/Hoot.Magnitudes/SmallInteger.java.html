@@ -71,10 +71,10 @@ public class SmallInteger extends Integer
      */
     @Override public   SmallInteger coerce(final Number aNumber)
     {
-<span class="nc" id="L74">      java.lang.String exitID = &quot;SmallIntegerMetatype&gt;&gt;coerce&quot;;</span>
-<span class="nc" id="L75">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L76">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L77">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(aNumber.primitiveInteger()));</span>
+<span class="fc" id="L74">      java.lang.String exitID = &quot;SmallIntegerMetatype&gt;&gt;coerce&quot;;</span>
+<span class="fc" id="L75">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L76">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L77">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(aNumber.primitiveInteger()));</span>
       });
     }
 
@@ -150,7 +150,7 @@ public class SmallInteger extends Integer
   }
 
 
-<span class="fc" id="L153">  protected static IntegerValue.Cache FlyweightCache = new IntegerValue.Cache();</span>
+<span class="fc" id="L153">  protected static IntegerValue.Cache FlyweightCache = new IntegerValue.Cache(SmallInteger.valueFactory());</span>
 <span class="fc" id="L154">  public static SmallInteger Zero = SmallInteger.from(0);</span>
 <span class="fc" id="L155">  public static SmallInteger Unity = SmallInteger.from(1);</span>
 <span class="fc" id="L156">  public static SmallInteger Duality = SmallInteger.from(2);</span>
@@ -159,11 +159,24 @@ public class SmallInteger extends Integer
   /**
    * @return 
    */
+  public static   Closure valueFactory()
+  {
+<span class="fc" id="L164">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$valueFactory&quot;;</span>
+<span class="fc" id="L165">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L166">    return (Closure)Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L167">      int value = f2.getValue(0).value();</span>
+<span class="fc" id="L168">      return new SmallInteger(value);</span>
+    }, &quot;value&quot;);
+  }
+
+  /**
+   * @return 
+   */
   public static   IntegerValue.Cache flyweights()
   {
-<span class="fc" id="L164">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$flyweights&quot;;</span>
-<span class="fc" id="L165">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L166">    return (IntegerValue.Cache)FlyweightCache;</span>
+<span class="fc" id="L177">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$flyweights&quot;;</span>
+<span class="fc" id="L178">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L179">    return (IntegerValue.Cache)FlyweightCache;</span>
   }
 
   /**
@@ -171,9 +184,9 @@ public class SmallInteger extends Integer
    */
   public static   SmallInteger flyweightCount()
   {
-<span class="fc" id="L174">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$flyweightCount&quot;;</span>
-<span class="fc" id="L175">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L176">    return (SmallInteger)SmallInteger.from(FlyweightCache.size());</span>
+<span class="fc" id="L187">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$flyweightCount&quot;;</span>
+<span class="fc" id="L188">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L189">    return (SmallInteger)SmallInteger.from(FlyweightCache.size());</span>
   }
 
   /**
@@ -181,69 +194,63 @@ public class SmallInteger extends Integer
    */
   public static   void initializeFlyweights()
   {
-<span class="fc" id="L184">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$initializeFlyweights&quot;;</span>
-<span class="fc" id="L185">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L186">    int index = 0;</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">    while((index &lt; FlyweightCache.size())) {</span>
-<span class="fc" id="L188">      FlyweightCache.cache(new SmallInteger(index));</span>
-<span class="fc" id="L189">      FlyweightCache.cache(new SmallInteger((0 - index)));</span>
-<span class="fc" id="L190">      index += 1;</span>
+<span class="fc" id="L197">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$initializeFlyweights&quot;;</span>
+<span class="fc" id="L198">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L199">    int index = 0;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">    while((index &lt; FlyweightCache.size())) {</span>
+<span class="fc" id="L201">      FlyweightCache.cacheCovered(new SmallInteger(index));</span>
+<span class="fc" id="L202">      FlyweightCache.cacheCovered(new SmallInteger((0 - index)));</span>
+<span class="fc" id="L203">      index += 1;</span>
     };
 
-<span class="fc" id="L193">     Zero = FlyweightCache.getCached(0);</span>
+<span class="fc" id="L206">     Zero = FlyweightCache.getCached(0);</span>
 
-<span class="fc" id="L195">     Unity = FlyweightCache.getCached(1);</span>
+<span class="fc" id="L208">     Unity = FlyweightCache.getCached(1);</span>
 
-<span class="fc" id="L197">     Duality = FlyweightCache.getCached(2);</span>
+<span class="fc" id="L210">     Duality = FlyweightCache.getCached(2);</span>
 
-<span class="fc" id="L199">     Negativity = FlyweightCache.getCached((0 - 1));</span>
-<span class="fc" id="L200">  }</span>
-
-  /**
-   * @return 
-   */
-  public static   SmallInteger from(final int intValue)
-  {
-<span class="fc" id="L207">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$from&quot;;</span>
-<span class="fc" id="L208">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">    if (!(SmallInteger.flyweights().covers(intValue))) {</span>
-<span class="fc" id="L210">      return new SmallInteger(intValue);</span>
-    };
-<span class="fc bfc" id="L212" title="All 2 branches covered.">    if (!(SmallInteger.flyweights().hasCached(intValue))) {</span>
-<span class="fc" id="L213">      return SmallInteger.flyweights().cache(new SmallInteger(intValue));</span>
-    };
-<span class="fc" id="L215">    return (SmallInteger)SmallInteger.flyweights().getCached(intValue);</span>
-  }
+<span class="fc" id="L212">     Negativity = FlyweightCache.getCached((0 - 1));</span>
+<span class="fc" id="L213">  }</span>
 
   /**
    * 
    */
   protected    SmallInteger()
   {
-<span class="fc" id="L223">    super();</span>
-<span class="fc" id="L224">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;SmallInteger&quot;;</span>
-<span class="fc" id="L225">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L226">  }</span>
+<span class="fc" id="L220">    super();</span>
+<span class="fc" id="L221">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;SmallInteger&quot;;</span>
+<span class="fc" id="L222">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L223">  }</span>
 
   /**
    * 
    */
   protected    SmallInteger(final int value)
   {
-<span class="fc" id="L233">    this();</span>
-<span class="fc" id="L234">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;SmallInteger&quot;;</span>
-<span class="fc" id="L235">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L236">     cachedValue = value;</span>
-<span class="fc" id="L237">  }</span>
+<span class="fc" id="L230">    this();</span>
+<span class="fc" id="L231">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;SmallInteger&quot;;</span>
+<span class="fc" id="L232">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L233">     cachedValue = value;</span>
+<span class="fc" id="L234">  }</span>
+
+  /**
+   * @return 
+   */
+  public static   SmallInteger from(final int intValue)
+  {
+<span class="fc" id="L241">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L242">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L243">    return (SmallInteger)SmallInteger.flyweights().getCached(intValue);</span>
+  }
 
   /**
    * @return 
    */
   public final   SmallInteger plus(final SmallInteger aNumber)
   {
-<span class="fc" id="L244">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L245">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L246">    return (SmallInteger)SmallInteger.from((cachedValue + aNumber.intValue()));</span>
+<span class="fc" id="L251">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L252">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L253">    return (SmallInteger)SmallInteger.from((cachedValue + aNumber.intValue()));</span>
   }
 
   /**
@@ -251,9 +258,9 @@ public class SmallInteger extends Integer
    */
   public final   SmallInteger minus(final SmallInteger aNumber)
   {
-<span class="fc" id="L254">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;minus&quot;;</span>
-<span class="fc" id="L255">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L256">    return (SmallInteger)SmallInteger.from((cachedValue - aNumber.intValue()));</span>
+<span class="fc" id="L261">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L262">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L263">    return (SmallInteger)SmallInteger.from((cachedValue - aNumber.intValue()));</span>
   }
 
   /**
@@ -261,9 +268,9 @@ public class SmallInteger extends Integer
    */
   public final   SmallInteger times(final SmallInteger aNumber)
   {
-<span class="fc" id="L264">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;times&quot;;</span>
-<span class="fc" id="L265">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L266">    return (SmallInteger)SmallInteger.from((cachedValue * aNumber.intValue()));</span>
+<span class="fc" id="L271">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;times&quot;;</span>
+<span class="fc" id="L272">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L273">    return (SmallInteger)SmallInteger.from((cachedValue * aNumber.intValue()));</span>
   }
 
   /**
@@ -271,13 +278,10 @@ public class SmallInteger extends Integer
    */
   public final   Number divideWith(final SmallInteger aNumber)
   {
-<span class="fc" id="L274">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L275">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">    if ((aNumber.primitiveInteger() == 0)) {</span>
-<span class="fc" id="L277">      this.zeroDivide();</span>
-<span class="fc" id="L278">      return this;</span>
-    };
-<span class="fc" id="L280">    return (Number)Fraction.type().numerator_denominator(this, aNumber);</span>
+<span class="fc" id="L281">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L282">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L283">    aNumber.faultIfZero();</span>
+<span class="fc" id="L284">    return (Number)Fraction.type().numerator_denominator(this, aNumber);</span>
   }
 
   /**
@@ -285,9 +289,9 @@ public class SmallInteger extends Integer
    */
   @Override public   Integer plus(final Numeric aNumber)
   {
-<span class="fc" id="L288">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L289">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L290">    return (Integer)LargeInteger.from(((Number)aNumber).asInteger().asBigInteger().add(this.asBigInteger())).narrowGenerality();</span>
+<span class="fc" id="L292">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L293">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L294">    return (Integer)LargeInteger.from(((Number)aNumber).asInteger().asBigInteger().add(this.asBigInteger())).narrowGenerality();</span>
   }
 
   /**
@@ -295,9 +299,9 @@ public class SmallInteger extends Integer
    */
   @Override public   Integer times(final Numeric aNumber)
   {
-<span class="fc" id="L298">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;times&quot;;</span>
-<span class="fc" id="L299">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L300">    return (Integer)LargeInteger.from(((Number)aNumber).asInteger().asBigInteger().multiply(this.asBigInteger())).narrowGenerality();</span>
+<span class="fc" id="L302">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;times&quot;;</span>
+<span class="fc" id="L303">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L304">    return (Integer)LargeInteger.from(((Number)aNumber).asInteger().asBigInteger().multiply(this.asBigInteger())).narrowGenerality();</span>
   }
 
   /**
@@ -305,9 +309,9 @@ public class SmallInteger extends Integer
    */
   public   Number divideWith(final Number aNumber)
   {
-<span class="fc" id="L308">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L309">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L310">    return (Number)(this.divideWith(aNumber.asSmallInteger()));</span>
+<span class="fc" id="L312">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L313">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L314">    return (Number)(this.divideWith(aNumber.asSmallInteger()));</span>
   }
 
   /**
@@ -315,9 +319,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger truncateWith(final Numeric aNumber)
   {
-<span class="fc" id="L318">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;truncateWith&quot;;</span>
-<span class="fc" id="L319">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L320">    return (SmallInteger)(this.truncateWith(((Number)aNumber).asSmallInteger()));</span>
+<span class="fc" id="L322">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;truncateWith&quot;;</span>
+<span class="fc" id="L323">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L324">    return (SmallInteger)(this.truncateWith(((Number)aNumber).asSmallInteger()));</span>
   }
 
   /**
@@ -325,14 +329,11 @@ public class SmallInteger extends Integer
    */
   @Override public   Number divideWith(final Numeric aNumber)
   {
-<span class="fc" id="L328">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L329">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L330">    Number n = ((Number)aNumber);</span>
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">    if (n.isZero().primitiveBoolean()) {</span>
-<span class="nc" id="L332">      this.zeroDivide();</span>
-<span class="nc" id="L333">      return this;</span>
-    };
-<span class="fc" id="L335">    return (Number)this.divideWith(n);</span>
+<span class="fc" id="L332">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L333">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L334">    Number n = ((Number)aNumber);</span>
+<span class="fc" id="L335">    n.faultIfZero();</span>
+<span class="fc" id="L336">    return (Number)this.divideWith(n);</span>
   }
 
   /**
@@ -340,13 +341,10 @@ public class SmallInteger extends Integer
    */
   public   SmallInteger truncateWith(final SmallInteger aNumber)
   {
-<span class="fc" id="L343">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;truncateWith&quot;;</span>
-<span class="fc" id="L344">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L345" title="1 of 2 branches missed.">    if ((aNumber.primitiveInteger() == 0)) {</span>
-<span class="nc" id="L346">      this.zeroDivide();</span>
-<span class="nc" id="L347">      return this;</span>
-    };
-<span class="fc" id="L349">    return (SmallInteger)SmallInteger.from((this.primitiveInteger() / aNumber.intValue()));</span>
+<span class="fc" id="L344">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;truncateWith&quot;;</span>
+<span class="fc" id="L345">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L346">    aNumber.faultIfZero();</span>
+<span class="fc" id="L347">    return (SmallInteger)SmallInteger.from((this.primitiveInteger() / aNumber.intValue()));</span>
   }
 
   /**
@@ -354,13 +352,10 @@ public class SmallInteger extends Integer
    */
   public   SmallInteger remainderFrom(final SmallInteger aNumber)
   {
-<span class="nc" id="L357">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;remainderFrom&quot;;</span>
-<span class="nc" id="L358">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">    if ((aNumber.primitiveInteger() == 0)) {</span>
-<span class="nc" id="L360">      this.zeroDivide();</span>
-<span class="nc" id="L361">      return this;</span>
-    };
-<span class="nc" id="L363">    return (SmallInteger)SmallInteger.from((this.primitiveInteger() % aNumber.intValue()));</span>
+<span class="nc" id="L355">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;remainderFrom&quot;;</span>
+<span class="nc" id="L356">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L357">    aNumber.faultIfZero();</span>
+<span class="nc" id="L358">    return (SmallInteger)SmallInteger.from((this.primitiveInteger() % aNumber.intValue()));</span>
   }
 
   /**
@@ -368,9 +363,9 @@ public class SmallInteger extends Integer
    */
   public final   Boolean equals(final SmallInteger aNumber)
   {
-<span class="fc" id="L371">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L372">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L373" title="All 2 branches covered.">    return (Boolean)Boolean.from((this.primitiveInteger() == aNumber.intValue()));</span>
+<span class="fc" id="L366">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L367">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveInteger() == aNumber.intValue()));</span>
   }
 
   /**
@@ -378,9 +373,9 @@ public class SmallInteger extends Integer
    */
   public final   Boolean lessThan(final SmallInteger aNumber)
   {
-<span class="fc" id="L381">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L382">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L383" title="All 2 branches covered.">    return (Boolean)Boolean.from((this.primitiveInteger() &lt; aNumber.intValue()));</span>
+<span class="fc" id="L376">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L377">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">    return (Boolean)Boolean.from((this.primitiveInteger() &lt; aNumber.intValue()));</span>
   }
 
   /**
@@ -388,9 +383,9 @@ public class SmallInteger extends Integer
    */
   public final   Boolean moreThan(final SmallInteger aNumber)
   {
-<span class="fc" id="L391">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;moreThan&quot;;</span>
-<span class="fc" id="L392">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L393" title="All 2 branches covered.">    return (Boolean)Boolean.from((this.primitiveInteger() &gt; aNumber.intValue()));</span>
+<span class="fc" id="L386">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L387">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L388" title="1 of 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveInteger() &gt; aNumber.intValue()));</span>
   }
 
   /**
@@ -398,179 +393,59 @@ public class SmallInteger extends Integer
    */
   @Override public   Boolean equals(final Magnitude aNumber)
   {
-<span class="fc" id="L401">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L402">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L403">    return (Boolean)(this.equals(((SmallInteger)aNumber)));</span>
+<span class="fc" id="L396">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L397">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L398">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L399">      return (((Number)aNumber).asRational().equals(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
    * @return 
    */
-  @Override public   Boolean equals(final Numeric aNumber)
+  @Override public   Boolean lessThan(final Scalar aNumber)
   {
-<span class="fc" id="L411">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L412">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L413">    return (Boolean)(((Number)aNumber).asSmallInteger().equals(this));</span>
+<span class="fc" id="L408">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L409">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L410">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L411">      return (((Number)aNumber).asRational().moreThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
    * @return 
    */
-  @Override public   Boolean lessThan(final Rational aNumber)
+  @Override public   Boolean moreThan(final Scalar aNumber)
   {
-<span class="fc" id="L421">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L422">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L423">    return (Boolean)(aNumber.asSmallInteger().moreThan(this));</span>
+<span class="fc" id="L420">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L421">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L422">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L423">      return (((Number)aNumber).asRational().lessThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
    * @return 
    */
-  @Override public   Boolean moreThan(final Rational aNumber)
+  public   Boolean lessThan(final Number aNumber)
   {
-<span class="fc" id="L431">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;moreThan&quot;;</span>
-<span class="fc" id="L432">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L433">    return (Boolean)(aNumber.asSmallInteger().lessThan(this));</span>
+<span class="nc" id="L432">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L433">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L434">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L435">      return (((Number)aNumber).asRational().moreThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
    * @return 
    */
-  public static   SmallInteger from(final Numeric aNumber)
+  public   Boolean moreThan(final Number aNumber)
   {
-<span class="nc" id="L441">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$from&quot;;</span>
-<span class="nc" id="L442">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L443">    return (SmallInteger)SmallInteger.from(aNumber.asInteger().intValue());</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   short primitiveShort()
-  {
-<span class="nc" id="L451">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveShort&quot;;</span>
-<span class="nc" id="L452">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L453">    return (short)this.elementaryInteger().shortValue();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   byte primitiveByte()
-  {
-<span class="nc" id="L461">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveByte&quot;;</span>
-<span class="nc" id="L462">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L463">    return (byte)this.elementaryInteger().byteValue();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   char primitiveCharacter()
-  {
-<span class="fc" id="L471">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveCharacter&quot;;</span>
-<span class="fc" id="L472">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L473">    return (char)((char)this.primitiveInteger());</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   int primitiveInteger()
-  {
-<span class="fc" id="L481">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveInteger&quot;;</span>
-<span class="fc" id="L482">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L483">    return (int)cachedValue;</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   java.lang.Integer elementaryInteger()
-  {
-<span class="fc" id="L491">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;elementaryInteger&quot;;</span>
-<span class="fc" id="L492">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L493">    return (java.lang.Integer)cachedValue;</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   int asPrimitive()
-  {
-<span class="fc" id="L501">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asPrimitive&quot;;</span>
-<span class="fc" id="L502">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L503">    return (int)this.primitiveInteger();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   long primitiveLong()
-  {
-<span class="fc" id="L511">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveLong&quot;;</span>
-<span class="fc" id="L512">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L513">    return (long)this.elementaryInteger().longValue();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   java.lang.Float primitiveFloat()
-  {
-<span class="fc" id="L521">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveFloat&quot;;</span>
-<span class="fc" id="L522">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L523">    return (java.lang.Float)this.elementaryInteger().floatValue();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   java.lang.Double primitiveDouble()
-  {
-<span class="fc" id="L531">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveDouble&quot;;</span>
-<span class="fc" id="L532">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L533">    return (java.lang.Double)this.elementaryInteger().doubleValue();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   java.lang.Number elementaryNumber()
-  {
-<span class="fc" id="L541">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;elementaryNumber&quot;;</span>
-<span class="fc" id="L542">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L543">    return (java.lang.Number)this.elementaryInteger();</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   SmallInteger asSmallInteger()
-  {
-<span class="fc" id="L551">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asSmallInteger&quot;;</span>
-<span class="fc" id="L552">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L553">    return (SmallInteger)this;</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   String asString()
-  {
-<span class="nc" id="L561">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asString&quot;;</span>
-<span class="nc" id="L562">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L563">    return (String)this.printString();</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   FastInteger asFastInteger()
-  {
-<span class="fc" id="L571">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asFastInteger&quot;;</span>
-<span class="fc" id="L572">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L573">    return (FastInteger)FastInteger.fromInteger(this);</span>
+<span class="nc" id="L444">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L445">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L446">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L447">      return (((Number)aNumber).asRational().lessThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -578,9 +453,149 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger generality()
   {
-<span class="fc" id="L581">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;generality&quot;;</span>
-<span class="fc" id="L582">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L583">    return (SmallInteger)this.$class().generality();</span>
+<span class="fc" id="L456">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;generality&quot;;</span>
+<span class="fc" id="L457">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L458">    return (SmallInteger)this.$class().generality();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public static   SmallInteger from(final Numeric aNumber)
+  {
+<span class="nc" id="L466">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;$from&quot;;</span>
+<span class="nc" id="L467">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L468">    return (SmallInteger)SmallInteger.from(aNumber.asInteger().intValue());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   short primitiveShort()
+  {
+<span class="nc" id="L476">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveShort&quot;;</span>
+<span class="nc" id="L477">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L478">    return (short)this.elementaryInteger().shortValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   byte primitiveByte()
+  {
+<span class="nc" id="L486">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveByte&quot;;</span>
+<span class="nc" id="L487">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L488">    return (byte)this.elementaryInteger().byteValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   char primitiveCharacter()
+  {
+<span class="fc" id="L496">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveCharacter&quot;;</span>
+<span class="fc" id="L497">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L498">    return (char)((char)this.primitiveInteger());</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   int primitiveInteger()
+  {
+<span class="fc" id="L506">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveInteger&quot;;</span>
+<span class="fc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L508">    return (int)cachedValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   int asPrimitive()
+  {
+<span class="fc" id="L516">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L517">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L518">    return (int)this.primitiveInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   long primitiveLong()
+  {
+<span class="fc" id="L526">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveLong&quot;;</span>
+<span class="fc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L528">    return (long)this.elementaryInteger().longValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Float primitiveFloat()
+  {
+<span class="fc" id="L536">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveFloat&quot;;</span>
+<span class="fc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L538">    return (java.lang.Float)this.elementaryInteger().floatValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Double primitiveDouble()
+  {
+<span class="fc" id="L546">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;primitiveDouble&quot;;</span>
+<span class="fc" id="L547">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L548">    return (java.lang.Double)this.elementaryInteger().doubleValue();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Number elementaryNumber()
+  {
+<span class="fc" id="L556">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;elementaryNumber&quot;;</span>
+<span class="fc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L558">    return (java.lang.Number)this.elementaryInteger();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   java.lang.Integer elementaryInteger()
+  {
+<span class="fc" id="L566">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;elementaryInteger&quot;;</span>
+<span class="fc" id="L567">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L568">    return (java.lang.Integer)cachedValue;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   SmallInteger asSmallInteger()
+  {
+<span class="fc" id="L576">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asSmallInteger&quot;;</span>
+<span class="fc" id="L577">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L578">    return (SmallInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String asString()
+  {
+<span class="nc" id="L586">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asString&quot;;</span>
+<span class="nc" id="L587">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L588">    return (String)this.printString();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger asFastInteger()
+  {
+<span class="fc" id="L596">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;asFastInteger&quot;;</span>
+<span class="fc" id="L597">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L598">    return (FastInteger)FastInteger.fromInteger(this);</span>
   }
 
   /**
@@ -588,9 +603,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger shallowCopy()
   {
-<span class="nc" id="L591">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;shallowCopy&quot;;</span>
-<span class="nc" id="L592">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L593">    return (SmallInteger)this;</span>
+<span class="nc" id="L606">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;shallowCopy&quot;;</span>
+<span class="nc" id="L607">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L608">    return (SmallInteger)this;</span>
   }
 
   /**
@@ -598,9 +613,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger deepCopy()
   {
-<span class="nc" id="L601">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;deepCopy&quot;;</span>
-<span class="nc" id="L602">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L603">    return (SmallInteger)this.shallowCopy();</span>
+<span class="nc" id="L616">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;deepCopy&quot;;</span>
+<span class="nc" id="L617">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L618">    return (SmallInteger)this.shallowCopy();</span>
   }
 
   /**
@@ -608,10 +623,10 @@ public class SmallInteger extends Integer
    */
   public   SmallInteger unmodifiableInteger()
   {
-<span class="nc" id="L611">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;unmodifiableInteger&quot;;</span>
-<span class="nc" id="L612">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L613">    this.error(String.from(&quot;Attempt to change an unmodifiable SmallInteger instance&quot;));</span>
-<span class="nc" id="L614">    return (SmallInteger)this;</span>
+<span class="nc" id="L626">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;unmodifiableInteger&quot;;</span>
+<span class="nc" id="L627">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L628">    this.error(String.from(&quot;Attempt to change an unmodifiable SmallInteger instance&quot;));</span>
+<span class="nc" id="L629">    return (SmallInteger)this;</span>
   }
 
   /**
@@ -619,9 +634,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitAnd(final Ordinal anInteger)
   {
-<span class="nc" id="L622">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAnd&quot;;</span>
-<span class="nc" id="L623">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L624">    return (SmallInteger)SmallInteger.from((this.intValue() &amp; anInteger.intValue()));</span>
+<span class="fc" id="L637">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAnd&quot;;</span>
+<span class="fc" id="L638">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L639">    return (SmallInteger)SmallInteger.from((this.intValue() &amp; anInteger.intValue()));</span>
   }
 
   /**
@@ -629,9 +644,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitOr(final Ordinal anInteger)
   {
-<span class="nc" id="L632">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitOr&quot;;</span>
-<span class="nc" id="L633">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L634">    return (SmallInteger)SmallInteger.from((this.intValue() | anInteger.intValue()));</span>
+<span class="fc" id="L647">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitOr&quot;;</span>
+<span class="fc" id="L648">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L649">    return (SmallInteger)SmallInteger.from((this.intValue() | anInteger.intValue()));</span>
   }
 
   /**
@@ -639,9 +654,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitXor(final Ordinal anInteger)
   {
-<span class="nc" id="L642">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitXor&quot;;</span>
-<span class="nc" id="L643">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L644">    return (SmallInteger)SmallInteger.from(Primitive.xorBits(this.intValue(), anInteger.intValue()));</span>
+<span class="fc" id="L657">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitXor&quot;;</span>
+<span class="fc" id="L658">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L659">    return (SmallInteger)SmallInteger.from(Primitive.xorBits(this.intValue(), anInteger.intValue()));</span>
   }
 
   /**
@@ -649,15 +664,15 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitAt(final Ordinal index)
   {
-<span class="nc" id="L652">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAt&quot;;</span>
-<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L654">    int x = (((Integer)index).primitiveInteger() - 1);</span>
-<span class="nc bnc" id="L655" title="All 6 branches missed.">    if (((x &lt; 0) | (x &gt; 31))) {</span>
-<span class="nc" id="L656">      throw new IllegalArgumentException(&quot;Bit index out of range, not 1 - 32&quot;);</span>
+<span class="fc" id="L667">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAt&quot;;</span>
+<span class="fc" id="L668">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L669">    int x = (((Integer)index).primitiveInteger() - 1);</span>
+<span class="pc bpc" id="L670" title="3 of 6 branches missed.">    if (((x &lt; 0) | (x &gt; 31))) {</span>
+<span class="nc" id="L671">      throw new IllegalArgumentException(&quot;Bit index out of range, not 1 - 32&quot;);</span>
     };
 
-<span class="nc" id="L659">    SmallInteger s = SmallInteger.from((1 &lt;&lt; x));</span>
-<span class="nc bnc" id="L660" title="All 4 branches missed.">    return (SmallInteger)(Boolean.primitiveValue((this.bitAnd(s).primitiveInteger() == 0)) ? Zero : Unity);</span>
+<span class="fc" id="L674">    SmallInteger s = SmallInteger.from((1 &lt;&lt; x));</span>
+<span class="pc bpc" id="L675" title="2 of 4 branches missed.">    return (SmallInteger)(Boolean.primitiveValue((this.bitAnd(s).primitiveInteger() == 0)) ? Zero : Unity);</span>
   }
 
   /**
@@ -665,23 +680,23 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitAt_put(final Ordinal index, final Ordinal bitValue)
   {
-<span class="nc" id="L668">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAt_put&quot;;</span>
-<span class="nc" id="L669">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L670">    int x = (((Integer)index).intValue() - 1);</span>
+<span class="fc" id="L683">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitAt_put&quot;;</span>
+<span class="fc" id="L684">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L685">    int x = (((Integer)index).intValue() - 1);</span>
 
-<span class="nc" id="L672">    int v = ((Integer)bitValue).intValue();</span>
-<span class="nc bnc" id="L673" title="All 6 branches missed.">    if (((x &lt; 0) | (x &gt; 31))) {</span>
-<span class="nc" id="L674">      throw new IllegalArgumentException(&quot;Bit index out of range, not 1 - 32&quot;);</span>
+<span class="fc" id="L687">    int v = ((Integer)bitValue).intValue();</span>
+<span class="pc bpc" id="L688" title="3 of 6 branches missed.">    if (((x &lt; 0) | (x &gt; 31))) {</span>
+<span class="nc" id="L689">      throw new IllegalArgumentException(&quot;Bit index out of range, not 1 - 32&quot;);</span>
     };
 
-<span class="nc" id="L677">    SmallInteger s = SmallInteger.from((1 &lt;&lt; x));</span>
-<span class="nc bnc" id="L678" title="All 2 branches missed.">    if ((v == 0)) {</span>
-<span class="nc" id="L679">      return SmallInteger.from((this.intValue() &amp; s.bitInvert().intValue()));</span>
+<span class="fc" id="L692">    SmallInteger s = SmallInteger.from((1 &lt;&lt; x));</span>
+<span class="pc bpc" id="L693" title="1 of 2 branches missed.">    if ((v == 0)) {</span>
+<span class="fc" id="L694">      return SmallInteger.from((this.intValue() &amp; s.bitInvert().intValue()));</span>
     };
-<span class="nc bnc" id="L681" title="All 2 branches missed.">    if ((v == 1)) {</span>
-<span class="nc" id="L682">      return SmallInteger.from((this.intValue() | s.intValue()));</span>
+<span class="nc bnc" id="L696" title="All 2 branches missed.">    if ((v == 1)) {</span>
+<span class="nc" id="L697">      return SmallInteger.from((this.intValue() | s.intValue()));</span>
     };
-<span class="nc" id="L684">    throw new IllegalArgumentException(&quot;Bit value must be 0 or 1&quot;);</span>
+<span class="nc" id="L699">    throw new IllegalArgumentException(&quot;Bit value must be 0 or 1&quot;);</span>
   }
 
   /**
@@ -689,32 +704,32 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger bitShift(final Ordinal count)
   {
-<span class="nc" id="L692">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitShift&quot;;</span>
-<span class="nc" id="L693">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L694" title="All 2 branches missed.">    if ((((Integer)count).primitiveInteger() &lt; 0)) {</span>
-<span class="nc" id="L695">      return this.rightShift(((Integer)count.negated()));</span>
+<span class="fc" id="L707">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;bitShift&quot;;</span>
+<span class="fc" id="L708">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">    if ((((Integer)count).primitiveInteger() &lt; 0)) {</span>
+<span class="fc" id="L710">      return this.rightShift(((Integer)count.negated()));</span>
     };
-<span class="nc" id="L697">    return (SmallInteger)this.leftShift(((Integer)count));</span>
+<span class="fc" id="L712">    return (SmallInteger)this.leftShift(((Integer)count));</span>
   }
 
   /**
    * @return 
    */
-  private   SmallInteger rightShift(final Integer count)
+  public   SmallInteger rightShift(final Integer count)
   {
-<span class="nc" id="L705">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;rightShift&quot;;</span>
-<span class="nc" id="L706">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L707">    return (SmallInteger)SmallInteger.from((this.intValue() &gt;&gt; count.intValue()));</span>
+<span class="fc" id="L720">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;rightShift&quot;;</span>
+<span class="fc" id="L721">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L722">    return (SmallInteger)SmallInteger.from((this.intValue() &gt;&gt; count.intValue()));</span>
   }
 
   /**
    * @return 
    */
-  private   SmallInteger leftShift(final Integer count)
+  public   SmallInteger leftShift(final Integer count)
   {
-<span class="nc" id="L715">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;leftShift&quot;;</span>
-<span class="nc" id="L716">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L717">    return (SmallInteger)SmallInteger.from((this.intValue() &lt;&lt; count.intValue()));</span>
+<span class="fc" id="L730">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;leftShift&quot;;</span>
+<span class="fc" id="L731">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L732">    return (SmallInteger)SmallInteger.from((this.intValue() &lt;&lt; count.intValue()));</span>
   }
 
   /**
@@ -722,9 +737,9 @@ public class SmallInteger extends Integer
    */
   @Override public   Boolean isLiteral()
   {
-<span class="nc" id="L725">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;isLiteral&quot;;</span>
-<span class="nc" id="L726">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L727">    return (Boolean)True.literal();</span>
+<span class="nc" id="L740">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L741">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L742">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -732,9 +747,9 @@ public class SmallInteger extends Integer
    */
   @Override public   Boolean isSmallInteger()
   {
-<span class="nc" id="L735">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;isSmallInteger&quot;;</span>
-<span class="nc" id="L736">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L737">    return (Boolean)True.literal();</span>
+<span class="nc" id="L750">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;isSmallInteger&quot;;</span>
+<span class="nc" id="L751">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L752">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -742,12 +757,12 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger abs()
   {
-<span class="fc" id="L745">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;abs&quot;;</span>
-<span class="fc" id="L746">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L747">    return (SmallInteger)(this.lessThan(Zero)).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L748">      return this.negated();</span>
-<span class="fc" id="L749">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L750">      return this;</span>
+<span class="fc" id="L760">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;abs&quot;;</span>
+<span class="fc" id="L761">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L762">    return (SmallInteger)(this.lessThan(Zero)).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L763">      return this.negated();</span>
+<span class="fc" id="L764">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L765">      return this;</span>
     }, &quot;&quot;));
   }
 
@@ -756,9 +771,9 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger negated()
   {
-<span class="fc" id="L759">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;negated&quot;;</span>
-<span class="fc" id="L760">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L761">    return (SmallInteger)SmallInteger.from((Zero.intValue() - this.intValue()));</span>
+<span class="fc" id="L774">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;negated&quot;;</span>
+<span class="fc" id="L775">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L776">    return (SmallInteger)SmallInteger.from((Zero.intValue() - this.intValue()));</span>
   }
 
   /**
@@ -766,16 +781,16 @@ public class SmallInteger extends Integer
    */
   @Override public   SmallInteger timesRepeat(final NiladicValuable aBlock)
   {
-<span class="fc" id="L769">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;timesRepeat&quot;;</span>
-<span class="fc" id="L770">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L771">    FastInteger count = Unity.asFastInteger();</span>
-<span class="fc" id="L772">    Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L773">      return (count.notMore(this));</span>
-<span class="fc" id="L774">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L775">      aBlock.value();</span>
-<span class="fc" id="L776">    count.add(Unity);</span>
-<span class="fc" id="L777">    }, &quot;&quot;));</span>
-<span class="fc" id="L778">    return (SmallInteger)this;</span>
+<span class="fc" id="L784">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;timesRepeat&quot;;</span>
+<span class="fc" id="L785">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L786">    FastInteger count = Unity.asFastInteger();</span>
+<span class="fc" id="L787">    Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L788">      return (count.notMore(this));</span>
+<span class="fc" id="L789">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L790">      aBlock.value();</span>
+<span class="fc" id="L791">    count.add(Unity);</span>
+<span class="fc" id="L792">    }, &quot;&quot;));</span>
+<span class="fc" id="L793">    return (SmallInteger)this;</span>
   }
 
   /**
@@ -783,25 +798,25 @@ public class SmallInteger extends Integer
    */
   public   SmallInteger to_by_do(final SmallInteger otherBound, final SmallInteger delta, final MonadicValuable aBlock)
   {
-<span class="nc" id="L786">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;to_by_do&quot;;</span>
-<span class="nc" id="L787">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L788">    FastInteger index = this.asFastInteger();</span>
-<span class="nc" id="L789">    (delta.moreThan(Zero)).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L790">      return Predicate.with(f3 -&gt; {</span>
-<span class="nc" id="L791">      return (index.notMore(otherBound));</span>
-<span class="nc" id="L792">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L793">      aBlock.value(index);</span>
-<span class="nc" id="L794">    index.add(delta);</span>
-<span class="nc" id="L795">    }, &quot;&quot;));</span>
-<span class="nc" id="L796">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L797">      return Predicate.with(f3 -&gt; {</span>
-<span class="nc" id="L798">      return (otherBound.notMore(index));</span>
-<span class="nc" id="L799">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L800">      aBlock.value(index);</span>
-<span class="nc" id="L801">    index.add(delta);</span>
-<span class="nc" id="L802">    }, &quot;&quot;));</span>
+<span class="nc" id="L801">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;to_by_do&quot;;</span>
+<span class="nc" id="L802">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L803">    FastInteger index = this.asFastInteger();</span>
+<span class="nc" id="L804">    (delta.moreThan(Zero)).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L805">      return Predicate.with(f3 -&gt; {</span>
+<span class="nc" id="L806">      return (index.notMore(otherBound));</span>
+<span class="nc" id="L807">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L808">      aBlock.value(index);</span>
+<span class="nc" id="L809">    index.add(delta);</span>
+<span class="nc" id="L810">    }, &quot;&quot;));</span>
+<span class="nc" id="L811">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L812">      return Predicate.with(f3 -&gt; {</span>
+<span class="nc" id="L813">      return (otherBound.notMore(index));</span>
+<span class="nc" id="L814">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L815">      aBlock.value(index);</span>
+<span class="nc" id="L816">    index.add(delta);</span>
+<span class="nc" id="L817">    }, &quot;&quot;));</span>
     }, &quot;&quot;));
-<span class="nc" id="L804">    return (SmallInteger)this;</span>
+<span class="nc" id="L819">    return (SmallInteger)this;</span>
   }
 
   /**
@@ -809,9 +824,9 @@ public class SmallInteger extends Integer
    */
   @Override public   String printString()
   {
-<span class="fc" id="L812">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L813">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L814">    return (String)String.from(java.lang.Integer.toString(this.intValue()));</span>
+<span class="fc" id="L827">    java.lang.String exitID = &quot;SmallInteger&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L828">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L829">    return (String)String.from(java.lang.Integer.toString(this.intValue()));</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

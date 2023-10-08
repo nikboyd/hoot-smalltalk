@@ -20,13 +20,13 @@ public class TypeList extends Item implements NoteSource {
 <span class="fc" id="L20">    protected TypeList(List&lt;DetailedType&gt; types) { this(); this.details.addAll(types); }</span>
 <span class="nc" id="L21">    @Override public int hashCode() { return hashList(); }</span>
     @Override public boolean equals(Object types) {
-<span class="nc bnc" id="L23" title="All 6 branches missed.">        return hasAny(types) &amp;&amp; getClass() == types.getClass() &amp;&amp; falseOr(d -&gt; equals(d.list()), (TypeList) types); }</span>
+<span class="pc bpc" id="L23" title="3 of 6 branches missed.">        return hasAny(types) &amp;&amp; getClass() == types.getClass() &amp;&amp; falseOr(d -&gt; equals(d.list()), (TypeList) types); }</span>
 
     protected boolean equals(List&lt;DetailedType&gt; details) {
-<span class="nc" id="L26">        final int[] index = { 0 };</span>
-<span class="nc bnc" id="L27" title="All 4 branches missed.">        if (isEmpty() &amp;&amp; details.isEmpty()) return true;</span>
-<span class="nc bnc" id="L28" title="All 2 branches missed.">        return list().size() == details.size() &amp;&amp;</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">            matchAll(list(), d -&gt; d.equals(details.get(index[0]++))); }</span>
+<span class="fc" id="L26">        final int[] index = { 0 };</span>
+<span class="pc bpc" id="L27" title="1 of 4 branches missed.">        if (isEmpty() &amp;&amp; details.isEmpty()) return true;</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        return list().size() == details.size() &amp;&amp;</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">            matchAll(list(), d -&gt; d.equals(details.get(index[0]++))); }</span>
 
 <span class="fc" id="L31">    public static TypeList withDetails(DetailedType... types) { return withDetails(wrap(types)); }</span>
 <span class="fc" id="L32">    public static TypeList withDetails(List&lt;DetailedType&gt; types) { return new TypeList(types); }</span>
@@ -40,8 +40,8 @@ public class TypeList extends Item implements NoteSource {
 <span class="nc" id="L40">        return this; }</span>
 
 <span class="fc" id="L42">    private final List&lt;DetailedType&gt; details = emptyList(DetailedType.class);</span>
-<span class="nc" id="L43">    public List&lt;DetailedType&gt; list() { return this.details; }</span>
-<span class="nc" id="L44">    @Override public boolean isEmpty() { return list().isEmpty(); }</span>
+<span class="fc" id="L43">    public List&lt;DetailedType&gt; list() { return this.details; }</span>
+<span class="fc" id="L44">    @Override public boolean isEmpty() { return list().isEmpty(); }</span>
 
 <span class="nc" id="L46">    public int hashList() { return reduce(map(list(), d -&gt; d.hashCode()), (ha, hb) -&gt; ha ^ hb, 0); }</span>
 <span class="nc bnc" id="L47" title="All 2 branches missed.">    public String firstName() { return isEmpty() ? Empty : list().get(0).typeName().fullName(); }</span>
@@ -58,36 +58,36 @@ public class TypeList extends Item implements NoteSource {
     }
 
     public List&lt;Emission&gt; detailedTypesCode() {
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        return (isEmpty()) ? EmptyList : map(list(), type -&gt; type.emitItem()); }</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        return (isEmpty()) ? EmptyList : map(list(), type -&gt; type.emitItem()); }</span>
 
     public List&lt;Emission&gt; derivedTypesCode() {
 <span class="nc bnc" id="L64" title="All 2 branches missed.">        return (isEmpty()) ? EmptyList : map(list(), type -&gt; type.emitItem()); }</span>
 
     public Map&lt;String, Emission&gt; extractGenerics(boolean wantsBases) {
-<span class="nc" id="L67">        HashMap&lt;String, Emission&gt; results = emptyMap(Emission.class);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (isEmpty()) return results;</span>
+<span class="fc" id="L67">        HashMap&lt;String, Emission&gt; results = emptyMap(Emission.class);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (isEmpty()) return results;</span>
 
-<span class="nc" id="L70">        list().forEach(d -&gt; results.putAll(d.extractGenerics(wantsBases)));</span>
-<span class="nc" id="L71">        return results;</span>
+<span class="fc" id="L70">        list().forEach(d -&gt; results.putAll(d.extractGenerics(wantsBases)));</span>
+<span class="fc" id="L71">        return results;</span>
     }
 
     public List&lt;String&gt; inferGenerics() {
-<span class="nc" id="L75">        ArrayList&lt;String&gt; results = emptyList(String.class);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (isEmpty()) return results;</span>
+<span class="fc" id="L75">        ArrayList&lt;String&gt; results = emptyList(String.class);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (isEmpty()) return results;</span>
 
-<span class="nc" id="L78">        list().forEach(d -&gt; results.addAll(d.inferGenerics()));</span>
-<span class="nc" id="L79">        return results;</span>
+<span class="fc" id="L78">        list().forEach(d -&gt; results.addAll(d.inferGenerics()));</span>
+<span class="fc" id="L79">        return results;</span>
     }
 
-<span class="nc" id="L82">    @Override public Emission emitItem() { return emitList(detailedTypesCode()); }</span>
+<span class="fc" id="L82">    @Override public Emission emitItem() { return emitList(detailedTypesCode()); }</span>
 <span class="nc" id="L83">    public Emission emitCode(boolean wantsBases) { return emitList(emitCodeList(wantsBases)); }</span>
 <span class="nc" id="L84">    public List&lt;Emission&gt; emitCodeList(boolean wantsBases) { return map(list(), d -&gt; d.emitCode(wantsBases)); }</span>
 
     public Emission emitDetails(boolean wantsBases) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        return (list().isEmpty()) ? emitEmpty() : emitDetails(map(list(), d -&gt; d.emitCode(wantsBases))); }</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        return (list().isEmpty()) ? emitEmpty() : emitDetails(map(list(), d -&gt; d.emitCode(wantsBases))); }</span>
 
     public Emission emitMetaNames() {
 <span class="nc bnc" id="L90" title="All 2 branches missed.">        return (isEmpty()) ? null : emitList(map(metaNames(true), name -&gt; emitItem(name))); }</span>
 
 } // TypeList
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

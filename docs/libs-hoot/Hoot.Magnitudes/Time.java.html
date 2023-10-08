@@ -19,40 +19,53 @@ import Hoot.Behaviors.False;
 import Hoot.Behaviors.Boolean;
 import Hoot.Collections.*;
 import Hoot.Collections.String;
-import Hoot.Runtime.Names.Primitive;
-import java.time.LocalDateTime;
-import java.time.Duration;
 import java.lang.System;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import Hoot.Runtime.Names.Primitive;
+import Smalltalk.Magnitudes.Scalar;
 
-<span class="nc" id="L27">public class Time extends Magnitude</span>
+<span class="nc" id="L28">public class Time extends Magnitude</span>
 {
-<span class="nc" id="L29">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L30">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L30">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L31">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Magnitude.Metaclass
   {
-<span class="fc" id="L33">    static final Time.Metaclass $class = new Time.Metaclass();</span>
+<span class="nc" id="L34">    static final Time.Metaclass $class = new Time.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L35">      this(Time.Metaclass.class);</span>
-<span class="fc" id="L36">    }</span>
+<span class="nc" id="L36">      this(Time.Metaclass.class);</span>
+<span class="nc" id="L37">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L39">      super(aClass);</span>
-<span class="fc" id="L40">    }</span>
+<span class="nc" id="L40">      super(aClass);</span>
+<span class="nc" id="L41">    }</span>
 
-<span class="fc" id="L42">    @Override public java.lang.Class outerClass() { return Time.class; }</span>
+<span class="nc" id="L43">    @Override public java.lang.Class outerClass() { return Time.class; }</span>
 
+    /**
+     * @return 
+     */
+    @Override public   Time $new()
+    {
+<span class="nc" id="L50">      java.lang.String exitID = &quot;TimeMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L51">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L52">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L53">      return (Time)f0.exit(exitID, new Time());</span>
+      });
+    }
   }
 
 
+<span class="nc" id="L59">  protected LocalDateTime localTime = Time.now();</span>
   /**
    * @return 
    */
   public static   Duration clockPrecision()
   {
-<span class="nc" id="L52">    java.lang.String exitID = &quot;Time&gt;&gt;$clockPrecision&quot;;</span>
-<span class="nc" id="L53">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L54">    long now = System.currentTimeMillis();</span>
-<span class="nc" id="L55">    return (Duration)Duration.ofMillis((System.currentTimeMillis() - now));</span>
+<span class="nc" id="L65">    java.lang.String exitID = &quot;Time&gt;&gt;$clockPrecision&quot;;</span>
+<span class="nc" id="L66">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L67">    long now = System.currentTimeMillis();</span>
+<span class="nc" id="L68">    return (Duration)Duration.ofMillis((System.currentTimeMillis() - now));</span>
   }
 
   /**
@@ -60,9 +73,85 @@ import java.lang.System;
    */
   public static   LocalDateTime now()
   {
-<span class="fc" id="L63">    java.lang.String exitID = &quot;Time&gt;&gt;$now&quot;;</span>
-<span class="fc" id="L64">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L65">    return (LocalDateTime)LocalDateTime.now();</span>
+<span class="fc" id="L76">    java.lang.String exitID = &quot;Time&gt;&gt;$now&quot;;</span>
+<span class="fc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L78">    return (LocalDateTime)LocalDateTime.now();</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   LocalDateTime localTime()
+  {
+<span class="nc" id="L86">    java.lang.String exitID = &quot;Time&gt;&gt;localTime&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (LocalDateTime)localTime;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final Time aTime)
+  {
+<span class="nc" id="L96">    java.lang.String exitID = &quot;Time&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L98">    return (Boolean)Boolean.from((localTime.equals(aTime.localTime())));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Time aTime)
+  {
+<span class="nc" id="L106">    java.lang.String exitID = &quot;Time&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L107">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L108">    return (Boolean)Boolean.from(localTime.isBefore(aTime.localTime()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Time aTime)
+  {
+<span class="nc" id="L116">    java.lang.String exitID = &quot;Time&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L117">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L118">    return (Boolean)Boolean.from(localTime.isAfter(aTime.localTime()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude value)
+  {
+<span class="nc" id="L126">    java.lang.String exitID = &quot;Time&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L127">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L128">    return (Boolean)Time.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L129">      return (this.equals(((Time)value)));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar value)
+  {
+<span class="nc" id="L138">    java.lang.String exitID = &quot;Time&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (Boolean)Time.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L141">      return (this.lessThan(((Time)value)));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean moreThan(final Scalar value)
+  {
+<span class="nc" id="L150">    java.lang.String exitID = &quot;Time&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L151">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L152">    return (Boolean)Time.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L153">      return (this.moreThan(((Time)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -70,9 +159,9 @@ import java.lang.System;
    */
   public static   String printTimeNow()
   {
-<span class="fc" id="L73">    java.lang.String exitID = &quot;Time&gt;&gt;$printTimeNow&quot;;</span>
-<span class="fc" id="L74">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L75">    return (String)Time.printTime(Time.now());</span>
+<span class="fc" id="L162">    java.lang.String exitID = &quot;Time&gt;&gt;$printTimeNow&quot;;</span>
+<span class="fc" id="L163">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L164">    return (String)Time.printTime(Time.now());</span>
   }
 
   /**
@@ -80,9 +169,9 @@ import java.lang.System;
    */
   public static   String printTime(final LocalDateTime time)
   {
-<span class="fc" id="L83">    java.lang.String exitID = &quot;Time&gt;&gt;$printTime&quot;;</span>
-<span class="fc" id="L84">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L85">    return (String)String.from(Primitive.printTime(time));</span>
+<span class="fc" id="L172">    java.lang.String exitID = &quot;Time&gt;&gt;$printTime&quot;;</span>
+<span class="fc" id="L173">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L174">    return (String)String.from(Primitive.printTime(time));</span>
   }
 
   /**
@@ -90,9 +179,9 @@ import java.lang.System;
    */
   public static   String formatTime_as(final LocalDateTime time, final String timeFormat)
   {
-<span class="nc" id="L93">    java.lang.String exitID = &quot;Time&gt;&gt;$formatTime_as&quot;;</span>
-<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L95">    return (String)String.from(Primitive.formatTime(time, timeFormat.asPrimitive()));</span>
+<span class="nc" id="L182">    java.lang.String exitID = &quot;Time&gt;&gt;$formatTime_as&quot;;</span>
+<span class="nc" id="L183">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L184">    return (String)String.from(Primitive.formatTime(time, timeFormat.asPrimitive()));</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

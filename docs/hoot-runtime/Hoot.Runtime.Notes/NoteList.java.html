@@ -18,68 +18,69 @@ import static Hoot.Runtime.Notes.Note.*;
  */
 <span class="fc" id="L19">public class NoteList implements EmissionSource {</span>
 
-<span class="nc" id="L21">    public static NoteList with(List&lt;Note&gt; notes) { return new NoteList().noteAll(notes); }</span>
+<span class="fc" id="L21">    public static NoteList with(Note... notes) { return with(wrap(notes)); }</span>
+<span class="fc" id="L22">    public static NoteList with(List&lt;Note&gt; notes) { return new NoteList().noteAll(notes); }</span>
 
-<span class="fc" id="L23">    private final List&lt;Note&gt; notes = emptyList(Note.class);</span>
-<span class="nc" id="L24">    public List&lt;Note&gt; notes() { return this.notes; }</span>
-<span class="nc" id="L25">    public NoteList noteAll(List&lt;Note&gt; notes) { notes.forEach(n -&gt; note(n)); return this; }</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">    public void note(Note note) { if (!anyMatch(n -&gt; n.name().equals(note.name()))) notes().add(note); }</span>
-<span class="nc bnc" id="L27" title="All 4 branches missed.">    boolean anyMatch(Predicate&lt;? super Note&gt; predicate) { return !isEmpty() &amp;&amp; matchAny(notes(), predicate); }</span>
-<span class="nc" id="L28">    public List&lt;String&gt; names() { return map(notes(), note -&gt; note.name()); }</span>
+<span class="fc" id="L24">    private final List&lt;Note&gt; notes = emptyList(Note.class);</span>
+<span class="fc" id="L25">    public List&lt;Note&gt; notes() { return this.notes; }</span>
+<span class="fc" id="L26">    public NoteList noteAll(List&lt;Note&gt; notes) { notes.forEach(n -&gt; note(n)); return this; }</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    public void note(Note note) { if (!anyMatch(n -&gt; n.name().equals(note.name()))) notes().add(note); }</span>
+<span class="fc bfc" id="L28" title="All 4 branches covered.">    boolean anyMatch(Predicate&lt;? super Note&gt; predicate) { return !isEmpty() &amp;&amp; matchAny(notes(), predicate); }</span>
+<span class="fc" id="L29">    public List&lt;String&gt; names() { return map(notes(), note -&gt; note.name()); }</span>
 
-<span class="nc" id="L30">    public void makeStatic() { note(StaticNote); }</span>
-<span class="nc" id="L31">    public void makeTransient() { note(TransientNote); }</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">    public void makeProtectedIfNeeded() { if (!hasAccess()) note(ProtectedNote); }</span>
+<span class="nc" id="L31">    public void makeStatic() { note(StaticNote); }</span>
+<span class="nc" id="L32">    public void makeTransient() { note(TransientNote); }</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    public void makeProtectedIfNeeded() { if (!hasAccess()) note(ProtectedNote); }</span>
 
-<span class="nc" id="L34">    public boolean isEmpty() { return notes().isEmpty(); }</span>
-<span class="nc" id="L35">    public boolean isVoid() { return anyMatch(note -&gt; note.isVoid()); }</span>
-<span class="nc" id="L36">    public boolean isStatic() { return anyMatch(note -&gt; note.isStatic()); }</span>
-<span class="nc" id="L37">    public boolean isStacked() { return anyMatch(note -&gt; note.isStacked()); }</span>
-<span class="nc" id="L38">    public boolean isTransient() { return anyMatch(note -&gt; note.isTransient()); }</span>
-<span class="nc" id="L39">    public boolean isPrimitive() { return anyMatch(note -&gt; note.isPrimitive()); }</span>
-<span class="nc" id="L40">    public boolean isAbstract() { return anyMatch(note -&gt; note.isAbstract()); }</span>
-<span class="nc bnc" id="L41" title="All 4 branches missed.">    public boolean isAbstractive() { return anyMatch(note -&gt; note.isAbstract() || note.isNative()); }</span>
-<span class="nc" id="L42">    public boolean isPublic() { return anyMatch(note -&gt; note.isPublic()); }</span>
-<span class="nc" id="L43">    public boolean isProtected() { return anyMatch(note -&gt; note.isProtected()); }</span>
-<span class="nc" id="L44">    public boolean isProperty() { return anyMatch(note -&gt; note.isProperty()); }</span>
-<span class="nc" id="L45">    public boolean hasAccess() { return anyMatch(note -&gt; note.isAccess()); }</span>
+<span class="fc" id="L35">    public boolean isEmpty() { return notes().isEmpty(); }</span>
+<span class="fc" id="L36">    public boolean isVoid() { return anyMatch(note -&gt; note.isVoid()); }</span>
+<span class="fc" id="L37">    public boolean isStatic() { return anyMatch(note -&gt; note.isStatic()); }</span>
+<span class="fc" id="L38">    public boolean isStacked() { return anyMatch(note -&gt; note.isStacked()); }</span>
+<span class="fc" id="L39">    public boolean isTransient() { return anyMatch(note -&gt; note.isTransient()); }</span>
+<span class="fc" id="L40">    public boolean isPrimitive() { return anyMatch(note -&gt; note.isPrimitive()); }</span>
+<span class="fc" id="L41">    public boolean isAbstract() { return anyMatch(note -&gt; note.isAbstract()); }</span>
+<span class="pc bpc" id="L42" title="2 of 4 branches missed.">    public boolean isAbstractive() { return anyMatch(note -&gt; note.isAbstract() || note.isNative()); }</span>
+<span class="fc" id="L43">    public boolean isPublic() { return anyMatch(note -&gt; note.isPublic()); }</span>
+<span class="fc" id="L44">    public boolean isProtected() { return anyMatch(note -&gt; note.isProtected()); }</span>
+<span class="fc" id="L45">    public boolean isProperty() { return anyMatch(note -&gt; note.isProperty()); }</span>
+<span class="fc" id="L46">    public boolean hasAccess() { return anyMatch(note -&gt; note.isAccess()); }</span>
 
-<span class="nc" id="L47">    public List&lt;Note&gt; selectNotes(Predicate&lt;Note&gt; predicate) { return select(notes(), predicate); }</span>
+<span class="nc" id="L48">    public List&lt;Note&gt; selectNotes(Predicate&lt;Note&gt; predicate) { return select(notes(), predicate); }</span>
     public String notice() {
-<span class="nc" id="L49">        List&lt;Note&gt; results = selectNotes(n -&gt; n.isNotice());</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        return results.isEmpty() ? Empty : results.get(0).notice();</span>
+<span class="nc" id="L50">        List&lt;Note&gt; results = selectNotes(n -&gt; n.isNotice());</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        return results.isEmpty() ? Empty : results.get(0).notice();</span>
     }
 
-<span class="nc" id="L53">    public List&lt;String&gt; typeDecor() { return selectDecor(Public, n -&gt; n.isTypeDecorOnly()); }</span>
-<span class="nc" id="L54">    public List&lt;String&gt; classDecor() { return selectDecor(Public, n -&gt; n.isClassDecorOnly()); }</span>
+<span class="nc" id="L54">    public List&lt;String&gt; typeDecor() { return selectDecor(Public, n -&gt; n.isTypeDecorOnly()); }</span>
+<span class="nc" id="L55">    public List&lt;String&gt; classDecor() { return selectDecor(Public, n -&gt; n.isClassDecorOnly()); }</span>
     public List&lt;String&gt; selectDecor(String defaultDecor, Predicate&lt;Note&gt; predicate) {
-<span class="nc" id="L56">        List&lt;String&gt; results = mapList(notes(), predicate, n -&gt; n.decor());</span>
-<span class="nc bnc" id="L57" title="All 4 branches missed.">        if (!defaultDecor.isEmpty() &amp;&amp; !this.hasAccess()) {</span>
-<span class="nc" id="L58">            results.add(0, defaultDecor.toLowerCase());</span>
+<span class="fc" id="L57">        List&lt;String&gt; results = mapList(notes(), predicate, n -&gt; n.decor());</span>
+<span class="fc bfc" id="L58" title="All 4 branches covered.">        if (!defaultDecor.isEmpty() &amp;&amp; !this.hasAccess()) {</span>
+<span class="fc" id="L59">            results.add(0, defaultDecor.toLowerCase());</span>
         }
-<span class="nc" id="L60">        return results;</span>
+<span class="fc" id="L61">        return results;</span>
     }
 
-<span class="nc" id="L63">    public List&lt;Emission&gt; metaNotesOnlyDecor() { return emitOnlyDecor(Static, note -&gt; note.isClassDecorOnly()); }</span>
-<span class="nc" id="L64">    public List&lt;Emission&gt; classNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isClassDecorOnly()); }</span>
-<span class="nc" id="L65">    public List&lt;Emission&gt; classNotesWithoutDecor() { return emitOnlyNotes(note -&gt; note.isClassNoteOnly()); }</span>
-<span class="nc" id="L66">    public List&lt;Emission&gt; assignedNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isVariableDecorOnly()); }</span>
-<span class="nc" id="L67">    public List&lt;Emission&gt; variableNotesOnlyDecor() { return emitOnlyDecor(Protected, note -&gt; note.isVariableDecorOnly()); }</span>
-<span class="nc" id="L68">    public List&lt;Emission&gt; argumentNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isArgumentDecorOnly()); }</span>
-<span class="nc" id="L69">    public List&lt;Emission&gt; methodNotesWithoutDecor() { return emitOnlyNotes(note -&gt; note.isMethodNoteOnly()); }</span>
-<span class="nc" id="L70">    public List&lt;Emission&gt; methodNotesOnlyDecor() { return emitOnlyDecor(Public, note -&gt; note.isMethodDecorOnly()); }</span>
+<span class="nc" id="L64">    public List&lt;Emission&gt; metaNotesOnlyDecor() { return emitOnlyDecor(Static, note -&gt; note.isClassDecorOnly()); }</span>
+<span class="fc" id="L65">    public List&lt;Emission&gt; classNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isClassDecorOnly()); }</span>
+<span class="fc" id="L66">    public List&lt;Emission&gt; classNotesWithoutDecor() { return emitOnlyNotes(note -&gt; note.isClassNoteOnly()); }</span>
+<span class="fc" id="L67">    public List&lt;Emission&gt; assignedNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isVariableDecorOnly()); }</span>
+<span class="pc" id="L68">    public List&lt;Emission&gt; variableNotesOnlyDecor() { return emitOnlyDecor(Protected, note -&gt; note.isVariableDecorOnly()); }</span>
+<span class="fc" id="L69">    public List&lt;Emission&gt; argumentNotesOnlyDecor() { return emitOnlyDecor(Empty, note -&gt; note.isArgumentDecorOnly()); }</span>
+<span class="fc" id="L70">    public List&lt;Emission&gt; methodNotesWithoutDecor() { return emitOnlyNotes(note -&gt; note.isMethodNoteOnly()); }</span>
+<span class="fc" id="L71">    public List&lt;Emission&gt; methodNotesOnlyDecor() { return emitOnlyDecor(Public, note -&gt; note.isMethodDecorOnly()); }</span>
 
-<span class="nc" id="L72">    public Emission emitLines() { return emitLines(emitCodeList()); }</span>
-<span class="nc" id="L73">    @Override public Emission emitItem() { return emitSequence(emitCodeList()); }</span>
+<span class="nc" id="L73">    public Emission emitLines() { return emitLines(emitCodeList()); }</span>
+<span class="nc" id="L74">    @Override public Emission emitItem() { return emitSequence(emitCodeList()); }</span>
 
     public List&lt;Emission&gt; emitOnlyNotes(Predicate&lt;Note&gt; predicate) {
-<span class="nc" id="L76">        return mapList(notes(), predicate, note -&gt; note.emitItem()); }</span>
+<span class="fc" id="L77">        return mapList(notes(), predicate, note -&gt; note.emitItem()); }</span>
 
     public List&lt;Emission&gt; emitOnlyDecor(String defaultDecor, Predicate&lt;Note&gt; predicate) {
-<span class="nc" id="L79">        return map(selectDecor(defaultDecor, predicate), d -&gt; emitItem(d)); }</span>
+<span class="fc" id="L80">        return map(selectDecor(defaultDecor, predicate), d -&gt; emitItem(d)); }</span>
 
     public List&lt;Emission&gt; emitCodeList() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        return mapList(notes(), note -&gt; !Decor.hootNote(note.name()), note -&gt; note.emitItem()); }</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        return mapList(notes(), note -&gt; !Decor.hootNote(note.name()), note -&gt; note.emitItem()); }</span>
 
 } // NoteList
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

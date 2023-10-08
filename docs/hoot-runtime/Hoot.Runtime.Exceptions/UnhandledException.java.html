@@ -15,9 +15,9 @@ public class UnhandledException extends ExceptionBase
 <span class="nc" id="L15">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends ExceptionBase.Metaclass
   {
-<span class="fc" id="L18">    static final UnhandledException.Metaclass $class = new UnhandledException.Metaclass();</span>
-<span class="fc" id="L19">    public Metaclass() { this(UnhandledException.Metaclass.class); }</span>
-<span class="fc" id="L20">    public Metaclass(java.lang.Class aClass) { super(aClass); }</span>
+<span class="nc" id="L18">    static final UnhandledException.Metaclass $class = new UnhandledException.Metaclass();</span>
+<span class="nc" id="L19">    public Metaclass() { this(UnhandledException.Metaclass.class); }</span>
+<span class="nc" id="L20">    public Metaclass(java.lang.Class aClass) { super(aClass); }</span>
 <span class="nc" id="L21">    @Override public java.lang.Class outerClass() { return UnhandledException.class; }</span>
 <span class="nc" id="L22">    public void raise(final Valued anException) { new UnhandledException(anException).raise(); }</span>
   }
@@ -28,4 +28,4 @@ public class UnhandledException extends ExceptionBase
 <span class="nc" id="L28">  public Valued unhandledException() { return exception; }</span>
   protected Valued exception;
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -22,21 +22,21 @@ import Hoot.Runtime.Emissions.NamedItem;
  */
 public class Table extends NamedItem {
 
-<span class="nc" id="L25">    public Table(Scope container) { super(container); }</span>
+<span class="fc" id="L25">    public Table(Scope container) { super(container); }</span>
 
     /**
      * Maintains an indexed collection of symbols.
      */
-<span class="nc" id="L30">    protected Map&lt;String, Variable&gt; contents = emptyMap(Variable.class);</span>
+<span class="fc" id="L30">    protected Map&lt;String, Variable&gt; contents = emptyMap(Variable.class);</span>
 <span class="nc" id="L31">    public int size() { return contents.size(); }</span>
 
     /**
      * Maintains symbols in the order of their definition.
      */
-<span class="nc" id="L36">    protected List&lt;Variable&gt; order = emptyList(Variable.class);</span>
-<span class="nc" id="L37">    public List&lt;Variable&gt; symbols() { return copyList(order); }</span>
-<span class="nc bnc" id="L38" title="All 2 branches missed.">    public List&lt;Variable&gt; definedSymbols() { return select(order, v -&gt; !v.isEmpty()); }</span>
-<span class="nc bnc" id="L39" title="All 4 branches missed.">    @Override public boolean isEmpty() { return this.order == null || this.order.isEmpty(); }</span>
+<span class="fc" id="L36">    protected List&lt;Variable&gt; order = emptyList(Variable.class);</span>
+<span class="fc" id="L37">    public List&lt;Variable&gt; symbols() { return copyList(order); }</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">    public List&lt;Variable&gt; definedSymbols() { return select(order, v -&gt; !v.isEmpty()); }</span>
+<span class="pc bpc" id="L39" title="3 of 4 branches missed.">    @Override public boolean isEmpty() { return this.order == null || this.order.isEmpty(); }</span>
 
     /**
      * Establishes (container) as the container for this scope.
@@ -44,11 +44,11 @@ public class Table extends NamedItem {
      * @param container the container scope.
      */
     @Override public void container(Item container) {
-<span class="nc" id="L47">        super.container(container);</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (!isEmpty()) {</span>
+<span class="fc" id="L47">        super.container(container);</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (!isEmpty()) {</span>
 <span class="nc" id="L49">            symbols().forEach(symbol -&gt; symbol.container(container));</span>
         }
-<span class="nc" id="L51">    }</span>
+<span class="fc" id="L51">    }</span>
 
     public Table withAll(Table table) {
 <span class="nc" id="L54">        table.order.forEach(v -&gt; addSymbol(v));</span>
@@ -77,10 +77,10 @@ public class Table extends NamedItem {
 //    }
 
     protected boolean captureSymbol(Variable symbol) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (!symbol.isEmpty()) {</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (!contents.containsKey(symbol.name())) {</span>
-<span class="nc" id="L82">                contents.put(symbol.name(), symbol);</span>
-<span class="nc" id="L83">                return true;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (!symbol.isEmpty()) {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">            if (!contents.containsKey(symbol.name())) {</span>
+<span class="fc" id="L82">                contents.put(symbol.name(), symbol);</span>
+<span class="fc" id="L83">                return true;</span>
             }
         }
 <span class="nc" id="L86">        return false;</span>
@@ -103,10 +103,10 @@ public class Table extends NamedItem {
      * @param symbol a named symbol.
      */
     public void addSymbol(Variable symbol) {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (captureSymbol(symbol)) {</span>
-<span class="nc" id="L107">            order.add(symbol);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (captureSymbol(symbol)) {</span>
+<span class="fc" id="L107">            order.add(symbol);</span>
         }
-<span class="nc" id="L109">    }</span>
+<span class="fc" id="L109">    }</span>
 
     /**
      * Returns the current symbol being defined by the compiler.
@@ -138,7 +138,7 @@ public class Table extends NamedItem {
      * @return the named symbol, or null if the table does not contain the named symbol.
      */
     public Variable symbolNamed(String name) {
-<span class="nc" id="L141">        return (Variable) contents.get(name);</span>
+<span class="fc" id="L141">        return (Variable) contents.get(name);</span>
     }
 
     /**
@@ -146,18 +146,18 @@ public class Table extends NamedItem {
      */
     @Override
     public void clean() {
-<span class="nc" id="L149">        super.clean();</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (order.isEmpty()) {</span>
+<span class="fc" id="L149">        super.clean();</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (order.isEmpty()) {</span>
 <span class="nc" id="L151">            return;</span>
         }
 
-<span class="nc" id="L154">        Variable end = order.get(order.size() - 1);</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (end.isEmpty()) {</span>
+<span class="fc" id="L154">        Variable end = order.get(order.size() - 1);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        if (end.isEmpty()) {</span>
 <span class="nc" id="L156">            order.remove(end);</span>
         }
 
-<span class="nc" id="L159">        symbols().forEach(symbol -&gt; symbol.clean());</span>
-<span class="nc" id="L160">    }</span>
+<span class="fc" id="L159">        symbols().forEach(symbol -&gt; symbol.clean());</span>
+<span class="fc" id="L160">    }</span>
 
     /**
      * Removes all the symbols from the table.
@@ -178,10 +178,10 @@ public class Table extends NamedItem {
      * @return whether all of the symbols have erasable types
      */
     public boolean hasErasableTypes() {
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (Variable symbol : symbols()) {</span>
-<span class="nc" id="L182">            TypeName resolver = symbol.typeResolver();</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">            if (resolver.isUnknown()) return false;</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (resolver.isEraseableType()) return true;</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        for (Variable symbol : symbols()) {</span>
+<span class="fc" id="L182">            TypeName resolver = symbol.typeResolver();</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">            if (resolver.isUnknown()) return false;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">            if (resolver.isEraseableType()) return true;</span>
 
 <span class="nc" id="L186">            Typified typeFace = Library.findFace(resolver.fullName());</span>
 <span class="nc bnc" id="L187" title="All 2 branches missed.">            if (typeFace == null) return false;</span>
@@ -208,18 +208,18 @@ public class Table extends NamedItem {
      * @return whether any of the symbols resolve to elementary type.
      */
     public boolean hasElementaryNames() {
-<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (Variable symbol : symbols()) {</span>
-<span class="nc" id="L212">            String typeName = symbol.type();</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (Primitive.isElementaryType(typeName)) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        for (Variable symbol : symbols()) {</span>
+<span class="fc" id="L212">            String typeName = symbol.type();</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">            if (Primitive.isElementaryType(typeName)) {</span>
 <span class="nc" id="L214">                return true;</span>
             }
 
-<span class="nc" id="L217">            Typified typeFace = Library.findFace(typeName);</span>
-<span class="nc bnc" id="L218" title="All 4 branches missed.">            if (typeFace != null &amp;&amp; Primitive.isElementaryType(typeFace.fullName())) {</span>
+<span class="fc" id="L217">            Typified typeFace = Library.findFace(typeName);</span>
+<span class="pc bpc" id="L218" title="3 of 4 branches missed.">            if (typeFace != null &amp;&amp; Primitive.isElementaryType(typeFace.fullName())) {</span>
 <span class="nc" id="L219">                return true;</span>
             }
-<span class="nc" id="L221">        }</span>
-<span class="nc" id="L222">        return false;</span>
+<span class="fc" id="L221">        }</span>
+<span class="fc" id="L222">        return false;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

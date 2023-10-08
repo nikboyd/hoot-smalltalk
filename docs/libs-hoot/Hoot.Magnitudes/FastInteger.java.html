@@ -19,23 +19,24 @@ import Hoot.Behaviors.False;
 import Hoot.Behaviors.Boolean;
 import Hoot.Collections.*;
 import Hoot.Collections.String;
+import Smalltalk.Magnitudes.Ordinal;
 
 public final class FastInteger extends SmallInteger
 {
-<span class="nc" id="L25">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="fc" id="L26">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L26">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L27">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends SmallInteger.Metaclass
   {
-<span class="fc" id="L29">    static final FastInteger.Metaclass $class = new FastInteger.Metaclass();</span>
+<span class="fc" id="L30">    static final FastInteger.Metaclass $class = new FastInteger.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L31">      this(FastInteger.Metaclass.class);</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L32">      this(FastInteger.Metaclass.class);</span>
+<span class="fc" id="L33">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L35">      super(aClass);</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L36">      super(aClass);</span>
+<span class="fc" id="L37">    }</span>
 
-<span class="fc" id="L38">    @Override public java.lang.Class outerClass() { return FastInteger.class; }</span>
+<span class="fc" id="L39">    @Override public java.lang.Class outerClass() { return FastInteger.class; }</span>
 
   }
 
@@ -45,19 +46,30 @@ public final class FastInteger extends SmallInteger
    */
   protected    FastInteger(final Integer anInteger)
   {
-<span class="fc" id="L48">    super(anInteger.primitiveInteger());</span>
-<span class="fc" id="L49">    java.lang.String exitID = &quot;FastInteger&gt;&gt;FastInteger&quot;;</span>
-<span class="fc" id="L50">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L51">  }</span>
+<span class="fc" id="L49">    super(anInteger.primitiveInteger());</span>
+<span class="fc" id="L50">    java.lang.String exitID = &quot;FastInteger&gt;&gt;FastInteger&quot;;</span>
+<span class="fc" id="L51">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L52">  }</span>
 
   /**
    * @return 
    */
   public static   FastInteger fromInteger(final Integer anInteger)
   {
-<span class="fc" id="L58">    java.lang.String exitID = &quot;FastInteger&gt;&gt;$fromInteger&quot;;</span>
-<span class="fc" id="L59">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L60">    return (FastInteger)new FastInteger(anInteger);</span>
+<span class="fc" id="L59">    java.lang.String exitID = &quot;FastInteger&gt;&gt;$fromInteger&quot;;</span>
+<span class="fc" id="L60">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L61">    return (FastInteger)new FastInteger(anInteger);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger value(final Integer value)
+  {
+<span class="fc" id="L69">    java.lang.String exitID = &quot;FastInteger&gt;&gt;value&quot;;</span>
+<span class="fc" id="L70">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L71">     cachedValue = value.intValue();</span>
+<span class="fc" id="L72">    return (FastInteger)this;</span>
   }
 
   /**
@@ -65,10 +77,64 @@ public final class FastInteger extends SmallInteger
    */
   public   FastInteger value(final IntegerValue.Source source)
   {
-<span class="nc" id="L68">    java.lang.String exitID = &quot;FastInteger&gt;&gt;value&quot;;</span>
-<span class="nc" id="L69">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L70">     cachedValue = source.intValue();</span>
-<span class="nc" id="L71">    return (FastInteger)this;</span>
+<span class="nc" id="L80">    java.lang.String exitID = &quot;FastInteger&gt;&gt;value&quot;;</span>
+<span class="nc" id="L81">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L82">     cachedValue = source.intValue();</span>
+<span class="nc" id="L83">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   SmallInteger value()
+  {
+<span class="fc" id="L91">    java.lang.String exitID = &quot;FastInteger&gt;&gt;value&quot;;</span>
+<span class="fc" id="L92">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L93">    return (SmallInteger)SmallInteger.from(cachedValue);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger increment()
+  {
+<span class="fc" id="L101">    java.lang.String exitID = &quot;FastInteger&gt;&gt;increment&quot;;</span>
+<span class="fc" id="L102">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L103">    this.add(Unity);</span>
+<span class="fc" id="L104">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger decrement()
+  {
+<span class="nc" id="L112">    java.lang.String exitID = &quot;FastInteger&gt;&gt;decrement&quot;;</span>
+<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L114">    this.subtract(Unity);</span>
+<span class="nc" id="L115">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger add(final int aNumber)
+  {
+<span class="nc" id="L123">    java.lang.String exitID = &quot;FastInteger&gt;&gt;add&quot;;</span>
+<span class="nc" id="L124">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L125">    cachedValue += aNumber;</span>
+<span class="nc" id="L126">    return (FastInteger)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   FastInteger add(final Ordinal aNumber)
+  {
+<span class="fc" id="L134">    java.lang.String exitID = &quot;FastInteger&gt;&gt;add&quot;;</span>
+<span class="fc" id="L135">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L136">    cachedValue += aNumber.intValue();</span>
+<span class="fc" id="L137">    return (FastInteger)this;</span>
   }
 
   /**
@@ -76,10 +142,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger add(final SmallInteger aNumber)
   {
-<span class="fc" id="L79">    java.lang.String exitID = &quot;FastInteger&gt;&gt;add&quot;;</span>
-<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L81">    cachedValue += aNumber.primitiveInteger();</span>
-<span class="fc" id="L82">    return (FastInteger)this;</span>
+<span class="fc" id="L145">    java.lang.String exitID = &quot;FastInteger&gt;&gt;add&quot;;</span>
+<span class="fc" id="L146">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L147">    cachedValue += aNumber.primitiveInteger();</span>
+<span class="fc" id="L148">    return (FastInteger)this;</span>
   }
 
   /**
@@ -87,10 +153,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger subtract(final SmallInteger aNumber)
   {
-<span class="fc" id="L90">    java.lang.String exitID = &quot;FastInteger&gt;&gt;subtract&quot;;</span>
-<span class="fc" id="L91">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L92">    cachedValue -= aNumber.primitiveInteger();</span>
-<span class="fc" id="L93">    return (FastInteger)this;</span>
+<span class="fc" id="L156">    java.lang.String exitID = &quot;FastInteger&gt;&gt;subtract&quot;;</span>
+<span class="fc" id="L157">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L158">    cachedValue -= aNumber.primitiveInteger();</span>
+<span class="fc" id="L159">    return (FastInteger)this;</span>
   }
 
   /**
@@ -98,10 +164,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger multiplyBy(final SmallInteger aNumber)
   {
-<span class="nc" id="L101">    java.lang.String exitID = &quot;FastInteger&gt;&gt;multiplyBy&quot;;</span>
-<span class="nc" id="L102">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L103">    cachedValue *= aNumber.primitiveInteger();</span>
-<span class="nc" id="L104">    return (FastInteger)this;</span>
+<span class="nc" id="L167">    java.lang.String exitID = &quot;FastInteger&gt;&gt;multiplyBy&quot;;</span>
+<span class="nc" id="L168">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L169">    cachedValue *= aNumber.primitiveInteger();</span>
+<span class="nc" id="L170">    return (FastInteger)this;</span>
   }
 
   /**
@@ -109,10 +175,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger divideBy(final SmallInteger aNumber)
   {
-<span class="nc" id="L112">    java.lang.String exitID = &quot;FastInteger&gt;&gt;divideBy&quot;;</span>
-<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L114">    cachedValue /= aNumber.primitiveInteger();</span>
-<span class="nc" id="L115">    return (FastInteger)this;</span>
+<span class="nc" id="L178">    java.lang.String exitID = &quot;FastInteger&gt;&gt;divideBy&quot;;</span>
+<span class="nc" id="L179">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L180">    cachedValue /= aNumber.primitiveInteger();</span>
+<span class="nc" id="L181">    return (FastInteger)this;</span>
   }
 
   /**
@@ -120,10 +186,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger bitXorWith(final SmallInteger aNumber)
   {
-<span class="nc" id="L123">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitXorWith&quot;;</span>
-<span class="nc" id="L124">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L125">    cachedValue ^= aNumber.primitiveInteger();</span>
-<span class="nc" id="L126">    return (FastInteger)this;</span>
+<span class="nc" id="L189">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitXorWith&quot;;</span>
+<span class="nc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L191">    cachedValue ^= aNumber.primitiveInteger();</span>
+<span class="nc" id="L192">    return (FastInteger)this;</span>
   }
 
   /**
@@ -131,10 +197,10 @@ public final class FastInteger extends SmallInteger
    */
   public final   FastInteger bitShiftWith(final SmallInteger aNumber)
   {
-<span class="nc" id="L134">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitShiftWith&quot;;</span>
-<span class="nc" id="L135">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L136">    cachedValue &lt;&lt;= aNumber.primitiveInteger();</span>
-<span class="nc" id="L137">    return (FastInteger)this;</span>
+<span class="nc" id="L200">    java.lang.String exitID = &quot;FastInteger&gt;&gt;bitShiftWith&quot;;</span>
+<span class="nc" id="L201">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L202">    cachedValue &lt;&lt;= aNumber.primitiveInteger();</span>
+<span class="nc" id="L203">    return (FastInteger)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

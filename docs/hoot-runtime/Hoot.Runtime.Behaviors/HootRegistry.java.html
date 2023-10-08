@@ -7,121 +7,126 @@ import Hoot.Runtime.Names.TypeName;
 import static Hoot.Runtime.Names.Keyword.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Names.TypeName.*;
+import Hoot.Runtime.Faces.ConditionalValue;
 import Hoot.Runtime.Faces.Logging;
 
 /**
- * Hoot runtime class with registries.
+ * Hoot run-time class with registries.
  *
  * @author nik &lt;nikboyd@sonic.net&gt;
  * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
  * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
  */
-<span class="nc" id="L19">public class HootRegistry implements Logging {</span>
+<span class="nc" id="L20">public class HootRegistry implements Logging {</span>
 
-<span class="fc" id="L21">    protected static final HashMap&lt;Class&lt;?&gt;, Object&gt; ValueRegistry = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L22">    protected static final HashMap&lt;Class&lt;?&gt;, Object&gt; ValueRegistry = new HashMap&lt;&gt;();</span>
     public static void registerValue(Object instance) {
-<span class="nc" id="L23">        nullOr(item -&gt; ValueRegistry.put(item.getClass(), item), instance); }</span>
+<span class="nc" id="L24">        nullOr(item -&gt; ValueRegistry.put(item.getClass(), item), instance); }</span>
 
     @SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L26">    public static &lt;T&gt; T getValue(Class&lt;?&gt; aClass) { return (T)nullOr(c -&gt; ValueRegistry.get(c), aClass); }</span>
+<span class="nc" id="L27">    public static &lt;T&gt; T getValue(Class&lt;?&gt; aClass) { return (T)nullOr(c -&gt; ValueRegistry.get(c), aClass); }</span>
 
     @SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L29">    public static &lt;T&gt; T getRegistered(Class&lt;?&gt; aClass) { return (T)nullOr(c -&gt; TypeRegistry.get(c), aClass); }</span>
-<span class="nc" id="L30">    public static &lt;T&gt; T getRegistered(TypeName className) { return getRegistered(className.findClass()); }</span>
+<span class="nc" id="L30">    public static &lt;T&gt; T getRegistered(Class&lt;?&gt; aClass) { return (T)nullOr(c -&gt; TypeRegistry.get(c), aClass); }</span>
+<span class="nc" id="L31">    public static &lt;T&gt; T getRegistered(TypeName className) { return getRegistered(className.findClass()); }</span>
 
-<span class="fc" id="L32">    protected static final HashMap&lt;Class&lt;?&gt;, Typified&gt; TypeRegistry = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L33">    public static Typified emptyType() { return Mirror.emptyMirror(); }</span>
-<span class="fc" id="L34">    public static Typified getType(Class&lt;?&gt; aClass) { return emptyOr(aClass); }</span>
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    public static boolean hasType(Class&lt;?&gt; aClass) { return !getType(aClass).isEmpty(); }</span>
-<span class="pc bpc" id="L36" title="1 of 2 branches missed.">    public static Typified emptyOr(Class&lt;?&gt; aClass) { return (hasNone(aClass)) ? emptyType() : emptyOrType(aClass); }</span>
-<span class="fc" id="L37">    protected static Typified emptyOrType(Class&lt;?&gt; aClass) { return TypeRegistry.getOrDefault(aClass, emptyType()); }</span>
+<span class="fc" id="L33">    protected static final HashMap&lt;Class&lt;?&gt;, Typified&gt; TypeRegistry = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L34">    public static Typified emptyType() { return Mirror.emptyMirror(); }</span>
+<span class="fc" id="L35">    public static Typified getType(Class&lt;?&gt; aClass) { return emptyOr(aClass); }</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">    public static boolean hasType(Class&lt;?&gt; aClass) { return !getType(aClass).isEmpty(); }</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">    public static Typified emptyOr(Class&lt;?&gt; aClass) { return (hasNone(aClass)) ? emptyType() : emptyOrType(aClass); }</span>
+<span class="fc" id="L38">    protected static Typified emptyOrType(Class&lt;?&gt; aClass) { return TypeRegistry.getOrDefault(aClass, emptyType()); }</span>
     public static Typified registerType(Typified type) {
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (hasNo(type)) return emptyType(); // vacuous --nik</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (hasType(type.primitiveClass())) return getType(type.primitiveClass());</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (hasNo(type)) return emptyType(); // vacuous --nik</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (hasType(type.primitiveClass())) return getType(type.primitiveClass());</span>
 
-<span class="fc" id="L42">        Mirror m = Mirror.forClass(type.outerClass());</span>
-<span class="fc" id="L43">        TypeRegistry.put(type.primitiveClass(), type);</span>
-<span class="fc" id="L44">        type.reportRegistration();</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (!m.isEmpty()) {</span>
-<span class="nc" id="L46">            TypeRegistry.put(type.outerClass(), m);</span>
-<span class="nc" id="L47">            m.reportRegistration();</span>
+<span class="fc" id="L43">        Mirror m = Mirror.forClass(type.outerClass());</span>
+<span class="fc" id="L44">        TypeRegistry.put(type.primitiveClass(), type);</span>
+<span class="fc" id="L45">        type.reportRegistration();</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (!m.isEmpty()) {</span>
+<span class="nc" id="L47">            TypeRegistry.put(type.outerClass(), m);</span>
+<span class="nc" id="L48">            m.reportRegistration();</span>
         }
-<span class="fc" id="L49">        return type; }</span>
+<span class="fc" id="L50">        return type; }</span>
 
-<span class="fc" id="L51">    public static Class&lt;?&gt; JavaRoot() { return JavaRoot; }</span>
-<span class="nc" id="L52">    public static Class&lt;?&gt; RootClass() { return itemOr(JavaRoot, RootType().findClass()); }</span>
+<span class="fc" id="L52">    public static Class&lt;?&gt; JavaRoot() { return JavaRoot; }</span>
+<span class="nc" id="L53">    public static Class&lt;?&gt; RootClass() { return itemOr(JavaRoot, RootType().findClass()); }</span>
 
-<span class="nc" id="L54">    public static TypeName ObjectType() { return TypeName.ObjectType(); }</span>
-<span class="nc" id="L55">    public static TypeName RootType() { return TypeName.RootType(); }</span>
-<span class="fc" id="L56">    public static TypeName ArrayType() { return TypeName.ArrayType(); }</span>
+<span class="nc" id="L55">    public static TypeName ObjectType() { return TypeName.ObjectType(); }</span>
+<span class="nc" id="L56">    public static TypeName RootType() { return TypeName.RootType(); }</span>
+<span class="fc" id="L57">    public static TypeName ArrayType() { return TypeName.ArrayType(); }</span>
 
-<span class="nc" id="L58">    public static TypeName BooleanType() { return TypeName.fromCache(Hoot, Behaviors, Boolean); }</span>
-<span class="nc" id="L59">    public static TypeName BehaviorType() { return TypeName.fromCache(Hoot, Behaviors, Behavior); }</span>
-<span class="nc" id="L60">    public static TypeName ClassType() { return TypeName.fromCache(Hoot, Behaviors, ClassType); }</span>
-<span class="nc" id="L61">    public static TypeName MetaclassType() { return TypeName.fromCache(Hoot, Behaviors, MetaclassType); }</span>
+<span class="nc" id="L59">    public static TypeName BooleanType() { return TypeName.fromCache(Hoot, Behaviors, Boolean); }</span>
+<span class="nc" id="L60">    public static TypeName BehaviorType() { return TypeName.fromCache(Hoot, Behaviors, Behavior); }</span>
+<span class="nc" id="L61">    public static TypeName ClassType() { return TypeName.fromCache(Hoot, Behaviors, ClassType); }</span>
+<span class="nc" id="L62">    public static TypeName MetaclassType() { return TypeName.fromCache(Hoot, Behaviors, MetaclassType); }</span>
 
-<span class="fc" id="L63">    public static TypeName NilType() { return TypeName.fromCache(Hoot, Behaviors, Nil); }</span>
-<span class="fc" id="L64">    public static TypeName TrueType() { return TypeName.fromCache(Hoot, Behaviors, True); }</span>
-<span class="fc" id="L65">    public static TypeName FalseType() { return TypeName.fromCache(Hoot, Behaviors, False); }</span>
-<span class="fc" id="L66">    public static TypeName StringType() { return TypeName.fromCache(Hoot, Collections, String); }</span>
-<span class="fc" id="L67">    public static TypeName SymbolType() { return TypeName.fromCache(Hoot, Collections, Symbol); }</span>
-<span class="fc" id="L68">    public static TypeName CharacterType() { return TypeName.fromCache(Hoot, Magnitudes, Character); }</span>
-<span class="fc" id="L69">    public static TypeName IntegerType() { return TypeName.fromCache(Hoot, Magnitudes, Integer); }</span>
-<span class="fc" id="L70">    public static TypeName FixedType() { return TypeName.fromCache(Hoot, Magnitudes, Fixed); }</span>
-<span class="fc" id="L71">    public static TypeName FloatType() { return TypeName.fromCache(Hoot, Magnitudes, Float); }</span>
-<span class="fc" id="L72">    public static TypeName DoubleType() { return TypeName.fromCache(Hoot, Magnitudes, Double); }</span>
+<span class="fc" id="L64">    public static TypeName NilType() { return TypeName.fromCache(Hoot, Behaviors, Nil); }</span>
+<span class="fc" id="L65">    public static TypeName TrueType() { return TypeName.fromCache(Hoot, Behaviors, True); }</span>
+<span class="fc" id="L66">    public static TypeName FalseType() { return TypeName.fromCache(Hoot, Behaviors, False); }</span>
+<span class="fc" id="L67">    public static TypeName StringType() { return TypeName.fromCache(Hoot, Collections, String); }</span>
+<span class="fc" id="L68">    public static TypeName SymbolType() { return TypeName.fromCache(Hoot, Collections, Symbol); }</span>
+<span class="fc" id="L69">    public static TypeName CharacterType() { return TypeName.fromCache(Hoot, Magnitudes, Character); }</span>
+<span class="fc" id="L70">    public static TypeName IntegerType() { return TypeName.fromCache(Hoot, Magnitudes, Integer); }</span>
+<span class="fc" id="L71">    public static TypeName FixedType() { return TypeName.fromCache(Hoot, Magnitudes, Fixed); }</span>
+<span class="fc" id="L72">    public static TypeName FloatType() { return TypeName.fromCache(Hoot, Magnitudes, Float); }</span>
+<span class="fc" id="L73">    public static TypeName DoubleType() { return TypeName.fromCache(Hoot, Magnitudes, Double); }</span>
 
-<span class="nc" id="L74">    public static Valued Nil() { return getValue(NilType().findClass()); }</span>
-<span class="nc" id="L75">    public static Valued True() { return getValue(TrueType().findClass()); }</span>
-<span class="nc" id="L76">    public static Valued False() { return getValue(FalseType().findClass()); }</span>
+<span class="nc" id="L75">    public static Valued Nil() { return getValue(NilType().findClass()); }</span>
+<span class="nc" id="L76">    public static Valued True() { return getValue(TrueType().findClass()); }</span>
+<span class="nc" id="L77">    public static Valued False() { return getValue(FalseType().findClass()); }</span>
 
-<span class="nc" id="L78">    public static boolean isRunning() { return false; }</span>
-<span class="nc" id="L79">    public static boolean isReady() { return false; }</span>
+<span class="nc" id="L79">    public static Valued nilValue() { return getValue(NilType().findClass()); }</span>
+<span class="nc" id="L80">    public static ConditionalValue trueValue() { return getValue(TrueType().findClass()); }</span>
+<span class="nc" id="L81">    public static ConditionalValue falseValue() { return getValue(FalseType().findClass()); }</span>
 
-<span class="fc" id="L81">    static final TypeName[] LiteralTypes = {</span>
-<span class="fc" id="L82">        NilType(), TrueType(), FalseType(), StringType(), SymbolType(),</span>
-<span class="fc" id="L83">        CharacterType(), IntegerType(), FixedType(), FloatType(), DoubleType(),</span>
-<span class="fc" id="L84">        ArrayType(),</span>
+<span class="nc" id="L83">    public static boolean isRunning() { return false; }</span>
+<span class="nc" id="L84">    public static boolean isReady() { return false; }</span>
+
+<span class="fc" id="L86">    static final TypeName[] LiteralTypes = {</span>
+<span class="fc" id="L87">        NilType(), TrueType(), FalseType(), StringType(), SymbolType(),</span>
+<span class="fc" id="L88">        CharacterType(), IntegerType(), FixedType(), FloatType(), DoubleType(),</span>
+<span class="fc" id="L89">        ArrayType(),</span>
     };
 
-<span class="fc" id="L87">    static final TypeName[] CollectionTypes = {</span>
-<span class="fc" id="L88">        TypeName.fromCache(Hoot, Collections, &quot;Set&quot;),</span>
-<span class="fc" id="L89">        TypeName.fromCache(Hoot, Collections, &quot;Bag&quot;),</span>
-<span class="fc" id="L90">        TypeName.fromCache(Hoot, Collections, &quot;ByteArray&quot;),</span>
-<span class="fc" id="L91">        TypeName.fromCache(Hoot, Collections, &quot;Dictionary&quot;),</span>
-<span class="fc" id="L92">        TypeName.fromCache(Hoot, Collections, &quot;IdentityDictionary&quot;),</span>
-<span class="fc" id="L93">        TypeName.fromCache(Hoot, Collections, &quot;IdentitySet&quot;),</span>
-<span class="fc" id="L94">        TypeName.fromCache(Hoot, Collections, &quot;OrderedCollection&quot;),</span>
-<span class="fc" id="L95">        TypeName.fromCache(Hoot, Collections, &quot;SortedCollection&quot;),</span>
-<span class="fc" id="L96">        TypeName.fromCache(Hoot, Collections, &quot;Interval&quot;),</span>
+<span class="fc" id="L92">    static final TypeName[] CollectionTypes = {</span>
+<span class="fc" id="L93">        TypeName.fromCache(Hoot, Collections, &quot;Set&quot;),</span>
+<span class="fc" id="L94">        TypeName.fromCache(Hoot, Collections, &quot;Bag&quot;),</span>
+<span class="fc" id="L95">        TypeName.fromCache(Hoot, Collections, &quot;ByteArray&quot;),</span>
+<span class="fc" id="L96">        TypeName.fromCache(Hoot, Collections, &quot;Dictionary&quot;),</span>
+<span class="fc" id="L97">        TypeName.fromCache(Hoot, Collections, &quot;IdentityDictionary&quot;),</span>
+<span class="fc" id="L98">        TypeName.fromCache(Hoot, Collections, &quot;IdentitySet&quot;),</span>
+<span class="fc" id="L99">        TypeName.fromCache(Hoot, Collections, &quot;OrderedCollection&quot;),</span>
+<span class="fc" id="L100">        TypeName.fromCache(Hoot, Collections, &quot;SortedCollection&quot;),</span>
+<span class="fc" id="L101">        TypeName.fromCache(Hoot, Collections, &quot;Interval&quot;),</span>
     };
 
-<span class="fc" id="L99">    static final TypeName[] MagnitudeTypes = {</span>
-<span class="fc" id="L100">        TypeName.fromCache(Hoot, Magnitudes, &quot;Time&quot;),</span>
-<span class="fc" id="L101">        TypeName.fromCache(Hoot, Magnitudes, &quot;Fraction&quot;),</span>
-<span class="fc" id="L102">        TypeName.fromCache(Hoot, Magnitudes, &quot;Association&quot;),</span>
-<span class="fc" id="L103">        TypeName.fromCache(Hoot, Magnitudes, &quot;FastInteger&quot;),</span>
-<span class="fc" id="L104">        TypeName.fromCache(Hoot, Magnitudes, &quot;LargeInteger&quot;),</span>
-<span class="fc" id="L105">        TypeName.fromCache(Hoot, Magnitudes, &quot;LongInteger&quot;),</span>
+<span class="fc" id="L104">    static final TypeName[] MagnitudeTypes = {</span>
+<span class="fc" id="L105">        TypeName.fromCache(Hoot, Magnitudes, &quot;Time&quot;),</span>
+<span class="fc" id="L106">        TypeName.fromCache(Hoot, Magnitudes, &quot;Fraction&quot;),</span>
+<span class="fc" id="L107">        TypeName.fromCache(Hoot, Magnitudes, &quot;Association&quot;),</span>
+<span class="fc" id="L108">        TypeName.fromCache(Hoot, Magnitudes, &quot;FastInteger&quot;),</span>
+<span class="fc" id="L109">        TypeName.fromCache(Hoot, Magnitudes, &quot;LargeInteger&quot;),</span>
+<span class="fc" id="L110">        TypeName.fromCache(Hoot, Magnitudes, &quot;LongInteger&quot;),</span>
     };
 
-<span class="fc" id="L108">    static final TypeName[] ExceptionTypes = {</span>
-<span class="fc" id="L109">        TypeName.fromCache(Hoot, Exceptions, &quot;Exception&quot;),</span>
-<span class="fc" id="L110">        TypeName.fromCache(Hoot, Exceptions, &quot;Error&quot;),</span>
-<span class="fc" id="L111">        TypeName.fromCache(Hoot, Exceptions, &quot;ControlError&quot;),</span>
-<span class="fc" id="L112">        TypeName.fromCache(Hoot, Exceptions, &quot;Warning&quot;),</span>
-<span class="fc" id="L113">        TypeName.fromCache(Hoot, Exceptions, &quot;ArithmeticError&quot;),</span>
-<span class="fc" id="L114">        TypeName.fromCache(Hoot, Exceptions, &quot;ZeroDivide&quot;),</span>
+<span class="fc" id="L113">    static final TypeName[] ExceptionTypes = {</span>
+<span class="fc" id="L114">        TypeName.fromCache(Hoot, Exceptions, &quot;Exception&quot;),</span>
+<span class="fc" id="L115">        TypeName.fromCache(Hoot, Exceptions, &quot;Error&quot;),</span>
+<span class="fc" id="L116">        TypeName.fromCache(Hoot, Exceptions, &quot;ControlError&quot;),</span>
+<span class="fc" id="L117">        TypeName.fromCache(Hoot, Exceptions, &quot;Warning&quot;),</span>
+<span class="fc" id="L118">        TypeName.fromCache(Hoot, Exceptions, &quot;ArithmeticError&quot;),</span>
+<span class="fc" id="L119">        TypeName.fromCache(Hoot, Exceptions, &quot;ZeroDivide&quot;),</span>
     };
 
-<span class="fc" id="L117">    static final TypeName[] StreamTypes = {</span>
-<span class="fc" id="L118">        TypeName.fromCache(Hoot, Streams, &quot;Transcript&quot;),</span>
-<span class="fc" id="L119">        TypeName.fromCache(Hoot, Streams, &quot;TextWriteStream&quot;),</span>
+<span class="fc" id="L122">    static final TypeName[] StreamTypes = {</span>
+<span class="fc" id="L123">        TypeName.fromCache(Hoot, Streams, &quot;Transcript&quot;),</span>
+<span class="fc" id="L124">        TypeName.fromCache(Hoot, Streams, &quot;TextWriteStream&quot;),</span>
     };
 
     static {
-<span class="fc" id="L123">        registerType(Mirror.forClass(JavaRoot));</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L128">        registerType(Mirror.forClass(JavaRoot));</span>
+<span class="fc" id="L129">    }</span>
 
 } // HootRegistry
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -57,6 +57,18 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
 <span class="nc" id="L57">      return (Subject)f0.exit(exitID, Primitive.newInstance(this.outerClass()));</span>
       });
     }
+
+    /**
+     * @return 
+     */
+    public   Boolean accepts(final java.lang.Object item)
+    {
+<span class="fc" id="L66">      java.lang.String exitID = &quot;ObjectMetatype&gt;&gt;accepts&quot;;</span>
+<span class="fc" id="L67">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L68">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L69">      return (Boolean)f0.exit(exitID, Boolean.from(this.outerClass().isInstance(item)));</span>
+      });
+    }
   }
 
 
@@ -64,20 +76,20 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    * 
    */
   protected    Object()
-<span class="fc" id="L67">  {</span>
-<span class="fc" id="L68">    java.lang.String exitID = &quot;Object&gt;&gt;Object&quot;;</span>
-<span class="fc" id="L69">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L70">  }</span>
+<span class="fc" id="L79">  {</span>
+<span class="fc" id="L80">    java.lang.String exitID = &quot;Object&gt;&gt;Object&quot;;</span>
+<span class="fc" id="L81">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L82">  }</span>
 
   /**
    * @return 
    */
   public synchronized   Object acquireMonitorDuring(final NiladicValuable aBlock)
   {
-<span class="fc" id="L77">    java.lang.String exitID = &quot;Object&gt;&gt;acquireMonitorDuring&quot;;</span>
-<span class="fc" id="L78">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L79">    aBlock.value();</span>
-<span class="fc" id="L80">    return (Object)this;</span>
+<span class="fc" id="L89">    java.lang.String exitID = &quot;Object&gt;&gt;acquireMonitorDuring&quot;;</span>
+<span class="fc" id="L90">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L91">    aBlock.value();</span>
+<span class="fc" id="L92">    return (Object)this;</span>
   }
 
   /**
@@ -85,10 +97,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public synchronized   Object awakenAllWaitingThreads()
   {
-<span class="fc" id="L88">    java.lang.String exitID = &quot;Object&gt;&gt;awakenAllWaitingThreads&quot;;</span>
-<span class="fc" id="L89">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L90">    this.notifyAll();</span>
-<span class="fc" id="L91">    return (Object)this;</span>
+<span class="fc" id="L100">    java.lang.String exitID = &quot;Object&gt;&gt;awakenAllWaitingThreads&quot;;</span>
+<span class="fc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L102">    this.notifyAll();</span>
+<span class="fc" id="L103">    return (Object)this;</span>
   }
 
   /**
@@ -96,10 +108,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public synchronized   Object awakenOneWaitingThread()
   {
-<span class="nc" id="L99">    java.lang.String exitID = &quot;Object&gt;&gt;awakenOneWaitingThread&quot;;</span>
-<span class="nc" id="L100">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L101">    this.notify();</span>
-<span class="nc" id="L102">    return (Object)this;</span>
+<span class="nc" id="L111">    java.lang.String exitID = &quot;Object&gt;&gt;awakenOneWaitingThread&quot;;</span>
+<span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L113">    this.notify();</span>
+<span class="nc" id="L114">    return (Object)this;</span>
   }
 
   /**
@@ -107,14 +119,14 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public synchronized   Object waitForChange_ifInterrupted(final Number duration, final NiladicValuable aBlock)
   {
-<span class="nc" id="L110">    java.lang.String exitID = &quot;Object&gt;&gt;waitForChange_ifInterrupted&quot;;</span>
-<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L122">    java.lang.String exitID = &quot;Object&gt;&gt;waitForChange_ifInterrupted&quot;;</span>
+<span class="nc" id="L123">    Frame f0 = new Frame(exitID);</span>
     try {
-<span class="nc" id="L113">      this.wait(duration.primitiveLong());</span>
-<span class="nc" id="L114">    } catch (InterruptedException ex) {</span>
-<span class="nc" id="L115">      aBlock.value();</span>
-<span class="nc" id="L116">    };</span>
-<span class="nc" id="L117">    return (Object)this;</span>
+<span class="nc" id="L125">      this.wait(duration.primitiveLong());</span>
+<span class="nc" id="L126">    } catch (InterruptedException ex) {</span>
+<span class="nc" id="L127">      aBlock.value();</span>
+<span class="nc" id="L128">    };</span>
+<span class="nc" id="L129">    return (Object)this;</span>
   }
 
   /**
@@ -122,14 +134,14 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public synchronized   Object waitForChangeIfInterrupted(final NiladicValuable aBlock)
   {
-<span class="fc" id="L125">    java.lang.String exitID = &quot;Object&gt;&gt;waitForChangeIfInterrupted&quot;;</span>
-<span class="fc" id="L126">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L137">    java.lang.String exitID = &quot;Object&gt;&gt;waitForChangeIfInterrupted&quot;;</span>
+<span class="fc" id="L138">    Frame f0 = new Frame(exitID);</span>
     try {
-<span class="fc" id="L128">      this.wait();</span>
-<span class="nc" id="L129">    } catch (InterruptedException ex) {</span>
-<span class="nc" id="L130">      aBlock.value();</span>
-<span class="fc" id="L131">    };</span>
-<span class="fc" id="L132">    return (Object)this;</span>
+<span class="fc" id="L140">      this.wait();</span>
+<span class="nc" id="L141">    } catch (InterruptedException ex) {</span>
+<span class="nc" id="L142">      aBlock.value();</span>
+<span class="fc" id="L143">    };</span>
+<span class="fc" id="L144">    return (Object)this;</span>
   }
 
   /**
@@ -137,9 +149,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Subject value()
   {
-<span class="nc" id="L140">    java.lang.String exitID = &quot;Object&gt;&gt;value&quot;;</span>
-<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L142">    return (Subject)this;</span>
+<span class="nc" id="L152">    java.lang.String exitID = &quot;Object&gt;&gt;value&quot;;</span>
+<span class="nc" id="L153">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L154">    return (Subject)this;</span>
   }
 
   /**
@@ -147,9 +159,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public  &lt;ResultType extends Subject&gt; ResultType yourself()
   {
-<span class="fc" id="L150">    java.lang.String exitID = &quot;Object&gt;&gt;yourself&quot;;</span>
-<span class="fc" id="L151">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L152">    return (ResultType)this;</span>
+<span class="fc" id="L162">    java.lang.String exitID = &quot;Object&gt;&gt;yourself&quot;;</span>
+<span class="fc" id="L163">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L164">    return (ResultType)this;</span>
   }
 
   /**
@@ -157,9 +169,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Behavior species()
   {
-<span class="fc" id="L160">    java.lang.String exitID = &quot;Object&gt;&gt;species&quot;;</span>
-<span class="fc" id="L161">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L162">    return (Behavior)this.$class();</span>
+<span class="fc" id="L172">    java.lang.String exitID = &quot;Object&gt;&gt;species&quot;;</span>
+<span class="fc" id="L173">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L174">    return (Behavior)this.$class();</span>
   }
 
   /**
@@ -167,9 +179,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Association associateWith(final Object associate)
   {
-<span class="fc" id="L170">    java.lang.String exitID = &quot;Object&gt;&gt;associateWith&quot;;</span>
-<span class="fc" id="L171">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L172">    return (Association)Association.withKey_withValue(this, associate);</span>
+<span class="fc" id="L182">    java.lang.String exitID = &quot;Object&gt;&gt;associateWith&quot;;</span>
+<span class="fc" id="L183">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L184">    return (Association)Association.withKey_withValue(this, associate);</span>
   }
 
   /**
@@ -177,15 +189,15 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   int compareTo(final java.lang.Object candidate)
   {
-<span class="fc" id="L180">    java.lang.String exitID = &quot;Object&gt;&gt;compareTo&quot;;</span>
-<span class="fc" id="L181">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">    if ((candidate == null)) {</span>
-<span class="nc" id="L183">      Hoot.Exceptions.UnhandledJavaException.raiseNullPointer();</span>
+<span class="fc" id="L192">    java.lang.String exitID = &quot;Object&gt;&gt;compareTo&quot;;</span>
+<span class="fc" id="L193">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L195">      Hoot.Exceptions.UnhandledJavaException.raiseNullPointer();</span>
     };
-<span class="fc bfc" id="L185" title="All 2 branches covered.">    if (this.equals(candidate)) {</span>
-<span class="fc" id="L186">      return 0;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">    if (this.equals(candidate)) {</span>
+<span class="fc" id="L198">      return 0;</span>
     };
-<span class="fc bfc" id="L188" title="All 2 branches covered.">    return (int)(Boolean.primitiveValue(this.lessThan(((Scalar)candidate))) ? Negativity.intValue() : Unity.intValue());</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">    return (int)(Boolean.primitiveValue(this.lessThan(((Scalar)candidate))) ? Negativity.intValue() : Unity.intValue());</span>
   }
 
   /**
@@ -193,12 +205,12 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   boolean equals(final java.lang.Object candidate)
   {
-<span class="fc" id="L196">    java.lang.String exitID = &quot;Object&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L197">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">    if ((candidate == null)) {</span>
-<span class="nc" id="L199">      return false;</span>
+<span class="fc" id="L208">    java.lang.String exitID = &quot;Object&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L209">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">    if ((candidate == null)) {</span>
+<span class="nc" id="L211">      return false;</span>
     };
-<span class="fc" id="L201">    return (boolean)this.equals(((Subject)candidate)).asPrimitive();</span>
+<span class="fc" id="L213">    return (boolean)this.equals(((Subject)candidate)).asPrimitive();</span>
   }
 
   /**
@@ -206,9 +218,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   int hashCode()
   {
-<span class="fc" id="L209">    java.lang.String exitID = &quot;Object&gt;&gt;hashCode&quot;;</span>
-<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L211">    return (int)super.hashCode();</span>
+<span class="fc" id="L221">    java.lang.String exitID = &quot;Object&gt;&gt;hashCode&quot;;</span>
+<span class="fc" id="L222">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L223">    return (int)super.hashCode();</span>
   }
 
   /**
@@ -216,9 +228,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean equals(final Subject candidate)
   {
-<span class="nc" id="L219">    java.lang.String exitID = &quot;Object&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L220">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L221">    return (Boolean)(this.isSame(((Object)candidate)));</span>
+<span class="nc" id="L231">    java.lang.String exitID = &quot;Object&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L232">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L233">    return (Boolean)(this.isSame(((Object)candidate)));</span>
   }
 
   /**
@@ -226,9 +238,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isSame(final Object candidate)
   {
-<span class="fc" id="L229">    java.lang.String exitID = &quot;Object&gt;&gt;isSame&quot;;</span>
-<span class="fc" id="L230">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">    return (Boolean)Boolean.from((this == candidate));</span>
+<span class="fc" id="L241">    java.lang.String exitID = &quot;Object&gt;&gt;isSame&quot;;</span>
+<span class="fc" id="L242">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">    return (Boolean)Boolean.from((this == candidate));</span>
   }
 
   /**
@@ -236,9 +248,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isSame(final Subject candidate)
   {
-<span class="nc" id="L239">    java.lang.String exitID = &quot;Object&gt;&gt;isSame&quot;;</span>
-<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L241">    return (Boolean)((Object)candidate).isSame(this);</span>
+<span class="fc" id="L251">    java.lang.String exitID = &quot;Object&gt;&gt;isSame&quot;;</span>
+<span class="fc" id="L252">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L253">    return (Boolean)((Object)candidate).isSame(this);</span>
   }
 
   /**
@@ -246,9 +258,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean notEqual(final Subject candidate)
   {
-<span class="nc" id="L249">    java.lang.String exitID = &quot;Object&gt;&gt;notEqual&quot;;</span>
-<span class="nc" id="L250">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L251">    return (Boolean)((Boolean)(this.equals(candidate)).not());</span>
+<span class="nc" id="L261">    java.lang.String exitID = &quot;Object&gt;&gt;notEqual&quot;;</span>
+<span class="nc" id="L262">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L263">    return (Boolean)((Boolean)(this.equals(candidate)).not());</span>
   }
 
   /**
@@ -256,9 +268,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean notSame(final Subject candidate)
   {
-<span class="nc" id="L259">    java.lang.String exitID = &quot;Object&gt;&gt;notSame&quot;;</span>
-<span class="nc" id="L260">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L261">    return (Boolean)((Boolean)(this.isSame(candidate)).not());</span>
+<span class="nc" id="L271">    java.lang.String exitID = &quot;Object&gt;&gt;notSame&quot;;</span>
+<span class="nc" id="L272">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L273">    return (Boolean)((Boolean)(this.isSame(candidate)).not());</span>
   }
 
   /**
@@ -266,9 +278,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public final   Integer hash()
   {
-<span class="nc" id="L269">    java.lang.String exitID = &quot;Object&gt;&gt;hash&quot;;</span>
-<span class="nc" id="L270">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L271">    return (Integer)SmallInteger.from(this.hashCode());</span>
+<span class="nc" id="L281">    java.lang.String exitID = &quot;Object&gt;&gt;hash&quot;;</span>
+<span class="nc" id="L282">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L283">    return (Integer)SmallInteger.from(this.hashCode());</span>
   }
 
   /**
@@ -276,9 +288,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public final   Integer identityHash()
   {
-<span class="fc" id="L279">    java.lang.String exitID = &quot;Object&gt;&gt;identityHash&quot;;</span>
-<span class="fc" id="L280">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L281">    return (Integer)SmallInteger.from(super.hashCode());</span>
+<span class="fc" id="L291">    java.lang.String exitID = &quot;Object&gt;&gt;identityHash&quot;;</span>
+<span class="fc" id="L292">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L293">    return (Integer)SmallInteger.from(super.hashCode());</span>
   }
 
   /**
@@ -286,9 +298,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean lessThan(final Scalar upperBound)
   {
-<span class="nc" id="L289">    java.lang.String exitID = &quot;Object&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L290">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L291">    return (Boolean)((Boolean)(upperBound.moreThan(this)));</span>
+<span class="nc" id="L301">    java.lang.String exitID = &quot;Object&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L302">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L303">    return (Boolean)((Boolean)(upperBound.moreThan(this)));</span>
   }
 
   /**
@@ -296,9 +308,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean notMore(final Scalar upperBound)
   {
-<span class="nc" id="L299">    java.lang.String exitID = &quot;Object&gt;&gt;notMore&quot;;</span>
-<span class="nc" id="L300">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L301">    return (Boolean)Boolean.from((this.moreThan(upperBound)).not());</span>
+<span class="fc" id="L311">    java.lang.String exitID = &quot;Object&gt;&gt;notMore&quot;;</span>
+<span class="fc" id="L312">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L313">    return (Boolean)Boolean.from((this.moreThan(upperBound)).not());</span>
   }
 
   /**
@@ -306,9 +318,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean moreThan(final Scalar lowerBound)
   {
-<span class="nc" id="L309">    java.lang.String exitID = &quot;Object&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L310">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L311">    return (Boolean)((Boolean)(lowerBound.lessThan(this)));</span>
+<span class="nc" id="L321">    java.lang.String exitID = &quot;Object&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L322">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L323">    return (Boolean)((Boolean)(lowerBound.lessThan(this)));</span>
   }
 
   /**
@@ -316,9 +328,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean notLess(final Scalar lowerBound)
   {
-<span class="nc" id="L319">    java.lang.String exitID = &quot;Object&gt;&gt;notLess&quot;;</span>
-<span class="nc" id="L320">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L321">    return (Boolean)((Boolean)(lowerBound.notMore(this)));</span>
+<span class="fc" id="L331">    java.lang.String exitID = &quot;Object&gt;&gt;notLess&quot;;</span>
+<span class="fc" id="L332">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L333">    return (Boolean)((Boolean)(lowerBound.notMore(this)));</span>
   }
 
   /**
@@ -326,10 +338,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Boolean between_and(final Scalar lowerBound, final Scalar upperBound)
   {
-<span class="nc" id="L329">    java.lang.String exitID = &quot;Object&gt;&gt;between_and&quot;;</span>
-<span class="nc" id="L330">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L331">    return (Boolean)((Boolean)(lowerBound.notMore(this)).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L332">      return (this.notMore(upperBound));</span>
+<span class="nc" id="L341">    java.lang.String exitID = &quot;Object&gt;&gt;between_and&quot;;</span>
+<span class="nc" id="L342">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L343">    return (Boolean)((Boolean)(lowerBound.notMore(this)).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L344">      return (this.notMore(upperBound));</span>
     }, &quot;&quot;)));
   }
 
@@ -338,9 +350,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean in(final Interval aRange)
   {
-<span class="nc" id="L341">    java.lang.String exitID = &quot;Object&gt;&gt;in&quot;;</span>
-<span class="nc" id="L342">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L343">    return (Boolean)aRange.includes(this);</span>
+<span class="nc" id="L353">    java.lang.String exitID = &quot;Object&gt;&gt;in&quot;;</span>
+<span class="nc" id="L354">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L355">    return (Boolean)aRange.includes(this);</span>
   }
 
   /**
@@ -348,10 +360,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean inside_and(final Scalar lowerBound, final Scalar upperBound)
   {
-<span class="nc" id="L351">    java.lang.String exitID = &quot;Object&gt;&gt;inside_and&quot;;</span>
-<span class="nc" id="L352">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L353">    return (Boolean)((Boolean)(lowerBound.lessThan(this)).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L354">      return (this.lessThan(upperBound));</span>
+<span class="nc" id="L363">    java.lang.String exitID = &quot;Object&gt;&gt;inside_and&quot;;</span>
+<span class="nc" id="L364">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L365">    return (Boolean)((Boolean)(lowerBound.lessThan(this)).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L366">      return (this.lessThan(upperBound));</span>
     }, &quot;&quot;)));
   }
 
@@ -360,13 +372,13 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Ordered max(final Scalar value)
   {
-<span class="nc" id="L363">    java.lang.String exitID = &quot;Object&gt;&gt;max&quot;;</span>
-<span class="nc" id="L364">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L365">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L366">    (this.moreThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L367">      return (Ordered)f0.exit(exitID, this);</span>
+<span class="nc" id="L375">    java.lang.String exitID = &quot;Object&gt;&gt;max&quot;;</span>
+<span class="nc" id="L376">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L377">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L378">    (this.moreThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L379">      return (Ordered)f0.exit(exitID, this);</span>
     }, &quot;&quot;));
-<span class="nc" id="L369">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
+<span class="nc" id="L381">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
     });
   }
 
@@ -375,13 +387,13 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   @Override public   Ordered min(final Scalar value)
   {
-<span class="nc" id="L378">    java.lang.String exitID = &quot;Object&gt;&gt;min&quot;;</span>
-<span class="nc" id="L379">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L380">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L381">    (this.lessThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L382">      return (Ordered)f0.exit(exitID, this);</span>
+<span class="nc" id="L390">    java.lang.String exitID = &quot;Object&gt;&gt;min&quot;;</span>
+<span class="nc" id="L391">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L392">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L393">    (this.lessThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L394">      return (Ordered)f0.exit(exitID, this);</span>
     }, &quot;&quot;));
-<span class="nc" id="L384">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
+<span class="nc" id="L396">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
     });
   }
 
@@ -390,9 +402,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object copy()
   {
-<span class="nc" id="L393">    java.lang.String exitID = &quot;Object&gt;&gt;copy&quot;;</span>
-<span class="nc" id="L394">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L395">    return (Object)this.shallowCopy();</span>
+<span class="nc" id="L405">    java.lang.String exitID = &quot;Object&gt;&gt;copy&quot;;</span>
+<span class="nc" id="L406">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L407">    return (Object)this.shallowCopy();</span>
   }
 
   /**
@@ -400,9 +412,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public  &lt;ResultType extends Object&gt; ResultType deepCopy()
   {
-<span class="nc" id="L403">    java.lang.String exitID = &quot;Object&gt;&gt;deepCopy&quot;;</span>
-<span class="nc" id="L404">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L405">    return (ResultType)((ResultType)Primitive.deepCopyOf(this));</span>
+<span class="nc" id="L415">    java.lang.String exitID = &quot;Object&gt;&gt;deepCopy&quot;;</span>
+<span class="nc" id="L416">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L417">    return (ResultType)((ResultType)Primitive.deepCopyOf(this));</span>
   }
 
   /**
@@ -410,9 +422,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public  &lt;ResultType extends Object&gt; ResultType shallowCopy()
   {
-<span class="nc" id="L413">    java.lang.String exitID = &quot;Object&gt;&gt;shallowCopy&quot;;</span>
-<span class="nc" id="L414">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L415">    return (ResultType)((ResultType)Primitive.shallowCopyOf(this));</span>
+<span class="nc" id="L425">    java.lang.String exitID = &quot;Object&gt;&gt;shallowCopy&quot;;</span>
+<span class="nc" id="L426">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L427">    return (ResultType)((ResultType)Primitive.shallowCopyOf(this));</span>
   }
 
   /**
@@ -420,9 +432,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object $do(final MonadicValuable aBlock)
   {
-<span class="nc" id="L423">    java.lang.String exitID = &quot;Object&gt;&gt;$do&quot;;</span>
-<span class="nc" id="L424">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L425">    return (Object)aBlock.value(this);</span>
+<span class="nc" id="L435">    java.lang.String exitID = &quot;Object&gt;&gt;$do&quot;;</span>
+<span class="nc" id="L436">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L437">    return (Object)aBlock.value(this);</span>
   }
 
   /**
@@ -430,9 +442,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform(final Selector selector, final Subject ... arguments)
   {
-<span class="nc" id="L433">    java.lang.String exitID = &quot;Object&gt;&gt;perform&quot;;</span>
-<span class="nc" id="L434">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L435">    return (Object)new MessageSend(this, selector, arguments).perform();</span>
+<span class="nc" id="L445">    java.lang.String exitID = &quot;Object&gt;&gt;perform&quot;;</span>
+<span class="nc" id="L446">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L447">    return (Object)new MessageSend(this, selector, arguments).perform();</span>
   }
 
   /**
@@ -440,9 +452,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform_withArguments(final Selector selector, final Subject ... arguments)
   {
-<span class="nc" id="L443">    java.lang.String exitID = &quot;Object&gt;&gt;perform_withArguments&quot;;</span>
-<span class="nc" id="L444">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L445">    return (Object)new MessageSend(this, selector, arguments).perform();</span>
+<span class="nc" id="L455">    java.lang.String exitID = &quot;Object&gt;&gt;perform_withArguments&quot;;</span>
+<span class="nc" id="L456">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L457">    return (Object)new MessageSend(this, selector, arguments).perform();</span>
   }
 
   /**
@@ -450,9 +462,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform_with_with_with_with(final Selector selector, final Subject a0, final Subject a1, final Subject a2, final Subject a3)
   {
-<span class="nc" id="L453">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with_with_with&quot;;</span>
-<span class="nc" id="L454">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L455">    return (Object)this.perform(selector, a0, a1, a2, a3);</span>
+<span class="nc" id="L465">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with_with_with&quot;;</span>
+<span class="nc" id="L466">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L467">    return (Object)this.perform(selector, a0, a1, a2, a3);</span>
   }
 
   /**
@@ -460,9 +472,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform_with_with_with(final Selector selector, final Subject a0, final Subject a1, final Subject a2)
   {
-<span class="nc" id="L463">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with_with&quot;;</span>
-<span class="nc" id="L464">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L465">    return (Object)this.perform(selector, a0, a1, a2);</span>
+<span class="nc" id="L475">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with_with&quot;;</span>
+<span class="nc" id="L476">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L477">    return (Object)this.perform(selector, a0, a1, a2);</span>
   }
 
   /**
@@ -470,9 +482,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform_with_with(final Selector selector, final Subject a0, final Subject a1)
   {
-<span class="nc" id="L473">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with&quot;;</span>
-<span class="nc" id="L474">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L475">    return (Object)this.perform(selector, a0, a1);</span>
+<span class="nc" id="L485">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with_with&quot;;</span>
+<span class="nc" id="L486">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L487">    return (Object)this.perform(selector, a0, a1);</span>
   }
 
   /**
@@ -480,9 +492,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform_with(final Selector selector, final Subject a0)
   {
-<span class="nc" id="L483">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with&quot;;</span>
-<span class="nc" id="L484">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L485">    return (Object)this.perform(selector, a0);</span>
+<span class="nc" id="L495">    java.lang.String exitID = &quot;Object&gt;&gt;perform_with&quot;;</span>
+<span class="nc" id="L496">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L497">    return (Object)this.perform(selector, a0);</span>
   }
 
   /**
@@ -490,9 +502,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object perform(final Selector selector)
   {
-<span class="nc" id="L493">    java.lang.String exitID = &quot;Object&gt;&gt;perform&quot;;</span>
-<span class="nc" id="L494">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L495">    return (Object)this.perform(selector, new Subject[0]);</span>
+<span class="nc" id="L505">    java.lang.String exitID = &quot;Object&gt;&gt;perform&quot;;</span>
+<span class="nc" id="L506">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L507">    return (Object)this.perform(selector, new Subject[0]);</span>
   }
 
   /**
@@ -500,10 +512,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object printOn(final StreamedSink aStream)
   {
-<span class="nc" id="L503">    java.lang.String exitID = &quot;Object&gt;&gt;printOn&quot;;</span>
-<span class="nc" id="L504">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L505">    aStream.nextPutAll(this.printString());</span>
-<span class="nc" id="L506">    return (Object)this;</span>
+<span class="nc" id="L515">    java.lang.String exitID = &quot;Object&gt;&gt;printOn&quot;;</span>
+<span class="nc" id="L516">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L517">    aStream.nextPutAll(this.printString());</span>
+<span class="nc" id="L518">    return (Object)this;</span>
   }
 
   /**
@@ -511,9 +523,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   String printString()
   {
-<span class="nc" id="L514">    java.lang.String exitID = &quot;Object&gt;&gt;printString&quot;;</span>
-<span class="nc" id="L515">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L516">    return (String)(this.species().namePrefix().append(this.$class().name()));</span>
+<span class="nc" id="L526">    java.lang.String exitID = &quot;Object&gt;&gt;printString&quot;;</span>
+<span class="nc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L528">    return (String)(this.species().namePrefix().append(this.$class().name()));</span>
   }
 
   /**
@@ -521,9 +533,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   String printTerm()
   {
-<span class="fc" id="L524">    java.lang.String exitID = &quot;Object&gt;&gt;printTerm&quot;;</span>
-<span class="fc" id="L525">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L526">    return (String)String.from(&quot;( &quot;).append(this.printString()).append(String.from(&quot; )&quot;));</span>
+<span class="fc" id="L536">    java.lang.String exitID = &quot;Object&gt;&gt;printTerm&quot;;</span>
+<span class="fc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L538">    return (String)String.from(&quot;( &quot;).append(this.printString()).append(String.from(&quot; )&quot;));</span>
   }
 
   /**
@@ -531,9 +543,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object doesNotUnderstand(final SentMessage message)
   {
-<span class="nc" id="L534">    java.lang.String exitID = &quot;Object&gt;&gt;doesNotUnderstand&quot;;</span>
-<span class="nc" id="L535">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L536">    return (Object)new MessageNotUnderstood(new MessageSend(this, message.selector(), message.arguments()));</span>
+<span class="nc" id="L546">    java.lang.String exitID = &quot;Object&gt;&gt;doesNotUnderstand&quot;;</span>
+<span class="nc" id="L547">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L548">    return (Object)new MessageNotUnderstood(new MessageSend(this, message.selector(), message.arguments()));</span>
   }
 
   /**
@@ -541,10 +553,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   void error(final ReadableString messageText)
   {
-<span class="nc" id="L544">    java.lang.String exitID = &quot;Object&gt;&gt;error&quot;;</span>
-<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L546">    Primitive.printError(messageText.asSelector().name());</span>
-<span class="nc" id="L547">    throw new IllegalStateException(messageText.asSelector().name());</span>
+<span class="nc" id="L556">    java.lang.String exitID = &quot;Object&gt;&gt;error&quot;;</span>
+<span class="nc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L558">    Primitive.printError(messageText.asSelector().name());</span>
+<span class="nc" id="L559">    throw new IllegalStateException(messageText.asSelector().name());</span>
   }
 
   /**
@@ -552,19 +564,19 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   void invalidMessage()
   {
-<span class="nc" id="L555">    java.lang.String exitID = &quot;Object&gt;&gt;invalidMessage&quot;;</span>
-<span class="nc" id="L556">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L557">    this.error(String.from(&quot;An unsupported message was sent to this object&quot;));</span>
-<span class="nc" id="L558">  }</span>
+<span class="nc" id="L567">    java.lang.String exitID = &quot;Object&gt;&gt;invalidMessage&quot;;</span>
+<span class="nc" id="L568">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L569">    this.error(String.from(&quot;An unsupported message was sent to this object&quot;));</span>
+<span class="nc" id="L570">  }</span>
 
   /**
    * @return 
    */
   public   Object ifNil(final NiladicValuable nilBlock)
   {
-<span class="nc" id="L565">    java.lang.String exitID = &quot;Object&gt;&gt;ifNil&quot;;</span>
-<span class="nc" id="L566">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L567">    return (Object)Nil.literal();</span>
+<span class="nc" id="L577">    java.lang.String exitID = &quot;Object&gt;&gt;ifNil&quot;;</span>
+<span class="nc" id="L578">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L579">    return (Object)Nil.literal();</span>
   }
 
   /**
@@ -572,9 +584,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object ifNil_ifExtant(final NiladicValuable nilBlock, final NiladicValuable extantBlock)
   {
-<span class="nc" id="L575">    java.lang.String exitID = &quot;Object&gt;&gt;ifNil_ifExtant&quot;;</span>
-<span class="nc" id="L576">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L577">    return (Object)((Object)extantBlock.value());</span>
+<span class="nc" id="L587">    java.lang.String exitID = &quot;Object&gt;&gt;ifNil_ifExtant&quot;;</span>
+<span class="nc" id="L588">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L589">    return (Object)((Object)extantBlock.value());</span>
   }
 
   /**
@@ -582,9 +594,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object ifExtant(final NiladicValuable extantBlock)
   {
-<span class="nc" id="L585">    java.lang.String exitID = &quot;Object&gt;&gt;ifExtant&quot;;</span>
-<span class="nc" id="L586">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L587">    return (Object)((Object)extantBlock.value());</span>
+<span class="nc" id="L597">    java.lang.String exitID = &quot;Object&gt;&gt;ifExtant&quot;;</span>
+<span class="nc" id="L598">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L599">    return (Object)((Object)extantBlock.value());</span>
   }
 
   /**
@@ -592,9 +604,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Object ifExtant_ifNil(final NiladicValuable extantBlock, final NiladicValuable nilBlock)
   {
-<span class="nc" id="L595">    java.lang.String exitID = &quot;Object&gt;&gt;ifExtant_ifNil&quot;;</span>
-<span class="nc" id="L596">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L597">    return (Object)((Object)extantBlock.value());</span>
+<span class="nc" id="L607">    java.lang.String exitID = &quot;Object&gt;&gt;ifExtant_ifNil&quot;;</span>
+<span class="nc" id="L608">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L609">    return (Object)((Object)extantBlock.value());</span>
   }
 
   /**
@@ -602,9 +614,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isClass()
   {
-<span class="nc" id="L605">    java.lang.String exitID = &quot;Object&gt;&gt;isClass&quot;;</span>
-<span class="nc" id="L606">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L607">    return (Boolean)False.literal();</span>
+<span class="nc" id="L617">    java.lang.String exitID = &quot;Object&gt;&gt;isClass&quot;;</span>
+<span class="nc" id="L618">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L619">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -612,9 +624,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isBehavior()
   {
-<span class="nc" id="L615">    java.lang.String exitID = &quot;Object&gt;&gt;isBehavior&quot;;</span>
-<span class="nc" id="L616">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L617">    return (Boolean)False.literal();</span>
+<span class="nc" id="L627">    java.lang.String exitID = &quot;Object&gt;&gt;isBehavior&quot;;</span>
+<span class="nc" id="L628">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L629">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -622,9 +634,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isMetaclass()
   {
-<span class="nc" id="L625">    java.lang.String exitID = &quot;Object&gt;&gt;isMetaclass&quot;;</span>
-<span class="nc" id="L626">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L627">    return (Boolean)False.literal();</span>
+<span class="nc" id="L637">    java.lang.String exitID = &quot;Object&gt;&gt;isMetaclass&quot;;</span>
+<span class="nc" id="L638">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L639">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -632,9 +644,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isKindOf(final Classified candidateClass)
   {
-<span class="fc" id="L635">    java.lang.String exitID = &quot;Object&gt;&gt;isKindOf&quot;;</span>
-<span class="fc" id="L636">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L637">    return (Boolean)this.species().inheritsFrom(((Behavior)candidateClass));</span>
+<span class="fc" id="L647">    java.lang.String exitID = &quot;Object&gt;&gt;isKindOf&quot;;</span>
+<span class="fc" id="L648">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L649">    return (Boolean)this.species().inheritsFrom(((Behavior)candidateClass));</span>
   }
 
   /**
@@ -642,10 +654,10 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean instanceOf(final java.lang.Class aClass)
   {
-<span class="nc" id="L645">    java.lang.String exitID = &quot;Object&gt;&gt;instanceOf&quot;;</span>
-<span class="nc" id="L646">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L647">    Behavior aType = ((Behavior)HootRegistry.getType(aClass));</span>
-<span class="nc" id="L648">    return (Boolean)this.isMemberOf(aType);</span>
+<span class="nc" id="L657">    java.lang.String exitID = &quot;Object&gt;&gt;instanceOf&quot;;</span>
+<span class="nc" id="L658">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L659">    Behavior aType = ((Behavior)HootRegistry.getType(aClass));</span>
+<span class="nc" id="L660">    return (Boolean)this.isMemberOf(aType);</span>
   }
 
   /**
@@ -653,9 +665,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isMemberOf(final Classified candidateClass)
   {
-<span class="nc" id="L656">    java.lang.String exitID = &quot;Object&gt;&gt;isMemberOf&quot;;</span>
-<span class="nc" id="L657">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L658">    return (Boolean)(((Behavior)candidateClass).isSame(((Subject)this.$class())));</span>
+<span class="nc" id="L668">    java.lang.String exitID = &quot;Object&gt;&gt;isMemberOf&quot;;</span>
+<span class="nc" id="L669">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L670">    return (Boolean)(((Behavior)candidateClass).isSame(((Subject)this.$class())));</span>
   }
 
   /**
@@ -663,9 +675,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean respondsTo(final Selector selector)
   {
-<span class="nc" id="L666">    java.lang.String exitID = &quot;Object&gt;&gt;respondsTo&quot;;</span>
-<span class="nc" id="L667">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L668">    return (Boolean)Boolean.from(Primitive.class_hasMethod(this.$class().primitiveClass(), selector.name()));</span>
+<span class="nc" id="L678">    java.lang.String exitID = &quot;Object&gt;&gt;respondsTo&quot;;</span>
+<span class="nc" id="L679">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L680">    return (Boolean)Boolean.from(Primitive.class_hasMethod(this.$class().primitiveClass(), selector.name()));</span>
   }
 
   /**
@@ -673,9 +685,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isNil()
   {
-<span class="nc" id="L676">    java.lang.String exitID = &quot;Object&gt;&gt;isNil&quot;;</span>
-<span class="nc" id="L677">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L678">    return (Boolean)False.literal();</span>
+<span class="nc" id="L688">    java.lang.String exitID = &quot;Object&gt;&gt;isNil&quot;;</span>
+<span class="nc" id="L689">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L690">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -683,9 +695,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean notNil()
   {
-<span class="nc" id="L686">    java.lang.String exitID = &quot;Object&gt;&gt;notNil&quot;;</span>
-<span class="nc" id="L687">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L688">    return (Boolean)True.literal();</span>
+<span class="nc" id="L698">    java.lang.String exitID = &quot;Object&gt;&gt;notNil&quot;;</span>
+<span class="nc" id="L699">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L700">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -693,9 +705,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isFloat()
   {
-<span class="nc" id="L696">    java.lang.String exitID = &quot;Object&gt;&gt;isFloat&quot;;</span>
-<span class="nc" id="L697">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L698">    return (Boolean)False.literal();</span>
+<span class="nc" id="L708">    java.lang.String exitID = &quot;Object&gt;&gt;isFloat&quot;;</span>
+<span class="nc" id="L709">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L710">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -703,9 +715,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isLiteral()
   {
-<span class="nc" id="L706">    java.lang.String exitID = &quot;Object&gt;&gt;isLiteral&quot;;</span>
-<span class="nc" id="L707">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L708">    return (Boolean)False.literal();</span>
+<span class="nc" id="L718">    java.lang.String exitID = &quot;Object&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L719">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L720">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -713,9 +725,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isString()
   {
-<span class="nc" id="L716">    java.lang.String exitID = &quot;Object&gt;&gt;isString&quot;;</span>
-<span class="nc" id="L717">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L718">    return (Boolean)False.literal();</span>
+<span class="nc" id="L728">    java.lang.String exitID = &quot;Object&gt;&gt;isString&quot;;</span>
+<span class="nc" id="L729">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L730">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -723,9 +735,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isSmallInteger()
   {
-<span class="nc" id="L726">    java.lang.String exitID = &quot;Object&gt;&gt;isSmallInteger&quot;;</span>
-<span class="nc" id="L727">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L728">    return (Boolean)False.literal();</span>
+<span class="nc" id="L738">    java.lang.String exitID = &quot;Object&gt;&gt;isSmallInteger&quot;;</span>
+<span class="nc" id="L739">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L740">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -733,9 +745,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isInteger()
   {
-<span class="nc" id="L736">    java.lang.String exitID = &quot;Object&gt;&gt;isInteger&quot;;</span>
-<span class="nc" id="L737">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L738">    return (Boolean)False.literal();</span>
+<span class="nc" id="L748">    java.lang.String exitID = &quot;Object&gt;&gt;isInteger&quot;;</span>
+<span class="nc" id="L749">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L750">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -743,9 +755,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isArray()
   {
-<span class="nc" id="L746">    java.lang.String exitID = &quot;Object&gt;&gt;isArray&quot;;</span>
-<span class="nc" id="L747">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L748">    return (Boolean)False.literal();</span>
+<span class="nc" id="L758">    java.lang.String exitID = &quot;Object&gt;&gt;isArray&quot;;</span>
+<span class="nc" id="L759">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L760">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -753,9 +765,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isBoolean()
   {
-<span class="nc" id="L756">    java.lang.String exitID = &quot;Object&gt;&gt;isBoolean&quot;;</span>
-<span class="nc" id="L757">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L758">    return (Boolean)False.literal();</span>
+<span class="nc" id="L768">    java.lang.String exitID = &quot;Object&gt;&gt;isBoolean&quot;;</span>
+<span class="nc" id="L769">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L770">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -763,9 +775,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isCharacter()
   {
-<span class="nc" id="L766">    java.lang.String exitID = &quot;Object&gt;&gt;isCharacter&quot;;</span>
-<span class="nc" id="L767">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L768">    return (Boolean)False.literal();</span>
+<span class="nc" id="L778">    java.lang.String exitID = &quot;Object&gt;&gt;isCharacter&quot;;</span>
+<span class="nc" id="L779">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L780">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -773,9 +785,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public   Boolean isCollection()
   {
-<span class="nc" id="L776">    java.lang.String exitID = &quot;Object&gt;&gt;isCollection&quot;;</span>
-<span class="nc" id="L777">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L778">    return (Boolean)False.literal();</span>
+<span class="nc" id="L788">    java.lang.String exitID = &quot;Object&gt;&gt;isCollection&quot;;</span>
+<span class="nc" id="L789">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L790">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -783,9 +795,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public static   Boolean isNull(final Object candidate)
   {
-<span class="fc" id="L786">    java.lang.String exitID = &quot;Object&gt;&gt;$isNull&quot;;</span>
-<span class="fc" id="L787">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L788" title="1 of 2 branches missed.">    return (Boolean)Boolean.from((candidate == null));</span>
+<span class="fc" id="L798">    java.lang.String exitID = &quot;Object&gt;&gt;$isNull&quot;;</span>
+<span class="fc" id="L799">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L800" title="1 of 2 branches missed.">    return (Boolean)Boolean.from((candidate == null));</span>
   }
 
   /**
@@ -793,9 +805,9 @@ public abstract class Object extends java.lang.Object implements Cloneable, Seri
    */
   public static   Nil literalNil()
   {
-<span class="nc" id="L796">    java.lang.String exitID = &quot;Object&gt;&gt;$literalNil&quot;;</span>
-<span class="nc" id="L797">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L798">    return (Nil)Nil.literal();</span>
+<span class="nc" id="L808">    java.lang.String exitID = &quot;Object&gt;&gt;$literalNil&quot;;</span>
+<span class="nc" id="L809">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L810">    return (Nil)Nil.literal();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

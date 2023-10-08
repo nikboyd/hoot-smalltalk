@@ -579,9 +579,9 @@ public class Character extends Integer implements Code
    */
   @Override public   java.lang.Number elementaryNumber()
   {
-<span class="fc" id="L582">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryNumber&quot;;</span>
-<span class="fc" id="L583">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L584">    return (java.lang.Number)this.elementaryInteger();</span>
+<span class="nc" id="L582">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryNumber&quot;;</span>
+<span class="nc" id="L583">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L584">    return (java.lang.Number)this.elementaryInteger();</span>
   }
 
   /**
@@ -589,9 +589,9 @@ public class Character extends Integer implements Code
    */
   @Override public   java.lang.Integer elementaryInteger()
   {
-<span class="fc" id="L592">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryInteger&quot;;</span>
-<span class="fc" id="L593">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L594">    return (java.lang.Integer)((int)primitiveValue);</span>
+<span class="nc" id="L592">    java.lang.String exitID = &quot;Character&gt;&gt;elementaryInteger&quot;;</span>
+<span class="nc" id="L593">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L594">    return (java.lang.Integer)((int)primitiveValue);</span>
   }
 
   /**
@@ -687,24 +687,43 @@ public class Character extends Integer implements Code
   /**
    * @return 
    */
-  @Override public   Boolean equals(final Magnitude aNumber)
+  public final   Boolean equals(final Character aNumber)
   {
-<span class="nc" id="L692">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L693">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L694">    return (Boolean)(this.equals(((Number)aNumber)));</span>
+<span class="fc" id="L692">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L693">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L694" title="All 2 branches covered.">    return (Boolean)Boolean.from((primitiveValue == aNumber.primitiveCharacter()));</span>
   }
 
   /**
    * @return 
    */
-  @Override public   Boolean equals(final Number aNumber)
+  public final   Boolean lessThan(final Character aNumber)
   {
-<span class="nc" id="L702">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L702">    java.lang.String exitID = &quot;Character&gt;&gt;lessThan&quot;;</span>
 <span class="nc" id="L703">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L704" title="All 2 branches missed.">    if ((aNumber == null)) {</span>
-<span class="nc" id="L705">      return False.literal();</span>
-    };
-<span class="nc bnc" id="L707" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() == aNumber.asCharacter().primitiveCharacter()));</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">    return (Boolean)Boolean.from((primitiveValue &lt; aNumber.primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public final   Boolean moreThan(final Character aNumber)
+  {
+<span class="nc" id="L712">    java.lang.String exitID = &quot;Character&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L713">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">    return (Boolean)Boolean.from((primitiveValue &gt; aNumber.primitiveCharacter()));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean equals(final Magnitude aNumber)
+  {
+<span class="nc" id="L722">    java.lang.String exitID = &quot;Character&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L723">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L724">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L725">      return (((Number)aNumber).asCharacter().equals(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -712,19 +731,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean lessThan(final Number aNumber)
   {
-<span class="nc" id="L715">    java.lang.String exitID = &quot;Character&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L716">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L717" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &lt; aNumber.asCharacter().primitiveCharacter()));</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   Boolean notMore(final Number aNumber)
-  {
-<span class="nc" id="L725">    java.lang.String exitID = &quot;Character&gt;&gt;notMore&quot;;</span>
-<span class="nc" id="L726">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L727" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &lt;= aNumber.asCharacter().primitiveCharacter()));</span>
+<span class="nc" id="L734">    java.lang.String exitID = &quot;Character&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L735">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L736">    return (Boolean)(aNumber.asCharacter().moreThan(this));</span>
   }
 
   /**
@@ -732,19 +741,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean moreThan(final Number aNumber)
   {
-<span class="nc" id="L735">    java.lang.String exitID = &quot;Character&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L736">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L737" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &gt; aNumber.asCharacter().primitiveCharacter()));</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   Boolean notLess(final Number aNumber)
-  {
-<span class="nc" id="L745">    java.lang.String exitID = &quot;Character&gt;&gt;notLess&quot;;</span>
-<span class="nc" id="L746">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L747" title="All 2 branches missed.">    return (Boolean)Boolean.from((this.primitiveCharacter() &gt;= aNumber.asCharacter().primitiveCharacter()));</span>
+<span class="nc" id="L744">    java.lang.String exitID = &quot;Character&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L745">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L746">    return (Boolean)(aNumber.asCharacter().lessThan(this));</span>
   }
 
   /**
@@ -752,9 +751,9 @@ public class Character extends Integer implements Code
    */
   @Override public   Boolean in(final Interval aRange)
   {
-<span class="nc" id="L755">    java.lang.String exitID = &quot;Character&gt;&gt;in&quot;;</span>
-<span class="nc" id="L756">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L757">    return (Boolean)aRange.includes(this);</span>
+<span class="nc" id="L754">    java.lang.String exitID = &quot;Character&gt;&gt;in&quot;;</span>
+<span class="nc" id="L755">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L756">    return (Boolean)aRange.includes(this);</span>
   }
 
   /**
@@ -762,9 +761,9 @@ public class Character extends Integer implements Code
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L765">    java.lang.String exitID = &quot;Character&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L766">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L767">    return (int)this.primitiveInteger();</span>
+<span class="nc" id="L764">    java.lang.String exitID = &quot;Character&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L765">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L766">    return (int)this.primitiveInteger();</span>
   }
 
   /**
@@ -772,10 +771,10 @@ public class Character extends Integer implements Code
    */
   @Override public   Character printOn(final StreamedSink aStream)
   {
-<span class="nc" id="L775">    java.lang.String exitID = &quot;Character&gt;&gt;printOn&quot;;</span>
-<span class="nc" id="L776">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L777">    aStream.nextPut(this);</span>
-<span class="nc" id="L778">    return (Character)this;</span>
+<span class="nc" id="L774">    java.lang.String exitID = &quot;Character&gt;&gt;printOn&quot;;</span>
+<span class="nc" id="L775">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L776">    aStream.nextPut(this);</span>
+<span class="nc" id="L777">    return (Character)this;</span>
   }
 
   /**
@@ -783,9 +782,9 @@ public class Character extends Integer implements Code
    */
   @Override public   String printString()
   {
-<span class="fc" id="L786">    java.lang.String exitID = &quot;Character&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L787">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L788">    return (String)String.from(java.lang.String.valueOf(this.primitiveCharacter()));</span>
+<span class="fc" id="L785">    java.lang.String exitID = &quot;Character&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L786">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L787">    return (String)String.from(java.lang.String.valueOf(this.primitiveCharacter()));</span>
   }
 
   /**
@@ -793,9 +792,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isDigit()
   {
-<span class="fc" id="L796">    java.lang.String exitID = &quot;Character&gt;&gt;isDigit&quot;;</span>
-<span class="fc" id="L797">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L798">    return (Boolean)Character.type().isDigit(this);</span>
+<span class="fc" id="L795">    java.lang.String exitID = &quot;Character&gt;&gt;isDigit&quot;;</span>
+<span class="fc" id="L796">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L797">    return (Boolean)Character.type().isDigit(this);</span>
   }
 
   /**
@@ -803,9 +802,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isLetter()
   {
-<span class="nc" id="L806">    java.lang.String exitID = &quot;Character&gt;&gt;isLetter&quot;;</span>
-<span class="nc" id="L807">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L808">    return (Boolean)Character.type().isLetter(this);</span>
+<span class="nc" id="L805">    java.lang.String exitID = &quot;Character&gt;&gt;isLetter&quot;;</span>
+<span class="nc" id="L806">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L807">    return (Boolean)Character.type().isLetter(this);</span>
   }
 
   /**
@@ -813,9 +812,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isAlphaNumeric()
   {
-<span class="nc" id="L816">    java.lang.String exitID = &quot;Character&gt;&gt;isAlphaNumeric&quot;;</span>
-<span class="nc" id="L817">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L818">    return (Boolean)Character.type().isAlphaNumeric(this);</span>
+<span class="nc" id="L815">    java.lang.String exitID = &quot;Character&gt;&gt;isAlphaNumeric&quot;;</span>
+<span class="nc" id="L816">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L817">    return (Boolean)Character.type().isAlphaNumeric(this);</span>
   }
 
   /**
@@ -823,9 +822,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isLowercase()
   {
-<span class="nc" id="L826">    java.lang.String exitID = &quot;Character&gt;&gt;isLowercase&quot;;</span>
-<span class="nc" id="L827">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L828">    return (Boolean)Character.type().isLowercase(this);</span>
+<span class="nc" id="L825">    java.lang.String exitID = &quot;Character&gt;&gt;isLowercase&quot;;</span>
+<span class="nc" id="L826">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L827">    return (Boolean)Character.type().isLowercase(this);</span>
   }
 
   /**
@@ -833,9 +832,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isLowerCase()
   {
-<span class="nc" id="L836">    java.lang.String exitID = &quot;Character&gt;&gt;isLowerCase&quot;;</span>
-<span class="nc" id="L837">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L838">    return (Boolean)this.isLowercase();</span>
+<span class="nc" id="L835">    java.lang.String exitID = &quot;Character&gt;&gt;isLowerCase&quot;;</span>
+<span class="nc" id="L836">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L837">    return (Boolean)this.isLowercase();</span>
   }
 
   /**
@@ -843,9 +842,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isUppercase()
   {
-<span class="nc" id="L846">    java.lang.String exitID = &quot;Character&gt;&gt;isUppercase&quot;;</span>
-<span class="nc" id="L847">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L848">    return (Boolean)Character.type().isUppercase(this);</span>
+<span class="nc" id="L845">    java.lang.String exitID = &quot;Character&gt;&gt;isUppercase&quot;;</span>
+<span class="nc" id="L846">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L847">    return (Boolean)Character.type().isUppercase(this);</span>
   }
 
   /**
@@ -853,9 +852,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isUpperCase()
   {
-<span class="nc" id="L856">    java.lang.String exitID = &quot;Character&gt;&gt;isUpperCase&quot;;</span>
-<span class="nc" id="L857">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L858">    return (Boolean)this.isUppercase();</span>
+<span class="nc" id="L855">    java.lang.String exitID = &quot;Character&gt;&gt;isUpperCase&quot;;</span>
+<span class="nc" id="L856">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L857">    return (Boolean)this.isUppercase();</span>
   }
 
   /**
@@ -863,9 +862,9 @@ public class Character extends Integer implements Code
    */
   public   Boolean isVowel()
   {
-<span class="nc" id="L866">    java.lang.String exitID = &quot;Character&gt;&gt;isVowel&quot;;</span>
-<span class="nc" id="L867">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L868">    return (Boolean)Boolean.from(VowelList.contains(this.asString()));</span>
+<span class="nc" id="L865">    java.lang.String exitID = &quot;Character&gt;&gt;isVowel&quot;;</span>
+<span class="nc" id="L866">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L867">    return (Boolean)Boolean.from(VowelList.contains(this.asString()));</span>
   }
 
   /**
@@ -873,9 +872,9 @@ public class Character extends Integer implements Code
    */
   @Override public   Boolean isLiteral()
   {
-<span class="nc" id="L876">    java.lang.String exitID = &quot;Character&gt;&gt;isLiteral&quot;;</span>
-<span class="nc" id="L877">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L878">    return (Boolean)True.literal();</span>
+<span class="nc" id="L875">    java.lang.String exitID = &quot;Character&gt;&gt;isLiteral&quot;;</span>
+<span class="nc" id="L876">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L877">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -883,9 +882,9 @@ public class Character extends Integer implements Code
    */
   @Override public   Boolean isCharacter()
   {
-<span class="nc" id="L886">    java.lang.String exitID = &quot;Character&gt;&gt;isCharacter&quot;;</span>
-<span class="nc" id="L887">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L888">    return (Boolean)True.literal();</span>
+<span class="nc" id="L885">    java.lang.String exitID = &quot;Character&gt;&gt;isCharacter&quot;;</span>
+<span class="nc" id="L886">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L887">    return (Boolean)True.literal();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

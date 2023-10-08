@@ -52,10 +52,10 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
      */
     public  &lt;ElementType extends Subject&gt; WriteStream with(final CollectedVariably&lt;ElementType&gt; aCollection)
     {
-<span class="nc" id="L55">      java.lang.String exitID = &quot;WriteStreamMetatype&gt;&gt;with&quot;;</span>
-<span class="nc" id="L56">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L57">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L58">      return (WriteStream)f0.exit(exitID, new WriteStream(aCollection));</span>
+<span class="fc" id="L55">      java.lang.String exitID = &quot;WriteStreamMetatype&gt;&gt;with&quot;;</span>
+<span class="fc" id="L56">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L57">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L58">      return (WriteStream)f0.exit(exitID, new WriteStream(aCollection));</span>
       });
     }
 
@@ -90,9 +90,9 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
    */
   @Override public   CollectedVariably&lt;ElementType&gt; contents()
   {
-<span class="nc" id="L93">    java.lang.String exitID = &quot;WriteStream&gt;&gt;contents&quot;;</span>
-<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L95">    return (CollectedVariably&lt;ElementType&gt;)((CollectedVariably)contents);</span>
+<span class="fc" id="L93">    java.lang.String exitID = &quot;WriteStream&gt;&gt;contents&quot;;</span>
+<span class="fc" id="L94">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L95">    return (CollectedVariably&lt;ElementType&gt;)((CollectedVariably)contents);</span>
   }
 
   /**
@@ -143,14 +143,14 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
    */
   public   WriteStream nextPut(final ElementType element)
   {
-<span class="nc" id="L146">    java.lang.String exitID = &quot;WriteStream&gt;&gt;nextPut&quot;;</span>
-<span class="nc" id="L147">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L148">    this.collectsElements(((Object)element)).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L149">      this.contents().add(element);</span>
+<span class="fc" id="L146">    java.lang.String exitID = &quot;WriteStream&gt;&gt;nextPut&quot;;</span>
+<span class="fc" id="L147">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L148">    this.collectsElements(((Object)element)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L149">      this.contents().add(element);</span>
 
-<span class="nc" id="L151">     position = (position.plus(SmallInteger.from(1)));</span>
-<span class="nc" id="L152">    }, &quot;&quot;));</span>
-<span class="nc" id="L153">    return (WriteStream)this;</span>
+<span class="fc" id="L151">     position = (position.plus(SmallInteger.from(1)));</span>
+<span class="fc" id="L152">    }, &quot;&quot;));</span>
+<span class="fc" id="L153">    return (WriteStream)this;</span>
   }
 
   /**
@@ -170,4 +170,4 @@ public class WriteStream&lt;ElementType extends Object&gt; extends CollectionStr
 <span class="nc" id="L170">    return (WriteStream)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -43,7 +43,7 @@ public interface Typified extends Valued.Metatype, Named, Logging {
 <span class="nc" id="L43">    default TypeName typeResolver() { return TypeName.fromOther(this); }</span>
 
 <span class="nc" id="L45">    default boolean isEmpty() { return typeMirror().isEmpty(); }</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    default boolean hasMetaface() { return $class() != null; }</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">    default boolean hasMetaface() { return $class() != null; }</span>
 <span class="nc" id="L47">    default boolean isReflective() { return false; }</span>
 
 <span class="nc bnc" id="L49" title="All 4 branches missed.">    default boolean isRoot() { return !isEmpty() &amp;&amp; typeResolver().isRootType(); }</span>
@@ -64,7 +64,7 @@ public interface Typified extends Valued.Metatype, Named, Logging {
 <span class="nc" id="L64">    default String resolveTypeName(Named reference) { return Empty; }</span>
 <span class="fc" id="L65">    public static List&lt;String&gt; names(List&lt;Typified&gt; types) { return map(types, type -&gt; type.name().toString()); }</span>
 
-<span class="nc bnc" id="L67" title="All 4 branches missed.">    default boolean inheritsFrom(Typified candidate) { return hasAny(candidate) &amp;&amp; fullInheritance().contains(candidate); }</span>
+<span class="nc" id="L67">    default boolean inheritsFrom(Typified candidate) { return primitiveClass().isInstance(candidate); }</span>
 <span class="nc" id="L68">    default List&lt;Typified&gt; simpleHeritage() { return emptyList(Typified.class); }</span>
 <span class="nc" id="L69">    default List&lt;Typified&gt; typeHeritage() { return emptyList(Typified.class); }</span>
     default List&lt;Typified&gt; fullInheritance() {
@@ -88,4 +88,4 @@ public interface Typified extends Valued.Metatype, Named, Logging {
 <span class="nc" id="L88">        return results; }</span>
 
 } // Typified
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
