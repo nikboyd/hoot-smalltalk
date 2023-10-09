@@ -39,23 +39,23 @@ filedHeader : fc=filedComment banger cs=classSignature cr=commentHeader ;
 filedComment : fc=ConstantString {
 String c = $fc.text;
 Scope s = Scope.current();
-s.report("filedComment");
-s.report(c);
+//s.report("filedComment");
+//s.report(c);
 } ;
 
 classHeader : cc=codedComment banger ms=classSignature ;
 codedComment : cc=codeComment {
 String c = $cc.text;
 Scope s = Scope.current();
-s.report("codedComment");
-s.report(c);
+//s.report("codedComment");
+//s.report(c);
 } ;
 
 commentHeader : banger x=expression banger c=ConstantString banger {
 // Global commentStamp: String prior: Integer ! comment text !
 Global classGlobal = $x.item.formula().primaryTerm().primary().asGlobal();
 Face face = Face.currentFace();
-face.report("commentHeader");
+//face.report("commentHeader");
 } ;
 
 //==================================================================================================
@@ -74,7 +74,7 @@ LiteralString iVars = $x.item.keywordMessage().formulas().get(1).primaryTerm().p
 String[] vars = iVars.unquotedValue().split(" ");
 for (String v : vars) Variable.from(Face.currentFace(), v, DetailedType.RootType).defineMember();
 Face.currentFace().makeCurrent(); // no op
-f.report("classSignature");
+//f.report("classSignature");
 //f.report(message);
 } ;
 
@@ -105,7 +105,7 @@ methodEnd : banger {
 MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
 $methodScope::item.content(scope.content.item);
 $methodScope::item.popScope();
-$methodScope::item.report("found block end");
+//$methodScope::item.report("found block end");
 } ;
 
 methodSignature returns  [BasicSignature item = null]
