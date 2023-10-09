@@ -2,8 +2,10 @@
 
 ![Hoot Owl][logo]
 
-Hoot Smalltalk is a variation of [Smalltalk][smalltalk] that integrates the best features of Smalltalk
-with those of Java and its virtual machine VM.
+[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
+* Hoot is [_experimental_](#introduction).
+* Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
+* Hoot integrates the best [features](#features) of Smalltalk (syntax) with those of Java (VM).
 
 [Coverage Test Results][hub-coverage] 
 
@@ -62,23 +64,32 @@ Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured
 The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove the choice of Java
 as the primary foundation for Hoot Smalltalk.
 
-#### Platform Requirements ####
+#### Platform Requirements
+
+This note was updated in early Sept 2023.
 
 Hoot Smalltalk was originally developed with Java SE [JDK 8][jdk8], partly due to its
 [Long Term Support][java-lts] LTS and its support for [Lambdas][lambdas].
-However, Java SE 11 also has LTS and a few nice language enhancements, including
+However, Java SE [JDK 11][jdk11] also has LTS and a few nice language enhancements, including
 better type inference and support for local [var][inference] declarations.
+
+Hoot Smalltalk has now been improved and tested with OpenJDK 8, 11, and 17.
+While it still supports JDK 8, and you can still use it, [JDK 17][jdk17] is now recommended,
+in order to better track the more recent platform upgrades.
+
+With selective Maven [configuration profiles][java-profiles], the Hoot project supports 
+JDK 8 (up through 10) and JDK 11 (and above).
+The Hoot Smalltalk compiler will tune how it generates Java code depending on which platform is available.
+Advances in the Java platform allow the Hoot Smalltalk compiler to generate simpler Java code.
+That said, it doesn't yet take advantage of any Java features that require a version later than JDK 11.
+However, we are tracking some of those being offered by [JDK 21][jdk21].
 
 The initial target platforms for Hoot Smalltalk include [Java][java] (and its [JVM][jvm]),
 plus [.Net][dot-net] (and its [CLR][clr]).
-With selective Maven [configuration profiles][java-profiles], the Hoot project supports both JDK 8 (up through 10)
-and JDK 11 (and above).
-The Hoot Smalltalk compiler will tune how it generates Java code depending on which platform is available.
-Advances in the Java platform allow the Hoot Smalltalk compiler to generate simpler Java code.
 
 So, ...
 
-Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8].
+Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8], but Java SE [JDK 17][jdk17] is now recommended.
 You'll also need [Maven][maven], at least [version 3.5.0][maven-350] is recommended.
 If you intend to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], you'll want JDK 8 (not any later version)
 and some [additional tools][hoot-dotnet], which depend on JDK 8.
@@ -88,13 +99,14 @@ versions on Ubuntu using **apt-get**.
 
 #### GraalVM Adopted as Recommended Platform
 
-This note was added early in March 2021.
+This note was updated in early Sept 2023.
 
 As of now, Hoot Smalltalk still _works fine_ with JDK 8 (through 10) and 11+.
 However, with the advent of [GraalVM][graal-vm] and discovery of its support for polyglot programming and
 language development using [Truffle][truffle], all future development of Hoot Smalltalk will be shifting focus
 to integrate with those tools.
-Even now, Hoot Smalltalk _as is_ runs fine with GraalVM CE [21.0.0.2][graal-install].
+
+Even now, Hoot Smalltalk _as is_ runs fine with GraalVM CE for JDK 17 [17.0.8][graal-install].
 And so, GraalVM is now recommended as the preferred platform on which to run the associated Java code,
 esp. if you want to track the further development of Hoot Smalltalk.
 
@@ -102,14 +114,20 @@ More discussions about this will emerge as they gain focus. For now, the opportu
 
 #### Building from Sources ####
 
+Important ADVICE!
+
+* Always ensure you have set **JAVA_HOME** for your chosen JDK version: the Hoot compiler _needs_ this.
+* Always start fresh, with an empty local **.m2/repository**, when switching JDK versions. Don't muddy the waters!
+* Use small cycles when writing new code. Start with working code, then: ...
+* Write a test, write new code, test the code, repeat until the test passes and you have working code again.
+
 Clone this repository, and run the following shell command in the base project folder:
 
 ```
 mvn -U -B clean install
 ```
 
-This also resembles how the associated [build pipeline](#build-and-coverage-pipelines)
-runs in GitHub.
+This also resembles how the associated [build pipeline](#build-and-coverage-pipelines) runs in GitHub.
 This command will build all the Hoot Smalltalk runtime components and compiler, generate Java sources from
 the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
 
@@ -142,13 +160,13 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 
 | **Project** | **Summary** | **Language** | **Contents** |
 | ----------- | ----------- | ------------ | ------------ |
-| [hoot-abstracts][hoot-abstracts] | abstractions | Java | mostly interfaces for the runtime, with a few basic classes |
+| [hoot-abstracts][hoot-abstracts] | abstractions | Java | interfaces for the runtime and a few basic classes |
 | [hoot-runtime][hoot-runtime]     | runtime | Java | essential Hoot runtime foundation classes |
-| [hoot-compiler][hoot-compiler]   | compiler | Java | Hoot [grammar][grammar], code [templates][code-lib], AST elements, compiler |
-| [hoot-compiler-boot][hoot-compiler-boot] | launch | Java | Spring Boot app to launch the compiler from a command |
-| [hoot-maven-plugin][hoot-maven-plugin] | compiler plugin | Java | runs the compiler to generate Java code from a library project |
-| [libs-smalltalk][libs-smalltalk] | Smalltalk types | Hoot | Hoot sources for Smalltalk library types + compile via the plugin |
-| [libs-hoot][libs-hoot]           | Hoot classes | Hoot | Hoot sources + tests for library classes + compile via the plugin |
+| [hoot-compiler][hoot-compiler]   | compiler | Java | [grammar][grammar], [templates][code-lib], AST elements, compiler |
+| [hoot-compiler-boot][hoot-compiler-boot] | launch | Java | app to launch the compiler from a command |
+| [hoot-maven-plugin][hoot-maven-plugin] | compiler plugin | Java | runs the compiler for a library project |
+| [libs-smalltalk][libs-smalltalk] | Smalltalk types | Hoot | Smalltalk library types + compile via the plugin |
+| [libs-hoot][libs-hoot]           | Hoot classes | Hoot | Hoot library classes + compile via the plugin |
 | [hoot-compiler-bundle][hoot-bundle] | compiler bundle | both | plugin + compiler + runtime libs |
 | [hoot-libs-bundle][libs-bundle]  | library bundle | both | compiled hoot classes + runtime libs |
 
@@ -454,7 +472,7 @@ Each link below leads to discussions of the specific language feature design det
 | ... | ... | [Language Model](hoot-design/model.md#language-model) |
 
 ```
-Copyright 2010,2021 Nikolas S Boyd.
+Copyright 2010,2023 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
@@ -470,13 +488,15 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 
 [jdk8]: https://openjdk.java.net/projects/jdk8/
 [jdk11]: https://openjdk.java.net/projects/jdk/11/
+[jdk17]: https://openjdk.org/projects/jdk/17/
+[jdk21]: https://openjdk.org/projects/jdk/21/
 [java-lts]: https://www.oracle.com/technetwork/java/java-se-support-roadmap.html
 [java]: https://en.wikipedia.org/wiki/Java_%28programming_language%29 "Java"
 [jvm]: https://en.wikipedia.org/wiki/Java_virtual_machine "Java Virtual Machine"
 [lambdas]: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html
 [inference]: https://developer.oracle.com/java/jdk-10-local-variable-type-inference
 [graal-vm]: https://www.graalvm.org/docs/introduction/
-[graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-21.0.0.2
+[graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/jdk-17.0.8
 [truffle]: https://www.graalvm.org/graalvm-as-a-platform/language-implementation-framework/
 
 [ikvm-home]: http://www.ikvm.net/
@@ -540,7 +560,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [hoot-bundle]: hoot-compiler-bundle/README.md
 [libs-bundle]: hoot-libs-bundle/README.md
 [plugin-example]: libs-hoot/pom.xml#L44
-[java-profiles]: pom.xml#L248
+[java-profiles]: pom.xml#L316
 
 [cloud-repo]: https://cloudsmith.io/~educery/repos/hoot-libs/packages/
 [cloud-build]: https://cloud.google.com/cloud-build

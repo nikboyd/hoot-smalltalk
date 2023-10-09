@@ -33,16 +33,16 @@ import Hoot.Streams.Transcript;
 <span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass implements Testable.Metatype
   {
-<span class="fc" id="L36">    static final TestBase.Metaclass $class = new TestBase.Metaclass();</span>
+<span class="nc" id="L36">    static final TestBase.Metaclass $class = new TestBase.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L38">      this(TestBase.Metaclass.class);</span>
-<span class="fc" id="L39">    }</span>
+<span class="nc" id="L38">      this(TestBase.Metaclass.class);</span>
+<span class="nc" id="L39">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L42">      super(aClass);</span>
-<span class="fc" id="L43">    }</span>
+<span class="nc" id="L42">      super(aClass);</span>
+<span class="nc" id="L43">    }</span>
 
-<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return TestBase.class; }</span>
+<span class="nc" id="L45">    @Override public java.lang.Class outerClass() { return TestBase.class; }</span>
 
   }
 
@@ -50,63 +50,72 @@ import Hoot.Streams.Transcript;
   /**
    * @return 
    */
+  @Override public   void runTest()
+  {
+<span class="nc" id="L55">    java.lang.String exitID = &quot;TestBase&gt;&gt;runTest&quot;;</span>
+<span class="nc" id="L56">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L57">  }</span>
+
+  /**
+   * @return 
+   */
   @Test public   void testOnce()
   {
-<span class="fc" id="L55">    java.lang.String exitID = &quot;TestBase&gt;&gt;testOnce&quot;;</span>
-<span class="fc" id="L56">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L57">    this.log().cr();</span>
-<span class="fc" id="L58">    this.runTest();</span>
-<span class="fc" id="L59">    this.log().cr();</span>
-<span class="fc" id="L60">  }</span>
+<span class="fc" id="L64">    java.lang.String exitID = &quot;TestBase&gt;&gt;testOnce&quot;;</span>
+<span class="fc" id="L65">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L66">    this.log().cr();</span>
+<span class="fc" id="L67">    this.runTest();</span>
+<span class="fc" id="L68">    this.log().cr();</span>
+<span class="fc" id="L69">  }</span>
 
   /**
    * @return 
    */
   public   void assertTrue(final Closure test)
   {
-<span class="fc" id="L67">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertTrue&quot;;</span>
-<span class="fc" id="L68">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L69">    Assert.assertTrue(test.toPredicate().value().primitiveBoolean());</span>
-<span class="fc" id="L70">  }</span>
+<span class="fc" id="L76">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertTrue&quot;;</span>
+<span class="fc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L78">    Assert.assertTrue(test.toPredicate().value().primitiveBoolean());</span>
+<span class="fc" id="L79">  }</span>
 
   /**
    * @return 
    */
   public   void assertFalse(final Closure test)
   {
-<span class="nc" id="L77">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertFalse&quot;;</span>
-<span class="nc" id="L78">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L79">    Assert.assertFalse(test.toPredicate().value().primitiveBoolean());</span>
-<span class="nc" id="L80">  }</span>
+<span class="nc" id="L86">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertFalse&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    Assert.assertFalse(test.toPredicate().value().primitiveBoolean());</span>
+<span class="nc" id="L89">  }</span>
 
   /**
    * @return 
    */
   public   void assertTrue_with(final Closure test, final Hoot.Behaviors.Object argument)
   {
-<span class="fc" id="L87">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertTrue_with&quot;;</span>
-<span class="fc" id="L88">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L89">    Assert.assertTrue(test.toPredicate().value(argument).primitiveBoolean());</span>
-<span class="fc" id="L90">  }</span>
+<span class="fc" id="L96">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertTrue_with&quot;;</span>
+<span class="fc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L98">    Assert.assertTrue(test.toPredicate().value(argument).primitiveBoolean());</span>
+<span class="fc" id="L99">  }</span>
 
   /**
    * @return 
    */
   public   void assertFalse_with(final Closure test, final Hoot.Behaviors.Object argument)
   {
-<span class="nc" id="L97">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertFalse_with&quot;;</span>
-<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L99">    Assert.assertFalse(test.toPredicate().value(argument).primitiveBoolean());</span>
-<span class="nc" id="L100">  }</span>
+<span class="nc" id="L106">    java.lang.String exitID = &quot;TestBase&gt;&gt;assertFalse_with&quot;;</span>
+<span class="nc" id="L107">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L108">    Assert.assertFalse(test.toPredicate().value(argument).primitiveBoolean());</span>
+<span class="nc" id="L109">  }</span>
 
   /**
    * @return 
    */
   public   Transcript log()
   {
-<span class="fc" id="L107">    java.lang.String exitID = &quot;TestBase&gt;&gt;log&quot;;</span>
-<span class="fc" id="L108">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L109">    return (Transcript)Transcript.log();</span>
+<span class="fc" id="L116">    java.lang.String exitID = &quot;TestBase&gt;&gt;log&quot;;</span>
+<span class="fc" id="L117">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L118">    return (Transcript)Transcript.log();</span>
   }
 
   /**
@@ -114,29 +123,29 @@ import Hoot.Streams.Transcript;
    */
   public   void report(final String message)
   {
-<span class="fc" id="L117">    java.lang.String exitID = &quot;TestBase&gt;&gt;report&quot;;</span>
-<span class="fc" id="L118">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L119">    this.log().printLine(message);</span>
-<span class="fc" id="L120">  }</span>
+<span class="fc" id="L126">    java.lang.String exitID = &quot;TestBase&gt;&gt;report&quot;;</span>
+<span class="fc" id="L127">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L128">    this.log().printLine(message);</span>
+<span class="fc" id="L129">  }</span>
 
   /**
    * @return 
    */
   public   void passed(final String testName)
   {
-<span class="fc" id="L127">    java.lang.String exitID = &quot;TestBase&gt;&gt;passed&quot;;</span>
-<span class="fc" id="L128">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L129">    this.report((String.from(&quot;passed: &quot;).append(testName)));</span>
-<span class="fc" id="L130">  }</span>
+<span class="fc" id="L136">    java.lang.String exitID = &quot;TestBase&gt;&gt;passed&quot;;</span>
+<span class="fc" id="L137">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L138">    this.report((String.from(&quot;passed: &quot;).append(testName)));</span>
+<span class="fc" id="L139">  }</span>
 
   /**
    * @return 
    */
   public   void recycleGarbage()
   {
-<span class="nc" id="L137">    java.lang.String exitID = &quot;TestBase&gt;&gt;recycleGarbage&quot;;</span>
-<span class="nc" id="L138">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L139">    java.lang.Runtime.getRuntime().gc();</span>
-<span class="nc" id="L140">  }</span>
+<span class="nc" id="L146">    java.lang.String exitID = &quot;TestBase&gt;&gt;recycleGarbage&quot;;</span>
+<span class="nc" id="L147">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L148">    java.lang.Runtime.getRuntime().gc();</span>
+<span class="nc" id="L149">  }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

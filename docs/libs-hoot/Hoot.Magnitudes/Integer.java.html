@@ -25,60 +25,61 @@ import Hoot.Runtime.Faces.IntegerValue;
 import Hoot.Streams.TextWriteStream;
 import Smalltalk.Core.Posit;
 import Smalltalk.Magnitudes.Code;
+import Smalltalk.Magnitudes.Scalar;
 import Smalltalk.Magnitudes.Ordinal;
 import Smalltalk.Magnitudes.Numeric;
 import Smalltalk.Streams.StreamedSink;
 
 public abstract class Integer extends Rational implements Ordinal, IntegerValue
 {
-<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L36">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Rational.Metaclass implements Ordinal.Metatype, IntegerValue.Metatype
   {
-<span class="fc" id="L38">    static final Integer.Metaclass $class = new Integer.Metaclass();</span>
+<span class="fc" id="L39">    static final Integer.Metaclass $class = new Integer.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L40">      this(Integer.Metaclass.class);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L41">      this(Integer.Metaclass.class);</span>
+<span class="fc" id="L42">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L44">      super(aClass);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L45">      super(aClass);</span>
+<span class="fc" id="L46">    }</span>
 
-<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return Integer.class; }</span>
+<span class="fc" id="L48">    @Override public java.lang.Class outerClass() { return Integer.class; }</span>
 
     /**
      * @return 
      */
     public   char radixDigit(final Number index)
     {
-<span class="nc" id="L54">      java.lang.String exitID = &quot;IntegerMetatype&gt;&gt;radixDigit&quot;;</span>
-<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L57">      return (char)f0.exit(exitID, RadixDigits.charAt(index.asSmallInteger().primitiveInteger()));</span>
+<span class="nc" id="L55">      java.lang.String exitID = &quot;IntegerMetatype&gt;&gt;radixDigit&quot;;</span>
+<span class="nc" id="L56">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L57">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L58">      return (char)f0.exit(exitID, RadixDigits.charAt(index.asSmallInteger().primitiveInteger()));</span>
       });
     }
   }
 
 
-<span class="fc" id="L63">  private static java.lang.String RadixDigits = String.from(&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;).primitiveString();</span>
+<span class="fc" id="L64">  private static java.lang.String RadixDigits = String.from(&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;).primitiveString();</span>
   /**
    * 
    */
   protected    Integer()
   {
-<span class="fc" id="L69">    super();</span>
-<span class="fc" id="L70">    java.lang.String exitID = &quot;Integer&gt;&gt;Integer&quot;;</span>
-<span class="fc" id="L71">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L72">  }</span>
+<span class="fc" id="L70">    super();</span>
+<span class="fc" id="L71">    java.lang.String exitID = &quot;Integer&gt;&gt;Integer&quot;;</span>
+<span class="fc" id="L72">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L73">  }</span>
 
   /**
    * @return 
    */
   @Override public   Integer numerator()
   {
-<span class="fc" id="L79">    java.lang.String exitID = &quot;Integer&gt;&gt;numerator&quot;;</span>
-<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L81">    return (Integer)this;</span>
+<span class="fc" id="L80">    java.lang.String exitID = &quot;Integer&gt;&gt;numerator&quot;;</span>
+<span class="fc" id="L81">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L82">    return (Integer)this;</span>
   }
 
   /**
@@ -86,9 +87,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer denominator()
   {
-<span class="fc" id="L89">    java.lang.String exitID = &quot;Integer&gt;&gt;denominator&quot;;</span>
-<span class="fc" id="L90">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L91">    return (Integer)((Integer)this.$class().unity());</span>
+<span class="fc" id="L90">    java.lang.String exitID = &quot;Integer&gt;&gt;denominator&quot;;</span>
+<span class="fc" id="L91">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L92">    return (Integer)((Integer)this.$class().unity());</span>
   }
 
   /**
@@ -96,9 +97,35 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Boolean equals(final Magnitude aNumber)
   {
-<span class="nc" id="L99">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L100">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L101">    return (Boolean)(this.equals(((Integer)aNumber)));</span>
+<span class="nc" id="L100">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L102">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L103">      return (((Number)aNumber).asInteger().equals(this));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar upperBound)
+  {
+<span class="nc" id="L112">    java.lang.String exitID = &quot;Integer&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L114">    return (Boolean)Number.type().accepts(upperBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L115">      return (((Number)upperBound).asInteger().moreThan(this));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean moreThan(final Scalar lowerBound)
+  {
+<span class="nc" id="L124">    java.lang.String exitID = &quot;Integer&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L126">    return (Boolean)Number.type().accepts(lowerBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L127">      return (((Number)lowerBound).asInteger().lessThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -106,9 +133,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean equals(final Integer aNumber)
   {
-<span class="fc" id="L109">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L110">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 == this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+<span class="fc" id="L136">    java.lang.String exitID = &quot;Integer&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L137">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 == this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
   }
 
   /**
@@ -116,9 +143,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean lessThan(final Integer aNumber)
   {
-<span class="fc" id="L119">    java.lang.String exitID = &quot;Integer&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L120">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &gt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+<span class="fc" id="L146">    java.lang.String exitID = &quot;Integer&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L147">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &gt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
   }
 
   /**
@@ -126,9 +153,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean moreThan(final Integer aNumber)
   {
-<span class="fc" id="L129">    java.lang.String exitID = &quot;Integer&gt;&gt;moreThan&quot;;</span>
-<span class="fc" id="L130">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &lt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
+<span class="fc" id="L156">    java.lang.String exitID = &quot;Integer&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L157">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 &lt; this.asBigInteger().compareTo(aNumber.asBigInteger())));</span>
   }
 
   /**
@@ -136,9 +163,61 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   int hashCode()
   {
-<span class="fc" id="L139">    java.lang.String exitID = &quot;Integer&gt;&gt;hashCode&quot;;</span>
-<span class="fc" id="L140">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L141">    return (int)this.elementaryNumber().hashCode();</span>
+<span class="fc" id="L166">    java.lang.String exitID = &quot;Integer&gt;&gt;hashCode&quot;;</span>
+<span class="fc" id="L167">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L168">    return (int)this.elementaryNumber().hashCode();</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer min(final Scalar index)
+  {
+<span class="nc" id="L176">    java.lang.String exitID = &quot;Integer&gt;&gt;min&quot;;</span>
+<span class="nc" id="L177">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L178">    return (Integer)this.min(((Integer)index));</span>
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Integer max(final Scalar index)
+  {
+<span class="fc" id="L186">    java.lang.String exitID = &quot;Integer&gt;&gt;max&quot;;</span>
+<span class="fc" id="L187">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L188">    return (Integer)this.max(((Integer)index));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer min(final Integer index)
+  {
+<span class="nc" id="L196">    java.lang.String exitID = &quot;Integer&gt;&gt;min&quot;;</span>
+<span class="nc" id="L197">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">    if ((index == null)) {</span>
+<span class="nc" id="L199">      return this;</span>
+    };
+<span class="nc bnc" id="L201" title="All 2 branches missed.">    if (this.lessThan(index).primitiveBoolean()) {</span>
+<span class="nc" id="L202">      return this;</span>
+    };
+<span class="nc" id="L204">    return (Integer)index;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer max(final Integer index)
+  {
+<span class="fc" id="L212">    java.lang.String exitID = &quot;Integer&gt;&gt;max&quot;;</span>
+<span class="fc" id="L213">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">    if ((index == null)) {</span>
+<span class="nc" id="L215">      return this;</span>
+    };
+<span class="fc bfc" id="L217" title="All 2 branches covered.">    if (this.moreThan(index).primitiveBoolean()) {</span>
+<span class="fc" id="L218">      return this;</span>
+    };
+<span class="fc" id="L220">    return (Integer)index;</span>
   }
 
   /**
@@ -146,9 +225,19 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer asInteger()
   {
-<span class="fc" id="L149">    java.lang.String exitID = &quot;Integer&gt;&gt;asInteger&quot;;</span>
-<span class="fc" id="L150">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L151">    return (Integer)this;</span>
+<span class="fc" id="L228">    java.lang.String exitID = &quot;Integer&gt;&gt;asInteger&quot;;</span>
+<span class="fc" id="L229">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L230">    return (Integer)this;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   FastInteger faster()
+  {
+<span class="fc" id="L238">    java.lang.String exitID = &quot;Integer&gt;&gt;faster&quot;;</span>
+<span class="fc" id="L239">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L240">    return (FastInteger)FastInteger.fromInteger(this);</span>
   }
 
   /**
@@ -156,9 +245,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   int intValue()
   {
-<span class="fc" id="L159">    java.lang.String exitID = &quot;Integer&gt;&gt;intValue&quot;;</span>
-<span class="fc" id="L160">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L161">    return (int)this.primitiveInteger();</span>
+<span class="fc" id="L248">    java.lang.String exitID = &quot;Integer&gt;&gt;intValue&quot;;</span>
+<span class="fc" id="L249">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L250">    return (int)this.primitiveInteger();</span>
   }
 
   /**
@@ -166,9 +255,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   long longValue()
   {
-<span class="fc" id="L169">    java.lang.String exitID = &quot;Integer&gt;&gt;longValue&quot;;</span>
-<span class="fc" id="L170">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L171">    return (long)this.primitiveLong();</span>
+<span class="fc" id="L258">    java.lang.String exitID = &quot;Integer&gt;&gt;longValue&quot;;</span>
+<span class="fc" id="L259">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L260">    return (long)this.primitiveLong();</span>
   }
 
   /**
@@ -176,9 +265,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitAnd(final Ordinal anInteger)
   {
-<span class="nc" id="L179">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAnd&quot;;</span>
-<span class="nc" id="L180">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L181">    return (Integer)((Integer)anInteger).asSmallInteger().bitAnd(this);</span>
+<span class="nc" id="L268">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAnd&quot;;</span>
+<span class="nc" id="L269">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L270">    return (Integer)((Integer)anInteger).asSmallInteger().bitAnd(this);</span>
   }
 
   /**
@@ -186,9 +275,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitOr(final Ordinal anInteger)
   {
-<span class="nc" id="L189">    java.lang.String exitID = &quot;Integer&gt;&gt;bitOr&quot;;</span>
-<span class="nc" id="L190">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L191">    return (Integer)((Integer)anInteger).asSmallInteger().bitOr(this);</span>
+<span class="nc" id="L278">    java.lang.String exitID = &quot;Integer&gt;&gt;bitOr&quot;;</span>
+<span class="nc" id="L279">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L280">    return (Integer)((Integer)anInteger).asSmallInteger().bitOr(this);</span>
   }
 
   /**
@@ -196,9 +285,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitXor(final Ordinal anInteger)
   {
-<span class="nc" id="L199">    java.lang.String exitID = &quot;Integer&gt;&gt;bitXor&quot;;</span>
-<span class="nc" id="L200">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L201">    return (Integer)((Integer)anInteger).asSmallInteger().bitXor(this);</span>
+<span class="nc" id="L288">    java.lang.String exitID = &quot;Integer&gt;&gt;bitXor&quot;;</span>
+<span class="nc" id="L289">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L290">    return (Integer)((Integer)anInteger).asSmallInteger().bitXor(this);</span>
   }
 
   /**
@@ -206,9 +295,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitInvert()
   {
-<span class="nc" id="L209">    java.lang.String exitID = &quot;Integer&gt;&gt;bitInvert&quot;;</span>
-<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L211">    return (Integer)SmallInteger.from(Primitive.invertBits(this.primitiveInteger()));</span>
+<span class="fc" id="L298">    java.lang.String exitID = &quot;Integer&gt;&gt;bitInvert&quot;;</span>
+<span class="fc" id="L299">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L300">    return (Integer)SmallInteger.from(Primitive.invertBits(this.primitiveInteger()));</span>
   }
 
   /**
@@ -216,9 +305,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer and(final Ordinal anInteger)
   {
-<span class="nc" id="L219">    java.lang.String exitID = &quot;Integer&gt;&gt;and&quot;;</span>
-<span class="nc" id="L220">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L221">    return (Integer)this.bitAnd(anInteger);</span>
+<span class="nc" id="L308">    java.lang.String exitID = &quot;Integer&gt;&gt;and&quot;;</span>
+<span class="nc" id="L309">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L310">    return (Integer)this.bitAnd(anInteger);</span>
   }
 
   /**
@@ -226,9 +315,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer or(final Ordinal anInteger)
   {
-<span class="nc" id="L229">    java.lang.String exitID = &quot;Integer&gt;&gt;or&quot;;</span>
-<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L231">    return (Integer)this.bitOr(anInteger);</span>
+<span class="nc" id="L318">    java.lang.String exitID = &quot;Integer&gt;&gt;or&quot;;</span>
+<span class="nc" id="L319">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L320">    return (Integer)this.bitOr(anInteger);</span>
   }
 
   /**
@@ -236,9 +325,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean allMask(final Ordinal mask)
   {
-<span class="nc" id="L239">    java.lang.String exitID = &quot;Integer&gt;&gt;allMask&quot;;</span>
-<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L241">    return (Boolean)(this.bitAnd(mask).equals(mask));</span>
+<span class="nc" id="L328">    java.lang.String exitID = &quot;Integer&gt;&gt;allMask&quot;;</span>
+<span class="nc" id="L329">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L330">    return (Boolean)(this.bitAnd(mask).equals(mask));</span>
   }
 
   /**
@@ -246,9 +335,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean anyMask(final Ordinal mask)
   {
-<span class="nc" id="L249">    java.lang.String exitID = &quot;Integer&gt;&gt;anyMask&quot;;</span>
-<span class="nc" id="L250">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L251">    return (Boolean)(this.bitAnd(mask).notEqual(SmallInteger.from(0)));</span>
+<span class="nc" id="L338">    java.lang.String exitID = &quot;Integer&gt;&gt;anyMask&quot;;</span>
+<span class="nc" id="L339">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L340">    return (Boolean)(this.bitAnd(mask).notEqual(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -256,9 +345,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean noMask(final Ordinal mask)
   {
-<span class="nc" id="L259">    java.lang.String exitID = &quot;Integer&gt;&gt;noMask&quot;;</span>
-<span class="nc" id="L260">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L261">    return (Boolean)(this.bitAnd(mask).isSame(SmallInteger.from(0)));</span>
+<span class="nc" id="L348">    java.lang.String exitID = &quot;Integer&gt;&gt;noMask&quot;;</span>
+<span class="nc" id="L349">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L350">    return (Boolean)(this.bitAnd(mask).isSame(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -266,9 +355,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitAt(final Ordinal index)
   {
-<span class="nc" id="L269">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt&quot;;</span>
-<span class="nc" id="L270">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L271">    return (Integer)this.bitAt(((Integer)index).asSmallInteger());</span>
+<span class="nc" id="L358">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt&quot;;</span>
+<span class="nc" id="L359">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L360">    return (Integer)this.bitAt(((Integer)index).asSmallInteger());</span>
   }
 
   /**
@@ -276,9 +365,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitAt_put(final Ordinal index, final Ordinal bitValue)
   {
-<span class="nc" id="L279">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt_put&quot;;</span>
-<span class="nc" id="L280">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L281">    return (Integer)this.bitAt_put(((Integer)index).asSmallInteger(), ((Integer)bitValue).asSmallInteger());</span>
+<span class="nc" id="L368">    java.lang.String exitID = &quot;Integer&gt;&gt;bitAt_put&quot;;</span>
+<span class="nc" id="L369">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L370">    return (Integer)this.bitAt_put(((Integer)index).asSmallInteger(), ((Integer)bitValue).asSmallInteger());</span>
   }
 
   /**
@@ -286,9 +375,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer bitShift(final Ordinal count)
   {
-<span class="nc" id="L289">    java.lang.String exitID = &quot;Integer&gt;&gt;bitShift&quot;;</span>
-<span class="nc" id="L290">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L291">    return (Integer)this.bitAt(((Integer)count).asSmallInteger());</span>
+<span class="nc" id="L378">    java.lang.String exitID = &quot;Integer&gt;&gt;bitShift&quot;;</span>
+<span class="nc" id="L379">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L380">    return (Integer)this.bitAt(((Integer)count).asSmallInteger());</span>
   }
 
   /**
@@ -296,9 +385,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer highBit()
   {
-<span class="nc" id="L299">    java.lang.String exitID = &quot;Integer&gt;&gt;highBit&quot;;</span>
-<span class="nc" id="L300">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L301">    return (Integer)this.asLargeInteger().highBit();</span>
+<span class="nc" id="L388">    java.lang.String exitID = &quot;Integer&gt;&gt;highBit&quot;;</span>
+<span class="nc" id="L389">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L390">    return (Integer)this.asLargeInteger().highBit();</span>
   }
 
   /**
@@ -306,9 +395,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean odd()
   {
-<span class="nc" id="L309">    java.lang.String exitID = &quot;Integer&gt;&gt;odd&quot;;</span>
-<span class="nc" id="L310">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L311">    return (Boolean)this.even().not();</span>
+<span class="nc" id="L398">    java.lang.String exitID = &quot;Integer&gt;&gt;odd&quot;;</span>
+<span class="nc" id="L399">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L400">    return (Boolean)this.even().not();</span>
   }
 
   /**
@@ -316,9 +405,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Boolean even()
   {
-<span class="nc" id="L319">    java.lang.String exitID = &quot;Integer&gt;&gt;even&quot;;</span>
-<span class="nc" id="L320">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L321">    return (Boolean)((this.remainderFrom(SmallInteger.from(2))).isSame(SmallInteger.from(0)));</span>
+<span class="nc" id="L408">    java.lang.String exitID = &quot;Integer&gt;&gt;even&quot;;</span>
+<span class="nc" id="L409">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L410">    return (Boolean)((this.remainderFrom(SmallInteger.from(2))).isSame(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -326,9 +415,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Boolean isInteger()
   {
-<span class="nc" id="L329">    java.lang.String exitID = &quot;Integer&gt;&gt;isInteger&quot;;</span>
-<span class="nc" id="L330">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L331">    return (Boolean)True.literal();</span>
+<span class="nc" id="L418">    java.lang.String exitID = &quot;Integer&gt;&gt;isInteger&quot;;</span>
+<span class="nc" id="L419">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L420">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -336,9 +425,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer minus(final Ordinal aNumber)
   {
-<span class="nc" id="L339">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
-<span class="nc" id="L340">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L341">    return (Integer)(this.minus(((Integer)aNumber)));</span>
+<span class="fc" id="L428">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L429">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L430">    return (Integer)(this.minus(((Integer)aNumber)));</span>
   }
 
   /**
@@ -346,9 +435,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer plus(final Ordinal aNumber)
   {
-<span class="nc" id="L349">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L350">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L351">    return (Integer)(((Integer)aNumber).plus(this));</span>
+<span class="fc" id="L438">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L439">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L440">    return (Integer)(((Integer)aNumber).plus(this));</span>
   }
 
   /**
@@ -356,9 +445,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer times(final Ordinal aNumber)
   {
-<span class="nc" id="L359">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
-<span class="nc" id="L360">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L361">    return (Integer)(((Integer)aNumber).times(this));</span>
+<span class="nc" id="L448">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="nc" id="L449">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L450">    return (Integer)(((Integer)aNumber).times(this));</span>
   }
 
   /**
@@ -366,9 +455,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer minus(final Numeric aNumber)
   {
-<span class="fc" id="L369">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
-<span class="fc" id="L370">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L371">    return (Integer)(this.minus(((Number)aNumber).asInteger()));</span>
+<span class="fc" id="L458">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L459">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L460">    return (Integer)(this.minus(((Number)aNumber).asInteger()));</span>
   }
 
   /**
@@ -376,9 +465,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer plus(final Numeric aNumber)
   {
-<span class="nc" id="L379">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L380">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L381">    return (Integer)(((Number)aNumber).asInteger().plus(this));</span>
+<span class="nc" id="L468">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L469">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L470">    return (Integer)(((Number)aNumber).asInteger().plus(this));</span>
   }
 
   /**
@@ -386,9 +475,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer times(final Numeric aNumber)
   {
-<span class="nc" id="L389">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
-<span class="nc" id="L390">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L391">    return (Integer)(((Number)aNumber).asInteger().times(this));</span>
+<span class="nc" id="L478">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="nc" id="L479">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L480">    return (Integer)(((Number)aNumber).asInteger().times(this));</span>
   }
 
   /**
@@ -396,9 +485,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer minus(final Integer anInteger)
   {
-<span class="fc" id="L399">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
-<span class="fc" id="L400">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L401">    return (Integer)new LargeInteger(this.asBigInteger().subtract(anInteger.asBigInteger())).narrowGenerality();</span>
+<span class="fc" id="L488">    java.lang.String exitID = &quot;Integer&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L489">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L490">    return (Integer)new LargeInteger(this.asBigInteger().subtract(anInteger.asBigInteger())).narrowGenerality();</span>
   }
 
   /**
@@ -406,9 +495,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer plus(final Integer anInteger)
   {
-<span class="fc" id="L409">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L410">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L411">    return (Integer)new LargeInteger(this.asBigInteger().add(anInteger.asBigInteger())).narrowGenerality();</span>
+<span class="fc" id="L498">    java.lang.String exitID = &quot;Integer&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L499">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L500">    return (Integer)new LargeInteger(this.asBigInteger().add(anInteger.asBigInteger())).narrowGenerality();</span>
   }
 
   /**
@@ -416,9 +505,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer times(final Integer anInteger)
   {
-<span class="fc" id="L419">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
-<span class="fc" id="L420">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L421">    return (Integer)new LargeInteger(this.asBigInteger().multiply(anInteger.asBigInteger())).narrowGenerality();</span>
+<span class="fc" id="L508">    java.lang.String exitID = &quot;Integer&gt;&gt;times&quot;;</span>
+<span class="fc" id="L509">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L510">    return (Integer)new LargeInteger(this.asBigInteger().multiply(anInteger.asBigInteger())).narrowGenerality();</span>
   }
 
   /**
@@ -426,9 +515,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer floor()
   {
-<span class="nc" id="L429">    java.lang.String exitID = &quot;Integer&gt;&gt;floor&quot;;</span>
-<span class="nc" id="L430">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L431">    return (Integer)this;</span>
+<span class="nc" id="L518">    java.lang.String exitID = &quot;Integer&gt;&gt;floor&quot;;</span>
+<span class="nc" id="L519">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L520">    return (Integer)this;</span>
   }
 
   /**
@@ -436,9 +525,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer ceiling()
   {
-<span class="nc" id="L439">    java.lang.String exitID = &quot;Integer&gt;&gt;ceiling&quot;;</span>
-<span class="nc" id="L440">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L441">    return (Integer)this;</span>
+<span class="nc" id="L528">    java.lang.String exitID = &quot;Integer&gt;&gt;ceiling&quot;;</span>
+<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L530">    return (Integer)this;</span>
   }
 
   /**
@@ -446,9 +535,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer truncated()
   {
-<span class="fc" id="L449">    java.lang.String exitID = &quot;Integer&gt;&gt;truncated&quot;;</span>
-<span class="fc" id="L450">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L451">    return (Integer)this;</span>
+<span class="fc" id="L538">    java.lang.String exitID = &quot;Integer&gt;&gt;truncated&quot;;</span>
+<span class="fc" id="L539">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L540">    return (Integer)this;</span>
   }
 
   /**
@@ -456,9 +545,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer rounded()
   {
-<span class="nc" id="L459">    java.lang.String exitID = &quot;Integer&gt;&gt;rounded&quot;;</span>
-<span class="nc" id="L460">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L461">    return (Integer)this;</span>
+<span class="nc" id="L548">    java.lang.String exitID = &quot;Integer&gt;&gt;rounded&quot;;</span>
+<span class="nc" id="L549">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L550">    return (Integer)this;</span>
   }
 
   /**
@@ -466,9 +555,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer integerPart()
   {
-<span class="nc" id="L469">    java.lang.String exitID = &quot;Integer&gt;&gt;integerPart&quot;;</span>
-<span class="nc" id="L470">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L471">    return (Integer)this;</span>
+<span class="nc" id="L558">    java.lang.String exitID = &quot;Integer&gt;&gt;integerPart&quot;;</span>
+<span class="nc" id="L559">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L560">    return (Integer)this;</span>
   }
 
   /**
@@ -476,9 +565,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer negated()
   {
-<span class="nc" id="L479">    java.lang.String exitID = &quot;Integer&gt;&gt;negated&quot;;</span>
-<span class="nc" id="L480">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L481">    return (Integer)(SmallInteger.from(0).minus(this));</span>
+<span class="nc" id="L568">    java.lang.String exitID = &quot;Integer&gt;&gt;negated&quot;;</span>
+<span class="nc" id="L569">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L570">    return (Integer)(SmallInteger.from(0).minus(this));</span>
   }
 
   /**
@@ -486,9 +575,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer raisedToInteger(final Integer anInteger)
   {
-<span class="nc" id="L489">    java.lang.String exitID = &quot;Integer&gt;&gt;raisedToInteger&quot;;</span>
-<span class="nc" id="L490">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L491">    return (Integer)this.asLargeInteger().raisedToInteger(anInteger).narrowGenerality();</span>
+<span class="nc" id="L578">    java.lang.String exitID = &quot;Integer&gt;&gt;raisedToInteger&quot;;</span>
+<span class="nc" id="L579">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L580">    return (Integer)this.asLargeInteger().raisedToInteger(anInteger).narrowGenerality();</span>
   }
 
   /**
@@ -496,18 +585,18 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer factorial()
   {
-<span class="nc" id="L499">    java.lang.String exitID = &quot;Integer&gt;&gt;factorial&quot;;</span>
-<span class="nc" id="L500">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L501">    (this.lessThan(this.$class().zero())).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L502">      this.error(String.from(&quot;Negative integers cannot use #factorial&quot;));</span>
-<span class="nc" id="L503">    }, &quot;&quot;));</span>
+<span class="nc" id="L588">    java.lang.String exitID = &quot;Integer&gt;&gt;factorial&quot;;</span>
+<span class="nc" id="L589">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L590">    (this.lessThan(this.$class().zero())).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L591">      this.error(String.from(&quot;Negative integers cannot use #factorial&quot;));</span>
+<span class="nc" id="L592">    }, &quot;&quot;));</span>
 
-<span class="nc" id="L505">    FastInteger result = this.$class().unity();</span>
-<span class="nc" id="L506">    this.$class().unity().to_do(this, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L507">      SmallInteger n = f2.getValue(0).value();</span>
-<span class="nc" id="L508">      return result.multiplyBy(n);</span>
+<span class="nc" id="L594">    FastInteger result = this.$class().unity();</span>
+<span class="nc" id="L595">    this.$class().unity().to_do(this, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L596">      SmallInteger n = f2.getValue(0).value();</span>
+<span class="nc" id="L597">      return result.multiplyBy(n);</span>
     }, &quot;n&quot;));
-<span class="nc" id="L510">    return (Integer)result.asInteger();</span>
+<span class="nc" id="L599">    return (Integer)result.asInteger();</span>
   }
 
   /**
@@ -515,9 +604,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer gcd(final Ordinal aNumber)
   {
-<span class="nc" id="L518">    java.lang.String exitID = &quot;Integer&gt;&gt;gcd&quot;;</span>
-<span class="nc" id="L519">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L520">    return (Integer)this.asLargeInteger().gcd(aNumber).narrowGenerality();</span>
+<span class="nc" id="L607">    java.lang.String exitID = &quot;Integer&gt;&gt;gcd&quot;;</span>
+<span class="nc" id="L608">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L609">    return (Integer)this.asLargeInteger().gcd(aNumber).narrowGenerality();</span>
   }
 
   /**
@@ -525,14 +614,14 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer lcm(final Ordinal aNumber)
   {
-<span class="nc" id="L528">    java.lang.String exitID = &quot;Integer&gt;&gt;lcm&quot;;</span>
-<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L530">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L531">    Integer gcd = this.gcd(((Integer)aNumber));</span>
-<span class="nc" id="L532">    (gcd.equals(SmallInteger.from(0))).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L533">      return (Integer)f0.exit(exitID, this.truncateWith(gcd).times(aNumber).abs());</span>
+<span class="nc" id="L617">    java.lang.String exitID = &quot;Integer&gt;&gt;lcm&quot;;</span>
+<span class="nc" id="L618">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L619">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L620">    Integer gcd = this.gcd(((Integer)aNumber));</span>
+<span class="nc" id="L621">    (gcd.equals(SmallInteger.from(0))).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L622">      return (Integer)f0.exit(exitID, this.truncateWith(gcd).times(aNumber).abs());</span>
     }, &quot;&quot;));
-<span class="nc" id="L535">    return (Integer)f0.exit(exitID, SmallInteger.from(1));</span>
+<span class="nc" id="L624">    return (Integer)f0.exit(exitID, SmallInteger.from(1));</span>
     });
   }
 
@@ -541,18 +630,18 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer timesRepeat(final NiladicValuable aBlock)
   {
-<span class="nc" id="L544">    java.lang.String exitID = &quot;Integer&gt;&gt;timesRepeat&quot;;</span>
-<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L546">    FastInteger count = this.$class().unity();</span>
+<span class="nc" id="L633">    java.lang.String exitID = &quot;Integer&gt;&gt;timesRepeat&quot;;</span>
+<span class="nc" id="L634">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L635">    FastInteger count = this.$class().unity();</span>
 
-<span class="nc" id="L548">    SmallInteger unity = this.$class().unity();</span>
-<span class="nc" id="L549">    Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L550">      return (count.notMore(this));</span>
-<span class="nc" id="L551">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L552">      aBlock.value();</span>
-<span class="nc" id="L553">    count.add(unity);</span>
-<span class="nc" id="L554">    }, &quot;&quot;));</span>
-<span class="nc" id="L555">    return (Integer)this;</span>
+<span class="nc" id="L637">    SmallInteger unity = this.$class().unity();</span>
+<span class="nc" id="L638">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L639">      return (count.notMore(this));</span>
+<span class="nc" id="L640">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L641">      aBlock.value();</span>
+<span class="nc" id="L642">    count.add(unity);</span>
+<span class="nc" id="L643">    }, &quot;&quot;));</span>
+<span class="nc" id="L644">    return (Integer)this;</span>
   }
 
   /**
@@ -560,10 +649,10 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   @Override public   Integer printOn(final StreamedSink aStream)
   {
-<span class="nc" id="L563">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn&quot;;</span>
-<span class="nc" id="L564">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L565">    this.printOn_base_showRadix(aStream, SmallInteger.from(10), False.literal());</span>
-<span class="nc" id="L566">    return (Integer)this;</span>
+<span class="nc" id="L652">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn&quot;;</span>
+<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L654">    this.printOn_base_showRadix(aStream, SmallInteger.from(10), False.literal());</span>
+<span class="nc" id="L655">    return (Integer)this;</span>
   }
 
   /**
@@ -571,19 +660,19 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer printOn_base_showRadix(final StreamedSink aStream, final Ordinal radix, final Posit showRadix)
   {
-<span class="nc" id="L574">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn_base_showRadix&quot;;</span>
-<span class="nc" id="L575">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L576">    this.negative().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L577">      aStream.nextPut(((Character)Character.from('-')));</span>
-<span class="nc" id="L578">    this.negated().asInteger().printOn_base_showRadix(aStream, radix, showRadix);</span>
-<span class="nc" id="L579">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L580">      showRadix.ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L581">      radix.printOn(aStream);</span>
-<span class="nc" id="L582">    aStream.nextPut(((Character)Character.from('r')));</span>
-<span class="nc" id="L583">    }, &quot;&quot;));</span>
-<span class="nc" id="L584">    this.printDigitsOn_base(aStream, radix);</span>
-<span class="nc" id="L585">    }, &quot;&quot;));</span>
-<span class="nc" id="L586">    return (Integer)this;</span>
+<span class="nc" id="L663">    java.lang.String exitID = &quot;Integer&gt;&gt;printOn_base_showRadix&quot;;</span>
+<span class="nc" id="L664">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L665">    this.negative().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L666">      aStream.nextPut(((Character)Character.from('-')));</span>
+<span class="nc" id="L667">    this.negated().asInteger().printOn_base_showRadix(aStream, radix, showRadix);</span>
+<span class="nc" id="L668">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L669">      showRadix.ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L670">      radix.printOn(aStream);</span>
+<span class="nc" id="L671">    aStream.nextPut(((Character)Character.from('r')));</span>
+<span class="nc" id="L672">    }, &quot;&quot;));</span>
+<span class="nc" id="L673">    this.printDigitsOn_base(aStream, radix);</span>
+<span class="nc" id="L674">    }, &quot;&quot;));</span>
+<span class="nc" id="L675">    return (Integer)this;</span>
   }
 
   /**
@@ -591,13 +680,13 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   Integer printDigitsOn_base(final StreamedSink aStream, final Ordinal radix)
   {
-<span class="nc" id="L594">    java.lang.String exitID = &quot;Integer&gt;&gt;printDigitsOn_base&quot;;</span>
-<span class="nc" id="L595">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L596">    (this.notLess(radix)).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L597">      (this.truncateWith(radix)).printDigitsOn_base(aStream, radix);</span>
-<span class="nc" id="L598">    }, &quot;&quot;));</span>
-<span class="nc" id="L599">    aStream.nextPut(Character.from(this.$class().radixDigit((this.remainderFrom(radix)))));</span>
-<span class="nc" id="L600">    return (Integer)this;</span>
+<span class="nc" id="L683">    java.lang.String exitID = &quot;Integer&gt;&gt;printDigitsOn_base&quot;;</span>
+<span class="nc" id="L684">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L685">    (this.notLess(radix)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L686">      (this.truncateWith(radix)).printDigitsOn_base(aStream, radix);</span>
+<span class="nc" id="L687">    }, &quot;&quot;));</span>
+<span class="nc" id="L688">    aStream.nextPut(Character.from(this.$class().radixDigit((this.remainderFrom(radix)))));</span>
+<span class="nc" id="L689">    return (Integer)this;</span>
   }
 
   /**
@@ -605,9 +694,9 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   String printStringRadix(final Ordinal radix)
   {
-<span class="nc" id="L608">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix&quot;;</span>
-<span class="nc" id="L609">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L610">    return (String)this.printStringRadix_showRadix(radix, True.literal());</span>
+<span class="nc" id="L697">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix&quot;;</span>
+<span class="nc" id="L698">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L699">    return (String)this.printStringRadix_showRadix(radix, True.literal());</span>
   }
 
   /**
@@ -615,11 +704,11 @@ public abstract class Integer extends Rational implements Ordinal, IntegerValue
    */
   public   String printStringRadix_showRadix(final Ordinal radix, final Boolean showRadix)
   {
-<span class="nc" id="L618">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix_showRadix&quot;;</span>
-<span class="nc" id="L619">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L620">    TextWriteStream aStream = String.type().writeStream(SmallInteger.from(16));</span>
-<span class="nc" id="L621">    this.printOn_base_showRadix(aStream, radix, showRadix);</span>
-<span class="nc" id="L622">    return (String)aStream.contents();</span>
+<span class="nc" id="L707">    java.lang.String exitID = &quot;Integer&gt;&gt;printStringRadix_showRadix&quot;;</span>
+<span class="nc" id="L708">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L709">    TextWriteStream aStream = String.type().writeStream(SmallInteger.from(16));</span>
+<span class="nc" id="L710">    this.printOn_base_showRadix(aStream, radix, showRadix);</span>
+<span class="nc" id="L711">    return (String)aStream.contents();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

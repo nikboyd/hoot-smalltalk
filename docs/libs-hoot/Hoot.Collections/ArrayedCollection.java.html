@@ -24,26 +24,27 @@ import Hoot.Magnitudes.Float;
 import Hoot.Magnitudes.Double;
 import Hoot.Magnitudes.Integer;
 import Hoot.Magnitudes.Number;
+import static Hoot.Magnitudes.SmallInteger.*;
 import Smalltalk.Collections.*;
 import Smalltalk.Magnitudes.Ordinal;
 import Smalltalk.Core.Subject;
 
-<span class="fc" id="L31">public abstract class ArrayedCollection&lt;ElementType extends Object&gt; extends SequencedCollection&lt;ElementType&gt; implements CollectedArray&lt;ElementType&gt;</span>
+<span class="fc" id="L32">public abstract class ArrayedCollection&lt;ElementType extends Object&gt; extends SequencedCollection&lt;ElementType&gt; implements CollectedArray&lt;ElementType&gt;</span>
 {
-<span class="nc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends SequencedCollection.Metaclass implements CollectedArray.Metatype
   {
-<span class="fc" id="L37">    static final ArrayedCollection.Metaclass $class = new ArrayedCollection.Metaclass();</span>
+<span class="fc" id="L38">    static final ArrayedCollection.Metaclass $class = new ArrayedCollection.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L39">      this(ArrayedCollection.Metaclass.class);</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L40">      this(ArrayedCollection.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L43">      super(aClass);</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
 
-<span class="fc" id="L46">    @Override public java.lang.Class outerClass() { return ArrayedCollection.class; }</span>
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return ArrayedCollection.class; }</span>
 
   }
 
@@ -53,9 +54,9 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType at_put(final Ordinal index, final ElementType element)
   {
-<span class="nc" id="L56">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L57">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L58">    return (ElementType)element;</span>
+<span class="nc" id="L57">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;at_put&quot;;</span>
+<span class="nc" id="L58">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L59">    return (ElementType)element;</span>
   }
 
   /**
@@ -63,13 +64,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType atAll_put(final CollectedReadably&lt;Ordinal&gt; indices, final ElementType element)
   {
-<span class="nc" id="L66">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAll_put&quot;;</span>
-<span class="nc" id="L67">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L68">    indices.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L69">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L70">      return this.at_put(index, element);</span>
+<span class="nc" id="L67">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAll_put&quot;;</span>
+<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L69">    indices.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L70">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L71">      return this.at_put(index, element);</span>
     }, &quot;index&quot;));
-<span class="nc" id="L72">    return (ElementType)element;</span>
+<span class="nc" id="L73">    return (ElementType)element;</span>
   }
 
   /**
@@ -77,67 +78,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType atAllPut(final ElementType element)
   {
-<span class="nc" id="L80">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAllPut&quot;;</span>
-<span class="nc" id="L81">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L82">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L83">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L84">      return this.at_put(index, element);</span>
+<span class="nc" id="L81">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAllPut&quot;;</span>
+<span class="nc" id="L82">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L83">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L84">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L85">      return this.at_put(index, element);</span>
     }, &quot;index&quot;));
-<span class="nc" id="L86">    return (ElementType)element;</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   ArrayedCollection replaceFrom_to_with_startingAt(final Ordinal start, final Ordinal stop, final CollectedReadably&lt;ElementType&gt; replacements, final Ordinal origin)
-  {
-<span class="nc" id="L94">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;replaceFrom_to_with_startingAt&quot;;</span>
-<span class="nc" id="L95">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L96">    Integer offset = (((Integer)origin).minus(((Integer)start))).asInteger();</span>
-<span class="nc" id="L97">    (this.isSame(replacements)).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L98">      return (((Integer)origin).lessThan(((Integer)start)));</span>
-<span class="nc" id="L99">    }, &quot;&quot;)).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L100">      return stop.to_by_do(start, (SmallInteger.from(0).minus(SmallInteger.from(1))), Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L101">      Integer i = f3.getValue(0).value();</span>
-<span class="nc" id="L102">      return this.at_put(i, replacements.at((i.plus(offset))));</span>
-    }, &quot;i&quot;));
-<span class="nc" id="L104">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L105">      return start.to_do(stop, Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L106">      Integer i = f3.getValue(0).value();</span>
-<span class="nc" id="L107">      return this.at_put(i, replacements.at((i.plus(offset))));</span>
-    }, &quot;i&quot;));
-    }, &quot;&quot;));
-<span class="nc" id="L110">    return (ArrayedCollection)this;</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   ArrayedCollection replaceFrom_to_with(final Ordinal start, final Ordinal stop, final CollectedReadably&lt;ElementType&gt; replacements)
-  {
-<span class="nc" id="L118">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;replaceFrom_to_with&quot;;</span>
-<span class="nc" id="L119">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L120">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L121">    (replacements.size().isSame(stop.minus(start).plus(SmallInteger.from(1)))).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L122">      this.error(String.from(&quot;size of replacement incorrect&quot;));</span>
-<span class="nc" id="L123">    return (ArrayedCollection)f0.exit(exitID, replacements);</span>
-    }, &quot;&quot;));
-<span class="nc" id="L125">    return (ArrayedCollection)f0.exit(exitID, this.replaceFrom_to_with_startingAt(start, stop, replacements, SmallInteger.from(1)));</span>
-    });
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   ElementType replaceFrom_to_withObject(final Ordinal start, final Ordinal stop, final ElementType replacement)
-  {
-<span class="nc" id="L134">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;replaceFrom_to_withObject&quot;;</span>
-<span class="nc" id="L135">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L136">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L137">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L138">      return this.at_put(index, replacement);</span>
-    }, &quot;index&quot;));
-<span class="nc" id="L140">    return (ElementType)replacement;</span>
+<span class="nc" id="L87">    return (ElementType)element;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

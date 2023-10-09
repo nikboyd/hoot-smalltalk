@@ -82,15 +82,15 @@ public class Mirror extends Item implements Typified {
 <span class="nc bnc" id="L82" title="All 2 branches missed.">    @Override public String shortName() { return isEmpty() ? Empty : Name.typeName(name()); }</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">    @Override public String description() { return isEmpty() ? Empty : primitiveClass().getCanonicalName(); }</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">    public boolean hasMetaclass() { return (fieldType(MetaMember) != null); }</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">    public boolean hasMetaclass() { return (fieldType(MetaMember) != null); }</span>
 <span class="nc" id="L86">    public Field metaclassField() { return fieldNamed(MetaMember); }</span>
-<span class="fc" id="L87">    public Class&lt;?&gt; metaclassType() { return fieldType(MetaMember); }</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">    @Override public Typified $class() { return hasMetaclass() ? Mirror.forClass(metaclassType()) : null; }</span>
+<span class="nc" id="L87">    public Class&lt;?&gt; metaclassType() { return fieldType(MetaMember); }</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">    @Override public Typified $class() { return hasMetaclass() ? Mirror.forClass(metaclassType()) : null; }</span>
 <span class="nc" id="L89">    public Typified metaclassInstance() { return nullOrTryLoudly(() -&gt; (Typified)metaclassField().get(null)); }</span>
 
 <span class="fc" id="L91">    public Field fieldNamed(String fieldName) { return findField(fieldName); }</span>
     public Class&lt;?&gt; fieldType(String fieldName) {
-<span class="fc" id="L93">        return nullOr(f -&gt; f.getType(), fieldNamed(fieldName)); }</span>
+<span class="pc" id="L93">        return nullOr(f -&gt; f.getType(), fieldNamed(fieldName)); }</span>
 
 <span class="nc" id="L95">    @Override public Signed getSigned(Signed s) { return nullOr(m -&gt; Signature.from(m), methodSigned(s)); }</span>
     public Method methodSigned(Signed s) {
@@ -132,10 +132,10 @@ public class Mirror extends Item implements Typified {
 <span class="fc bfc" id="L132" title="All 2 branches covered.">        if (!superior().isEmpty()) {</span>
 <span class="fc" id="L133">            simpleHeritage().forEach(superType -&gt; {</span>
 <span class="fc" id="L134">                wrap(superType.primitiveClass().getInterfaces()).forEach(impType -&gt; {</span>
-<span class="fc" id="L135">                    Typified aType = Mirror.forClass(impType);</span>
-<span class="fc" id="L136">                    results.add(aType);</span>
-<span class="fc" id="L137">                    results.addAll(aType.typeHeritage());</span>
-<span class="fc" id="L138">                });</span>
+<span class="nc" id="L135">                    Typified aType = Mirror.forClass(impType);</span>
+<span class="nc" id="L136">                    results.add(aType);</span>
+<span class="nc" id="L137">                    results.addAll(aType.typeHeritage());</span>
+<span class="nc" id="L138">                });</span>
 <span class="fc" id="L139">            });</span>
         }
 <span class="fc" id="L141">        return copyList(results);</span>
@@ -186,7 +186,7 @@ public class Mirror extends Item implements Typified {
     private Field findField(String fieldName) {
         try {
 <span class="fc bfc" id="L188" title="All 2 branches covered.">            if (isEmpty()) return null;</span>
-<span class="fc" id="L189">            return aClass.getDeclaredField(fieldName);</span>
+<span class="nc" id="L189">            return aClass.getDeclaredField(fieldName);</span>
 <span class="fc" id="L190">        } catch (NoSuchFieldException ex) {</span>
 <span class="fc" id="L191">            return superior().fieldNamed(fieldName);</span>
         }
@@ -207,4 +207,4 @@ public class Mirror extends Item implements Typified {
     }
 
 } // Mirror
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

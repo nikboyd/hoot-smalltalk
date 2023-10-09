@@ -2,6 +2,8 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Smalltalk Magnitudes Ordinal import.
+
 SmallInteger subclass: @Final FastInteger.
 "An integer value, especially for a fast integer arithmetic."
 
@@ -12,11 +14,18 @@ FastInteger members: "constructing instances"
     @Protected! FastInteger: Integer! anInteger [ super : anInteger primitiveInteger. ]
     @Static FastInteger! fromInteger: Integer! anInteger [ ^FastInteger basicNew: anInteger ]
 
+    FastInteger! value: Integer! value [ cachedValue := value intValue. ^self ]
     FastInteger! value: IntegerValue Source! source [ cachedValue := source intValue. ^self ]
+    SmallInteger! value [ ^SmallInteger from: cachedValue ]
 ]
 
 FastInteger members: "cumulative math"
 [
+    increment [ self += Unity. ]
+    decrement [ self -= Unity. ]
+
+    @Primitive @Final FastInteger! += Int! aNumber [ cachedValue += aNumber. ^self ]
+    @Primitive @Final FastInteger! += Ordinal! aNumber [ cachedValue += aNumber intValue. ^self ]
     @Primitive @Final FastInteger! += SmallInteger! aNumber [ cachedValue += aNumber primitiveInteger. ^self ]
     @Primitive @Final FastInteger! -= SmallInteger! aNumber [ cachedValue -= aNumber primitiveInteger. ^self ]
     @Primitive @Final FastInteger! *= SmallInteger! aNumber [ cachedValue *= aNumber primitiveInteger. ^self ]

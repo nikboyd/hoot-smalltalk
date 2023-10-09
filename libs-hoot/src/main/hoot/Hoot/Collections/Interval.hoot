@@ -2,9 +2,13 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Java Util List import.
+Java Util ArrayList import.
+
 Hoot Magnitudes Number import.
 Hoot Magnitudes Integer import.
 Hoot Magnitudes FastInteger import.
+Hoot Magnitudes SmallInteger importStatics.
 
 Smalltalk Core Subject import.
 Smalltalk Core Classified import.
@@ -19,11 +23,11 @@ Interval class members: "creating instances"
 [
     Interval! new [ 
         "a new empty Interval (0, 0, 0)"
-        ^self from: 0 to: 0 by: 0 ]
+        ^self from: Zero to: Zero by: Zero ]
 
     Interval! from: Ordinal! start to: Ordinal! stop [
-        "a new Interval (start, stop, 1)"
-    	^self from: start to: stop by: 1 ]
+        "a new Interval (start, stop, (stop - start) sign)"
+    	^self from: start to: stop by: (stop - start) sign ]
 
     Interval! from: Ordinal! start to: Ordinal! stop by: Ordinal! step [
         "a new Interval (start, stop, step)"
@@ -33,13 +37,13 @@ Interval class members: "creating instances"
 Interval members: "constructing instances"
 [
     "The interval start."
-    Ordinal! start := 0.
+    Ordinal! start := Zero.
 
     "The interval stop."
-    Ordinal! stop := 0.
+    Ordinal! stop := Zero.
 
     "The interval step."
-    Ordinal! step := 0.
+    Ordinal! step := Zero.
 
     "Constructs a new Interval."
     @Protected Interval: Ordinal! aStart : Ordinal! aStop : Ordinal! aStep [
@@ -51,34 +55,33 @@ Interval members: "constructing instances"
 
 Interval "accessing" members:
 [
+    @Private FastInteger! fastStart [ ^self start asSmallInteger asFastInteger ]
+    @Private SmallInteger! smallStep [ ^self step asSmallInteger ]
+
     @Private Integer! start [ ^Integer <- start ]
     @Private Integer! stop  [ ^Integer <- stop ]
     @Private Integer! step  [ ^Integer <- step ]
 
-    @Private @Primitive Int! countSteps [
-        ^(self stop primitiveInteger - self start primitiveInteger / self step primitiveInteger) + 1 ]
+    @Private @Primitive Int! startPrimly [ ^start intValue ]
+    @Private @Primitive Int! stopPrimly [ ^stop intValue ]    
+    @Private @Primitive Int! stepPrimly [ ^step intValue ]
+    @Private @Primitive Int! countSteps [ ^(self stopPrimly - self startPrimly / self stepPrimly) + 1 ]
 
     Integer! first [ self emptyCheck. ^self start ]
-    Integer! last [ self emptyCheck.
-        ^(self stop - (self stop - self start \\ step)) asInteger ]
-
-    @Primitive Integer! size [
-    	^self isEmpty
-            ifTrue: [ SmallInteger from: 0 ]
-            ifFalse: [ SmallInteger from: self countSteps ] ]
+    Integer! last  [ self emptyCheck. ^(self stop - (self stop - self start \\ step)) asInteger ]
+    Integer! size  [ ^self notEmpty ifTrue: [ SmallInteger from: self countSteps ] ifFalse: [ Zero ] ]
 
     Behavior! species [ ^Behavior <- OrderedCollection type ]
 ]
 
 Interval members: "comparing"
 [
-    @Primitive Boolean! = Collected! aCollection [
-        (aCollection instanceOf: Interval) ifFalse: [ ^super equals: aCollection ].
+    Boolean! = Collected! aCollection [
+        (Interval type accepts: aCollection) ifFalse: [ ^super equals: aCollection ].
         Interval! candidate := Interval <- aCollection.
-        (candidate start == self start) ifFalse: [ ^False literal ].
-        (candidate stop == self stop) ifFalse: [ ^False literal ].
-        (candidate step == self step) ifFalse: [ ^False literal ].
-        ^True literal
+        ^(candidate start == self start) and: [
+         (candidate stop == self stop) and: [
+         (candidate step == self step) ]]
     ]
 
     @Primitive Java Lang Int! hashCode [
@@ -93,19 +96,19 @@ Interval members: "comparing"
 
 Interval members: "accessing elements"
 [
-    @Protected Integer! get: Int! index [
-        ^self at: (SmallInteger from: index) + 1 ]
+    @Protected Integer! get: Int! index [ ^self at: (SmallInteger from: index) + 1 ]
+    Integer! at: Ordinal! index [ ^self at: index ifAbsent: [ self elementNotFound. ^Unity ] ]
 
-    Integer! at: Ordinal! index [
-        ^self at: index ifAbsent: [ self elementNotFound. ^0 ] ]
-
-    "Returns the element at (index), or evaluates (aBlock),
-    if the receiver does not include an (index)."
     @Primitive Integer! at: Ordinal! index ifAbsent: NiladicValuable! aBlock [
         Int! i := self checkIndex: index ifAbsent: aBlock.
-        i *= step intValue.
-        i += start intValue.
+        i *= step intValue. i += start intValue.
         ^SmallInteger from: i ]
+]
+
+Interval members: "printing"
+[
+    String! printElements [ ^(self collect: [ : Integer! value | value printString ]) printString ]
+    String! printString [ ^( '(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
 ]
 
 Interval members: "copying elements"
@@ -113,26 +116,44 @@ Interval members: "copying elements"
     reverse [ ^Interval type from: stop to: start by: step negated asInteger ]
 ]
 
+Interval members: "converting"
+[
+    @Primitive List? Ordinal! asList [
+        List? Ordinal! results := ArrayList basicNew.
+        self do: [ : Ordinal! v | results add: v. ].
+        ^results
+    ]
+]
+
 Interval members: "enumerating"
 [
-    do: MonadicValuable! aBlock [ start to: stop by: step do: [ : Ordinal! i | aBlock value: i ] ]
+    @Primitive Closure! testBlock: FastInteger! index [ "index ranges based on step"
+        ^self stepsDown ifTrue: [ [ ^(stop moreThan: index) not ] ] ifFalse: [ [ ^(index moreThan: stop) not ] ] ]
+
+    do: MonadicValuable! aBlock [
+        step = 0 ifTrue: [ ^self ]. "do nothing"
+        FastInteger! index := self fastStart.
+        (self testBlock: index) toPredicate whileTrue: [ aBlock value: index. index += self smallStep. ].
+    ]
 
     OrderedCollection! collect: MonadicValuable! filterBlock [
+        FastInteger! index := 0 asFastInteger. 
      	OrderedCollection! result := OrderedCollection new: self size.
-        FastInteger! index := 0 asFastInteger.
-        self do: [ : Ordinal! v |
-            index += 1.
-            result at: index put: Integer <- (filterBlock value: v).
-        ].
-        ^result ]
+        self do: [ : Ordinal! v | index += 1. result at: index put: (filterBlock value: v). ].
+        ^result
+    ]
 ]
 
 Interval members: "testing"
 [
-    @Primitive Boolean! isEmpty [
+    Boolean! stepsDown [ ^step < 0 ]
+    @Primitive Java Lang Boolean! stepsDownward [ ^step intValue < 0 ]
+
+    @Primitive Java Lang Boolean! isEmpty [
+        (step intValue == 0) ifTrue: [ ^true ].
     	^step intValue < 0
-            ifTrue: [ Boolean from: (start intValue < stop intValue) ]
-            ifFalse: [ Boolean from: (stop intValue < start intValue) ] ]
+            ifTrue:  [ (start intValue < stop intValue) ]
+            ifFalse: [ (stop intValue < start intValue) ] ]
 
     Boolean! includes: Subject! aValue [
         (aValue isKindOf: Integer type) ifFalse: [ ^false ].

@@ -43,26 +43,26 @@ public class Servant implements Logging {
     static final String CompilerSpec = "hoot-smalltalk:hoot-compiler-boot:";
     Artifact locateArtifact() { return Discovery.lookup(CompilerSpec + version()).getArtifact(); }
     String locateCompiler() { return locateArtifact().getFile().getAbsolutePath(); }
-    
+
     static final String Quote = "\"";
     static final String WinShell = "cmd.exe";
     static final String WinCommand = "'%%JAVA_HOME%%\\bin\\java' -jar %s";
-    String buildWinCommand(String... args) { 
+    String buildWinCommand(String... args) {
         String result = format(WinCommand, locateCompiler()).replace("'", Quote);
         for (String s : args) { result += " " + s; }
         report("running "+result);
         return result; }
 
     static final String Shell = "/bin/sh";
-    static final String JavaCommand = "java -jar %s";
-    String buildJavaCommand(String... args) { 
+    static final String JavaCommand = "$JAVA_HOME/bin/java -jar %s";
+    String buildJavaCommand(String... args) {
         String result = format(JavaCommand, locateCompiler());
         for (String s : args) { result += " " + s; }
         report("running "+result);
         return result; }
 
     ProcessBuilder buildProcess(String... args) {
-        return SystemUtils.IS_OS_WINDOWS ? 
+        return SystemUtils.IS_OS_WINDOWS ?
             new ProcessBuilder(WinShell, "/c", buildWinCommand(args)) :
             new ProcessBuilder(Shell, "-c", buildJavaCommand(args)); }
 

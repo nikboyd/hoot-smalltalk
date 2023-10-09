@@ -1,5 +1,6 @@
 package Hoot.Runtime.Faces;
 
+import Hoot.Runtime.Blocks.MonadicValuable;
 import static Hoot.Runtime.Names.Operator.Empty;
 
 /**
@@ -10,6 +11,8 @@ import static Hoot.Runtime.Names.Operator.Empty;
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface IntegerValue extends Valued {
+
+    public static interface Factory { IntegerValue valueFrom(int value); }
 
     public static IntegerValue with(int value) { return Source.with(value); }
 
@@ -29,6 +32,13 @@ public interface IntegerValue extends Valued {
      */
     public static class Cache {
 
+        MonadicValuable valueFactory = new MonadicValuable() {
+            @Override public <V,R> R value(V value) { return (R)(new Source((Integer)value)); }
+            @Override public IntegerValue argumentCount() { return new Source(1); }
+        };
+        public Cache(MonadicValuable f) { valueFactory = f; }
+        public Cache() {}
+
         public static final int Size = 4096;
 
         /**
@@ -36,8 +46,13 @@ public interface IntegerValue extends Valued {
          */
         public static int size() { return Size; }
 
-        private final IntegerValue[] positiveIntegers = new IntegerValue[Size];
-        private final IntegerValue[] negativeIntegers = new IntegerValue[Size];
+        private final IntegerValue[] posValues = new IntegerValue[Size];
+        private final IntegerValue[] negValues = new IntegerValue[Size];
+        private IntegerValue get(int value) { return (value < 0 ? this.negValues[0 - value]: this.posValues[value]); }
+        private IntegerValue set(IntegerValue value) {
+            int index = value.intValue(); if (index < 0) negValues[0 - index] = value; else posValues[index] = value;
+            return value;
+        }
 
         /**
          * @return whether this cache covers a value
@@ -49,7 +64,7 @@ public interface IntegerValue extends Valued {
          * @return whether this cache has a value
          * @param value a value
          */
-        public boolean hasCached(int value) { return covers(value) && (getCached(value) != null); }
+        public boolean hasCached(int value) { return (covers(value) && get(value) != null); }
 
         /**
          * @return a cached value holder (flyweight)
@@ -57,37 +72,30 @@ public interface IntegerValue extends Valued {
          * @param value a cached value
          */
         @SuppressWarnings("unchecked")
-        public <R extends IntegerValue> R getCached(int value) { if (!covers(value)) return null;
-            return (R) (value < 0 ? this.negativeIntegers[0 - value] : this.positiveIntegers[value]); }
+        public <R extends IntegerValue> R getCached(int value) {
+            return hasCached(value)? (R)get(value): cacheCovered((R)valueFactory.value(value));
+        }
 
         /**
          * @return a flyweight value holder
          * @param <R> an IntegerValue type
          * @param valueHolder a value holder
          */
-        public <R extends IntegerValue> R cache(R valueHolder) {
-            if (valueHolder == null) return null;
-            int index = valueHolder.intValue();
-            if (!covers(index)) return null;
-
-            if (index < 0) {
-                this.negativeIntegers[0 - index] = valueHolder;
-            }
-            else {
-                this.positiveIntegers[index] = valueHolder;
-            }
-
-            return valueHolder;
+        @SuppressWarnings("unchecked")
+        public <R extends IntegerValue> R cacheCovered(R valueHolder) {
+            return (valueHolder != null && covers(valueHolder.intValue()))? (R)set(valueHolder): valueHolder;
         }
 
     } // Cache
 
+    public static class SourceFactory implements Factory {
+        @Override public IntegerValue valueFrom(int value) { return new Source(value); }
+    }
+
     public static class Source extends Number implements IntegerValue {
 
         static final Cache CachedValues = new Cache();
-        public static Source with(int value) {
-            return CachedValues.hasCached(value) ?
-                CachedValues.getCached(value) : CachedValues.cache(new Source(value)); }
+        public static Source with(int value) { return CachedValues.getCached(value); }
 
         private Integer value = 0;
         private Source(int value) { this.value = value; }

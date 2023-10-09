@@ -3,9 +3,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 '!
 
 Java Math BigInteger import.
-
 Hoot Runtime Names Primitive import.
-
 Smalltalk Magnitudes Ordinal import.
 
 Integer subclass: LargeInteger. "A large integer value."

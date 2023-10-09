@@ -94,35 +94,34 @@ Fixed members: "truncation"
 
 Fixed members: "arithmetic"
 [
-    + aFixed [ "this + aFixed"
+    + aFixed [
     	denominator = aFixed denominator ifTrue: [
             ^self class numerator: numerator + aFixed numerator
-                denominator: denominator scale: Number <- (scale max: aFixed scale) ].
-        ^self class
-            numerator: (numerator * aFixed denominator) + (denominator * aFixed numerator)
-            denominator: (denominator * aFixed denominator) scale: Number <- (scale max: aFixed scale) ]
-
-    * aFixed [ "this * aFixed"
-    	^self class
-            numerator: (numerator * aFixed numerator)
-            denominator: (denominator * aFixed denominator)
+                denominator: denominator 
+                scale: Number <- (scale max: aFixed scale) ].
+        ^self class numerator: (self crossSum: aFixed)
+            denominator: (self underProduct: aFixed) 
             scale: Number <- (scale max: aFixed scale) ]
 
-    / aFixed [ "this / aFixed"
-    	^self class
-            numerator: (numerator * aFixed denominator)
-            denominator: (denominator * aFixed numerator)
+    * aFixed [
+    	^self class numerator: (self overProduct: aFixed)
+            denominator: (self underProduct: aFixed)
             scale: Number <- (scale max: aFixed scale) ]
 
-    + aNumber [ "this + aFixed"
+    / aFixed [
+    	^self class numerator: (self crossProduct: aFixed)
+            denominator: (aFixed crossProduct: self)
+            scale: Number <- (scale max: aFixed scale) ]
+
+    + aNumber [
         self generality < aNumber generality ifTrue: [  ^(aNumber asScaledDecimal: scale) + self  ].
         ^self + (aNumber asScaledDecimal: scale) ]
 
-    * aNumber [ "this * aFixed"
+    * aNumber [
         self generality < aNumber generality ifTrue: [ ^aNumber * self ].
         ^self * (aNumber asScaledDecimal: scale) ]
 
-    / aNumber [ "this / aFixed"
+    / aNumber [
         self generality < aNumber generality ifTrue: [ ^(self coerceTo: aNumber class) / aNumber ].
         ^self / (aNumber asScaledDecimal: scale) ]
 ]

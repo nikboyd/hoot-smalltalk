@@ -2,53 +2,69 @@
 
 import java.io.*;
 import java.util.Properties;
-import Hoot.Runtime.Faces.Logging;
-import org.eclipse.aether.resolution.ArtifactResult;
+import org.apache.commons.lang3.SystemUtils;
+import org.eclipse.aether.artifact.Artifact;
 import static Hoot.Runtime.Functions.Exceptional.*;
+import Hoot.Runtime.Faces.Logging;
 
 /**
- * Starts and stops the web service as needed.
+ * Compiles Hoot code in a separate process.
  *
  * @author nik &lt;nikboyd@sonic.net&gt;
  * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
  * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
  */
-<span class="fc" id="L16">public class Servant implements Logging {</span>
+<span class="fc" id="L17">public class Servant implements Logging {</span>
 
-<span class="fc" id="L18">    private Process remoteProcess = null;</span>
-<span class="fc" id="L19">    private InputStream processStream() { return remoteProcess.getInputStream(); }</span>
-<span class="fc" id="L20">    private BufferedReader processReader() { return new BufferedReader(new InputStreamReader(processStream())); }</span>
-
-    private void pipeShellOutput() {
-<span class="fc" id="L23">        String line; BufferedReader reader = processReader();</span>
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        try { while((line = reader.readLine()) != null) report(line); }</span>
-<span class="pc" id="L25">        catch (IOException x) { error(x); }</span>
+<span class="fc" id="L19">    private Process remoteProcess = null;</span>
+    public void runCompiler(String... args) {
+<span class="fc" id="L21">        runLoudly(() -&gt; {</span>
+<span class="fc" id="L22">            remoteProcess = buildProcess(args).start();</span>
+<span class="fc" id="L23">            new Thread(() -&gt; pipeShellOutput()).start();</span>
+<span class="fc" id="L24">            remoteProcess.waitFor();</span>
+<span class="fc" id="L25">        });</span>
 <span class="fc" id="L26">    }</span>
-<span class="fc" id="L27">    Properties p = new Properties();</span>
+
+<span class="fc" id="L28">    InputStream processStream() { return remoteProcess.getInputStream(); }</span>
+<span class="fc" id="L29">    BufferedReader processReader() { return new BufferedReader(new InputStreamReader(processStream())); }</span>
+    void pipeShellOutput() {
+<span class="fc" id="L31">        String line; BufferedReader reader = processReader();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        try { while((line = reader.readLine()) != null) report(line); }</span>
+<span class="pc" id="L33">        catch (IOException x) { error(x); }</span>
+<span class="fc" id="L34">    }</span>
+
+<span class="fc" id="L36">    Properties p = new Properties();</span>
     static final String Version = &quot;version&quot;; // loaded value name
     static final String MojoVersion = &quot;/version.properties&quot;;
-<span class="fc" id="L30">    String version() { runLoudly(() -&gt; loadVersion(p)); return p.getProperty(Version); }</span>
-<span class="fc" id="L31">    void loadVersion(Properties p) throws IOException { try (InputStream in = versionStream()) { p.load(in); } }</span>
-<span class="fc" id="L32">    InputStream versionStream() throws IOException { return getClass().getResourceAsStream(MojoVersion); }</span>
+<span class="fc" id="L39">    String version() { runLoudly(() -&gt; loadVersion(p)); return p.getProperty(Version); }</span>
+<span class="fc" id="L40">    void loadVersion(Properties p) throws IOException { try (InputStream in = versionStream()) { p.load(in); } }</span>
+<span class="fc" id="L41">    InputStream versionStream() throws IOException { return getClass().getResourceAsStream(MojoVersion); }</span>
 
     static final String CompilerSpec = &quot;hoot-smalltalk:hoot-compiler-boot:&quot;;
-    private String locateCompiler() {
-<span class="fc" id="L36">        ArtifactResult result = Discovery.lookup(CompilerSpec + version());</span>
-<span class="fc" id="L37">        return result.getArtifact().getFile().getAbsolutePath();</span>
-    }
+<span class="fc" id="L44">    Artifact locateArtifact() { return Discovery.lookup(CompilerSpec + version()).getArtifact(); }</span>
+<span class="fc" id="L45">    String locateCompiler() { return locateArtifact().getFile().getAbsolutePath(); }</span>
+
+    static final String Quote = &quot;\&quot;&quot;;
+    static final String WinShell = &quot;cmd.exe&quot;;
+    static final String WinCommand = &quot;'%%JAVA_HOME%%\\bin\\java' -jar %s&quot;;
+    String buildWinCommand(String... args) {
+<span class="nc" id="L51">        String result = format(WinCommand, locateCompiler()).replace(&quot;'&quot;, Quote);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (String s : args) { result += &quot; &quot; + s; }</span>
+<span class="nc" id="L53">        report(&quot;running &quot;+result);</span>
+<span class="nc" id="L54">        return result; }</span>
 
     static final String Shell = &quot;/bin/sh&quot;;
-    static final String ServiceCommand = &quot;java -jar %s&quot;;
-    public void runCompiler(String... args) {
-<span class="fc" id="L43">        runLoudly(() -&gt; {</span>
-<span class="fc" id="L44">            String launchCommand = format(ServiceCommand, locateCompiler());</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (String s : args) { launchCommand += &quot; &quot; + s; }</span>
-<span class="fc" id="L46">            ProcessBuilder pb = new ProcessBuilder(Shell, &quot;-c&quot;, launchCommand);</span>
-<span class="fc" id="L47">            remoteProcess = pb.start();</span>
-<span class="fc" id="L48">            new Thread(() -&gt; pipeShellOutput()).start();</span>
-<span class="fc" id="L49">            remoteProcess.waitFor();</span>
-<span class="fc" id="L50">        });</span>
-<span class="fc" id="L51">    }</span>
+    static final String JavaCommand = &quot;$JAVA_HOME/bin/java -jar %s&quot;;
+    String buildJavaCommand(String... args) {
+<span class="fc" id="L59">        String result = format(JavaCommand, locateCompiler());</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (String s : args) { result += &quot; &quot; + s; }</span>
+<span class="fc" id="L61">        report(&quot;running &quot;+result);</span>
+<span class="fc" id="L62">        return result; }</span>
+
+    ProcessBuilder buildProcess(String... args) {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        return SystemUtils.IS_OS_WINDOWS ?</span>
+<span class="nc" id="L66">            new ProcessBuilder(WinShell, &quot;/c&quot;, buildWinCommand(args)) :</span>
+<span class="fc" id="L67">            new ProcessBuilder(Shell, &quot;-c&quot;, buildJavaCommand(args)); }</span>
 
 } // Servant
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

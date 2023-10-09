@@ -90,22 +90,22 @@ public class Variable extends Operand implements ValueSource {
 
 <span class="fc" id="L91">    protected final List&lt;String&gt; names = emptyList(String.class);</span>
 <span class="fc" id="L92">    private void name(String aName) { names.add(aName); }</span>
-<span class="nc" id="L93">    @Override public boolean isEmpty() { return names.isEmpty(); }</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">    @Override public String name() { return isEmpty() ? Empty : TypeName.with(names).fullName(); }</span>
+<span class="fc" id="L93">    @Override public boolean isEmpty() { return names.isEmpty(); }</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">    @Override public String name() { return isEmpty() ? Empty : TypeName.with(names).fullName(); }</span>
     protected static final String NameReport = &quot;%s = %s: %s&quot;;
     @Override public String description() {
 <span class="nc" id="L97">        return format(NameReport, getClass().getSimpleName(), name(), resolvedTypeName()); }</span>
 
     DetailedType notedType;
-<span class="nc" id="L100">    public DetailedType notedType() { return this.notedType; }</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">    public boolean hasTypeNote() { return notedType() != null; }</span>
+<span class="fc" id="L100">    public DetailedType notedType() { return this.notedType; }</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">    public boolean hasTypeNote() { return notedType() != null; }</span>
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">    private void notedType(DetailedType notedType) { if (hasAny(notedType)) this.notedType = notedType; }</span>
-<span class="nc" id="L103">    public String type() { return typeResolver().typeName(); }</span>
+<span class="fc" id="L103">    public String type() { return typeResolver().typeName(); }</span>
 <span class="nc" id="L104">    public Typified typeFace() { return typeResolver().findType(); }</span>
 <span class="nc bnc" id="L105" title="All 4 branches missed.">    public boolean valueNeedsCast() { return hasValue() &amp;&amp; !type().equals(operandValue().resolvedTypeName()); }</span>
 
     @Override public TypeName typeResolver() {
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (this.hasTypeNote()) return this.notedType().toTypeName();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (this.hasTypeNote()) return this.notedType().toTypeName();</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">        if (referencesMember()) return referencedMember().typeResolver();</span>
 <span class="nc bnc" id="L110" title="All 2 branches missed.">        if (referencesLocal()) {</span>
 <span class="nc" id="L111">            Variable ref = referencedLocal(); // same ref without note?</span>
@@ -119,11 +119,11 @@ public class Variable extends Operand implements ValueSource {
 //    @Override public Object value() { return operandValue(); }
 
 <span class="fc" id="L121">    protected Operand value = null;</span>
-<span class="nc" id="L122">    public Operand operandValue() { return this.value; }</span>
+<span class="fc" id="L122">    public Operand operandValue() { return this.value; }</span>
 
 <span class="nc" id="L124">    public void value(Operand aValue) { value = aValue.inside(this); }</span>
 <span class="nc" id="L125">    public boolean noValue() { return hasNone(operandValue()); }</span>
-<span class="nc" id="L126">    public boolean hasValue() { return hasOne(operandValue()); }</span>
+<span class="fc" id="L126">    public boolean hasValue() { return hasOne(operandValue()); }</span>
 <span class="nc bnc" id="L127" title="All 4 branches missed.">    @Override public boolean containsExit() { return hasValue() &amp;&amp; operandValue().exitsMethod(); }</span>
 <span class="nc bnc" id="L128" title="All 2 branches missed.">    public Variable withValue(Operand value) { if (hasAny(value)) { value(value); value.makeAssigned(); }  return this; }</span>
 
@@ -171,7 +171,7 @@ public class Variable extends Operand implements ValueSource {
 <span class="nc" id="L171">    public void comment(String aString) { comment = defaultIfEmpty(aString, Empty); }</span>
 <span class="nc bnc" id="L172" title="All 2 branches missed.">    public boolean hasComment() { return comment.length() &gt; 0; }</span>
     @Override public String comment() { // remove the surrounding quotes if needed
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        return (comment.isEmpty() ? null : comment.substring(1, comment.length() - 1)); }</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        return (comment.isEmpty() ? null : comment.substring(1, comment.length() - 1)); }</span>
 
 <span class="nc" id="L176">    public boolean referencesStacked() { return falseOr(v -&gt; v.isStacked(), referencedLocal()); }</span>
 <span class="nc" id="L177">    public boolean referencesLocal() { return matchAny(blockScopes(), s -&gt; s.hasLocal(name())); }</span>
@@ -189,36 +189,36 @@ public class Variable extends Operand implements ValueSource {
 <span class="nc" id="L189">        results.addAll(facialScope().simpleHeritage());</span>
 <span class="nc" id="L190">        return results; }</span>
 
-<span class="nc" id="L192">    public Emission variableNotes() { return emitSequence(notes().variableNotesOnlyDecor()); }</span>
+<span class="fc" id="L192">    public Emission variableNotes() { return emitSequence(notes().variableNotesOnlyDecor()); }</span>
 <span class="nc" id="L193">    public Emission argumentNotes() { return emitSequence(notes().argumentNotesOnlyDecor()); }</span>
 
     public Emission emitNotedType() {
-<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (hasTypeNote()) return notedType().emitCode(true);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (hasTypeNote()) return notedType().emitCode(true);</span>
 <span class="nc bnc" id="L197" title="All 2 branches missed.">        if (definesValue()) return emitItem(localVar());</span>
 <span class="nc bnc" id="L198" title="All 2 branches missed.">        if (isDefined()) return null;</span>
 <span class="nc" id="L199">        return emitItem(localVar());</span>
     }
 
     public Emission emitType(boolean wantsBases) { // used by members
-<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (hasTypeNote()) return notedType().emitCode(wantsBases);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">        if (hasTypeNote()) return notedType().emitCode(wantsBases);</span>
 <span class="nc bnc" id="L204" title="All 2 branches missed.">        if (definesValue()) emitItem(localVar());</span>
 <span class="nc bnc" id="L205" title="All 2 branches missed.">        if (isDefined()) return null;</span>
 <span class="nc" id="L206">        return emitItem(localVar());</span>
     }
 
 <span class="nc" id="L209">    public Emission emitCast() { return emitCast(emitType(false), emitItem(name())); }</span>
-<span class="nc" id="L210">    public Emission emitType() { return emitType(true) ; }</span>
+<span class="fc" id="L210">    public Emission emitType() { return emitType(true) ; }</span>
     public Emission emitArgumentType() {
-<span class="nc bnc" id="L212" title="All 2 branches missed.">        return hasTypeNote() ? notedType().makeArgued(true).emitCode(false) : emitItem(RootType().fullName()) ; }</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">        return hasTypeNote() ? notedType().makeArgued(true).emitCode(false) : emitItem(RootType().fullName()) ; }</span>
 
     @Override public Emission emitOperand() {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (this.hasValue()) {</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">        if (this.hasValue()) {</span>
 <span class="nc bnc" id="L216" title="All 4 branches missed.">            if (this.isStacked()) return this.hasTypeNote() ? emitSequence(emitSimply(), emitBinding()) : emitBoundValue();</span>
 <span class="nc bnc" id="L217" title="All 2 branches missed.">            if (this.referencesStacked()) return emitBoundValue();</span>
 <span class="nc bnc" id="L218" title="All 2 branches missed.">            if (operandValue().hasCascades()) return emitValue();</span>
         }
 
-<span class="nc" id="L221">        return emitSimply();</span>
+<span class="fc" id="L221">        return emitSimply();</span>
     }
 
     @Override public Emission emitItem() {
@@ -230,17 +230,17 @@ public class Variable extends Operand implements ValueSource {
 <span class="nc" id="L230">    public Emission emitErasedArgument() { return emitArgument(fullName(), RootType().shortName(), true); }</span>
 <span class="nc" id="L231">    public Emission emitBlockArgument(int index, int level) { return emitBlockArgument(name(), emitArgumentType(), index, level); }</span>
 <span class="nc" id="L232">    public Emission emitArgument() { return emitNamedArgument(name(), emitArgumentType(), argumentNotes()); }</span>
-<span class="nc" id="L233">    public Emission emitArgument(boolean useFinal) { return emitArgument(fullName(), typeResolver().typeName(), useFinal); }</span>
+<span class="fc" id="L233">    public Emission emitArgument(boolean useFinal) { return emitArgument(fullName(), typeResolver().typeName(), useFinal); }</span>
     public Emission emitProperty() {
 <span class="nc" id="L235">        return emitProperty(name(), emitNotedType(), containerScope().name(), emitValue(), variableNotes(), comment()) ; }</span>
 
 <span class="fc" id="L237">    static final String NoComment = null;</span>
 <span class="nc" id="L238">    public Emission emitLocal() { return emitVariable(name(), emitNotedType(), emitValue(), NoValue, NoComment); }</span>
-<span class="nc" id="L239">    public Emission emitSimply() { return emitVariable(name(), emitNotedType(), emitValue(), NoValue, NoComment); }</span>
-<span class="nc" id="L240">    public Emission emitVariable() {  return emitVariable(name(), emitNotedType(), emitValue(), variableNotes(), comment()); }</span>
+<span class="fc" id="L239">    public Emission emitSimply() { return emitVariable(name(), emitNotedType(), emitValue(), NoValue, NoComment); }</span>
+<span class="fc" id="L240">    public Emission emitVariable() {  return emitVariable(name(), emitNotedType(), emitValue(), variableNotes(), comment()); }</span>
 <span class="nc" id="L241">    public Emission emitTransientLocal() { return emitTransient(name(), emitNotedType(), emitValueOrDefault(), valueNeedsCast()); }</span>
 <span class="nc bnc" id="L242" title="All 2 branches missed.">    public Emission emitValueOrDefault() { return hasValue() ? emitValue() : emitItem(defaultValue()); }</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">    public Emission emitValue() { return nullOr(v -&gt; isPrimitive() ? v.emitPrimitive() : v.emitOperand(), operandValue()); }</span>
+<span class="pc bnc" id="L243" title="All 2 branches missed.">    public Emission emitValue() { return nullOr(v -&gt; isPrimitive() ? v.emitPrimitive() : v.emitOperand(), operandValue()); }</span>
 
 //    @Override public boolean needsLocalResolution() { return false; }
 //    @Override public Scope resolvingScope() { return containerScope(); }
@@ -281,4 +281,4 @@ public class Variable extends Operand implements ValueSource {
     static final String LocalVariable = &quot;var&quot;;
 
 } // Variable
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

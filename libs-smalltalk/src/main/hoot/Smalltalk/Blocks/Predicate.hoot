@@ -5,6 +5,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 Java Util Function Function import.
 
 Hoot Runtime Values Frame import.
+Hoot Runtime Behaviors HootRegistry import.
 Hoot Runtime Functions Exceptional importStatics.
 
 Closure subclass: NiladicPredicate! MonadicPredicate! DyadicPredicate! Predicate. 
@@ -27,15 +28,24 @@ Predicate members: "evaluating predicates"
 
 Predicate "looping" members:
 [
-    @Primitive Posit! whileTrue [ Posit! result := self value. 
-        [ result primitiveBoolean ] whileTrue: [ result := self value. ]. ^result ]
+    @Primitive Posit! valueOrTrue [
+        Posit! result := self value. result == nil ifFalse: [ ^result ].
+        ^Posit <- HootRegistry trueValue ]
 
-    @Primitive Posit! whileFalse [ Posit! result := self value. 
-        [ result primitiveBoolean ] whileFalse: [ result := self value. ]. ^result ]
+    @Primitive Posit! valueOrFalse [
+        Posit! result := self value. result == nil ifFalse: [ ^result ].
+        ^Posit <- HootRegistry falseValue ]
 
-    @Primitive Posit! whileTrue: NiladicValuable! aBlock [ Posit! result := self value. 
-        [ result primitiveBoolean ] whileTrue: [ aBlock value. result := self value. ]. ^result ]
+    Posit! whileTrue  [ ^self whileTrue:  [ ] ]
+    Posit! whileFalse [ ^self whileFalse: [ ] ]
 
-    @Primitive Posit! whileFalse: NiladicValuable! aBlock [ Posit! result := self value.
-        [ result primitiveBoolean ] whileFalse: [ aBlock value. result := self value. ]. ^result ]
+    @Primitive Posit! whileTrue: NiladicValuable! aBlock [ 
+        Posit! result := self valueOrFalse.
+        [ result primitiveBoolean ] whileTrue: [ aBlock value. result := self valueOrFalse. ]. 
+        ^result ]
+
+    @Primitive Posit! whileFalse: NiladicValuable! aBlock [ 
+        Posit! result := self valueOrTrue.
+        [ result primitiveBoolean ] whileFalse: [ aBlock value. result := self valueOrTrue. ]. 
+        ^result ]
 ]

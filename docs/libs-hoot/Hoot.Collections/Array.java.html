@@ -32,7 +32,7 @@ import Smalltalk.Blocks.*;
 public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&lt;ElementType&gt;
 {
 <span class="fc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends ArrayedCollection.Metaclass
   {
 <span class="fc" id="L38">    static final Array.Metaclass $class = new Array.Metaclass();</span>
@@ -109,9 +109,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
     /**
      * @return 
      */
-    @Override public  &lt;ElementType extends Subject&gt; Array withAll(final CollectedReadably&lt;ElementType&gt; aCollection)
+    public  &lt;ElementType extends Subject&gt; Array withThese(final CollectedReadably&lt;ElementType&gt; aCollection)
     {
-<span class="nc" id="L114">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withAll&quot;;</span>
+<span class="nc" id="L114">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withThese&quot;;</span>
 <span class="nc" id="L115">      Frame f0 = new Frame(exitID);</span>
 <span class="nc" id="L116">      return f0.evaluate(() -&gt; {</span>
 <span class="nc" id="L117">      return (Array)f0.exit(exitID, new Array(aCollection.asList()));</span>
@@ -161,11 +161,11 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    * 
    */
   public    Array(final List&lt;ElementType&gt; elements)
-<span class="nc" id="L164">  {</span>
-<span class="nc" id="L165">    java.lang.String exitID = &quot;Array&gt;&gt;Array&quot;;</span>
-<span class="nc" id="L166">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L167">    contents.addAll(elements);</span>
-<span class="nc" id="L168">  }</span>
+<span class="fc" id="L164">  {</span>
+<span class="fc" id="L165">    java.lang.String exitID = &quot;Array&gt;&gt;Array&quot;;</span>
+<span class="fc" id="L166">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L167">    contents.addAll(elements);</span>
+<span class="fc" id="L168">  }</span>
 
   /**
    * 
@@ -211,11 +211,21 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
   /**
    * @return 
    */
+  public static  &lt;ElementType extends Subject&gt; Array withThese(final CollectedReadably&lt;ElementType&gt; aCollection)
+  {
+<span class="fc" id="L216">    java.lang.String exitID = &quot;Array&gt;&gt;$withThese&quot;;</span>
+<span class="fc" id="L217">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L218">    return (Array)new Array(aCollection.asList());</span>
+  }
+
+  /**
+   * @return 
+   */
   public   List&lt;ElementType&gt; primitiveContents()
   {
-<span class="fc" id="L216">    java.lang.String exitID = &quot;Array&gt;&gt;primitiveContents&quot;;</span>
-<span class="fc" id="L217">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L218">    return (List&lt;ElementType&gt;)contents;</span>
+<span class="fc" id="L226">    java.lang.String exitID = &quot;Array&gt;&gt;primitiveContents&quot;;</span>
+<span class="fc" id="L227">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L228">    return (List&lt;ElementType&gt;)contents;</span>
   }
 
   /**
@@ -223,9 +233,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   Integer size()
   {
-<span class="fc" id="L226">    java.lang.String exitID = &quot;Array&gt;&gt;size&quot;;</span>
-<span class="fc" id="L227">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L228">    return (Integer)SmallInteger.from(contents.size());</span>
+<span class="fc" id="L236">    java.lang.String exitID = &quot;Array&gt;&gt;size&quot;;</span>
+<span class="fc" id="L237">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L238">    return (Integer)SmallInteger.from(contents.size());</span>
   }
 
   /**
@@ -233,9 +243,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override protected   ElementType get(final int index)
   {
-<span class="fc" id="L236">    java.lang.String exitID = &quot;Array&gt;&gt;get&quot;;</span>
-<span class="fc" id="L237">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L238">    return (ElementType)contents.get(index);</span>
+<span class="fc" id="L246">    java.lang.String exitID = &quot;Array&gt;&gt;get&quot;;</span>
+<span class="fc" id="L247">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L248">    return (ElementType)contents.get(index);</span>
   }
 
   /**
@@ -243,10 +253,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override protected   ElementType add_at(final ElementType element, final int index)
   {
-<span class="nc" id="L246">    java.lang.String exitID = &quot;Array&gt;&gt;add_at&quot;;</span>
-<span class="nc" id="L247">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L248">    contents.add(index, element);</span>
-<span class="nc" id="L249">    return (ElementType)element;</span>
+<span class="nc" id="L256">    java.lang.String exitID = &quot;Array&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L257">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L258">    contents.add(index, element);</span>
+<span class="nc" id="L259">    return (ElementType)element;</span>
   }
 
   /**
@@ -254,20 +264,20 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   ElementType at_ifAbsent(final Integer index, final NiladicValuable aBlock)
   {
-<span class="nc" id="L257">    java.lang.String exitID = &quot;Array&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="nc" id="L258">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L259">    return (ElementType)this.get(this.checkIndex_ifAbsent(index, aBlock));</span>
+<span class="nc" id="L267">    java.lang.String exitID = &quot;Array&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="nc" id="L268">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L269">    return (ElementType)this.get(this.checkIndex_ifAbsent(index, aBlock));</span>
   }
 
   /**
    * @return 
    */
-  public   ElementType at_put(final Integer index, final ElementType element)
+  @Override public   ElementType at_put(final Ordinal index, final ElementType element)
   {
-<span class="fc" id="L267">    java.lang.String exitID = &quot;Array&gt;&gt;at_put&quot;;</span>
-<span class="fc" id="L268">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L269">    contents.add(this.checkIndex(index), element);</span>
-<span class="fc" id="L270">    return (ElementType)element;</span>
+<span class="fc" id="L277">    java.lang.String exitID = &quot;Array&gt;&gt;at_put&quot;;</span>
+<span class="fc" id="L278">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L279">    contents.set(this.checkIndex(index), element);</span>
+<span class="fc" id="L280">    return (ElementType)element;</span>
   }
 
   /**
@@ -275,9 +285,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   List&lt;ElementType&gt; asList()
   {
-<span class="fc" id="L278">    java.lang.String exitID = &quot;Array&gt;&gt;asList&quot;;</span>
-<span class="fc" id="L279">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L280">    return (List&lt;ElementType&gt;)this.primitiveContents();</span>
+<span class="fc" id="L288">    java.lang.String exitID = &quot;Array&gt;&gt;asList&quot;;</span>
+<span class="fc" id="L289">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L290">    return (List&lt;ElementType&gt;)this.primitiveContents();</span>
   }
 
   /**
@@ -285,9 +295,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L288">    java.lang.String exitID = &quot;Array&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L289">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L290">    return (int)this.primitiveContents().hashCode();</span>
+<span class="nc" id="L298">    java.lang.String exitID = &quot;Array&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L299">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L300">    return (int)this.primitiveContents().hashCode();</span>
   }
 
   /**
@@ -295,9 +305,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   Boolean equals(final Collected aCollection)
   {
-<span class="nc" id="L298">    java.lang.String exitID = &quot;Array&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L299">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L300">    return (Boolean)(this.equals(((Array)aCollection.asArray())));</span>
+<span class="nc" id="L308">    java.lang.String exitID = &quot;Array&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L309">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L310">    return (Boolean)(this.equals(((Array)aCollection.asArray())));</span>
   }
 
   /**
@@ -305,9 +315,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   Boolean equals(final Array&lt;ElementType&gt; aCollection)
   {
-<span class="nc" id="L308">    java.lang.String exitID = &quot;Array&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L309">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L310">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
+<span class="nc" id="L318">    java.lang.String exitID = &quot;Array&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L319">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L320">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
   }
 
   /**
@@ -315,13 +325,13 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   Array $do(final MonadicValuable aBlock)
   {
-<span class="fc" id="L318">    java.lang.String exitID = &quot;Array&gt;&gt;$do&quot;;</span>
-<span class="fc" id="L319">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L320">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L321">      Integer index = f2.getValue(0).value();</span>
-<span class="fc" id="L322">      return aBlock.value(this.get((index.minus(SmallInteger.from(1))).primitiveInteger()));</span>
+<span class="fc" id="L328">    java.lang.String exitID = &quot;Array&gt;&gt;$do&quot;;</span>
+<span class="fc" id="L329">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L330">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L331">      Integer index = f2.getValue(0).value();</span>
+<span class="fc" id="L332">      return aBlock.value(this.get((index.minus(SmallInteger.from(1))).primitiveInteger()));</span>
     }, &quot;index&quot;));
-<span class="fc" id="L324">    return (Array)this;</span>
+<span class="fc" id="L334">    return (Array)this;</span>
   }
 
   /**
@@ -329,9 +339,9 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   @Override public   Boolean includes(final Subject anObject)
   {
-<span class="fc" id="L332">    java.lang.String exitID = &quot;Array&gt;&gt;includes&quot;;</span>
-<span class="fc" id="L333">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L334">    return (Boolean)Boolean.from(contents.contains(anObject));</span>
+<span class="fc" id="L342">    java.lang.String exitID = &quot;Array&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L343">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L344">    return (Boolean)Boolean.from(contents.contains(anObject));</span>
   }
 
   /**
@@ -339,10 +349,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   Array removeAll()
   {
-<span class="nc" id="L342">    java.lang.String exitID = &quot;Array&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L343">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L344">    this.immutabilityError();</span>
-<span class="nc" id="L345">    return (Array)this;</span>
+<span class="nc" id="L352">    java.lang.String exitID = &quot;Array&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L353">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L354">    this.immutabilityError();</span>
+<span class="nc" id="L355">    return (Array)this;</span>
   }
 
   /**
@@ -350,10 +360,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   ElementType removeLast()
   {
-<span class="nc" id="L353">    java.lang.String exitID = &quot;Array&gt;&gt;removeLast&quot;;</span>
-<span class="nc" id="L354">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L355">    this.immutabilityError();</span>
-<span class="nc" id="L356">    return (ElementType)((ElementType)Nil.literal());</span>
+<span class="nc" id="L363">    java.lang.String exitID = &quot;Array&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L364">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L365">    this.immutabilityError();</span>
+<span class="nc" id="L366">    return (ElementType)((ElementType)Nil.literal());</span>
   }
 
   /**
@@ -361,10 +371,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   ElementType removeFirst()
   {
-<span class="nc" id="L364">    java.lang.String exitID = &quot;Array&gt;&gt;removeFirst&quot;;</span>
-<span class="nc" id="L365">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L366">    this.immutabilityError();</span>
-<span class="nc" id="L367">    return (ElementType)((ElementType)Nil.literal());</span>
+<span class="nc" id="L374">    java.lang.String exitID = &quot;Array&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L375">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L376">    this.immutabilityError();</span>
+<span class="nc" id="L377">    return (ElementType)((ElementType)Nil.literal());</span>
   }
 
   /**
@@ -372,10 +382,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   ElementType removeAtIndex(final Ordinal index)
   {
-<span class="nc" id="L375">    java.lang.String exitID = &quot;Array&gt;&gt;removeAtIndex&quot;;</span>
-<span class="nc" id="L376">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L377">    this.immutabilityError();</span>
-<span class="nc" id="L378">    return (ElementType)((ElementType)Nil.literal());</span>
+<span class="nc" id="L385">    java.lang.String exitID = &quot;Array&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L386">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L387">    this.immutabilityError();</span>
+<span class="nc" id="L388">    return (ElementType)((ElementType)Nil.literal());</span>
   }
 
   /**
@@ -383,10 +393,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
    */
   public   ElementType add(final ElementType element)
   {
-<span class="nc" id="L386">    java.lang.String exitID = &quot;Array&gt;&gt;add&quot;;</span>
-<span class="nc" id="L387">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L388">    this.immutabilityError();</span>
-<span class="nc" id="L389">    return (ElementType)((ElementType)Nil.literal());</span>
+<span class="nc" id="L396">    java.lang.String exitID = &quot;Array&gt;&gt;add&quot;;</span>
+<span class="nc" id="L397">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L398">    this.immutabilityError();</span>
+<span class="nc" id="L399">    return (ElementType)((ElementType)Nil.literal());</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

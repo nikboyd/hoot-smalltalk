@@ -33,16 +33,16 @@ public class Symbol extends CharacterString implements Selector
 <span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends CharacterString.Metaclass implements Selector.Metatype
   {
-<span class="fc" id="L36">    static final Symbol.Metaclass $class = new Symbol.Metaclass();</span>
+<span class="nc" id="L36">    static final Symbol.Metaclass $class = new Symbol.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L38">      this(Symbol.Metaclass.class);</span>
-<span class="fc" id="L39">    }</span>
+<span class="nc" id="L38">      this(Symbol.Metaclass.class);</span>
+<span class="nc" id="L39">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L42">      super(aClass);</span>
-<span class="fc" id="L43">    }</span>
+<span class="nc" id="L42">      super(aClass);</span>
+<span class="nc" id="L43">    }</span>
 
-<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return Symbol.class; }</span>
+<span class="nc" id="L45">    @Override public java.lang.Class outerClass() { return Symbol.class; }</span>
 
   }
 
@@ -195,4 +195,4 @@ public class Symbol extends CharacterString implements Selector
 <span class="nc" id="L195">    return (Code)SmallInteger.from(0).asCharacter();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

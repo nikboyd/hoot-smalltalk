@@ -69,9 +69,9 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="nc bnc" id="L69" title="All 2 branches missed.">    public static boolean isStatic(Field f) { return STATIC == (f.getModifiers() &amp; STATIC); }</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">    public static boolean isStatic(Method m) { return STATIC == (m.getModifiers() &amp; STATIC); }</span>
 
-<span class="nc" id="L72">    public static int minimumPriority() { return Thread.MIN_PRIORITY; }</span>
-<span class="nc" id="L73">    public static int maximumPriority() { return Thread.MAX_PRIORITY; }</span>
-<span class="nc" id="L74">    public static int normalPriority() { return Thread.NORM_PRIORITY; }</span>
+<span class="fc" id="L72">    public static int minimumPriority() { return Thread.MIN_PRIORITY; }</span>
+<span class="fc" id="L73">    public static int maximumPriority() { return Thread.MAX_PRIORITY; }</span>
+<span class="fc" id="L74">    public static int normalPriority() { return Thread.NORM_PRIORITY; }</span>
 
 <span class="nc" id="L76">    public static void waitMilliseconds(IntegerValue duration) { runQuietly(() -&gt; Thread.sleep(duration.intValue())); }</span>
 
@@ -100,42 +100,42 @@ import static Hoot.Runtime.Functions.Utils.*;
     public static String systemValue(String valueName, String defaultValue) {
 <span class="nc" id="L101">        return System.getProperty(valueName, defaultValue); }</span>
 
-<span class="nc" id="L103">    public static Double radiansPerDegree() { return (Math.PI / 180.0f); }</span>
-<span class="nc" id="L104">    public static Double degreesPerRadian() { return (180.0f / Math.PI); }</span>
+<span class="fc" id="L103">    public static Double radiansPerDegree() { return (Math.PI / 180.0f); }</span>
+<span class="fc" id="L104">    public static Double degreesPerRadian() { return (180.0f / Math.PI); }</span>
 
     private static final int NegativeUnity = -1;
-<span class="nc" id="L107">    public static int negativeUnity() { return NegativeUnity; }</span>
+<span class="fc" id="L107">    public static int negativeUnity() { return NegativeUnity; }</span>
 
     static final String DigitValue = &quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
     public static String printDecimal(long... values) { // upper, lower, scale
-<span class="nc" id="L111">        StringBuilder b = new StringBuilder();</span>
-<span class="nc" id="L112">        long upper = values[0];</span>
-<span class="nc" id="L113">        long lower = values[1];</span>
-<span class="nc" id="L114">        long scale = values[2];</span>
-<span class="nc" id="L115">        long d = (long)Math.pow(10, scale);</span>
-<span class="nc" id="L116">        long n = upper * d;</span>
+<span class="fc" id="L111">        StringBuilder b = new StringBuilder();</span>
+<span class="fc" id="L112">        long upper = values[0];</span>
+<span class="fc" id="L113">        long lower = values[1];</span>
+<span class="fc" id="L114">        long scale = values[2];</span>
+<span class="fc" id="L115">        long d = (long)Math.pow(10, scale);</span>
+<span class="fc" id="L116">        long n = upper * d;</span>
 
-<span class="nc" id="L118">        n += lower &gt;&gt; 1; n /= lower;</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (upper &lt; 0L) {</span>
+<span class="fc" id="L118">        n += lower &gt;&gt; 1; n /= lower;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (upper &lt; 0L) {</span>
 <span class="nc" id="L120">            b.append('-'); n = 0 - n;</span>
         }
 
-<span class="nc" id="L123">        long quo = n / d;</span>
-<span class="nc" id="L124">        long rem = n % d;</span>
-<span class="nc" id="L125">        int s = (int)scale;</span>
+<span class="fc" id="L123">        long quo = n / d;</span>
+<span class="fc" id="L124">        long rem = n % d;</span>
+<span class="fc" id="L125">        int s = (int)scale;</span>
 
-<span class="nc" id="L127">        b.append(quo);</span>
-<span class="nc" id="L128">        b.append('.');</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        while (s-- &gt; 0) {</span>
-<span class="nc" id="L130">            rem = rem * 10L;</span>
-<span class="nc" id="L131">            int digit = (int)(rem / d);</span>
-<span class="nc" id="L132">            b.append(DigitValue.charAt(digit));</span>
-<span class="nc" id="L133">            rem = rem % d;</span>
-<span class="nc" id="L134">        }</span>
+<span class="fc" id="L127">        b.append(quo);</span>
+<span class="fc" id="L128">        b.append('.');</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        while (s-- &gt; 0) {</span>
+<span class="fc" id="L130">            rem = rem * 10L;</span>
+<span class="fc" id="L131">            int digit = (int)(rem / d);</span>
+<span class="fc" id="L132">            b.append(DigitValue.charAt(digit));</span>
+<span class="fc" id="L133">            rem = rem % d;</span>
+<span class="fc" id="L134">        }</span>
 
-<span class="nc" id="L136">        b.append('s');</span>
-<span class="nc" id="L137">        b.append(scale);</span>
-<span class="nc" id="L138">        return b.toString();</span>
+<span class="fc" id="L136">        b.append('s');</span>
+<span class="fc" id="L137">        b.append(scale);</span>
+<span class="fc" id="L138">        return b.toString();</span>
     }
 
     @SuppressWarnings(&quot;UseSpecificCatch&quot;)
@@ -162,15 +162,15 @@ import static Hoot.Runtime.Functions.Utils.*;
         }
     }
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">    public static int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">    public static int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }</span>
     public static Integer[] rationalize(int num, int den) {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">        int n = den &lt; 0 ? -num : num;</span>
-<span class="nc" id="L168">        int d = abs(den);</span>
-<span class="nc" id="L169">        int gcd = gcd(n, d);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        int n = den &lt; 0 ? -num : num;</span>
+<span class="fc" id="L168">        int d = abs(den);</span>
+<span class="fc" id="L169">        int gcd = gcd(n, d);</span>
 
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (d == gcd) {</span>
-<span class="nc" id="L172">            Integer[] results = { n / gcd, 1 };</span>
-<span class="nc" id="L173">            return results;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (d == gcd) {</span>
+<span class="fc" id="L172">            Integer[] results = { n / gcd, 1 };</span>
+<span class="fc" id="L173">            return results;</span>
         }
 
 <span class="nc bnc" id="L176" title="All 2 branches missed.">        if (1 == gcd) {</span>
@@ -182,7 +182,7 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="nc" id="L182">        return results;</span>
     }
 
-<span class="nc bnc" id="L185" title="All 2 branches missed.">    public static double truncate(double value) { return (value &lt; 0.0d ? Math.ceil(value) : Math.floor(value)); }</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">    public static double truncate(double value) { return (value &lt; 0.0d ? Math.ceil(value) : Math.floor(value)); }</span>
 
     public static BigDecimal decimalFrom(long numerator, long denominator, int scale) {
 <span class="nc" id="L188">        return new BigDecimal(numerator)</span>
@@ -190,84 +190,84 @@ import static Hoot.Runtime.Functions.Utils.*;
                 scale, RoundingMode.HALF_UP); }
 
     public static BigInteger[] integersFrom(Double... ds) {
-<span class="nc" id="L193">        BigInteger[] results = {</span>
-<span class="nc" id="L194">            BigDecimal.valueOf(ds[0]).toBigInteger(),</span>
-<span class="nc" id="L195">            BigDecimal.valueOf(ds[1]).toBigInteger() };</span>
-<span class="nc" id="L196">        Reporter.whisper(results[0].toString());</span>
-<span class="nc" id="L197">        Reporter.whisper(results[1].toString());</span>
-<span class="nc" id="L198">        return results; }</span>
+<span class="fc" id="L193">        BigInteger[] results = {</span>
+<span class="fc" id="L194">            BigDecimal.valueOf(ds[0]).toBigInteger(),</span>
+<span class="fc" id="L195">            BigDecimal.valueOf(ds[1]).toBigInteger() };</span>
+<span class="fc" id="L196">        Reporter.whisper(results[0].toString());</span>
+<span class="fc" id="L197">        Reporter.whisper(results[1].toString());</span>
+<span class="fc" id="L198">        return results; }</span>
 
     public static BigInteger[] fractionalize(double value, int sig) {
-<span class="nc" id="L201">        double limit = Math.pow( 10.0d, sig );</span>
+<span class="fc" id="L201">        double limit = Math.pow( 10.0d, sig );</span>
 
-<span class="nc" id="L203">        double n1 = truncate(value); double n2 = 1.0d;</span>
-<span class="nc" id="L204">        double d1 = 1.0d; double d2 = 0.0d;</span>
+<span class="fc" id="L203">        double n1 = truncate(value); double n2 = 1.0d;</span>
+<span class="fc" id="L204">        double d1 = 1.0d; double d2 = 0.0d;</span>
 
-<span class="nc" id="L206">        double i  = n1; double x  = 0.0d;</span>
-<span class="nc" id="L207">        double f = value - n1;</span>
+<span class="fc" id="L206">        double i  = n1; double x  = 0.0d;</span>
+<span class="fc" id="L207">        double f = value - n1;</span>
 
-<span class="nc bnc" id="L209" title="All 2 branches missed.">        while (f != 0.0d) {</span>
-<span class="nc" id="L210">            double dn = 1.0d / f;</span>
-<span class="nc" id="L211">            i = truncate(dn); f = dn - i;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        while (f != 0.0d) {</span>
+<span class="fc" id="L210">            double dn = 1.0d / f;</span>
+<span class="fc" id="L211">            i = truncate(dn); f = dn - i;</span>
 
-<span class="nc" id="L213">            x = n2; n2 = n1;</span>
-<span class="nc" id="L214">            n1 = ( n1 * i ) + x;</span>
+<span class="fc" id="L213">            x = n2; n2 = n1;</span>
+<span class="fc" id="L214">            n1 = ( n1 * i ) + x;</span>
 
-<span class="nc" id="L216">            x = d2; d2 = d1;</span>
-<span class="nc" id="L217">            d1 = ( d1 * i ) + x;</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">            if (limit &lt; d1) {</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">                if (n2 == 0.0d) {</span>
+<span class="fc" id="L216">            x = d2; d2 = d1;</span>
+<span class="fc" id="L217">            d1 = ( d1 * i ) + x;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">            if (limit &lt; d1) {</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">                if (n2 == 0.0d) {</span>
 <span class="nc" id="L220">                    return integersFrom(n1, d1);</span>
                 }
                 else {
-<span class="nc" id="L223">                    return integersFrom(n2, d2);</span>
+<span class="fc" id="L223">                    return integersFrom(n2, d2);</span>
                 }
             }
-<span class="nc" id="L226">        }</span>
+<span class="fc" id="L226">        }</span>
 
-<span class="nc" id="L228">        return integersFrom(n1, d1);</span>
+<span class="fc" id="L228">        return integersFrom(n1, d1);</span>
     }
 
     public static Long[] parseDecimal(String value) {
-<span class="nc" id="L232">        int point = value.indexOf( '.' );</span>
-<span class="nc" id="L233">        int sMark = value.indexOf( 's' );</span>
-<span class="nc" id="L234">        String iString = value.substring( 0, point );</span>
-<span class="nc" id="L235">        String fString = value.substring( point + 1, sMark );</span>
-<span class="nc" id="L236">        String sString = value.substring( sMark + 1 );</span>
+<span class="fc" id="L232">        int point = value.indexOf( '.' );</span>
+<span class="fc" id="L233">        int sMark = value.indexOf( 's' );</span>
+<span class="fc" id="L234">        String iString = value.substring( 0, point );</span>
+<span class="fc" id="L235">        String fString = value.substring( point + 1, sMark );</span>
+<span class="fc" id="L236">        String sString = value.substring( sMark + 1 );</span>
 
-<span class="nc" id="L238">        long scale = 0;</span>
-<span class="nc" id="L239">        long numerator = 0;</span>
-<span class="nc" id="L240">        long denominator = 1;</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">        for( int i = 0; i &lt; fString.length(); i++ ) denominator *= 10;</span>
-<span class="nc" id="L242">        Long[] results = { numerator, denominator, scale };</span>
+<span class="fc" id="L238">        long scale = 0;</span>
+<span class="fc" id="L239">        long numerator = 0;</span>
+<span class="fc" id="L240">        long denominator = 1;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        for( int i = 0; i &lt; fString.length(); i++ ) denominator *= 10;</span>
+<span class="fc" id="L242">        Long[] results = { numerator, denominator, scale };</span>
 
         // integer digits + fraction digits / scale of 10s
-<span class="nc" id="L245">        runQuietly(() -&gt; {</span>
-<span class="nc" id="L246">            results[2] = Long.parseLong(sString);</span>
-<span class="nc" id="L247">            results[0] = Long.parseLong(iString + fString);</span>
-<span class="nc" id="L248">        });</span>
-<span class="nc" id="L249">        return results;</span>
+<span class="fc" id="L245">        runQuietly(() -&gt; {</span>
+<span class="fc" id="L246">            results[2] = Long.parseLong(sString);</span>
+<span class="fc" id="L247">            results[0] = Long.parseLong(iString + fString);</span>
+<span class="fc" id="L248">        });</span>
+<span class="fc" id="L249">        return results;</span>
     }
 
 <span class="nc" id="L252">    public static int invertBits(int bits) { return ~bits; }</span>
 <span class="nc" id="L253">    public static int xorBits(int a, int b) { return a ^ b; }</span>
 
-<span class="nc" id="L255">    public static Double elementaryMaxDouble() { return java.lang.Double.MAX_VALUE; }</span>
-<span class="nc" id="L256">    public static Double elementaryMinDouble() { return java.lang.Double.MIN_VALUE; }</span>
+<span class="fc" id="L255">    public static Double elementaryMaxDouble() { return java.lang.Double.MAX_VALUE; }</span>
+<span class="fc" id="L256">    public static Double elementaryMinDouble() { return java.lang.Double.MIN_VALUE; }</span>
 
-<span class="nc" id="L258">    public static Float elementaryMaxFloat() { return java.lang.Float.MAX_VALUE; }</span>
-<span class="nc" id="L259">    public static Float elementaryMinFloat() { return java.lang.Float.MIN_VALUE; }</span>
+<span class="fc" id="L258">    public static Float elementaryMaxFloat() { return java.lang.Float.MAX_VALUE; }</span>
+<span class="fc" id="L259">    public static Float elementaryMinFloat() { return java.lang.Float.MIN_VALUE; }</span>
 
-<span class="nc" id="L261">    public static Long elementaryMaxLong() { return java.lang.Long.MAX_VALUE; }</span>
-<span class="nc" id="L262">    public static Long elementaryMinLong() { return java.lang.Long.MIN_VALUE; }</span>
+<span class="fc" id="L261">    public static Long elementaryMaxLong() { return java.lang.Long.MAX_VALUE; }</span>
+<span class="fc" id="L262">    public static Long elementaryMinLong() { return java.lang.Long.MIN_VALUE; }</span>
 
-<span class="nc" id="L264">    public static Integer elementaryMaxInteger() { return java.lang.Integer.MAX_VALUE; }</span>
-<span class="nc" id="L265">    public static Integer elementaryMinInteger() { return java.lang.Integer.MIN_VALUE; }</span>
+<span class="fc" id="L264">    public static Integer elementaryMaxInteger() { return java.lang.Integer.MAX_VALUE; }</span>
+<span class="fc" id="L265">    public static Integer elementaryMinInteger() { return java.lang.Integer.MIN_VALUE; }</span>
 
-<span class="nc" id="L267">    public static Short elementaryMaxShort() { return java.lang.Short.MAX_VALUE; }</span>
-<span class="nc" id="L268">    public static Short elementaryMinShort() { return java.lang.Short.MIN_VALUE; }</span>
+<span class="fc" id="L267">    public static Short elementaryMaxShort() { return java.lang.Short.MAX_VALUE; }</span>
+<span class="fc" id="L268">    public static Short elementaryMinShort() { return java.lang.Short.MIN_VALUE; }</span>
 
-<span class="nc" id="L270">    public static Boolean elementaryFalse() { return java.lang.Boolean.FALSE; }</span>
+<span class="fc" id="L270">    public static Boolean elementaryFalse() { return java.lang.Boolean.FALSE; }</span>
 <span class="fc" id="L271">    public static Boolean elementaryTrue() { return java.lang.Boolean.TRUE; }</span>
 
 <span class="nc" id="L273">    public static float getFloat(String value) { return Float.parseFloat(value); }</span>
@@ -400,9 +400,9 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="pc bpc" id="L400" title="1 of 4 branches missed.">        return !typeName.isEmpty() &amp;&amp; ElementaryWrappers.containsKey(typeName); }</span>
 
     public static boolean isEraseableType(String typeName) {
-<span class="nc bnc" id="L403" title="All 2 branches missed.">        return !typeName.isEmpty() &amp;&amp;</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">            (PrimitiveWrappers.containsKey(simplifiedType(typeName)) ||</span>
-<span class="nc bnc" id="L405" title="All 2 branches missed.">            ElementaryWrappers.containsKey(typeName)); }</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">        return !typeName.isEmpty() &amp;&amp;</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">            (PrimitiveWrappers.containsKey(simplifiedType(typeName)) ||</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">            ElementaryWrappers.containsKey(typeName)); }</span>
 
     public static boolean fromElementaryPackage(String typeName) {
 <span class="pc bpc" id="L408" title="2 of 4 branches missed.">        return !typeName.isEmpty() &amp;&amp; typeName.contains(Dot) ?</span>
@@ -432,4 +432,4 @@ import static Hoot.Runtime.Functions.Utils.*;
 <span class="fc" id="L432">    public static final Primitive Reporter = new Primitive();</span>
 
 } // Primitive
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

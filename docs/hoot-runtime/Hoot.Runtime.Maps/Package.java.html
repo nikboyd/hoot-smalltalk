@@ -22,6 +22,7 @@ import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Exceptions.ExceptionBase.*;
 import static Hoot.Runtime.Names.Name.removeTail;
+import org.apache.commons.lang3.SystemUtils;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -33,206 +34,207 @@ import org.codehaus.plexus.util.StringUtils;
  */
 public class Package implements Named, Logging {
 
-<span class="nc" id="L36">    public Package() { this(Empty); }</span>
-<span class="fc" id="L37">    public Package(String packageName) { super(); name = packageName; }</span>
-<span class="nc" id="L38">    public Package(String packageName, String folderPath) { this(packageName); baseFolder = folderPath; }</span>
+<span class="nc" id="L37">    public Package() { this(Empty); }</span>
+<span class="fc" id="L38">    public Package(String packageName) { super(); name = packageName; }</span>
+<span class="nc" id="L39">    public Package(String packageName, String folderPath) { this(packageName); baseFolder = folderPath; }</span>
 
     String name;
-<span class="fc" id="L41">    @Override public String name() { return name; }</span>
-<span class="nc" id="L42">    public void name(String packageName) { name = packageName; }</span>
-<span class="fc" id="L43">    public String pathname() { return name.replace(Dot, Slash); }</span>
-<span class="nc" id="L44">    public String parentName() { return Name.packageName(name); }</span>
-<span class="fc" id="L45">    public static Package named(String packageName) { return CurrentLib.packageNamed(nameFrom(packageName)); }</span>
+<span class="fc" id="L42">    @Override public String name() { return name; }</span>
+<span class="nc" id="L43">    public void name(String packageName) { name = packageName; }</span>
 
-<span class="fc" id="L47">    public static final String[] LiteralPackages = { &quot;Hoot.Behaviors&quot;, &quot;Hoot.Magnitudes&quot;, &quot;Hoot.Collections&quot; };</span>
-<span class="fc" id="L48">    public static final List&lt;String&gt; LiteralPackageNames = wrap(LiteralPackages);</span>
-<span class="nc" id="L49">    public boolean definesLiterals() { return LiteralPackageNames.contains(name()); }</span>
-<span class="nc" id="L50">    public boolean definesMagnitudes() { return LiteralPackages[1].equals(name()); }</span>
-<span class="nc" id="L51">    public boolean definesCollections() { return LiteralPackages[2].equals(name()); }</span>
-<span class="nc bnc" id="L52" title="All 4 branches missed.">    public boolean definesBehaviors() { return (LiteralPackages[0].equals(name()) || definesSmalltalk()); }</span>
-<span class="nc" id="L53">    public boolean definesSmalltalk() { return Smalltalk.equals(name()); }</span>
-<span class="fc" id="L54">    public boolean definesRoot() { return RootPackages[0].equals(name()); }</span>
+<span class="fc" id="L45">    public String pathname() { return pathFrom(name); }</span>
+<span class="nc" id="L46">    public String parentName() { return Name.packageName(name); }</span>
+<span class="fc" id="L47">    public static Package named(String packageName) { return CurrentLib.packageNamed(nameFrom(packageName)); }</span>
+
+<span class="fc" id="L49">    public static final String[] LiteralPackages = { &quot;Hoot.Behaviors&quot;, &quot;Hoot.Magnitudes&quot;, &quot;Hoot.Collections&quot; };</span>
+<span class="fc" id="L50">    public static final List&lt;String&gt; LiteralPackageNames = wrap(LiteralPackages);</span>
+<span class="nc" id="L51">    public boolean definesLiterals() { return LiteralPackageNames.contains(name()); }</span>
+<span class="nc" id="L52">    public boolean definesMagnitudes() { return LiteralPackages[1].equals(name()); }</span>
+<span class="nc" id="L53">    public boolean definesCollections() { return LiteralPackages[2].equals(name()); }</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">    public boolean definesBehaviors() { return (LiteralPackages[0].equals(name()) || definesSmalltalk()); }</span>
+<span class="nc" id="L55">    public boolean definesSmalltalk() { return Smalltalk.equals(name()); }</span>
+<span class="fc" id="L56">    public boolean definesRoot() { return RootPackages[0].equals(name()); }</span>
 
     public static UnitFile.Factory UnitFactory;
-<span class="nc" id="L57">    private UnitFile createUnit(String fullName) { return UnitFactory.createUnit(fullName, name()); }</span>
+<span class="nc" id="L59">    private UnitFile createUnit(String fullName) { return UnitFactory.createUnit(fullName, name()); }</span>
     private Map&lt;String, UnitFile&gt; createPeers() {
-<span class="nc" id="L59">        HashMap&lt;String, UnitFile&gt; results = emptyMap(UnitFile.class);</span>
-<span class="nc" id="L60">        sourceFaces().forEach(f -&gt; results.put(f, createUnit(f)));</span>
-<span class="nc" id="L61">        results.values().forEach(f -&gt; f.peers(results));</span>
-<span class="nc" id="L62">        return results;</span>
+<span class="nc" id="L61">        HashMap&lt;String, UnitFile&gt; results = emptyMap(UnitFile.class);</span>
+<span class="nc" id="L62">        sourceFaces().forEach(f -&gt; results.put(f, createUnit(f)));</span>
+<span class="nc" id="L63">        results.values().forEach(f -&gt; f.peers(results));</span>
+<span class="nc" id="L64">        return results;</span>
     }
 
     public HashMap&lt;String, UnitFile&gt; parseSources() throws Exception {
-<span class="nc" id="L66">        HashMap&lt;String, UnitFile&gt; results = emptyMap(UnitFile.class);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (UnitFactory == null) return results;</span>
+<span class="nc" id="L68">        HashMap&lt;String, UnitFile&gt; results = emptyMap(UnitFile.class);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (UnitFactory == null) return results;</span>
 
-<span class="nc" id="L69">        java.io.File sourceFolder = sourceFolder();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (!sourceFolder.exists()) {</span>
-<span class="nc" id="L71">            error(&quot;failed to locate sources for &quot; + name());</span>
-<span class="nc" id="L72">            return results;</span>
+<span class="nc" id="L71">        java.io.File sourceFolder = sourceFolder();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (!sourceFolder.exists()) {</span>
+<span class="nc" id="L73">            error(&quot;failed to locate sources for &quot; + name());</span>
+<span class="nc" id="L74">            return results;</span>
         }
 
-<span class="nc" id="L75">        results.putAll(createPeers());</span>
-<span class="nc" id="L76">        results.values().forEach(f -&gt; f.addStandardImports());</span>
-<span class="nc" id="L77">        results.values().forEach(f -&gt; addFace((Typified)((Item)f).facialScope()));</span>
-<span class="nc" id="L78">        results.values().forEach(f -&gt; f.parse());</span>
+<span class="nc" id="L77">        results.putAll(createPeers());</span>
+<span class="nc" id="L78">        results.values().forEach(f -&gt; f.addStandardImports());</span>
+<span class="nc" id="L79">        results.values().forEach(f -&gt; addFace((Typified)((Item)f).facialScope()));</span>
+<span class="nc" id="L80">        results.values().forEach(f -&gt; f.parse());</span>
 
-<span class="nc" id="L80">        return results;</span>
+<span class="nc" id="L82">        return results;</span>
     }
 
-<span class="nc" id="L83">    public List&lt;String&gt; sourceFaces() { return listFaces(sourceFolder(), SourceFileType, SourceFileFilter); }</span>
-<span class="nc" id="L84">    public List&lt;String&gt; targetFaces() { return listFaces(targetFolder(), TargetFileType, TargetFileFilter); }</span>
+<span class="nc" id="L85">    public List&lt;String&gt; sourceFaces() { return listFaces(sourceFolder(), SourceFileType, SourceFileFilter); }</span>
+<span class="nc" id="L86">    public List&lt;String&gt; targetFaces() { return listFaces(targetFolder(), TargetFileType, TargetFileFilter); }</span>
     public List&lt;String&gt; listFaces(java.io.File folder, String type, FilenameFilter filter) {
-<span class="nc" id="L86">        return map(wrap(folder.list(filter)), f -&gt; removeTail(f, type)); }</span>
+<span class="nc" id="L88">        return map(wrap(folder.list(filter)), f -&gt; removeTail(f, type)); }</span>
 
-<span class="nc" id="L88">    public File sourceFolder() { return new File(CurrentLib.sourcePath(), pathname()); }</span>
-<span class="nc" id="L89">    public File targetFolder() { return new File(CurrentLib.targetPath(), pathname()); }</span>
+<span class="nc" id="L90">    public File sourceFolder() { return new File(CurrentLib.sourcePath(), pathname()); }</span>
+<span class="nc" id="L91">    public File targetFolder() { return new File(CurrentLib.targetPath(), pathname()); }</span>
 
     public File createTarget() {
-<span class="nc" id="L92">        File targetFolder = targetFolder();</span>
+<span class="nc" id="L94">        File targetFolder = targetFolder();</span>
 
-<span class="nc bnc" id="L94" title="All 4 branches missed.">        if (!targetFolder.exists() &amp;&amp; !targetFolder.mkdirs()) {</span>
-<span class="nc" id="L95">            error(&quot;Can't create &quot; + targetFolder.getAbsolutePath());</span>
-<span class="nc" id="L96">            return null;</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">        if (!targetFolder.exists() &amp;&amp; !targetFolder.mkdirs()) {</span>
+<span class="nc" id="L97">            error(&quot;Can't create &quot; + targetFolder.getAbsolutePath());</span>
+<span class="nc" id="L98">            return null;</span>
         }
 
-<span class="nc" id="L99">        return targetFolder;</span>
+<span class="nc" id="L101">        return targetFolder;</span>
     }
 
-<span class="fc" id="L102">    String baseFolder = Empty;</span>
+<span class="fc" id="L104">    String baseFolder = Empty;</span>
     public File directory() {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        return (baseFolder.isEmpty()) ? CurrentPath.locate(pathname()) : new File(baseFolder + pathname()); }</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        return (baseFolder.isEmpty()) ? CurrentPath.locate(pathname()) : new File(baseFolder + pathname()); }</span>
 
     public Set&lt;String&gt; packagedClassNames() {
-<span class="fc" id="L107">        return collectSet(results -&gt; {</span>
-<span class="fc" id="L108">            results.addAll(CurrentPath.classesInPackage(this));</span>
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">            if (baseFolder.isEmpty() &amp;&amp; definesRoot()) {</span>
-<span class="fc" id="L110">                results.add(JavaRoot().getSimpleName());</span>
-<span class="fc" id="L111">                results.addAll(wrap(RootExceptions));</span>
+<span class="fc" id="L109">        return collectSet(results -&gt; {</span>
+<span class="fc" id="L110">            results.addAll(CurrentPath.classesInPackage(this));</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">            if (baseFolder.isEmpty() &amp;&amp; definesRoot()) {</span>
+<span class="fc" id="L112">                results.add(JavaRoot().getSimpleName());</span>
+<span class="fc" id="L113">                results.addAll(wrap(RootExceptions));</span>
             }
-<span class="fc" id="L113">        }); }</span>
+<span class="fc" id="L115">        }); }</span>
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">    public boolean needsLoad() { return packagedClassNames().size() &gt; faceNames().size(); }</span>
-<span class="fc" id="L116">    public void loadFaces(Set&lt;String&gt; faceNames) { faceNames.forEach(faceName -&gt; loadFace(faceName)); }</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">    public boolean needsLoad() { return packagedClassNames().size() &gt; faceNames().size(); }</span>
+<span class="fc" id="L118">    public void loadFaces(Set&lt;String&gt; faceNames) { faceNames.forEach(faceName -&gt; loadFace(faceName)); }</span>
 
     public void loadFaces() {
-<span class="fc" id="L119">        int count = faceNames().size();</span>
-<span class="fc" id="L120">        loadFaces(packagedClassNames());</span>
+<span class="fc" id="L121">        int count = faceNames().size();</span>
+<span class="fc" id="L122">        loadFaces(packagedClassNames());</span>
 
-<span class="fc" id="L122">        int sizeNow = faceNames().size();</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (ReportLoads) reportLoad(name(), sizeNow);</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L124">        int sizeNow = faceNames().size();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (ReportLoads) reportLoad(name(), sizeNow);</span>
+<span class="fc" id="L126">    }</span>
 
-<span class="fc" id="L126">    public static boolean ReportLoads = false;</span>
-<span class="fc" id="L127">    public static void reportLoads(boolean value) { ReportLoads = value; }</span>
+<span class="fc" id="L128">    public static boolean ReportLoads = false;</span>
+<span class="fc" id="L129">    public static void reportLoads(boolean value) { ReportLoads = value; }</span>
 
     static final String CountReport = &quot;%s loaded %d faces&quot;;
     void reportLoad(String name, int count) {
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (ReportLoads) report(format(CountReport, name, count));</span>
-<span class="pc" id="L132">        else whisper(format(CountReport, name, count)); }</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (ReportLoads) report(format(CountReport, name, count));</span>
+<span class="pc" id="L134">        else whisper(format(CountReport, name, count)); }</span>
 
     public void loadFace(String shortName) {
-<span class="fc" id="L135">        runQuietly(() -&gt; {</span>
-<span class="fc" id="L136">            Class c = TypeName.findPrimitiveClass(qualify(shortName));</span>
-<span class="fc" id="L137">            Mirror m = Mirror.forClass(c);</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            addFace(m.isTypical() ? m.reflectedType() : m);</span>
-<span class="fc" id="L139">        });</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L137">        runQuietly(() -&gt; {</span>
+<span class="fc" id="L138">            Class c = TypeName.findPrimitiveClass(qualify(shortName));</span>
+<span class="fc" id="L139">            Mirror m = Mirror.forClass(c);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            addFace(m.isTypical() ? m.reflectedType() : m);</span>
+<span class="fc" id="L141">        });</span>
+<span class="fc" id="L142">    }</span>
 
-<span class="fc" id="L142">    Map&lt;String, Typified&gt; faces = emptyMap(Typified.class);</span>
-<span class="fc" id="L143">    public int countFaces() { return faces.size(); }</span>
-<span class="fc" id="L144">    public Set&lt;String&gt; faceNames() { return faces.keySet(); }</span>
-<span class="nc" id="L145">    public Map&lt;String, Typified&gt; knownFaces() { return new HashMap&lt;&gt;(faces); }</span>
-<span class="fc" id="L146">    public Typified faceNamed(String faceName) { return faces.get(Name.typeName(faceName)); }</span>
-<span class="nc" id="L147">    public Set&lt;String&gt; qualifiedFaceNames() { return mapSet(faceNames(), f -&gt; qualify(f)); }</span>
+<span class="fc" id="L144">    Map&lt;String, Typified&gt; faces = emptyMap(Typified.class);</span>
+<span class="fc" id="L145">    public int countFaces() { return faces.size(); }</span>
+<span class="fc" id="L146">    public Set&lt;String&gt; faceNames() { return faces.keySet(); }</span>
+<span class="nc" id="L147">    public Map&lt;String, Typified&gt; knownFaces() { return new HashMap&lt;&gt;(faces); }</span>
+<span class="fc" id="L148">    public Typified faceNamed(String faceName) { return faces.get(Name.typeName(faceName)); }</span>
+<span class="nc" id="L149">    public Set&lt;String&gt; qualifiedFaceNames() { return mapSet(faceNames(), f -&gt; qualify(f)); }</span>
 
     public void addFace(Typified face) {
-<span class="fc" id="L150">        String packageName = face.packageName();</span>
-<span class="fc" id="L151">        String typeName = Name.typeName(face.fullName());</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if (typeName.startsWith(packageName)) {</span>
-<span class="nc" id="L153">            typeName = typeName.substring(packageName.length() + 1);</span>
+<span class="fc" id="L152">        String packageName = face.packageName();</span>
+<span class="fc" id="L153">        String typeName = Name.typeName(face.fullName());</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (typeName.startsWith(packageName)) {</span>
+<span class="nc" id="L155">            typeName = typeName.substring(packageName.length() + 1);</span>
         }
 
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (!CurrentLib.hasFace(typeName)) { // ??</span>
-<span class="fc" id="L157">            registerFace(face, typeName);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (!CurrentLib.hasFace(typeName)) { // ??</span>
+<span class="fc" id="L159">            registerFace(face, typeName);</span>
         }
         else { // ??
-<span class="fc" id="L160">            registerFace(face, typeName);</span>
+<span class="fc" id="L162">            registerFace(face, typeName);</span>
         }
-<span class="fc" id="L162">    }</span>
+<span class="fc" id="L164">    }</span>
 
     protected void registerFace(Typified face, String typeName) {
-<span class="fc" id="L165">        faces.put(typeName, face);</span>
-<span class="fc" id="L166">        CurrentLib.addFace(face);</span>
-<span class="fc" id="L167">        registerMetaface(face);</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (Name.isMetaNamed(face.fullName())) {</span>
-<span class="fc" id="L169">            packageMetaface(face);</span>
+<span class="fc" id="L167">        faces.put(typeName, face);</span>
+<span class="fc" id="L168">        CurrentLib.addFace(face);</span>
+<span class="fc" id="L169">        registerMetaface(face);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (Name.isMetaNamed(face.fullName())) {</span>
+<span class="fc" id="L171">            packageMetaface(face);</span>
         }
-<span class="fc" id="L171">    }</span>
+<span class="fc" id="L173">    }</span>
 
     protected void registerMetaface(Typified face) {
-<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (face.hasMetaface()) {</span>
-<span class="fc" id="L175">            Typified metaFace = face.$class();</span>
-<span class="fc" id="L176">            CurrentLib.addFace(metaFace);</span>
-<span class="fc" id="L177">            packageMetaface(metaFace);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        if (face.hasMetaface()) {</span>
+<span class="nc" id="L177">            Typified metaFace = face.$class();</span>
+<span class="nc" id="L178">            CurrentLib.addFace(metaFace);</span>
+<span class="nc" id="L179">            packageMetaface(metaFace);</span>
         }
-<span class="fc" id="L179">    }</span>
+<span class="fc" id="L181">    }</span>
 
     protected void packageMetaface(Typified metaFace) {
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (metaFace.packageName().equals(name())) {</span>
-<span class="fc" id="L183">            addMetaface(metaFace);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        if (metaFace.packageName().equals(name())) {</span>
+<span class="fc" id="L185">            addMetaface(metaFace);</span>
         }
         else {
-<span class="nc" id="L186">            Package.named(metaFace.packageName()).addMetaface(metaFace);</span>
+<span class="nc" id="L188">            Package.named(metaFace.packageName()).addMetaface(metaFace);</span>
         }
-<span class="fc" id="L188">    }</span>
+<span class="fc" id="L190">    }</span>
 
     protected void addMetaface(Typified metaFace) {
-<span class="fc" id="L191">        String metaName = Name.typeName(metaFace.fullName());</span>
-<span class="fc" id="L192">        String packageName = Name.packageName(metaFace.fullName());</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if (metaName.startsWith(packageName)) {</span>
-<span class="nc" id="L194">            metaName = metaName.substring(packageName.length() + 1);</span>
+<span class="fc" id="L193">        String metaName = Name.typeName(metaFace.fullName());</span>
+<span class="fc" id="L194">        String packageName = Name.packageName(metaFace.fullName());</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (metaName.startsWith(packageName)) {</span>
+<span class="nc" id="L196">            metaName = metaName.substring(packageName.length() + 1);</span>
         }
-<span class="fc" id="L196">        faces.put(metaName.replace(Dollar, Dot), metaFace);</span>
-<span class="fc" id="L197">        faces.put(metaName.replace(Dot, Dollar), metaFace);</span>
-<span class="fc" id="L198">    }</span>
+<span class="fc" id="L198">        faces.put(metaName.replace(Dollar, Dot), metaFace);</span>
+<span class="fc" id="L199">        faces.put(metaName.replace(Dot, Dollar), metaFace);</span>
+<span class="fc" id="L200">    }</span>
 
     public Map&lt;String, TypeName&gt; faceTypes() {
-<span class="nc" id="L201">        HashMap&lt;String, TypeName&gt; results = emptyMap(TypeName.class);</span>
-<span class="nc" id="L202">        faceNames().forEach((faceName) -&gt; {</span>
-<span class="nc" id="L203">            results.put(faceName, TypeName.fromName(qualify(faceName)));</span>
-<span class="nc" id="L204">        });</span>
-<span class="nc" id="L205">        return results;</span>
+<span class="nc" id="L203">        HashMap&lt;String, TypeName&gt; results = emptyMap(TypeName.class);</span>
+<span class="nc" id="L204">        faceNames().forEach((faceName) -&gt; {</span>
+<span class="nc" id="L205">            results.put(faceName, TypeName.fromName(qualify(faceName)));</span>
+<span class="nc" id="L206">        });</span>
+<span class="nc" id="L207">        return results;</span>
     }
 
-    /**
-     * @return whether the supplied (importName) ends with a wild card.
-     * @param importName the name of an imported class, interface, or package.
-     */
-<span class="nc" id="L212">    public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }</span>
-
     public static final String WildCard = &quot;.*&quot;;
-<span class="fc" id="L215">    public static String nameFrom(String packageName) { return nameWithout(WildCard, packageName); }</span>
-<span class="fc" id="L216">    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }</span>
-
-    public static final String Slash = &quot;/&quot;;
+<span class="nc" id="L211">    public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }</span>
+<span class="fc" id="L212">    public static String nameWithout(String tail, String name) { return removeTail(name, tail); }</span>
     public static String nameFrom(File baseFolder, File packageFolder) {
-<span class="nc" id="L220">        return packageFolder.getPath()</span>
-<span class="nc" id="L221">            .substring(baseFolder.getPath().length())</span>
-<span class="nc" id="L222">            .replace(Slash, Blank).trim().replace(Blank, Dot); }</span>
+<span class="nc" id="L214">        return nameFrom(packageFolder.getPath().substring(baseFolder.getPath().length())); }</span>
+
+    public static final String Slash = &quot;/&quot;; // cover Unix paths
+    public static final String BackSlash = &quot;\\&quot;; // cover Windows too! --nik
+    static String slashToDot(String packagePath) { 
+<span class="fc" id="L219">        return packagePath.replace(BackSlash, Blank).trim().replace(Slash, Blank).trim().replace(Blank, Dot); }</span>
+<span class="fc" id="L220">    public static String nameFrom(String packageName) { return slashToDot(nameWithout(WildCard, packageName)); }</span>
+<span class="fc" id="L221">    public static String pathFrom(String packageName) { return packageName.replace(Dot, separator()); }</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">    public static String separator() { return SystemUtils.IS_OS_WINDOWS ? BackSlash : Slash; }</span>
+    public static String normalPath(String folderPath) { 
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">        return SystemUtils.IS_OS_WINDOWS ? folderPath.replace(Slash, BackSlash) : folderPath; }</span>
 
     public void reportReflectively() {
-<span class="fc" id="L225">        report(&quot;&quot;);</span>
-<span class="fc" id="L226">        report(fullName());</span>
-<span class="fc" id="L227">        faceNames().forEach(n -&gt; {</span>
-<span class="fc" id="L228">            Typified type = faceNamed(n);</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            if (hasSome(type)) {</span>
-<span class="fc" id="L230">                report(format(Clss, type.name()));</span>
-<span class="fc" id="L231">                reportHeritage(type.simpleHeritage(), Xtds);</span>
-<span class="fc" id="L232">                reportHeritage(type.typeHeritage(), Imps);</span>
+<span class="fc" id="L227">        report(&quot;&quot;);</span>
+<span class="fc" id="L228">        report(fullName());</span>
+<span class="fc" id="L229">        faceNames().forEach(n -&gt; {</span>
+<span class="fc" id="L230">            Typified type = faceNamed(n);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            if (hasSome(type)) {</span>
+<span class="fc" id="L232">                report(format(Clss, type.name()));</span>
+<span class="fc" id="L233">                reportHeritage(type.simpleHeritage(), Xtds);</span>
+<span class="fc" id="L234">                reportHeritage(type.typeHeritage(), Imps);</span>
             }
-<span class="fc" id="L234">        });</span>
-<span class="fc" id="L235">    }</span>
+<span class="fc" id="L236">        });</span>
+<span class="fc" id="L237">    }</span>
 
     static final String Comma = &quot;,&quot;;
     static final String Clss = &quot;  %s&quot;;
@@ -240,19 +242,19 @@ public class Package implements Named, Logging {
     static final String Imps = &quot;    implements %s&quot;;
     static final String Tabs = &quot;               %s&quot;;
     protected void reportHeritage(List&lt;Typified&gt; list, String report) {
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (!list.isEmpty()) {</span>
-<span class="fc" id="L244">            String text = format(report, Typified.names(list).toString());</span>
-<span class="fc" id="L245">            int count = StringUtils.countMatches(text, Comma);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (count &lt; 4) { report(text); return; } // exit early</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (!list.isEmpty()) {</span>
+<span class="fc" id="L246">            String text = format(report, Typified.names(list).toString());</span>
+<span class="fc" id="L247">            int count = StringUtils.countMatches(text, Comma);</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (count &lt; 4) { report(text); return; } // exit early</span>
 
-<span class="fc" id="L248">            String[] parts = text.split(Comma); // take 1st three</span>
-<span class="fc" id="L249">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
+<span class="nc" id="L250">            String[] parts = text.split(Comma); // take 1st three</span>
+<span class="nc" id="L251">            report(joinWith(Comma, wrap(parts[0], parts[1], parts[2])));</span>
 
-<span class="fc" id="L251">            text = parts[3]; // take last many</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
-<span class="fc" id="L253">            report(format(Tabs, text));</span>
+<span class="nc" id="L253">            text = parts[3]; // take last many</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">            for (int index = 4; index &lt; parts.length; index++ ) text+=parts[index];</span>
+<span class="nc" id="L255">            report(format(Tabs, text));</span>
         }
-<span class="fc" id="L255">    }</span>
+<span class="fc" id="L257">    }</span>
 
 } // Package
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

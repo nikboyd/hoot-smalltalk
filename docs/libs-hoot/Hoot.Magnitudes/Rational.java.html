@@ -126,14 +126,37 @@ public abstract class Rational extends Number implements Ratio
   /**
    * @return 
    */
-  @Override public   Boolean equals(final Magnitude value)
+  @Override public   Boolean equals(final Magnitude aNumber)
   {
 <span class="nc" id="L131">    java.lang.String exitID = &quot;Rational&gt;&gt;equals&quot;;</span>
 <span class="nc" id="L132">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">    if (value instanceof Rational) {</span>
-<span class="nc" id="L134">      return this.equals(((Rational)value));</span>
-    };
-<span class="nc" id="L136">    return (Boolean)False.literal();</span>
+<span class="nc" id="L133">    return (Boolean)Number.type().accepts(aNumber).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L134">      return (((Number)aNumber).asRational().equals(this));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean lessThan(final Scalar upperBound)
+  {
+<span class="nc" id="L143">    java.lang.String exitID = &quot;Rational&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L144">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L145">    return (Boolean)Number.type().accepts(upperBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L146">      return (((Number)upperBound).asRational().moreThan(this));</span>
+    }, &quot;&quot;));
+  }
+
+  /**
+   * @return 
+   */
+  @Override public   Boolean moreThan(final Scalar lowerBound)
+  {
+<span class="nc" id="L155">    java.lang.String exitID = &quot;Rational&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L156">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L157">    return (Boolean)Number.type().accepts(lowerBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L158">      return (((Number)lowerBound).asRational().lessThan(this));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -141,10 +164,10 @@ public abstract class Rational extends Number implements Ratio
    */
   public   Boolean equals(final Rational aNumber)
   {
-<span class="nc" id="L144">    java.lang.String exitID = &quot;Rational&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L145">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L146">    return (Boolean)(this.numerator().equals(aNumber.numerator())).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L147">      return (this.denominator().equals(aNumber.denominator()));</span>
+<span class="fc" id="L167">    java.lang.String exitID = &quot;Rational&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L168">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L169">    return (Boolean)(this.numerator().equals(aNumber.numerator())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L170">      return (this.denominator().equals(aNumber.denominator()));</span>
     }, &quot;&quot;));
   }
 
@@ -153,9 +176,9 @@ public abstract class Rational extends Number implements Ratio
    */
   public   Boolean lessThan(final Rational aNumber)
   {
-<span class="nc" id="L156">    java.lang.String exitID = &quot;Rational&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L157">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L158">    return (Boolean)(this.crossProduct(aNumber).lessThan(aNumber.crossProduct(this)));</span>
+<span class="fc" id="L179">    java.lang.String exitID = &quot;Rational&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L180">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L181">    return (Boolean)(this.crossProduct(aNumber).lessThan(aNumber.crossProduct(this)));</span>
   }
 
   /**
@@ -163,50 +186,9 @@ public abstract class Rational extends Number implements Ratio
    */
   public   Boolean moreThan(final Rational aNumber)
   {
-<span class="fc" id="L166">    java.lang.String exitID = &quot;Rational&gt;&gt;moreThan&quot;;</span>
-<span class="fc" id="L167">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L168">    return (Boolean)(this.crossProduct(aNumber).moreThan(aNumber.crossProduct(this)));</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   Boolean equals(final Numeric aNumber)
-  {
-<span class="nc" id="L176">    java.lang.String exitID = &quot;Rational&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L177">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L178">    Number n = ((Number)aNumber);</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">    return (Boolean)(Boolean.primitiveValue(this.lessGeneral(n)) ? n.equals(this.coerceTo(n.type())) : this.equals(n.asRational()));</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   Boolean lessThan(final Scalar aNumber)
-  {
-<span class="fc" id="L187">    java.lang.String exitID = &quot;Rational&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L188">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">    if (!(aNumber.isKindOf(Number.type()).primitiveBoolean())) {</span>
-<span class="nc" id="L190">      return False.literal();</span>
-    };
-
-<span class="fc" id="L193">    Number n = ((Number)aNumber);</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    return (Boolean)(Boolean.primitiveValue(this.lessGeneral(n)) ? n.moreThan(this.coerceTo(n.type())) : this.lessThan(n.asRational()));</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   Boolean moreThan(final Scalar aNumber)
-  {
-<span class="fc" id="L202">    java.lang.String exitID = &quot;Rational&gt;&gt;moreThan&quot;;</span>
-<span class="fc" id="L203">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">    if (!(aNumber.isKindOf(Number.type()).primitiveBoolean())) {</span>
-<span class="nc" id="L205">      return False.literal();</span>
-    };
-
-<span class="fc" id="L208">    Number n = ((Number)aNumber);</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">    return (Boolean)(Boolean.primitiveValue(this.lessGeneral(n)) ? n.lessThan(this.coerceTo(n.type())) : this.moreThan(n.asRational()));</span>
+<span class="fc" id="L189">    java.lang.String exitID = &quot;Rational&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L191">    return (Boolean)(this.crossProduct(aNumber).moreThan(aNumber.crossProduct(this)));</span>
   }
 
   /**
@@ -214,9 +196,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L217">    java.lang.String exitID = &quot;Rational&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L218">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L219">    return (int)this.numerator().bitXor(this.denominator()).intValue();</span>
+<span class="nc" id="L199">    java.lang.String exitID = &quot;Rational&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L200">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L201">    return (int)this.numerator().bitXor(this.denominator()).intValue();</span>
   }
 
   /**
@@ -224,9 +206,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Rational asRational()
   {
-<span class="fc" id="L227">    java.lang.String exitID = &quot;Rational&gt;&gt;asRational&quot;;</span>
-<span class="fc" id="L228">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L229">    return (Rational)this;</span>
+<span class="fc" id="L209">    java.lang.String exitID = &quot;Rational&gt;&gt;asRational&quot;;</span>
+<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L211">    return (Rational)this;</span>
   }
 
   /**
@@ -234,9 +216,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Boolean isZero()
   {
-<span class="fc" id="L237">    java.lang.String exitID = &quot;Rational&gt;&gt;isZero&quot;;</span>
-<span class="fc" id="L238">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">    return (Boolean)Boolean.from((0 == this.numerator().intValue()));</span>
+<span class="fc" id="L219">    java.lang.String exitID = &quot;Rational&gt;&gt;isZero&quot;;</span>
+<span class="fc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">    return (Boolean)Boolean.from((0 == this.numerator().intValue()));</span>
   }
 
   /**
@@ -244,9 +226,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Boolean negative()
   {
-<span class="fc" id="L247">    java.lang.String exitID = &quot;Rational&gt;&gt;negative&quot;;</span>
-<span class="fc" id="L248">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L249">    return (Boolean)Boolean.from((SmallInteger.from(0).moreThan(this.internalProduct())));</span>
+<span class="fc" id="L229">    java.lang.String exitID = &quot;Rational&gt;&gt;negative&quot;;</span>
+<span class="fc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L231">    return (Boolean)Boolean.from((SmallInteger.from(0).moreThan(this.internalProduct())));</span>
   }
 
   /**
@@ -254,9 +236,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Boolean positive()
   {
-<span class="nc" id="L257">    java.lang.String exitID = &quot;Rational&gt;&gt;positive&quot;;</span>
-<span class="nc" id="L258">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L259">    return (Boolean)Boolean.from((SmallInteger.from(0).notMore(this.internalProduct())));</span>
+<span class="nc" id="L239">    java.lang.String exitID = &quot;Rational&gt;&gt;positive&quot;;</span>
+<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L241">    return (Boolean)Boolean.from((SmallInteger.from(0).notMore(this.internalProduct())));</span>
   }
 
   /**
@@ -264,9 +246,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Boolean strictlyPositive()
   {
-<span class="fc" id="L267">    java.lang.String exitID = &quot;Rational&gt;&gt;strictlyPositive&quot;;</span>
-<span class="fc" id="L268">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L269">    return (Boolean)Boolean.from((SmallInteger.from(0).lessThan(this.internalProduct())));</span>
+<span class="fc" id="L249">    java.lang.String exitID = &quot;Rational&gt;&gt;strictlyPositive&quot;;</span>
+<span class="fc" id="L250">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L251">    return (Boolean)Boolean.from((SmallInteger.from(0).lessThan(this.internalProduct())));</span>
   }
 
   /**
@@ -274,9 +256,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Integer floor()
   {
-<span class="fc" id="L277">    java.lang.String exitID = &quot;Rational&gt;&gt;floor&quot;;</span>
-<span class="fc" id="L278">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L279">    return (Integer)SmallInteger.from(((int)Math.floor(this.primitiveDouble())));</span>
+<span class="fc" id="L259">    java.lang.String exitID = &quot;Rational&gt;&gt;floor&quot;;</span>
+<span class="fc" id="L260">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L261">    return (Integer)SmallInteger.from(((int)Math.floor(this.primitiveDouble())));</span>
   }
 
   /**
@@ -284,9 +266,9 @@ public abstract class Rational extends Number implements Ratio
    */
   @Override public   Integer ceiling()
   {
-<span class="nc" id="L287">    java.lang.String exitID = &quot;Rational&gt;&gt;ceiling&quot;;</span>
-<span class="nc" id="L288">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L289">    return (Integer)SmallInteger.from(((int)Math.ceil(this.primitiveDouble())));</span>
+<span class="nc" id="L269">    java.lang.String exitID = &quot;Rational&gt;&gt;ceiling&quot;;</span>
+<span class="nc" id="L270">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L271">    return (Integer)SmallInteger.from(((int)Math.ceil(this.primitiveDouble())));</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

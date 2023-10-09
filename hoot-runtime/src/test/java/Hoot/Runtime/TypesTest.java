@@ -16,6 +16,7 @@ import static Hoot.Runtime.Maps.Library.*;
 import static Hoot.Runtime.Maps.ClassPath.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Names.Keyword.Object;
+import Hoot.Runtime.Notes.DetailedType;
 
 /**
  * Confirms proper operation of types and their names.
@@ -143,6 +144,16 @@ public class TypesTest implements Logging {
         Type[] gts = pt.getActualTypeArguments();
         report(pt.toString());
         report(wrap(gts).toString());
+
+        DetailedType dt = DetailedType.fromTypes("ArrayList", "String");
+        dt.inferGenerics();
+        dt.extractGenerics(true);
+        dt.details().emitItem();
+        dt.emitDetailedTypes(true);
+        report(dt.description());
+
+        DetailedType at = DetailedType.fromTypes("ArrayList", "String");
+        assertTrue(at.equals(dt));
     }
 
 } // TypesTest

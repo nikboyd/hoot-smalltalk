@@ -10,6 +10,7 @@ Hoot Streams TextWriteStream import.
 
 Smalltalk Core Posit import.
 Smalltalk Magnitudes Code import.
+Smalltalk Magnitudes Scalar import.
 Smalltalk Magnitudes Ordinal import.
 Smalltalk Magnitudes Numeric import.
 Smalltalk Streams StreamedSink import.
@@ -33,23 +34,39 @@ Integer "accessing" members:
 
 Integer "comparing" members:
 [
-    Boolean! = Magnitude! aNumber [ ^self = (Integer <- aNumber) ]
+    Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asInteger = self ] ]
+    Boolean! <  Scalar! upperBound [ ^(Number type accepts: upperBound) and: [ (Number <- upperBound) asInteger > self ] ]
+    Boolean! >  Scalar! lowerBound [ ^(Number type accepts: lowerBound) and: [ (Number <- lowerBound) asInteger < self ] ]
 
-    @Primitive Boolean! = Integer! aNumber "whether (this = aNumber)" [
+    @Primitive Boolean! = Integer! aNumber [
     	^Boolean from: 0 == (self asBigInteger compareTo: aNumber asBigInteger) ]
 
-    @Primitive Boolean! < Integer! aNumber "whether (this < aNumber)" [
+    @Primitive Boolean! < Integer! aNumber [
     	^Boolean from: 0 > (self asBigInteger compareTo: aNumber asBigInteger) ]
 
-    @Primitive Boolean! > Integer! aNumber "whether (this > aNumber)" [
+    @Primitive Boolean! > Integer! aNumber [
     	^Boolean from: 0 < (self asBigInteger compareTo: aNumber asBigInteger) ]
 
     Java Lang Int! hashCode [ ^self elementaryNumber hashCode ]
+
+    @Override Integer! min: Scalar! index [ ^self min: Integer <- index ]
+    @Override Integer! max: Scalar! index [ ^self max: Integer <- index ]
+
+    @Primitive Integer! min: Integer! index [
+        (index == null) ifTrue: [ ^self ].
+        (self lessThan: index) primitiveBoolean ifTrue: [ ^self ].
+        ^index ]
+
+    @Primitive Integer! max: Integer! index [
+        (index == null) ifTrue: [ ^self ].
+        (self moreThan: index) primitiveBoolean ifTrue: [ ^self ].
+        ^index ]
 ]
 
 Integer "converting" members:
 [
     asInteger [ ^self ]
+    FastInteger! faster [ ^FastInteger fromInteger: self ]
     Int! intValue [ ^self primitiveInteger ]
     Long! longValue [ ^self primitiveLong ]
 ]

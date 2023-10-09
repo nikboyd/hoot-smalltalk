@@ -67,7 +67,7 @@ public abstract class Operand extends NamedItem implements Resulting {
 <span class="nc bnc" id="L67" title="All 2 branches missed.">        if (BehaviorType().matches(resolver)) return false;</span>
 <span class="nc" id="L68">        return true; }</span>
 
-<span class="nc" id="L70">    @Override public Emission emitItem() { return emitOperand(); }</span>
+<span class="fc" id="L70">    @Override public Emission emitItem() { return emitOperand(); }</span>
 <span class="nc" id="L71">    @Override public Emission emitOptimized() { return emitOperand(); }</span>
 <span class="nc" id="L72">    @Override public Emission emitPrimitive() { return emitOperand(); }</span>
 
@@ -79,4 +79,4 @@ public abstract class Operand extends NamedItem implements Resulting {
 <span class="nc bnc" id="L79" title="All 2 branches missed.">    public Emission emitReceiver() { return (receiverNeedsTerm()) ? emitTerm() : emitOperand(); }</span>
 
 } // Operand
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

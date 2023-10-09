@@ -2,10 +2,11 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
+Hoot Behaviors Ordered import.
+Hoot Collections Interval import.
 Smalltalk Core Subject import.
 Smalltalk Magnitudes Scalar import.
-Hoot Collections Interval import.
-Hoot Behaviors Ordered import.
+Smalltalk Magnitudes Numeric import.
 
 Object subclass: @Abstract Ordered! Magnitude.
 "Supports comparisons between (typically scalar) magnitudes."
@@ -19,15 +20,12 @@ Magnitude "constructing" members:
 
 Magnitude members: "comparing values"
 [
-    Boolean! = Magnitude! candidate [ ^candidate = self ]
-    @Primitive Boolean! = Subject! candidate "whether (this = candidate)" [
-        (candidate isKindOf: self species) primitiveBoolean ifFalse: [ ^False literal ].
-        ^(Magnitude <- candidate) equals: self ]
+    Boolean! = Magnitude! value [ ^(Magnitude type accepts: value) and: [ value = self ] ]
+    Boolean! = Subject!   value [ ^(Magnitude type accepts: value) and: [ (Magnitude <- value) = self ] ]
+    Boolean! = Numeric!   value [ ^(Magnitude type accepts: value) and: [ (Number <- value) = self ] ]
 
-    Boolean! <  Scalar! upperBound [ ^Boolean <- (upperBound > self) ]
-    Boolean! <= Scalar! upperBound [ ^Boolean from: (self > upperBound) not ]
-    Boolean! >  Scalar! lowerBound [ ^Boolean <- (lowerBound < self) ]
-    Boolean! >= Scalar! lowerBound [ ^Boolean <- (lowerBound <= self) ]
+    Boolean! <  Scalar! upperBound [ ^Boolean <- ((Magnitude <- upperBound) > self) ]
+    Boolean! >  Scalar! lowerBound [ ^Boolean <- ((Magnitude <- lowerBound) < self) ]
 
     Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
         ^Boolean <- (( lowerBound <= self ) and: [ self <= upperBound ]) ]

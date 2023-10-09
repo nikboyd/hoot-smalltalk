@@ -21,7 +21,7 @@ public interface ValueSource extends EmissionSource {
 <span class="nc" id="L21">            .with(&quot;index&quot;, emitItem(index+&quot;&quot;)).with(&quot;level&quot;, emitItem(level+&quot;&quot;)); }</span>
 
     default Emission emitArgument(String name, String type, boolean useFinal) {
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        return emit(&quot;Argument&quot;).name(name).type(type).with(&quot;useFinal&quot;, useFinal ? emitEmpty() : null); }</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        return emit(&quot;Argument&quot;).name(name).type(type).with(&quot;useFinal&quot;, useFinal ? emitEmpty() : null); }</span>
 
     default Emission emitNamedArgument(String name, Emission type, Emission notes) {
 <span class="nc" id="L27">        return emit(&quot;NamedArgument&quot;).name(name).type(type).with(&quot;notes&quot;, notes); }</span>
@@ -33,10 +33,10 @@ public interface ValueSource extends EmissionSource {
 <span class="nc" id="L33">                .with(&quot;notes&quot;, notes).value(value).comment(comment); }</span>
 
     default Emission emitVariable(String name, Emission type, Emission value, Emission notes, String comment) {
-<span class="nc" id="L36">        return emit(&quot;Variable&quot;).name(name).type(type).with(&quot;notes&quot;, notes).value(value).comment(comment); }</span>
+<span class="fc" id="L36">        return emit(&quot;Variable&quot;).name(name).type(type).with(&quot;notes&quot;, notes).value(value).comment(comment); }</span>
 
     default Emission emitTransient(String name, Emission type, Emission value, boolean needsCast) {
 <span class="nc bnc" id="L39" title="All 2 branches missed.">        return emit(&quot;TransientLocal&quot;).name(name).type(type).value(value).with(&quot;cast&quot;, needsCast ? type : emitEmpty()); }</span>
 
 } // ValueSource
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

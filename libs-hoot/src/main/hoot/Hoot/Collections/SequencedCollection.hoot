@@ -30,18 +30,15 @@ SequencedCollection members: "abstract accessors"
 SequencedCollection "accessing" members:
 [
     ElementType! first [ self emptyCheck. ^self at: 1 ]
-    ElementType! last [ self emptyCheck. ^self at: self size ]
-    ElementType! at: Numeric! index [ ^self at: index asInteger ]
+    ElementType! last  [ self emptyCheck. ^self at: self size ]
 
+    ElementType! at: Numeric! index [ ^self at: index asInteger ]
     ElementType! at: Numeric! index ifAbsent: NiladicValuable! noneBlock [
     	^self at: index asInteger ifAbsent: noneBlock ]
 
-    ElementType! at: Ordinal! index [
-        ^self at: index ifAbsent: [ ^self indexRangeError ] ]
-
+    ElementType! at: Ordinal! index [ ^self at: index ifAbsent: [ ^self indexRangeError ] ]
     ElementType! at: Ordinal! index ifAbsent: NiladicValuable! noneBlock [
-        Int! i := self checkIndex: index ifAbsent: noneBlock.
-        ^(self get: i) ]
+        Int! i := self checkIndex: index ifAbsent: noneBlock. ^(self get: i) ]
 ]
 
 SequencedCollection members: "locating elements"
@@ -50,15 +47,13 @@ SequencedCollection members: "locating elements"
      	^self nextIndexOf: element from: start to: stop ifAbsent: [ ^Negativity ] ]
 
     Integer! nextIndexOf: ElementType! element from: Integer! start to: Integer! stop ifAbsent: NiladicValuable! noneBlock [
-     	start to: stop do: [ : Integer! i | (self at: i) = element ifTrue: [ ^i ] ].
-        ^noneBlock value ]
+     	start to: stop do: [ : Integer! i | (self at: i) = element ifTrue: [ ^i ] ]. ^noneBlock value ]
 
     Integer! prevIndexOf: ElementType! element from: Integer! start to: Integer! stop [
      	^self prevIndexOf: element from: start to: stop ifAbsent: [ ^Negativity ] ]
 
     Integer! prevIndexOf: ElementType! element from: Integer! start to: Integer! stop ifAbsent: NiladicValuable! noneBlock [
-     	start to: stop by: 0 - 1 do: [ : Integer! i | (self at: i) = element ifTrue: [ ^i ] ].
-        ^noneBlock value ]
+     	start to: stop by: Negativity do: [ : Integer! i | (self at: i) = element ifTrue: [ ^i ] ]. ^noneBlock value ]
 
     ElementType! after: ElementType! leadingElement [
     	Integer! index := self nextIndexOf: leadingElement from: 1 to: self size ifAbsent: [ self elementNotFound. ^Zero ].
@@ -72,39 +67,38 @@ SequencedCollection members: "locating elements"
     Integer! indexOf: ElementType! element ifAbsent: NiladicValuable! noneBlock [
      	^self nextIndexOf: element from: 1 to: self size ifAbsent: noneBlock ]
 
-    Integer! indexOfSubCollection: CollectedReadably? ElementType! subCollection startingAt: Ordinal! anIndex [
-     	^self indexOfSubCollection: subCollection startingAt: anIndex ifAbsent: [ ^Zero ] ]
-
-    Integer! indexOfSubCollection: CollectedReadably? ElementType! subCollection startingAt: Ordinal! anIndex
-    ifAbsent: NiladicValuable! noneBlock [
-     	Ordinal! subSize := subCollection size.
-        Zero = subSize ifTrue: [ ^noneBlock value ].
-
-        ElementType! firstElement := subCollection at: Unity.
-        Unity = subSize ifTrue: [
-            ^self nextIndexOf: firstElement
-                from: Integer <- anIndex to: self size
-                ifAbsent: [ ^noneBlock value ] ].
-
-        FastInteger! matchIndex := FastInteger fromInteger: Integer <- anIndex.
-        Number! finalIndex := self size - subSize + Unity.
-        [ matchIndex <= finalIndex ] whileTrue: [
-            (self at: matchIndex) = firstElement ifTrue: [
-                FastInteger! index := FastInteger fromInteger: Duality.
-                [ (self at: matchIndex + index - Unity) = (subCollection at: index) ] whileTrue: [
-                    index = subSize ifTrue: [ ^matchIndex ].
-                    index += Unity.
-                ]
+    Integer! indexOfSubCollection: 
+    CollectedReadably? ElementType! subCollection startingAt: Ordinal! anIndex [
+        Ordinal! subSize := subCollection size.
+        FastInteger! finalIndex := Zero faster.
+        (Zero < subSize and: [ Zero + self size >= anIndex ]) ifTrue: [
+            SequencedCollection! sub := SequencedCollection <- subCollection.
+            Object! firstSub := sub at: Unity.
+            Interval! range := (Unity max: anIndex) to: (Unity + self size - subSize).
+            range do: [ : Integer! startIndex |
+                Object! nextItem := (self at: startIndex).
+                (nextItem = firstSub) ifTrue: [
+                    FastInteger! matchIndex := Duality faster.
+                    [ (matchIndex <= subSize) and: [ (self at: startIndex + matchIndex - 1) = (sub at: matchIndex) ] ]
+                        whileTrue: [ matchIndex increment. ].
+                    (matchIndex <= subSize) ifFalse: [ finalIndex value: startIndex. ^finalIndex value ]
+                ].
+                ^finalIndex value
             ].
-            matchIndex += Unity.
         ].
-        ^noneBlock value
+        ^finalIndex value
     ]
 
-    Integer! occurrencesOf: Subject! anObject [
+    @Primitive Integer! indexOfSubCollection: CollectedReadably? ElementType! subCollection 
+    startingAt: Ordinal! anIndex ifAbsent: NiladicValuable! noneBlock [
+        Integer! index := self indexOfSubCollection: subCollection startingAt: anIndex.
+        ^(index intValue == Zero intValue) ifTrue: [ noneBlock value ] ifFalse: [ index ]
+    ]
+
+    "Integer! occurrencesOf: Subject! anObject [
         FastInteger! tally := FastInteger fromInteger: Zero.
         self do: [ : ElementType! element | anObject = element ifTrue: [ tally += Unity ] ].
-        ^tally ]
+        ^tally ]"
 ]
 
 SequencedCollection members: "copying elements"
@@ -113,44 +107,52 @@ SequencedCollection members: "copying elements"
         "a copy of this concatenated with aCollection"
     	^self copyReplaceFrom: Unity + self size to: self size with: aCollection ]
 
+    SequencedCollection? ElementType! copyRange: Interval! range [ ^self copyFrom: range first to: range last ]
     SequencedCollection? ElementType! copyFrom: Ordinal! start to: Ordinal! stop [
+        self notEmpty ifFalse: [ ^self copy ].
      	Integer! newSize := Unity + (stop - start).
-        ^(SequencedCollection <- (self species new: newSize))
-            replaceFrom: Unity to: newSize with: self startingAt: start ]
+        ^(self species new: newSize)
+            replaceFrom: Unity to: newSize with: self startingAt: start;
+            yourself ]
 
     SequencedCollection? ElementType! copyReplaceAll:
     CollectedReadably? ElementType! oldElements with: CollectedReadably? ElementType! newElements [
-        "If there are no matches, answer the receiver."
-        @Stacked Integer! oldIndex := Unity.
-        @Stacked Integer! matchIndex := self indexOfSubCollection: oldElements startingAt: oldIndex.
-        Zero < matchIndex ifFalse: [ ^self copy ].
-
         "Locate all the occurrences."
-        OrderedCollection? Integer! matchIndices := OrderedCollection type with: matchIndex.
+        FastInteger! oldIndex := Unity faster.
+        FastInteger! matchIndex := (self indexOfSubCollection: oldElements startingAt: oldIndex) faster.
+        OrderedCollection? Integer! matchIndices := OrderedCollection type new.
+        [ Zero < matchIndex ] whileTrue: [
+            matchIndices addLast: matchIndex value.
+            matchIndex += oldElements size.
+            matchIndex value: (self indexOfSubCollection: oldElements startingAt: matchIndex value).
+        ].
 
-        [ matchIndex := self indexOfSubCollection: oldElements
-            startingAt: (oldElements size + matchIndex) asInteger.
-        Zero < matchIndex ] whileTrue: [ matchIndices addLast: matchIndex ].
+        ^matchIndices notEmpty ifTrue: [
+            "Copy the collection, replacing all the occurrences."
+            FastInteger! newIndex := Unity faster.
+            FastInteger! newPlace := Zero faster.
+            Integer! newSize := (self size + ((newElements size - oldElements size) * matchIndices size)) asInteger.
+            OrderedCollection! results := OrderedCollection new: newSize.
+            results registerType: oldElements first.
 
-        "Copy the collection, replacing all the occurrences."
-        @Stacked Integer! newIndex := Unity.
-        @Stacked Integer! newPlace := Zero.
-        Integer! newSize := (self size + ((newElements size - oldElements size) * matchIndices size)) asInteger.
-        SequencedCollection! results := SequencedCollection <- (self species new: newSize).
+            [ matchIndices notEmpty ] whileTrue: [
+                matchIndex value: matchIndices removeFirst.
+                "Copy the subcollection up to the match."
+                newPlace value: newIndex + matchIndex - oldIndex.
+                results replaceFrom: newIndex to: newPlace + Negativity with: self startingAt: oldIndex.
+                oldIndex value: (matchIndex value + oldElements size) asInteger.
+                "Insert the new subcollection."
+                newIndex value: (newPlace value + newElements size) asInteger.
+                results replaceFrom: newPlace to: newIndex + Negativity with: newElements startingAt: Unity ].
 
-        [ matchIndices isEmpty ] whileFalse: [
-            matchIndex := matchIndices removeFirst.
-            "Copy the subcollection up to the match."
-            newPlace := (Integer <- newIndex) + matchIndex - oldIndex.
-            results replaceFrom: newIndex to: Negativity + newPlace with: self startingAt: oldIndex.
-            oldIndex := oldElements size + matchIndex.
-            "Insert the new subcollection."
-            newIndex := newElements size + newPlace.
-            results replaceFrom: newPlace to: Negativity + newIndex with: newElements startingAt: Unity ].
-
-        "Copy the collection beyond the last match."
-        results replaceFrom: newIndex to: results size with: self startingAt: oldIndex.
-        ^results ]
+            "Copy the collection beyond the last match."
+            results replaceFrom: newIndex value to: results size with: self startingAt: oldIndex value.
+            results
+        ]
+        ifFalse: [
+            self copy "just copy"
+        ]
+    ]
 
     SequencedCollection? ElementType! copyReplaceFrom:
     Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements [
@@ -167,11 +169,12 @@ SequencedCollection members: "copying elements"
         ^(self species new: newSize)
             replaceFrom: Unity to: (start - Unity) asInteger with: self startingAt: Unity;
             replaceFrom: start to: end with: replacements startingAt: Unity;
-            replaceFrom: Unity + end to: newSize with: self startingAt: Unity + stop ]
+            replaceFrom: Unity + end to: newSize with: self startingAt: Unity + stop;
+            yourself ]
 
     SequencedCollection? ElementType! copyReplaceFrom:
     Ordinal! start to: Ordinal! stop withObject: ElementType! replacement [
-        FastInteger! size := ((Integer  <- stop) - start) asSmallInteger asFastInteger.
+        FastInteger! size := ((Integer  <- stop) - start) asSmallInteger faster.
         size < 0 ifTrue: [ size -= size ].
         size += Unity.
 
@@ -181,14 +184,14 @@ SequencedCollection members: "copying elements"
 
     SequencedCollection? ElementType! copyWith: ElementType! newElement [
      	Integer! newSize := Unity + self size.
-        ^(self species new: newSize)
-            at: newSize put: newElement;
-            replaceFrom: Unity to: self size with: self startingAt: Unity ]
+        ^(self species new: newSize) at: newSize put: newElement;
+            replaceFrom: Unity to: self size with: self startingAt: Unity;
+            yourself ]
 
     SequencedCollection? ElementType! copyWithout: ElementType! oldElement [
-     	WriteStream! aStream := WriteStream type with: (self species new: self size) asOrderedCollection.
-        self do: [ : ElementType! element |
-            oldElement = element ifFalse: [ aStream nextPut: element ] ].
+        OrderedCollection! copy := OrderedCollection <- (self species new: self size) asOrderedCollection.
+        WriteStream! aStream := WriteStream type with: (copy registerType: oldElement).
+        self do: [ : ElementType! element | oldElement = element ifFalse: [ aStream nextPut: element ] ].
         ^SequencedCollection <- aStream contents ]
 
     @Primitive SequencedCollection? ElementType! copyReplacing:
@@ -206,8 +209,7 @@ SequencedCollection "enumerating" members:
 [
     SequencedCollection? ElementType! collect: MonadicValuable! filterBlock [
      	OrderedCollection! results := OrderedCollection new: self size.
-        Unity to: self size do: [ : Integer! index |
-            results at: index put: Object <- (filterBlock value: (self at: index)) ].
+        Unity to: self size do: [ : Integer! index | results at: index put: Object <- (filterBlock value: (self at: index)) ].
         ^results ]
 
     Integer! findFirst: MonadicPredicate! testBlock [ ^self findFirst: testBlock ifAbsent: [ ^Zero ] ]
@@ -230,14 +232,14 @@ SequencedCollection "enumerating" members:
     do: MonadicValuable! aBlock [ Unity to: self size do: [ : Integer! i | aBlock value: (self at: i) ] ]
 
     do: MonadicValuable! aBlock separatedBy: NiladicValuable! separateBlock [
-     	self isEmpty ifTrue: [ ^self ]. aBlock value: (self at: 1).
+     	self notEmpty ifFalse: [ ^self ]. aBlock value: (self at: 1).
         Duality to: self size do: [ : Integer! i | separateBlock value. aBlock value: (self at: i) ] ]
 
     reverseDo: MonadicValuable! aBlock [
      	self size to: Unity by: Negativity do: [ : Integer! i | aBlock value: (self at: i) ] ]
 
     with: CollectedReadably? ElementType! aCollection do: DyadicValuable! aBlock [
-     	self size == aCollection size ifFalse: [ self error: 'Collections are of different sizes'. ].
+     	(self size = aCollection size) ifFalse: [ self error: 'Collections are of different sizes'. ].
         Unity to: self size do: [ : Integer! index |
             aBlock value: (self at: index) value: (aCollection at: index) ]. ]
 ]
@@ -249,9 +251,8 @@ SequencedCollection "streaming" members:
 
 SequencedCollection "testing" members:
 [
-    @Primitive Boolean! = Collected? ElementType! aCollection [
-     	(aCollection instanceOf: CollectedReadably) ifFalse: [ ^False literal ].
-        ^self equals: (CollectedReadably <- aCollection) ]
+    Boolean! = Collected? ElementType! aCollection [
+     	^(SequencedCollection type accepts: aCollection) and: [ self equals: (CollectedReadably <- aCollection) ]]
 
     Boolean! = CollectedReadably? ElementType! aCollection [
         (self size = aCollection size) ifFalse: [ ^false ].
@@ -265,43 +266,41 @@ SequencedCollection "testing" members:
 
 SequencedCollection members: "replacing elements"
 [
-    ElementType! at: Ordinal! index put: ElementType! element [
-        ^element
+    ElementType! atAllPut: ElementType! element [ ^element "override this!" ]
+    ElementType! at: Ordinal! index put: ElementType! element [ ^element "override this!" ]
+    ElementType! atAll: CollectedReadably? Ordinal! index put: ElementType! element [ ^element "override this!" ]
+
+    @Protected @Primitive Interval! replacedRange: Interval! range
+    from: CollectedReadably? ElementType! replacements at: Integer! origin [
+        (self isSame: replacements) primitiveBoolean ifFalse: [ ^range ]. "not self, no overlap"
+        (origin intValue < range first intValue) ifFalse: [ ^range ]. "no overlap, range forwards"
+        ^range reverse "overlaps, so range backwards"
     ]
 
-    ElementType! atAll: CollectedReadably? Ordinal! index put: ElementType! element [
-        ^element
+    replaceFrom: Ordinal! start to: Ordinal! stop 
+    with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin [
+     	Integer! offset := (Integer <- origin) - (Integer <- start). "cache offset"
+        Interval! range := (Integer <- start to: Integer <- stop by: Unity). "initial range, check overlap"
+        range := (self replacedRange: range from: replacements at: Integer <- origin).
+        range do: [ : Integer! i | self at: i put: (replacements at: i + offset) ].
+        ^replacements
     ]
 
-    ElementType! atAllPut: ElementType! element [
-        ^element
-    ]
-
-    SequencedCollection? ElementType! replaceFrom:
-    Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements startingAt: Ordinal! origin [
-     	Integer! offset := ((Integer <- origin) - (Integer <- start)) asInteger.
-        (self == replacements and: [(Integer <- origin) < (Integer <- start)])
-        ifTrue: [ "Move within same object overlaps, so do backwards"
-            stop to: start by: Negativity do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] ]
-        ifFalse: [ "Non-overlapping moves are done forwards"
-            start to: stop do: [ : Integer! i | self at: i put: (replacements at: i + offset) ] ].
-        ^SequencedCollection <- replacements ]
-
-    SequencedCollection? ElementType! replaceFrom:
-    Ordinal! start to: Ordinal! stop with: CollectedReadably? ElementType! replacements [
+    replaceFrom: Ordinal! start to: Ordinal! stop 
+    with: CollectedReadably? ElementType! replacements [
      	replacements size == (stop - start + 1) ifFalse: [
-            self error: 'size of replacement incorrect'. ^replacements ].
-        ^self replaceFrom: start to: stop with: replacements startingAt: 1 ]
+            self error: 'size of replacement incorrect'.  ^replacements ].
+        ^self replaceFrom: start to: stop with: replacements startingAt: Unity
+    ]
 
     ElementType! replaceFrom: Ordinal! start to: Ordinal! stop withObject: ElementType! element [
-     	Unity to: self size do: [ : Integer! index | self at: index put: element ].
-        ^element ]
+     	Unity to: self size do: [ : Integer! index | self at: index put: element ]. ^element ]
 ]
 
 SequencedCollection members: "adding elements"
 [
     ElementType! addFirst: ElementType! element [ self add: element beforeIndex: Unity. ^element ]
-    ElementType! addLast: ElementType! element [ self add: element. ^element ]
+    ElementType! addLast:  ElementType! element [ self add: element. ^element ]
 
     Collected? ElementType! addAll: Collected? ElementType! elements [
      	elements do: [ : ElementType! element | self add: element ]. ^elements ]

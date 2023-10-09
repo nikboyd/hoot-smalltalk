@@ -139,25 +139,19 @@ Character members: "converting"
     SmallInteger! generality [ ^Generality ]
 ]
 
+
+Character members: "comparing values - final"
+[
+    @Primitive @Final Boolean! = Character! aNumber [ ^Boolean from: primitiveValue == aNumber primitiveCharacter ]
+    @Primitive @Final Boolean! < Character! aNumber [ ^Boolean from: primitiveValue < aNumber primitiveCharacter ]
+    @Primitive @Final Boolean! > Character! aNumber [ ^Boolean from: primitiveValue > aNumber primitiveCharacter ]
+]
+
 Character members: "comparing"
 [
-    Boolean! = Magnitude! aNumber [ ^self = (Number <- aNumber) ]
-
-    @Primitive Boolean! = aNumber [
-        aNumber == null ifTrue: [ ^False literal ].
-        ^Boolean from: (self primitiveCharacter == aNumber asCharacter primitiveCharacter) ]
-
-    @Primitive Boolean! < aNumber [
-        ^Boolean from: (self primitiveCharacter < aNumber asCharacter primitiveCharacter) ]
-
-    @Primitive Boolean! <= aNumber [
-        ^Boolean from: (self primitiveCharacter <= aNumber asCharacter primitiveCharacter) ]
-
-    @Primitive Boolean! > aNumber [
-        ^Boolean from: (self primitiveCharacter > aNumber asCharacter primitiveCharacter) ]
-
-    @Primitive Boolean! >= aNumber [
-        ^Boolean from: (self primitiveCharacter >= aNumber asCharacter primitiveCharacter) ]
+    Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asCharacter = self ] ]
+    Boolean! < aNumber [ ^aNumber asCharacter > self ]
+    Boolean! > aNumber [ ^aNumber asCharacter < self ]
 
     Boolean! in: Interval! aRange [ ^aRange includes: self ]
     Java Lang Int! hashCode [ ^self primitiveInteger ]

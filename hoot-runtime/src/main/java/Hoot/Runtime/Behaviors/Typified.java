@@ -66,7 +66,7 @@ public interface Typified extends Valued.Metatype, Named, Logging {
     default String resolveTypeName(Named reference) { return Empty; }
     public static List<String> names(List<Typified> types) { return map(types, type -> type.name().toString()); }
 
-    default boolean inheritsFrom(Typified candidate) { return hasAny(candidate) && fullInheritance().contains(candidate); }
+    default boolean inheritsFrom(Typified candidate) { return primitiveClass().isInstance(candidate); }
     default List<Typified> simpleHeritage() { return emptyList(Typified.class); }
     default List<Typified> typeHeritage() { return emptyList(Typified.class); }
     default List<Typified> fullInheritance() {

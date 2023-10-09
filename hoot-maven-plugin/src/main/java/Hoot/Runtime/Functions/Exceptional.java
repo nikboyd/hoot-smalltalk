@@ -5,7 +5,6 @@ import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Functions.Exceptional.Runner.*;
 import static Hoot.Runtime.Functions.Exceptional.Result.*;
 import static Hoot.Runtime.Functions.Exceptional.Argued.*;
-import Hoot.Runtime.Faces.Logging;
 
 /**
  * Common standard utility functions for executing closures and handling exceptions.
@@ -14,10 +13,10 @@ import Hoot.Runtime.Faces.Logging;
  * @see "Copyright 2010,2019 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
-public interface Exceptional extends Logging {
+public interface Exceptional extends Hoot.Runtime.Faces.Logging {
 
     static Exceptional StandardReporter = new Exceptional(){};
-    public static interface Handler<T extends Throwable> extends Consumer<T>, Logging {}
+    public static interface Handler<T extends Throwable> extends Consumer<T>, Hoot.Runtime.Faces.Logging {}
     public static Handler<Throwable> ErrorHandler = (Throwable ex) -> { StandardReporter.error(ex); };
     public static Handler<Throwable> DebugHandler = (Throwable ex) -> { StandardReporter.whisper(ex.toString()); };
 

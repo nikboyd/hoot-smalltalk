@@ -21,16 +21,16 @@ public class Global extends Operand {
 <span class="fc" id="L21">    protected Global(List&lt;String&gt; names) { this(); this.names.addAll(names); }</span>
 
 <span class="nc bnc" id="L23" title="All 2 branches missed.">    @Override public int hashCode() { return isEmpty() ? super.hashCode() : fullName().hashCode(); }</span>
-<span class="nc bnc" id="L24" title="All 6 branches missed.">    protected boolean equals(Global g) { return (isEmpty() &amp;&amp; g.isEmpty()) || fullName().equals(g.fullName()); }</span>
+<span class="pc bpc" id="L24" title="4 of 6 branches missed.">    protected boolean equals(Global g) { return (isEmpty() &amp;&amp; g.isEmpty()) || fullName().equals(g.fullName()); }</span>
     @Override public boolean equals(Object global) {
-<span class="nc bnc" id="L26" title="All 6 branches missed.">        return hasAny(global) &amp;&amp; getClass() == global.getClass() &amp;&amp; falseOr(g -&gt; this.equals(g), (Global) global); }</span>
+<span class="pc bpc" id="L26" title="3 of 6 branches missed.">        return hasAny(global) &amp;&amp; getClass() == global.getClass() &amp;&amp; falseOr(g -&gt; this.equals(g), (Global) global); }</span>
 
-<span class="nc" id="L28">    public static Global named(String name) { return Global.with(name); }</span>
-<span class="nc" id="L29">    public static Global with(String... names) { return Global.withList(wrap(names)); }</span>
+<span class="fc" id="L28">    public static Global named(String name) { return Global.with(name); }</span>
+<span class="fc" id="L29">    public static Global with(String... names) { return Global.withList(wrap(names)); }</span>
 <span class="fc" id="L30">    public static Global withList(List&lt;String&gt; names) { return new Global(names).fixArrayed(); }</span>
 
 <span class="fc" id="L32">    private boolean primary = false;</span>
-<span class="nc" id="L33">    public boolean isPrimary() { return this.primary; }</span>
+<span class="fc" id="L33">    public boolean isPrimary() { return this.primary; }</span>
 <span class="nc" id="L34">    public Global makePrimary() { this.primary = true; return this; }</span>
 
 <span class="fc" id="L36">    protected boolean arrayedType = false;</span>
@@ -48,20 +48,20 @@ public class Global extends Operand {
 <span class="fc" id="L48">    public int countNames() { return names.size(); }</span>
 <span class="pc bpc" id="L49" title="1 of 2 branches missed.">    public List&lt;String&gt; names() { return isEmpty() ? emptyList(String.class) : copyList(this.names); }</span>
 <span class="nc bnc" id="L50" title="All 2 branches missed.">    public String metaName(boolean asType) { return formType(typeName(), asType ? Name.Metatype : Name.Metaclass); }</span>
-<span class="nc" id="L51">    public String typeName() { return typeResolver().typeName(); }</span>
+<span class="fc" id="L51">    public String typeName() { return typeResolver().typeName(); }</span>
 
 <span class="fc" id="L53">    @Override public boolean isEmpty() { return names.isEmpty(); }</span>
 <span class="fc" id="L54">    @Override public TypeName typeResolver() { return TypeName.with(names()).makeArrayed(isArrayed()); }</span>
 
-<span class="nc bnc" id="L56" title="All 2 branches missed.">    public boolean isSingular() { return countNames() == 1; }</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">    public boolean isSingular() { return countNames() == 1; }</span>
 <span class="nc bnc" id="L57" title="All 4 branches missed.">    public boolean isVoid()    { return isSingular() &amp;&amp; shortName().equals(Keyword.Void); }</span>
 <span class="nc bnc" id="L58" title="All 4 branches missed.">    public boolean isBoolean() { return isSingular() &amp;&amp; shortName().equals(Keyword.Boolean); }</span>
-<span class="nc bnc" id="L59" title="All 4 branches missed.">    public boolean isGenericType() { return isSingular() &amp;&amp; shortName().endsWith(Keyword.TypeSuffix); }</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">    public boolean isGenericType() { return isSingular() &amp;&amp; shortName().endsWith(Keyword.TypeSuffix); }</span>
 <span class="nc bnc" id="L60" title="All 4 branches missed.">    public boolean isPrimitiveBoolean() { return !isSingular() &amp;&amp; shortName().equals(Keyword.Boolean); }</span>
 
-<span class="nc" id="L62">    @Override public String fullName() { return joinWith(Blank, names()); }</span>
+<span class="fc" id="L62">    @Override public String fullName() { return joinWith(Blank, names()); }</span>
 <span class="pc bpc" id="L63" title="1 of 2 branches missed.">    @Override public String shortName() { return isEmpty() ? Empty : names().get(countNames() - 1); }</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">    @Override public String name() { return this.isPrimary() ? formType(names()) : typeName(); }</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">    @Override public String name() { return this.isPrimary() ? formType(names()) : typeName(); }</span>
 
     public Map&lt;String, Emission&gt; extractGenerics(boolean wantsBases) {
 <span class="nc" id="L67">        HashMap&lt;String, Emission&gt; results = emptyMap(Emission.class);</span>
@@ -70,13 +70,13 @@ public class Global extends Operand {
     }
 
     public List&lt;String&gt; inferGenerics() {
-<span class="nc" id="L73">        List&lt;String&gt; results = emptyList(String.class);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (this.isGenericType()) results.add(shortName());</span>
-<span class="nc" id="L75">        return results;</span>
+<span class="fc" id="L73">        List&lt;String&gt; results = emptyList(String.class);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (this.isGenericType()) results.add(shortName());</span>
+<span class="fc" id="L75">        return results;</span>
     }
 
-<span class="nc" id="L78">    @Override public Emission emitOperand() { return emitItem(name()); }</span>
+<span class="fc" id="L78">    @Override public Emission emitOperand() { return emitItem(name()); }</span>
 <span class="nc" id="L79">    public Emission emitMetaName(boolean asType) { return emitItem(metaName(asType)); }</span>
 
 } // Global
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

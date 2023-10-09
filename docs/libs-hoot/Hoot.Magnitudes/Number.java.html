@@ -272,10 +272,10 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Boolean lessGeneral(final Numeric aNumber)
   {
-<span class="fc" id="L275">    java.lang.String exitID = &quot;Number&gt;&gt;lessGeneral&quot;;</span>
-<span class="fc" id="L276">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L277">    Number n = ((Number)aNumber);</span>
-<span class="fc" id="L278">    return (Boolean)(this.generality().lessThan(n.generality()));</span>
+<span class="nc" id="L275">    java.lang.String exitID = &quot;Number&gt;&gt;lessGeneral&quot;;</span>
+<span class="nc" id="L276">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L277">    Number n = ((Number)aNumber);</span>
+<span class="nc" id="L278">    return (Boolean)(this.generality().lessThan(n.generality()));</span>
   }
 
   /**
@@ -306,61 +306,11 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
   /**
    * @return 
    */
-  public   Boolean equals(final Number aNumber)
-  {
-<span class="nc" id="L311">    java.lang.String exitID = &quot;Number&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L312">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L313">    return (Boolean)(this.equals(((Magnitude)aNumber)));</span>
-  }
-
-  /**
-   * @return 
-   */
-  public   Boolean equals(final Numeric aNumber)
-  {
-<span class="nc" id="L321">    java.lang.String exitID = &quot;Number&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L322">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L323">    return (Boolean)Boolean.from((((Number)aNumber).equals(this)));</span>
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   Boolean lessThan(final Scalar aNumber)
-  {
-<span class="nc" id="L331">    java.lang.String exitID = &quot;Number&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L332">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L333">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L334">    aNumber.isKindOf(Number.type()).not().ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L335">      return (Boolean)f0.exit(exitID, False.literal());</span>
-    }, &quot;&quot;));
-<span class="nc" id="L337">    return (Boolean)f0.exit(exitID, Boolean.from((((Number)aNumber).moreThan(this))));</span>
-    });
-  }
-
-  /**
-   * @return 
-   */
-  @Override public   Boolean moreThan(final Scalar aNumber)
-  {
-<span class="nc" id="L346">    java.lang.String exitID = &quot;Number&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L347">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L348">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L349">    aNumber.isKindOf(Number.type()).not().ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L350">      return (Boolean)f0.exit(exitID, False.literal());</span>
-    }, &quot;&quot;));
-<span class="nc" id="L352">    return (Boolean)f0.exit(exitID, Boolean.from((((Number)aNumber).lessThan(this))));</span>
-    });
-  }
-
-  /**
-   * @return 
-   */
   public   byte primitiveByte()
   {
-<span class="nc" id="L361">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveByte&quot;;</span>
-<span class="nc" id="L362">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L363">    return (byte)this.elementaryNumber().byteValue();</span>
+<span class="nc" id="L311">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveByte&quot;;</span>
+<span class="nc" id="L312">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L313">    return (byte)this.elementaryNumber().byteValue();</span>
   }
 
   /**
@@ -368,9 +318,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   short primitiveShort()
   {
-<span class="nc" id="L371">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveShort&quot;;</span>
-<span class="nc" id="L372">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L373">    return (short)this.elementaryNumber().shortValue();</span>
+<span class="nc" id="L321">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveShort&quot;;</span>
+<span class="nc" id="L322">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L323">    return (short)this.elementaryNumber().shortValue();</span>
   }
 
   /**
@@ -378,9 +328,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Character asCharacter()
   {
-<span class="nc" id="L381">    java.lang.String exitID = &quot;Number&gt;&gt;asCharacter&quot;;</span>
-<span class="nc" id="L382">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L383">    return (Character)Character.from(this.primitiveCharacter());</span>
+<span class="nc" id="L331">    java.lang.String exitID = &quot;Number&gt;&gt;asCharacter&quot;;</span>
+<span class="nc" id="L332">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L333">    return (Character)Character.from(this.primitiveCharacter());</span>
   }
 
   /**
@@ -388,9 +338,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   char primitiveCharacter()
   {
-<span class="nc" id="L391">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveCharacter&quot;;</span>
-<span class="nc" id="L392">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L393">    return (char)((char)this.elementaryNumber().intValue());</span>
+<span class="nc" id="L341">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveCharacter&quot;;</span>
+<span class="nc" id="L342">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L343">    return (char)((char)this.elementaryNumber().intValue());</span>
   }
 
   /**
@@ -398,9 +348,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   SmallInteger asSmallInteger()
   {
-<span class="fc" id="L401">    java.lang.String exitID = &quot;Number&gt;&gt;asSmallInteger&quot;;</span>
-<span class="fc" id="L402">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L403">    return (SmallInteger)SmallInteger.from(this.primitiveInteger());</span>
+<span class="fc" id="L351">    java.lang.String exitID = &quot;Number&gt;&gt;asSmallInteger&quot;;</span>
+<span class="fc" id="L352">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L353">    return (SmallInteger)SmallInteger.from(this.primitiveInteger());</span>
   }
 
   /**
@@ -408,9 +358,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   int primitiveInteger()
   {
-<span class="fc" id="L411">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveInteger&quot;;</span>
-<span class="fc" id="L412">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L413">    return (int)this.elementaryNumber().intValue();</span>
+<span class="fc" id="L361">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveInteger&quot;;</span>
+<span class="fc" id="L362">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L363">    return (int)this.elementaryNumber().intValue();</span>
   }
 
   /**
@@ -418,9 +368,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   LongInteger asLongInteger()
   {
-<span class="fc" id="L421">    java.lang.String exitID = &quot;Number&gt;&gt;asLongInteger&quot;;</span>
-<span class="fc" id="L422">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L423">    return (LongInteger)new LongInteger(this.primitiveLong());</span>
+<span class="fc" id="L371">    java.lang.String exitID = &quot;Number&gt;&gt;asLongInteger&quot;;</span>
+<span class="fc" id="L372">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L373">    return (LongInteger)new LongInteger(this.primitiveLong());</span>
   }
 
   /**
@@ -428,9 +378,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   long primitiveLong()
   {
-<span class="fc" id="L431">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveLong&quot;;</span>
-<span class="fc" id="L432">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L433">    return (long)this.elementaryNumber().longValue();</span>
+<span class="fc" id="L381">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveLong&quot;;</span>
+<span class="fc" id="L382">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L383">    return (long)this.elementaryNumber().longValue();</span>
   }
 
   /**
@@ -438,9 +388,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Float asFloatE()
   {
-<span class="nc" id="L441">    java.lang.String exitID = &quot;Number&gt;&gt;asFloatE&quot;;</span>
-<span class="nc" id="L442">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L443">    return (Float)this.asFloat();</span>
+<span class="nc" id="L391">    java.lang.String exitID = &quot;Number&gt;&gt;asFloatE&quot;;</span>
+<span class="nc" id="L392">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L393">    return (Float)this.asFloat();</span>
   }
 
   /**
@@ -448,9 +398,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Float asFloat()
   {
-<span class="fc" id="L451">    java.lang.String exitID = &quot;Number&gt;&gt;asFloat&quot;;</span>
-<span class="fc" id="L452">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L453">    return (Float)Float.from(this.primitiveFloat());</span>
+<span class="fc" id="L401">    java.lang.String exitID = &quot;Number&gt;&gt;asFloat&quot;;</span>
+<span class="fc" id="L402">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L403">    return (Float)Float.from(this.primitiveFloat());</span>
   }
 
   /**
@@ -458,9 +408,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   java.lang.Float primitiveFloat()
   {
-<span class="nc" id="L461">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveFloat&quot;;</span>
-<span class="nc" id="L462">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L463">    return (java.lang.Float)this.elementaryNumber().floatValue();</span>
+<span class="nc" id="L411">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveFloat&quot;;</span>
+<span class="nc" id="L412">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L413">    return (java.lang.Float)this.elementaryNumber().floatValue();</span>
   }
 
   /**
@@ -468,9 +418,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double asFloatD()
   {
-<span class="fc" id="L471">    java.lang.String exitID = &quot;Number&gt;&gt;asFloatD&quot;;</span>
-<span class="fc" id="L472">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L473">    return (Double)Double.from(this.primitiveDouble());</span>
+<span class="fc" id="L421">    java.lang.String exitID = &quot;Number&gt;&gt;asFloatD&quot;;</span>
+<span class="fc" id="L422">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L423">    return (Double)Double.from(this.primitiveDouble());</span>
   }
 
   /**
@@ -478,9 +428,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   java.lang.Double primitiveDouble()
   {
-<span class="fc" id="L481">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveDouble&quot;;</span>
-<span class="fc" id="L482">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L483">    return (java.lang.Double)this.elementaryNumber().doubleValue();</span>
+<span class="fc" id="L431">    java.lang.String exitID = &quot;Number&gt;&gt;primitiveDouble&quot;;</span>
+<span class="fc" id="L432">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L433">    return (java.lang.Double)this.elementaryNumber().doubleValue();</span>
   }
 
   /**
@@ -488,9 +438,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer asInteger()
   {
-<span class="fc" id="L491">    java.lang.String exitID = &quot;Number&gt;&gt;asInteger&quot;;</span>
-<span class="fc" id="L492">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L493">    return (Integer)this.asLargeInteger().narrowGenerality();</span>
+<span class="fc" id="L441">    java.lang.String exitID = &quot;Number&gt;&gt;asInteger&quot;;</span>
+<span class="fc" id="L442">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L443">    return (Integer)this.asLargeInteger().narrowGenerality();</span>
   }
 
   /**
@@ -498,9 +448,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   java.lang.Integer elementaryInteger()
   {
-<span class="nc" id="L501">    java.lang.String exitID = &quot;Number&gt;&gt;elementaryInteger&quot;;</span>
-<span class="nc" id="L502">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L503">    return (java.lang.Integer)this.elementaryNumber().intValue();</span>
+<span class="nc" id="L451">    java.lang.String exitID = &quot;Number&gt;&gt;elementaryInteger&quot;;</span>
+<span class="nc" id="L452">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L453">    return (java.lang.Integer)this.elementaryNumber().intValue();</span>
   }
 
   /**
@@ -513,9 +463,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Rational asRational()
   {
-<span class="nc" id="L516">    java.lang.String exitID = &quot;Number&gt;&gt;asRational&quot;;</span>
-<span class="nc" id="L517">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L518">    return (Rational)this.asFraction();</span>
+<span class="nc" id="L466">    java.lang.String exitID = &quot;Number&gt;&gt;asRational&quot;;</span>
+<span class="nc" id="L467">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L468">    return (Rational)this.asFraction();</span>
   }
 
   /**
@@ -523,9 +473,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Fraction asFraction()
   {
-<span class="nc" id="L526">    java.lang.String exitID = &quot;Number&gt;&gt;asFraction&quot;;</span>
-<span class="nc" id="L527">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L528">    return (Fraction)new Fraction(this.asInteger());</span>
+<span class="fc" id="L476">    java.lang.String exitID = &quot;Number&gt;&gt;asFraction&quot;;</span>
+<span class="fc" id="L477">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L478">    return (Fraction)new Fraction(this.asInteger());</span>
   }
 
   /**
@@ -533,9 +483,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   LargeInteger asLargeInteger()
   {
-<span class="fc" id="L536">    java.lang.String exitID = &quot;Number&gt;&gt;asLargeInteger&quot;;</span>
-<span class="fc" id="L537">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L538">    return (LargeInteger)LargeInteger.from(this.asBigInteger());</span>
+<span class="fc" id="L486">    java.lang.String exitID = &quot;Number&gt;&gt;asLargeInteger&quot;;</span>
+<span class="fc" id="L487">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L488">    return (LargeInteger)LargeInteger.from(this.asBigInteger());</span>
   }
 
   /**
@@ -543,9 +493,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   BigInteger asBigInteger()
   {
-<span class="fc" id="L546">    java.lang.String exitID = &quot;Number&gt;&gt;asBigInteger&quot;;</span>
-<span class="fc" id="L547">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L548">    return (BigInteger)BigInteger.valueOf(this.primitiveLong());</span>
+<span class="fc" id="L496">    java.lang.String exitID = &quot;Number&gt;&gt;asBigInteger&quot;;</span>
+<span class="fc" id="L497">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L498">    return (BigInteger)BigInteger.valueOf(this.primitiveLong());</span>
   }
 
   /**
@@ -553,9 +503,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   BigDecimal asDecimal()
   {
-<span class="fc" id="L556">    java.lang.String exitID = &quot;Number&gt;&gt;asDecimal&quot;;</span>
-<span class="fc" id="L557">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L558">    return (BigDecimal)new BigDecimal(this.primitiveLong());</span>
+<span class="fc" id="L506">    java.lang.String exitID = &quot;Number&gt;&gt;asDecimal&quot;;</span>
+<span class="fc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L508">    return (BigDecimal)new BigDecimal(this.primitiveLong());</span>
   }
 
   /**
@@ -563,9 +513,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Fixed asFixedPoint(final Ordinal scale)
   {
-<span class="nc" id="L566">    java.lang.String exitID = &quot;Number&gt;&gt;asFixedPoint&quot;;</span>
-<span class="nc" id="L567">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L568">    return (Fixed)this.asFraction().scaledAt(((Integer)scale));</span>
+<span class="nc" id="L516">    java.lang.String exitID = &quot;Number&gt;&gt;asFixedPoint&quot;;</span>
+<span class="nc" id="L517">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L518">    return (Fixed)this.asFraction().scaledAt(((Integer)scale));</span>
   }
 
   /**
@@ -573,9 +523,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Fixed asScaledDecimal(final Ordinal scale)
   {
-<span class="nc" id="L576">    java.lang.String exitID = &quot;Number&gt;&gt;asScaledDecimal&quot;;</span>
-<span class="nc" id="L577">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L578">    return (Fixed)this.asFraction().scaledAt(((Integer)scale));</span>
+<span class="fc" id="L526">    java.lang.String exitID = &quot;Number&gt;&gt;asScaledDecimal&quot;;</span>
+<span class="fc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L528">    return (Fixed)this.asFraction().scaledAt(((Integer)scale));</span>
   }
 
   /**
@@ -583,9 +533,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Point asPoint()
   {
-<span class="nc" id="L586">    java.lang.String exitID = &quot;Number&gt;&gt;asPoint&quot;;</span>
-<span class="nc" id="L587">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L588">    return (Point)(this.at(this));</span>
+<span class="nc" id="L536">    java.lang.String exitID = &quot;Number&gt;&gt;asPoint&quot;;</span>
+<span class="nc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L538">    return (Point)(this.at(this));</span>
   }
 
   /**
@@ -593,9 +543,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number minus(final Numeric aNumber)
   {
-<span class="nc" id="L596">    java.lang.String exitID = &quot;Number&gt;&gt;minus&quot;;</span>
-<span class="nc" id="L597">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L598">    return (Number)(((Number)aNumber).negated().plus(this));</span>
+<span class="nc" id="L546">    java.lang.String exitID = &quot;Number&gt;&gt;minus&quot;;</span>
+<span class="nc" id="L547">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L548">    return (Number)(((Number)aNumber).negated().plus(this));</span>
   }
 
   /**
@@ -603,9 +553,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number plus(final Numeric aNumber)
   {
-<span class="nc" id="L606">    java.lang.String exitID = &quot;Number&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L607">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L608">    return (Number)(((Number)aNumber).plus(this));</span>
+<span class="nc" id="L556">    java.lang.String exitID = &quot;Number&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L558">    return (Number)(((Number)aNumber).plus(this));</span>
   }
 
   /**
@@ -613,9 +563,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number times(final Numeric aNumber)
   {
-<span class="nc" id="L616">    java.lang.String exitID = &quot;Number&gt;&gt;times&quot;;</span>
-<span class="nc" id="L617">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L618">    return (Number)(((Number)aNumber).times(this));</span>
+<span class="nc" id="L566">    java.lang.String exitID = &quot;Number&gt;&gt;times&quot;;</span>
+<span class="nc" id="L567">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L568">    return (Number)(((Number)aNumber).times(this));</span>
   }
 
   /**
@@ -623,9 +573,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   @Override public   Number divideWith(final Numeric aNumber)
   {
-<span class="nc" id="L626">    java.lang.String exitID = &quot;Number&gt;&gt;divideWith&quot;;</span>
-<span class="nc" id="L627">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L628">    return (Number)(this.divideWith(((Number)aNumber)));</span>
+<span class="nc" id="L576">    java.lang.String exitID = &quot;Number&gt;&gt;divideWith&quot;;</span>
+<span class="nc" id="L577">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L578">    return (Number)(this.divideWith(((Number)aNumber)));</span>
   }
 
   /**
@@ -633,9 +583,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer truncateWith(final Numeric aNumber)
   {
-<span class="nc" id="L636">    java.lang.String exitID = &quot;Number&gt;&gt;truncateWith&quot;;</span>
-<span class="nc" id="L637">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L638">    return (Integer)(this.divideWith(((Number)aNumber))).floor();</span>
+<span class="nc" id="L586">    java.lang.String exitID = &quot;Number&gt;&gt;truncateWith&quot;;</span>
+<span class="nc" id="L587">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L588">    return (Integer)(this.divideWith(((Number)aNumber))).floor();</span>
   }
 
   /**
@@ -643,9 +593,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number remainderFrom(final Numeric aNumber)
   {
-<span class="fc" id="L646">    java.lang.String exitID = &quot;Number&gt;&gt;remainderFrom&quot;;</span>
-<span class="fc" id="L647">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L648">    return (Number)(this.minus(this.truncateWith(((Number)aNumber)).times(((Number)aNumber))));</span>
+<span class="fc" id="L596">    java.lang.String exitID = &quot;Number&gt;&gt;remainderFrom&quot;;</span>
+<span class="fc" id="L597">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L598">    return (Number)(this.minus(this.truncateWith(((Number)aNumber)).times(((Number)aNumber))));</span>
   }
 
   /**
@@ -653,9 +603,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number modulo(final Numeric aNumber)
   {
-<span class="fc" id="L656">    java.lang.String exitID = &quot;Number&gt;&gt;modulo&quot;;</span>
-<span class="fc" id="L657">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L658">    return (Number)(this.remainderFrom(((Number)aNumber)));</span>
+<span class="fc" id="L606">    java.lang.String exitID = &quot;Number&gt;&gt;modulo&quot;;</span>
+<span class="fc" id="L607">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L608">    return (Number)(this.remainderFrom(((Number)aNumber)));</span>
   }
 
   /**
@@ -663,10 +613,10 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number zeroDivide()
   {
-<span class="fc" id="L666">    java.lang.String exitID = &quot;Number&gt;&gt;zeroDivide&quot;;</span>
-<span class="fc" id="L667">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L668">    ZeroDivide.type().dividend(this);</span>
-<span class="fc" id="L669">    return (Number)this;</span>
+<span class="fc" id="L616">    java.lang.String exitID = &quot;Number&gt;&gt;zeroDivide&quot;;</span>
+<span class="fc" id="L617">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L618">    ZeroDivide.type().dividend(this);</span>
+<span class="fc" id="L619">    return (Number)this;</span>
   }
 
   /**
@@ -674,9 +624,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Point at(final Numeric aNumber)
   {
-<span class="fc" id="L677">    java.lang.String exitID = &quot;Number&gt;&gt;at&quot;;</span>
-<span class="fc" id="L678">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L679">    return (Point)new Point().x_y(this, ((Number)aNumber));</span>
+<span class="fc" id="L627">    java.lang.String exitID = &quot;Number&gt;&gt;at&quot;;</span>
+<span class="fc" id="L628">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L629">    return (Point)new Point().x_y(this, ((Number)aNumber));</span>
   }
 
   /**
@@ -684,9 +634,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number raisedTo(final Ordinal power)
   {
-<span class="fc" id="L687">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
-<span class="fc" id="L688">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L689">    return (Number)this.raisedTo(Double.from(((Number)power).primitiveDouble()));</span>
+<span class="fc" id="L637">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
+<span class="fc" id="L638">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L639">    return (Number)this.raisedTo(Double.from(((Number)power).primitiveDouble()));</span>
   }
 
   /**
@@ -694,9 +644,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number raisedTo(final Numeric power)
   {
-<span class="nc" id="L697">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
-<span class="nc" id="L698">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L699">    return (Number)this.raisedTo(Double.from(((Number)power).primitiveDouble()));</span>
+<span class="nc" id="L647">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
+<span class="nc" id="L648">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L649">    return (Number)this.raisedTo(Double.from(((Number)power).primitiveDouble()));</span>
   }
 
   /**
@@ -704,9 +654,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number raisedTo(final Double power)
   {
-<span class="fc" id="L707">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
-<span class="fc" id="L708">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L709">    return (Number)this.asFloatD().raisedTo(power);</span>
+<span class="fc" id="L657">    java.lang.String exitID = &quot;Number&gt;&gt;raisedTo&quot;;</span>
+<span class="fc" id="L658">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L659">    return (Number)this.asFloatD().raisedTo(power);</span>
   }
 
   /**
@@ -714,12 +664,12 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number abs()
   {
-<span class="nc" id="L717">    java.lang.String exitID = &quot;Number&gt;&gt;abs&quot;;</span>
-<span class="nc" id="L718">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L719">    return (Number)(this.lessThan(this.$class().zero())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L720">      return this.negated();</span>
-<span class="nc" id="L721">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L722">      return this;</span>
+<span class="nc" id="L667">    java.lang.String exitID = &quot;Number&gt;&gt;abs&quot;;</span>
+<span class="nc" id="L668">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L669">    return (Number)(this.lessThan(this.$class().zero())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L670">      return this.negated();</span>
+<span class="nc" id="L671">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L672">      return this;</span>
     }, &quot;&quot;));
   }
 
@@ -728,9 +678,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Rational fractionPart()
   {
-<span class="nc" id="L731">    java.lang.String exitID = &quot;Number&gt;&gt;fractionPart&quot;;</span>
-<span class="nc" id="L732">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L733">    return (Rational)(this.minus(this.truncated())).asRational();</span>
+<span class="nc" id="L681">    java.lang.String exitID = &quot;Number&gt;&gt;fractionPart&quot;;</span>
+<span class="nc" id="L682">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L683">    return (Rational)(this.minus(this.truncated())).asRational();</span>
   }
 
   /**
@@ -738,9 +688,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer integerPart()
   {
-<span class="nc" id="L741">    java.lang.String exitID = &quot;Number&gt;&gt;integerPart&quot;;</span>
-<span class="nc" id="L742">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L743">    return (Integer)this.truncated();</span>
+<span class="nc" id="L691">    java.lang.String exitID = &quot;Number&gt;&gt;integerPart&quot;;</span>
+<span class="nc" id="L692">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L693">    return (Integer)this.truncated();</span>
   }
 
   /**
@@ -748,9 +698,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number negated()
   {
-<span class="nc" id="L751">    java.lang.String exitID = &quot;Number&gt;&gt;negated&quot;;</span>
-<span class="nc" id="L752">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L753">    return (Number)(this.$class().zero().minus(this));</span>
+<span class="nc" id="L701">    java.lang.String exitID = &quot;Number&gt;&gt;negated&quot;;</span>
+<span class="nc" id="L702">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L703">    return (Number)(this.$class().zero().minus(this));</span>
   }
 
   /**
@@ -758,9 +708,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number reciprocal()
   {
-<span class="nc" id="L761">    java.lang.String exitID = &quot;Number&gt;&gt;reciprocal&quot;;</span>
-<span class="nc" id="L762">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L763">    return (Number)(this.$class().unity().divideWith(this));</span>
+<span class="nc" id="L711">    java.lang.String exitID = &quot;Number&gt;&gt;reciprocal&quot;;</span>
+<span class="nc" id="L712">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L713">    return (Number)(this.$class().unity().divideWith(this));</span>
   }
 
   /**
@@ -768,9 +718,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number squared()
   {
-<span class="fc" id="L771">    java.lang.String exitID = &quot;Number&gt;&gt;squared&quot;;</span>
-<span class="fc" id="L772">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L773">    return (Number)((Number)(this.times(this)));</span>
+<span class="fc" id="L721">    java.lang.String exitID = &quot;Number&gt;&gt;squared&quot;;</span>
+<span class="fc" id="L722">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L723">    return (Number)((Number)(this.times(this)));</span>
   }
 
   /**
@@ -778,9 +728,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer quo(final Numeric aNumber)
   {
-<span class="nc" id="L781">    java.lang.String exitID = &quot;Number&gt;&gt;quo&quot;;</span>
-<span class="nc" id="L782">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L783">    return (Integer)(this.divideWith(aNumber)).truncated();</span>
+<span class="nc" id="L731">    java.lang.String exitID = &quot;Number&gt;&gt;quo&quot;;</span>
+<span class="nc" id="L732">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L733">    return (Integer)(this.divideWith(aNumber)).truncated();</span>
   }
 
   /**
@@ -788,9 +738,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number rem(final Numeric aNumber)
   {
-<span class="nc" id="L791">    java.lang.String exitID = &quot;Number&gt;&gt;rem&quot;;</span>
-<span class="nc" id="L792">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L793">    return (Number)(this.minus(this.truncatedTo(aNumber)));</span>
+<span class="nc" id="L741">    java.lang.String exitID = &quot;Number&gt;&gt;rem&quot;;</span>
+<span class="nc" id="L742">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L743">    return (Number)(this.minus(this.truncatedTo(aNumber)));</span>
   }
 
   /**
@@ -798,15 +748,15 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer sign()
   {
-<span class="fc" id="L801">    java.lang.String exitID = &quot;Number&gt;&gt;sign&quot;;</span>
-<span class="fc" id="L802">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L803" title="1 of 2 branches missed.">    if (this.strictlyPositive().asPrimitive()) {</span>
-<span class="fc" id="L804">      return Unity;</span>
+<span class="fc" id="L751">    java.lang.String exitID = &quot;Number&gt;&gt;sign&quot;;</span>
+<span class="fc" id="L752">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L753" title="1 of 2 branches missed.">    if (this.strictlyPositive().asPrimitive()) {</span>
+<span class="fc" id="L754">      return Unity;</span>
     };
-<span class="nc bnc" id="L806" title="All 2 branches missed.">    if (this.negative().asPrimitive()) {</span>
-<span class="nc" id="L807">      return Negativity;</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">    if (this.negative().asPrimitive()) {</span>
+<span class="nc" id="L757">      return Negativity;</span>
     };
-<span class="nc" id="L809">    return (Integer)Zero;</span>
+<span class="nc" id="L759">    return (Integer)Zero;</span>
   }
 
   /**
@@ -814,18 +764,18 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number sqrt()
   {
-<span class="fc" id="L817">    java.lang.String exitID = &quot;Number&gt;&gt;sqrt&quot;;</span>
-<span class="fc" id="L818">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L819">    java.lang.Double rootD = Math.sqrt(this.primitiveDouble());</span>
+<span class="fc" id="L767">    java.lang.String exitID = &quot;Number&gt;&gt;sqrt&quot;;</span>
+<span class="fc" id="L768">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L769">    java.lang.Double rootD = Math.sqrt(this.primitiveDouble());</span>
 
-<span class="fc" id="L821">    long rootL = rootD.longValue();</span>
-<span class="pc bpc" id="L822" title="1 of 2 branches missed.">    if ((rootL == rootD)) {</span>
-<span class="fc" id="L823">      int rootI = ((int)rootL);</span>
-<span class="pc bpc" id="L824" title="2 of 4 branches missed.">      return (Boolean.primitiveValue((rootI == rootL)) ? new SmallInteger(rootI) : new LongInteger(rootL));</span>
+<span class="fc" id="L771">    long rootL = rootD.longValue();</span>
+<span class="pc bpc" id="L772" title="1 of 2 branches missed.">    if ((rootL == rootD)) {</span>
+<span class="fc" id="L773">      int rootI = ((int)rootL);</span>
+<span class="pc bpc" id="L774" title="2 of 4 branches missed.">      return (Boolean.primitiveValue((rootI == rootL)) ? new SmallInteger(rootI) : new LongInteger(rootL));</span>
     };
 
-<span class="nc" id="L827">    java.lang.Float rootF = rootD.floatValue();</span>
-<span class="nc bnc" id="L828" title="All 4 branches missed.">    return (Number)(Boolean.primitiveValue((rootF.doubleValue() == rootD)) ? new Float(rootF) : new Double(rootD));</span>
+<span class="nc" id="L777">    java.lang.Float rootF = rootD.floatValue();</span>
+<span class="nc bnc" id="L778" title="All 4 branches missed.">    return (Number)(Boolean.primitiveValue((rootF.doubleValue() == rootD)) ? new Float(rootF) : new Double(rootD));</span>
   }
 
   /**
@@ -833,9 +783,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Floater cos()
   {
-<span class="nc" id="L836">    java.lang.String exitID = &quot;Number&gt;&gt;cos&quot;;</span>
-<span class="nc" id="L837">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L838">    return (Floater)new Double(Math.cos(this.primitiveFloat()));</span>
+<span class="nc" id="L786">    java.lang.String exitID = &quot;Number&gt;&gt;cos&quot;;</span>
+<span class="nc" id="L787">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L788">    return (Floater)new Double(Math.cos(this.primitiveFloat()));</span>
   }
 
   /**
@@ -843,9 +793,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Floater arcCos()
   {
-<span class="nc" id="L846">    java.lang.String exitID = &quot;Number&gt;&gt;arcCos&quot;;</span>
-<span class="nc" id="L847">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L848">    return (Floater)new Double(Math.acos(this.primitiveFloat()));</span>
+<span class="nc" id="L796">    java.lang.String exitID = &quot;Number&gt;&gt;arcCos&quot;;</span>
+<span class="nc" id="L797">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L798">    return (Floater)new Double(Math.acos(this.primitiveFloat()));</span>
   }
 
   /**
@@ -853,9 +803,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Floater arcSin()
   {
-<span class="nc" id="L856">    java.lang.String exitID = &quot;Number&gt;&gt;arcSin&quot;;</span>
-<span class="nc" id="L857">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L858">    return (Floater)new Double(Math.asin(this.primitiveFloat()));</span>
+<span class="nc" id="L806">    java.lang.String exitID = &quot;Number&gt;&gt;arcSin&quot;;</span>
+<span class="nc" id="L807">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L808">    return (Floater)new Double(Math.asin(this.primitiveFloat()));</span>
   }
 
   /**
@@ -863,9 +813,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Floater arcTan()
   {
-<span class="nc" id="L866">    java.lang.String exitID = &quot;Number&gt;&gt;arcTan&quot;;</span>
-<span class="nc" id="L867">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L868">    return (Floater)new Double(Math.atan(this.primitiveFloat()));</span>
+<span class="nc" id="L816">    java.lang.String exitID = &quot;Number&gt;&gt;arcTan&quot;;</span>
+<span class="nc" id="L817">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L818">    return (Floater)new Double(Math.atan(this.primitiveFloat()));</span>
   }
 
   /**
@@ -873,9 +823,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Floater exp()
   {
-<span class="nc" id="L876">    java.lang.String exitID = &quot;Number&gt;&gt;exp&quot;;</span>
-<span class="nc" id="L877">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L878">    return (Floater)new Double(Math.exp(this.primitiveFloat()));</span>
+<span class="nc" id="L826">    java.lang.String exitID = &quot;Number&gt;&gt;exp&quot;;</span>
+<span class="nc" id="L827">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L828">    return (Floater)new Double(Math.exp(this.primitiveFloat()));</span>
   }
 
   /**
@@ -883,9 +833,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double degreesToRadians()
   {
-<span class="nc" id="L886">    java.lang.String exitID = &quot;Number&gt;&gt;degreesToRadians&quot;;</span>
-<span class="nc" id="L887">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L888">    return (Double)new Double((this.primitiveDouble() * Primitive.radiansPerDegree()));</span>
+<span class="nc" id="L836">    java.lang.String exitID = &quot;Number&gt;&gt;degreesToRadians&quot;;</span>
+<span class="nc" id="L837">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L838">    return (Double)new Double((this.primitiveDouble() * Primitive.radiansPerDegree()));</span>
   }
 
   /**
@@ -893,9 +843,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double radiansToDegrees()
   {
-<span class="nc" id="L896">    java.lang.String exitID = &quot;Number&gt;&gt;radiansToDegrees&quot;;</span>
-<span class="nc" id="L897">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L898">    return (Double)new Double((this.primitiveDouble() * Primitive.degreesPerRadian()));</span>
+<span class="nc" id="L846">    java.lang.String exitID = &quot;Number&gt;&gt;radiansToDegrees&quot;;</span>
+<span class="nc" id="L847">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L848">    return (Double)new Double((this.primitiveDouble() * Primitive.degreesPerRadian()));</span>
   }
 
   /**
@@ -903,9 +853,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double ln()
   {
-<span class="nc" id="L906">    java.lang.String exitID = &quot;Number&gt;&gt;ln&quot;;</span>
-<span class="nc" id="L907">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L908">    return (Double)new Double(Math.log(this.primitiveFloat()));</span>
+<span class="nc" id="L856">    java.lang.String exitID = &quot;Number&gt;&gt;ln&quot;;</span>
+<span class="nc" id="L857">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L858">    return (Double)new Double(Math.log(this.primitiveFloat()));</span>
   }
 
   /**
@@ -913,9 +863,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number log(final Numeric radix)
   {
-<span class="nc" id="L916">    java.lang.String exitID = &quot;Number&gt;&gt;log&quot;;</span>
-<span class="nc" id="L917">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L918">    return (Number)(this.ln().divideWith(((Number)radix).ln()));</span>
+<span class="nc" id="L866">    java.lang.String exitID = &quot;Number&gt;&gt;log&quot;;</span>
+<span class="nc" id="L867">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L868">    return (Number)(this.ln().divideWith(((Number)radix).ln()));</span>
   }
 
   /**
@@ -923,9 +873,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer floorLog(final Numeric radix)
   {
-<span class="nc" id="L926">    java.lang.String exitID = &quot;Number&gt;&gt;floorLog&quot;;</span>
-<span class="nc" id="L927">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L928">    return (Integer)this.log(((Number)radix).asFloat()).floor();</span>
+<span class="nc" id="L876">    java.lang.String exitID = &quot;Number&gt;&gt;floorLog&quot;;</span>
+<span class="nc" id="L877">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L878">    return (Integer)this.log(((Number)radix).asFloat()).floor();</span>
   }
 
   /**
@@ -933,9 +883,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double sin()
   {
-<span class="nc" id="L936">    java.lang.String exitID = &quot;Number&gt;&gt;sin&quot;;</span>
-<span class="nc" id="L937">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L938">    return (Double)new Double(Math.sin(this.primitiveFloat()));</span>
+<span class="nc" id="L886">    java.lang.String exitID = &quot;Number&gt;&gt;sin&quot;;</span>
+<span class="nc" id="L887">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L888">    return (Double)new Double(Math.sin(this.primitiveFloat()));</span>
   }
 
   /**
@@ -943,9 +893,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Double tan()
   {
-<span class="nc" id="L946">    java.lang.String exitID = &quot;Number&gt;&gt;tan&quot;;</span>
-<span class="nc" id="L947">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L948">    return (Double)new Double(Math.tan(this.primitiveFloat()));</span>
+<span class="nc" id="L896">    java.lang.String exitID = &quot;Number&gt;&gt;tan&quot;;</span>
+<span class="nc" id="L897">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L898">    return (Double)new Double(Math.tan(this.primitiveFloat()));</span>
   }
 
   /**
@@ -963,12 +913,12 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer truncated()
   {
-<span class="fc" id="L966">    java.lang.String exitID = &quot;Number&gt;&gt;truncated&quot;;</span>
-<span class="fc" id="L967">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L968">    return (Integer)this.negative().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L969">      return this.ceiling();</span>
-<span class="fc" id="L970">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L971">      return this.floor();</span>
+<span class="fc" id="L916">    java.lang.String exitID = &quot;Number&gt;&gt;truncated&quot;;</span>
+<span class="fc" id="L917">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L918">    return (Integer)this.negative().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L919">      return this.ceiling();</span>
+<span class="fc" id="L920">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L921">      return this.floor();</span>
     }, &quot;&quot;));
   }
 
@@ -977,9 +927,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number truncatedTo(final Numeric aNumber)
   {
-<span class="nc" id="L980">    java.lang.String exitID = &quot;Number&gt;&gt;truncatedTo&quot;;</span>
-<span class="nc" id="L981">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L982">    return (Number)(this.quo(aNumber).times(aNumber));</span>
+<span class="nc" id="L930">    java.lang.String exitID = &quot;Number&gt;&gt;truncatedTo&quot;;</span>
+<span class="nc" id="L931">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L932">    return (Number)(this.quo(aNumber).times(aNumber));</span>
   }
 
   /**
@@ -987,9 +937,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Integer rounded()
   {
-<span class="nc" id="L990">    java.lang.String exitID = &quot;Number&gt;&gt;rounded&quot;;</span>
-<span class="nc" id="L991">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L992">    return (Integer)(this.plus((this.sign().divideWith(Duality)))).truncated();</span>
+<span class="fc" id="L940">    java.lang.String exitID = &quot;Number&gt;&gt;rounded&quot;;</span>
+<span class="fc" id="L941">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L942">    return (Integer)(this.plus((this.sign().divideWith(Duality)))).truncated();</span>
   }
 
   /**
@@ -997,9 +947,22 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number roundTo(final Numeric aNumber)
   {
-<span class="nc" id="L1000">    java.lang.String exitID = &quot;Number&gt;&gt;roundTo&quot;;</span>
-<span class="nc" id="L1001">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1002">    return (Number)((this.divideWith(aNumber)).rounded().times(aNumber));</span>
+<span class="nc" id="L950">    java.lang.String exitID = &quot;Number&gt;&gt;roundTo&quot;;</span>
+<span class="nc" id="L951">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L952">    return (Number)((this.divideWith(aNumber)).rounded().times(aNumber));</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Number faultIfZero()
+  {
+<span class="fc" id="L960">    java.lang.String exitID = &quot;Number&gt;&gt;faultIfZero&quot;;</span>
+<span class="fc" id="L961">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L962">    this.isZero().ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L963">      this.zeroDivide();</span>
+<span class="fc" id="L964">    }, &quot;&quot;));</span>
+<span class="fc" id="L965">    return (Number)this;</span>
   }
 
   /**
@@ -1007,9 +970,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Boolean isZero()
   {
-<span class="nc" id="L1010">    java.lang.String exitID = &quot;Number&gt;&gt;isZero&quot;;</span>
-<span class="nc" id="L1011">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1012">    return (Boolean)Boolean.from((this.equals(this.$class().zero())));</span>
+<span class="nc" id="L973">    java.lang.String exitID = &quot;Number&gt;&gt;isZero&quot;;</span>
+<span class="nc" id="L974">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L975">    return (Boolean)(((Numeric)this.$class().zero()).equals(this));</span>
   }
 
   /**
@@ -1017,9 +980,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Boolean negative()
   {
-<span class="nc" id="L1020">    java.lang.String exitID = &quot;Number&gt;&gt;negative&quot;;</span>
-<span class="nc" id="L1021">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1022">    return (Boolean)Boolean.from((this.lessThan(this.$class().zero())));</span>
+<span class="nc" id="L983">    java.lang.String exitID = &quot;Number&gt;&gt;negative&quot;;</span>
+<span class="nc" id="L984">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L985">    return (Boolean)Boolean.from((this.lessThan(this.$class().zero())));</span>
   }
 
   /**
@@ -1027,9 +990,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Boolean positive()
   {
-<span class="nc" id="L1030">    java.lang.String exitID = &quot;Number&gt;&gt;positive&quot;;</span>
-<span class="nc" id="L1031">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1032">    return (Boolean)Boolean.from((this.notLess(this.$class().zero())));</span>
+<span class="nc" id="L993">    java.lang.String exitID = &quot;Number&gt;&gt;positive&quot;;</span>
+<span class="nc" id="L994">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L995">    return (Boolean)Boolean.from((this.notLess(this.$class().zero())));</span>
   }
 
   /**
@@ -1037,9 +1000,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Boolean strictlyPositive()
   {
-<span class="nc" id="L1040">    java.lang.String exitID = &quot;Number&gt;&gt;strictlyPositive&quot;;</span>
-<span class="nc" id="L1041">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1042">    return (Boolean)Boolean.from((this.moreThan(this.$class().zero())));</span>
+<span class="nc" id="L1003">    java.lang.String exitID = &quot;Number&gt;&gt;strictlyPositive&quot;;</span>
+<span class="nc" id="L1004">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L1005">    return (Boolean)Boolean.from((this.moreThan(this.$class().zero())));</span>
   }
 
   /**
@@ -1047,9 +1010,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Interval to(final Ordinal aNumber)
   {
-<span class="fc" id="L1050">    java.lang.String exitID = &quot;Number&gt;&gt;to&quot;;</span>
-<span class="fc" id="L1051">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L1052">    return (Interval)Interval.type().from_to(this.asInteger(), aNumber);</span>
+<span class="fc" id="L1013">    java.lang.String exitID = &quot;Number&gt;&gt;to&quot;;</span>
+<span class="fc" id="L1014">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L1015">    return (Interval)Interval.type().from_to(this.asInteger(), aNumber);</span>
   }
 
   /**
@@ -1057,9 +1020,9 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Interval to_by(final Ordinal aNumber, final Ordinal delta)
   {
-<span class="nc" id="L1060">    java.lang.String exitID = &quot;Number&gt;&gt;to_by&quot;;</span>
-<span class="nc" id="L1061">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1062">    return (Interval)Interval.type().from_to_by(this.asInteger(), aNumber, delta);</span>
+<span class="fc" id="L1023">    java.lang.String exitID = &quot;Number&gt;&gt;to_by&quot;;</span>
+<span class="fc" id="L1024">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L1025">    return (Interval)Interval.type().from_to_by(this.asInteger(), aNumber, delta);</span>
   }
 
   /**
@@ -1067,10 +1030,10 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number to_do(final Ordinal aNumber, final MonadicValuable aBlock)
   {
-<span class="fc" id="L1070">    java.lang.String exitID = &quot;Number&gt;&gt;to_do&quot;;</span>
-<span class="fc" id="L1071">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L1072">    this.to_by_do(aNumber, Unity, aBlock);</span>
-<span class="fc" id="L1073">    return (Number)this;</span>
+<span class="fc" id="L1033">    java.lang.String exitID = &quot;Number&gt;&gt;to_do&quot;;</span>
+<span class="fc" id="L1034">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L1035">    this.to_by_do(aNumber, Unity, aBlock);</span>
+<span class="fc" id="L1036">    return (Number)this;</span>
   }
 
   /**
@@ -1078,22 +1041,22 @@ public abstract class Number extends Magnitude implements Smalltalk.Magnitudes.N
    */
   public   Number to_by_do(final Ordinal aNumber, final Ordinal delta, final MonadicValuable aBlock)
   {
-<span class="fc" id="L1081">    java.lang.String exitID = &quot;Number&gt;&gt;to_by_do&quot;;</span>
-<span class="fc" id="L1082">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L1083">    int index = this.primitiveInteger();</span>
-<span class="pc bpc" id="L1084" title="1 of 2 branches missed.">    if ((delta.intValue() &gt; 0)) {</span>
-<span class="fc bfc" id="L1085" title="All 2 branches covered.">      while((index &lt;= aNumber.intValue())) {</span>
-<span class="fc" id="L1086">        aBlock.value(SmallInteger.from(index));</span>
-<span class="fc" id="L1087">        index += delta.intValue();</span>
+<span class="fc" id="L1044">    java.lang.String exitID = &quot;Number&gt;&gt;to_by_do&quot;;</span>
+<span class="fc" id="L1045">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L1046">    int index = this.primitiveInteger();</span>
+<span class="fc bfc" id="L1047" title="All 2 branches covered.">    if ((delta.intValue() &gt; 0)) {</span>
+<span class="fc bfc" id="L1048" title="All 2 branches covered.">      while((index &lt;= aNumber.intValue())) {</span>
+<span class="fc" id="L1049">        aBlock.value(SmallInteger.from(index));</span>
+<span class="fc" id="L1050">        index += delta.intValue();</span>
       };
     }
     else {
-<span class="nc bnc" id="L1091" title="All 2 branches missed.">      while((aNumber.intValue() &lt;= index)) {</span>
-<span class="nc" id="L1092">        aBlock.value(SmallInteger.from(index));</span>
-<span class="nc" id="L1093">        index += delta.intValue();</span>
+<span class="fc bfc" id="L1054" title="All 2 branches covered.">      while((aNumber.intValue() &lt;= index)) {</span>
+<span class="fc" id="L1055">        aBlock.value(SmallInteger.from(index));</span>
+<span class="fc" id="L1056">        index += delta.intValue();</span>
       };
     };
-<span class="fc" id="L1096">    return (Number)this;</span>
+<span class="fc" id="L1059">    return (Number)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

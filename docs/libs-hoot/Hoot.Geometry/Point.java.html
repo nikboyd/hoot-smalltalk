@@ -27,33 +27,34 @@ import Hoot.Collections.String;
 import Hoot.Magnitudes.Number;
 import Hoot.Magnitudes.Magnitude;
 import Smalltalk.Magnitudes.Scalar;
+import Smalltalk.Magnitudes.Numeric;
 
-<span class="fc" id="L31">public class Point extends Magnitude</span>
+<span class="fc" id="L32">public class Point extends Magnitude</span>
 {
-<span class="nc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="fc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Magnitude.Metaclass
   {
-<span class="fc" id="L37">    static final Point.Metaclass $class = new Point.Metaclass();</span>
+<span class="fc" id="L38">    static final Point.Metaclass $class = new Point.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L39">      this(Point.Metaclass.class);</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L40">      this(Point.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L43">      super(aClass);</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
 
-<span class="fc" id="L46">    @Override public java.lang.Class outerClass() { return Point.class; }</span>
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return Point.class; }</span>
 
     /**
      * @return 
      */
     public   Point $new()
     {
-<span class="nc" id="L53">      java.lang.String exitID = &quot;PointMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L54">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L55">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L56">      return (Point)f0.exit(exitID, new Point().x_y(SmallInteger.from(0), SmallInteger.from(0)));</span>
+<span class="nc" id="L54">      java.lang.String exitID = &quot;PointMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L57">      return (Point)f0.exit(exitID, new Point().x_y(SmallInteger.from(0), SmallInteger.from(0)));</span>
       });
     }
 
@@ -62,44 +63,64 @@ import Smalltalk.Magnitudes.Scalar;
      */
     public   Point x_y(final Number x, final Number y)
     {
-<span class="fc" id="L65">      java.lang.String exitID = &quot;PointMetatype&gt;&gt;x_y&quot;;</span>
-<span class="fc" id="L66">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L67">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L68">      return (Point)f0.exit(exitID, new Point().x_y(x, y));</span>
+<span class="fc" id="L66">      java.lang.String exitID = &quot;PointMetatype&gt;&gt;x_y&quot;;</span>
+<span class="fc" id="L67">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L68">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L69">      return (Point)f0.exit(exitID, new Point().x_y(x, y));</span>
       });
     }
   }
 
 
-<span class="fc" id="L74">    protected Number x = SmallInteger.from(0);</span>
-<span class="fc" id="L75">    public Number x() { return this.x; }</span>
-<span class="nc" id="L76">    public Object getX() { return (Object)this.x; }</span>
+<span class="fc" id="L75">    protected Number x = SmallInteger.from(0);</span>
+<span class="fc" id="L76">    public Number x() { return this.x; }</span>
+<span class="nc" id="L77">    public Object getX() { return (Object)this.x; }</span>
 
-<span class="fc" id="L78">    public Point x(Number value) { this.x = value; return this; }</span>
-<span class="nc" id="L79">    public void setX(Object value) { this.x = (Number)value; }</span>
+<span class="fc" id="L79">    public Point x(Number value) { this.x = value; return this; }</span>
+<span class="nc" id="L80">    public void setX(Object value) { this.x = (Number)value; }</span>
 
   ;
-<span class="fc" id="L82">    protected Number y = SmallInteger.from(0);</span>
-<span class="fc" id="L83">    public Number y() { return this.y; }</span>
-<span class="nc" id="L84">    public Object getY() { return (Object)this.y; }</span>
+<span class="fc" id="L83">    protected Number y = SmallInteger.from(0);</span>
+<span class="fc" id="L84">    public Number y() { return this.y; }</span>
+<span class="nc" id="L85">    public Object getY() { return (Object)this.y; }</span>
 
-<span class="fc" id="L86">    public Point y(Number value) { this.y = value; return this; }</span>
-<span class="nc" id="L87">    public void setY(Object value) { this.y = (Number)value; }</span>
+<span class="fc" id="L87">    public Point y(Number value) { this.y = value; return this; }</span>
+<span class="nc" id="L88">    public void setY(Object value) { this.y = (Number)value; }</span>
 
   ;
   /**
    * @return 
    */
+  public   Numeric xAsNumeric()
+  {
+<span class="fc" id="L96">    java.lang.String exitID = &quot;Point&gt;&gt;xAsNumeric&quot;;</span>
+<span class="fc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L98">    return (Numeric)((Numeric)x);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Numeric yAsNumeric()
+  {
+<span class="fc" id="L106">    java.lang.String exitID = &quot;Point&gt;&gt;yAsNumeric&quot;;</span>
+<span class="fc" id="L107">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L108">    return (Numeric)((Numeric)y);</span>
+  }
+
+  /**
+   * @return 
+   */
   public   Point x_y(final Number x, final Number y)
   {
-<span class="fc" id="L95">    java.lang.String exitID = &quot;Point&gt;&gt;x_y&quot;;</span>
-<span class="fc" id="L96">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L116">    java.lang.String exitID = &quot;Point&gt;&gt;x_y&quot;;</span>
+<span class="fc" id="L117">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="fc" id="L98">    Point prime = this;</span>
-<span class="fc" id="L99">    prime.x(x); </span>
-<span class="fc" id="L100">    prime.y(y); </span>
+<span class="fc" id="L119">    Point prime = this;</span>
+<span class="fc" id="L120">    prime.x(x); </span>
+<span class="fc" id="L121">    prime.y(y); </span>
 
-<span class="fc" id="L102">    return prime.yourself();</span>
+<span class="fc" id="L123">    return prime.yourself();</span>
     }
   }
 
@@ -108,9 +129,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public static   Point from(final Number scalar)
   {
-<span class="fc" id="L111">    java.lang.String exitID = &quot;Point&gt;&gt;$from&quot;;</span>
-<span class="fc" id="L112">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L113">    return (Point)new Point().x_y(scalar, scalar);</span>
+<span class="fc" id="L132">    java.lang.String exitID = &quot;Point&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L133">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L134">    return (Point)new Point().x_y(scalar, scalar);</span>
   }
 
   /**
@@ -118,9 +139,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point plus(final Point aPoint)
   {
-<span class="fc" id="L121">    java.lang.String exitID = &quot;Point&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L122">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L123">    return (Point)this.$class().x_y((x.plus(aPoint.x())), (y.plus(aPoint.y())));</span>
+<span class="fc" id="L142">    java.lang.String exitID = &quot;Point&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L143">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L144">    return (Point)this.$class().x_y((x.plus(aPoint.x())), (y.plus(aPoint.y())));</span>
   }
 
   /**
@@ -128,9 +149,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point minus(final Point aPoint)
   {
-<span class="fc" id="L131">    java.lang.String exitID = &quot;Point&gt;&gt;minus&quot;;</span>
-<span class="fc" id="L132">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L133">    return (Point)this.$class().x_y((x.minus(aPoint.x())), (y.minus(aPoint.y())));</span>
+<span class="fc" id="L152">    java.lang.String exitID = &quot;Point&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L153">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L154">    return (Point)this.$class().x_y((x.minus(aPoint.x())), (y.minus(aPoint.y())));</span>
   }
 
   /**
@@ -138,9 +159,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point times(final Point aPoint)
   {
-<span class="nc" id="L141">    java.lang.String exitID = &quot;Point&gt;&gt;times&quot;;</span>
-<span class="nc" id="L142">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L143">    return (Point)this.$class().x_y((x.times(aPoint.x())), (y.times(aPoint.y())));</span>
+<span class="fc" id="L162">    java.lang.String exitID = &quot;Point&gt;&gt;times&quot;;</span>
+<span class="fc" id="L163">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L164">    return (Point)this.$class().x_y((x.times(aPoint.x())), (y.times(aPoint.y())));</span>
   }
 
   /**
@@ -148,9 +169,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point divideWith(final Point aPoint)
   {
-<span class="fc" id="L151">    java.lang.String exitID = &quot;Point&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L152">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L153">    return (Point)this.$class().x_y((x.divideWith(aPoint.x())), (y.divideWith(aPoint.y())));</span>
+<span class="fc" id="L172">    java.lang.String exitID = &quot;Point&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L173">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L174">    return (Point)this.$class().x_y((x.divideWith(aPoint.x())), (y.divideWith(aPoint.y())));</span>
   }
 
   /**
@@ -158,9 +179,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point truncateWith(final Point aPoint)
   {
-<span class="nc" id="L161">    java.lang.String exitID = &quot;Point&gt;&gt;truncateWith&quot;;</span>
-<span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L163">    return (Point)this.$class().x_y((x.truncateWith(aPoint.x())), (y.truncateWith(aPoint.y())));</span>
+<span class="nc" id="L182">    java.lang.String exitID = &quot;Point&gt;&gt;truncateWith&quot;;</span>
+<span class="nc" id="L183">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L184">    return (Point)this.$class().x_y((x.truncateWith(aPoint.x())), (y.truncateWith(aPoint.y())));</span>
   }
 
   /**
@@ -168,9 +189,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point remainderFrom(final Point aPoint)
   {
-<span class="nc" id="L171">    java.lang.String exitID = &quot;Point&gt;&gt;remainderFrom&quot;;</span>
-<span class="nc" id="L172">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L173">    return (Point)this.$class().x_y((x.remainderFrom(aPoint.x())), (y.remainderFrom(aPoint.y())));</span>
+<span class="nc" id="L192">    java.lang.String exitID = &quot;Point&gt;&gt;remainderFrom&quot;;</span>
+<span class="nc" id="L193">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L194">    return (Point)this.$class().x_y((x.remainderFrom(aPoint.x())), (y.remainderFrom(aPoint.y())));</span>
   }
 
   /**
@@ -178,9 +199,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point plus(final Number scalar)
   {
-<span class="nc" id="L181">    java.lang.String exitID = &quot;Point&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L182">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L183">    return (Point)(this.plus(Point.from(scalar)));</span>
+<span class="fc" id="L202">    java.lang.String exitID = &quot;Point&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L203">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L204">    return (Point)(this.plus(Point.from(scalar)));</span>
   }
 
   /**
@@ -188,9 +209,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point minus(final Number scalar)
   {
-<span class="nc" id="L191">    java.lang.String exitID = &quot;Point&gt;&gt;minus&quot;;</span>
-<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L193">    return (Point)(this.minus(Point.from(scalar)));</span>
+<span class="fc" id="L212">    java.lang.String exitID = &quot;Point&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L213">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L214">    return (Point)(this.minus(Point.from(scalar)));</span>
   }
 
   /**
@@ -198,9 +219,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point times(final Number scalar)
   {
-<span class="nc" id="L201">    java.lang.String exitID = &quot;Point&gt;&gt;times&quot;;</span>
-<span class="nc" id="L202">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L203">    return (Point)(this.times(Point.from(scalar)));</span>
+<span class="fc" id="L222">    java.lang.String exitID = &quot;Point&gt;&gt;times&quot;;</span>
+<span class="fc" id="L223">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L224">    return (Point)(this.times(Point.from(scalar)));</span>
   }
 
   /**
@@ -208,9 +229,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point divideWith(final Number scalar)
   {
-<span class="fc" id="L211">    java.lang.String exitID = &quot;Point&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L212">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L213">    return (Point)(this.divideWith(Point.from(scalar)));</span>
+<span class="fc" id="L232">    java.lang.String exitID = &quot;Point&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L233">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L234">    return (Point)(this.divideWith(Point.from(scalar)));</span>
   }
 
   /**
@@ -218,9 +239,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point truncateWith(final Number scalar)
   {
-<span class="nc" id="L221">    java.lang.String exitID = &quot;Point&gt;&gt;truncateWith&quot;;</span>
-<span class="nc" id="L222">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L223">    return (Point)(this.truncateWith(Point.from(scalar)));</span>
+<span class="nc" id="L242">    java.lang.String exitID = &quot;Point&gt;&gt;truncateWith&quot;;</span>
+<span class="nc" id="L243">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L244">    return (Point)(this.truncateWith(Point.from(scalar)));</span>
   }
 
   /**
@@ -228,9 +249,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point remainderFrom(final Number scalar)
   {
-<span class="nc" id="L231">    java.lang.String exitID = &quot;Point&gt;&gt;remainderFrom&quot;;</span>
-<span class="nc" id="L232">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L233">    return (Point)(this.remainderFrom(Point.from(scalar)));</span>
+<span class="nc" id="L252">    java.lang.String exitID = &quot;Point&gt;&gt;remainderFrom&quot;;</span>
+<span class="nc" id="L253">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L254">    return (Point)(this.remainderFrom(Point.from(scalar)));</span>
   }
 
   /**
@@ -238,10 +259,10 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean equals(final Point aPoint)
   {
-<span class="nc" id="L241">    java.lang.String exitID = &quot;Point&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L242">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L243">    return (Boolean)((Boolean)(x.equals(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L244">      return (y.equals(aPoint.y()));</span>
+<span class="fc" id="L262">    java.lang.String exitID = &quot;Point&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L263">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L264">    return (Boolean)((Boolean)(this.xAsNumeric().equals(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L265">      return (this.yAsNumeric().equals(aPoint.y()));</span>
     }, &quot;&quot;)));
   }
 
@@ -250,10 +271,10 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean lessThan(final Point aPoint)
   {
-<span class="nc" id="L253">    java.lang.String exitID = &quot;Point&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L254">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L255">    return (Boolean)((Boolean)(x.lessThan(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L256">      return (y.lessThan(aPoint.y()));</span>
+<span class="fc" id="L274">    java.lang.String exitID = &quot;Point&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L275">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L276">    return (Boolean)((Boolean)(x.lessThan(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L277">      return (y.lessThan(aPoint.y()));</span>
     }, &quot;&quot;)));
   }
 
@@ -262,10 +283,10 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean moreThan(final Point aPoint)
   {
-<span class="nc" id="L265">    java.lang.String exitID = &quot;Point&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L266">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L267">    return (Boolean)((Boolean)(x.moreThan(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L268">      return (y.moreThan(aPoint.y()));</span>
+<span class="fc" id="L286">    java.lang.String exitID = &quot;Point&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L287">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L288">    return (Boolean)((Boolean)(x.moreThan(aPoint.x())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L289">      return (y.moreThan(aPoint.y()));</span>
     }, &quot;&quot;)));
   }
 
@@ -274,10 +295,10 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notMore(final Point aPoint)
   {
-<span class="fc" id="L277">    java.lang.String exitID = &quot;Point&gt;&gt;notMore&quot;;</span>
-<span class="fc" id="L278">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L279">    return (Boolean)((Boolean)(aPoint.x().lessThan(x)).not().and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L280">      return (aPoint.y().lessThan(y)).not();</span>
+<span class="fc" id="L298">    java.lang.String exitID = &quot;Point&gt;&gt;notMore&quot;;</span>
+<span class="fc" id="L299">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L300">    return (Boolean)((Boolean)(aPoint.x().lessThan(x)).not().and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L301">      return (aPoint.y().lessThan(y)).not();</span>
     }, &quot;&quot;)));
   }
 
@@ -286,31 +307,31 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notLess(final Point aPoint)
   {
-<span class="fc" id="L289">    java.lang.String exitID = &quot;Point&gt;&gt;notLess&quot;;</span>
-<span class="fc" id="L290">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L291">    return (Boolean)((Boolean)(aPoint.x().moreThan(x)).not().and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L292">      return (aPoint.y().moreThan(y)).not();</span>
+<span class="fc" id="L310">    java.lang.String exitID = &quot;Point&gt;&gt;notLess&quot;;</span>
+<span class="fc" id="L311">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L312">    return (Boolean)((Boolean)(aPoint.x().moreThan(x)).not().and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L313">      return (aPoint.y().moreThan(y)).not();</span>
     }, &quot;&quot;)));
   }
 
   /**
    * @return 
    */
-  public   Point min(final Scalar aPoint)
+  @Override public   Point min(final Scalar aPoint)
   {
-<span class="nc" id="L301">    java.lang.String exitID = &quot;Point&gt;&gt;min&quot;;</span>
-<span class="nc" id="L302">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L303">    return (Point)this.min(((Point)aPoint));</span>
+<span class="nc" id="L322">    java.lang.String exitID = &quot;Point&gt;&gt;min&quot;;</span>
+<span class="nc" id="L323">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L324">    return (Point)this.min(((Point)aPoint));</span>
   }
 
   /**
    * @return 
    */
-  public   Point max(final Scalar aPoint)
+  @Override public   Point max(final Scalar aPoint)
   {
-<span class="nc" id="L311">    java.lang.String exitID = &quot;Point&gt;&gt;max&quot;;</span>
-<span class="nc" id="L312">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L313">    return (Point)this.max(((Point)aPoint));</span>
+<span class="nc" id="L332">    java.lang.String exitID = &quot;Point&gt;&gt;max&quot;;</span>
+<span class="nc" id="L333">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L334">    return (Point)this.max(((Point)aPoint));</span>
   }
 
   /**
@@ -318,15 +339,15 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point min(final Point aPoint)
   {
-<span class="nc" id="L321">    java.lang.String exitID = &quot;Point&gt;&gt;min&quot;;</span>
-<span class="nc" id="L322">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">    if ((aPoint == null)) {</span>
-<span class="nc" id="L324">      return this;</span>
+<span class="fc" id="L342">    java.lang.String exitID = &quot;Point&gt;&gt;min&quot;;</span>
+<span class="fc" id="L343">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">    if ((aPoint == null)) {</span>
+<span class="nc" id="L345">      return this;</span>
     };
-<span class="nc bnc" id="L326" title="All 2 branches missed.">    if (this.lessThan(aPoint).primitiveBoolean()) {</span>
-<span class="nc" id="L327">      return this;</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">    if (this.lessThan(aPoint).primitiveBoolean()) {</span>
+<span class="nc" id="L348">      return this;</span>
     };
-<span class="nc" id="L329">    return (Point)aPoint;</span>
+<span class="fc" id="L350">    return (Point)aPoint;</span>
   }
 
   /**
@@ -334,15 +355,15 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point max(final Point aPoint)
   {
-<span class="nc" id="L337">    java.lang.String exitID = &quot;Point&gt;&gt;max&quot;;</span>
-<span class="nc" id="L338">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L339" title="All 2 branches missed.">    if ((aPoint == null)) {</span>
-<span class="nc" id="L340">      return this;</span>
+<span class="fc" id="L358">    java.lang.String exitID = &quot;Point&gt;&gt;max&quot;;</span>
+<span class="fc" id="L359">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">    if ((aPoint == null)) {</span>
+<span class="nc" id="L361">      return this;</span>
     };
-<span class="nc bnc" id="L342" title="All 2 branches missed.">    if (this.moreThan(aPoint).primitiveBoolean()) {</span>
-<span class="nc" id="L343">      return this;</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">    if (this.moreThan(aPoint).primitiveBoolean()) {</span>
+<span class="fc" id="L364">      return this;</span>
     };
-<span class="nc" id="L345">    return (Point)aPoint;</span>
+<span class="nc" id="L366">    return (Point)aPoint;</span>
   }
 
   /**
@@ -350,12 +371,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean equals(final Magnitude value)
   {
-<span class="nc" id="L353">    java.lang.String exitID = &quot;Point&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L354">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">    if (value instanceof Point) {</span>
-<span class="nc" id="L356">      return this.equals(((Point)value));</span>
-    };
-<span class="nc" id="L358">    return (Boolean)False.literal();</span>
+<span class="nc" id="L374">    java.lang.String exitID = &quot;Point&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L375">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L376">    return (Boolean)Point.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L377">      return (this.equals(((Point)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -363,12 +383,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean lessThan(final Scalar value)
   {
-<span class="nc" id="L366">    java.lang.String exitID = &quot;Point&gt;&gt;lessThan&quot;;</span>
-<span class="nc" id="L367">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L368" title="All 2 branches missed.">    if (value instanceof Point) {</span>
-<span class="nc" id="L369">      return this.lessThan(((Point)value));</span>
-    };
-<span class="nc" id="L371">    return (Boolean)False.literal();</span>
+<span class="nc" id="L386">    java.lang.String exitID = &quot;Point&gt;&gt;lessThan&quot;;</span>
+<span class="nc" id="L387">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L388">    return (Boolean)Point.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L389">      return (this.lessThan(((Point)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -376,12 +395,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notMore(final Scalar value)
   {
-<span class="fc" id="L379">    java.lang.String exitID = &quot;Point&gt;&gt;notMore&quot;;</span>
-<span class="fc" id="L380">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L381" title="1 of 2 branches missed.">    if (value instanceof Point) {</span>
-<span class="fc" id="L382">      return this.notMore(((Point)value));</span>
-    };
-<span class="nc" id="L384">    return (Boolean)False.literal();</span>
+<span class="fc" id="L398">    java.lang.String exitID = &quot;Point&gt;&gt;notMore&quot;;</span>
+<span class="fc" id="L399">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L400">    return (Boolean)Point.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L401">      return (this.notMore(((Point)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -389,12 +407,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean moreThan(final Scalar value)
   {
-<span class="nc" id="L392">    java.lang.String exitID = &quot;Point&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L393">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L394" title="All 2 branches missed.">    if (value instanceof Point) {</span>
-<span class="nc" id="L395">      return this.moreThan(((Point)value));</span>
-    };
-<span class="nc" id="L397">    return (Boolean)False.literal();</span>
+<span class="nc" id="L410">    java.lang.String exitID = &quot;Point&gt;&gt;moreThan&quot;;</span>
+<span class="nc" id="L411">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L412">    return (Boolean)Point.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L413">      return (this.moreThan(((Point)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -402,12 +419,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notLess(final Scalar value)
   {
-<span class="nc" id="L405">    java.lang.String exitID = &quot;Point&gt;&gt;notLess&quot;;</span>
-<span class="nc" id="L406">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L407" title="All 2 branches missed.">    if (value instanceof Point) {</span>
-<span class="nc" id="L408">      return this.notLess(((Point)value));</span>
-    };
-<span class="nc" id="L410">    return (Boolean)False.literal();</span>
+<span class="nc" id="L422">    java.lang.String exitID = &quot;Point&gt;&gt;notLess&quot;;</span>
+<span class="nc" id="L423">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L424">    return (Boolean)Point.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L425">      return (this.notLess(((Point)value)));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -415,9 +431,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point asPoint()
   {
-<span class="nc" id="L418">    java.lang.String exitID = &quot;Point&gt;&gt;asPoint&quot;;</span>
-<span class="nc" id="L419">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L420">    return (Point)this;</span>
+<span class="nc" id="L434">    java.lang.String exitID = &quot;Point&gt;&gt;asPoint&quot;;</span>
+<span class="nc" id="L435">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L436">    return (Point)this;</span>
   }
 
   /**
@@ -425,9 +441,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   String printString()
   {
-<span class="fc" id="L428">    java.lang.String exitID = &quot;Point&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L429">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L430">    return (String)x.printString().append(String.from(&quot; @ &quot;)).append(y.printString());</span>
+<span class="fc" id="L444">    java.lang.String exitID = &quot;Point&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L445">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L446">    return (String)x.printString().append(String.from(&quot; @ &quot;)).append(y.printString());</span>
   }
 
   /**
@@ -435,9 +451,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   java.lang.String toString()
   {
-<span class="fc" id="L438">    java.lang.String exitID = &quot;Point&gt;&gt;toString&quot;;</span>
-<span class="fc" id="L439">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L440">    return (java.lang.String)this.printTerm().toString();</span>
+<span class="fc" id="L454">    java.lang.String exitID = &quot;Point&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L455">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L456">    return (java.lang.String)this.printTerm().toString();</span>
   }
 
   /**
@@ -445,9 +461,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   java.awt.Point primitivePoint()
   {
-<span class="nc" id="L448">    java.lang.String exitID = &quot;Point&gt;&gt;primitivePoint&quot;;</span>
-<span class="nc" id="L449">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L450">    return (java.awt.Point)new java.awt.Point(x.primitiveInteger(), y.primitiveInteger());</span>
+<span class="nc" id="L464">    java.lang.String exitID = &quot;Point&gt;&gt;primitivePoint&quot;;</span>
+<span class="nc" id="L465">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L466">    return (java.awt.Point)new java.awt.Point(x.primitiveInteger(), y.primitiveInteger());</span>
   }
 
   /**
@@ -455,9 +471,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   java.awt.Dimension primitiveDimension()
   {
-<span class="nc" id="L458">    java.lang.String exitID = &quot;Point&gt;&gt;primitiveDimension&quot;;</span>
-<span class="nc" id="L459">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L460">    return (java.awt.Dimension)new java.awt.Dimension(x.primitiveInteger(), y.primitiveInteger());</span>
+<span class="nc" id="L474">    java.lang.String exitID = &quot;Point&gt;&gt;primitiveDimension&quot;;</span>
+<span class="nc" id="L475">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L476">    return (java.awt.Dimension)new java.awt.Dimension(x.primitiveInteger(), y.primitiveInteger());</span>
   }
 
   /**
@@ -465,9 +481,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L468">    java.lang.String exitID = &quot;Point&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L469">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L470">    return (int)x.hash().bitXor(y.hash()).primitiveInteger();</span>
+<span class="nc" id="L484">    java.lang.String exitID = &quot;Point&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L485">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L486">    return (int)x.hash().bitXor(y.hash()).primitiveInteger();</span>
   }
 
   /**
@@ -475,9 +491,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Rectangle extent(final Point extentPoint)
   {
-<span class="fc" id="L478">    java.lang.String exitID = &quot;Point&gt;&gt;extent&quot;;</span>
-<span class="fc" id="L479">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L480">    return (Rectangle)Rectangle.origin_extent(this, extentPoint);</span>
+<span class="fc" id="L494">    java.lang.String exitID = &quot;Point&gt;&gt;extent&quot;;</span>
+<span class="fc" id="L495">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L496">    return (Rectangle)Rectangle.origin_extent(this, extentPoint);</span>
   }
 
   /**
@@ -485,9 +501,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Rectangle corner(final Point cornerPoint)
   {
-<span class="nc" id="L488">    java.lang.String exitID = &quot;Point&gt;&gt;corner&quot;;</span>
-<span class="nc" id="L489">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L490">    return (Rectangle)Rectangle.origin_corner(this, cornerPoint);</span>
+<span class="nc" id="L504">    java.lang.String exitID = &quot;Point&gt;&gt;corner&quot;;</span>
+<span class="nc" id="L505">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L506">    return (Rectangle)Rectangle.origin_corner(this, cornerPoint);</span>
   }
 
   /**
@@ -495,9 +511,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point abs()
   {
-<span class="nc" id="L498">    java.lang.String exitID = &quot;Point&gt;&gt;abs&quot;;</span>
-<span class="nc" id="L499">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L500">    return (Point)(x.abs().at(y.abs()));</span>
+<span class="nc" id="L514">    java.lang.String exitID = &quot;Point&gt;&gt;abs&quot;;</span>
+<span class="nc" id="L515">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L516">    return (Point)(x.abs().at(y.abs()));</span>
   }
 
   /**
@@ -505,9 +521,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point negated()
   {
-<span class="nc" id="L508">    java.lang.String exitID = &quot;Point&gt;&gt;negated&quot;;</span>
-<span class="nc" id="L509">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L510">    return (Point)(x.negated().at(y.negated()));</span>
+<span class="fc" id="L524">    java.lang.String exitID = &quot;Point&gt;&gt;negated&quot;;</span>
+<span class="fc" id="L525">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L526">    return (Point)(x.negated().at(y.negated()));</span>
   }
 
   /**
@@ -515,9 +531,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point truncated()
   {
-<span class="nc" id="L518">    java.lang.String exitID = &quot;Point&gt;&gt;truncated&quot;;</span>
-<span class="nc" id="L519">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L520">    return (Point)(x.truncated().at(y.truncated()));</span>
+<span class="fc" id="L534">    java.lang.String exitID = &quot;Point&gt;&gt;truncated&quot;;</span>
+<span class="fc" id="L535">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L536">    return (Point)(x.truncated().at(y.truncated()));</span>
   }
 
   /**
@@ -525,9 +541,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point truncatedTo(final Number aNumber)
   {
-<span class="nc" id="L528">    java.lang.String exitID = &quot;Point&gt;&gt;truncatedTo&quot;;</span>
-<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L530">    return (Point)(x.truncatedTo(aNumber).at(y.truncatedTo(aNumber)));</span>
+<span class="nc" id="L544">    java.lang.String exitID = &quot;Point&gt;&gt;truncatedTo&quot;;</span>
+<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L546">    return (Point)(x.truncatedTo(aNumber).at(y.truncatedTo(aNumber)));</span>
   }
 
   /**
@@ -535,9 +551,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Number dotProduct(final Point aPoint)
   {
-<span class="fc" id="L538">    java.lang.String exitID = &quot;Point&gt;&gt;dotProduct&quot;;</span>
-<span class="fc" id="L539">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L540">    return (Number)((x.times(aPoint.x())).plus((y.times(aPoint.y()))));</span>
+<span class="fc" id="L554">    java.lang.String exitID = &quot;Point&gt;&gt;dotProduct&quot;;</span>
+<span class="fc" id="L555">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L556">    return (Number)((x.times(aPoint.x())).plus((y.times(aPoint.y()))));</span>
   }
 
   /**
@@ -545,9 +561,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point rounded()
   {
-<span class="nc" id="L548">    java.lang.String exitID = &quot;Point&gt;&gt;rounded&quot;;</span>
-<span class="nc" id="L549">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L550">    return (Point)(x.rounded().at(y.rounded()));</span>
+<span class="fc" id="L564">    java.lang.String exitID = &quot;Point&gt;&gt;rounded&quot;;</span>
+<span class="fc" id="L565">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L566">    return (Point)(x.rounded().at(y.rounded()));</span>
   }
 
   /**
@@ -555,9 +571,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Point transpose()
   {
-<span class="nc" id="L558">    java.lang.String exitID = &quot;Point&gt;&gt;transpose&quot;;</span>
-<span class="nc" id="L559">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L560">    return (Point)(y.at(x));</span>
+<span class="fc" id="L574">    java.lang.String exitID = &quot;Point&gt;&gt;transpose&quot;;</span>
+<span class="fc" id="L575">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L576">    return (Point)(y.at(x));</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

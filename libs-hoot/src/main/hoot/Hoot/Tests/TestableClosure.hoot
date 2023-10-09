@@ -25,7 +25,7 @@ TestableClosure "constructing" members:
 
     @Property String! name := String emptyString.
     @Static TestableClosure! named: String! name [ ^TestableClosure basicNew: name ]
-    String! description [ ^name isEmpty ifTrue: [ String from: self getClass getSimpleName ] ifFalse: [ name ] ]
+    String! description [ ^name notEmpty ifFalse: [ String from: self getClass getSimpleName ] ifTrue: [ name ] ]
 
     "also make instantiable by other classes"
     @Protected! TestableClosure: String! nameString [ name := nameString. ]

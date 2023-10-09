@@ -24,119 +24,47 @@ import Hoot.Magnitudes.Float;
 import Hoot.Magnitudes.Double;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-import Hoot.Runtime.Names.Primitive;
+import java.util.regex.Pattern;
 
 public class StringPattern extends Object
 {
-<span class="nc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass
   {
-<span class="fc" id="L36">    static final StringPattern.Metaclass $class = new StringPattern.Metaclass();</span>
+<span class="nc" id="L35">    static final StringPattern.Metaclass $class = new StringPattern.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L38">      this(StringPattern.Metaclass.class);</span>
-<span class="fc" id="L39">    }</span>
+<span class="nc" id="L37">      this(StringPattern.Metaclass.class);</span>
+<span class="nc" id="L38">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L42">      super(aClass);</span>
-<span class="fc" id="L43">    }</span>
+<span class="nc" id="L41">      super(aClass);</span>
+<span class="nc" id="L42">    }</span>
 
-<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return StringPattern.class; }</span>
+<span class="nc" id="L44">    @Override public java.lang.Class outerClass() { return StringPattern.class; }</span>
 
   }
 
 
-<span class="fc" id="L50">  protected static String WildCard = String.from(&quot;*&quot;);</span>
-<span class="fc" id="L51">  protected static String EmptyString = String.from(&quot;&quot;);</span>
-<span class="nc" id="L52">  protected List&lt;java.lang.String&gt; segments = new ArrayList();</span>
+  protected java.lang.String regexPattern;
   /**
    * 
    */
   public    StringPattern(final CharacterString pattern)
-  {
-<span class="nc" id="L58">    this(pattern, WildCard);</span>
-<span class="nc" id="L59">    java.lang.String exitID = &quot;StringPattern&gt;&gt;StringPattern&quot;;</span>
-<span class="nc" id="L60">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L61">  }</span>
-
-  /**
-   * 
-   */
-  public    StringPattern(final CharacterString pattern, final CharacterString wildCard)
-<span class="nc" id="L67">  {</span>
-<span class="nc" id="L68">    java.lang.String exitID = &quot;StringPattern&gt;&gt;StringPattern&quot;;</span>
-<span class="nc" id="L69">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L70">    java.lang.String p = pattern.primitiveString();</span>
-
-<span class="nc" id="L72">    java.lang.String w = wildCard.primitiveString();</span>
-
-<span class="nc" id="L74">    StringTokenizer tokens = Primitive.tokens(p, w);</span>
-
-<span class="nc" id="L76">    int count = tokens.countTokens();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">    if ((0 &lt; count)) {</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">      if (p.startsWith(w)) {</span>
-<span class="nc" id="L79">        count += 1;</span>
-      };
-<span class="nc bnc" id="L81" title="All 2 branches missed.">      if (p.endsWith(w)) {</span>
-<span class="nc" id="L82">        count += 1;</span>
-      };
-<span class="nc bnc" id="L84" title="All 2 branches missed.">      if (p.startsWith(w)) {</span>
-<span class="nc" id="L85">        segments.add(EmptyString.primitiveString());</span>
-<span class="nc" id="L86">        count += 1;</span>
-      };
-<span class="nc bnc" id="L88" title="All 2 branches missed.">      while(tokens.hasMoreTokens()) {</span>
-<span class="nc" id="L89">        segments.add(tokens.nextToken());</span>
-<span class="nc" id="L90">        count += 1;</span>
-      };
-<span class="nc bnc" id="L92" title="All 2 branches missed.">      if (p.endsWith(w)) {</span>
-<span class="nc" id="L93">        segments.add(EmptyString.primitiveString());</span>
-<span class="nc" id="L94">        count += 1;</span>
-      };
-    };
-<span class="nc" id="L97">  }</span>
+<span class="fc" id="L54">  {</span>
+<span class="fc" id="L55">    java.lang.String exitID = &quot;StringPattern&gt;&gt;StringPattern&quot;;</span>
+<span class="fc" id="L56">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L57">     regexPattern = pattern.primitiveString();</span>
+<span class="fc" id="L58">  }</span>
 
   /**
    * @return 
    */
   public   Boolean accepts(final CharacterString aString)
   {
-<span class="nc" id="L104">    java.lang.String exitID = &quot;StringPattern&gt;&gt;accepts&quot;;</span>
-<span class="nc" id="L105">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L106">    java.lang.String sample = aString.primitiveString();</span>
-
-<span class="nc" id="L108">    int count = segments.size();</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">    if ((0 &gt; count)) {</span>
-<span class="nc" id="L110">      return True.literal();</span>
-    };
-<span class="nc bnc" id="L112" title="All 2 branches missed.">    if (!(sample.startsWith(segments.get(0)))) {</span>
-<span class="nc" id="L113">      return False.literal();</span>
-    };
-<span class="nc bnc" id="L115" title="All 2 branches missed.">    if ((0 == count)) {</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">      return Boolean.from((sample.length() == segments.get(0).length()));</span>
-    };
-<span class="nc bnc" id="L118" title="All 2 branches missed.">    if (!(sample.endsWith(segments.get(count)))) {</span>
-<span class="nc" id="L119">      return False.literal();</span>
-    };
-<span class="nc bnc" id="L121" title="All 2 branches missed.">    if ((1 &lt; count)) {</span>
-<span class="nc" id="L122">      int x = 0;</span>
-
-<span class="nc" id="L124">      int p = segments.get(0).length();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">      while((count &gt; x)) {</span>
-<span class="nc" id="L126">        java.lang.String s = segments.get(x);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        if ((0 &lt; x)) {</span>
-<span class="nc" id="L128">          int a = sample.indexOf(s, p);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">          if ((0 &gt; a)) {</span>
-<span class="nc" id="L130">            return False.literal();</span>
-          }
-          else {
-<span class="nc" id="L133">             p = (a + s.length());</span>
-          };
-        };
-<span class="nc" id="L136">        x += 1;</span>
-<span class="nc" id="L137">      };</span>
-    };
-<span class="nc" id="L139">    return (Boolean)True.literal();</span>
+<span class="fc" id="L65">    java.lang.String exitID = &quot;StringPattern&gt;&gt;accepts&quot;;</span>
+<span class="fc" id="L66">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L67">    return (Boolean)Boolean.from(Pattern.compile(regexPattern).matcher(aString.primitiveString()).matches());</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

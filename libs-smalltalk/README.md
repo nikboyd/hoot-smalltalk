@@ -19,6 +19,7 @@ No surprise: some names are quite popular and descriptive for commonly found typ
 To reduce naming conflicts and keep some of its class references simple,
 Hoot Smalltalk maps some of the standard Smalltalk protocols to type names _different_ from those
 found in the [ANSI standard][st-ansi].
+
 This applies especially to those types whose names also have potential conflicts
 with some found in the underlying Java type library.
 These renamed types are emphasized in the table below with **bold**.
@@ -30,6 +31,11 @@ can be instantiated.
 
 Many of the exception types and collection types defined in the standard are mapped directly to classes in Hoot Smalltalk,
 especially those whose names are called out in the **Standard Globals** (5.2).
+
+The method **Collected.isEmpty** in the collection protocols 5.7.1 required special treatment 
+because of the native Java **String.isEmpty** method.
+The native Java method has a primitive **boolean** result that cannot be replaced by **Smalltalk Core Posit**.
+This imposed pervasive changes in the Smalltalk code to use **notEmpty** instead, and flip the test logic.
 
 | **Section** | **ANSI Smalltalk** | **Hoot Smalltalk** |
 | ----------- | ------------------ | ------------------ |
@@ -124,7 +130,7 @@ especially those whose names are called out in the **Standard Globals** (5.2).
 | 5.10.4 | FileStream factory | Hoot Streams [FileStream][file-stream] class |
 
 ```
-Copyright 2010,2021 Nikolas S Boyd.
+Copyright 2010,2023 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 ```
 

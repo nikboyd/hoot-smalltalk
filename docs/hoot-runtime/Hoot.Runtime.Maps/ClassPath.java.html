@@ -25,186 +25,187 @@ public class ClassPath implements Logging {
 
 <span class="fc" id="L26">    protected ClassPath() { }</span>
 <span class="fc" id="L27">    public static final ClassPath CurrentPath = new ClassPath();</span>
+<span class="fc" id="L28">    static String normalPath(String p) { return Package.normalPath(p); }</span>
 
     static final String WorkPath = &quot;user.dir&quot;;
-<span class="fc" id="L30">    public static String workPath() { return systemValue(WorkPath); }</span>
+<span class="fc" id="L31">    public static String workPath() { return systemValue(WorkPath); }</span>
 
-<span class="fc" id="L32">    static File CachedBase = new File(workPath());</span>
-<span class="fc" id="L33">    public static File cachedBase() { return CachedBase; }</span>
+<span class="fc" id="L33">    static File CachedBase = new File(workPath());</span>
+<span class="fc" id="L34">    public static File cachedBase() { return CachedBase; }</span>
 
     public static final String Workspace = &quot;workspace&quot;;
     public static final String HootSmalltalk = &quot;hoot-smalltalk&quot;;
-<span class="fc" id="L37">    static { discoverBase(Workspace, HootSmalltalk); }</span>
+<span class="fc" id="L38">    static { discoverBase(Workspace, HootSmalltalk); }</span>
 
     static final String BaseReport = &quot;using default base folder: %s&quot;;
     static void reportDefaultBase(File baseCache) {
-<span class="nc" id="L41">        cachedDiscovery().report(String.format(BaseReport, baseCache.getAbsolutePath())); }</span>
+<span class="nc" id="L42">        cachedDiscovery().report(String.format(BaseReport, baseCache.getAbsolutePath())); }</span>
 
-<span class="fc" id="L43">    static boolean found(File f) { return cachedDiscovery().found(f); }</span>
-<span class="fc bfc" id="L44" title="All 4 branches covered.">    static File find(String name, File f) { return hasSome(f) &amp;&amp; !found(name, f) ? find(name, f.getParentFile()) : f; }</span>
-<span class="fc" id="L45">    static boolean found(String baseName, File f) { return f.getAbsolutePath().endsWith(baseName); }</span>
-<span class="fc" id="L46">    static boolean foundAny(File f, String... baseNames) { return matchAny(wrap(baseNames), (n) -&gt; found(n, f)); }</span>
+<span class="fc" id="L44">    static boolean found(File f) { return cachedDiscovery().found(f); }</span>
+<span class="fc bfc" id="L45" title="All 4 branches covered.">    static File find(String name, File f) { return hasSome(f) &amp;&amp; !found(name, f) ? find(name, f.getParentFile()) : f; }</span>
+<span class="fc" id="L46">    static boolean found(String baseName, File f) { return f.getAbsolutePath().endsWith(baseName); }</span>
+<span class="fc" id="L47">    static boolean foundAny(File f, String... baseNames) { return matchAny(wrap(baseNames), (n) -&gt; found(n, f)); }</span>
     public static File discoverBase(String... baseNames) {
-<span class="fc" id="L48">        File workFolder = new File(workPath());</span>
-<span class="fc" id="L49">        File baseFolder = find(baseNames[0], workFolder);</span>
+<span class="fc" id="L49">        File workFolder = new File(workPath());</span>
+<span class="fc" id="L50">        File baseFolder = find(baseNames[0], workFolder);</span>
 
-<span class="fc" id="L51">        int index = 0;</span>
-<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        while (!found(baseFolder) &amp;&amp; (++index) &lt; baseNames.length)</span>
-<span class="fc" id="L53">        { baseFolder = find(baseNames[index], workFolder); }</span>
+<span class="fc" id="L52">        int index = 0;</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">        while (!found(baseFolder) &amp;&amp; (++index) &lt; baseNames.length)</span>
+<span class="fc" id="L54">        { baseFolder = find(baseNames[index], workFolder); }</span>
 
-<span class="fc" id="L55">        File baseCache = baseFolder;</span>
-<span class="fc" id="L56">        setSafely(() -&gt; baseCache, (f) -&gt; {</span>
-<span class="pc bpc" id="L57" title="2 of 4 branches missed.">            if (!CachedBase.getAbsolutePath().equals(f.getAbsolutePath()) &amp;&amp; !foundAny(f, baseNames)) {</span>
-<span class="nc" id="L58">                reportDefaultBase(f); // found a different default</span>
+<span class="fc" id="L56">        File baseCache = baseFolder;</span>
+<span class="fc" id="L57">        setSafely(() -&gt; baseCache, (f) -&gt; {</span>
+<span class="pc bpc" id="L58" title="2 of 4 branches missed.">            if (!CachedBase.getAbsolutePath().equals(f.getAbsolutePath()) &amp;&amp; !foundAny(f, baseNames)) {</span>
+<span class="nc" id="L59">                reportDefaultBase(f); // found a different default</span>
             }
-<span class="fc" id="L60">            CachedBase = f;</span>
-<span class="fc" id="L61">        });</span>
+<span class="fc" id="L61">            CachedBase = f;</span>
+<span class="fc" id="L62">        });</span>
 
-<span class="fc" id="L63">        return cachedBase();</span>
+<span class="fc" id="L64">        return cachedBase();</span>
     }
 
-<span class="fc" id="L66">    List&lt;PathMap&gt; contents = emptyList(PathMap.class);</span>
-<span class="fc" id="L67">    public void clear() { contents.clear(); }</span>
-<span class="nc" id="L68">    public List&lt;PathMap&gt; contents() { return this.contents; }</span>
-<span class="fc" id="L69">    private List&lt;PathMap&gt; reversedPath() { List&lt;PathMap&gt; results = copyList(contents); reverse(results); return results; }</span>
+<span class="fc" id="L67">    List&lt;PathMap&gt; contents = emptyList(PathMap.class);</span>
+<span class="fc" id="L68">    public void clear() { contents.clear(); }</span>
+<span class="nc" id="L69">    public List&lt;PathMap&gt; contents() { return this.contents; }</span>
+<span class="fc" id="L70">    private List&lt;PathMap&gt; reversedPath() { List&lt;PathMap&gt; results = copyList(contents); reverse(results); return results; }</span>
 
-<span class="nc" id="L71">    public List&lt;String&gt; listFaces() { return collectList(fs -&gt; collectFaces(fs)); }</span>
-<span class="nc" id="L72">    void collectFaces(Collection&lt;String&gt; fs) { contents().forEach(pathMap -&gt; fs.addAll(pathMap.listFaces())); }</span>
+<span class="nc" id="L72">    public List&lt;String&gt; listFaces() { return collectList(fs -&gt; collectFaces(fs)); }</span>
+<span class="nc" id="L73">    void collectFaces(Collection&lt;String&gt; fs) { contents().forEach(pathMap -&gt; fs.addAll(pathMap.listFaces())); }</span>
 
 
-<span class="fc" id="L75">    public void mapLibs(String... libNames) { mapLibs(wrap(libNames)); }</span>
-<span class="fc" id="L76">    public void mapLibs(List&lt;String&gt; libNames) { libNames.forEach(libName -&gt; mapLibrary(libName)); }</span>
+<span class="fc" id="L76">    public void mapLibs(String... libNames) { mapLibs(wrap(libNames)); }</span>
+<span class="fc" id="L77">    public void mapLibs(List&lt;String&gt; libNames) { libNames.forEach(libName -&gt; mapLibrary(libName)); }</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">    public void mapLibWhen(String codePath, String libName) { if (whenSource(codePath)) mapLibrary(libName); }</span>
-<span class="nc" id="L79">    public void mapLibWhenNot(String... codePaths) { mapLibWhenNot(wrap(codePaths)); }</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    public void mapLibWhen(String codePath, String libName) { if (whenSource(codePath)) mapLibrary(libName); }</span>
+<span class="nc" id="L80">    public void mapLibWhenNot(String... codePaths) { mapLibWhenNot(wrap(codePaths)); }</span>
     public void mapLibWhenNot(List&lt;String&gt; codePaths) { // when lib not the source
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (!matchAny(codePaths, s -&gt; whenSource(s))) mapLibrary(codePaths.get(0));</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (!matchAny(codePaths, s -&gt; whenSource(s))) mapLibrary(codePaths.get(0));</span>
+<span class="nc" id="L83">    }</span>
 
-<span class="nc" id="L84">    public boolean whenSource(String libName) { return CurrentLib.sourcePath().contains(libName); }</span>
-<span class="nc" id="L85">    public boolean whenTarget(String libName) { return CurrentLib.targetPath().contains(libName); }</span>
+<span class="nc" id="L85">    public boolean whenSource(String libName) { return CurrentLib.sourcePath().contains(libName); }</span>
+<span class="nc" id="L86">    public boolean whenTarget(String libName) { return CurrentLib.targetPath().contains(libName); }</span>
 
     static final String Colon = &quot;:&quot;;
     static final String LATEST = Colon + &quot;LATEST&quot;;
     static String artifactNamed(String libName) { // default to Hoot if no group provided
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        return libName.contains(Colon) ? libName : HootSmalltalk + Colon + libName + LATEST; }</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        return libName.contains(Colon) ? libName : HootSmalltalk + Colon + libName + LATEST; }</span>
 
     static final String TargetClasses = &quot;target/classes&quot;;
     public void mapLibrary(String libName) {
-<span class="fc" id="L94">        String artifactName = artifactNamed(libName);</span>
-<span class="fc" id="L95">        ArtifactResult result = Discovery.lookup(artifactName);</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (hasSome(result)) { // try maven resolution first</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (Package.ReportLoads) reportMapping(result, artifactName);</span>
-<span class="fc" id="L98">            File file = result.getArtifact().getFile();</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (file.exists()) {</span>
-<span class="fc" id="L100">                PathMap m = mapPath(file);</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">                if (Package.ReportLoads) printLine();</span>
-<span class="fc" id="L102">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
-<span class="fc" id="L103">                return; // done with found library</span>
+<span class="fc" id="L95">        String artifactName = artifactNamed(libName);</span>
+<span class="fc" id="L96">        ArtifactResult result = Discovery.lookup(artifactName);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (hasSome(result)) { // try maven resolution first</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if (Package.ReportLoads) reportMapping(result, artifactName);</span>
+<span class="fc" id="L99">            File file = result.getArtifact().getFile();</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">            if (file.exists()) {</span>
+<span class="fc" id="L101">                PathMap m = mapPath(file);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                if (Package.ReportLoads) printLine();</span>
+<span class="fc" id="L103">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
+<span class="fc" id="L104">                return; // done with found library</span>
             }
         }
 
         // try local library class resolution
-<span class="nc" id="L108">        File libFolder = new File(cachedBase(), libName);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (libFolder.exists()) {</span>
-<span class="nc" id="L110">            File classFolder = new File(libFolder, TargetClasses);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (classFolder.exists()) {</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">                if (Package.ReportLoads) reportMapping(libName, classFolder);</span>
-<span class="nc" id="L113">                PathMap m = mapPath(classFolder);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">                if (Package.ReportLoads) printLine();</span>
-<span class="nc" id="L115">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
+<span class="fc" id="L109">        File libFolder = new File(cachedBase(), libName);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (libFolder.exists()) {</span>
+<span class="fc" id="L111">            File classFolder = new File(libFolder, normalPath(TargetClasses));</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (classFolder.exists()) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                if (Package.ReportLoads) reportMapping(libName, classFolder);</span>
+<span class="fc" id="L114">                PathMap m = mapPath(classFolder);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                if (Package.ReportLoads) printLine();</span>
+<span class="fc" id="L116">                m.getPackages().forEach(p -&gt; p.loadFaces());</span>
             }
         }
-<span class="nc" id="L118">    }</span>
+<span class="fc" id="L119">    }</span>
 
-<span class="fc" id="L120">    public PathMap mapPath(File folder) { boolean appended = true; return addMapped(folder, appended); }</span>
+<span class="fc" id="L121">    public PathMap mapPath(File folder) { boolean appended = true; return addMapped(folder, appended); }</span>
     public PathMap addMapped(File folder, boolean appended) {
-<span class="pc bpc" id="L122" title="2 of 4 branches missed.">        if (hasNo(folder) || !folder.exists()) {</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (hasSome(folder)) report(folder.getName() + &quot; not loaded&quot;);</span>
-<span class="nc" id="L124">            return null; // bail out, can't load from non-existent folder</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">        if (hasNo(folder) || !folder.exists()) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (hasSome(folder)) report(folder.getName() + &quot; not loaded&quot;);</span>
+<span class="nc" id="L125">            return null; // bail out, can't load from non-existent folder</span>
         }
 
-<span class="fc" id="L127">        PathMap map = buildMap(folder);</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (appended) contents.add(map);</span>
-<span class="nc" id="L129">                 else contents.add(0, map);</span>
+<span class="fc" id="L128">        PathMap map = buildMap(folder);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (appended) contents.add(map);</span>
+<span class="nc" id="L130">                 else contents.add(0, map);</span>
 
-<span class="fc" id="L131">        map.load();</span>
-<span class="fc" id="L132">        reportMapped(); // while mapping</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (Package.ReportLoads) reportCount(map.listFaces().size());</span>
-<span class="fc" id="L134">        return map;</span>
+<span class="fc" id="L132">        map.load();</span>
+<span class="fc" id="L133">        reportMapped(); // while mapping</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (Package.ReportLoads) reportCount(map.listFaces().size());</span>
+<span class="fc" id="L135">        return map;</span>
     }
 
     private PathMap buildMap(File folder) {
         // NOTE: folder may actually locate
         // a ZIP or JAR file that contains a class library!
-<span class="fc bfc" id="L140" title="All 2 branches covered.">        return ZipMap.supports(folder.getAbsolutePath()) ?</span>
-<span class="fc" id="L141">                new ZipMap(folder.getAbsolutePath()) :</span>
-<span class="fc" id="L142">                new PathMap(folder.getAbsolutePath()) ; }</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        return ZipMap.supports(folder.getAbsolutePath()) ?</span>
+<span class="fc" id="L142">                new ZipMap(folder.getAbsolutePath()) :</span>
+<span class="fc" id="L143">                new PathMap(folder.getAbsolutePath()) ; }</span>
 
-<span class="fc" id="L144">    boolean classPathMapping = false;</span>
-<span class="fc" id="L145">    public boolean showDots() { return this.classPathMapping; }</span>
-<span class="fc" id="L146">    public boolean showOnlyDots(boolean value) { this.classPathMapping = value; return value; }</span>
+<span class="fc" id="L145">    boolean classPathMapping = false;</span>
+<span class="fc" id="L146">    public boolean showDots() { return this.classPathMapping; }</span>
+<span class="fc" id="L147">    public boolean showOnlyDots(boolean value) { this.classPathMapping = value; return value; }</span>
 
     private boolean locatesFace(String faceName, String packageName) {
-<span class="nc" id="L149">        return matchAny(classesInPackage(packageName), faceNames -&gt;</span>
-<span class="nc bnc" id="L150" title="All 4 branches missed.">            hasSome(faceNames) &amp;&amp; faceNames.contains(faceName)); }</span>
+<span class="nc" id="L150">        return matchAny(classesInPackage(packageName), faceNames -&gt;</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">            hasSome(faceNames) &amp;&amp; faceNames.contains(faceName)); }</span>
 
     private boolean anyPackageHasFaceNamed(String faceName) {
-<span class="nc" id="L153">        return matchAny(reversedPath(), pathMap -&gt;</span>
-<span class="nc" id="L154">            hasSome(pathMap.packageContaining(faceName)));</span>
+<span class="nc" id="L154">        return matchAny(reversedPath(), pathMap -&gt;</span>
+<span class="nc" id="L155">            hasSome(pathMap.packageContaining(faceName)));</span>
     }
 
     public boolean canLocateFaceNamed(String fullName) {
-<span class="nc" id="L158">        String faceName = Name.typeName(fullName);</span>
-<span class="nc" id="L159">        String packageName = Name.packageName(fullName);</span>
-<span class="nc bnc" id="L160" title="All 4 branches missed.">        return locatesFace(faceName, packageName) || anyPackageHasFaceNamed(faceName); }</span>
+<span class="nc" id="L159">        String faceName = Name.typeName(fullName);</span>
+<span class="nc" id="L160">        String packageName = Name.packageName(fullName);</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">        return locatesFace(faceName, packageName) || anyPackageHasFaceNamed(faceName); }</span>
 
-<span class="nc" id="L162">    public boolean canLocatePackage(Package aPackage) { return classesExistInFolder(aPackage.pathname()); }</span>
+<span class="nc" id="L163">    public boolean canLocatePackage(Package aPackage) { return classesExistInFolder(aPackage.pathname()); }</span>
     private boolean classesExistInFolder(String packagePath) {
-<span class="nc" id="L164">        return matchAny(reversedPath(), pathMap -&gt;</span>
-<span class="nc" id="L165">            hasSome(pathMap.classesInFolder(packagePath))); }</span>
+<span class="nc" id="L165">        return matchAny(reversedPath(), pathMap -&gt;</span>
+<span class="nc" id="L166">            hasSome(pathMap.classesInFolder(packagePath))); }</span>
 
-<span class="fc" id="L167">    public Set&lt;String&gt; classesInPackage(Package aPackage) { return classesInPackage(aPackage.pathname()); }</span>
+<span class="fc" id="L168">    public Set&lt;String&gt; classesInPackage(Package aPackage) { return classesInPackage(aPackage.pathname()); }</span>
     private Set&lt;String&gt; classesInPackage(String packageName) {
-<span class="fc" id="L169">        return collectSet(results -&gt;</span>
-<span class="fc" id="L170">            reversedPath().forEach(pathMap -&gt;</span>
-<span class="fc" id="L171">                results.addAll(pathMap.classesInFolder(packageName)))); }</span>
+<span class="fc" id="L170">        return collectSet(results -&gt;</span>
+<span class="fc" id="L171">            reversedPath().forEach(pathMap -&gt;</span>
+<span class="fc" id="L172">                results.addAll(pathMap.classesInFolder(packageName)))); }</span>
 
     public java.io.File locate(String folder) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        for (PathMap map : reversedPath()) {</span>
-<span class="nc" id="L175">            File result = map.locate(folder);</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (hasSome(result)) return result;</span>
-<span class="nc" id="L177">        }</span>
-<span class="nc" id="L178">        return null;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        for (PathMap map : reversedPath()) {</span>
+<span class="nc" id="L176">            File result = map.locate(folder);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (hasSome(result)) return result;</span>
+<span class="nc" id="L178">        }</span>
+<span class="nc" id="L179">        return null;</span>
     }
 
     static final String StandardPath = &quot;java.class.path&quot;;
-<span class="fc" id="L182">    String[] standardPaths() { return systemValue(StandardPath).split(Separator); }</span>
-<span class="nc" id="L183">    public static String buildPath(String... basePaths) { return joinWith(Separator, wrap(basePaths)); }</span>
+<span class="fc" id="L183">    String[] standardPaths() { return systemValue(StandardPath).split(Separator); }</span>
+<span class="nc" id="L184">    public static String buildPath(String... basePaths) { return joinWith(Separator, wrap(basePaths)); }</span>
     public void mapStandardPaths() {
-<span class="fc" id="L185">        reportMapping(&quot;CLASSPATH&quot;, null); wrap(standardPaths()).forEach(p -&gt; mapPath(new File(p))); }</span>
+<span class="fc" id="L186">        reportMapping(&quot;CLASSPATH&quot;, null); wrap(standardPaths()).forEach(p -&gt; mapPath(new File(p))); }</span>
 
     static final String ArtReport = &quot;mapping %s = %s &quot;;
     private void reportMapping(ArtifactResult r, String name) {
-<span class="fc" id="L189">        printLine(); print(format(ArtReport, name, r.getArtifact().getVersion())); }</span>
+<span class="fc" id="L190">        printLine(); print(format(ArtReport, name, r.getArtifact().getVersion())); }</span>
 
     static final String CountReport = &quot; mapped %d faces&quot;;
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">    private void reportCount(int count) { if (!showDots()) print(format(CountReport, count)); }</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">    private void reportCount(int count) { if (!showDots()) print(format(CountReport, count)); }</span>
 
     static final String MappingReport = &quot;mapping %s &quot;;
-<span class="fc" id="L195">    public void reportMapping(String name, File folder) { printLine();</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        print(hasNo(folder) ? format(MappingReport, name) : format(ArtReport, name, folder.getAbsolutePath())); }</span>
+<span class="fc" id="L196">    public void reportMapping(String name, File folder) { printLine();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        print(hasNo(folder) ? format(MappingReport, name) : format(ArtReport, name, folder.getAbsolutePath())); }</span>
 
-<span class="fc bfc" id="L198" title="All 2 branches covered.">    public void reportMapped() { if (showDots()) print(Dot); }</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">    public void println(int count) { while(count-- &gt; 0) printLine(); }</span>
-<span class="nc" id="L200">    public void println() { System.out.println(); }</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">    public void reportMapped() { if (showDots()) print(Dot); }</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">    public void println(int count) { while(count-- &gt; 0) printLine(); }</span>
+<span class="nc" id="L201">    public void println() { System.out.println(); }</span>
 
     public static final String PathSeparator = &quot;path.separator&quot;;
-<span class="fc" id="L203">    public static final String Separator = systemValue(PathSeparator);</span>
+<span class="fc" id="L204">    public static final String Separator = systemValue(PathSeparator);</span>
 
-<span class="fc" id="L205">    static final String[] Hoots = { &quot;Hoot&quot;, &quot;Smalltalk&quot;, };</span>
-<span class="fc" id="L206">    static final List&lt;String&gt; HootBases = wrap(Hoots);</span>
-<span class="nc" id="L207">    public static boolean matchHoots(String faceName) { return matchAny(HootBases, (h) -&gt; faceName.startsWith(h)); }</span>
+<span class="fc" id="L206">    static final String[] Hoots = { &quot;Hoot&quot;, &quot;Smalltalk&quot;, };</span>
+<span class="fc" id="L207">    static final List&lt;String&gt; HootBases = wrap(Hoots);</span>
+<span class="nc" id="L208">    public static boolean matchHoots(String faceName) { return matchAny(HootBases, (h) -&gt; faceName.startsWith(h)); }</span>
 
 } // ClassPath
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

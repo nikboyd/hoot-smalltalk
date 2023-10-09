@@ -78,9 +78,9 @@ public abstract class CollectionStream&lt;ElementType extends Object&gt; extends
    */
   public   OrderedCollection&lt;ElementType&gt; orderedContents()
   {
-<span class="nc" id="L81">    java.lang.String exitID = &quot;CollectionStream&gt;&gt;orderedContents&quot;;</span>
-<span class="nc" id="L82">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L83">    return (OrderedCollection&lt;ElementType&gt;)((OrderedCollection)this.contents());</span>
+<span class="fc" id="L81">    java.lang.String exitID = &quot;CollectionStream&gt;&gt;orderedContents&quot;;</span>
+<span class="fc" id="L82">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L83">    return (OrderedCollection&lt;ElementType&gt;)((OrderedCollection)this.contents());</span>
   }
 
   /**
@@ -88,9 +88,9 @@ public abstract class CollectionStream&lt;ElementType extends Object&gt; extends
    */
   public   Boolean collectsElements(final Object element)
   {
-<span class="nc" id="L91">    java.lang.String exitID = &quot;CollectionStream&gt;&gt;collectsElements&quot;;</span>
-<span class="nc" id="L92">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L93">    return (Boolean)this.orderedContents().collectsElements(element);</span>
+<span class="fc" id="L91">    java.lang.String exitID = &quot;CollectionStream&gt;&gt;collectsElements&quot;;</span>
+<span class="fc" id="L92">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L93">    return (Boolean)this.orderedContents().collectsElements(element);</span>
   }
 
   /**
@@ -110,7 +110,7 @@ public abstract class CollectionStream&lt;ElementType extends Object&gt; extends
   {
 <span class="nc" id="L111">    java.lang.String exitID = &quot;CollectionStream&gt;&gt;isEmpty&quot;;</span>
 <span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L113">    return (Boolean)Boolean.from(contents.isEmpty());</span>
+<span class="nc" id="L113">    return (Boolean)contents.notEmpty();</span>
   }
 
   /**
@@ -166,4 +166,4 @@ public abstract class CollectionStream&lt;ElementType extends Object&gt; extends
 <span class="nc" id="L166">    return (CollectionStream)this;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

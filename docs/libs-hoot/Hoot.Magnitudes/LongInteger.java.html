@@ -25,7 +25,7 @@ import Hoot.Runtime.Names.Primitive;
 public class LongInteger extends Integer
 {
 <span class="fc" id="L27">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="fc" id="L28">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L28">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Integer.Metaclass
   {
 <span class="fc" id="L31">    static final LongInteger.Metaclass $class = new LongInteger.Metaclass();</span>
@@ -44,10 +44,10 @@ public class LongInteger extends Integer
      */
     @Override public   LongInteger coerce(final Number aNumber)
     {
-<span class="fc" id="L47">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;coerce&quot;;</span>
-<span class="fc" id="L48">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L49">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L50">      return (LongInteger)f0.exit(exitID, LongInteger.from(aNumber.primitiveLong()));</span>
+<span class="nc" id="L47">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L48">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L49">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L50">      return (LongInteger)f0.exit(exitID, LongInteger.from(aNumber.primitiveLong()));</span>
       });
     }
 
@@ -188,9 +188,9 @@ public class LongInteger extends Integer
    */
   @Override public   Integer generality()
   {
-<span class="fc" id="L191">    java.lang.String exitID = &quot;LongInteger&gt;&gt;generality&quot;;</span>
-<span class="fc" id="L192">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L193">    return (Integer)Generality;</span>
+<span class="nc" id="L191">    java.lang.String exitID = &quot;LongInteger&gt;&gt;generality&quot;;</span>
+<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L193">    return (Integer)Generality;</span>
   }
 
   /**
@@ -314,4 +314,4 @@ public class LongInteger extends Integer
 <span class="nc" id="L314">    return (LongInteger)LongInteger.from((this.asPrimitive() % aNumber.asPrimitive()));</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -32,7 +32,7 @@ public abstract class Item implements EmissionSource, Resolver {
 <span class="fc" id="L32">    protected &lt;T extends Item&gt; Class&lt;T&gt; itemType() { return (Class&lt;T&gt;)getClass(); }</span>
 <span class="fc" id="L33">    public final &lt;T extends Item&gt; T inside(Item container) { container(container); return asType(itemType()); }</span>
 
-<span class="nc" id="L35">    public void clean() { } // derived classes sometimes override this</span>
+<span class="fc" id="L35">    public void clean() { } // derived classes sometimes override this</span>
     public void release() { // derived classes sometimes override this
 <span class="nc bnc" id="L37" title="All 2 branches missed.">        if (hasOne(container())) {</span>
             // breaks cycles, if needed, to promote proper garbage collection
@@ -50,14 +50,14 @@ public abstract class Item implements EmissionSource, Resolver {
 
     protected Scope itemScope;
 <span class="nc" id="L52">    public Scope scope() { return this.itemScope; }</span>
-<span class="nc" id="L53">    protected void scope(Scope s) { this.itemScope = s; }</span>
-<span class="pc bpc" id="L54" title="3 of 4 branches missed.">    protected void scope(Item it) { if (hasOne(it)) scope(hasInstance(it) ? (Scope)it : it.containerScope()); }</span>
+<span class="fc" id="L53">    protected void scope(Scope s) { this.itemScope = s; }</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">    protected void scope(Item it) { if (hasOne(it)) scope(hasInstance(it) ? (Scope)it : it.containerScope()); }</span>
 
 <span class="nc" id="L56">    public Scope containerScope() { return findParent(Scope.class); }</span>
-<span class="nc" id="L57">    public static boolean hasInstance(Item item) { return Scope.class.isInstance(item); }</span>
+<span class="fc" id="L57">    public static boolean hasInstance(Item item) { return Scope.class.isInstance(item); }</span>
 
 <span class="fc" id="L59">    protected NoteList notes = new NoteList();</span>
-<span class="nc" id="L60">    public NoteList notes() { return this.notes; }</span>
+<span class="fc" id="L60">    public NoteList notes() { return this.notes; }</span>
 <span class="nc" id="L61">    public void note(Note note) { this.notes.note(note); }</span>
 <span class="nc" id="L62">    public void noteAll(List&lt;Note&gt; notes) { notes().noteAll(notes); }</span>
 
@@ -194,7 +194,7 @@ public abstract class Item implements EmissionSource, Resolver {
 <span class="nc" id="L194">    public void sourceLine(int lineNumber) { sourceLine = lineNumber + 1; }</span>
 <span class="nc" id="L195">    public &lt;T extends Item&gt; T withLine(int line) { sourceLine(line); return asType(itemType()); }</span>
 
-<span class="nc" id="L197">    public String description() { return getClass().getName(); }</span>
+<span class="fc" id="L197">    public String description() { return getClass().getName(); }</span>
 <span class="nc" id="L198">    public String commentFrom(Tree node) { return nullOr(hidden -&gt; hidden.getText(), hiddenToken((Tree) node)); }</span>
 <span class="nc" id="L199">    public TokenStream tokenStream() { return null; } // dervied classes override!!</span>
 <span class="nc" id="L200">    public Token tokenFrom(Tree node) { return (Token)node.getPayload(); }</span>
@@ -218,4 +218,4 @@ public abstract class Item implements EmissionSource, Resolver {
 <span class="fc" id="L218">    protected static final List&lt;Emission&gt; EmptyList = wrap(EmptyArgs);</span>
 
 } // Item
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
