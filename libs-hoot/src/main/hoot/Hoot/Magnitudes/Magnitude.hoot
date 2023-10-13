@@ -26,16 +26,6 @@ Magnitude members: "comparing values"
 
     Boolean! <  Scalar! upperBound [ ^Boolean <- ((Magnitude <- upperBound) > self) ]
     Boolean! >  Scalar! lowerBound [ ^Boolean <- ((Magnitude <- lowerBound) < self) ]
-
-    Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
-        ^Boolean <- (( lowerBound <= self ) and: [ self <= upperBound ]) ]
-
-    Boolean! in: Interval! aRange [ ^aRange includes: self ]
-    Boolean! inside: Scalar! lowerBound and: Scalar! upperBound [
-        ^Boolean <- (( lowerBound < self ) and: [ self < upperBound ]) ]
-
-    Ordered! max: Scalar! value [ self > value ifTrue: [ ^self ]. ^Ordered <- value ]
-    Ordered! min: Scalar! value [ self < value ifTrue: [ ^self ]. ^Ordered <- value ]
 ]
 
 Magnitude members: "printing"

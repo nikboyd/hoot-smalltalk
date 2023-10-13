@@ -10,7 +10,6 @@ import static Hoot.Runtime.Names.Keyword.Object;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Signature.formatTerm;
 import static Hoot.Runtime.Notes.Note.OverrideNote;
-import static Hoot.Runtime.Notes.Note.DefaultNote;
 import static Hoot.Runtime.Names.Keyword.Colon;
 
 import Hoot.Compiler.Expressions.*;
