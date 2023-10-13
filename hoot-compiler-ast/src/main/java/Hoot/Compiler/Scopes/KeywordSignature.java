@@ -19,17 +19,17 @@ public class KeywordSignature extends BasicSignature {
     public KeywordSignature() { super(); }
     public static KeywordSignature emptyNiladic() { return with(null, emptyList(Variable.class)); }
     public static KeywordSignature with(DetailedType resultType, List<Variable> args) {
-        List<String> tails = emptyList(String.class);
-        for (Variable arg : args) tails.add(Colon);
-        return with(resultType, args, emptyList(String.class), tails); }
+        List<Variable> allArgs = hasSome(args)? args: emptyList(Variable.class);
+        List<String> tails = emptyList(String.class); for (Variable arg : allArgs) tails.add(Colon);
+        return with(resultType, allArgs, emptyList(String.class), tails); }
 
     public static KeywordSignature with(
             DetailedType resultType, List<Variable> args, List<String> heads, List<String> tails) {
         KeywordSignature result = new KeywordSignature();
         result.resultType = resultType;
-        result.args.withAll(args);
-        result.heads.addAll(heads);
-        result.tails.addAll(tails);
+        result.args.withAll(hasSome(args)? args: emptyList(Variable.class));
+        result.heads.addAll(hasSome(heads)? heads: emptyList(String.class));
+        result.tails.addAll(hasSome(tails)? tails: emptyList(String.class));
         return result;
     }
 

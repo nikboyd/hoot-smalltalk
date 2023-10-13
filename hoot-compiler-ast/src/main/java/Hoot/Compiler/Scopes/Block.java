@@ -128,6 +128,11 @@ public class Block extends Scope implements Signed, ClosureSource {
     private String valueMessage() { return valueMessages[argumentCount()]; }
     public String blockName() { return needsErasure() ? Dollar + valueMessage() : valueMessage(); }
 
+    public Emission emitTry() { return emitOnlyTry(emitLocalVariables(), emitContents()); }
+    public Emission emitCatch() { return emitOnlyCatch(emitArguments(false), emitLocalVariables(), emitContents()); }
+    public Emission emitFinally() { return emitOnlyEnsure(emitLocalVariables(), emitContents()); }
+    public Emission emitNewClosure() { return emitNewClosure(closureType(), nestLevel() - 1, emitArgumentNames()); }
+
     public boolean needsErasure() { return needsErasure(argumentCount()); }
     public boolean needsErasure(int argumentCount) {
         if (this.isMethod()) return false;
@@ -142,10 +147,5 @@ public class Block extends Scope implements Signed, ClosureSource {
 
     public Emission emitErasure() {
         return emitErasedBlock(valueMessage(), emitErasedArguments(), emitErasedCall()) ; }
-
-    public Emission emitTry() { return emitOnlyTry(emitLocalVariables(), emitContents()); }
-    public Emission emitCatch() { return emitOnlyCatch(emitArguments(false), emitLocalVariables(), emitContents()); }
-    public Emission emitFinally() { return emitOnlyEnsure(emitLocalVariables(), emitContents()); }
-    public Emission emitNewClosure() { return emitNewClosure(closureType(), nestLevel() - 1, emitArgumentNames()); }
 
 } // Block

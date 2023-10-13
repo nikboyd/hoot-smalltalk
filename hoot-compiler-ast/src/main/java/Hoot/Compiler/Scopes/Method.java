@@ -10,6 +10,7 @@ import static Hoot.Runtime.Names.Keyword.Object;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Signature.formatTerm;
 import static Hoot.Runtime.Notes.Note.OverrideNote;
+import static Hoot.Runtime.Notes.Note.DefaultNote;
 import static Hoot.Runtime.Names.Keyword.Colon;
 
 import Hoot.Compiler.Expressions.*;
@@ -50,7 +51,7 @@ public class Method extends Block {
     public boolean isVoid() { return notes().isVoid() || signature().returnsVoid(); }
 
     @Override public boolean isMethod() { return true; }
-    @Override public boolean isAbstract() { return (face().isInterface()) ? true : super.isAbstract(); }
+    @Override public boolean isAbstract() { return (face().isInterface() && this.isEmpty()) ? true : super.isAbstract(); }
     @Override public boolean isConstructor() { return name().equals(face().defaultName()) || Metaclass.equals(name()); }
     @Override public boolean isPrimitive() { return notes().isPrimitive(); }
 

@@ -65,6 +65,8 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
     }
 
     boolean hasResult = false;
+    private boolean isAbstracted() { return face().isInterface() || notes().isAbstract(); }
+    private boolean noContent(Expression x) { return hasNone(x) && statements().isEmpty(); }
     public void addResult(Expression x) {
         if (!this.isEmpty()) {
             if (finalStatement().throwsException()) {
@@ -76,16 +78,15 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
         Block b = block();
 
         // for methods ...
-        if (hasAny(b) && b.isMethod()) {
+        if (hasOne(b) && b.isMethod()) {
             Method m = method();
             if (x == null && m.isPrimitive()) {
                 // primitive methods are coded exactly as wanted
                 return; // done here
             }
 
-            if (m.isAbstract()) {
+            if (noContent(x) && isAbstracted()) {
                 // abstract methods are empty of content
-                // primitive methods are coded exactly as wanted
                 return; // done here
             }
 
@@ -97,7 +98,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
             }
 
             // normal methods always return a result, which may be yourself
-            Statement result = Statement.with(x == null ? UnarySequence.yourself() : x);
+            Statement result = Statement.with(hasOne(x)? x: UnarySequence.yourself());
             add(result.makeResult());
             this.hasResult = true;
             return; // done here

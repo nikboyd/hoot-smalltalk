@@ -28,8 +28,9 @@ Ordered "comparing" members:
     Boolean! >= Scalar! lowerBound
         "indicates whether (this >= lowerBound)" []
 
-    Boolean! between: Scalar! lowerBound and: Scalar! upperBound
-        "indicates whether ((Interval from: lowerBound to: upperBound) includes: this)" []
+    @Default Boolean! between: Scalar! lowerBound and: Scalar! upperBound
+        [ ^Boolean <- (( lowerBound <= self ) and: [ self <= upperBound ]) ]
+
 "
     Boolean! in: Interval! range []
 "
