@@ -43,7 +43,7 @@
         <version.hoot.libs>[2020.0101.0101,)</version.hoot.libs>
 
         <!-- keep ANTLR versions in sync -->
-        <version.antlr>4.11.1</version.antlr>
+        <version.antlr>4.13.1</version.antlr>
         <version.antlr.st>4.3.4</version.antlr.st>
 
         <version.spring-boot>2.5.5</version.spring-boot>
