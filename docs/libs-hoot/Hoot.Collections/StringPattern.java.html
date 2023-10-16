@@ -28,43 +28,45 @@ import java.util.regex.Pattern;
 
 public class StringPattern extends Object
 {
-<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass
   {
-<span class="nc" id="L35">    static final StringPattern.Metaclass $class = new StringPattern.Metaclass();</span>
+<span class="fc" id="L36">    static final StringPattern.Metaclass $class = new StringPattern.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L37">      this(StringPattern.Metaclass.class);</span>
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L38">      this(StringPattern.Metaclass.class);</span>
+<span class="fc" id="L39">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L41">      super(aClass);</span>
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L42">      super(aClass);</span>
+<span class="fc" id="L43">    }</span>
 
-<span class="nc" id="L44">    @Override public java.lang.Class outerClass() { return StringPattern.class; }</span>
+<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return StringPattern.class; }</span>
 
   }
 
 
   protected java.lang.String regexPattern;
+
   /**
    * 
    */
   public    StringPattern(final CharacterString pattern)
-<span class="fc" id="L54">  {</span>
-<span class="fc" id="L55">    java.lang.String exitID = &quot;StringPattern&gt;&gt;StringPattern&quot;;</span>
-<span class="fc" id="L56">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L57">     regexPattern = pattern.primitiveString();</span>
-<span class="fc" id="L58">  }</span>
+<span class="fc" id="L56">  {</span>
+<span class="fc" id="L57">    java.lang.String exitID = &quot;StringPattern&gt;&gt;StringPattern&quot;;</span>
+<span class="fc" id="L58">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L59">     regexPattern = pattern.primitiveString();</span>
+<span class="fc" id="L60">  }</span>
 
   /**
    * @return 
    */
   public   Boolean accepts(final CharacterString aString)
   {
-<span class="fc" id="L65">    java.lang.String exitID = &quot;StringPattern&gt;&gt;accepts&quot;;</span>
-<span class="fc" id="L66">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L67">    return (Boolean)Boolean.from(Pattern.compile(regexPattern).matcher(aString.primitiveString()).matches());</span>
+<span class="fc" id="L67">    java.lang.String exitID = &quot;StringPattern&gt;&gt;accepts&quot;;</span>
+<span class="fc" id="L68">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L69">    return (Boolean)Boolean.from(Pattern.compile(regexPattern).matcher(aString.primitiveString()).matches());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -28,36 +28,37 @@ public class Message extends Object implements SentMessage
 
   protected Selector selector;
   protected Subject [] arguments;
+
   /**
    * @return 
    */
   public   Selector selector()
   {
-<span class="nc" id="L36">    java.lang.String exitID = &quot;Message&gt;&gt;selector&quot;;</span>
-<span class="nc" id="L37">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L38">    return (Selector)selector;</span>
+<span class="nc" id="L37">    java.lang.String exitID = &quot;Message&gt;&gt;selector&quot;;</span>
+<span class="nc" id="L38">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L39">    return (Selector)selector;</span>
   }
 
   /**
    * 
    */
   public    Message(final Selector methodSelector, final Subject ... methodArguments)
-<span class="nc" id="L45">  {</span>
-<span class="nc" id="L46">    java.lang.String exitID = &quot;Message&gt;&gt;Message&quot;;</span>
-<span class="nc" id="L47">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L48">     selector = methodSelector;</span>
+<span class="nc" id="L46">  {</span>
+<span class="nc" id="L47">    java.lang.String exitID = &quot;Message&gt;&gt;Message&quot;;</span>
+<span class="nc" id="L48">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L49">     selector = methodSelector;</span>
 
-<span class="nc" id="L50">     arguments = methodArguments;</span>
-<span class="nc" id="L51">  }</span>
+<span class="nc" id="L51">     arguments = methodArguments;</span>
+<span class="nc" id="L52">  }</span>
 
   /**
    * @return 
    */
   public   CollectedSequentially&lt;Subject&gt; arguments()
   {
-<span class="nc" id="L58">    java.lang.String exitID = &quot;Message&gt;&gt;arguments&quot;;</span>
-<span class="nc" id="L59">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L60">    return (CollectedSequentially&lt;Subject&gt;)null;</span>
+<span class="nc" id="L59">    java.lang.String exitID = &quot;Message&gt;&gt;arguments&quot;;</span>
+<span class="nc" id="L60">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L61">    return (CollectedSequentially&lt;Subject&gt;)null;</span>
   }
 
   /**
@@ -65,9 +66,9 @@ public class Message extends Object implements SentMessage
    */
   protected   int argumentCount()
   {
-<span class="nc" id="L68">    java.lang.String exitID = &quot;Message&gt;&gt;argumentCount&quot;;</span>
-<span class="nc" id="L69">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L70">    return (int)Arrays.asList(arguments).size();</span>
+<span class="nc" id="L69">    java.lang.String exitID = &quot;Message&gt;&gt;argumentCount&quot;;</span>
+<span class="nc" id="L70">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L71">    return (int)Arrays.asList(arguments).size();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

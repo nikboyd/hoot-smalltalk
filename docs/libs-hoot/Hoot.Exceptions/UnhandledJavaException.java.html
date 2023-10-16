@@ -30,53 +30,56 @@ import Hoot.Runtime.Exceptions.ExceptionBase;
 
 public class UnhandledJavaException extends ExceptionBase
 {
-<span class="nc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends ExceptionBase.Metaclass
   {
-<span class="nc" id="L37">    static final UnhandledJavaException.Metaclass $class = new UnhandledJavaException.Metaclass();</span>
+<span class="fc" id="L38">    static final UnhandledJavaException.Metaclass $class = new UnhandledJavaException.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L39">      this(UnhandledJavaException.Metaclass.class);</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L40">      this(UnhandledJavaException.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L43">      super(aClass);</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
 
-<span class="nc" id="L46">    @Override public java.lang.Class outerClass() { return UnhandledJavaException.class; }</span>
+<span class="nc" id="L47">    @Override public java.lang.Class outerClass() { return UnhandledJavaException.class; }</span>
+
 
     /**
      * @return 
      */
     public   void raise(final Throwable aThrowable)
     {
-<span class="nc" id="L53">      java.lang.String exitID = &quot;UnhandledJavaExceptionMetatype&gt;&gt;raise&quot;;</span>
-<span class="nc" id="L54">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L55">      new UnhandledJavaException(aThrowable).raise();</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L55">      java.lang.String exitID = &quot;UnhandledJavaExceptionMetatype&gt;&gt;raise&quot;;</span>
+<span class="nc" id="L56">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L57">      new UnhandledJavaException(aThrowable).raise();</span>
+<span class="nc" id="L58">    }</span>
   }
 
 
   protected Throwable throwable;
+
   /**
    * 
    */
   public    UnhandledJavaException(final Throwable aThrowable)
   {
-<span class="nc" id="L66">    super(aThrowable.getMessage());</span>
-<span class="nc" id="L67">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;UnhandledJavaException&quot;;</span>
-<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L69">     throwable = aThrowable;</span>
-<span class="nc" id="L70">  }</span>
+<span class="nc" id="L69">    super(aThrowable.getMessage());</span>
+<span class="nc" id="L70">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;UnhandledJavaException&quot;;</span>
+<span class="nc" id="L71">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L72">     throwable = aThrowable;</span>
+<span class="nc" id="L73">  }</span>
 
   /**
    * @return 
    */
   public   void raise()
   {
-<span class="nc" id="L77">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;raise&quot;;</span>
-<span class="nc" id="L78">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L79">    throw this;</span>
+<span class="nc" id="L80">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;raise&quot;;</span>
+<span class="nc" id="L81">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L82">    throw this;</span>
   }
 
   /**
@@ -84,9 +87,9 @@ public class UnhandledJavaException extends ExceptionBase
    */
   public   Throwable unhandledException()
   {
-<span class="nc" id="L87">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;unhandledException&quot;;</span>
-<span class="nc" id="L88">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L89">    return (Throwable)throwable;</span>
+<span class="nc" id="L90">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;unhandledException&quot;;</span>
+<span class="nc" id="L91">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L92">    return (Throwable)throwable;</span>
   }
 
   /**
@@ -94,32 +97,32 @@ public class UnhandledJavaException extends ExceptionBase
    */
   @Override public   void printStackTrace(final PrintWriter s)
   {
-<span class="nc" id="L97">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
-<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L99">    throwable.printStackTrace(s);</span>
-<span class="nc" id="L100">    super.printStackTrace(s);</span>
-<span class="nc" id="L101">  }</span>
+<span class="nc" id="L100">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
+<span class="nc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L102">    throwable.printStackTrace(s);</span>
+<span class="nc" id="L103">    super.printStackTrace(s);</span>
+<span class="nc" id="L104">  }</span>
 
   /**
    * @return 
    */
   @Override public   void printStackTrace(final PrintStream s)
   {
-<span class="nc" id="L108">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
-<span class="nc" id="L109">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L110">    throwable.printStackTrace(s);</span>
-<span class="nc" id="L111">    super.printStackTrace(s);</span>
-<span class="nc" id="L112">  }</span>
+<span class="nc" id="L111">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
+<span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L113">    throwable.printStackTrace(s);</span>
+<span class="nc" id="L114">    super.printStackTrace(s);</span>
+<span class="nc" id="L115">  }</span>
 
   /**
    * @return 
    */
   @Override public   void printStackTrace()
   {
-<span class="nc" id="L119">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
-<span class="nc" id="L120">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L121">    throwable.printStackTrace();</span>
-<span class="nc" id="L122">    super.printStackTrace();</span>
-<span class="nc" id="L123">  }</span>
+<span class="nc" id="L122">    java.lang.String exitID = &quot;UnhandledJavaException&gt;&gt;printStackTrace&quot;;</span>
+<span class="nc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L124">    throwable.printStackTrace();</span>
+<span class="nc" id="L125">    super.printStackTrace();</span>
+<span class="nc" id="L126">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

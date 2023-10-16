@@ -30,30 +30,31 @@ import Hoot.Streams.*;
 {
 
 <span class="fc" id="L32">  protected static final String TextReport = String.from(&quot;%s w/o vowels = %s&quot;);</span>
+
   /**
    * @return 
    */
   @Override public   void runTest()
   {
-<span class="fc" id="L38">    java.lang.String exitID = &quot;TextStream&gt;&gt;runTest&quot;;</span>
-<span class="fc" id="L39">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L40">    String vowels = String.from(&quot;aeiou&quot;);</span>
+<span class="fc" id="L39">    java.lang.String exitID = &quot;TextStream&gt;&gt;runTest&quot;;</span>
+<span class="fc" id="L40">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L41">    String vowels = String.from(&quot;aeiou&quot;);</span>
 
-<span class="fc" id="L42">    String source = String.from(&quot;abcdefghijklmnopqrstuvwxyz&quot;);</span>
+<span class="fc" id="L43">    String source = String.from(&quot;abcdefghijklmnopqrstuvwxyz&quot;);</span>
 
-<span class="fc" id="L44">    TextReadStream iStream = source.readStream();</span>
+<span class="fc" id="L45">    TextReadStream iStream = source.readStream();</span>
 
-<span class="fc" id="L46">    TextWriteStream oStream = String.type().writeStream(source.size());</span>
-<span class="fc" id="L47">    Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L48">      return iStream.atEnd();</span>
-<span class="fc" id="L49">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L47">    TextWriteStream oStream = String.type().writeStream(source.size());</span>
+<span class="fc" id="L48">    Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L49">      return iStream.atEnd();</span>
+<span class="fc" id="L50">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L51">    Character c = iStream.next();</span>
-<span class="fc" id="L52">    vowels.includes(c).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="fc" id="L53">      oStream.nextPut(c);</span>
-<span class="fc" id="L54">    }, &quot;&quot;));</span>
+<span class="fc" id="L52">    Character c = iStream.next();</span>
+<span class="fc" id="L53">    vowels.includes(c).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L54">      oStream.nextPut(c);</span>
 <span class="fc" id="L55">    }, &quot;&quot;));</span>
-<span class="fc" id="L56">    this.log().printLine(TextReport.formatWith(source, oStream.contents()));</span>
-<span class="fc" id="L57">  }</span>
+<span class="fc" id="L56">    }, &quot;&quot;));</span>
+<span class="fc" id="L57">    this.log().printLine(TextReport.formatWith(source, oStream.contents()));</span>
+<span class="fc" id="L58">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

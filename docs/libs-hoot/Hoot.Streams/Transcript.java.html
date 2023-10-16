@@ -34,14 +34,15 @@ import Smalltalk.Collections.ReadableString;
 {
 
 <span class="fc" id="L36">  public static final Transcript Instance = new Transcript();</span>
+
   /**
    * @return 
    */
   public static   Transcript log()
   {
-<span class="fc" id="L42">    java.lang.String exitID = &quot;Transcript&gt;&gt;$log&quot;;</span>
-<span class="fc" id="L43">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L44">    return (Transcript)Instance;</span>
+<span class="fc" id="L43">    java.lang.String exitID = &quot;Transcript&gt;&gt;$log&quot;;</span>
+<span class="fc" id="L44">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L45">    return (Transcript)Instance;</span>
   }
 
   /**
@@ -49,10 +50,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript printLine()
   {
-<span class="nc" id="L52">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
-<span class="nc" id="L53">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L54">    this.cr();</span>
-<span class="nc" id="L55">    return (Transcript)this;</span>
+<span class="nc" id="L53">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
+<span class="nc" id="L54">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L55">    this.cr();</span>
+<span class="nc" id="L56">    return (Transcript)this;</span>
   }
 
   /**
@@ -60,10 +61,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript printLine(final CharSequence text)
   {
-<span class="fc" id="L63">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
-<span class="fc" id="L64">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L65">    Primitive.printLine(text.toString());</span>
-<span class="fc" id="L66">    return (Transcript)this;</span>
+<span class="fc" id="L64">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
+<span class="fc" id="L65">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L66">    Primitive.printLine(text.toString());</span>
+<span class="fc" id="L67">    return (Transcript)this;</span>
   }
 
   /**
@@ -71,10 +72,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript printLine(final ReadableString text)
   {
-<span class="fc" id="L74">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
-<span class="fc" id="L75">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L76">    this.printLine(((String)text));</span>
-<span class="fc" id="L77">    return (Transcript)this;</span>
+<span class="fc" id="L75">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
+<span class="fc" id="L76">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L77">    this.printLine(((String)text));</span>
+<span class="fc" id="L78">    return (Transcript)this;</span>
   }
 
   /**
@@ -82,10 +83,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript printLine(final String text)
   {
-<span class="fc" id="L85">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
-<span class="fc" id="L86">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L87">    Primitive.printLine(text.primitiveString());</span>
-<span class="fc" id="L88">    return (Transcript)this;</span>
+<span class="fc" id="L86">    java.lang.String exitID = &quot;Transcript&gt;&gt;printLine&quot;;</span>
+<span class="fc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L88">    Primitive.printLine(text.primitiveString());</span>
+<span class="fc" id="L89">    return (Transcript)this;</span>
   }
 
   /**
@@ -93,10 +94,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript print(final CharSequence text)
   {
-<span class="nc" id="L96">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
-<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L98">    Primitive.printLine(text.toString());</span>
-<span class="nc" id="L99">    return (Transcript)this;</span>
+<span class="nc" id="L97">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
+<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L99">    Primitive.printLine(text.toString());</span>
+<span class="nc" id="L100">    return (Transcript)this;</span>
   }
 
   /**
@@ -104,10 +105,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript print(final ReadableString text)
   {
-<span class="nc" id="L107">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
-<span class="nc" id="L108">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L109">    this.print(((String)text));</span>
-<span class="nc" id="L110">    return (Transcript)this;</span>
+<span class="nc" id="L108">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
+<span class="nc" id="L109">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L110">    this.print(((String)text));</span>
+<span class="nc" id="L111">    return (Transcript)this;</span>
   }
 
   /**
@@ -115,10 +116,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript print(final String text)
   {
-<span class="fc" id="L118">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
-<span class="fc" id="L119">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L120">    Primitive.print(text.primitiveString());</span>
-<span class="fc" id="L121">    return (Transcript)this;</span>
+<span class="fc" id="L119">    java.lang.String exitID = &quot;Transcript&gt;&gt;print&quot;;</span>
+<span class="fc" id="L120">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L121">    Primitive.print(text.primitiveString());</span>
+<span class="fc" id="L122">    return (Transcript)this;</span>
   }
 
   /**
@@ -126,10 +127,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript cr()
   {
-<span class="fc" id="L129">    java.lang.String exitID = &quot;Transcript&gt;&gt;cr&quot;;</span>
-<span class="fc" id="L130">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L131">    this.print(this.lineSeparator());</span>
-<span class="fc" id="L132">    return (Transcript)this;</span>
+<span class="fc" id="L130">    java.lang.String exitID = &quot;Transcript&gt;&gt;cr&quot;;</span>
+<span class="fc" id="L131">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L132">    this.print(this.lineSeparator());</span>
+<span class="fc" id="L133">    return (Transcript)this;</span>
   }
 
   /**
@@ -137,10 +138,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript tab()
   {
-<span class="nc" id="L140">    java.lang.String exitID = &quot;Transcript&gt;&gt;tab&quot;;</span>
-<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L142">    this.print(Character.type().tab().asString());</span>
-<span class="nc" id="L143">    return (Transcript)this;</span>
+<span class="nc" id="L141">    java.lang.String exitID = &quot;Transcript&gt;&gt;tab&quot;;</span>
+<span class="nc" id="L142">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L143">    this.print(Character.type().tab().asString());</span>
+<span class="nc" id="L144">    return (Transcript)this;</span>
   }
 
   /**
@@ -148,10 +149,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript space()
   {
-<span class="fc" id="L151">    java.lang.String exitID = &quot;Transcript&gt;&gt;space&quot;;</span>
-<span class="fc" id="L152">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L153">    this.print(Character.type().space().asString());</span>
-<span class="fc" id="L154">    return (Transcript)this;</span>
+<span class="fc" id="L152">    java.lang.String exitID = &quot;Transcript&gt;&gt;space&quot;;</span>
+<span class="fc" id="L153">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L154">    this.print(Character.type().space().asString());</span>
+<span class="fc" id="L155">    return (Transcript)this;</span>
   }
 
   /**
@@ -159,10 +160,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript quote()
   {
-<span class="nc" id="L162">    java.lang.String exitID = &quot;Transcript&gt;&gt;quote&quot;;</span>
-<span class="nc" id="L163">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L164">    this.print(Character.type().quote().asString());</span>
-<span class="nc" id="L165">    return (Transcript)this;</span>
+<span class="nc" id="L163">    java.lang.String exitID = &quot;Transcript&gt;&gt;quote&quot;;</span>
+<span class="nc" id="L164">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L165">    this.print(Character.type().quote().asString());</span>
+<span class="nc" id="L166">    return (Transcript)this;</span>
   }
 
   /**
@@ -170,9 +171,9 @@ import Smalltalk.Collections.ReadableString;
    */
   public   String lineSeparator()
   {
-<span class="fc" id="L173">    java.lang.String exitID = &quot;Transcript&gt;&gt;lineSeparator&quot;;</span>
-<span class="fc" id="L174">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L175">    return (String)WriteStream.type().lineSeparator();</span>
+<span class="fc" id="L174">    java.lang.String exitID = &quot;Transcript&gt;&gt;lineSeparator&quot;;</span>
+<span class="fc" id="L175">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L176">    return (String)WriteStream.type().lineSeparator();</span>
   }
 
   /**
@@ -180,9 +181,9 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript yourself()
   {
-<span class="nc" id="L183">    java.lang.String exitID = &quot;Transcript&gt;&gt;yourself&quot;;</span>
-<span class="nc" id="L184">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L185">    return (Transcript)this;</span>
+<span class="nc" id="L184">    java.lang.String exitID = &quot;Transcript&gt;&gt;yourself&quot;;</span>
+<span class="nc" id="L185">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L186">    return (Transcript)this;</span>
   }
 
   /**
@@ -190,17 +191,17 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript reportSecs_fromTest(final String text, final Closure testBlock)
   {
-<span class="nc" id="L193">    java.lang.String exitID = &quot;Transcript&gt;&gt;reportSecs_fromTest&quot;;</span>
-<span class="nc" id="L194">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L195">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRun());</span>
+<span class="nc" id="L194">    java.lang.String exitID = &quot;Transcript&gt;&gt;reportSecs_fromTest&quot;;</span>
+<span class="nc" id="L195">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L196">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRun());</span>
     {
-<span class="nc" id="L197">    Transcript prime = this;</span>
-<span class="nc" id="L198">    prime.print(text); </span>
-<span class="nc" id="L199">    prime.print((duration.divideWith(((Float)Float.from(1000.0f)))).printString()); </span>
+<span class="nc" id="L198">    Transcript prime = this;</span>
+<span class="nc" id="L199">    prime.print(text); </span>
+<span class="nc" id="L200">    prime.print((duration.divideWith(((Float)Float.from(1000.0f)))).printString()); </span>
 
-<span class="nc" id="L201">    prime.printLine(String.from(&quot; secs&quot;));</span>
+<span class="nc" id="L202">    prime.printLine(String.from(&quot; secs&quot;));</span>
     };
-<span class="nc" id="L203">    return (Transcript)this;</span>
+<span class="nc" id="L204">    return (Transcript)this;</span>
   }
 
   /**
@@ -208,17 +209,17 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript reportMsecs_fromTest(final String text, final Closure testBlock)
   {
-<span class="nc" id="L211">    java.lang.String exitID = &quot;Transcript&gt;&gt;reportMsecs_fromTest&quot;;</span>
-<span class="nc" id="L212">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L213">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRun());</span>
+<span class="nc" id="L212">    java.lang.String exitID = &quot;Transcript&gt;&gt;reportMsecs_fromTest&quot;;</span>
+<span class="nc" id="L213">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L214">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRun());</span>
     {
-<span class="nc" id="L215">    Transcript prime = this;</span>
-<span class="nc" id="L216">    prime.print(text); </span>
-<span class="nc" id="L217">    prime.print(duration.printString()); </span>
+<span class="nc" id="L216">    Transcript prime = this;</span>
+<span class="nc" id="L217">    prime.print(text); </span>
+<span class="nc" id="L218">    prime.print(duration.printString()); </span>
 
-<span class="nc" id="L219">    prime.printLine(String.from(&quot; msecs&quot;));</span>
+<span class="nc" id="L220">    prime.printLine(String.from(&quot; msecs&quot;));</span>
     };
-<span class="nc" id="L221">    return (Transcript)this;</span>
+<span class="nc" id="L222">    return (Transcript)this;</span>
   }
 
   /**
@@ -226,10 +227,10 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript report_afterTest(final String text, final Closure testBlock)
   {
-<span class="nc" id="L229">    java.lang.String exitID = &quot;Transcript&gt;&gt;report_afterTest&quot;;</span>
-<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L231">    this.report_after_timesRepeat(text, SmallInteger.from(1), testBlock);</span>
-<span class="nc" id="L232">    return (Transcript)this;</span>
+<span class="nc" id="L230">    java.lang.String exitID = &quot;Transcript&gt;&gt;report_afterTest&quot;;</span>
+<span class="nc" id="L231">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L232">    this.report_after_timesRepeat(text, SmallInteger.from(1), testBlock);</span>
+<span class="nc" id="L233">    return (Transcript)this;</span>
   }
 
   /**
@@ -237,27 +238,27 @@ import Smalltalk.Collections.ReadableString;
    */
   public   Transcript report_after_timesRepeat(final String text, final Integer count, final Closure testBlock)
   {
-<span class="nc" id="L240">    java.lang.String exitID = &quot;Transcript&gt;&gt;report_after_timesRepeat&quot;;</span>
-<span class="nc" id="L241">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L242">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRepeat(count));</span>
-<span class="nc" id="L243">    (count.moreThan(SmallInteger.from(1))).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L241">    java.lang.String exitID = &quot;Transcript&gt;&gt;report_after_timesRepeat&quot;;</span>
+<span class="nc" id="L242">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L243">    LongInteger duration = LongInteger.from(testBlock.millisecondsToRepeat(count));</span>
+<span class="nc" id="L244">    (count.moreThan(SmallInteger.from(1))).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
       {
-<span class="nc" id="L245">    Transcript prime = this;</span>
-<span class="nc" id="L246">    prime.print(text); </span>
-<span class="nc" id="L247">    prime.print((duration.divideWith(((Float)Float.from(1000.0f)))).printString()); </span>
+<span class="nc" id="L246">    Transcript prime = this;</span>
+<span class="nc" id="L247">    prime.print(text); </span>
+<span class="nc" id="L248">    prime.print((duration.divideWith(((Float)Float.from(1000.0f)))).printString()); </span>
 
-<span class="nc" id="L249">    prime.printLine(String.from(&quot; secs&quot;));</span>
+<span class="nc" id="L250">    prime.printLine(String.from(&quot; secs&quot;));</span>
     };
-<span class="nc" id="L251">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L252">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
       {
-<span class="nc" id="L253">    Transcript prime = this;</span>
-<span class="nc" id="L254">    prime.print(text); </span>
-<span class="nc" id="L255">    prime.print(duration.printString()); </span>
+<span class="nc" id="L254">    Transcript prime = this;</span>
+<span class="nc" id="L255">    prime.print(text); </span>
+<span class="nc" id="L256">    prime.print(duration.printString()); </span>
 
-<span class="nc" id="L257">    prime.printLine(String.from(&quot; msecs&quot;));</span>
+<span class="nc" id="L258">    prime.printLine(String.from(&quot; msecs&quot;));</span>
     };
-<span class="nc" id="L259">    }, &quot;&quot;));</span>
-<span class="nc" id="L260">    return (Transcript)this;</span>
+<span class="nc" id="L260">    }, &quot;&quot;));</span>
+<span class="nc" id="L261">    return (Transcript)this;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

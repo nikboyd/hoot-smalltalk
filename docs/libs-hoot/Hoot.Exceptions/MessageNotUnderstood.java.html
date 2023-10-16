@@ -27,43 +27,45 @@ import Hoot.Collections.String;
 
 public class MessageNotUnderstood extends ControlError
 {
-<span class="nc" id="L30">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L31">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends ControlError.Metaclass
   {
-<span class="nc" id="L34">    static final MessageNotUnderstood.Metaclass $class = new MessageNotUnderstood.Metaclass();</span>
+<span class="fc" id="L35">    static final MessageNotUnderstood.Metaclass $class = new MessageNotUnderstood.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L36">      this(MessageNotUnderstood.Metaclass.class);</span>
-<span class="nc" id="L37">    }</span>
+<span class="fc" id="L37">      this(MessageNotUnderstood.Metaclass.class);</span>
+<span class="fc" id="L38">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L40">      super(aClass);</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L41">      super(aClass);</span>
+<span class="fc" id="L42">    }</span>
 
-<span class="nc" id="L43">    @Override public java.lang.Class outerClass() { return MessageNotUnderstood.class; }</span>
+<span class="fc" id="L44">    @Override public java.lang.Class outerClass() { return MessageNotUnderstood.class; }</span>
 
   }
 
 
   protected MessageSend message;
+
   /**
    * 
    */
   public    MessageNotUnderstood(final MessageSend messageSend)
-<span class="nc" id="L53">  {</span>
-<span class="nc" id="L54">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;MessageNotUnderstood&quot;;</span>
-<span class="nc" id="L55">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L56">     message = messageSend;</span>
-<span class="nc" id="L57">  }</span>
+<span class="nc" id="L55">  {</span>
+<span class="nc" id="L56">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;MessageNotUnderstood&quot;;</span>
+<span class="nc" id="L57">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L58">     message = messageSend;</span>
+<span class="nc" id="L59">  }</span>
 
   /**
    * @return 
    */
   public   MessageSend message()
   {
-<span class="nc" id="L64">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;message&quot;;</span>
-<span class="nc" id="L65">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L66">    return (MessageSend)message;</span>
+<span class="nc" id="L66">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;message&quot;;</span>
+<span class="nc" id="L67">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L68">    return (MessageSend)message;</span>
   }
 
   /**
@@ -71,9 +73,9 @@ public class MessageNotUnderstood extends ControlError
    */
   public   Object receiver()
   {
-<span class="nc" id="L74">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;receiver&quot;;</span>
-<span class="nc" id="L75">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L76">    return (Object)((Object)message.receiver());</span>
+<span class="nc" id="L76">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;receiver&quot;;</span>
+<span class="nc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L78">    return (Object)((Object)message.receiver());</span>
   }
 
   /**
@@ -81,9 +83,9 @@ public class MessageNotUnderstood extends ControlError
    */
   @Override public   Boolean isResumable()
   {
-<span class="nc" id="L84">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;isResumable&quot;;</span>
-<span class="nc" id="L85">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L86">    return (Boolean)True.literal();</span>
+<span class="nc" id="L86">    java.lang.String exitID = &quot;MessageNotUnderstood&gt;&gt;isResumable&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (Boolean)True.literal();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -36,90 +36,92 @@ import Hoot.Runtime.Behaviors.Invoke;
 
 <span class="fc" id="L37">public class HootRunner extends Object</span>
 {
-<span class="nc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L40">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L41">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass
   {
-<span class="nc" id="L43">    static final HootRunner.Metaclass $class = new HootRunner.Metaclass();</span>
+<span class="fc" id="L44">    static final HootRunner.Metaclass $class = new HootRunner.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L45">      this(HootRunner.Metaclass.class);</span>
-<span class="nc" id="L46">    }</span>
+<span class="fc" id="L46">      this(HootRunner.Metaclass.class);</span>
+<span class="fc" id="L47">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L49">      super(aClass);</span>
-<span class="nc" id="L50">    }</span>
+<span class="fc" id="L50">      super(aClass);</span>
+<span class="fc" id="L51">    }</span>
 
-<span class="nc" id="L52">    @Override public java.lang.Class outerClass() { return HootRunner.class; }</span>
+<span class="fc" id="L53">    @Override public java.lang.Class outerClass() { return HootRunner.class; }</span>
 
   }
 
 
-<span class="fc" id="L57">  protected static final HootRunner Runner = new HootRunner();</span>
+<span class="fc" id="L58">  protected static final HootRunner Runner = new HootRunner();</span>
+
   /**
    * @return 
    */
   public static   void main(final java.lang.String ... args)
   {
-<span class="fc" id="L63">    java.lang.String exitID = &quot;HootRunner&gt;&gt;$main&quot;;</span>
-<span class="fc" id="L64">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L65">    Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L66">      Runner.runWith(args);</span>
-<span class="fc" id="L67">    }, &quot;&quot;).runLoud();</span>
-<span class="fc" id="L68">  }</span>
+<span class="fc" id="L65">    java.lang.String exitID = &quot;HootRunner&gt;&gt;$main&quot;;</span>
+<span class="fc" id="L66">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L67">    Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L68">      Runner.runWith(args);</span>
+<span class="fc" id="L69">    }, &quot;&quot;).runLoud();</span>
+<span class="fc" id="L70">  }</span>
 
   /**
    * @return 
    */
   public   void runWith(final java.lang.String ... args)
   {
-<span class="fc" id="L75">    java.lang.String exitID = &quot;HootRunner&gt;&gt;runWith&quot;;</span>
-<span class="fc" id="L76">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L77">    List&lt;String&gt; argList = String.listWith(Utils.wrap(args));</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (argList.isEmpty()) {</span>
-<span class="fc" id="L79">      this.reportMissingClass();</span>
+<span class="fc" id="L77">    java.lang.String exitID = &quot;HootRunner&gt;&gt;runWith&quot;;</span>
+<span class="fc" id="L78">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L79">    List&lt;String&gt; argList = String.listWith(Utils.wrap(args));</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (argList.isEmpty()) {</span>
+<span class="fc" id="L81">      this.reportMissingClass();</span>
     }
     else {
-<span class="fc" id="L82">      String className = argList.remove(0);</span>
-<span class="fc" id="L83">      this.reportClass_with(className, argList);</span>
-<span class="fc" id="L84">      this.run_with(className, argList);</span>
+<span class="fc" id="L84">      String className = argList.remove(0);</span>
+<span class="fc" id="L85">      this.reportClass_with(className, argList);</span>
+<span class="fc" id="L86">      this.run_with(className, argList);</span>
     };
-<span class="fc" id="L86">  }</span>
+<span class="fc" id="L88">  }</span>
 
   /**
    * @return 
    */
   public   void run_with(final String className, final List&lt;String&gt; argList)
   {
-<span class="fc" id="L93">    java.lang.String exitID = &quot;HootRunner&gt;&gt;run_with&quot;;</span>
-<span class="fc" id="L94">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L95">    java.lang.Class aClass = TypeName.findPrimitiveClass(className.primitiveString());</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    if (MultiValuable.type().isAssignableFrom(aClass)) {</span>
-<span class="fc" id="L97">      this.runNew_with(className, argList);</span>
+<span class="fc" id="L95">    java.lang.String exitID = &quot;HootRunner&gt;&gt;run_with&quot;;</span>
+<span class="fc" id="L96">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L97">    java.lang.Class aClass = TypeName.findPrimitiveClass(className.primitiveString());</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">    if (MultiValuable.type().isAssignableFrom(aClass)) {</span>
+<span class="fc" id="L99">      this.runNew_with(className, argList);</span>
     };
-<span class="fc" id="L99">  }</span>
+<span class="fc" id="L101">  }</span>
 
   /**
    * @return 
    */
   public   void runNew_with(final String className, final List&lt;String&gt; argList)
   {
-<span class="fc" id="L106">    java.lang.String exitID = &quot;HootRunner&gt;&gt;runNew_with&quot;;</span>
-<span class="fc" id="L107">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L108">    List&lt;java.lang.Object&gt; args = new ArrayList();</span>
-<span class="fc" id="L109">    args.addAll(argList);</span>
+<span class="fc" id="L108">    java.lang.String exitID = &quot;HootRunner&gt;&gt;runNew_with&quot;;</span>
+<span class="fc" id="L109">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L110">    List&lt;java.lang.Object&gt; args = new ArrayList();</span>
+<span class="fc" id="L111">    args.addAll(argList);</span>
 
-<span class="fc" id="L111">    MultiValuable mv = Invoke.with().with(Selector.named(className.primitiveString())).call();</span>
-<span class="fc" id="L112">    mv.runWith(args);</span>
-<span class="fc" id="L113">  }</span>
+<span class="fc" id="L113">    MultiValuable mv = Invoke.with().with(Selector.named(className.primitiveString())).call();</span>
+<span class="fc" id="L114">    mv.runWith(args);</span>
+<span class="fc" id="L115">  }</span>
 
   /**
    * @return 
    */
   public   Transcript log()
   {
-<span class="fc" id="L120">    java.lang.String exitID = &quot;HootRunner&gt;&gt;log&quot;;</span>
-<span class="fc" id="L121">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L122">    return (Transcript)Transcript.log();</span>
+<span class="fc" id="L122">    java.lang.String exitID = &quot;HootRunner&gt;&gt;log&quot;;</span>
+<span class="fc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L124">    return (Transcript)Transcript.log();</span>
   }
 
   /**
@@ -127,10 +129,10 @@ import Hoot.Runtime.Behaviors.Invoke;
    */
   public   HootRunner reportMissingClass()
   {
-<span class="fc" id="L130">    java.lang.String exitID = &quot;HootRunner&gt;&gt;reportMissingClass&quot;;</span>
-<span class="fc" id="L131">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L132">    this.log().printLine(String.from(&quot;!! please specify a class name to run !!&quot;));</span>
-<span class="fc" id="L133">    return (HootRunner)this;</span>
+<span class="fc" id="L132">    java.lang.String exitID = &quot;HootRunner&gt;&gt;reportMissingClass&quot;;</span>
+<span class="fc" id="L133">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L134">    this.log().printLine(String.from(&quot;!! please specify a class name to run !!&quot;));</span>
+<span class="fc" id="L135">    return (HootRunner)this;</span>
   }
 
   /**
@@ -138,12 +140,12 @@ import Hoot.Runtime.Behaviors.Invoke;
    */
   public   HootRunner reportClass_with(final String className, final List&lt;String&gt; argList)
   {
-<span class="fc" id="L141">    java.lang.String exitID = &quot;HootRunner&gt;&gt;reportClass_with&quot;;</span>
-<span class="fc" id="L142">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L143">    this.log().cr();</span>
-<span class="fc" id="L144">    this.log().print(String.from(&quot;running: &quot;).append(className).append(String.from(&quot; with: &quot;)));</span>
-<span class="fc" id="L145">    this.log().printLine(argList.toString());</span>
-<span class="fc" id="L146">    return (HootRunner)this;</span>
+<span class="fc" id="L143">    java.lang.String exitID = &quot;HootRunner&gt;&gt;reportClass_with&quot;;</span>
+<span class="fc" id="L144">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L145">    this.log().cr();</span>
+<span class="fc" id="L146">    this.log().print(String.from(&quot;running: &quot;).append(className).append(String.from(&quot; with: &quot;)));</span>
+<span class="fc" id="L147">    this.log().printLine(argList.toString());</span>
+<span class="fc" id="L148">    return (HootRunner)this;</span>
   }
 
   /**
@@ -151,9 +153,9 @@ import Hoot.Runtime.Behaviors.Invoke;
    */
   public   String locationPath()
   {
-<span class="nc" id="L154">    java.lang.String exitID = &quot;HootRunner&gt;&gt;locationPath&quot;;</span>
-<span class="nc" id="L155">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L156">    return (String)String.from(Primitive.locateClass(this.getClass()).toString());</span>
+<span class="nc" id="L156">    java.lang.String exitID = &quot;HootRunner&gt;&gt;locationPath&quot;;</span>
+<span class="nc" id="L157">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L158">    return (String)String.from(Primitive.locateClass(this.getClass()).toString());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

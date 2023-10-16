@@ -31,30 +31,32 @@ import Smalltalk.Magnitudes.Fractional;
 
 public class Fraction extends Rational implements Fractional
 {
-<span class="fc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="fc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="fc" id="L35">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L36">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Rational.Metaclass implements Fractional.Metatype
   {
-<span class="fc" id="L38">    static final Fraction.Metaclass $class = new Fraction.Metaclass();</span>
+<span class="fc" id="L39">    static final Fraction.Metaclass $class = new Fraction.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L40">      this(Fraction.Metaclass.class);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L41">      this(Fraction.Metaclass.class);</span>
+<span class="fc" id="L42">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L44">      super(aClass);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L45">      super(aClass);</span>
+<span class="fc" id="L46">    }</span>
 
-<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return Fraction.class; }</span>
+<span class="fc" id="L48">    @Override public java.lang.Class outerClass() { return Fraction.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   Rational coerce(final Number aNumber)
     {
-<span class="nc" id="L54">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;coerce&quot;;</span>
-<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L57">      return (Rational)f0.exit(exitID, aNumber.asFraction());</span>
+<span class="nc" id="L56">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L57">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L58">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L59">      return (Rational)f0.exit(exitID, aNumber.asFraction());</span>
       });
     }
 
@@ -63,10 +65,10 @@ public class Fraction extends Rational implements Fractional
      */
     public   Fraction numerator_denominator(final LongInteger upper, final LongInteger lower)
     {
-<span class="fc" id="L66">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;numerator_denominator&quot;;</span>
-<span class="fc" id="L67">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L68">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L69">      return (Fraction)f0.exit(exitID, new Fraction(((Integer)upper), ((Integer)lower)));</span>
+<span class="fc" id="L68">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;numerator_denominator&quot;;</span>
+<span class="fc" id="L69">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L70">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L71">      return (Fraction)f0.exit(exitID, new Fraction(((Integer)upper), ((Integer)lower)));</span>
       });
     }
 
@@ -75,10 +77,10 @@ public class Fraction extends Rational implements Fractional
      */
     public   Fraction numerator_denominator(final Ordinal upper, final Ordinal lower)
     {
-<span class="fc" id="L78">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;numerator_denominator&quot;;</span>
-<span class="fc" id="L79">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L80">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L81">      return (Fraction)f0.exit(exitID, this.rationalized_over(((Integer)upper), ((Integer)lower)));</span>
+<span class="fc" id="L80">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;numerator_denominator&quot;;</span>
+<span class="fc" id="L81">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L82">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L83">      return (Fraction)f0.exit(exitID, this.rationalized_over(((Integer)upper), ((Integer)lower)));</span>
       });
     }
 
@@ -87,12 +89,12 @@ public class Fraction extends Rational implements Fractional
      */
     public   Fraction rationalized_over(final Number upper, final Number lower)
     {
-<span class="fc" id="L90">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;rationalized_over&quot;;</span>
-<span class="fc" id="L91">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L92">      SmallInteger num = upper.truncated().asSmallInteger();</span>
+<span class="fc" id="L92">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;rationalized_over&quot;;</span>
+<span class="fc" id="L93">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L94">      SmallInteger num = upper.truncated().asSmallInteger();</span>
 
-<span class="fc" id="L94">      SmallInteger den = lower.truncated().asSmallInteger();</span>
-<span class="fc" id="L95">      return this.rationalized(Primitive.rationalize(num.intValue(), den.intValue()));</span>
+<span class="fc" id="L96">      SmallInteger den = lower.truncated().asSmallInteger();</span>
+<span class="fc" id="L97">      return this.rationalized(Primitive.rationalize(num.intValue(), den.intValue()));</span>
     }
 
     /**
@@ -100,66 +102,67 @@ public class Fraction extends Rational implements Fractional
      */
     public   Fraction rationalized(final java.lang.Integer ... parts)
     {
-<span class="fc" id="L103">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;rationalized&quot;;</span>
-<span class="fc" id="L104">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L105">      List&lt;java.lang.Integer&gt; ps = Utils.wrap(parts);</span>
-<span class="fc" id="L106">      return new Fraction(ps.get(0), ps.get(1));</span>
+<span class="fc" id="L105">      java.lang.String exitID = &quot;FractionMetatype&gt;&gt;rationalized&quot;;</span>
+<span class="fc" id="L106">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L107">      List&lt;java.lang.Integer&gt; ps = Utils.wrap(parts);</span>
+<span class="fc" id="L108">      return new Fraction(ps.get(0), ps.get(1));</span>
     }
   }
 
 
-<span class="fc" id="L111">  protected static SmallInteger Generality = SmallInteger.from(40);</span>
-<span class="pc" id="L112">  protected Integer numerator = SmallInteger.from(0);</span>
-<span class="pc" id="L113">  protected Integer denominator = SmallInteger.from(1);</span>
+<span class="fc" id="L113">  protected static SmallInteger Generality = SmallInteger.from(40);</span>
+<span class="pc" id="L114">  protected Integer numerator = SmallInteger.from(0);</span>
+<span class="pc" id="L115">  protected Integer denominator = SmallInteger.from(1);</span>
+
   /**
    * 
    */
   public    Fraction()
-<span class="nc" id="L118">  {</span>
-<span class="nc" id="L119">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
-<span class="nc" id="L120">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L121">  }</span>
+<span class="nc" id="L121">  {</span>
+<span class="nc" id="L122">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
+<span class="nc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L124">  }</span>
 
   /**
    * 
    */
   public    Fraction(final Integer upper)
-<span class="fc" id="L127">  {</span>
-<span class="fc" id="L128">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
-<span class="fc" id="L129">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L130">     numerator = upper;</span>
-<span class="fc" id="L131">  }</span>
+<span class="fc" id="L130">  {</span>
+<span class="fc" id="L131">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
+<span class="fc" id="L132">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L133">     numerator = upper;</span>
+<span class="fc" id="L134">  }</span>
 
   /**
    * 
    */
   public    Fraction(final int upper, final int lower)
   {
-<span class="fc" id="L138">    this(SmallInteger.from(upper), SmallInteger.from(lower));</span>
-<span class="fc" id="L139">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
-<span class="fc" id="L140">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L141">  }</span>
+<span class="fc" id="L141">    this(SmallInteger.from(upper), SmallInteger.from(lower));</span>
+<span class="fc" id="L142">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
+<span class="fc" id="L143">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L144">  }</span>
 
   /**
    * 
    */
   public    Fraction(final Integer upper, final Integer lower)
-<span class="fc" id="L147">  {</span>
-<span class="fc" id="L148">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
-<span class="fc" id="L149">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L150">     numerator = upper;</span>
+<span class="fc" id="L150">  {</span>
+<span class="fc" id="L151">    java.lang.String exitID = &quot;Fraction&gt;&gt;Fraction&quot;;</span>
+<span class="fc" id="L152">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L153">     numerator = upper;</span>
 
-<span class="fc" id="L152">     denominator = lower;</span>
-<span class="fc" id="L153">  }</span>
+<span class="fc" id="L155">     denominator = lower;</span>
+<span class="fc" id="L156">  }</span>
 
   /**
    * @return 
    */
   @Override public   Integer numerator()
   {
-<span class="fc" id="L160">    java.lang.String exitID = &quot;Fraction&gt;&gt;numerator&quot;;</span>
-<span class="fc" id="L161">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L162">    return (Integer)numerator;</span>
+<span class="fc" id="L163">    java.lang.String exitID = &quot;Fraction&gt;&gt;numerator&quot;;</span>
+<span class="fc" id="L164">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L165">    return (Integer)numerator;</span>
   }
 
   /**
@@ -167,9 +170,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Integer denominator()
   {
-<span class="fc" id="L170">    java.lang.String exitID = &quot;Fraction&gt;&gt;denominator&quot;;</span>
-<span class="fc" id="L171">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L172">    return (Integer)denominator;</span>
+<span class="fc" id="L173">    java.lang.String exitID = &quot;Fraction&gt;&gt;denominator&quot;;</span>
+<span class="fc" id="L174">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L175">    return (Integer)denominator;</span>
   }
 
   /**
@@ -177,13 +180,13 @@ public class Fraction extends Rational implements Fractional
    */
   public   Rational minus(final Rational aNumber)
   {
-<span class="nc" id="L180">    java.lang.String exitID = &quot;Fraction&gt;&gt;minus&quot;;</span>
-<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L182">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L183">    (denominator.equals(aNumber.denominator())).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L184">      return (Rational)f0.exit(exitID, this.$class().numerator_denominator((numerator.minus(aNumber.numerator())), denominator));</span>
+<span class="nc" id="L183">    java.lang.String exitID = &quot;Fraction&gt;&gt;minus&quot;;</span>
+<span class="nc" id="L184">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L185">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L186">    (denominator.equals(aNumber.denominator())).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L187">      return (Rational)f0.exit(exitID, this.$class().numerator_denominator((numerator.minus(aNumber.numerator())), denominator));</span>
     }, &quot;&quot;));
-<span class="nc" id="L186">    return (Rational)f0.exit(exitID, this.$class().numerator_denominator(this.crossDiff(aNumber), this.underProduct(aNumber)));</span>
+<span class="nc" id="L189">    return (Rational)f0.exit(exitID, this.$class().numerator_denominator(this.crossDiff(aNumber), this.underProduct(aNumber)));</span>
     });
   }
 
@@ -192,13 +195,13 @@ public class Fraction extends Rational implements Fractional
    */
   public   Rational plus(final Rational aNumber)
   {
-<span class="fc" id="L195">    java.lang.String exitID = &quot;Fraction&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L196">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L197">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L198">    (denominator.equals(aNumber.denominator())).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L199">      return (Rational)f0.exit(exitID, this.$class().numerator_denominator((numerator.plus(aNumber.numerator())), denominator));</span>
+<span class="fc" id="L198">    java.lang.String exitID = &quot;Fraction&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L199">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L200">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L201">    (denominator.equals(aNumber.denominator())).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L202">      return (Rational)f0.exit(exitID, this.$class().numerator_denominator((numerator.plus(aNumber.numerator())), denominator));</span>
     }, &quot;&quot;));
-<span class="fc" id="L201">    return (Rational)f0.exit(exitID, this.$class().numerator_denominator(this.crossSum(aNumber), this.underProduct(aNumber)));</span>
+<span class="fc" id="L204">    return (Rational)f0.exit(exitID, this.$class().numerator_denominator(this.crossSum(aNumber), this.underProduct(aNumber)));</span>
     });
   }
 
@@ -207,9 +210,9 @@ public class Fraction extends Rational implements Fractional
    */
   public   Rational times(final Rational aNumber)
   {
-<span class="nc" id="L210">    java.lang.String exitID = &quot;Fraction&gt;&gt;times&quot;;</span>
-<span class="nc" id="L211">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L212">    return (Rational)this.$class().numerator_denominator(this.overProduct(aNumber), this.underProduct(aNumber));</span>
+<span class="nc" id="L213">    java.lang.String exitID = &quot;Fraction&gt;&gt;times&quot;;</span>
+<span class="nc" id="L214">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L215">    return (Rational)this.$class().numerator_denominator(this.overProduct(aNumber), this.underProduct(aNumber));</span>
   }
 
   /**
@@ -217,9 +220,9 @@ public class Fraction extends Rational implements Fractional
    */
   public   Rational divideWith(final Rational aNumber)
   {
-<span class="nc" id="L220">    java.lang.String exitID = &quot;Fraction&gt;&gt;divideWith&quot;;</span>
-<span class="nc" id="L221">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L222">    return (Rational)this.$class().numerator_denominator(this.crossProduct(aNumber), aNumber.crossProduct(this));</span>
+<span class="nc" id="L223">    java.lang.String exitID = &quot;Fraction&gt;&gt;divideWith&quot;;</span>
+<span class="nc" id="L224">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L225">    return (Rational)this.$class().numerator_denominator(this.crossProduct(aNumber), aNumber.crossProduct(this));</span>
   }
 
   /**
@@ -227,9 +230,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Number plus(final Numeric aNumber)
   {
-<span class="fc" id="L230">    java.lang.String exitID = &quot;Fraction&gt;&gt;plus&quot;;</span>
-<span class="fc" id="L231">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L232">    return (Number)(this.plus(((Rational)aNumber.asRational())));</span>
+<span class="fc" id="L233">    java.lang.String exitID = &quot;Fraction&gt;&gt;plus&quot;;</span>
+<span class="fc" id="L234">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L235">    return (Number)(this.plus(((Rational)aNumber.asRational())));</span>
   }
 
   /**
@@ -237,9 +240,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Number times(final Numeric aNumber)
   {
-<span class="nc" id="L240">    java.lang.String exitID = &quot;Fraction&gt;&gt;times&quot;;</span>
-<span class="nc" id="L241">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L242">    return (Number)(this.times(((Rational)aNumber.asRational())));</span>
+<span class="nc" id="L243">    java.lang.String exitID = &quot;Fraction&gt;&gt;times&quot;;</span>
+<span class="nc" id="L244">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L245">    return (Number)(this.times(((Rational)aNumber.asRational())));</span>
   }
 
   /**
@@ -247,9 +250,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Number divideWith(final Numeric aNumber)
   {
-<span class="nc" id="L250">    java.lang.String exitID = &quot;Fraction&gt;&gt;divideWith&quot;;</span>
-<span class="nc" id="L251">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L252">    return (Number)(this.divideWith(((Rational)aNumber.asRational())));</span>
+<span class="nc" id="L253">    java.lang.String exitID = &quot;Fraction&gt;&gt;divideWith&quot;;</span>
+<span class="nc" id="L254">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L255">    return (Number)(this.divideWith(((Rational)aNumber.asRational())));</span>
   }
 
   /**
@@ -257,9 +260,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Fraction asFraction()
   {
-<span class="nc" id="L260">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFraction&quot;;</span>
-<span class="nc" id="L261">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L262">    return (Fraction)this;</span>
+<span class="nc" id="L263">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFraction&quot;;</span>
+<span class="nc" id="L264">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L265">    return (Fraction)this;</span>
   }
 
   /**
@@ -267,9 +270,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Float asFloat()
   {
-<span class="fc" id="L270">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFloat&quot;;</span>
-<span class="fc" id="L271">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L272">    return (Float)Float.from(this.primitiveFloat());</span>
+<span class="fc" id="L273">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFloat&quot;;</span>
+<span class="fc" id="L274">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L275">    return (Float)Float.from(this.primitiveFloat());</span>
   }
 
   /**
@@ -277,9 +280,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Double asFloatD()
   {
-<span class="fc" id="L280">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFloatD&quot;;</span>
-<span class="fc" id="L281">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L282">    return (Double)Double.from(this.primitiveDouble());</span>
+<span class="fc" id="L283">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFloatD&quot;;</span>
+<span class="fc" id="L284">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L285">    return (Double)Double.from(this.primitiveDouble());</span>
   }
 
   /**
@@ -287,9 +290,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Integer generality()
   {
-<span class="nc" id="L290">    java.lang.String exitID = &quot;Fraction&gt;&gt;generality&quot;;</span>
-<span class="nc" id="L291">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L292">    return (Integer)Generality;</span>
+<span class="nc" id="L293">    java.lang.String exitID = &quot;Fraction&gt;&gt;generality&quot;;</span>
+<span class="nc" id="L294">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L295">    return (Integer)Generality;</span>
   }
 
   /**
@@ -297,9 +300,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   java.lang.Number elementaryNumber()
   {
-<span class="fc" id="L300">    java.lang.String exitID = &quot;Fraction&gt;&gt;elementaryNumber&quot;;</span>
-<span class="fc" id="L301">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L302">    return (java.lang.Number)this.primitiveDouble();</span>
+<span class="fc" id="L303">    java.lang.String exitID = &quot;Fraction&gt;&gt;elementaryNumber&quot;;</span>
+<span class="fc" id="L304">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L305">    return (java.lang.Number)this.primitiveDouble();</span>
   }
 
   /**
@@ -307,13 +310,13 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   long primitiveLong()
   {
-<span class="fc" id="L310">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveLong&quot;;</span>
-<span class="fc" id="L311">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L312">    java.lang.Double value = this.primitiveDouble();</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">    if ((value &lt; 0)) {</span>
-<span class="nc" id="L314">      return ((long)Math.ceil(value));</span>
+<span class="fc" id="L313">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveLong&quot;;</span>
+<span class="fc" id="L314">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L315">    java.lang.Double value = this.primitiveDouble();</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">    if ((value &lt; 0)) {</span>
+<span class="nc" id="L317">      return ((long)Math.ceil(value));</span>
     };
-<span class="fc" id="L316">    return (long)((long)Math.floor(value));</span>
+<span class="fc" id="L319">    return (long)((long)Math.floor(value));</span>
   }
 
   /**
@@ -321,9 +324,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   java.lang.Float primitiveFloat()
   {
-<span class="fc" id="L324">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveFloat&quot;;</span>
-<span class="fc" id="L325">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L326">    return (java.lang.Float)this.primitiveDouble().floatValue();</span>
+<span class="fc" id="L327">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveFloat&quot;;</span>
+<span class="fc" id="L328">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L329">    return (java.lang.Float)this.primitiveDouble().floatValue();</span>
   }
 
   /**
@@ -331,12 +334,12 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   java.lang.Double primitiveDouble()
   {
-<span class="fc" id="L334">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveDouble&quot;;</span>
-<span class="fc" id="L335">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L336">    java.lang.Double n = numerator.primitiveDouble();</span>
+<span class="fc" id="L337">    java.lang.String exitID = &quot;Fraction&gt;&gt;primitiveDouble&quot;;</span>
+<span class="fc" id="L338">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L339">    java.lang.Double n = numerator.primitiveDouble();</span>
 
-<span class="fc" id="L338">    java.lang.Double d = denominator.primitiveDouble();</span>
-<span class="fc" id="L339">    return (java.lang.Double)(n / d);</span>
+<span class="fc" id="L341">    java.lang.Double d = denominator.primitiveDouble();</span>
+<span class="fc" id="L342">    return (java.lang.Double)(n / d);</span>
   }
 
   /**
@@ -344,9 +347,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Fixed asFixedPoint(final Ordinal scale)
   {
-<span class="nc" id="L347">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFixedPoint&quot;;</span>
-<span class="nc" id="L348">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L349">    return (Fixed)this.scaledAt(((Integer)scale));</span>
+<span class="nc" id="L350">    java.lang.String exitID = &quot;Fraction&gt;&gt;asFixedPoint&quot;;</span>
+<span class="nc" id="L351">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L352">    return (Fixed)this.scaledAt(((Integer)scale));</span>
   }
 
   /**
@@ -354,9 +357,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Fixed asScaledDecimal(final Ordinal scale)
   {
-<span class="fc" id="L357">    java.lang.String exitID = &quot;Fraction&gt;&gt;asScaledDecimal&quot;;</span>
-<span class="fc" id="L358">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L359">    return (Fixed)this.scaledAt(((Integer)scale));</span>
+<span class="fc" id="L360">    java.lang.String exitID = &quot;Fraction&gt;&gt;asScaledDecimal&quot;;</span>
+<span class="fc" id="L361">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L362">    return (Fixed)this.scaledAt(((Integer)scale));</span>
   }
 
   /**
@@ -364,9 +367,9 @@ public class Fraction extends Rational implements Fractional
    */
   public   Fixed scaledZero()
   {
-<span class="nc" id="L367">    java.lang.String exitID = &quot;Fraction&gt;&gt;scaledZero&quot;;</span>
-<span class="nc" id="L368">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L369">    return (Fixed)new Fixed(numerator, denominator);</span>
+<span class="nc" id="L370">    java.lang.String exitID = &quot;Fraction&gt;&gt;scaledZero&quot;;</span>
+<span class="nc" id="L371">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L372">    return (Fixed)new Fixed(numerator, denominator);</span>
   }
 
   /**
@@ -374,9 +377,9 @@ public class Fraction extends Rational implements Fractional
    */
   public   Fixed scaledAt(final Integer scale)
   {
-<span class="fc" id="L377">    java.lang.String exitID = &quot;Fraction&gt;&gt;scaledAt&quot;;</span>
-<span class="fc" id="L378">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L379">    return (Fixed)new Fixed(numerator, denominator, scale);</span>
+<span class="fc" id="L380">    java.lang.String exitID = &quot;Fraction&gt;&gt;scaledAt&quot;;</span>
+<span class="fc" id="L381">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L382">    return (Fixed)new Fixed(numerator, denominator, scale);</span>
   }
 
   /**
@@ -384,14 +387,14 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   BigDecimal asDecimal()
   {
-<span class="fc" id="L387">    java.lang.String exitID = &quot;Fraction&gt;&gt;asDecimal&quot;;</span>
-<span class="fc" id="L388">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L389">    int n = numerator.printString().length();</span>
+<span class="fc" id="L390">    java.lang.String exitID = &quot;Fraction&gt;&gt;asDecimal&quot;;</span>
+<span class="fc" id="L391">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L392">    int n = numerator.printString().length();</span>
 
-<span class="fc" id="L391">    int d = denominator.printString().length();</span>
+<span class="fc" id="L394">    int d = denominator.printString().length();</span>
 
-<span class="fc" id="L393">    int r = 4;</span>
-<span class="fc" id="L394">    return (BigDecimal)numerator.asDecimal().divide(denominator.asDecimal(), Math.min(n, d), r);</span>
+<span class="fc" id="L396">    int r = 4;</span>
+<span class="fc" id="L397">    return (BigDecimal)numerator.asDecimal().divide(denominator.asDecimal(), Math.min(n, d), r);</span>
   }
 
   /**
@@ -399,9 +402,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Fraction negated()
   {
-<span class="nc" id="L402">    java.lang.String exitID = &quot;Fraction&gt;&gt;negated&quot;;</span>
-<span class="nc" id="L403">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L404">    return (Fraction)this.$class().numerator_denominator(numerator.negated(), denominator);</span>
+<span class="nc" id="L405">    java.lang.String exitID = &quot;Fraction&gt;&gt;negated&quot;;</span>
+<span class="nc" id="L406">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L407">    return (Fraction)this.$class().numerator_denominator(numerator.negated(), denominator);</span>
   }
 
   /**
@@ -409,9 +412,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Fraction reciprocal()
   {
-<span class="fc" id="L412">    java.lang.String exitID = &quot;Fraction&gt;&gt;reciprocal&quot;;</span>
-<span class="fc" id="L413">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L414">    return (Fraction)this.$class().numerator_denominator(denominator, numerator);</span>
+<span class="fc" id="L415">    java.lang.String exitID = &quot;Fraction&gt;&gt;reciprocal&quot;;</span>
+<span class="fc" id="L416">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L417">    return (Fraction)this.$class().numerator_denominator(denominator, numerator);</span>
   }
 
   /**
@@ -419,9 +422,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   Integer rounded()
   {
-<span class="fc" id="L422">    java.lang.String exitID = &quot;Fraction&gt;&gt;rounded&quot;;</span>
-<span class="fc" id="L423">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L424">    return (Integer)(this.plus((this.sign().divideWith(Duality)))).truncated();</span>
+<span class="fc" id="L425">    java.lang.String exitID = &quot;Fraction&gt;&gt;rounded&quot;;</span>
+<span class="fc" id="L426">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L427">    return (Integer)(this.plus((this.sign().divideWith(Duality)))).truncated();</span>
   }
 
   /**
@@ -429,9 +432,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   java.lang.String toString()
   {
-<span class="fc" id="L432">    java.lang.String exitID = &quot;Fraction&gt;&gt;toString&quot;;</span>
-<span class="fc" id="L433">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L434">    return (java.lang.String)this.printTerm().primitiveString();</span>
+<span class="fc" id="L435">    java.lang.String exitID = &quot;Fraction&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L436">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L437">    return (java.lang.String)this.printTerm().primitiveString();</span>
   }
 
   /**
@@ -439,9 +442,9 @@ public class Fraction extends Rational implements Fractional
    */
   @Override public   String printString()
   {
-<span class="fc" id="L442">    java.lang.String exitID = &quot;Fraction&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L443">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L444">    return (String)String.from(numerator.printString() + &quot; / &quot; + denominator.printString());</span>
+<span class="fc" id="L445">    java.lang.String exitID = &quot;Fraction&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L446">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L447">    return (String)String.from(numerator.printString() + &quot; / &quot; + denominator.printString());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -32,30 +32,32 @@ import Smalltalk.Magnitudes.Ordinal;
 
 public abstract class FileStream&lt;ElementType extends Object&gt; extends Object implements StreamedSequence&lt;ElementType&gt;
 {
-<span class="nc" id="L35">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L36">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L36">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L37">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass implements StreamedSequence.Metatype
   {
-<span class="fc" id="L39">    static final FileStream.Metaclass $class = new FileStream.Metaclass();</span>
+<span class="fc" id="L40">    static final FileStream.Metaclass $class = new FileStream.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L41">      this(FileStream.Metaclass.class);</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L42">      this(FileStream.Metaclass.class);</span>
+<span class="fc" id="L43">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L45">      super(aClass);</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L46">      super(aClass);</span>
+<span class="fc" id="L47">    }</span>
 
-<span class="fc" id="L48">    @Override public java.lang.Class outerClass() { return FileStream.class; }</span>
+<span class="fc" id="L49">    @Override public java.lang.Class outerClass() { return FileStream.class; }</span>
+
 
     /**
      * @return 
      */
     public   TextFileReadStream read(final String fileName)
     {
-<span class="fc" id="L55">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;read&quot;;</span>
-<span class="fc" id="L56">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L57">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L58">      return (TextFileReadStream)f0.exit(exitID, FileReadStream.type().read_type(fileName, Symbol.from(&quot;text&quot;)));</span>
+<span class="fc" id="L57">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;read&quot;;</span>
+<span class="fc" id="L58">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L59">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L60">      return (TextFileReadStream)f0.exit(exitID, FileReadStream.type().read_type(fileName, Symbol.from(&quot;text&quot;)));</span>
       });
     }
 
@@ -64,10 +66,10 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
      */
     public   TextFileWriteStream write(final String fileName)
     {
-<span class="fc" id="L67">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;write&quot;;</span>
-<span class="fc" id="L68">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L69">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L70">      return (TextFileWriteStream)f0.exit(exitID, this.write_mode(fileName, Symbol.from(&quot;create&quot;)));</span>
+<span class="fc" id="L69">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;write&quot;;</span>
+<span class="fc" id="L70">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L71">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L72">      return (TextFileWriteStream)f0.exit(exitID, this.write_mode(fileName, Symbol.from(&quot;create&quot;)));</span>
       });
     }
 
@@ -76,39 +78,40 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
      */
     public   TextFileWriteStream write_mode(final String fileName, final Symbol mode)
     {
-<span class="fc" id="L79">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;write_mode&quot;;</span>
-<span class="fc" id="L80">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L81">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L82">      return (TextFileWriteStream)f0.exit(exitID, FileWriteStream.type().write_mode_check_type(fileName, mode, False.literal(), Symbol.from(&quot;text&quot;)));</span>
+<span class="fc" id="L81">      java.lang.String exitID = &quot;FileStreamMetatype&gt;&gt;write_mode&quot;;</span>
+<span class="fc" id="L82">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L83">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L84">      return (TextFileWriteStream)f0.exit(exitID, FileWriteStream.type().write_mode_check_type(fileName, mode, False.literal(), Symbol.from(&quot;text&quot;)));</span>
       });
     }
   }
 
 
   protected RandomAccessFile file;
+
   /**
    * 
    */
   protected    FileStream(final RandomAccessFile primitiveFile)
-<span class="fc" id="L93">  {</span>
-<span class="fc" id="L94">    java.lang.String exitID = &quot;FileStream&gt;&gt;FileStream&quot;;</span>
-<span class="fc" id="L95">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L96">     file = primitiveFile;</span>
-<span class="fc" id="L97">  }</span>
+<span class="fc" id="L96">  {</span>
+<span class="fc" id="L97">    java.lang.String exitID = &quot;FileStream&gt;&gt;FileStream&quot;;</span>
+<span class="fc" id="L98">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L99">     file = primitiveFile;</span>
+<span class="fc" id="L100">  }</span>
 
   /**
    * @return 
    */
   public   FileStream close()
   {
-<span class="fc" id="L104">    java.lang.String exitID = &quot;FileStream&gt;&gt;close&quot;;</span>
-<span class="fc" id="L105">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L106">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L107">    Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L108">      file.close();</span>
-<span class="fc" id="L109">    return (FileStream)f0.exit(exitID, null);</span>
-<span class="fc" id="L110">    }, &quot;&quot;).runQuiet();</span>
-<span class="fc" id="L111">    return (FileStream)this;</span>
+<span class="fc" id="L107">    java.lang.String exitID = &quot;FileStream&gt;&gt;close&quot;;</span>
+<span class="fc" id="L108">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L109">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L110">    Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L111">      file.close();</span>
+<span class="fc" id="L112">    return (FileStream)f0.exit(exitID, null);</span>
+<span class="fc" id="L113">    }, &quot;&quot;).runQuiet();</span>
+<span class="fc" id="L114">    return (FileStream)this;</span>
     });
   }
 
@@ -117,15 +120,15 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   Boolean atEnd()
   {
-<span class="fc" id="L120">    java.lang.String exitID = &quot;FileStream&gt;&gt;atEnd&quot;;</span>
-<span class="fc" id="L121">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L122">    return (Boolean)Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L123">    java.lang.String exitID = &quot;FileStream&gt;&gt;atEnd&quot;;</span>
+<span class="fc" id="L124">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L125">    return (Boolean)Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L124">    long length = file.length();</span>
+<span class="fc" id="L127">    long length = file.length();</span>
 
-<span class="fc" id="L126">    long position = file.getFilePointer();</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">    return Boolean.from((position == length));</span>
-<span class="fc" id="L128">    }, &quot;&quot;).defaultIfCurtailed(True.literal());</span>
+<span class="fc" id="L129">    long position = file.getFilePointer();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">    return Boolean.from((position == length));</span>
+<span class="fc" id="L131">    }, &quot;&quot;).defaultIfCurtailed(True.literal());</span>
   }
 
   /**
@@ -133,13 +136,13 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   Boolean isEmpty()
   {
-<span class="nc" id="L136">    java.lang.String exitID = &quot;FileStream&gt;&gt;isEmpty&quot;;</span>
-<span class="nc" id="L137">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L138">    return (Boolean)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L139">    java.lang.String exitID = &quot;FileStream&gt;&gt;isEmpty&quot;;</span>
+<span class="nc" id="L140">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L141">    return (Boolean)Closure.with(f2 -&gt; {</span>
       
-<span class="nc" id="L140">    long length = file.length();</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">    return Boolean.from((length == 0));</span>
-<span class="nc" id="L142">    }, &quot;&quot;).defaultIfCurtailed(True.literal());</span>
+<span class="nc" id="L143">    long length = file.length();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">    return Boolean.from((length == 0));</span>
+<span class="nc" id="L145">    }, &quot;&quot;).defaultIfCurtailed(True.literal());</span>
   }
 
   /**
@@ -147,11 +150,11 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   Integer length()
   {
-<span class="nc" id="L150">    java.lang.String exitID = &quot;FileStream&gt;&gt;length&quot;;</span>
-<span class="nc" id="L151">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L152">    return (Integer)Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L153">      return LongInteger.from(file.length());</span>
-<span class="nc" id="L154">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.from(0));</span>
+<span class="nc" id="L153">    java.lang.String exitID = &quot;FileStream&gt;&gt;length&quot;;</span>
+<span class="nc" id="L154">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L155">    return (Integer)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L156">      return LongInteger.from(file.length());</span>
+<span class="nc" id="L157">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.from(0));</span>
   }
 
   /**
@@ -159,11 +162,11 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   Integer position()
   {
-<span class="nc" id="L162">    java.lang.String exitID = &quot;FileStream&gt;&gt;position&quot;;</span>
-<span class="nc" id="L163">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L164">    return (Integer)Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L165">      return LongInteger.from(file.getFilePointer());</span>
-<span class="nc" id="L166">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.from(0));</span>
+<span class="nc" id="L165">    java.lang.String exitID = &quot;FileStream&gt;&gt;position&quot;;</span>
+<span class="nc" id="L166">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L167">    return (Integer)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L168">      return LongInteger.from(file.getFilePointer());</span>
+<span class="nc" id="L169">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.from(0));</span>
   }
 
   /**
@@ -171,14 +174,14 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   FileStream position(final Ordinal position)
   {
-<span class="nc" id="L174">    java.lang.String exitID = &quot;FileStream&gt;&gt;position&quot;;</span>
-<span class="nc" id="L175">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L176">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L177">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L178">      file.seek(((Integer)position).primitiveLong());</span>
-<span class="nc" id="L179">    return (FileStream)f0.exit(exitID, null);</span>
-<span class="nc" id="L180">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L181">    return (FileStream)this;</span>
+<span class="nc" id="L177">    java.lang.String exitID = &quot;FileStream&gt;&gt;position&quot;;</span>
+<span class="nc" id="L178">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L179">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L180">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L181">      file.seek(((Integer)position).primitiveLong());</span>
+<span class="nc" id="L182">    return (FileStream)f0.exit(exitID, null);</span>
+<span class="nc" id="L183">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L184">    return (FileStream)this;</span>
     });
   }
 
@@ -187,14 +190,14 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   FileStream setToEnd()
   {
-<span class="nc" id="L190">    java.lang.String exitID = &quot;FileStream&gt;&gt;setToEnd&quot;;</span>
-<span class="nc" id="L191">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L192">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L193">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L194">      file.seek(file.length());</span>
-<span class="nc" id="L195">    return (FileStream)f0.exit(exitID, null);</span>
-<span class="nc" id="L196">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L197">    return (FileStream)this;</span>
+<span class="nc" id="L193">    java.lang.String exitID = &quot;FileStream&gt;&gt;setToEnd&quot;;</span>
+<span class="nc" id="L194">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L195">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L196">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L197">      file.seek(file.length());</span>
+<span class="nc" id="L198">    return (FileStream)f0.exit(exitID, null);</span>
+<span class="nc" id="L199">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L200">    return (FileStream)this;</span>
     });
   }
 
@@ -203,10 +206,10 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   public   FileStream reset()
   {
-<span class="nc" id="L206">    java.lang.String exitID = &quot;FileStream&gt;&gt;reset&quot;;</span>
-<span class="nc" id="L207">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L208">    this.position(SmallInteger.from(0));</span>
-<span class="nc" id="L209">    return (FileStream)this;</span>
+<span class="nc" id="L209">    java.lang.String exitID = &quot;FileStream&gt;&gt;reset&quot;;</span>
+<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L211">    this.position(SmallInteger.from(0));</span>
+<span class="nc" id="L212">    return (FileStream)this;</span>
   }
 
   /**
@@ -214,15 +217,15 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   protected   ByteArray nextBytes(final Integer count)
   {
-<span class="nc" id="L217">    java.lang.String exitID = &quot;FileStream&gt;&gt;nextBytes&quot;;</span>
-<span class="nc" id="L218">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L219">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L220">    ByteArray result = ByteArray.type().$new(count);</span>
-<span class="nc" id="L221">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L222">      file.readFully(result.primitiveContents());</span>
-<span class="nc" id="L223">    return (ByteArray)f0.exit(exitID, null);</span>
-<span class="nc" id="L224">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L225">    return (ByteArray)f0.exit(exitID, result);</span>
+<span class="nc" id="L220">    java.lang.String exitID = &quot;FileStream&gt;&gt;nextBytes&quot;;</span>
+<span class="nc" id="L221">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L222">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L223">    ByteArray result = ByteArray.type().$new(count);</span>
+<span class="nc" id="L224">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L225">      file.readFully(result.primitiveContents());</span>
+<span class="nc" id="L226">    return (ByteArray)f0.exit(exitID, null);</span>
+<span class="nc" id="L227">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L228">    return (ByteArray)f0.exit(exitID, result);</span>
     });
   }
 
@@ -231,9 +234,9 @@ public abstract class FileStream&lt;ElementType extends Object&gt; extends Objec
    */
   protected   String nextString(final Integer count)
   {
-<span class="nc" id="L234">    java.lang.String exitID = &quot;FileStream&gt;&gt;nextString&quot;;</span>
-<span class="nc" id="L235">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L236">    return (String)String.from(new java.lang.String(this.nextBytes(count).primitiveContents()));</span>
+<span class="nc" id="L237">    java.lang.String exitID = &quot;FileStream&gt;&gt;nextString&quot;;</span>
+<span class="nc" id="L238">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L239">    return (String)String.from(new java.lang.String(this.nextBytes(count).primitiveContents()));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

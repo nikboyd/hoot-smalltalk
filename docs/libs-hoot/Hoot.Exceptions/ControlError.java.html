@@ -27,20 +27,21 @@ import Hoot.Collections.String;
 
 <span class="nc" id="L28">public class ControlError extends Error</span>
 {
-<span class="nc" id="L30">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L31">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Error.Metaclass
   {
-<span class="nc" id="L34">    static final ControlError.Metaclass $class = new ControlError.Metaclass();</span>
+<span class="fc" id="L35">    static final ControlError.Metaclass $class = new ControlError.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L36">      this(ControlError.Metaclass.class);</span>
-<span class="nc" id="L37">    }</span>
+<span class="fc" id="L37">      this(ControlError.Metaclass.class);</span>
+<span class="fc" id="L38">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L40">      super(aClass);</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L41">      super(aClass);</span>
+<span class="fc" id="L42">    }</span>
 
-<span class="nc" id="L43">    @Override public java.lang.Class outerClass() { return ControlError.class; }</span>
+<span class="fc" id="L44">    @Override public java.lang.Class outerClass() { return ControlError.class; }</span>
 
   }
 

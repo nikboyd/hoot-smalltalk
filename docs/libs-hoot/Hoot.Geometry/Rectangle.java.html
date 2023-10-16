@@ -28,69 +28,72 @@ import Hoot.Magnitudes.Number;
 
 public class Rectangle extends Object
 {
-<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass
   {
-<span class="nc" id="L35">    static final Rectangle.Metaclass $class = new Rectangle.Metaclass();</span>
+<span class="fc" id="L36">    static final Rectangle.Metaclass $class = new Rectangle.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L37">      this(Rectangle.Metaclass.class);</span>
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L38">      this(Rectangle.Metaclass.class);</span>
+<span class="fc" id="L39">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L41">      super(aClass);</span>
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L42">      super(aClass);</span>
+<span class="fc" id="L43">    }</span>
 
-<span class="nc" id="L44">    @Override public java.lang.Class outerClass() { return Rectangle.class; }</span>
+<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return Rectangle.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   Rectangle $new()
     {
-<span class="nc" id="L51">      java.lang.String exitID = &quot;RectangleMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L52">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L53">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L54">      return (Rectangle)f0.exit(exitID, new Rectangle());</span>
+<span class="nc" id="L53">      java.lang.String exitID = &quot;RectangleMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L54">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L55">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L56">      return (Rectangle)f0.exit(exitID, new Rectangle());</span>
       });
     }
   }
 
 
-<span class="pc" id="L60">  protected Point origin = new Point();</span>
-<span class="pc" id="L61">  protected Point extent = new Point();</span>
+<span class="pc" id="L62">  protected Point origin = new Point();</span>
+<span class="pc" id="L63">  protected Point extent = new Point();</span>
+
   /**
    * 
    */
   protected    Rectangle()
-<span class="nc" id="L66">  {</span>
-<span class="nc" id="L67">    java.lang.String exitID = &quot;Rectangle&gt;&gt;Rectangle&quot;;</span>
-<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L69">     origin = (SmallInteger.from(0).at(SmallInteger.from(0)));</span>
+<span class="nc" id="L69">  {</span>
+<span class="nc" id="L70">    java.lang.String exitID = &quot;Rectangle&gt;&gt;Rectangle&quot;;</span>
+<span class="nc" id="L71">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L72">     origin = (SmallInteger.from(0).at(SmallInteger.from(0)));</span>
 
-<span class="nc" id="L71">     extent = (SmallInteger.from(0).at(SmallInteger.from(0)));</span>
-<span class="nc" id="L72">  }</span>
+<span class="nc" id="L74">     extent = (SmallInteger.from(0).at(SmallInteger.from(0)));</span>
+<span class="nc" id="L75">  }</span>
 
   /**
    * 
    */
   protected    Rectangle(final Point originPoint, final Point extentPoint)
-<span class="fc" id="L78">  {</span>
-<span class="fc" id="L79">    java.lang.String exitID = &quot;Rectangle&gt;&gt;Rectangle&quot;;</span>
-<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L81">     origin = originPoint;</span>
+<span class="fc" id="L81">  {</span>
+<span class="fc" id="L82">    java.lang.String exitID = &quot;Rectangle&gt;&gt;Rectangle&quot;;</span>
+<span class="fc" id="L83">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L84">     origin = originPoint;</span>
 
-<span class="fc" id="L83">     extent = extentPoint;</span>
-<span class="fc" id="L84">  }</span>
+<span class="fc" id="L86">     extent = extentPoint;</span>
+<span class="fc" id="L87">  }</span>
 
   /**
    * @return 
    */
   public static   Rectangle origin_extent(final Point origin, final Point extent)
   {
-<span class="fc" id="L91">    java.lang.String exitID = &quot;Rectangle&gt;&gt;$origin_extent&quot;;</span>
-<span class="fc" id="L92">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L93">    return (Rectangle)new Rectangle(origin, extent);</span>
+<span class="fc" id="L94">    java.lang.String exitID = &quot;Rectangle&gt;&gt;$origin_extent&quot;;</span>
+<span class="fc" id="L95">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L96">    return (Rectangle)new Rectangle(origin, extent);</span>
   }
 
   /**
@@ -98,12 +101,12 @@ public class Rectangle extends Object
    */
   public static   Rectangle origin_corner(final Point origin, final Point corner)
   {
-<span class="nc" id="L101">    java.lang.String exitID = &quot;Rectangle&gt;&gt;$origin_corner&quot;;</span>
-<span class="nc" id="L102">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L103">    Rectangle result = new Rectangle();</span>
-<span class="nc" id="L104">    result.origin(origin);</span>
-<span class="nc" id="L105">    result.corner(corner);</span>
-<span class="nc" id="L106">    return (Rectangle)result;</span>
+<span class="nc" id="L104">    java.lang.String exitID = &quot;Rectangle&gt;&gt;$origin_corner&quot;;</span>
+<span class="nc" id="L105">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L106">    Rectangle result = new Rectangle();</span>
+<span class="nc" id="L107">    result.origin(origin);</span>
+<span class="nc" id="L108">    result.corner(corner);</span>
+<span class="nc" id="L109">    return (Rectangle)result;</span>
   }
 
   /**
@@ -111,9 +114,9 @@ public class Rectangle extends Object
    */
   public   Point origin()
   {
-<span class="fc" id="L114">    java.lang.String exitID = &quot;Rectangle&gt;&gt;origin&quot;;</span>
-<span class="fc" id="L115">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L116">    return (Point)origin;</span>
+<span class="fc" id="L117">    java.lang.String exitID = &quot;Rectangle&gt;&gt;origin&quot;;</span>
+<span class="fc" id="L118">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L119">    return (Point)origin;</span>
   }
 
   /**
@@ -121,10 +124,10 @@ public class Rectangle extends Object
    */
   public   Point origin(final Point originPoint)
   {
-<span class="nc" id="L124">    java.lang.String exitID = &quot;Rectangle&gt;&gt;origin&quot;;</span>
-<span class="nc" id="L125">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L126">     origin = originPoint;</span>
-<span class="nc" id="L127">    return (Point)originPoint;</span>
+<span class="nc" id="L127">    java.lang.String exitID = &quot;Rectangle&gt;&gt;origin&quot;;</span>
+<span class="nc" id="L128">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L129">     origin = originPoint;</span>
+<span class="nc" id="L130">    return (Point)originPoint;</span>
   }
 
   /**
@@ -132,9 +135,9 @@ public class Rectangle extends Object
    */
   public   Point corner()
   {
-<span class="fc" id="L135">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corner&quot;;</span>
-<span class="fc" id="L136">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L137">    return (Point)((origin.x().plus(extent.x())).at((origin.y().plus(extent.y()))));</span>
+<span class="fc" id="L138">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corner&quot;;</span>
+<span class="fc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L140">    return (Point)((origin.x().plus(extent.x())).at((origin.y().plus(extent.y()))));</span>
   }
 
   /**
@@ -142,10 +145,10 @@ public class Rectangle extends Object
    */
   public   Point corner(final Point cornerPoint)
   {
-<span class="nc" id="L145">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corner&quot;;</span>
-<span class="nc" id="L146">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L147">    this.extent((cornerPoint.minus(origin)));</span>
-<span class="nc" id="L148">    return (Point)cornerPoint;</span>
+<span class="nc" id="L148">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corner&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    this.extent((cornerPoint.minus(origin)));</span>
+<span class="nc" id="L151">    return (Point)cornerPoint;</span>
   }
 
   /**
@@ -153,9 +156,9 @@ public class Rectangle extends Object
    */
   public   Number top()
   {
-<span class="fc" id="L156">    java.lang.String exitID = &quot;Rectangle&gt;&gt;top&quot;;</span>
-<span class="fc" id="L157">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L158">    return (Number)this.origin().y();</span>
+<span class="fc" id="L159">    java.lang.String exitID = &quot;Rectangle&gt;&gt;top&quot;;</span>
+<span class="fc" id="L160">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L161">    return (Number)this.origin().y();</span>
   }
 
   /**
@@ -163,9 +166,9 @@ public class Rectangle extends Object
    */
   public   Number bottom()
   {
-<span class="fc" id="L166">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottom&quot;;</span>
-<span class="fc" id="L167">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L168">    return (Number)this.corner().y();</span>
+<span class="fc" id="L169">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottom&quot;;</span>
+<span class="fc" id="L170">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L171">    return (Number)this.corner().y();</span>
   }
 
   /**
@@ -173,9 +176,9 @@ public class Rectangle extends Object
    */
   public   Number left()
   {
-<span class="fc" id="L176">    java.lang.String exitID = &quot;Rectangle&gt;&gt;left&quot;;</span>
-<span class="fc" id="L177">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L178">    return (Number)this.origin().x();</span>
+<span class="fc" id="L179">    java.lang.String exitID = &quot;Rectangle&gt;&gt;left&quot;;</span>
+<span class="fc" id="L180">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L181">    return (Number)this.origin().x();</span>
   }
 
   /**
@@ -183,9 +186,9 @@ public class Rectangle extends Object
    */
   public   Number right()
   {
-<span class="fc" id="L186">    java.lang.String exitID = &quot;Rectangle&gt;&gt;right&quot;;</span>
-<span class="fc" id="L187">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L188">    return (Number)this.corner().x();</span>
+<span class="fc" id="L189">    java.lang.String exitID = &quot;Rectangle&gt;&gt;right&quot;;</span>
+<span class="fc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L191">    return (Number)this.corner().x();</span>
   }
 
   /**
@@ -193,9 +196,9 @@ public class Rectangle extends Object
    */
   public   Point center()
   {
-<span class="fc" id="L196">    java.lang.String exitID = &quot;Rectangle&gt;&gt;center&quot;;</span>
-<span class="fc" id="L197">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L198">    return (Point)(this.origin().plus((this.extent().divideWith(SmallInteger.from(2)))));</span>
+<span class="fc" id="L199">    java.lang.String exitID = &quot;Rectangle&gt;&gt;center&quot;;</span>
+<span class="fc" id="L200">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L201">    return (Point)(this.origin().plus((this.extent().divideWith(SmallInteger.from(2)))));</span>
   }
 
   /**
@@ -203,9 +206,9 @@ public class Rectangle extends Object
    */
   public   Point topCenter()
   {
-<span class="nc" id="L206">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topCenter&quot;;</span>
-<span class="nc" id="L207">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L208">    return (Point)(this.center().x().at(this.top()));</span>
+<span class="nc" id="L209">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topCenter&quot;;</span>
+<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L211">    return (Point)(this.center().x().at(this.top()));</span>
   }
 
   /**
@@ -213,9 +216,9 @@ public class Rectangle extends Object
    */
   public   Point bottomCenter()
   {
-<span class="nc" id="L216">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomCenter&quot;;</span>
-<span class="nc" id="L217">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L218">    return (Point)(this.center().x().at(this.bottom()));</span>
+<span class="nc" id="L219">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomCenter&quot;;</span>
+<span class="nc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L221">    return (Point)(this.center().x().at(this.bottom()));</span>
   }
 
   /**
@@ -223,9 +226,9 @@ public class Rectangle extends Object
    */
   public   Point leftCenter()
   {
-<span class="nc" id="L226">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftCenter&quot;;</span>
-<span class="nc" id="L227">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L228">    return (Point)(this.left().at(this.center().y()));</span>
+<span class="nc" id="L229">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftCenter&quot;;</span>
+<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L231">    return (Point)(this.left().at(this.center().y()));</span>
   }
 
   /**
@@ -233,9 +236,9 @@ public class Rectangle extends Object
    */
   public   Point rightCenter()
   {
-<span class="nc" id="L236">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightCenter&quot;;</span>
-<span class="nc" id="L237">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L238">    return (Point)(this.right().at(this.center().y()));</span>
+<span class="nc" id="L239">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightCenter&quot;;</span>
+<span class="nc" id="L240">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L241">    return (Point)(this.right().at(this.center().y()));</span>
   }
 
   /**
@@ -243,9 +246,9 @@ public class Rectangle extends Object
    */
   public   Point bottomLeft()
   {
-<span class="fc" id="L246">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomLeft&quot;;</span>
-<span class="fc" id="L247">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L248">    return (Point)(this.left().at(this.bottom()));</span>
+<span class="fc" id="L249">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomLeft&quot;;</span>
+<span class="fc" id="L250">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L251">    return (Point)(this.left().at(this.bottom()));</span>
   }
 
   /**
@@ -253,9 +256,9 @@ public class Rectangle extends Object
    */
   public   Point bottomRight()
   {
-<span class="fc" id="L256">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomRight&quot;;</span>
-<span class="fc" id="L257">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L258">    return (Point)(this.right().at(this.bottom()));</span>
+<span class="fc" id="L259">    java.lang.String exitID = &quot;Rectangle&gt;&gt;bottomRight&quot;;</span>
+<span class="fc" id="L260">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L261">    return (Point)(this.right().at(this.bottom()));</span>
   }
 
   /**
@@ -263,9 +266,9 @@ public class Rectangle extends Object
    */
   public   Point leftTop()
   {
-<span class="fc" id="L266">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftTop&quot;;</span>
-<span class="fc" id="L267">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L268">    return (Point)(this.left().at(this.top()));</span>
+<span class="fc" id="L269">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftTop&quot;;</span>
+<span class="fc" id="L270">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L271">    return (Point)(this.left().at(this.top()));</span>
   }
 
   /**
@@ -273,9 +276,9 @@ public class Rectangle extends Object
    */
   public   Point leftBottom()
   {
-<span class="fc" id="L276">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftBottom&quot;;</span>
-<span class="fc" id="L277">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L278">    return (Point)this.bottomLeft();</span>
+<span class="fc" id="L279">    java.lang.String exitID = &quot;Rectangle&gt;&gt;leftBottom&quot;;</span>
+<span class="fc" id="L280">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L281">    return (Point)this.bottomLeft();</span>
   }
 
   /**
@@ -283,9 +286,9 @@ public class Rectangle extends Object
    */
   public   Point rightTop()
   {
-<span class="fc" id="L286">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightTop&quot;;</span>
-<span class="fc" id="L287">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L288">    return (Point)(this.right().at(this.top()));</span>
+<span class="fc" id="L289">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightTop&quot;;</span>
+<span class="fc" id="L290">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L291">    return (Point)(this.right().at(this.top()));</span>
   }
 
   /**
@@ -293,9 +296,9 @@ public class Rectangle extends Object
    */
   public   Point rightBottom()
   {
-<span class="fc" id="L296">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightBottom&quot;;</span>
-<span class="fc" id="L297">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L298">    return (Point)this.bottomRight();</span>
+<span class="fc" id="L299">    java.lang.String exitID = &quot;Rectangle&gt;&gt;rightBottom&quot;;</span>
+<span class="fc" id="L300">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L301">    return (Point)this.bottomRight();</span>
   }
 
   /**
@@ -303,9 +306,9 @@ public class Rectangle extends Object
    */
   public   Point topLeft()
   {
-<span class="nc" id="L306">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topLeft&quot;;</span>
-<span class="nc" id="L307">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L308">    return (Point)this.leftTop();</span>
+<span class="nc" id="L309">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topLeft&quot;;</span>
+<span class="nc" id="L310">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L311">    return (Point)this.leftTop();</span>
   }
 
   /**
@@ -313,9 +316,9 @@ public class Rectangle extends Object
    */
   public   Point topRight()
   {
-<span class="nc" id="L316">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topRight&quot;;</span>
-<span class="nc" id="L317">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L318">    return (Point)this.rightTop();</span>
+<span class="nc" id="L319">    java.lang.String exitID = &quot;Rectangle&gt;&gt;topRight&quot;;</span>
+<span class="nc" id="L320">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L321">    return (Point)this.rightTop();</span>
   }
 
   /**
@@ -323,9 +326,9 @@ public class Rectangle extends Object
    */
   public   Array&lt;Point&gt; corners()
   {
-<span class="fc" id="L326">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corners&quot;;</span>
-<span class="fc" id="L327">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L328">    return (Array&lt;Point&gt;)Array.withAll(this.leftTop(), this.rightTop(), this.leftBottom(), this.rightBottom());</span>
+<span class="fc" id="L329">    java.lang.String exitID = &quot;Rectangle&gt;&gt;corners&quot;;</span>
+<span class="fc" id="L330">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L331">    return (Array&lt;Point&gt;)Array.withAll(this.leftTop(), this.rightTop(), this.leftBottom(), this.rightBottom());</span>
   }
 
   /**
@@ -333,9 +336,9 @@ public class Rectangle extends Object
    */
   public   Point extent()
   {
-<span class="fc" id="L336">    java.lang.String exitID = &quot;Rectangle&gt;&gt;extent&quot;;</span>
-<span class="fc" id="L337">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L338">    return (Point)extent;</span>
+<span class="fc" id="L339">    java.lang.String exitID = &quot;Rectangle&gt;&gt;extent&quot;;</span>
+<span class="fc" id="L340">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L341">    return (Point)extent;</span>
   }
 
   /**
@@ -343,10 +346,10 @@ public class Rectangle extends Object
    */
   public   Point extent(final Point extentPoint)
   {
-<span class="nc" id="L346">    java.lang.String exitID = &quot;Rectangle&gt;&gt;extent&quot;;</span>
-<span class="nc" id="L347">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L348">     extent = extentPoint;</span>
-<span class="nc" id="L349">    return (Point)extentPoint;</span>
+<span class="nc" id="L349">    java.lang.String exitID = &quot;Rectangle&gt;&gt;extent&quot;;</span>
+<span class="nc" id="L350">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L351">     extent = extentPoint;</span>
+<span class="nc" id="L352">    return (Point)extentPoint;</span>
   }
 
   /**
@@ -354,9 +357,9 @@ public class Rectangle extends Object
    */
   public   Number width()
   {
-<span class="fc" id="L357">    java.lang.String exitID = &quot;Rectangle&gt;&gt;width&quot;;</span>
-<span class="fc" id="L358">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L359">    return (Number)extent.x();</span>
+<span class="fc" id="L360">    java.lang.String exitID = &quot;Rectangle&gt;&gt;width&quot;;</span>
+<span class="fc" id="L361">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L362">    return (Number)extent.x();</span>
   }
 
   /**
@@ -364,10 +367,10 @@ public class Rectangle extends Object
    */
   public   Number width(final Number width)
   {
-<span class="nc" id="L367">    java.lang.String exitID = &quot;Rectangle&gt;&gt;width&quot;;</span>
-<span class="nc" id="L368">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L369">    extent.x(width);</span>
-<span class="nc" id="L370">    return (Number)width;</span>
+<span class="nc" id="L370">    java.lang.String exitID = &quot;Rectangle&gt;&gt;width&quot;;</span>
+<span class="nc" id="L371">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L372">    extent.x(width);</span>
+<span class="nc" id="L373">    return (Number)width;</span>
   }
 
   /**
@@ -375,9 +378,9 @@ public class Rectangle extends Object
    */
   public   Number height()
   {
-<span class="fc" id="L378">    java.lang.String exitID = &quot;Rectangle&gt;&gt;height&quot;;</span>
-<span class="fc" id="L379">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L380">    return (Number)extent.y();</span>
+<span class="fc" id="L381">    java.lang.String exitID = &quot;Rectangle&gt;&gt;height&quot;;</span>
+<span class="fc" id="L382">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L383">    return (Number)extent.y();</span>
   }
 
   /**
@@ -385,10 +388,10 @@ public class Rectangle extends Object
    */
   public   Number height(final Number height)
   {
-<span class="nc" id="L388">    java.lang.String exitID = &quot;Rectangle&gt;&gt;height&quot;;</span>
-<span class="nc" id="L389">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L390">    extent.y(height);</span>
-<span class="nc" id="L391">    return (Number)height;</span>
+<span class="nc" id="L391">    java.lang.String exitID = &quot;Rectangle&gt;&gt;height&quot;;</span>
+<span class="nc" id="L392">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L393">    extent.y(height);</span>
+<span class="nc" id="L394">    return (Number)height;</span>
   }
 
   /**
@@ -396,9 +399,9 @@ public class Rectangle extends Object
    */
   public   Number area()
   {
-<span class="fc" id="L399">    java.lang.String exitID = &quot;Rectangle&gt;&gt;area&quot;;</span>
-<span class="fc" id="L400">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L401">    return (Number)(this.width().times(this.height()));</span>
+<span class="fc" id="L402">    java.lang.String exitID = &quot;Rectangle&gt;&gt;area&quot;;</span>
+<span class="fc" id="L403">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L404">    return (Number)(this.width().times(this.height()));</span>
   }
 
   /**
@@ -406,9 +409,9 @@ public class Rectangle extends Object
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L409">    java.lang.String exitID = &quot;Rectangle&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L410">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L411">    return (int)origin.hash().bitXor(extent.hash()).primitiveInteger();</span>
+<span class="nc" id="L412">    java.lang.String exitID = &quot;Rectangle&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L413">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L414">    return (int)origin.hash().bitXor(extent.hash()).primitiveInteger();</span>
   }
 
   /**
@@ -416,10 +419,10 @@ public class Rectangle extends Object
    */
   public   Boolean equals(final Rectangle aRectangle)
   {
-<span class="nc" id="L419">    java.lang.String exitID = &quot;Rectangle&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L420">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L421">    return (Boolean)((Boolean)(origin.equals(aRectangle.origin())).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L422">      return (extent.equals(aRectangle.extent()));</span>
+<span class="nc" id="L422">    java.lang.String exitID = &quot;Rectangle&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L423">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L424">    return (Boolean)((Boolean)(origin.equals(aRectangle.origin())).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L425">      return (extent.equals(aRectangle.extent()));</span>
     }, &quot;&quot;)));
   }
 
@@ -428,12 +431,12 @@ public class Rectangle extends Object
    */
   @Override public   Boolean equals(final Subject value)
   {
-<span class="nc" id="L431">    java.lang.String exitID = &quot;Rectangle&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L432">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L433" title="All 2 branches missed.">    if (value instanceof Rectangle) {</span>
-<span class="nc" id="L434">      return this.equals(((Rectangle)value));</span>
+<span class="nc" id="L434">    java.lang.String exitID = &quot;Rectangle&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L435">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">    if (value instanceof Rectangle) {</span>
+<span class="nc" id="L437">      return this.equals(((Rectangle)value));</span>
     };
-<span class="nc" id="L436">    return (Boolean)False.literal();</span>
+<span class="nc" id="L439">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -441,9 +444,9 @@ public class Rectangle extends Object
    */
   public   java.awt.Rectangle primitiveRectangle()
   {
-<span class="nc" id="L444">    java.lang.String exitID = &quot;Rectangle&gt;&gt;primitiveRectangle&quot;;</span>
-<span class="nc" id="L445">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L446">    return (java.awt.Rectangle)new java.awt.Rectangle(origin.primitivePoint(), extent.primitiveDimension());</span>
+<span class="nc" id="L447">    java.lang.String exitID = &quot;Rectangle&gt;&gt;primitiveRectangle&quot;;</span>
+<span class="nc" id="L448">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L449">    return (java.awt.Rectangle)new java.awt.Rectangle(origin.primitivePoint(), extent.primitiveDimension());</span>
   }
 
   /**
@@ -451,9 +454,9 @@ public class Rectangle extends Object
    */
   @Override public   String printString()
   {
-<span class="fc" id="L454">    java.lang.String exitID = &quot;Rectangle&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L455">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L456">    return (String)origin.printString().append(String.from(&quot; extent: &quot;)).append(extent.printString());</span>
+<span class="fc" id="L457">    java.lang.String exitID = &quot;Rectangle&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L458">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L459">    return (String)origin.printString().append(String.from(&quot; extent: &quot;)).append(extent.printString());</span>
   }
 
   /**
@@ -461,9 +464,9 @@ public class Rectangle extends Object
    */
   @Override public   java.lang.String toString()
   {
-<span class="fc" id="L464">    java.lang.String exitID = &quot;Rectangle&gt;&gt;toString&quot;;</span>
-<span class="fc" id="L465">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L466">    return (java.lang.String)this.printTerm().toString();</span>
+<span class="fc" id="L467">    java.lang.String exitID = &quot;Rectangle&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L468">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L469">    return (java.lang.String)this.printTerm().toString();</span>
   }
 
   /**
@@ -471,10 +474,10 @@ public class Rectangle extends Object
    */
   public   Boolean contains(final Rectangle aRectangle)
   {
-<span class="fc" id="L474">    java.lang.String exitID = &quot;Rectangle&gt;&gt;contains&quot;;</span>
-<span class="fc" id="L475">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L476">    return (Boolean)((Boolean)(this.origin().notMore(aRectangle.origin())).and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L477">      return (this.corner().notLess(aRectangle.corner()));</span>
+<span class="fc" id="L477">    java.lang.String exitID = &quot;Rectangle&gt;&gt;contains&quot;;</span>
+<span class="fc" id="L478">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L479">    return (Boolean)((Boolean)(this.origin().notMore(aRectangle.origin())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L480">      return (this.corner().notLess(aRectangle.corner()));</span>
     }, &quot;&quot;)));
   }
 
@@ -483,9 +486,9 @@ public class Rectangle extends Object
    */
   public   Boolean containsPoint(final Point aPoint)
   {
-<span class="fc" id="L486">    java.lang.String exitID = &quot;Rectangle&gt;&gt;containsPoint&quot;;</span>
-<span class="fc" id="L487">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L488">    return (Boolean)((Boolean)aPoint.between_and(this.origin(), this.corner()));</span>
+<span class="fc" id="L489">    java.lang.String exitID = &quot;Rectangle&gt;&gt;containsPoint&quot;;</span>
+<span class="fc" id="L490">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L491">    return (Boolean)((Boolean)aPoint.between_and(this.origin(), this.corner()));</span>
   }
 
   /**
@@ -493,10 +496,10 @@ public class Rectangle extends Object
    */
   public   Boolean intersects(final Rectangle aRectangle)
   {
-<span class="fc" id="L496">    java.lang.String exitID = &quot;Rectangle&gt;&gt;intersects&quot;;</span>
-<span class="fc" id="L497">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L498">    return (Boolean)((Boolean)(this.origin().notMore(aRectangle.corner())).and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L499">      return (aRectangle.origin().notMore(this.corner()));</span>
+<span class="fc" id="L499">    java.lang.String exitID = &quot;Rectangle&gt;&gt;intersects&quot;;</span>
+<span class="fc" id="L500">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L501">    return (Boolean)((Boolean)(this.origin().notMore(aRectangle.corner())).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L502">      return (aRectangle.origin().notMore(this.corner()));</span>
     }, &quot;&quot;)));
   }
 }

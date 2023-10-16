@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ordered.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">libs-hoot</a> &gt; <a href="index.source.html" class="el_package">Hoot.Behaviors</a> &gt; <span class="el_source">Ordered.java</span></div><h1>Ordered.java</h1><pre class="source lang-java linenums">/**
+* Copyright 2010,2021 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+
+*/
+package Hoot.Behaviors;
+
+import Hoot.Runtime.Functions.*;
+import Hoot.Runtime.Faces.*;
+import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Blocks.*;
+import Smalltalk.Core.*;
+import Smalltalk.Blocks.*;
+import Hoot.Magnitudes.*;
+import Hoot.Magnitudes.Integer;
+import Hoot.Magnitudes.Character;
+import Hoot.Magnitudes.Float;
+import Hoot.Magnitudes.Double;
+import Hoot.Collections.*;
+import Hoot.Collections.String;
+import Smalltalk.Core.Subject;
+import Smalltalk.Magnitudes.Scalar;
+import Hoot.Collections.Interval;
+
+public interface Ordered extends Comparable, Scalar
+{
+
+  public static interface Metatype extends Scalar.Metatype
+  {
+  }
+
+
+
+  /**
+   * @return 
+   */
+  public   Boolean equals(final Subject aBound);
+
+  /**
+   * @return 
+   */
+  public   Boolean notMore(final Scalar upperBound);
+
+  /**
+   * @return 
+   */
+  public   Boolean lessThan(final Scalar upperBound);
+
+  /**
+   * @return 
+   */
+  public   Boolean moreThan(final Scalar lowerBound);
+
+  /**
+   * @return 
+   */
+  public   Boolean notLess(final Scalar lowerBound);
+
+  /**
+   * @return 
+   */
+  @Override public default   Boolean between_and(final Scalar lowerBound, final Scalar upperBound)
+  {
+<span class="nc" id="L64">    java.lang.String exitID = &quot;Ordered&gt;&gt;between_and&quot;;</span>
+<span class="nc" id="L65">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L66">    return (Boolean)((Boolean)(lowerBound.notMore(this)).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L67">      return (this.notMore(upperBound));</span>
+    }, &quot;&quot;)));
+  }
+
+  /**
+   * @return 
+   */
+  public default   Boolean in(final Interval aRange)
+  {
+<span class="nc" id="L76">    java.lang.String exitID = &quot;Ordered&gt;&gt;in&quot;;</span>
+<span class="nc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L78">    return (Boolean)aRange.includes(this);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public default   Boolean inside_and(final Scalar lowerBound, final Scalar upperBound)
+  {
+<span class="nc" id="L86">    java.lang.String exitID = &quot;Ordered&gt;&gt;inside_and&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (Boolean)((Boolean)(lowerBound.lessThan(this)).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L89">      return (this.lessThan(upperBound));</span>
+    }, &quot;&quot;)));
+  }
+
+  /**
+   * @return 
+   */
+  public default   Ordered max(final Scalar value)
+  {
+<span class="nc" id="L98">    java.lang.String exitID = &quot;Ordered&gt;&gt;max&quot;;</span>
+<span class="nc" id="L99">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L100">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L101">    (this.moreThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L102">      return (Ordered)f0.exit(exitID, this);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L104">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
+    });
+  }
+
+  /**
+   * @return 
+   */
+  public default   Ordered min(final Scalar value)
+  {
+<span class="nc" id="L113">    java.lang.String exitID = &quot;Ordered&gt;&gt;min&quot;;</span>
+<span class="nc" id="L114">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L115">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L116">    (this.lessThan(value)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L117">      return (Ordered)f0.exit(exitID, this);</span>
+    }, &quot;&quot;));
+<span class="nc" id="L119">    return (Ordered)f0.exit(exitID, ((Ordered)value));</span>
+    });
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

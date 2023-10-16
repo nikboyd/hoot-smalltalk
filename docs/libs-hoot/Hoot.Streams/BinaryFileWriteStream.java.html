@@ -34,33 +34,36 @@ import Smalltalk.Streams.*;
 
 public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
 {
-<span class="nc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends FileWriteStream.Metaclass
   {
-<span class="nc" id="L41">    static final BinaryFileWriteStream.Metaclass $class = new BinaryFileWriteStream.Metaclass();</span>
+<span class="fc" id="L42">    static final BinaryFileWriteStream.Metaclass $class = new BinaryFileWriteStream.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L43">      this(BinaryFileWriteStream.Metaclass.class);</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L44">      this(BinaryFileWriteStream.Metaclass.class);</span>
+<span class="fc" id="L45">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L47">      super(aClass);</span>
-<span class="nc" id="L48">    }</span>
+<span class="fc" id="L48">      super(aClass);</span>
+<span class="fc" id="L49">    }</span>
 
-<span class="nc" id="L50">    @Override public java.lang.Class outerClass() { return BinaryFileWriteStream.class; }</span>
+<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return BinaryFileWriteStream.class; }</span>
+
 
     /**
      * @return 
      */
     protected   BinaryFileWriteStream on(final RandomAccessFile primitiveFile)
     {
-<span class="nc" id="L57">      java.lang.String exitID = &quot;BinaryFileWriteStreamMetatype&gt;&gt;on&quot;;</span>
-<span class="nc" id="L58">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L59">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L60">      return (BinaryFileWriteStream)f0.exit(exitID, new BinaryFileWriteStream(primitiveFile));</span>
+<span class="nc" id="L59">      java.lang.String exitID = &quot;BinaryFileWriteStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="nc" id="L60">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L61">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L62">      return (BinaryFileWriteStream)f0.exit(exitID, new BinaryFileWriteStream(primitiveFile));</span>
       });
     }
   }
+
 
 
   /**
@@ -68,24 +71,24 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   protected    BinaryFileWriteStream(final RandomAccessFile primitiveFile)
   {
-<span class="nc" id="L71">    super(primitiveFile);</span>
-<span class="nc" id="L72">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;BinaryFileWriteStream&quot;;</span>
-<span class="nc" id="L73">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L74">  }</span>
+<span class="nc" id="L74">    super(primitiveFile);</span>
+<span class="nc" id="L75">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;BinaryFileWriteStream&quot;;</span>
+<span class="nc" id="L76">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L77">  }</span>
 
   /**
    * @return 
    */
   public   ByteArray contents()
   {
-<span class="nc" id="L81">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;contents&quot;;</span>
-<span class="nc" id="L82">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L83">    Integer pose = this.position();</span>
-<span class="nc" id="L84">    this.reset();</span>
+<span class="nc" id="L84">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L85">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L86">    Integer pose = this.position();</span>
+<span class="nc" id="L87">    this.reset();</span>
 
-<span class="nc" id="L86">    ByteArray result = this.nextBytes(this.length());</span>
-<span class="nc" id="L87">    this.position(pose);</span>
-<span class="nc" id="L88">    return (ByteArray)result;</span>
+<span class="nc" id="L89">    ByteArray result = this.nextBytes(this.length());</span>
+<span class="nc" id="L90">    this.position(pose);</span>
+<span class="nc" id="L91">    return (ByteArray)result;</span>
   }
 
   /**
@@ -93,13 +96,13 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   @Override public   BinaryFileWriteStream nextPut(final Integer element)
   {
-<span class="nc" id="L96">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPut&quot;;</span>
-<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L98">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L99">      file.writeByte(element.primitiveByte());</span>
-<span class="nc" id="L100">    return null;</span>
-<span class="nc" id="L101">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L102">    return (BinaryFileWriteStream)this;</span>
+<span class="nc" id="L99">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPut&quot;;</span>
+<span class="nc" id="L100">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L101">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L102">      file.writeByte(element.primitiveByte());</span>
+<span class="nc" id="L103">    return null;</span>
+<span class="nc" id="L104">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L105">    return (BinaryFileWriteStream)this;</span>
   }
 
   /**
@@ -107,14 +110,14 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   BinaryFileWriteStream nextPutAll(final byte ... elements)
   {
-<span class="nc" id="L110">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L112">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L113">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L114">      file.write(elements);</span>
-<span class="nc" id="L115">    return (BinaryFileWriteStream)f0.exit(exitID, null);</span>
-<span class="nc" id="L116">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L117">    return (BinaryFileWriteStream)f0.exit(exitID, this);</span>
+<span class="nc" id="L113">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L114">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L115">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L116">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L117">      file.write(elements);</span>
+<span class="nc" id="L118">    return (BinaryFileWriteStream)f0.exit(exitID, null);</span>
+<span class="nc" id="L119">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L120">    return (BinaryFileWriteStream)f0.exit(exitID, this);</span>
     });
   }
 
@@ -123,14 +126,14 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   BinaryFileWriteStream nextPutAll(final java.lang.String elements)
   {
-<span class="nc" id="L126">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="nc" id="L127">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L128">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L129">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L130">      file.writeBytes(elements);</span>
-<span class="nc" id="L131">    return (BinaryFileWriteStream)f0.exit(exitID, null);</span>
-<span class="nc" id="L132">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L133">    return (BinaryFileWriteStream)f0.exit(exitID, this);</span>
+<span class="nc" id="L129">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L130">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L131">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L132">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L133">      file.writeBytes(elements);</span>
+<span class="nc" id="L134">    return (BinaryFileWriteStream)f0.exit(exitID, null);</span>
+<span class="nc" id="L135">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L136">    return (BinaryFileWriteStream)f0.exit(exitID, this);</span>
     });
   }
 
@@ -139,9 +142,9 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   BinaryFileWriteStream nextPutAll(final String elements)
   {
-<span class="nc" id="L142">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="nc" id="L143">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L144">    return (BinaryFileWriteStream)this.nextPutAll(elements.primitiveString());</span>
+<span class="nc" id="L145">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L146">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L147">    return (BinaryFileWriteStream)this.nextPutAll(elements.primitiveString());</span>
   }
 
   /**
@@ -149,14 +152,14 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   BinaryFileWriteStream nextPutAll(final CollectedReadably&lt;Integer&gt; elements)
   {
-<span class="nc" id="L152">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="nc" id="L153">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L154">    StringBuilder b = new StringBuilder();</span>
-<span class="nc" id="L155">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L156">      Integer each = f2.getValue(0).value();</span>
-<span class="nc" id="L157">      b.append(each.primitiveCharacter());</span>
-<span class="nc" id="L158">    }, &quot;each&quot;));</span>
-<span class="nc" id="L159">    return (BinaryFileWriteStream)this.nextPutAll(b.toString());</span>
+<span class="nc" id="L155">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L156">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L157">    StringBuilder b = new StringBuilder();</span>
+<span class="nc" id="L158">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L159">      Integer each = f2.getValue(0).value();</span>
+<span class="nc" id="L160">      b.append(each.primitiveCharacter());</span>
+<span class="nc" id="L161">    }, &quot;each&quot;));</span>
+<span class="nc" id="L162">    return (BinaryFileWriteStream)this.nextPutAll(b.toString());</span>
   }
 
   /**
@@ -164,9 +167,9 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   Boolean isText()
   {
-<span class="nc" id="L167">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;isText&quot;;</span>
-<span class="nc" id="L168">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L169">    return (Boolean)False.literal();</span>
+<span class="nc" id="L170">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;isText&quot;;</span>
+<span class="nc" id="L171">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L172">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -174,9 +177,9 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   Boolean isBinary()
   {
-<span class="nc" id="L177">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;isBinary&quot;;</span>
-<span class="nc" id="L178">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L179">    return (Boolean)True.literal();</span>
+<span class="nc" id="L180">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;isBinary&quot;;</span>
+<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L182">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -184,9 +187,9 @@ public class BinaryFileWriteStream extends FileWriteStream&lt;Integer&gt;
    */
   public   Symbol externalType()
   {
-<span class="nc" id="L187">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;externalType&quot;;</span>
-<span class="nc" id="L188">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L189">    return (Symbol)Symbol.from(&quot;binary&quot;);</span>
+<span class="nc" id="L190">    java.lang.String exitID = &quot;BinaryFileWriteStream&gt;&gt;externalType&quot;;</span>
+<span class="nc" id="L191">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L192">    return (Symbol)Symbol.from(&quot;binary&quot;);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

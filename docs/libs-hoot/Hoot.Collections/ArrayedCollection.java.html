@@ -31,22 +31,24 @@ import Smalltalk.Core.Subject;
 
 <span class="fc" id="L32">public abstract class ArrayedCollection&lt;ElementType extends Object&gt; extends SequencedCollection&lt;ElementType&gt; implements CollectedArray&lt;ElementType&gt;</span>
 {
-<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L35">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L36">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends SequencedCollection.Metaclass implements CollectedArray.Metatype
   {
-<span class="fc" id="L38">    static final ArrayedCollection.Metaclass $class = new ArrayedCollection.Metaclass();</span>
+<span class="fc" id="L39">    static final ArrayedCollection.Metaclass $class = new ArrayedCollection.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L40">      this(ArrayedCollection.Metaclass.class);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L41">      this(ArrayedCollection.Metaclass.class);</span>
+<span class="fc" id="L42">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L44">      super(aClass);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L45">      super(aClass);</span>
+<span class="fc" id="L46">    }</span>
 
-<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return ArrayedCollection.class; }</span>
+<span class="fc" id="L48">    @Override public java.lang.Class outerClass() { return ArrayedCollection.class; }</span>
 
   }
+
 
 
   /**
@@ -54,9 +56,9 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType at_put(final Ordinal index, final ElementType element)
   {
-<span class="nc" id="L57">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L58">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L59">    return (ElementType)element;</span>
+<span class="nc" id="L59">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;at_put&quot;;</span>
+<span class="nc" id="L60">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L61">    return (ElementType)element;</span>
   }
 
   /**
@@ -64,13 +66,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType atAll_put(final CollectedReadably&lt;Ordinal&gt; indices, final ElementType element)
   {
-<span class="nc" id="L67">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAll_put&quot;;</span>
-<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L69">    indices.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L70">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L71">      return this.at_put(index, element);</span>
+<span class="nc" id="L69">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAll_put&quot;;</span>
+<span class="nc" id="L70">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L71">    indices.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L72">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L73">      return this.at_put(index, element);</span>
     }, &quot;index&quot;));
-<span class="nc" id="L73">    return (ElementType)element;</span>
+<span class="nc" id="L75">    return (ElementType)element;</span>
   }
 
   /**
@@ -78,13 +80,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   ElementType atAllPut(final ElementType element)
   {
-<span class="nc" id="L81">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAllPut&quot;;</span>
-<span class="nc" id="L82">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L83">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L84">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L85">      return this.at_put(index, element);</span>
+<span class="nc" id="L83">    java.lang.String exitID = &quot;ArrayedCollection&gt;&gt;atAllPut&quot;;</span>
+<span class="nc" id="L84">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L85">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L86">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L87">      return this.at_put(index, element);</span>
     }, &quot;index&quot;));
-<span class="nc" id="L87">    return (ElementType)element;</span>
+<span class="nc" id="L89">    return (ElementType)element;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

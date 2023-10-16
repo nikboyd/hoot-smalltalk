@@ -35,33 +35,36 @@ import Smalltalk.Streams.*;
 
 public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
 {
-<span class="fc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="fc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends FileWriteStream.Metaclass
   {
-<span class="fc" id="L42">    static final TextFileWriteStream.Metaclass $class = new TextFileWriteStream.Metaclass();</span>
+<span class="fc" id="L43">    static final TextFileWriteStream.Metaclass $class = new TextFileWriteStream.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L44">      this(TextFileWriteStream.Metaclass.class);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L45">      this(TextFileWriteStream.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L48">      super(aClass);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
 
-<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return TextFileWriteStream.class; }</span>
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return TextFileWriteStream.class; }</span>
+
 
     /**
      * @return 
      */
     protected   TextFileWriteStream on(final RandomAccessFile primitiveFile)
     {
-<span class="fc" id="L58">      java.lang.String exitID = &quot;TextFileWriteStreamMetatype&gt;&gt;on&quot;;</span>
-<span class="fc" id="L59">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L60">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L61">      return (TextFileWriteStream)f0.exit(exitID, new TextFileWriteStream(primitiveFile));</span>
+<span class="fc" id="L60">      java.lang.String exitID = &quot;TextFileWriteStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="fc" id="L61">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L62">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L63">      return (TextFileWriteStream)f0.exit(exitID, new TextFileWriteStream(primitiveFile));</span>
       });
     }
   }
+
 
 
   /**
@@ -69,19 +72,19 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   protected    TextFileWriteStream(final RandomAccessFile primitiveFile)
   {
-<span class="fc" id="L72">    super(primitiveFile);</span>
-<span class="fc" id="L73">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;TextFileWriteStream&quot;;</span>
-<span class="fc" id="L74">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L75">  }</span>
+<span class="fc" id="L75">    super(primitiveFile);</span>
+<span class="fc" id="L76">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;TextFileWriteStream&quot;;</span>
+<span class="fc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L78">  }</span>
 
   /**
    * @return 
    */
   public static   TextFileWriteStream write(final String fileName)
   {
-<span class="fc" id="L82">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;$write&quot;;</span>
-<span class="fc" id="L83">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L84">    return (TextFileWriteStream)FileWriteStream.type().write(fileName);</span>
+<span class="fc" id="L85">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;$write&quot;;</span>
+<span class="fc" id="L86">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L87">    return (TextFileWriteStream)FileWriteStream.type().write(fileName);</span>
   }
 
   /**
@@ -89,14 +92,14 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   public   String contents()
   {
-<span class="nc" id="L92">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;contents&quot;;</span>
-<span class="nc" id="L93">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L94">    Integer pose = this.position();</span>
-<span class="nc" id="L95">    this.reset();</span>
+<span class="nc" id="L95">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L96">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L97">    Integer pose = this.position();</span>
+<span class="nc" id="L98">    this.reset();</span>
 
-<span class="nc" id="L97">    String result = this.nextString(this.length());</span>
-<span class="nc" id="L98">    this.position(pose);</span>
-<span class="nc" id="L99">    return (String)result;</span>
+<span class="nc" id="L100">    String result = this.nextString(this.length());</span>
+<span class="nc" id="L101">    this.position(pose);</span>
+<span class="nc" id="L102">    return (String)result;</span>
   }
 
   /**
@@ -104,13 +107,13 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   @Override public   TextFileWriteStream nextPut(final Character element)
   {
-<span class="nc" id="L107">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;nextPut&quot;;</span>
-<span class="nc" id="L108">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L109">    Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L110">      file.writeByte(element.primitiveByte());</span>
-<span class="nc" id="L111">    return null;</span>
-<span class="nc" id="L112">    }, &quot;&quot;).runLoud();</span>
-<span class="nc" id="L113">    return (TextFileWriteStream)this;</span>
+<span class="nc" id="L110">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;nextPut&quot;;</span>
+<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L112">    Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L113">      file.writeByte(element.primitiveByte());</span>
+<span class="nc" id="L114">    return null;</span>
+<span class="nc" id="L115">    }, &quot;&quot;).runLoud();</span>
+<span class="nc" id="L116">    return (TextFileWriteStream)this;</span>
   }
 
   /**
@@ -118,13 +121,13 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   public   TextFileWriteStream nextPutAll(final CollectedReadably&lt;Character&gt; elements)
   {
-<span class="fc" id="L121">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="fc" id="L122">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L123">    Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L124">      file.writeBytes(((CharacterString)elements).primitiveString());</span>
-<span class="fc" id="L125">    return null;</span>
-<span class="fc" id="L126">    }, &quot;&quot;).runLoud();</span>
-<span class="fc" id="L127">    return (TextFileWriteStream)this;</span>
+<span class="fc" id="L124">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="fc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L126">    Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L127">      file.writeBytes(((CharacterString)elements).primitiveString());</span>
+<span class="fc" id="L128">    return null;</span>
+<span class="fc" id="L129">    }, &quot;&quot;).runLoud();</span>
+<span class="fc" id="L130">    return (TextFileWriteStream)this;</span>
   }
 
   /**
@@ -132,9 +135,9 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   public   Boolean isText()
   {
-<span class="nc" id="L135">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;isText&quot;;</span>
-<span class="nc" id="L136">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L137">    return (Boolean)True.literal();</span>
+<span class="nc" id="L138">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;isText&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -142,9 +145,9 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   public   Boolean isBinary()
   {
-<span class="nc" id="L145">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;isBinary&quot;;</span>
-<span class="nc" id="L146">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L147">    return (Boolean)False.literal();</span>
+<span class="nc" id="L148">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;isBinary&quot;;</span>
+<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L150">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -152,9 +155,9 @@ public class TextFileWriteStream extends FileWriteStream&lt;Character&gt;
    */
   public   Symbol externalType()
   {
-<span class="nc" id="L155">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;externalType&quot;;</span>
-<span class="nc" id="L156">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L157">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
+<span class="nc" id="L158">    java.lang.String exitID = &quot;TextFileWriteStream&gt;&gt;externalType&quot;;</span>
+<span class="nc" id="L159">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L160">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -22,14 +22,15 @@ import Hoot.Collections.String;
 <span class="fc" id="L22">public abstract class Boolean extends Object implements Posit</span>
 {
 
+
   /**
    * @return 
    */
   public static   Boolean from(final Posit aBoolean)
   {
-<span class="fc" id="L30">    java.lang.String exitID = &quot;Boolean&gt;&gt;$from&quot;;</span>
-<span class="fc" id="L31">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L32">    return (Boolean)aBoolean;</span>
+<span class="fc" id="L31">    java.lang.String exitID = &quot;Boolean&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L32">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L33">    return (Boolean)aBoolean;</span>
   }
 
   /**
@@ -37,9 +38,9 @@ import Hoot.Collections.String;
    */
   public static   Boolean from(final boolean aBoolean)
   {
-<span class="fc" id="L40">    java.lang.String exitID = &quot;Boolean&gt;&gt;$from&quot;;</span>
-<span class="fc" id="L41">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">    return (Boolean)(Boolean.primitiveValue(aBoolean) ? True.literal() : False.literal());</span>
+<span class="fc" id="L41">    java.lang.String exitID = &quot;Boolean&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L42">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    return (Boolean)(Boolean.primitiveValue(aBoolean) ? True.literal() : False.literal());</span>
   }
 
   /**
@@ -47,9 +48,9 @@ import Hoot.Collections.String;
    */
   public static   boolean primitiveValue(final Posit aBoolean)
   {
-<span class="fc" id="L50">    java.lang.String exitID = &quot;Boolean&gt;&gt;$primitiveValue&quot;;</span>
-<span class="fc" id="L51">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L52">    return (boolean)Boolean.from(aBoolean).primitiveBoolean();</span>
+<span class="fc" id="L51">    java.lang.String exitID = &quot;Boolean&gt;&gt;$primitiveValue&quot;;</span>
+<span class="fc" id="L52">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L53">    return (boolean)Boolean.from(aBoolean).primitiveBoolean();</span>
   }
 
   /**
@@ -57,9 +58,9 @@ import Hoot.Collections.String;
    */
   public static   boolean primitiveValue(final boolean aBoolean)
   {
-<span class="fc" id="L60">    java.lang.String exitID = &quot;Boolean&gt;&gt;$primitiveValue&quot;;</span>
-<span class="fc" id="L61">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L62">    return (boolean)aBoolean;</span>
+<span class="fc" id="L61">    java.lang.String exitID = &quot;Boolean&gt;&gt;$primitiveValue&quot;;</span>
+<span class="fc" id="L62">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L63">    return (boolean)aBoolean;</span>
   }
 
   /**
@@ -72,9 +73,9 @@ import Hoot.Collections.String;
    */
   public   boolean asPrimitive()
   {
-<span class="fc" id="L75">    java.lang.String exitID = &quot;Boolean&gt;&gt;asPrimitive&quot;;</span>
-<span class="fc" id="L76">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L77">    return (boolean)this.primitiveBoolean();</span>
+<span class="fc" id="L76">    java.lang.String exitID = &quot;Boolean&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L77">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L78">    return (boolean)this.primitiveBoolean();</span>
   }
 
   /**
@@ -82,9 +83,9 @@ import Hoot.Collections.String;
    */
   public static   Boolean trueValue()
   {
-<span class="nc" id="L85">    java.lang.String exitID = &quot;Boolean&gt;&gt;$trueValue&quot;;</span>
-<span class="nc" id="L86">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L87">    return (Boolean)True.literal();</span>
+<span class="nc" id="L86">    java.lang.String exitID = &quot;Boolean&gt;&gt;$trueValue&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -92,9 +93,9 @@ import Hoot.Collections.String;
    */
   public static   Boolean falseValue()
   {
-<span class="nc" id="L95">    java.lang.String exitID = &quot;Boolean&gt;&gt;$falseValue&quot;;</span>
-<span class="nc" id="L96">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L97">    return (Boolean)False.literal();</span>
+<span class="nc" id="L96">    java.lang.String exitID = &quot;Boolean&gt;&gt;$falseValue&quot;;</span>
+<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L98">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -107,9 +108,9 @@ import Hoot.Collections.String;
    */
   public   Boolean and(final Posit aPosit)
   {
-<span class="nc" id="L110">    java.lang.String exitID = &quot;Boolean&gt;&gt;and&quot;;</span>
-<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L112">    return (Boolean)Boolean.from((this.primitiveBoolean() &amp; aPosit.primitiveBoolean()));</span>
+<span class="nc" id="L111">    java.lang.String exitID = &quot;Boolean&gt;&gt;and&quot;;</span>
+<span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L113">    return (Boolean)Boolean.from((this.primitiveBoolean() &amp; aPosit.primitiveBoolean()));</span>
   }
 
   /**
@@ -117,9 +118,9 @@ import Hoot.Collections.String;
    */
   public   Boolean or(final Posit aPosit)
   {
-<span class="nc" id="L120">    java.lang.String exitID = &quot;Boolean&gt;&gt;or&quot;;</span>
-<span class="nc" id="L121">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L122">    return (Boolean)Boolean.from((this.primitiveBoolean() | aPosit.primitiveBoolean()));</span>
+<span class="nc" id="L121">    java.lang.String exitID = &quot;Boolean&gt;&gt;or&quot;;</span>
+<span class="nc" id="L122">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L123">    return (Boolean)Boolean.from((this.primitiveBoolean() | aPosit.primitiveBoolean()));</span>
   }
 
   /**
@@ -127,9 +128,9 @@ import Hoot.Collections.String;
    */
   public   Boolean and(final NiladicPredicate aBlock)
   {
-<span class="nc" id="L130">    java.lang.String exitID = &quot;Boolean&gt;&gt;and&quot;;</span>
-<span class="nc" id="L131">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L132">    return (Boolean)(this.and(aBlock.value()));</span>
+<span class="nc" id="L131">    java.lang.String exitID = &quot;Boolean&gt;&gt;and&quot;;</span>
+<span class="nc" id="L132">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L133">    return (Boolean)(this.and(aBlock.value()));</span>
   }
 
   /**
@@ -137,9 +138,9 @@ import Hoot.Collections.String;
    */
   public   Boolean or(final NiladicPredicate aBlock)
   {
-<span class="nc" id="L140">    java.lang.String exitID = &quot;Boolean&gt;&gt;or&quot;;</span>
-<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L142">    return (Boolean)(this.or(aBlock.value()));</span>
+<span class="nc" id="L141">    java.lang.String exitID = &quot;Boolean&gt;&gt;or&quot;;</span>
+<span class="nc" id="L142">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L143">    return (Boolean)(this.or(aBlock.value()));</span>
   }
 
   /**
@@ -147,9 +148,9 @@ import Hoot.Collections.String;
    */
   public   Boolean xor(final NiladicPredicate aBlock)
   {
-<span class="nc" id="L150">    java.lang.String exitID = &quot;Boolean&gt;&gt;xor&quot;;</span>
-<span class="nc" id="L151">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L152">    return (Boolean)((Boolean)this.eqv(aBlock.value()).not());</span>
+<span class="nc" id="L151">    java.lang.String exitID = &quot;Boolean&gt;&gt;xor&quot;;</span>
+<span class="nc" id="L152">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L153">    return (Boolean)((Boolean)this.eqv(aBlock.value()).not());</span>
   }
 
   /**
@@ -157,9 +158,9 @@ import Hoot.Collections.String;
    */
   public   Boolean eqv(final Posit aPosit)
   {
-<span class="nc" id="L160">    java.lang.String exitID = &quot;Boolean&gt;&gt;eqv&quot;;</span>
-<span class="nc" id="L161">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L162">    return (Boolean)(this.isSame(aPosit));</span>
+<span class="nc" id="L161">    java.lang.String exitID = &quot;Boolean&gt;&gt;eqv&quot;;</span>
+<span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L163">    return (Boolean)(this.isSame(aPosit));</span>
   }
 
   /**
@@ -167,9 +168,9 @@ import Hoot.Collections.String;
    */
   @Override public   Boolean isBoolean()
   {
-<span class="nc" id="L170">    java.lang.String exitID = &quot;Boolean&gt;&gt;isBoolean&quot;;</span>
-<span class="nc" id="L171">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L172">    return (Boolean)True.literal();</span>
+<span class="nc" id="L171">    java.lang.String exitID = &quot;Boolean&gt;&gt;isBoolean&quot;;</span>
+<span class="nc" id="L172">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L173">    return (Boolean)True.literal();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

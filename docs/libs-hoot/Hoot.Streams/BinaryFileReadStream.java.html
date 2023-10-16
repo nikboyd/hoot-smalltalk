@@ -36,30 +36,32 @@ import Smalltalk.Streams.*;
 
 public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
 {
-<span class="nc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L40">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L41">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends FileReadStream.Metaclass
   {
-<span class="nc" id="L43">    static final BinaryFileReadStream.Metaclass $class = new BinaryFileReadStream.Metaclass();</span>
+<span class="fc" id="L44">    static final BinaryFileReadStream.Metaclass $class = new BinaryFileReadStream.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L45">      this(BinaryFileReadStream.Metaclass.class);</span>
-<span class="nc" id="L46">    }</span>
+<span class="fc" id="L46">      this(BinaryFileReadStream.Metaclass.class);</span>
+<span class="fc" id="L47">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L49">      super(aClass);</span>
-<span class="nc" id="L50">    }</span>
+<span class="fc" id="L50">      super(aClass);</span>
+<span class="fc" id="L51">    }</span>
 
-<span class="nc" id="L52">    @Override public java.lang.Class outerClass() { return BinaryFileReadStream.class; }</span>
+<span class="fc" id="L53">    @Override public java.lang.Class outerClass() { return BinaryFileReadStream.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   BinaryFileReadStream read(final ReadableString fileName)
     {
-<span class="nc" id="L59">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;read&quot;;</span>
-<span class="nc" id="L60">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L61">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L62">      return (BinaryFileReadStream)f0.exit(exitID, super.read(fileName));</span>
+<span class="nc" id="L61">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;read&quot;;</span>
+<span class="nc" id="L62">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L63">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L64">      return (BinaryFileReadStream)f0.exit(exitID, super.read(fileName));</span>
       });
     }
 
@@ -68,13 +70,14 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
      */
     public   BinaryFileReadStream on(final RandomAccessFile primitiveFile)
     {
-<span class="nc" id="L71">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;on&quot;;</span>
-<span class="nc" id="L72">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L73">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L74">      return (BinaryFileReadStream)f0.exit(exitID, new BinaryFileReadStream(primitiveFile));</span>
+<span class="nc" id="L73">      java.lang.String exitID = &quot;BinaryFileReadStreamMetatype&gt;&gt;on&quot;;</span>
+<span class="nc" id="L74">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L75">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L76">      return (BinaryFileReadStream)f0.exit(exitID, new BinaryFileReadStream(primitiveFile));</span>
       });
     }
   }
+
 
 
   /**
@@ -82,24 +85,24 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   protected    BinaryFileReadStream(final RandomAccessFile primitiveFile)
   {
-<span class="nc" id="L85">    super(primitiveFile);</span>
-<span class="nc" id="L86">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;BinaryFileReadStream&quot;;</span>
-<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L88">  }</span>
+<span class="nc" id="L88">    super(primitiveFile);</span>
+<span class="nc" id="L89">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;BinaryFileReadStream&quot;;</span>
+<span class="nc" id="L90">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L91">  }</span>
 
   /**
    * @return 
    */
   public   ByteArray contents()
   {
-<span class="nc" id="L95">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;contents&quot;;</span>
-<span class="nc" id="L96">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L97">    Integer pose = this.position();</span>
-<span class="nc" id="L98">    this.reset();</span>
+<span class="nc" id="L98">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;contents&quot;;</span>
+<span class="nc" id="L99">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L100">    Integer pose = this.position();</span>
+<span class="nc" id="L101">    this.reset();</span>
 
-<span class="nc" id="L100">    ByteArray result = this.nextBytes(this.length());</span>
-<span class="nc" id="L101">    this.position(pose);</span>
-<span class="nc" id="L102">    return (ByteArray)result;</span>
+<span class="nc" id="L103">    ByteArray result = this.nextBytes(this.length());</span>
+<span class="nc" id="L104">    this.position(pose);</span>
+<span class="nc" id="L105">    return (ByteArray)result;</span>
   }
 
   /**
@@ -107,9 +110,9 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   Boolean isText()
   {
-<span class="nc" id="L110">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isText&quot;;</span>
-<span class="nc" id="L111">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L112">    return (Boolean)True.literal();</span>
+<span class="nc" id="L113">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isText&quot;;</span>
+<span class="nc" id="L114">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L115">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -117,9 +120,9 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   Boolean isBinary()
   {
-<span class="nc" id="L120">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isBinary&quot;;</span>
-<span class="nc" id="L121">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L122">    return (Boolean)False.literal();</span>
+<span class="nc" id="L123">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;isBinary&quot;;</span>
+<span class="nc" id="L124">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L125">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -127,9 +130,9 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   Symbol externalType()
   {
-<span class="nc" id="L130">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;externalType&quot;;</span>
-<span class="nc" id="L131">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L132">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
+<span class="nc" id="L133">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;externalType&quot;;</span>
+<span class="nc" id="L134">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L135">    return (Symbol)Symbol.from(&quot;text&quot;);</span>
   }
 
   /**
@@ -137,11 +140,11 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   Integer next()
   {
-<span class="nc" id="L140">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
-<span class="nc" id="L141">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L142">    return (Integer)Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L143">      return SmallInteger.from(((int)file.readUnsignedByte()));</span>
-<span class="nc" id="L144">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.type().zero());</span>
+<span class="nc" id="L143">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
+<span class="nc" id="L144">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L145">    return (Integer)Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L146">      return SmallInteger.from(((int)file.readUnsignedByte()));</span>
+<span class="nc" id="L147">    }, &quot;&quot;).defaultIfCurtailed(SmallInteger.type().zero());</span>
   }
 
   /**
@@ -149,9 +152,9 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   String nextLine()
   {
-<span class="nc" id="L152">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;nextLine&quot;;</span>
-<span class="nc" id="L153">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L154">    return (String)String.emptyString();</span>
+<span class="nc" id="L155">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;nextLine&quot;;</span>
+<span class="nc" id="L156">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L157">    return (String)String.emptyString();</span>
   }
 
   /**
@@ -159,9 +162,9 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   ByteArray next(final Ordinal count)
   {
-<span class="nc" id="L162">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
-<span class="nc" id="L163">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L164">    return (ByteArray)this.nextBytes(((Integer)count));</span>
+<span class="nc" id="L165">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;next&quot;;</span>
+<span class="nc" id="L166">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L167">    return (ByteArray)this.nextBytes(((Integer)count));</span>
   }
 
   /**
@@ -169,21 +172,21 @@ public class BinaryFileReadStream extends FileReadStream&lt;Integer&gt;
    */
   public   ByteArray upTo(final Integer target)
   {
-<span class="nc" id="L172">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;upTo&quot;;</span>
-<span class="nc" id="L173">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L174">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L175">    String results = String.emptyString();</span>
-<span class="nc" id="L176">    Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L177">      return this.atEnd();</span>
-<span class="nc" id="L178">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L175">    java.lang.String exitID = &quot;BinaryFileReadStream&gt;&gt;upTo&quot;;</span>
+<span class="nc" id="L176">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L177">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L178">    String results = String.emptyString();</span>
+<span class="nc" id="L179">    Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L180">      return this.atEnd();</span>
+<span class="nc" id="L181">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
       
-<span class="nc" id="L180">    Integer v = this.next();</span>
-<span class="nc" id="L181">    (target.equals(v)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L182">      return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
+<span class="nc" id="L183">    Integer v = this.next();</span>
+<span class="nc" id="L184">    (target.equals(v)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L185">      return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
     }, &quot;&quot;));
-<span class="nc" id="L184">    results.add(v.asCharacter());</span>
-<span class="nc" id="L185">    }, &quot;&quot;));</span>
-<span class="nc" id="L186">    return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
+<span class="nc" id="L187">    results.add(v.asCharacter());</span>
+<span class="nc" id="L188">    }, &quot;&quot;));</span>
+<span class="nc" id="L189">    return (ByteArray)f0.exit(exitID, ByteArray.type().withAll(results.primitiveString().getBytes()));</span>
     });
   }
 }

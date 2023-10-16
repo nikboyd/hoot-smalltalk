@@ -35,22 +35,24 @@ import Smalltalk.Core.Subject;
 
 <span class="fc" id="L36">public abstract class SequencedCollection&lt;ElementType extends Object&gt; extends Collection&lt;ElementType&gt; implements CollectedOrdinally&lt;ElementType&gt;</span>
 {
-<span class="nc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L39">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L40">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Collection.Metaclass implements CollectedOrdinally.Metatype
   {
-<span class="fc" id="L42">    static final SequencedCollection.Metaclass $class = new SequencedCollection.Metaclass();</span>
+<span class="fc" id="L43">    static final SequencedCollection.Metaclass $class = new SequencedCollection.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L44">      this(SequencedCollection.Metaclass.class);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L45">      this(SequencedCollection.Metaclass.class);</span>
+<span class="fc" id="L46">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L48">      super(aClass);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L49">      super(aClass);</span>
+<span class="fc" id="L50">    }</span>
 
-<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return SequencedCollection.class; }</span>
+<span class="fc" id="L52">    @Override public java.lang.Class outerClass() { return SequencedCollection.class; }</span>
 
   }
+
 
 
   /**
@@ -68,10 +70,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType first()
   {
-<span class="fc" id="L71">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;first&quot;;</span>
-<span class="fc" id="L72">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L73">    this.emptyCheck();</span>
-<span class="fc" id="L74">    return (ElementType)this.at(SmallInteger.from(1));</span>
+<span class="fc" id="L73">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;first&quot;;</span>
+<span class="fc" id="L74">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L75">    this.emptyCheck();</span>
+<span class="fc" id="L76">    return (ElementType)this.at(SmallInteger.from(1));</span>
   }
 
   /**
@@ -79,10 +81,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType last()
   {
-<span class="fc" id="L82">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;last&quot;;</span>
-<span class="fc" id="L83">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L84">    this.emptyCheck();</span>
-<span class="fc" id="L85">    return (ElementType)this.at(this.size());</span>
+<span class="fc" id="L84">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;last&quot;;</span>
+<span class="fc" id="L85">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L86">    this.emptyCheck();</span>
+<span class="fc" id="L87">    return (ElementType)this.at(this.size());</span>
   }
 
   /**
@@ -90,9 +92,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType at(final Numeric index)
   {
-<span class="nc" id="L93">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at&quot;;</span>
-<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L95">    return (ElementType)this.at(index.asInteger());</span>
+<span class="nc" id="L95">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at&quot;;</span>
+<span class="nc" id="L96">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L97">    return (ElementType)this.at(index.asInteger());</span>
   }
 
   /**
@@ -100,9 +102,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType at_ifAbsent(final Numeric index, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L103">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="nc" id="L104">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L105">    return (ElementType)this.at_ifAbsent(index.asInteger(), noneBlock);</span>
+<span class="nc" id="L105">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="nc" id="L106">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L107">    return (ElementType)this.at_ifAbsent(index.asInteger(), noneBlock);</span>
   }
 
   /**
@@ -110,10 +112,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType at(final Ordinal index)
   {
-<span class="fc" id="L113">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at&quot;;</span>
-<span class="fc" id="L114">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L115">    return (ElementType)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L116">      return this.indexRangeError();</span>
+<span class="fc" id="L115">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at&quot;;</span>
+<span class="fc" id="L116">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L117">    return (ElementType)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L118">      return this.indexRangeError();</span>
     }, &quot;&quot;));
   }
 
@@ -122,10 +124,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType at_ifAbsent(final Ordinal index, final NiladicValuable noneBlock)
   {
-<span class="fc" id="L125">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="fc" id="L126">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L127">    int i = this.checkIndex_ifAbsent(index, noneBlock);</span>
-<span class="fc" id="L128">    return (ElementType)this.get(i);</span>
+<span class="fc" id="L127">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="fc" id="L128">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L129">    int i = this.checkIndex_ifAbsent(index, noneBlock);</span>
+<span class="fc" id="L130">    return (ElementType)this.get(i);</span>
   }
 
   /**
@@ -133,10 +135,10 @@ import Smalltalk.Core.Subject;
    */
   public   Integer nextIndexOf_from_to(final ElementType element, final Integer start, final Integer stop)
   {
-<span class="nc" id="L136">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;nextIndexOf_from_to&quot;;</span>
-<span class="nc" id="L137">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L138">    return (Integer)this.nextIndexOf_from_to_ifAbsent(element, start, stop, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L139">      return Negativity;</span>
+<span class="nc" id="L138">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;nextIndexOf_from_to&quot;;</span>
+<span class="nc" id="L139">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L140">    return (Integer)this.nextIndexOf_from_to_ifAbsent(element, start, stop, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L141">      return Negativity;</span>
     }, &quot;&quot;));
   }
 
@@ -145,16 +147,16 @@ import Smalltalk.Core.Subject;
    */
   public   Integer nextIndexOf_from_to_ifAbsent(final ElementType element, final Integer start, final Integer stop, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L148">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;nextIndexOf_from_to_ifAbsent&quot;;</span>
-<span class="nc" id="L149">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L150">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L151">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L152">      Integer i = f2.getValue(0).value();</span>
-<span class="nc" id="L153">      return (Integer)f0.exit(exitID, (this.at(i).equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L154">      return (Integer)f0.exit(exitID, i);</span>
+<span class="nc" id="L150">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;nextIndexOf_from_to_ifAbsent&quot;;</span>
+<span class="nc" id="L151">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L152">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L153">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L154">      Integer i = f2.getValue(0).value();</span>
+<span class="nc" id="L155">      return (Integer)f0.exit(exitID, (this.at(i).equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L156">      return (Integer)f0.exit(exitID, i);</span>
     }, &quot;&quot;)));
     }, &quot;i&quot;));
-<span class="nc" id="L157">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
+<span class="nc" id="L159">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
     });
   }
 
@@ -163,10 +165,10 @@ import Smalltalk.Core.Subject;
    */
   public   Integer prevIndexOf_from_to(final ElementType element, final Integer start, final Integer stop)
   {
-<span class="nc" id="L166">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;prevIndexOf_from_to&quot;;</span>
-<span class="nc" id="L167">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L168">    return (Integer)this.prevIndexOf_from_to_ifAbsent(element, start, stop, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L169">      return Negativity;</span>
+<span class="nc" id="L168">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;prevIndexOf_from_to&quot;;</span>
+<span class="nc" id="L169">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L170">    return (Integer)this.prevIndexOf_from_to_ifAbsent(element, start, stop, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L171">      return Negativity;</span>
     }, &quot;&quot;));
   }
 
@@ -175,16 +177,16 @@ import Smalltalk.Core.Subject;
    */
   public   Integer prevIndexOf_from_to_ifAbsent(final ElementType element, final Integer start, final Integer stop, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L178">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;prevIndexOf_from_to_ifAbsent&quot;;</span>
-<span class="nc" id="L179">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L180">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L181">    start.to_by_do(stop, Negativity, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L182">      Integer i = f2.getValue(0).value();</span>
-<span class="nc" id="L183">      return (Integer)f0.exit(exitID, (this.at(i).equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L184">      return (Integer)f0.exit(exitID, i);</span>
+<span class="nc" id="L180">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;prevIndexOf_from_to_ifAbsent&quot;;</span>
+<span class="nc" id="L181">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L182">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L183">    start.to_by_do(stop, Negativity, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L184">      Integer i = f2.getValue(0).value();</span>
+<span class="nc" id="L185">      return (Integer)f0.exit(exitID, (this.at(i).equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L186">      return (Integer)f0.exit(exitID, i);</span>
     }, &quot;&quot;)));
     }, &quot;i&quot;));
-<span class="nc" id="L187">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
+<span class="nc" id="L189">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
     });
   }
 
@@ -193,14 +195,14 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType after(final ElementType leadingElement)
   {
-<span class="nc" id="L196">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;after&quot;;</span>
-<span class="nc" id="L197">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L198">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L199">    Integer index = this.nextIndexOf_from_to_ifAbsent(leadingElement, SmallInteger.from(1), this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L200">      this.elementNotFound();</span>
-<span class="nc" id="L201">    return (ElementType)f0.exit(exitID, Zero);</span>
+<span class="nc" id="L198">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;after&quot;;</span>
+<span class="nc" id="L199">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L200">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L201">    Integer index = this.nextIndexOf_from_to_ifAbsent(leadingElement, SmallInteger.from(1), this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L202">      this.elementNotFound();</span>
+<span class="nc" id="L203">    return (ElementType)f0.exit(exitID, Zero);</span>
     }, &quot;&quot;));
-<span class="nc" id="L203">    return (ElementType)f0.exit(exitID, this.at((index.plus(SmallInteger.from(1))).asInteger()));</span>
+<span class="nc" id="L205">    return (ElementType)f0.exit(exitID, this.at((index.plus(SmallInteger.from(1))).asInteger()));</span>
     });
   }
 
@@ -209,14 +211,14 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType before(final ElementType trailingElement)
   {
-<span class="nc" id="L212">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;before&quot;;</span>
-<span class="nc" id="L213">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L214">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L215">    Integer index = this.prevIndexOf_from_to_ifAbsent(trailingElement, this.size(), SmallInteger.from(1), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L216">      this.elementNotFound();</span>
-<span class="nc" id="L217">    return (ElementType)f0.exit(exitID, Zero);</span>
+<span class="nc" id="L214">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;before&quot;;</span>
+<span class="nc" id="L215">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L216">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L217">    Integer index = this.prevIndexOf_from_to_ifAbsent(trailingElement, this.size(), SmallInteger.from(1), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L218">      this.elementNotFound();</span>
+<span class="nc" id="L219">    return (ElementType)f0.exit(exitID, Zero);</span>
     }, &quot;&quot;));
-<span class="nc" id="L219">    return (ElementType)f0.exit(exitID, this.at((index.minus(SmallInteger.from(1))).asInteger()));</span>
+<span class="nc" id="L221">    return (ElementType)f0.exit(exitID, this.at((index.minus(SmallInteger.from(1))).asInteger()));</span>
     });
   }
 
@@ -225,10 +227,10 @@ import Smalltalk.Core.Subject;
    */
   public   Integer indexOf(final ElementType element)
   {
-<span class="nc" id="L228">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOf&quot;;</span>
-<span class="nc" id="L229">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L230">    return (Integer)this.indexOf_ifAbsent(element, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L231">      return Zero;</span>
+<span class="nc" id="L230">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOf&quot;;</span>
+<span class="nc" id="L231">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L232">    return (Integer)this.indexOf_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L233">      return Zero;</span>
     }, &quot;&quot;));
   }
 
@@ -237,9 +239,9 @@ import Smalltalk.Core.Subject;
    */
   public   Integer indexOf_ifAbsent(final ElementType element, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L240">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOf_ifAbsent&quot;;</span>
-<span class="nc" id="L241">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L242">    return (Integer)this.nextIndexOf_from_to_ifAbsent(element, SmallInteger.from(1), this.size(), noneBlock);</span>
+<span class="nc" id="L242">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOf_ifAbsent&quot;;</span>
+<span class="nc" id="L243">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L244">    return (Integer)this.nextIndexOf_from_to_ifAbsent(element, SmallInteger.from(1), this.size(), noneBlock);</span>
   }
 
   /**
@@ -247,44 +249,44 @@ import Smalltalk.Core.Subject;
    */
   public   Integer indexOfSubCollection_startingAt(final CollectedReadably&lt;ElementType&gt; subCollection, final Ordinal anIndex)
   {
-<span class="fc" id="L250">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOfSubCollection_startingAt&quot;;</span>
-<span class="fc" id="L251">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L252">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L253">    Ordinal subSize = subCollection.size();</span>
+<span class="fc" id="L252">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOfSubCollection_startingAt&quot;;</span>
+<span class="fc" id="L253">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L254">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L255">    Ordinal subSize = subCollection.size();</span>
 
-<span class="fc" id="L255">    FastInteger finalIndex = Zero.faster();</span>
-<span class="fc" id="L256">    (Zero.lessThan(subSize)).and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L257">      return Zero.plus(this.size()).notLess(anIndex);</span>
-<span class="fc" id="L258">    }, &quot;&quot;)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L257">    FastInteger finalIndex = Zero.faster();</span>
+<span class="fc" id="L258">    (Zero.lessThan(subSize)).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L259">      return Zero.plus(this.size()).notLess(anIndex);</span>
+<span class="fc" id="L260">    }, &quot;&quot;)).ifTrue(Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L260">    SequencedCollection sub = ((SequencedCollection)subCollection);</span>
+<span class="fc" id="L262">    SequencedCollection sub = ((SequencedCollection)subCollection);</span>
 
-<span class="fc" id="L262">    Object firstSub = sub.at(Unity);</span>
+<span class="fc" id="L264">    Object firstSub = sub.at(Unity);</span>
 
-<span class="fc" id="L264">    Interval range = Unity.max(anIndex).to(Unity.plus(this.size()).minus(subSize));</span>
-<span class="fc" id="L265">    range.$do(Closure.with(f3 -&gt; {</span>
-<span class="fc" id="L266">      Integer startIndex = f3.getValue(0).value();</span>
+<span class="fc" id="L266">    Interval range = Unity.max(anIndex).to(Unity.plus(this.size()).minus(subSize));</span>
+<span class="fc" id="L267">    range.$do(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L268">      Integer startIndex = f3.getValue(0).value();</span>
       
-<span class="fc" id="L268">    Object nextItem = this.at(startIndex);</span>
-<span class="fc" id="L269">    (nextItem.equals(firstSub)).ifTrue(Closure.with(f4 -&gt; {</span>
+<span class="fc" id="L270">    Object nextItem = this.at(startIndex);</span>
+<span class="fc" id="L271">    (nextItem.equals(firstSub)).ifTrue(Closure.with(f4 -&gt; {</span>
       
-<span class="fc" id="L271">    FastInteger matchIndex = Duality.faster();</span>
-<span class="fc" id="L272">    Predicate.with(f5 -&gt; {</span>
-<span class="fc" id="L273">      return (matchIndex.notMore(subSize)).and(Predicate.with(f6 -&gt; {</span>
-<span class="fc" id="L274">      return (this.at(startIndex.plus(matchIndex).minus(SmallInteger.from(1))).equals(sub.at(matchIndex)));</span>
+<span class="fc" id="L273">    FastInteger matchIndex = Duality.faster();</span>
+<span class="fc" id="L274">    Predicate.with(f5 -&gt; {</span>
+<span class="fc" id="L275">      return (matchIndex.notMore(subSize)).and(Predicate.with(f6 -&gt; {</span>
+<span class="fc" id="L276">      return (this.at(startIndex.plus(matchIndex).minus(SmallInteger.from(1))).equals(sub.at(matchIndex)));</span>
     }, &quot;&quot;));
-<span class="fc" id="L276">    }, &quot;&quot;).whileTrue(Closure.with(f5 -&gt; {</span>
-<span class="fc" id="L277">      matchIndex.increment();</span>
-<span class="fc" id="L278">    }, &quot;&quot;));</span>
-<span class="fc" id="L279">    return (Integer)f0.exit(exitID, (matchIndex.notMore(subSize)).ifFalse(Closure.with(f5 -&gt; {</span>
-<span class="fc" id="L280">      finalIndex.value(startIndex);</span>
-<span class="fc" id="L281">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
+<span class="fc" id="L278">    }, &quot;&quot;).whileTrue(Closure.with(f5 -&gt; {</span>
+<span class="fc" id="L279">      matchIndex.increment();</span>
+<span class="fc" id="L280">    }, &quot;&quot;));</span>
+<span class="fc" id="L281">    return (Integer)f0.exit(exitID, (matchIndex.notMore(subSize)).ifFalse(Closure.with(f5 -&gt; {</span>
+<span class="fc" id="L282">      finalIndex.value(startIndex);</span>
+<span class="fc" id="L283">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
     }, &quot;&quot;)));
     }, &quot;&quot;));
-<span class="fc" id="L284">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
+<span class="fc" id="L286">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
     }, &quot;startIndex&quot;));
-<span class="fc" id="L286">    }, &quot;&quot;));</span>
-<span class="fc" id="L287">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
+<span class="fc" id="L288">    }, &quot;&quot;));</span>
+<span class="fc" id="L289">    return (Integer)f0.exit(exitID, finalIndex.value());</span>
     });
   }
 
@@ -293,10 +295,10 @@ import Smalltalk.Core.Subject;
    */
   public   Integer indexOfSubCollection_startingAt_ifAbsent(final CollectedReadably&lt;ElementType&gt; subCollection, final Ordinal anIndex, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L296">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOfSubCollection_startingAt_ifAbsent&quot;;</span>
-<span class="nc" id="L297">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L298">    Integer index = this.indexOfSubCollection_startingAt(subCollection, anIndex);</span>
-<span class="nc bnc" id="L299" title="All 4 branches missed.">    return (Integer)(Boolean.primitiveValue((index.intValue() == Zero.intValue())) ? noneBlock.value() : index);</span>
+<span class="nc" id="L298">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;indexOfSubCollection_startingAt_ifAbsent&quot;;</span>
+<span class="nc" id="L299">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L300">    Integer index = this.indexOfSubCollection_startingAt(subCollection, anIndex);</span>
+<span class="nc bnc" id="L301" title="All 4 branches missed.">    return (Integer)(Boolean.primitiveValue((index.intValue() == Zero.intValue())) ? noneBlock.value() : index);</span>
   }
 
   /**
@@ -304,9 +306,9 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; append(final CollectedReadably&lt;ElementType&gt; aCollection)
   {
-<span class="nc" id="L307">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;append&quot;;</span>
-<span class="nc" id="L308">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L309">    return (SequencedCollection&lt;ElementType&gt;)this.copyReplaceFrom_to_with((Unity.plus(this.size())), this.size(), aCollection);</span>
+<span class="nc" id="L309">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;append&quot;;</span>
+<span class="nc" id="L310">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L311">    return (SequencedCollection&lt;ElementType&gt;)this.copyReplaceFrom_to_with((Unity.plus(this.size())), this.size(), aCollection);</span>
   }
 
   /**
@@ -314,9 +316,9 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyRange(final Interval range)
   {
-<span class="nc" id="L317">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyRange&quot;;</span>
-<span class="nc" id="L318">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L319">    return (SequencedCollection&lt;ElementType&gt;)this.copyFrom_to(range.first(), range.last());</span>
+<span class="nc" id="L319">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyRange&quot;;</span>
+<span class="nc" id="L320">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L321">    return (SequencedCollection&lt;ElementType&gt;)this.copyFrom_to(range.first(), range.last());</span>
   }
 
   /**
@@ -324,19 +326,19 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyFrom_to(final Ordinal start, final Ordinal stop)
   {
-<span class="fc" id="L327">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyFrom_to&quot;;</span>
-<span class="fc" id="L328">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L329">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L330">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L331">      return (SequencedCollection&lt;ElementType&gt;)f0.exit(exitID, this.copy());</span>
+<span class="fc" id="L329">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyFrom_to&quot;;</span>
+<span class="fc" id="L330">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L331">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L332">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L333">      return (SequencedCollection&lt;ElementType&gt;)f0.exit(exitID, this.copy());</span>
     }, &quot;&quot;));
 
-<span class="fc" id="L334">    Integer newSize = (Unity.plus((stop.minus(start))));</span>
-<span class="fc" id="L335">    return (SequencedCollection&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="fc" id="L336">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
-<span class="fc" id="L337">    prime.replaceFrom_to_with_startingAt(Unity, newSize, this, start); </span>
+<span class="fc" id="L336">    Integer newSize = (Unity.plus((stop.minus(start))));</span>
+<span class="fc" id="L337">    return (SequencedCollection&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="fc" id="L338">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
+<span class="fc" id="L339">    prime.replaceFrom_to_with_startingAt(Unity, newSize, this, start); </span>
 
-<span class="fc" id="L339">    return prime.yourself();</span>
+<span class="fc" id="L341">    return prime.yourself();</span>
     });
     });
   }
@@ -346,44 +348,44 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyReplaceAll_with(final CollectedReadably&lt;ElementType&gt; oldElements, final CollectedReadably&lt;ElementType&gt; newElements)
   {
-<span class="fc" id="L349">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceAll_with&quot;;</span>
-<span class="fc" id="L350">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L351">    FastInteger oldIndex = Unity.faster();</span>
+<span class="fc" id="L351">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceAll_with&quot;;</span>
+<span class="fc" id="L352">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L353">    FastInteger oldIndex = Unity.faster();</span>
 
-<span class="fc" id="L353">    FastInteger matchIndex = this.indexOfSubCollection_startingAt(oldElements, oldIndex).faster();</span>
+<span class="fc" id="L355">    FastInteger matchIndex = this.indexOfSubCollection_startingAt(oldElements, oldIndex).faster();</span>
 
-<span class="fc" id="L355">    OrderedCollection&lt;Integer&gt; matchIndices = OrderedCollection.type().$new();</span>
-<span class="fc" id="L356">    Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L357">      return (Zero.lessThan(matchIndex));</span>
-<span class="fc" id="L358">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L359">      matchIndices.addLast(matchIndex.value());</span>
-<span class="fc" id="L360">    matchIndex.add(oldElements.size());</span>
-<span class="fc" id="L361">    matchIndex.value(this.indexOfSubCollection_startingAt(oldElements, matchIndex.value()));</span>
-<span class="fc" id="L362">    }, &quot;&quot;));</span>
-<span class="fc" id="L363">    return (SequencedCollection&lt;ElementType&gt;)matchIndices.notEmpty().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L357">    OrderedCollection&lt;Integer&gt; matchIndices = OrderedCollection.type().$new();</span>
+<span class="fc" id="L358">    Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L359">      return (Zero.lessThan(matchIndex));</span>
+<span class="fc" id="L360">    }, &quot;&quot;).whileTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L361">      matchIndices.addLast(matchIndex.value());</span>
+<span class="fc" id="L362">    matchIndex.add(oldElements.size());</span>
+<span class="fc" id="L363">    matchIndex.value(this.indexOfSubCollection_startingAt(oldElements, matchIndex.value()));</span>
+<span class="fc" id="L364">    }, &quot;&quot;));</span>
+<span class="fc" id="L365">    return (SequencedCollection&lt;ElementType&gt;)matchIndices.notEmpty().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L365">    FastInteger newIndex = Unity.faster();</span>
+<span class="fc" id="L367">    FastInteger newIndex = Unity.faster();</span>
 
-<span class="fc" id="L367">    FastInteger newPlace = Zero.faster();</span>
+<span class="fc" id="L369">    FastInteger newPlace = Zero.faster();</span>
 
-<span class="fc" id="L369">    Integer newSize = (this.size().plus(((newElements.size().minus(oldElements.size())).times(matchIndices.size())))).asInteger();</span>
+<span class="fc" id="L371">    Integer newSize = (this.size().plus(((newElements.size().minus(oldElements.size())).times(matchIndices.size())))).asInteger();</span>
 
-<span class="fc" id="L371">    OrderedCollection results = OrderedCollection.type().$new(newSize);</span>
-<span class="fc" id="L372">    results.registerType(oldElements.first());</span>
-<span class="fc" id="L373">    Predicate.with(f3 -&gt; {</span>
-<span class="fc" id="L374">      return matchIndices.notEmpty();</span>
-<span class="fc" id="L375">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
-<span class="fc" id="L376">      matchIndex.value(matchIndices.removeFirst());</span>
-<span class="fc" id="L377">    newPlace.value(newIndex.plus(matchIndex).minus(oldIndex));</span>
-<span class="fc" id="L378">    results.replaceFrom_to_with_startingAt(newIndex, (newPlace.plus(Negativity)), this, oldIndex);</span>
-<span class="fc" id="L379">    oldIndex.value((matchIndex.value().plus(oldElements.size())).asInteger());</span>
-<span class="fc" id="L380">    newIndex.value((newPlace.value().plus(newElements.size())).asInteger());</span>
-<span class="fc" id="L381">    return results.replaceFrom_to_with_startingAt(newPlace, (newIndex.plus(Negativity)), newElements, Unity);</span>
+<span class="fc" id="L373">    OrderedCollection results = OrderedCollection.type().$new(newSize);</span>
+<span class="fc" id="L374">    results.registerType(oldElements.first());</span>
+<span class="fc" id="L375">    Predicate.with(f3 -&gt; {</span>
+<span class="fc" id="L376">      return matchIndices.notEmpty();</span>
+<span class="fc" id="L377">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L378">      matchIndex.value(matchIndices.removeFirst());</span>
+<span class="fc" id="L379">    newPlace.value(newIndex.plus(matchIndex).minus(oldIndex));</span>
+<span class="fc" id="L380">    results.replaceFrom_to_with_startingAt(newIndex, (newPlace.plus(Negativity)), this, oldIndex);</span>
+<span class="fc" id="L381">    oldIndex.value((matchIndex.value().plus(oldElements.size())).asInteger());</span>
+<span class="fc" id="L382">    newIndex.value((newPlace.value().plus(newElements.size())).asInteger());</span>
+<span class="fc" id="L383">    return results.replaceFrom_to_with_startingAt(newPlace, (newIndex.plus(Negativity)), newElements, Unity);</span>
     }, &quot;&quot;));
-<span class="fc" id="L383">    results.replaceFrom_to_with_startingAt(newIndex.value(), results.size(), this, oldIndex.value());</span>
-<span class="fc" id="L384">    return results;</span>
-<span class="fc" id="L385">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L386">      return this.copy();</span>
+<span class="fc" id="L385">    results.replaceFrom_to_with_startingAt(newIndex.value(), results.size(), this, oldIndex.value());</span>
+<span class="fc" id="L386">    return results;</span>
+<span class="fc" id="L387">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L388">      return this.copy();</span>
     }, &quot;&quot;));
   }
 
@@ -392,18 +394,18 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyReplaceFrom_to_with(final Ordinal start, final Ordinal stop, final CollectedReadably&lt;ElementType&gt; replacements)
   {
-<span class="nc" id="L395">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceFrom_to_with&quot;;</span>
-<span class="nc" id="L396">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L397">    Integer newSize = this.size().minus(Unity.plus(stop).minus(start)).plus(replacements.size()).asInteger();</span>
+<span class="nc" id="L397">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceFrom_to_with&quot;;</span>
+<span class="nc" id="L398">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L399">    Integer newSize = this.size().minus(Unity.plus(stop).minus(start)).plus(replacements.size()).asInteger();</span>
 
-<span class="nc" id="L399">    Integer end = SmallInteger.from(start.minus(Unity).plus(replacements.size()));</span>
+<span class="nc" id="L401">    Integer end = SmallInteger.from(start.minus(Unity).plus(replacements.size()));</span>
     {
-<span class="nc" id="L401">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
-<span class="nc" id="L402">    prime.replaceFrom_to_with_startingAt(Unity, (start.minus(Unity)).asInteger(), this, Unity); </span>
-<span class="nc" id="L403">    prime.replaceFrom_to_with_startingAt(start, end, replacements, Unity); </span>
-<span class="nc" id="L404">    prime.replaceFrom_to_with_startingAt((Unity.plus(end)), newSize, this, (Unity.plus(stop))); </span>
+<span class="nc" id="L403">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
+<span class="nc" id="L404">    prime.replaceFrom_to_with_startingAt(Unity, (start.minus(Unity)).asInteger(), this, Unity); </span>
+<span class="nc" id="L405">    prime.replaceFrom_to_with_startingAt(start, end, replacements, Unity); </span>
+<span class="nc" id="L406">    prime.replaceFrom_to_with_startingAt((Unity.plus(end)), newSize, this, (Unity.plus(stop))); </span>
 
-<span class="nc" id="L406">    return prime.yourself();</span>
+<span class="nc" id="L408">    return prime.yourself();</span>
     }
   }
 
@@ -412,17 +414,17 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyReplaceFrom_to_withObject(final Ordinal start, final Ordinal stop, final ElementType replacement)
   {
-<span class="nc" id="L415">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceFrom_to_withObject&quot;;</span>
-<span class="nc" id="L416">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L417">    FastInteger size = (((Integer)stop).minus(start)).asSmallInteger().faster();</span>
-<span class="nc" id="L418">    (size.lessThan(SmallInteger.from(0))).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L419">      return size.subtract(size);</span>
+<span class="nc" id="L417">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplaceFrom_to_withObject&quot;;</span>
+<span class="nc" id="L418">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L419">    FastInteger size = (((Integer)stop).minus(start)).asSmallInteger().faster();</span>
+<span class="nc" id="L420">    (size.lessThan(SmallInteger.from(0))).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L421">      return size.subtract(size);</span>
     }, &quot;&quot;));
-<span class="nc" id="L421">    size.add(Unity);</span>
+<span class="nc" id="L423">    size.add(Unity);</span>
 
-<span class="nc" id="L423">    Array replacements = Array.type().$new(size);</span>
-<span class="nc" id="L424">    replacements.atAllPut(replacement);</span>
-<span class="nc" id="L425">    return (SequencedCollection&lt;ElementType&gt;)this.copyReplaceFrom_to_with(start, stop, replacements);</span>
+<span class="nc" id="L425">    Array replacements = Array.type().$new(size);</span>
+<span class="nc" id="L426">    replacements.atAllPut(replacement);</span>
+<span class="nc" id="L427">    return (SequencedCollection&lt;ElementType&gt;)this.copyReplaceFrom_to_with(start, stop, replacements);</span>
   }
 
   /**
@@ -430,15 +432,15 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyWith(final ElementType newElement)
   {
-<span class="fc" id="L433">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyWith&quot;;</span>
-<span class="fc" id="L434">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L435">    Integer newSize = (Unity.plus(this.size()));</span>
+<span class="fc" id="L435">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyWith&quot;;</span>
+<span class="fc" id="L436">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L437">    Integer newSize = (Unity.plus(this.size()));</span>
     {
-<span class="fc" id="L437">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
-<span class="fc" id="L438">    prime.at_put(newSize, newElement); </span>
-<span class="fc" id="L439">    prime.replaceFrom_to_with_startingAt(Unity, this.size(), this, Unity); </span>
+<span class="fc" id="L439">    SequencedCollection prime = (SequencedCollection)this.species().$new(newSize);</span>
+<span class="fc" id="L440">    prime.at_put(newSize, newElement); </span>
+<span class="fc" id="L441">    prime.replaceFrom_to_with_startingAt(Unity, this.size(), this, Unity); </span>
 
-<span class="fc" id="L441">    return prime.yourself();</span>
+<span class="fc" id="L443">    return prime.yourself();</span>
     }
   }
 
@@ -447,18 +449,18 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyWithout(final ElementType oldElement)
   {
-<span class="fc" id="L450">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyWithout&quot;;</span>
-<span class="fc" id="L451">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L452">    OrderedCollection copy = ((OrderedCollection)this.species().$new(this.size()).asOrderedCollection());</span>
+<span class="fc" id="L452">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyWithout&quot;;</span>
+<span class="fc" id="L453">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L454">    OrderedCollection copy = ((OrderedCollection)this.species().$new(this.size()).asOrderedCollection());</span>
 
-<span class="fc" id="L454">    WriteStream aStream = WriteStream.type().with(copy.registerType(oldElement));</span>
-<span class="fc" id="L455">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L456">      ElementType element = f2.getValue(0).value();</span>
-<span class="fc" id="L457">      return (oldElement.equals(element)).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="fc" id="L458">      return aStream.nextPut(element);</span>
+<span class="fc" id="L456">    WriteStream aStream = WriteStream.type().with(copy.registerType(oldElement));</span>
+<span class="fc" id="L457">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L458">      ElementType element = f2.getValue(0).value();</span>
+<span class="fc" id="L459">      return (oldElement.equals(element)).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L460">      return aStream.nextPut(element);</span>
     }, &quot;&quot;));
     }, &quot;element&quot;));
-<span class="fc" id="L461">    return (SequencedCollection&lt;ElementType&gt;)((SequencedCollection)aStream.contents());</span>
+<span class="fc" id="L463">    return (SequencedCollection&lt;ElementType&gt;)((SequencedCollection)aStream.contents());</span>
   }
 
   /**
@@ -466,11 +468,11 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; copyReplacing_withObject(final ElementType oldElement, final ElementType newElement)
   {
-<span class="fc" id="L469">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplacing_withObject&quot;;</span>
-<span class="fc" id="L470">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L471">    return (SequencedCollection&lt;ElementType&gt;)this.collect(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L472">      ElementType each = f2.getValue(0).value();</span>
-<span class="fc bfc" id="L473" title="All 2 branches covered.">      return (Boolean.primitiveValue(each.equals(oldElement)) ? newElement : each);</span>
+<span class="fc" id="L471">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyReplacing_withObject&quot;;</span>
+<span class="fc" id="L472">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L473">    return (SequencedCollection&lt;ElementType&gt;)this.collect(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L474">      ElementType each = f2.getValue(0).value();</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">      return (Boolean.primitiveValue(each.equals(oldElement)) ? newElement : each);</span>
     }, &quot;each&quot;));
   }
 
@@ -479,14 +481,14 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection&lt;ElementType&gt; reverse()
   {
-<span class="fc" id="L482">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;reverse&quot;;</span>
-<span class="fc" id="L483">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L484">    OrderedCollection results = OrderedCollection.type().$new(this.size());</span>
-<span class="fc" id="L485">    this.reverseDo(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L486">      ElementType element = f2.getValue(0).value();</span>
-<span class="fc" id="L487">      return results.add(element);</span>
+<span class="fc" id="L484">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;reverse&quot;;</span>
+<span class="fc" id="L485">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L486">    OrderedCollection results = OrderedCollection.type().$new(this.size());</span>
+<span class="fc" id="L487">    this.reverseDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L488">      ElementType element = f2.getValue(0).value();</span>
+<span class="fc" id="L489">      return results.add(element);</span>
     }, &quot;element&quot;));
-<span class="fc" id="L489">    return (SequencedCollection&lt;ElementType&gt;)results;</span>
+<span class="fc" id="L491">    return (SequencedCollection&lt;ElementType&gt;)results;</span>
   }
 
   /**
@@ -494,14 +496,14 @@ import Smalltalk.Core.Subject;
    */
   @Override public   SequencedCollection&lt;ElementType&gt; collect(final MonadicValuable filterBlock)
   {
-<span class="fc" id="L497">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;collect&quot;;</span>
-<span class="fc" id="L498">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L499">    OrderedCollection results = OrderedCollection.type().$new(this.size());</span>
-<span class="fc" id="L500">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L501">      Integer index = f2.getValue(0).value();</span>
-<span class="fc" id="L502">      return results.at_put(index, ((Object)filterBlock.value(this.at(index))));</span>
+<span class="fc" id="L499">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;collect&quot;;</span>
+<span class="fc" id="L500">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L501">    OrderedCollection results = OrderedCollection.type().$new(this.size());</span>
+<span class="fc" id="L502">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L503">      Integer index = f2.getValue(0).value();</span>
+<span class="fc" id="L504">      return results.at_put(index, ((Object)filterBlock.value(this.at(index))));</span>
     }, &quot;index&quot;));
-<span class="fc" id="L504">    return (SequencedCollection&lt;ElementType&gt;)results;</span>
+<span class="fc" id="L506">    return (SequencedCollection&lt;ElementType&gt;)results;</span>
   }
 
   /**
@@ -509,10 +511,10 @@ import Smalltalk.Core.Subject;
    */
   @Override public   Integer findFirst(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L512">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findFirst&quot;;</span>
-<span class="nc" id="L513">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L514">    return (Integer)this.findFirst_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L515">      return Zero;</span>
+<span class="nc" id="L514">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findFirst&quot;;</span>
+<span class="nc" id="L515">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L516">    return (Integer)this.findFirst_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L517">      return Zero;</span>
     }, &quot;&quot;));
   }
 
@@ -521,16 +523,16 @@ import Smalltalk.Core.Subject;
    */
   @Override public   Integer findFirst_ifAbsent(final MonadicPredicate testBlock, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L524">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findFirst_ifAbsent&quot;;</span>
-<span class="nc" id="L525">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L526">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L527">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L528">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L529">      return (Integer)f0.exit(exitID, testBlock.value(this.at(index)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L530">      return (Integer)f0.exit(exitID, index);</span>
+<span class="nc" id="L526">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findFirst_ifAbsent&quot;;</span>
+<span class="nc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L528">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L529">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L530">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L531">      return (Integer)f0.exit(exitID, testBlock.value(this.at(index)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L532">      return (Integer)f0.exit(exitID, index);</span>
     }, &quot;&quot;)));
     }, &quot;index&quot;));
-<span class="nc" id="L533">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
+<span class="nc" id="L535">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
     });
   }
 
@@ -539,10 +541,10 @@ import Smalltalk.Core.Subject;
    */
   @Override public   Integer findLast(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L542">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findLast&quot;;</span>
-<span class="nc" id="L543">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L544">    return (Integer)this.findLast_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L545">      return Zero;</span>
+<span class="nc" id="L544">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findLast&quot;;</span>
+<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L546">    return (Integer)this.findLast_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L547">      return Zero;</span>
     }, &quot;&quot;));
   }
 
@@ -551,16 +553,16 @@ import Smalltalk.Core.Subject;
    */
   @Override public   Integer findLast_ifAbsent(final MonadicPredicate testBlock, final NiladicValuable noneBlock)
   {
-<span class="nc" id="L554">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findLast_ifAbsent&quot;;</span>
-<span class="nc" id="L555">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L556">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L557">    this.size().to_by_do(Unity, Negativity, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L558">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L559">      return (Integer)f0.exit(exitID, testBlock.value(this.at(index)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L560">      return (Integer)f0.exit(exitID, index);</span>
+<span class="nc" id="L556">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;findLast_ifAbsent&quot;;</span>
+<span class="nc" id="L557">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L558">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L559">    this.size().to_by_do(Unity, Negativity, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L560">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L561">      return (Integer)f0.exit(exitID, testBlock.value(this.at(index)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L562">      return (Integer)f0.exit(exitID, index);</span>
     }, &quot;&quot;)));
     }, &quot;index&quot;));
-<span class="nc" id="L563">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
+<span class="nc" id="L565">    return (Integer)f0.exit(exitID, noneBlock.value());</span>
     });
   }
 
@@ -569,13 +571,13 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection from_to_do(final Ordinal start, final Ordinal stop, final MonadicValuable aBlock)
   {
-<span class="nc" id="L572">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;from_to_do&quot;;</span>
-<span class="nc" id="L573">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L574">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L575">      Integer i = f2.getValue(0).value();</span>
-<span class="nc" id="L576">      return aBlock.value(this.at(i));</span>
+<span class="nc" id="L574">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;from_to_do&quot;;</span>
+<span class="nc" id="L575">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L576">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L577">      Integer i = f2.getValue(0).value();</span>
+<span class="nc" id="L578">      return aBlock.value(this.at(i));</span>
     }, &quot;i&quot;));
-<span class="nc" id="L578">    return (SequencedCollection)this;</span>
+<span class="nc" id="L580">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -583,13 +585,13 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection from_to_keysAndValuesDo(final Ordinal start, final Ordinal stop, final DyadicValuable aBlock)
   {
-<span class="nc" id="L586">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;from_to_keysAndValuesDo&quot;;</span>
-<span class="nc" id="L587">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L588">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L589">      Integer i = f2.getValue(0).value();</span>
-<span class="nc" id="L590">      return aBlock.value_value(this.at(i), i);</span>
+<span class="nc" id="L588">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;from_to_keysAndValuesDo&quot;;</span>
+<span class="nc" id="L589">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L590">    start.to_do(stop, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L591">      Integer i = f2.getValue(0).value();</span>
+<span class="nc" id="L592">      return aBlock.value_value(this.at(i), i);</span>
     }, &quot;i&quot;));
-<span class="nc" id="L592">    return (SequencedCollection)this;</span>
+<span class="nc" id="L594">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -597,10 +599,10 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection keysAndValuesDo(final DyadicValuable aBlock)
   {
-<span class="nc" id="L600">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;keysAndValuesDo&quot;;</span>
-<span class="nc" id="L601">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L602">    this.from_to_keysAndValuesDo(Unity, this.size(), aBlock);</span>
-<span class="nc" id="L603">    return (SequencedCollection)this;</span>
+<span class="nc" id="L602">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;keysAndValuesDo&quot;;</span>
+<span class="nc" id="L603">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L604">    this.from_to_keysAndValuesDo(Unity, this.size(), aBlock);</span>
+<span class="nc" id="L605">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -608,13 +610,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   SequencedCollection $do(final MonadicValuable aBlock)
   {
-<span class="fc" id="L611">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;$do&quot;;</span>
-<span class="fc" id="L612">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L613">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L614">      Integer i = f2.getValue(0).value();</span>
-<span class="fc" id="L615">      return aBlock.value(this.at(i));</span>
+<span class="fc" id="L613">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;$do&quot;;</span>
+<span class="fc" id="L614">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L615">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L616">      Integer i = f2.getValue(0).value();</span>
+<span class="fc" id="L617">      return aBlock.value(this.at(i));</span>
     }, &quot;i&quot;));
-<span class="fc" id="L617">    return (SequencedCollection)this;</span>
+<span class="fc" id="L619">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -622,19 +624,19 @@ import Smalltalk.Core.Subject;
    */
   @Override public   SequencedCollection do_separatedBy(final MonadicValuable aBlock, final NiladicValuable separateBlock)
   {
-<span class="nc" id="L625">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;do_separatedBy&quot;;</span>
-<span class="nc" id="L626">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L627">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L628">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L629">      return (SequencedCollection)f0.exit(exitID, this);</span>
+<span class="nc" id="L627">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;do_separatedBy&quot;;</span>
+<span class="nc" id="L628">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L629">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L630">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L631">      return (SequencedCollection)f0.exit(exitID, this);</span>
     }, &quot;&quot;));
-<span class="nc" id="L631">    aBlock.value(this.at(SmallInteger.from(1)));</span>
-<span class="nc" id="L632">    Duality.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L633">      Integer i = f2.getValue(0).value();</span>
-<span class="nc" id="L634">      separateBlock.value();</span>
-<span class="nc" id="L635">    return aBlock.value(this.at(i));</span>
+<span class="nc" id="L633">    aBlock.value(this.at(SmallInteger.from(1)));</span>
+<span class="nc" id="L634">    Duality.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L635">      Integer i = f2.getValue(0).value();</span>
+<span class="nc" id="L636">      separateBlock.value();</span>
+<span class="nc" id="L637">    return aBlock.value(this.at(i));</span>
     }, &quot;i&quot;));
-<span class="nc" id="L637">    return (SequencedCollection)this;</span>
+<span class="nc" id="L639">    return (SequencedCollection)this;</span>
     });
   }
 
@@ -643,13 +645,13 @@ import Smalltalk.Core.Subject;
    */
   @Override public   SequencedCollection reverseDo(final MonadicValuable aBlock)
   {
-<span class="fc" id="L646">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;reverseDo&quot;;</span>
-<span class="fc" id="L647">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L648">    this.size().to_by_do(Unity, Negativity, Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L649">      Integer i = f2.getValue(0).value();</span>
-<span class="fc" id="L650">      return aBlock.value(this.at(i));</span>
+<span class="fc" id="L648">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;reverseDo&quot;;</span>
+<span class="fc" id="L649">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L650">    this.size().to_by_do(Unity, Negativity, Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L651">      Integer i = f2.getValue(0).value();</span>
+<span class="fc" id="L652">      return aBlock.value(this.at(i));</span>
     }, &quot;i&quot;));
-<span class="fc" id="L652">    return (SequencedCollection)this;</span>
+<span class="fc" id="L654">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -657,16 +659,16 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection with_do(final CollectedReadably&lt;ElementType&gt; aCollection, final DyadicValuable aBlock)
   {
-<span class="fc" id="L660">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;with_do&quot;;</span>
-<span class="fc" id="L661">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L662">    (this.size().equals(aCollection.size())).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L663">      this.error(String.from(&quot;Collections are of different sizes&quot;));</span>
-<span class="nc" id="L664">    }, &quot;&quot;));</span>
-<span class="fc" id="L665">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L666">      Integer index = f2.getValue(0).value();</span>
-<span class="fc" id="L667">      return aBlock.value_value(this.at(index), aCollection.at(index));</span>
+<span class="fc" id="L662">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;with_do&quot;;</span>
+<span class="fc" id="L663">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L664">    (this.size().equals(aCollection.size())).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L665">      this.error(String.from(&quot;Collections are of different sizes&quot;));</span>
+<span class="nc" id="L666">    }, &quot;&quot;));</span>
+<span class="fc" id="L667">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L668">      Integer index = f2.getValue(0).value();</span>
+<span class="fc" id="L669">      return aBlock.value_value(this.at(index), aCollection.at(index));</span>
     }, &quot;index&quot;));
-<span class="fc" id="L669">    return (SequencedCollection)this;</span>
+<span class="fc" id="L671">    return (SequencedCollection)this;</span>
   }
 
   /**
@@ -674,9 +676,9 @@ import Smalltalk.Core.Subject;
    */
   public   ReadStream&lt;ElementType&gt; readStream()
   {
-<span class="nc" id="L677">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;readStream&quot;;</span>
-<span class="nc" id="L678">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L679">    return (ReadStream&lt;ElementType&gt;)ReadStream.type().on(this);</span>
+<span class="nc" id="L679">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;readStream&quot;;</span>
+<span class="nc" id="L680">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L681">    return (ReadStream&lt;ElementType&gt;)ReadStream.type().on(this);</span>
   }
 
   /**
@@ -684,10 +686,10 @@ import Smalltalk.Core.Subject;
    */
   @Override public   Boolean equals(final Collected&lt;ElementType&gt; aCollection)
   {
-<span class="nc" id="L687">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L688">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L689">    return (Boolean)SequencedCollection.type().accepts(aCollection).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L690">      return this.equals(((CollectedReadably)aCollection));</span>
+<span class="nc" id="L689">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L690">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L691">    return (Boolean)SequencedCollection.type().accepts(aCollection).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L692">      return this.equals(((CollectedReadably)aCollection));</span>
     }, &quot;&quot;));
   }
 
@@ -696,20 +698,20 @@ import Smalltalk.Core.Subject;
    */
   public   Boolean equals(final CollectedReadably&lt;ElementType&gt; aCollection)
   {
-<span class="fc" id="L699">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L700">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L701">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L702">    (this.size().equals(aCollection.size())).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L703">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L701">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L702">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L703">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L704">    (this.size().equals(aCollection.size())).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L705">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="fc" id="L705">    this.with_do(aCollection, Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L706">      ElementType a = f2.getValue(0).value();</span>
-<span class="fc" id="L707">      ElementType b = f2.getValue(1).value();</span>
-<span class="fc" id="L708">      (a.equals(b)).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L709">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L707">    this.with_do(aCollection, Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L708">      ElementType a = f2.getValue(0).value();</span>
+<span class="fc" id="L709">      ElementType b = f2.getValue(1).value();</span>
+<span class="fc" id="L710">      (a.equals(b)).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L711">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="fc" id="L711">    }, &quot;a&quot;, &quot;b&quot;));</span>
-<span class="fc" id="L712">    return (Boolean)f0.exit(exitID, True.literal());</span>
+<span class="fc" id="L713">    }, &quot;a&quot;, &quot;b&quot;));</span>
+<span class="fc" id="L714">    return (Boolean)f0.exit(exitID, True.literal());</span>
     });
   }
 
@@ -718,13 +720,13 @@ import Smalltalk.Core.Subject;
    */
   public   Boolean includesIndex(final Ordinal index)
   {
-<span class="nc" id="L721">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;includesIndex&quot;;</span>
-<span class="nc" id="L722">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L723">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L724">    (index.lessThan(Zero)).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L725">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L723">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;includesIndex&quot;;</span>
+<span class="nc" id="L724">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L725">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L726">    (index.lessThan(Zero)).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L727">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="nc" id="L727">    return (Boolean)f0.exit(exitID, Boolean.from((index.lessThan(this.size()))));</span>
+<span class="nc" id="L729">    return (Boolean)f0.exit(exitID, Boolean.from((index.lessThan(this.size()))));</span>
     });
   }
 
@@ -733,9 +735,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType atAllPut(final ElementType element)
   {
-<span class="nc" id="L736">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;atAllPut&quot;;</span>
-<span class="nc" id="L737">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L738">    return (ElementType)element;</span>
+<span class="nc" id="L738">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;atAllPut&quot;;</span>
+<span class="nc" id="L739">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L740">    return (ElementType)element;</span>
   }
 
   /**
@@ -743,9 +745,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType at_put(final Ordinal index, final ElementType element)
   {
-<span class="nc" id="L746">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L747">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L748">    return (ElementType)element;</span>
+<span class="nc" id="L748">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;at_put&quot;;</span>
+<span class="nc" id="L749">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L750">    return (ElementType)element;</span>
   }
 
   /**
@@ -753,9 +755,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType atAll_put(final CollectedReadably&lt;Ordinal&gt; index, final ElementType element)
   {
-<span class="nc" id="L756">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;atAll_put&quot;;</span>
-<span class="nc" id="L757">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L758">    return (ElementType)element;</span>
+<span class="nc" id="L758">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;atAll_put&quot;;</span>
+<span class="nc" id="L759">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L760">    return (ElementType)element;</span>
   }
 
   /**
@@ -763,15 +765,15 @@ import Smalltalk.Core.Subject;
    */
   protected   Interval replacedRange_from_at(final Interval range, final CollectedReadably&lt;ElementType&gt; replacements, final Integer origin)
   {
-<span class="fc" id="L766">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replacedRange_from_at&quot;;</span>
-<span class="fc" id="L767">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L768" title="1 of 2 branches missed.">    if (!(this.isSame(replacements).primitiveBoolean())) {</span>
-<span class="fc" id="L769">      return range;</span>
+<span class="fc" id="L768">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replacedRange_from_at&quot;;</span>
+<span class="fc" id="L769">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">    if (!(this.isSame(replacements).primitiveBoolean())) {</span>
+<span class="fc" id="L771">      return range;</span>
     };
-<span class="nc bnc" id="L771" title="All 2 branches missed.">    if (!((origin.intValue() &lt; range.first().intValue()))) {</span>
-<span class="nc" id="L772">      return range;</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">    if (!((origin.intValue() &lt; range.first().intValue()))) {</span>
+<span class="nc" id="L774">      return range;</span>
     };
-<span class="nc" id="L774">    return (Interval)range.reverse();</span>
+<span class="nc" id="L776">    return (Interval)range.reverse();</span>
   }
 
   /**
@@ -779,18 +781,18 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection replaceFrom_to_with_startingAt(final Ordinal start, final Ordinal stop, final CollectedReadably&lt;ElementType&gt; replacements, final Ordinal origin)
   {
-<span class="fc" id="L782">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_with_startingAt&quot;;</span>
-<span class="fc" id="L783">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L784">    Integer offset = (((Integer)origin).minus(((Integer)start)));</span>
+<span class="fc" id="L784">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_with_startingAt&quot;;</span>
+<span class="fc" id="L785">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L786">    Integer offset = (((Integer)origin).minus(((Integer)start)));</span>
 
-<span class="fc" id="L786">    Interval range = ((Integer)start).to_by(((Integer)stop), Unity);</span>
+<span class="fc" id="L788">    Interval range = ((Integer)start).to_by(((Integer)stop), Unity);</span>
 
-<span class="fc" id="L788">     range = this.replacedRange_from_at(range, replacements, ((Integer)origin));</span>
-<span class="fc" id="L789">    range.$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L790">      Integer i = f2.getValue(0).value();</span>
-<span class="fc" id="L791">      return this.at_put(i, replacements.at((i.plus(offset))));</span>
+<span class="fc" id="L790">     range = this.replacedRange_from_at(range, replacements, ((Integer)origin));</span>
+<span class="fc" id="L791">    range.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L792">      Integer i = f2.getValue(0).value();</span>
+<span class="fc" id="L793">      return this.at_put(i, replacements.at((i.plus(offset))));</span>
     }, &quot;i&quot;));
-<span class="fc" id="L793">    return (SequencedCollection)replacements;</span>
+<span class="fc" id="L795">    return (SequencedCollection)replacements;</span>
   }
 
   /**
@@ -798,14 +800,14 @@ import Smalltalk.Core.Subject;
    */
   public   SequencedCollection replaceFrom_to_with(final Ordinal start, final Ordinal stop, final CollectedReadably&lt;ElementType&gt; replacements)
   {
-<span class="nc" id="L801">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_with&quot;;</span>
-<span class="nc" id="L802">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L803">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L804">    (replacements.size().isSame(stop.minus(start).plus(SmallInteger.from(1)))).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L805">      this.error(String.from(&quot;size of replacement incorrect&quot;));</span>
-<span class="nc" id="L806">    return (SequencedCollection)f0.exit(exitID, replacements);</span>
+<span class="nc" id="L803">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_with&quot;;</span>
+<span class="nc" id="L804">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L805">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L806">    (replacements.size().isSame(stop.minus(start).plus(SmallInteger.from(1)))).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L807">      this.error(String.from(&quot;size of replacement incorrect&quot;));</span>
+<span class="nc" id="L808">    return (SequencedCollection)f0.exit(exitID, replacements);</span>
     }, &quot;&quot;));
-<span class="nc" id="L808">    return (SequencedCollection)f0.exit(exitID, this.replaceFrom_to_with_startingAt(start, stop, replacements, Unity));</span>
+<span class="nc" id="L810">    return (SequencedCollection)f0.exit(exitID, this.replaceFrom_to_with_startingAt(start, stop, replacements, Unity));</span>
     });
   }
 
@@ -814,13 +816,13 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType replaceFrom_to_withObject(final Ordinal start, final Ordinal stop, final ElementType element)
   {
-<span class="nc" id="L817">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_withObject&quot;;</span>
-<span class="nc" id="L818">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L819">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L820">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L821">      return this.at_put(index, element);</span>
+<span class="nc" id="L819">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;replaceFrom_to_withObject&quot;;</span>
+<span class="nc" id="L820">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L821">    Unity.to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L822">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L823">      return this.at_put(index, element);</span>
     }, &quot;index&quot;));
-<span class="nc" id="L823">    return (ElementType)element;</span>
+<span class="nc" id="L825">    return (ElementType)element;</span>
   }
 
   /**
@@ -828,10 +830,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType addFirst(final ElementType element)
   {
-<span class="nc" id="L831">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addFirst&quot;;</span>
-<span class="nc" id="L832">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L833">    this.add_beforeIndex(element, Unity);</span>
-<span class="nc" id="L834">    return (ElementType)element;</span>
+<span class="nc" id="L833">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addFirst&quot;;</span>
+<span class="nc" id="L834">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L835">    this.add_beforeIndex(element, Unity);</span>
+<span class="nc" id="L836">    return (ElementType)element;</span>
   }
 
   /**
@@ -839,10 +841,10 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType addLast(final ElementType element)
   {
-<span class="fc" id="L842">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addLast&quot;;</span>
-<span class="fc" id="L843">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L844">    this.add(element);</span>
-<span class="fc" id="L845">    return (ElementType)element;</span>
+<span class="fc" id="L844">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addLast&quot;;</span>
+<span class="fc" id="L845">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L846">    this.add(element);</span>
+<span class="fc" id="L847">    return (ElementType)element;</span>
   }
 
   /**
@@ -850,13 +852,13 @@ import Smalltalk.Core.Subject;
    */
   public   Collected&lt;ElementType&gt; addAll(final Collected&lt;ElementType&gt; elements)
   {
-<span class="fc" id="L853">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll&quot;;</span>
-<span class="fc" id="L854">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L855">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L856">      ElementType element = f2.getValue(0).value();</span>
-<span class="fc" id="L857">      return this.add(element);</span>
+<span class="fc" id="L855">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll&quot;;</span>
+<span class="fc" id="L856">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L857">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L858">      ElementType element = f2.getValue(0).value();</span>
+<span class="fc" id="L859">      return this.add(element);</span>
     }, &quot;element&quot;));
-<span class="fc" id="L859">    return (Collected&lt;ElementType&gt;)elements;</span>
+<span class="fc" id="L861">    return (Collected&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -864,13 +866,13 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAllFirst(final CollectedReadably&lt;ElementType&gt; elements)
   {
-<span class="nc" id="L867">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAllFirst&quot;;</span>
-<span class="nc" id="L868">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L869">    elements.reverseDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L870">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L871">      return this.addFirst(element);</span>
+<span class="nc" id="L869">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAllFirst&quot;;</span>
+<span class="nc" id="L870">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L871">    elements.reverseDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L872">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L873">      return this.addFirst(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L873">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
+<span class="nc" id="L875">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -878,13 +880,13 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAllLast(final CollectedReadably&lt;ElementType&gt; elements)
   {
-<span class="nc" id="L881">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAllLast&quot;;</span>
-<span class="nc" id="L882">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L883">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L884">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L885">      return this.addLast(element);</span>
+<span class="nc" id="L883">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAllLast&quot;;</span>
+<span class="nc" id="L884">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L885">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L886">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L887">      return this.addLast(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L887">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
+<span class="nc" id="L889">    return (CollectedReadably&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -892,11 +894,11 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAll_after(final CollectedReadably&lt;ElementType&gt; elements, final ElementType target)
   {
-<span class="nc" id="L895">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_after&quot;;</span>
-<span class="nc" id="L896">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L897">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_afterIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L898">      this.elementNotFound();</span>
-<span class="nc" id="L899">    }, &quot;&quot;)));</span>
+<span class="nc" id="L897">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_after&quot;;</span>
+<span class="nc" id="L898">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L899">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_afterIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L900">      this.elementNotFound();</span>
+<span class="nc" id="L901">    }, &quot;&quot;)));</span>
   }
 
   /**
@@ -904,16 +906,16 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAll_afterIndex(final CollectedReadably&lt;ElementType&gt; elements, final Ordinal index)
   {
-<span class="nc" id="L907">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_afterIndex&quot;;</span>
-<span class="nc" id="L908">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L909">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L910">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L911">      Ordinal i = f2.getValue(0).value();</span>
-<span class="nc" id="L912">      ElementType e = f2.getValue(1).value();</span>
-<span class="nc" id="L913">      this.add_afterIndex(e, i);</span>
-<span class="nc" id="L914">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, (i.plus(Unity)));</span>
+<span class="nc" id="L909">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_afterIndex&quot;;</span>
+<span class="nc" id="L910">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L911">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L912">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L913">      Ordinal i = f2.getValue(0).value();</span>
+<span class="nc" id="L914">      ElementType e = f2.getValue(1).value();</span>
+<span class="nc" id="L915">      this.add_afterIndex(e, i);</span>
+<span class="nc" id="L916">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, (i.plus(Unity)));</span>
     }, &quot;i&quot;, &quot;e&quot;));
-<span class="nc" id="L916">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, elements);</span>
+<span class="nc" id="L918">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, elements);</span>
     });
   }
 
@@ -922,10 +924,10 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAll_before(final CollectedReadably&lt;ElementType&gt; elements, final ElementType target)
   {
-<span class="nc" id="L925">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_before&quot;;</span>
-<span class="nc" id="L926">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L927">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_beforeIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L928">      return this.elementNotFound();</span>
+<span class="nc" id="L927">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_before&quot;;</span>
+<span class="nc" id="L928">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L929">    return (CollectedReadably&lt;ElementType&gt;)this.addAll_beforeIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L930">      return this.elementNotFound();</span>
     }, &quot;&quot;)));
   }
 
@@ -934,16 +936,16 @@ import Smalltalk.Core.Subject;
    */
   public   CollectedReadably&lt;ElementType&gt; addAll_beforeIndex(final CollectedReadably&lt;ElementType&gt; elements, final Ordinal index)
   {
-<span class="nc" id="L937">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_beforeIndex&quot;;</span>
-<span class="nc" id="L938">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L939">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L940">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L941">      Ordinal i = f2.getValue(0).value();</span>
-<span class="nc" id="L942">      ElementType e = f2.getValue(1).value();</span>
-<span class="nc" id="L943">      this.add_beforeIndex(e, i);</span>
-<span class="nc" id="L944">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, (i.plus(Unity)));</span>
+<span class="nc" id="L939">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;addAll_beforeIndex&quot;;</span>
+<span class="nc" id="L940">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L941">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L942">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L943">      Ordinal i = f2.getValue(0).value();</span>
+<span class="nc" id="L944">      ElementType e = f2.getValue(1).value();</span>
+<span class="nc" id="L945">      this.add_beforeIndex(e, i);</span>
+<span class="nc" id="L946">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, (i.plus(Unity)));</span>
     }, &quot;i&quot;, &quot;e&quot;));
-<span class="nc" id="L946">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, elements);</span>
+<span class="nc" id="L948">    return (CollectedReadably&lt;ElementType&gt;)f0.exit(exitID, elements);</span>
     });
   }
 
@@ -952,11 +954,11 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType add_after(final ElementType element, final ElementType target)
   {
-<span class="nc" id="L955">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_after&quot;;</span>
-<span class="nc" id="L956">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L957">    return (ElementType)this.add_afterIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L958">      this.elementNotFound();</span>
-<span class="nc" id="L959">    return Nil.literal();</span>
+<span class="nc" id="L957">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_after&quot;;</span>
+<span class="nc" id="L958">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L959">    return (ElementType)this.add_afterIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L960">      this.elementNotFound();</span>
+<span class="nc" id="L961">    return Nil.literal();</span>
     }, &quot;&quot;)));
   }
 
@@ -965,12 +967,12 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType add_afterIndex(final ElementType element, final Ordinal index)
   {
-<span class="nc" id="L968">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_afterIndex&quot;;</span>
-<span class="nc" id="L969">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L970">    int i = this.checkRange((Unity.plus(index)));</span>
-<span class="nc" id="L971">    this.registerType(((Object)element));</span>
-<span class="nc" id="L972">    this.add_at(element, i);</span>
-<span class="nc" id="L973">    return (ElementType)element;</span>
+<span class="nc" id="L970">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_afterIndex&quot;;</span>
+<span class="nc" id="L971">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L972">    int i = this.checkRange((Unity.plus(index)));</span>
+<span class="nc" id="L973">    this.registerType(((Object)element));</span>
+<span class="nc" id="L974">    this.add_at(element, i);</span>
+<span class="nc" id="L975">    return (ElementType)element;</span>
   }
 
   /**
@@ -978,11 +980,11 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType add_before(final ElementType element, final ElementType target)
   {
-<span class="nc" id="L981">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_before&quot;;</span>
-<span class="nc" id="L982">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L983">    return (ElementType)this.add_beforeIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L984">      this.elementNotFound();</span>
-<span class="nc" id="L985">    return Nil.literal();</span>
+<span class="nc" id="L983">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_before&quot;;</span>
+<span class="nc" id="L984">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L985">    return (ElementType)this.add_beforeIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L986">      this.elementNotFound();</span>
+<span class="nc" id="L987">    return Nil.literal();</span>
     }, &quot;&quot;)));
   }
 
@@ -991,12 +993,12 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType add_beforeIndex(final ElementType element, final Ordinal index)
   {
-<span class="nc" id="L994">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_beforeIndex&quot;;</span>
-<span class="nc" id="L995">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L996">    int i = this.checkRange(index);</span>
-<span class="nc" id="L997">    this.registerType(((Object)element));</span>
-<span class="nc" id="L998">    this.add_at(element, i);</span>
-<span class="nc" id="L999">    return (ElementType)element;</span>
+<span class="nc" id="L996">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;add_beforeIndex&quot;;</span>
+<span class="nc" id="L997">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L998">    int i = this.checkRange(index);</span>
+<span class="nc" id="L999">    this.registerType(((Object)element));</span>
+<span class="nc" id="L1000">    this.add_at(element, i);</span>
+<span class="nc" id="L1001">    return (ElementType)element;</span>
   }
 
   /**
@@ -1004,13 +1006,13 @@ import Smalltalk.Core.Subject;
    */
   public   Collected&lt;ElementType&gt; removeAll(final Collected&lt;ElementType&gt; elements)
   {
-<span class="nc" id="L1007">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L1008">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1009">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L1010">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L1011">      return this.remove(element);</span>
+<span class="nc" id="L1009">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L1010">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L1011">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L1012">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L1013">      return this.remove(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L1013">    return (Collected&lt;ElementType&gt;)elements;</span>
+<span class="nc" id="L1015">    return (Collected&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -1018,11 +1020,11 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType remove(final ElementType element)
   {
-<span class="nc" id="L1021">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;remove&quot;;</span>
-<span class="nc" id="L1022">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1023">    return (ElementType)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L1024">      this.elementNotFound();</span>
-<span class="nc" id="L1025">    return Nil.literal();</span>
+<span class="nc" id="L1023">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;remove&quot;;</span>
+<span class="nc" id="L1024">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L1025">    return (ElementType)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L1026">      this.elementNotFound();</span>
+<span class="nc" id="L1027">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -1031,9 +1033,9 @@ import Smalltalk.Core.Subject;
    */
   public   ElementType remove_ifAbsent(final ElementType element, final NiladicValuable aBlock)
   {
-<span class="nc" id="L1034">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;remove_ifAbsent&quot;;</span>
-<span class="nc" id="L1035">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1036">    return (ElementType)this.removeAtIndex(this.indexOf_ifAbsent(element, aBlock));</span>
+<span class="nc" id="L1036">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;remove_ifAbsent&quot;;</span>
+<span class="nc" id="L1037">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L1038">    return (ElementType)this.removeAtIndex(this.indexOf_ifAbsent(element, aBlock));</span>
   }
 
   /**
@@ -1041,17 +1043,17 @@ import Smalltalk.Core.Subject;
    */
   public   OrderedCollection&lt;ElementType&gt; removeAllSuchThat(final MonadicPredicate criteria)
   {
-<span class="nc" id="L1044">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;removeAllSuchThat&quot;;</span>
-<span class="nc" id="L1045">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L1046">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new();</span>
-<span class="nc" id="L1047">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L1048">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L1049">      return criteria.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L1050">      results.add(element);</span>
-<span class="nc" id="L1051">    this.remove(element);</span>
-<span class="nc" id="L1052">    }, &quot;&quot;));</span>
+<span class="nc" id="L1046">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;removeAllSuchThat&quot;;</span>
+<span class="nc" id="L1047">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L1048">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new();</span>
+<span class="nc" id="L1049">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L1050">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L1051">      return criteria.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L1052">      results.add(element);</span>
+<span class="nc" id="L1053">    this.remove(element);</span>
+<span class="nc" id="L1054">    }, &quot;&quot;));</span>
     }, &quot;element&quot;));
-<span class="nc" id="L1054">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
+<span class="nc" id="L1056">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

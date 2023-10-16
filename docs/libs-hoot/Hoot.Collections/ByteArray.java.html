@@ -30,30 +30,32 @@ import Smalltalk.Magnitudes.Ordinal;
 
 public class ByteArray extends ArrayedCollection
 {
-<span class="nc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L34">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L35">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends ArrayedCollection.Metaclass
   {
-<span class="nc" id="L37">    static final ByteArray.Metaclass $class = new ByteArray.Metaclass();</span>
+<span class="fc" id="L38">    static final ByteArray.Metaclass $class = new ByteArray.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L39">      this(ByteArray.Metaclass.class);</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L40">      this(ByteArray.Metaclass.class);</span>
+<span class="fc" id="L41">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L43">      super(aClass);</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L44">      super(aClass);</span>
+<span class="fc" id="L45">    }</span>
 
-<span class="nc" id="L46">    @Override public java.lang.Class outerClass() { return ByteArray.class; }</span>
+<span class="fc" id="L47">    @Override public java.lang.Class outerClass() { return ByteArray.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   ByteArray $new()
     {
-<span class="nc" id="L53">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L54">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L55">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L56">      return (ByteArray)f0.exit(exitID, this.$new(SmallInteger.from(0)));</span>
+<span class="nc" id="L55">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L56">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L57">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L58">      return (ByteArray)f0.exit(exitID, this.$new(SmallInteger.from(0)));</span>
       });
     }
 
@@ -62,10 +64,10 @@ public class ByteArray extends ArrayedCollection
      */
     @Override public   ByteArray $new(final Ordinal capacity)
     {
-<span class="nc" id="L65">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L66">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L67">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L68">      return (ByteArray)f0.exit(exitID, new ByteArray(capacity));</span>
+<span class="nc" id="L67">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L68">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L69">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L70">      return (ByteArray)f0.exit(exitID, new ByteArray(capacity));</span>
       });
     }
 
@@ -74,54 +76,55 @@ public class ByteArray extends ArrayedCollection
      */
     public   ByteArray withAll(final byte ... elements)
     {
-<span class="nc" id="L77">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L78">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L79">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L80">      return (ByteArray)f0.exit(exitID, new ByteArray(elements));</span>
+<span class="nc" id="L79">      java.lang.String exitID = &quot;ByteArrayMetatype&gt;&gt;withAll&quot;;</span>
+<span class="nc" id="L80">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L81">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L82">      return (ByteArray)f0.exit(exitID, new ByteArray(elements));</span>
       });
     }
   }
 
 
-<span class="nc" id="L86">  protected byte [] contents = {</span>
+<span class="nc" id="L88">  protected byte [] contents = {</span>
   };
+
   /**
    * 
    */
   protected    ByteArray()
-<span class="nc" id="L92">  {</span>
-<span class="nc" id="L93">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
-<span class="nc" id="L94">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L95">  }</span>
+<span class="nc" id="L95">  {</span>
+<span class="nc" id="L96">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
+<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L98">  }</span>
 
   /**
    * 
    */
   protected    ByteArray(final byte ... elements)
-<span class="nc" id="L101">  {</span>
-<span class="nc" id="L102">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
-<span class="nc" id="L103">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L104">     contents = elements;</span>
-<span class="nc" id="L105">  }</span>
+<span class="nc" id="L104">  {</span>
+<span class="nc" id="L105">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
+<span class="nc" id="L106">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L107">     contents = elements;</span>
+<span class="nc" id="L108">  }</span>
 
   /**
    * 
    */
   protected    ByteArray(final Ordinal capacity)
-<span class="nc" id="L111">  {</span>
-<span class="nc" id="L112">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
-<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L114">     contents = new byte[capacity.intValue()];</span>
-<span class="nc" id="L115">  }</span>
+<span class="nc" id="L114">  {</span>
+<span class="nc" id="L115">    java.lang.String exitID = &quot;ByteArray&gt;&gt;ByteArray&quot;;</span>
+<span class="nc" id="L116">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L117">     contents = new byte[capacity.intValue()];</span>
+<span class="nc" id="L118">  }</span>
 
   /**
    * @return 
    */
   public   byte [] primitiveContents()
   {
-<span class="nc" id="L122">    java.lang.String exitID = &quot;ByteArray&gt;&gt;primitiveContents&quot;;</span>
-<span class="nc" id="L123">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L124">    return (byte [])contents;</span>
+<span class="nc" id="L125">    java.lang.String exitID = &quot;ByteArray&gt;&gt;primitiveContents&quot;;</span>
+<span class="nc" id="L126">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L127">    return (byte [])contents;</span>
   }
 
   /**
@@ -129,9 +132,9 @@ public class ByteArray extends ArrayedCollection
    */
   @Override public   Integer size()
   {
-<span class="nc" id="L132">    java.lang.String exitID = &quot;ByteArray&gt;&gt;size&quot;;</span>
-<span class="nc" id="L133">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L134">    return (Integer)SmallInteger.from(Primitive.length(contents));</span>
+<span class="nc" id="L135">    java.lang.String exitID = &quot;ByteArray&gt;&gt;size&quot;;</span>
+<span class="nc" id="L136">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L137">    return (Integer)SmallInteger.from(Primitive.length(contents));</span>
   }
 
   /**
@@ -139,9 +142,9 @@ public class ByteArray extends ArrayedCollection
    */
   @Override protected   Integer get(final int index)
   {
-<span class="nc" id="L142">    java.lang.String exitID = &quot;ByteArray&gt;&gt;get&quot;;</span>
-<span class="nc" id="L143">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L144">    return (Integer)SmallInteger.from(contents[index]);</span>
+<span class="nc" id="L145">    java.lang.String exitID = &quot;ByteArray&gt;&gt;get&quot;;</span>
+<span class="nc" id="L146">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L147">    return (Integer)SmallInteger.from(contents[index]);</span>
   }
 
   /**
@@ -149,10 +152,10 @@ public class ByteArray extends ArrayedCollection
    */
   protected   Integer add_at(final Object element, final int index)
   {
-<span class="nc" id="L152">    java.lang.String exitID = &quot;ByteArray&gt;&gt;add_at&quot;;</span>
-<span class="nc" id="L153">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L154">    contents[index] = ((byte)((Ordinal)element).intValue());</span>
-<span class="nc" id="L155">    return (Integer)SmallInteger.from(((Ordinal)element).intValue());</span>
+<span class="nc" id="L155">    java.lang.String exitID = &quot;ByteArray&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L156">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L157">    contents[index] = ((byte)((Ordinal)element).intValue());</span>
+<span class="nc" id="L158">    return (Integer)SmallInteger.from(((Ordinal)element).intValue());</span>
   }
 
   /**
@@ -160,9 +163,9 @@ public class ByteArray extends ArrayedCollection
    */
   @Override public   Integer at_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
   {
-<span class="nc" id="L163">    java.lang.String exitID = &quot;ByteArray&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="nc" id="L164">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L165">    return (Integer)this.get(this.checkIndex_ifAbsent(index, aBlock));</span>
+<span class="nc" id="L166">    java.lang.String exitID = &quot;ByteArray&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="nc" id="L167">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L168">    return (Integer)this.get(this.checkIndex_ifAbsent(index, aBlock));</span>
   }
 
   /**
@@ -170,9 +173,9 @@ public class ByteArray extends ArrayedCollection
    */
   public   Integer at_put(final Ordinal index, final Ordinal element)
   {
-<span class="nc" id="L173">    java.lang.String exitID = &quot;ByteArray&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L174">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L175">    return (Integer)this.add_at(((Magnitude)element), this.checkIndex(index));</span>
+<span class="nc" id="L176">    java.lang.String exitID = &quot;ByteArray&gt;&gt;at_put&quot;;</span>
+<span class="nc" id="L177">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L178">    return (Integer)this.add_at(((Magnitude)element), this.checkIndex(index));</span>
   }
 
   /**
@@ -180,9 +183,9 @@ public class ByteArray extends ArrayedCollection
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L183">    java.lang.String exitID = &quot;ByteArray&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L184">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L185">    return (int)this.primitiveContents().hashCode();</span>
+<span class="nc" id="L186">    java.lang.String exitID = &quot;ByteArray&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L187">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L188">    return (int)this.primitiveContents().hashCode();</span>
   }
 
   /**
@@ -190,9 +193,9 @@ public class ByteArray extends ArrayedCollection
    */
   public   Boolean equals(final ByteArray aCollection)
   {
-<span class="nc" id="L193">    java.lang.String exitID = &quot;ByteArray&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L194">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L195">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
+<span class="nc" id="L196">    java.lang.String exitID = &quot;ByteArray&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L197">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L198">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
   }
 
   /**
@@ -200,12 +203,12 @@ public class ByteArray extends ArrayedCollection
    */
   @Override public   Boolean equals(final Collected aCollection)
   {
-<span class="nc" id="L203">    java.lang.String exitID = &quot;ByteArray&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L204">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">    if (aCollection instanceof ByteArray) {</span>
-<span class="nc" id="L206">      return this.equals(((ByteArray)aCollection));</span>
+<span class="nc" id="L206">    java.lang.String exitID = &quot;ByteArray&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L207">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">    if (aCollection instanceof ByteArray) {</span>
+<span class="nc" id="L209">      return this.equals(((ByteArray)aCollection));</span>
     };
-<span class="nc" id="L208">    return (Boolean)aCollection.asArray().equals(this);</span>
+<span class="nc" id="L211">    return (Boolean)aCollection.asArray().equals(this);</span>
   }
 
   /**
@@ -213,13 +216,13 @@ public class ByteArray extends ArrayedCollection
    */
   @Override public   ByteArray $do(final MonadicValuable aBlock)
   {
-<span class="nc" id="L216">    java.lang.String exitID = &quot;ByteArray&gt;&gt;$do&quot;;</span>
-<span class="nc" id="L217">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L218">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L219">      Integer index = f2.getValue(0).value();</span>
-<span class="nc" id="L220">      return aBlock.value(this.get((index.minus(SmallInteger.from(1))).primitiveInteger()));</span>
+<span class="nc" id="L219">    java.lang.String exitID = &quot;ByteArray&gt;&gt;$do&quot;;</span>
+<span class="nc" id="L220">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L221">    SmallInteger.from(1).to_do(this.size(), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L222">      Integer index = f2.getValue(0).value();</span>
+<span class="nc" id="L223">      return aBlock.value(this.get((index.minus(SmallInteger.from(1))).primitiveInteger()));</span>
     }, &quot;index&quot;));
-<span class="nc" id="L222">    return (ByteArray)this;</span>
+<span class="nc" id="L225">    return (ByteArray)this;</span>
   }
 
   /**
@@ -227,10 +230,10 @@ public class ByteArray extends ArrayedCollection
    */
   public   ByteArray removeAll()
   {
-<span class="nc" id="L230">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L231">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L232">    this.immutabilityError();</span>
-<span class="nc" id="L233">    return (ByteArray)this;</span>
+<span class="nc" id="L233">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L234">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L235">    this.immutabilityError();</span>
+<span class="nc" id="L236">    return (ByteArray)this;</span>
   }
 
   /**
@@ -238,10 +241,10 @@ public class ByteArray extends ArrayedCollection
    */
   public   Subject removeFirst()
   {
-<span class="nc" id="L241">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeFirst&quot;;</span>
-<span class="nc" id="L242">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L243">    this.immutabilityError();</span>
-<span class="nc" id="L244">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L244">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeFirst&quot;;</span>
+<span class="nc" id="L245">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L246">    this.immutabilityError();</span>
+<span class="nc" id="L247">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -249,10 +252,10 @@ public class ByteArray extends ArrayedCollection
    */
   public   Subject removeLast()
   {
-<span class="nc" id="L252">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeLast&quot;;</span>
-<span class="nc" id="L253">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L254">    this.immutabilityError();</span>
-<span class="nc" id="L255">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L255">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeLast&quot;;</span>
+<span class="nc" id="L256">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L257">    this.immutabilityError();</span>
+<span class="nc" id="L258">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -260,10 +263,10 @@ public class ByteArray extends ArrayedCollection
    */
   public   Subject removeAtIndex(final Ordinal index)
   {
-<span class="nc" id="L263">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeAtIndex&quot;;</span>
-<span class="nc" id="L264">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L265">    this.immutabilityError();</span>
-<span class="nc" id="L266">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L266">    java.lang.String exitID = &quot;ByteArray&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L267">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L268">    this.immutabilityError();</span>
+<span class="nc" id="L269">    return (Subject)SmallInteger.from(0);</span>
   }
 
   /**
@@ -271,10 +274,10 @@ public class ByteArray extends ArrayedCollection
    */
   public   Subject add(final Subject element)
   {
-<span class="nc" id="L274">    java.lang.String exitID = &quot;ByteArray&gt;&gt;add&quot;;</span>
-<span class="nc" id="L275">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L276">    this.immutabilityError();</span>
-<span class="nc" id="L277">    return (Subject)SmallInteger.from(0);</span>
+<span class="nc" id="L277">    java.lang.String exitID = &quot;ByteArray&gt;&gt;add&quot;;</span>
+<span class="nc" id="L278">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L279">    this.immutabilityError();</span>
+<span class="nc" id="L280">    return (Subject)SmallInteger.from(0);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

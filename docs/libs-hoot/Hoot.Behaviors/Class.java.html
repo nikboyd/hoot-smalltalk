@@ -22,31 +22,34 @@ import Hoot.Runtime.Maps.MethodCache;
 
 public class Class extends Behavior
 {
-<span class="nc" id="L25">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L26">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L26">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L27">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Behavior.Metaclass
   {
-<span class="nc" id="L29">    static final Class.Metaclass $class = new Class.Metaclass();</span>
+<span class="fc" id="L30">    static final Class.Metaclass $class = new Class.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L31">      this(Class.Metaclass.class);</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L32">      this(Class.Metaclass.class);</span>
+<span class="fc" id="L33">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L35">      super(aClass);</span>
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L36">      super(aClass);</span>
+<span class="fc" id="L37">    }</span>
 
-<span class="nc" id="L38">    @Override public java.lang.Class outerClass() { return Class.class; }</span>
+<span class="fc" id="L39">    @Override public java.lang.Class outerClass() { return Class.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   Class $new()
     {
-<span class="nc" id="L45">      java.lang.String exitID = &quot;ClassMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L46">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L47">      return new Class(Object.class);</span>
+<span class="nc" id="L47">      java.lang.String exitID = &quot;ClassMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L48">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L49">      return new Class(Object.class);</span>
     }
   }
+
 
 
   /**
@@ -54,25 +57,25 @@ public class Class extends Behavior
    */
   public    Class(final java.lang.Class aClass)
   {
-<span class="nc" id="L57">    super();</span>
-<span class="nc" id="L58">    java.lang.String exitID = &quot;Class&gt;&gt;Class&quot;;</span>
-<span class="nc" id="L59">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L60">     methodDictionary = new MethodCache(aClass);</span>
-<span class="nc" id="L61">    this.registerType();</span>
-<span class="nc" id="L62">  }</span>
+<span class="nc" id="L60">    super();</span>
+<span class="nc" id="L61">    java.lang.String exitID = &quot;Class&gt;&gt;Class&quot;;</span>
+<span class="nc" id="L62">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L63">     methodDictionary = new MethodCache(aClass);</span>
+<span class="nc" id="L64">    this.registerType();</span>
+<span class="nc" id="L65">  }</span>
 
   /**
    * @return 
    */
   @Override public   String namePrefix()
   {
-<span class="nc" id="L69">    java.lang.String exitID = &quot;Class&gt;&gt;namePrefix&quot;;</span>
-<span class="nc" id="L70">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L71">    Character first = ((Character)this.name().first());</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">    if (first.isVowel().asPrimitive()) {</span>
-<span class="nc" id="L73">      return String.from(&quot;an &quot;);</span>
+<span class="nc" id="L72">    java.lang.String exitID = &quot;Class&gt;&gt;namePrefix&quot;;</span>
+<span class="nc" id="L73">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L74">    Character first = ((Character)this.name().first());</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">    if (first.isVowel().asPrimitive()) {</span>
+<span class="nc" id="L76">      return String.from(&quot;an &quot;);</span>
     };
-<span class="nc" id="L75">    return (String)String.from(&quot;a &quot;);</span>
+<span class="nc" id="L78">    return (String)String.from(&quot;a &quot;);</span>
   }
 
   /**
@@ -80,9 +83,9 @@ public class Class extends Behavior
    */
   @Override public   Boolean isClass()
   {
-<span class="nc" id="L83">    java.lang.String exitID = &quot;Class&gt;&gt;isClass&quot;;</span>
-<span class="nc" id="L84">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L85">    return (Boolean)True.literal();</span>
+<span class="nc" id="L86">    java.lang.String exitID = &quot;Class&gt;&gt;isClass&quot;;</span>
+<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L88">    return (Boolean)True.literal();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

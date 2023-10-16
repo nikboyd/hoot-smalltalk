@@ -24,30 +24,32 @@ import Hoot.Runtime.Names.Primitive;
 
 public class LongInteger extends Integer
 {
-<span class="fc" id="L27">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L28">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="fc" id="L28">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L29">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Integer.Metaclass
   {
-<span class="fc" id="L31">    static final LongInteger.Metaclass $class = new LongInteger.Metaclass();</span>
+<span class="fc" id="L32">    static final LongInteger.Metaclass $class = new LongInteger.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L33">      this(LongInteger.Metaclass.class);</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L34">      this(LongInteger.Metaclass.class);</span>
+<span class="fc" id="L35">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L37">      super(aClass);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L38">      super(aClass);</span>
+<span class="fc" id="L39">    }</span>
 
-<span class="fc" id="L40">    @Override public java.lang.Class outerClass() { return LongInteger.class; }</span>
+<span class="fc" id="L41">    @Override public java.lang.Class outerClass() { return LongInteger.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   LongInteger coerce(final Number aNumber)
     {
-<span class="nc" id="L47">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;coerce&quot;;</span>
-<span class="nc" id="L48">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L49">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L50">      return (LongInteger)f0.exit(exitID, LongInteger.from(aNumber.primitiveLong()));</span>
+<span class="nc" id="L49">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;coerce&quot;;</span>
+<span class="nc" id="L50">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L51">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L52">      return (LongInteger)f0.exit(exitID, LongInteger.from(aNumber.primitiveLong()));</span>
       });
     }
 
@@ -56,10 +58,10 @@ public class LongInteger extends Integer
      */
     public   LongInteger maximum()
     {
-<span class="fc" id="L59">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;maximum&quot;;</span>
-<span class="fc" id="L60">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L61">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L62">      return (LongInteger)f0.exit(exitID, LongInteger.from(Primitive.elementaryMaxLong()));</span>
+<span class="fc" id="L61">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;maximum&quot;;</span>
+<span class="fc" id="L62">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L63">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L64">      return (LongInteger)f0.exit(exitID, LongInteger.from(Primitive.elementaryMaxLong()));</span>
       });
     }
 
@@ -68,10 +70,10 @@ public class LongInteger extends Integer
      */
     public   LongInteger minimum()
     {
-<span class="nc" id="L71">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;minimum&quot;;</span>
-<span class="nc" id="L72">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L73">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L74">      return (LongInteger)f0.exit(exitID, LongInteger.from(Primitive.elementaryMinLong()));</span>
+<span class="nc" id="L73">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;minimum&quot;;</span>
+<span class="nc" id="L74">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L75">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L76">      return (LongInteger)f0.exit(exitID, LongInteger.from(Primitive.elementaryMinLong()));</span>
       });
     }
 
@@ -80,10 +82,10 @@ public class LongInteger extends Integer
      */
     @Override public   SmallInteger precision()
     {
-<span class="nc" id="L83">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;precision&quot;;</span>
-<span class="nc" id="L84">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L85">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L86">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(64));</span>
+<span class="nc" id="L85">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;precision&quot;;</span>
+<span class="nc" id="L86">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L87">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L88">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(64));</span>
       });
     }
 
@@ -92,35 +94,36 @@ public class LongInteger extends Integer
      */
     @Override public   SmallInteger radix()
     {
-<span class="nc" id="L95">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;radix&quot;;</span>
-<span class="nc" id="L96">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L97">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L98">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(2));</span>
+<span class="nc" id="L97">      java.lang.String exitID = &quot;LongIntegerMetatype&gt;&gt;radix&quot;;</span>
+<span class="nc" id="L98">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L99">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L100">      return (SmallInteger)f0.exit(exitID, SmallInteger.from(2));</span>
       });
     }
   }
 
 
   protected long primitiveValue;
-<span class="fc" id="L105">  protected static SmallInteger Generality = SmallInteger.from(20);</span>
+<span class="fc" id="L107">  protected static SmallInteger Generality = SmallInteger.from(20);</span>
+
   /**
    * 
    */
   public    LongInteger(final long aLong)
-<span class="fc" id="L110">  {</span>
-<span class="fc" id="L111">    java.lang.String exitID = &quot;LongInteger&gt;&gt;LongInteger&quot;;</span>
-<span class="fc" id="L112">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L113">     primitiveValue = aLong;</span>
-<span class="fc" id="L114">  }</span>
+<span class="fc" id="L113">  {</span>
+<span class="fc" id="L114">    java.lang.String exitID = &quot;LongInteger&gt;&gt;LongInteger&quot;;</span>
+<span class="fc" id="L115">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L116">     primitiveValue = aLong;</span>
+<span class="fc" id="L117">  }</span>
 
   /**
    * @return 
    */
   public static   LongInteger from(final long aLong)
   {
-<span class="fc" id="L121">    java.lang.String exitID = &quot;LongInteger&gt;&gt;$from&quot;;</span>
-<span class="fc" id="L122">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L123">    return (LongInteger)new LongInteger(aLong);</span>
+<span class="fc" id="L124">    java.lang.String exitID = &quot;LongInteger&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L125">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L126">    return (LongInteger)new LongInteger(aLong);</span>
   }
 
   /**
@@ -128,9 +131,9 @@ public class LongInteger extends Integer
    */
   public   long asPrimitive()
   {
-<span class="fc" id="L131">    java.lang.String exitID = &quot;LongInteger&gt;&gt;asPrimitive&quot;;</span>
-<span class="fc" id="L132">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L133">    return (long)this.primitiveLong();</span>
+<span class="fc" id="L134">    java.lang.String exitID = &quot;LongInteger&gt;&gt;asPrimitive&quot;;</span>
+<span class="fc" id="L135">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L136">    return (long)this.primitiveLong();</span>
   }
 
   /**
@@ -138,9 +141,9 @@ public class LongInteger extends Integer
    */
   @Override public   LongInteger asLongInteger()
   {
-<span class="nc" id="L141">    java.lang.String exitID = &quot;LongInteger&gt;&gt;asLongInteger&quot;;</span>
-<span class="nc" id="L142">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L143">    return (LongInteger)this;</span>
+<span class="nc" id="L144">    java.lang.String exitID = &quot;LongInteger&gt;&gt;asLongInteger&quot;;</span>
+<span class="nc" id="L145">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L146">    return (LongInteger)this;</span>
   }
 
   /**
@@ -148,9 +151,9 @@ public class LongInteger extends Integer
    */
   @Override public   java.lang.Float primitiveFloat()
   {
-<span class="nc" id="L151">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveFloat&quot;;</span>
-<span class="nc" id="L152">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L153">    return (java.lang.Float)java.lang.Float.valueOf(primitiveValue);</span>
+<span class="nc" id="L154">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveFloat&quot;;</span>
+<span class="nc" id="L155">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L156">    return (java.lang.Float)java.lang.Float.valueOf(primitiveValue);</span>
   }
 
   /**
@@ -158,9 +161,9 @@ public class LongInteger extends Integer
    */
   @Override public   java.lang.Double primitiveDouble()
   {
-<span class="nc" id="L161">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveDouble&quot;;</span>
-<span class="nc" id="L162">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L163">    return (java.lang.Double)java.lang.Double.valueOf(primitiveValue);</span>
+<span class="nc" id="L164">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveDouble&quot;;</span>
+<span class="nc" id="L165">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L166">    return (java.lang.Double)java.lang.Double.valueOf(primitiveValue);</span>
   }
 
   /**
@@ -168,9 +171,9 @@ public class LongInteger extends Integer
    */
   @Override public   java.lang.Number elementaryNumber()
   {
-<span class="fc" id="L171">    java.lang.String exitID = &quot;LongInteger&gt;&gt;elementaryNumber&quot;;</span>
-<span class="fc" id="L172">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L173">    return (java.lang.Number)primitiveValue;</span>
+<span class="fc" id="L174">    java.lang.String exitID = &quot;LongInteger&gt;&gt;elementaryNumber&quot;;</span>
+<span class="fc" id="L175">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L176">    return (java.lang.Number)primitiveValue;</span>
   }
 
   /**
@@ -178,9 +181,9 @@ public class LongInteger extends Integer
    */
   @Override public   long primitiveLong()
   {
-<span class="fc" id="L181">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveLong&quot;;</span>
-<span class="fc" id="L182">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L183">    return (long)primitiveValue;</span>
+<span class="fc" id="L184">    java.lang.String exitID = &quot;LongInteger&gt;&gt;primitiveLong&quot;;</span>
+<span class="fc" id="L185">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L186">    return (long)primitiveValue;</span>
   }
 
   /**
@@ -188,9 +191,9 @@ public class LongInteger extends Integer
    */
   @Override public   Integer generality()
   {
-<span class="nc" id="L191">    java.lang.String exitID = &quot;LongInteger&gt;&gt;generality&quot;;</span>
-<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L193">    return (Integer)Generality;</span>
+<span class="nc" id="L194">    java.lang.String exitID = &quot;LongInteger&gt;&gt;generality&quot;;</span>
+<span class="nc" id="L195">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L196">    return (Integer)Generality;</span>
   }
 
   /**
@@ -198,9 +201,9 @@ public class LongInteger extends Integer
    */
   @Override public   String printString()
   {
-<span class="fc" id="L201">    java.lang.String exitID = &quot;LongInteger&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L202">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L203">    return (String)String.from(Primitive.printLong(this.primitiveLong()));</span>
+<span class="fc" id="L204">    java.lang.String exitID = &quot;LongInteger&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L205">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L206">    return (String)String.from(Primitive.printLong(this.primitiveLong()));</span>
   }
 
   /**
@@ -208,9 +211,9 @@ public class LongInteger extends Integer
    */
   public final   LongInteger plus(final LongInteger aNumber)
   {
-<span class="nc" id="L211">    java.lang.String exitID = &quot;LongInteger&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L212">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L213">    return (LongInteger)LongInteger.from((this.asPrimitive() + aNumber.asPrimitive()));</span>
+<span class="nc" id="L214">    java.lang.String exitID = &quot;LongInteger&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L215">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L216">    return (LongInteger)LongInteger.from((this.asPrimitive() + aNumber.asPrimitive()));</span>
   }
 
   /**
@@ -218,9 +221,9 @@ public class LongInteger extends Integer
    */
   public final   LongInteger minus(final LongInteger aNumber)
   {
-<span class="fc" id="L221">    java.lang.String exitID = &quot;LongInteger&gt;&gt;minus&quot;;</span>
-<span class="fc" id="L222">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L223">    return (LongInteger)LongInteger.from((this.asPrimitive() - aNumber.asPrimitive()));</span>
+<span class="fc" id="L224">    java.lang.String exitID = &quot;LongInteger&gt;&gt;minus&quot;;</span>
+<span class="fc" id="L225">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L226">    return (LongInteger)LongInteger.from((this.asPrimitive() - aNumber.asPrimitive()));</span>
   }
 
   /**
@@ -228,9 +231,9 @@ public class LongInteger extends Integer
    */
   public final   LongInteger times(final LongInteger aNumber)
   {
-<span class="nc" id="L231">    java.lang.String exitID = &quot;LongInteger&gt;&gt;times&quot;;</span>
-<span class="nc" id="L232">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L233">    return (LongInteger)LongInteger.from((this.asPrimitive() * aNumber.asPrimitive()));</span>
+<span class="nc" id="L234">    java.lang.String exitID = &quot;LongInteger&gt;&gt;times&quot;;</span>
+<span class="nc" id="L235">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L236">    return (LongInteger)LongInteger.from((this.asPrimitive() * aNumber.asPrimitive()));</span>
   }
 
   /**
@@ -238,13 +241,13 @@ public class LongInteger extends Integer
    */
   public final   Number divideWith(final LongInteger aNumber)
   {
-<span class="fc" id="L241">    java.lang.String exitID = &quot;LongInteger&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L242">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
-<span class="nc" id="L244">      this.zeroDivide();</span>
-<span class="nc" id="L245">      return this;</span>
+<span class="fc" id="L244">    java.lang.String exitID = &quot;LongInteger&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L245">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
+<span class="nc" id="L247">      this.zeroDivide();</span>
+<span class="nc" id="L248">      return this;</span>
     };
-<span class="fc" id="L247">    return (Number)Fraction.type().numerator_denominator(this, aNumber);</span>
+<span class="fc" id="L250">    return (Number)Fraction.type().numerator_denominator(this, aNumber);</span>
   }
 
   /**
@@ -252,12 +255,12 @@ public class LongInteger extends Integer
    */
   public   LongInteger plus(final Number aNumber)
   {
-<span class="nc" id="L255">    java.lang.String exitID = &quot;LongInteger&gt;&gt;plus&quot;;</span>
-<span class="nc" id="L256">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L257">    return (LongInteger)(this.generality().lessThan(aNumber.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L258">      return (aNumber.plus(this));</span>
-<span class="nc" id="L259">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L260">      return (this.plus(aNumber.asLongInteger()));</span>
+<span class="nc" id="L258">    java.lang.String exitID = &quot;LongInteger&gt;&gt;plus&quot;;</span>
+<span class="nc" id="L259">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L260">    return (LongInteger)(this.generality().lessThan(aNumber.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L261">      return (aNumber.plus(this));</span>
+<span class="nc" id="L262">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L263">      return (this.plus(aNumber.asLongInteger()));</span>
     }, &quot;&quot;));
   }
 
@@ -266,12 +269,12 @@ public class LongInteger extends Integer
    */
   public   LongInteger times(final Number aNumber)
   {
-<span class="nc" id="L269">    java.lang.String exitID = &quot;LongInteger&gt;&gt;times&quot;;</span>
-<span class="nc" id="L270">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L271">    return (LongInteger)(this.generality().lessThan(aNumber.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L272">      return (aNumber.times(this));</span>
-<span class="nc" id="L273">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L274">      return (this.times(aNumber.asLongInteger()));</span>
+<span class="nc" id="L272">    java.lang.String exitID = &quot;LongInteger&gt;&gt;times&quot;;</span>
+<span class="nc" id="L273">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L274">    return (LongInteger)(this.generality().lessThan(aNumber.generality())).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L275">      return (aNumber.times(this));</span>
+<span class="nc" id="L276">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L277">      return (this.times(aNumber.asLongInteger()));</span>
     }, &quot;&quot;));
   }
 
@@ -280,10 +283,10 @@ public class LongInteger extends Integer
    */
   @Override public   Number divideWith(final Numeric aNumber)
   {
-<span class="fc" id="L283">    java.lang.String exitID = &quot;LongInteger&gt;&gt;divideWith&quot;;</span>
-<span class="fc" id="L284">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L285">    Number n = ((Number)aNumber);</span>
-<span class="fc" id="L286">    return (Number)(this.divideWith(n.asLongInteger()));</span>
+<span class="fc" id="L286">    java.lang.String exitID = &quot;LongInteger&gt;&gt;divideWith&quot;;</span>
+<span class="fc" id="L287">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L288">    Number n = ((Number)aNumber);</span>
+<span class="fc" id="L289">    return (Number)(this.divideWith(n.asLongInteger()));</span>
   }
 
   /**
@@ -291,13 +294,13 @@ public class LongInteger extends Integer
    */
   public   LongInteger truncateWith(final LongInteger aNumber)
   {
-<span class="nc" id="L294">    java.lang.String exitID = &quot;LongInteger&gt;&gt;truncateWith&quot;;</span>
-<span class="nc" id="L295">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L296" title="All 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
-<span class="nc" id="L297">      this.zeroDivide();</span>
-<span class="nc" id="L298">      return this;</span>
+<span class="nc" id="L297">    java.lang.String exitID = &quot;LongInteger&gt;&gt;truncateWith&quot;;</span>
+<span class="nc" id="L298">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
+<span class="nc" id="L300">      this.zeroDivide();</span>
+<span class="nc" id="L301">      return this;</span>
     };
-<span class="nc" id="L300">    return (LongInteger)LongInteger.from((this.asPrimitive() / aNumber.asPrimitive()));</span>
+<span class="nc" id="L303">    return (LongInteger)LongInteger.from((this.asPrimitive() / aNumber.asPrimitive()));</span>
   }
 
   /**
@@ -305,13 +308,13 @@ public class LongInteger extends Integer
    */
   public   LongInteger remainderFrom(final LongInteger aNumber)
   {
-<span class="nc" id="L308">    java.lang.String exitID = &quot;LongInteger&gt;&gt;remainderFrom&quot;;</span>
-<span class="nc" id="L309">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
-<span class="nc" id="L311">      this.zeroDivide();</span>
-<span class="nc" id="L312">      return this;</span>
+<span class="nc" id="L311">    java.lang.String exitID = &quot;LongInteger&gt;&gt;remainderFrom&quot;;</span>
+<span class="nc" id="L312">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">    if ((aNumber.asPrimitive() == 0)) {</span>
+<span class="nc" id="L314">      this.zeroDivide();</span>
+<span class="nc" id="L315">      return this;</span>
     };
-<span class="nc" id="L314">    return (LongInteger)LongInteger.from((this.asPrimitive() % aNumber.asPrimitive()));</span>
+<span class="nc" id="L317">    return (LongInteger)LongInteger.from((this.asPrimitive() % aNumber.asPrimitive()));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

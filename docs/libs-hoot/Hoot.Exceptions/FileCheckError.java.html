@@ -27,30 +27,32 @@ import Hoot.Collections.String;
 
 public class FileCheckError extends Error
 {
-<span class="nc" id="L30">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L31">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L31">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L32">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Error.Metaclass
   {
-<span class="nc" id="L34">    static final FileCheckError.Metaclass $class = new FileCheckError.Metaclass();</span>
+<span class="fc" id="L35">    static final FileCheckError.Metaclass $class = new FileCheckError.Metaclass();</span>
     public Metaclass() {
-<span class="nc" id="L36">      this(FileCheckError.Metaclass.class);</span>
-<span class="nc" id="L37">    }</span>
+<span class="fc" id="L37">      this(FileCheckError.Metaclass.class);</span>
+<span class="fc" id="L38">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="nc" id="L40">      super(aClass);</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L41">      super(aClass);</span>
+<span class="fc" id="L42">    }</span>
 
-<span class="nc" id="L43">    @Override public java.lang.Class outerClass() { return FileCheckError.class; }</span>
+<span class="fc" id="L44">    @Override public java.lang.Class outerClass() { return FileCheckError.class; }</span>
+
 
     /**
      * @return 
      */
     public   FileCheckError missingFile(final String filePath)
     {
-<span class="nc" id="L50">      java.lang.String exitID = &quot;FileCheckErrorMetatype&gt;&gt;missingFile&quot;;</span>
-<span class="nc" id="L51">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L52">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L53">      return (FileCheckError)f0.exit(exitID, new FileCheckError(filePath).signal(String.from(&quot;file missing&quot;)));</span>
+<span class="nc" id="L52">      java.lang.String exitID = &quot;FileCheckErrorMetatype&gt;&gt;missingFile&quot;;</span>
+<span class="nc" id="L53">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L54">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L55">      return (FileCheckError)f0.exit(exitID, new FileCheckError(filePath).signal(String.from(&quot;file missing&quot;)));</span>
       });
     }
 
@@ -59,44 +61,45 @@ public class FileCheckError extends Error
      */
     public   FileCheckError presentFile(final String filePath)
     {
-<span class="nc" id="L62">      java.lang.String exitID = &quot;FileCheckErrorMetatype&gt;&gt;presentFile&quot;;</span>
-<span class="nc" id="L63">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L64">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L65">      return (FileCheckError)f0.exit(exitID, new FileCheckError(filePath).signal(String.from(&quot;file present&quot;)));</span>
+<span class="nc" id="L64">      java.lang.String exitID = &quot;FileCheckErrorMetatype&gt;&gt;presentFile&quot;;</span>
+<span class="nc" id="L65">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L66">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L67">      return (FileCheckError)f0.exit(exitID, new FileCheckError(filePath).signal(String.from(&quot;file present&quot;)));</span>
       });
     }
   }
 
 
   protected String filePath;
+
   /**
    * @return 
    */
   public   String filePath()
   {
-<span class="nc" id="L77">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;filePath&quot;;</span>
-<span class="nc" id="L78">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L79">    return (String)filePath;</span>
+<span class="nc" id="L80">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;filePath&quot;;</span>
+<span class="nc" id="L81">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L82">    return (String)filePath;</span>
   }
 
   /**
    * 
    */
   public    FileCheckError(final String path)
-<span class="nc" id="L86">  {</span>
-<span class="nc" id="L87">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;FileCheckError&quot;;</span>
-<span class="nc" id="L88">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L89">     filePath = path;</span>
-<span class="nc" id="L90">  }</span>
+<span class="nc" id="L89">  {</span>
+<span class="nc" id="L90">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;FileCheckError&quot;;</span>
+<span class="nc" id="L91">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L92">     filePath = path;</span>
+<span class="nc" id="L93">  }</span>
 
   /**
    * @return 
    */
   @Override public   Boolean isResumable()
   {
-<span class="nc" id="L97">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;isResumable&quot;;</span>
-<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L99">    return (Boolean)True.literal();</span>
+<span class="nc" id="L100">    java.lang.String exitID = &quot;FileCheckError&gt;&gt;isResumable&quot;;</span>
+<span class="nc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L102">    return (Boolean)True.literal();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

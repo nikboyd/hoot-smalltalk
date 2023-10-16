@@ -29,30 +29,32 @@ import Smalltalk.Collections.*;
 
 public class TextWriteStream extends WriteStream&lt;Character&gt;
 {
-<span class="fc" id="L32">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L33">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="fc" id="L33">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L34">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends WriteStream.Metaclass
   {
-<span class="fc" id="L36">    static final TextWriteStream.Metaclass $class = new TextWriteStream.Metaclass();</span>
+<span class="fc" id="L37">    static final TextWriteStream.Metaclass $class = new TextWriteStream.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L38">      this(TextWriteStream.Metaclass.class);</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L39">      this(TextWriteStream.Metaclass.class);</span>
+<span class="fc" id="L40">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L42">      super(aClass);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L43">      super(aClass);</span>
+<span class="fc" id="L44">    }</span>
 
-<span class="fc" id="L45">    @Override public java.lang.Class outerClass() { return TextWriteStream.class; }</span>
+<span class="fc" id="L46">    @Override public java.lang.Class outerClass() { return TextWriteStream.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   TextWriteStream with(final CollectedVariably aString)
     {
-<span class="nc" id="L52">      java.lang.String exitID = &quot;TextWriteStreamMetatype&gt;&gt;with&quot;;</span>
-<span class="nc" id="L53">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L54">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L55">      return (TextWriteStream)f0.exit(exitID, this.with(((String)aString)));</span>
+<span class="nc" id="L54">      java.lang.String exitID = &quot;TextWriteStreamMetatype&gt;&gt;with&quot;;</span>
+<span class="nc" id="L55">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L56">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L57">      return (TextWriteStream)f0.exit(exitID, this.with(((String)aString)));</span>
       });
     }
 
@@ -61,13 +63,14 @@ public class TextWriteStream extends WriteStream&lt;Character&gt;
      */
     public   TextWriteStream with(final String aString)
     {
-<span class="fc" id="L64">      java.lang.String exitID = &quot;TextWriteStreamMetatype&gt;&gt;with&quot;;</span>
-<span class="fc" id="L65">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L66">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L67">      return (TextWriteStream)f0.exit(exitID, new TextWriteStream(aString));</span>
+<span class="fc" id="L66">      java.lang.String exitID = &quot;TextWriteStreamMetatype&gt;&gt;with&quot;;</span>
+<span class="fc" id="L67">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L68">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L69">      return (TextWriteStream)f0.exit(exitID, new TextWriteStream(aString));</span>
       });
     }
   }
+
 
 
   /**
@@ -75,19 +78,19 @@ public class TextWriteStream extends WriteStream&lt;Character&gt;
    */
   protected    TextWriteStream(final String aString)
   {
-<span class="fc" id="L78">    super(aString);</span>
-<span class="fc" id="L79">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;TextWriteStream&quot;;</span>
-<span class="fc" id="L80">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L81">  }</span>
+<span class="fc" id="L81">    super(aString);</span>
+<span class="fc" id="L82">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;TextWriteStream&quot;;</span>
+<span class="fc" id="L83">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L84">  }</span>
 
   /**
    * @return 
    */
   @Override public   String contents()
   {
-<span class="fc" id="L88">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;contents&quot;;</span>
-<span class="fc" id="L89">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L90">    return (String)String.from(contents.toString());</span>
+<span class="fc" id="L91">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;contents&quot;;</span>
+<span class="fc" id="L92">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L93">    return (String)String.from(contents.toString());</span>
   }
 
   /**
@@ -95,12 +98,12 @@ public class TextWriteStream extends WriteStream&lt;Character&gt;
    */
   public   TextWriteStream nextPut(final Character element)
   {
-<span class="fc" id="L98">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;nextPut&quot;;</span>
-<span class="fc" id="L99">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L100">    ((String)contents).add(element);</span>
+<span class="fc" id="L101">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;nextPut&quot;;</span>
+<span class="fc" id="L102">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L103">    ((String)contents).add(element);</span>
 
-<span class="fc" id="L102">     position = (SmallInteger.from(1).plus(position));</span>
-<span class="fc" id="L103">    return (TextWriteStream)this;</span>
+<span class="fc" id="L105">     position = (SmallInteger.from(1).plus(position));</span>
+<span class="fc" id="L106">    return (TextWriteStream)this;</span>
   }
 
   /**
@@ -108,12 +111,12 @@ public class TextWriteStream extends WriteStream&lt;Character&gt;
    */
   @Override public   TextWriteStream nextPutAll(final CollectedReadably&lt;Character&gt; elements)
   {
-<span class="nc" id="L111">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;nextPutAll&quot;;</span>
-<span class="nc" id="L112">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L113">    ((String)contents).addAll(elements);</span>
+<span class="nc" id="L114">    java.lang.String exitID = &quot;TextWriteStream&gt;&gt;nextPutAll&quot;;</span>
+<span class="nc" id="L115">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L116">    ((String)contents).addAll(elements);</span>
 
-<span class="nc" id="L115">     position = (position.plus(elements.size()));</span>
-<span class="nc" id="L116">    return (TextWriteStream)this;</span>
+<span class="nc" id="L118">     position = (position.plus(elements.size()));</span>
+<span class="nc" id="L119">    return (TextWriteStream)this;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

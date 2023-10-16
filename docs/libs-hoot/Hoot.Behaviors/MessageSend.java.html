@@ -27,14 +27,15 @@ public class MessageSend extends Message
 {
 
   private Subject receiver;
+
   /**
    * @return 
    */
   public   Subject receiver()
   {
-<span class="nc" id="L35">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiver&quot;;</span>
-<span class="nc" id="L36">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L37">    return (Subject)receiver;</span>
+<span class="nc" id="L36">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiver&quot;;</span>
+<span class="nc" id="L37">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L38">    return (Subject)receiver;</span>
   }
 
   /**
@@ -42,20 +43,20 @@ public class MessageSend extends Message
    */
   public    MessageSend(final Subject aReceiver, final Selector methodSelector, final Subject ... methodArguments)
   {
-<span class="nc" id="L45">    super(methodSelector, methodArguments);</span>
-<span class="nc" id="L46">    java.lang.String exitID = &quot;MessageSend&gt;&gt;MessageSend&quot;;</span>
-<span class="nc" id="L47">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L48">     receiver = aReceiver;</span>
-<span class="nc" id="L49">  }</span>
+<span class="nc" id="L46">    super(methodSelector, methodArguments);</span>
+<span class="nc" id="L47">    java.lang.String exitID = &quot;MessageSend&gt;&gt;MessageSend&quot;;</span>
+<span class="nc" id="L48">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L49">     receiver = aReceiver;</span>
+<span class="nc" id="L50">  }</span>
 
   /**
    * @return 
    */
   private   Behavior receiverBehavior()
   {
-<span class="nc" id="L56">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverBehavior&quot;;</span>
-<span class="nc" id="L57">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L58">    return (Behavior)((Behavior)receiver);</span>
+<span class="nc" id="L57">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverBehavior&quot;;</span>
+<span class="nc" id="L58">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L59">    return (Behavior)((Behavior)receiver);</span>
   }
 
   /**
@@ -63,9 +64,9 @@ public class MessageSend extends Message
    */
   private   Class receiverClass()
   {
-<span class="nc" id="L66">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverClass&quot;;</span>
-<span class="nc" id="L67">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L68">    return (Class)((Class)receiver.$class());</span>
+<span class="nc" id="L67">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverClass&quot;;</span>
+<span class="nc" id="L68">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L69">    return (Class)((Class)receiver.$class());</span>
   }
 
   /**
@@ -73,9 +74,9 @@ public class MessageSend extends Message
    */
   protected   java.lang.reflect.Constructor receiverConstructor()
   {
-<span class="nc" id="L76">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverConstructor&quot;;</span>
-<span class="nc" id="L77">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L78">    return (java.lang.reflect.Constructor)this.receiverBehavior().methodDictionary().constructorFor(this.argumentCount());</span>
+<span class="nc" id="L77">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverConstructor&quot;;</span>
+<span class="nc" id="L78">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L79">    return (java.lang.reflect.Constructor)this.receiverBehavior().methodDictionary().constructorFor(this.argumentCount());</span>
   }
 
   /**
@@ -83,9 +84,9 @@ public class MessageSend extends Message
    */
   protected   java.lang.reflect.Method receiverMethod()
   {
-<span class="nc" id="L86">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverMethod&quot;;</span>
-<span class="nc" id="L87">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L88">    return (java.lang.reflect.Method)this.receiverClass().methodDictionary().methodNamed(selector.name(), this.argumentCount());</span>
+<span class="nc" id="L87">    java.lang.String exitID = &quot;MessageSend&gt;&gt;receiverMethod&quot;;</span>
+<span class="nc" id="L88">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L89">    return (java.lang.reflect.Method)this.receiverClass().methodDictionary().methodNamed(selector.name(), this.argumentCount());</span>
   }
 
   /**
@@ -93,15 +94,15 @@ public class MessageSend extends Message
    */
   protected   java.lang.RuntimeException appropriated(final java.lang.Throwable exception)
   {
-<span class="nc" id="L96">    java.lang.String exitID = &quot;MessageSend&gt;&gt;appropriated&quot;;</span>
-<span class="nc" id="L97">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">    if (exception instanceof UnhandledJavaException) {</span>
-<span class="nc" id="L99">      return ((UnhandledJavaException)exception);</span>
+<span class="nc" id="L97">    java.lang.String exitID = &quot;MessageSend&gt;&gt;appropriated&quot;;</span>
+<span class="nc" id="L98">    Frame f0 = new Frame(exitID);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">    if (exception instanceof UnhandledJavaException) {</span>
+<span class="nc" id="L100">      return ((UnhandledJavaException)exception);</span>
     };
-<span class="nc bnc" id="L101" title="All 2 branches missed.">    if (exception instanceof InvocationTargetException) {</span>
-<span class="nc" id="L102">      return new UnhandledJavaException(exception.getCause());</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">    if (exception instanceof InvocationTargetException) {</span>
+<span class="nc" id="L103">      return new UnhandledJavaException(exception.getCause());</span>
     };
-<span class="nc" id="L104">    return (java.lang.RuntimeException)new UnhandledJavaException(exception);</span>
+<span class="nc" id="L105">    return (java.lang.RuntimeException)new UnhandledJavaException(exception);</span>
   }
 
   /**
@@ -109,9 +110,9 @@ public class MessageSend extends Message
    */
   public   Object perform()
   {
-<span class="nc" id="L112">    java.lang.String exitID = &quot;MessageSend&gt;&gt;perform&quot;;</span>
-<span class="nc" id="L113">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L114">    return (Object)Invoke.withValues(this.receiver()).call_with(this.selector(), this.arguments());</span>
+<span class="nc" id="L113">    java.lang.String exitID = &quot;MessageSend&gt;&gt;perform&quot;;</span>
+<span class="nc" id="L114">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L115">    return (Object)Invoke.withValues(this.receiver()).call_with(this.selector(), this.arguments());</span>
   }
 
   /**
@@ -119,9 +120,9 @@ public class MessageSend extends Message
    */
   public   Object construct()
   {
-<span class="nc" id="L122">    java.lang.String exitID = &quot;MessageSend&gt;&gt;construct&quot;;</span>
-<span class="nc" id="L123">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L124">    return (Object)Invoke.withValues(this.receiverBehavior().primitiveClass()).callWith(this.arguments());</span>
+<span class="nc" id="L123">    java.lang.String exitID = &quot;MessageSend&gt;&gt;construct&quot;;</span>
+<span class="nc" id="L124">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L125">    return (Object)Invoke.withValues(this.receiverBehavior().primitiveClass()).callWith(this.arguments());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

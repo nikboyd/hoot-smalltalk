@@ -25,26 +25,27 @@ import Hoot.Runtime.Behaviors.HootRegistry;
 public class MetaclassBase extends Behavior
 {
 
+
   /**
    * 
    */
   public    MetaclassBase(final java.lang.Class aClass)
   {
-<span class="fc" id="L33">    super();</span>
-<span class="fc" id="L34">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;MetaclassBase&quot;;</span>
-<span class="fc" id="L35">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L36">     methodDictionary = new MethodCache(aClass);</span>
-<span class="fc" id="L37">    this.registerType();</span>
-<span class="fc" id="L38">  }</span>
+<span class="fc" id="L34">    super();</span>
+<span class="fc" id="L35">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;MetaclassBase&quot;;</span>
+<span class="fc" id="L36">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L37">     methodDictionary = new MethodCache(aClass);</span>
+<span class="fc" id="L38">    this.registerType();</span>
+<span class="fc" id="L39">  }</span>
 
   /**
    * @return 
    */
   @Override public   Boolean isMetaclass()
   {
-<span class="nc" id="L45">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;isMetaclass&quot;;</span>
-<span class="nc" id="L46">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L47">    return (Boolean)True.literal();</span>
+<span class="nc" id="L46">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;isMetaclass&quot;;</span>
+<span class="nc" id="L47">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L48">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -52,9 +53,9 @@ public class MetaclassBase extends Behavior
    */
   public   Behavior instanceClass()
   {
-<span class="nc" id="L55">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;instanceClass&quot;;</span>
-<span class="nc" id="L56">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L57">    return (Behavior)HootRegistry.getType(this.outerClass());</span>
+<span class="nc" id="L56">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;instanceClass&quot;;</span>
+<span class="nc" id="L57">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L58">    return (Behavior)HootRegistry.getType(this.outerClass());</span>
   }
 
   /**
@@ -62,13 +63,13 @@ public class MetaclassBase extends Behavior
    */
   @Override public   String namePrefix()
   {
-<span class="nc" id="L65">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;namePrefix&quot;;</span>
-<span class="nc" id="L66">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L67">    Character first = Character.from(this.primitiveClass().getName().charAt(0));</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">    if (first.isVowel().asPrimitive()) {</span>
-<span class="nc" id="L69">      return String.from(&quot;an &quot;);</span>
+<span class="nc" id="L66">    java.lang.String exitID = &quot;MetaclassBase&gt;&gt;namePrefix&quot;;</span>
+<span class="nc" id="L67">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L68">    Character first = Character.from(this.primitiveClass().getName().charAt(0));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">    if (first.isVowel().asPrimitive()) {</span>
+<span class="nc" id="L70">      return String.from(&quot;an &quot;);</span>
     };
-<span class="nc" id="L71">    return (String)String.from(&quot;a &quot;);</span>
+<span class="nc" id="L72">    return (String)String.from(&quot;a &quot;);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

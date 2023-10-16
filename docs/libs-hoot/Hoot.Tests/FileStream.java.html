@@ -31,54 +31,55 @@ import Hoot.Streams.*;
 {
 
 <span class="fc" id="L33">  protected static final String FileReport = String.from(&quot;%s %s: %s&quot;);</span>
+
   /**
    * @return 
    */
   @Override public   void runTest()
   {
-<span class="fc" id="L39">    java.lang.String exitID = &quot;FileStream&gt;&gt;runTest&quot;;</span>
-<span class="fc" id="L40">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L41">    File testFolder = new File(&quot;target&quot;);</span>
-<span class="fc" id="L42">    Boolean.from(testFolder.exists()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L43">      testFolder.mkdir();</span>
-<span class="nc" id="L44">    }, &quot;&quot;));</span>
+<span class="fc" id="L40">    java.lang.String exitID = &quot;FileStream&gt;&gt;runTest&quot;;</span>
+<span class="fc" id="L41">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L42">    File testFolder = new File(&quot;target&quot;);</span>
+<span class="fc" id="L43">    Boolean.from(testFolder.exists()).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L44">      testFolder.mkdir();</span>
+<span class="nc" id="L45">    }, &quot;&quot;));</span>
 
-<span class="fc" id="L46">    String fileName = String.from(&quot;target/stream.test.txt&quot;);</span>
+<span class="fc" id="L47">    String fileName = String.from(&quot;target/stream.test.txt&quot;);</span>
 
-<span class="fc" id="L48">    String fileOut = String.from(&quot;target/parsed.text.txt&quot;);</span>
+<span class="fc" id="L49">    String fileOut = String.from(&quot;target/parsed.text.txt&quot;);</span>
 
-<span class="fc" id="L50">    String text = String.from(&quot;a quick brown fox jumped over a lazy dog&quot;);</span>
+<span class="fc" id="L51">    String text = String.from(&quot;a quick brown fox jumped over a lazy dog&quot;);</span>
 
-<span class="fc" id="L52">    TextFileWriteStream oStream = TextFileWriteStream.write(fileName);</span>
+<span class="fc" id="L53">    TextFileWriteStream oStream = TextFileWriteStream.write(fileName);</span>
     {
-<span class="fc" id="L54">    TextFileWriteStream prime = (TextFileWriteStream)oStream;</span>
-<span class="fc" id="L55">    prime.nextPutAll(text); </span>
+<span class="fc" id="L55">    TextFileWriteStream prime = (TextFileWriteStream)oStream;</span>
+<span class="fc" id="L56">    prime.nextPutAll(text); </span>
 
-<span class="fc" id="L57">    prime.cr();</span>
+<span class="fc" id="L58">    prime.cr();</span>
     };
-<span class="fc" id="L59">    oStream.close();</span>
-<span class="fc" id="L60">    this.log().cr();</span>
-<span class="fc" id="L61">    this.log().printLine(FileReport.formatWith(String.from(&quot;wrote into &quot;), fileName, text));</span>
-<span class="fc" id="L62">    this.log().printLine(FileReport.formatWith(String.from(&quot;reads from &quot;), fileName, String.from(&quot;&quot;)));</span>
+<span class="fc" id="L60">    oStream.close();</span>
+<span class="fc" id="L61">    this.log().cr();</span>
+<span class="fc" id="L62">    this.log().printLine(FileReport.formatWith(String.from(&quot;wrote into &quot;), fileName, text));</span>
+<span class="fc" id="L63">    this.log().printLine(FileReport.formatWith(String.from(&quot;reads from &quot;), fileName, String.from(&quot;&quot;)));</span>
 
-<span class="fc" id="L64">    TextFileReadStream iStream = TextFileReadStream.read(fileName);</span>
+<span class="fc" id="L65">    TextFileReadStream iStream = TextFileReadStream.read(fileName);</span>
 
-<span class="fc" id="L66">    TextFileWriteStream newStream = TextFileWriteStream.write(fileOut);</span>
-<span class="fc" id="L67">    Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L68">      return iStream.atEnd();</span>
-<span class="fc" id="L69">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L67">    TextFileWriteStream newStream = TextFileWriteStream.write(fileOut);</span>
+<span class="fc" id="L68">    Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L69">      return iStream.atEnd();</span>
+<span class="fc" id="L70">    }, &quot;&quot;).whileFalse(Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L71">    String line = iStream.upTo(((Character)Character.from(' ')));</span>
+<span class="fc" id="L72">    String line = iStream.upTo(((Character)Character.from(' ')));</span>
     {
-<span class="fc" id="L73">    TextFileWriteStream prime = (TextFileWriteStream)newStream;</span>
-<span class="fc" id="L74">    prime.nextPutAll(line); </span>
+<span class="fc" id="L74">    TextFileWriteStream prime = (TextFileWriteStream)newStream;</span>
+<span class="fc" id="L75">    prime.nextPutAll(line); </span>
 
-<span class="fc" id="L76">    prime.cr();</span>
+<span class="fc" id="L77">    prime.cr();</span>
     };
-<span class="fc" id="L78">    this.log().printLine(line);</span>
-<span class="fc" id="L79">    }, &quot;&quot;));</span>
-<span class="fc" id="L80">    iStream.close();</span>
-<span class="fc" id="L81">    oStream.close();</span>
-<span class="fc" id="L82">  }</span>
+<span class="fc" id="L79">    this.log().printLine(line);</span>
+<span class="fc" id="L80">    }, &quot;&quot;));</span>
+<span class="fc" id="L81">    iStream.close();</span>
+<span class="fc" id="L82">    oStream.close();</span>
+<span class="fc" id="L83">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

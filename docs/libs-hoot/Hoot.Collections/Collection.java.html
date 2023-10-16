@@ -33,30 +33,32 @@ import java.util.List;
 
 <span class="fc" id="L34">public abstract class Collection&lt;ElementType extends Object&gt; extends Object implements CollectedVariably&lt;ElementType&gt;</span>
 {
-<span class="nc" id="L36">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L37">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+
+<span class="nc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass implements CollectedVariably.Metatype
   {
-<span class="fc" id="L40">    static final Collection.Metaclass $class = new Collection.Metaclass();</span>
+<span class="fc" id="L41">    static final Collection.Metaclass $class = new Collection.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L42">      this(Collection.Metaclass.class);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L43">      this(Collection.Metaclass.class);</span>
+<span class="fc" id="L44">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L46">      super(aClass);</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L47">      super(aClass);</span>
+<span class="fc" id="L48">    }</span>
 
-<span class="fc" id="L49">    @Override public java.lang.Class outerClass() { return Collection.class; }</span>
+<span class="fc" id="L50">    @Override public java.lang.Class outerClass() { return Collection.class; }</span>
+
 
     /**
      * @return 
      */
     @Override public   Collection $new()
     {
-<span class="nc" id="L56">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L57">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L58">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L59">      return (Collection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+<span class="nc" id="L58">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L59">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L60">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L61">      return (Collection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
       });
     }
 
@@ -65,10 +67,10 @@ import java.util.List;
      */
     @Override public   Collection $new(final Ordinal capacity)
     {
-<span class="nc" id="L68">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L69">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L70">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L71">      return (Collection)f0.exit(exitID, new OrderedCollection(capacity));</span>
+<span class="nc" id="L70">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="nc" id="L71">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L72">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L73">      return (Collection)f0.exit(exitID, new OrderedCollection(capacity));</span>
       });
     }
 
@@ -77,14 +79,14 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with(final ElementType a)
     {
-<span class="nc" id="L80">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with&quot;;</span>
-<span class="nc" id="L81">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L82">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L83">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L84">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L85">      prime.add(((Object)a)); </span>
+<span class="nc" id="L82">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with&quot;;</span>
+<span class="nc" id="L83">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L84">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L85">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L86">      Collection prime = (Collection)this.$new();</span>
+<span class="nc" id="L87">      prime.add(((Object)a)); </span>
 
-<span class="nc" id="L87">      return prime.yourself();</span>
+<span class="nc" id="L89">      return prime.yourself();</span>
       });
       });
     }
@@ -94,15 +96,15 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with(final ElementType a, final ElementType b)
     {
-<span class="nc" id="L97">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with&quot;;</span>
-<span class="nc" id="L98">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L99">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L100">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L101">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L102">      prime.add(((Object)a)); </span>
-<span class="nc" id="L103">      prime.add(((Object)b)); </span>
+<span class="nc" id="L99">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with&quot;;</span>
+<span class="nc" id="L100">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L101">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L102">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L103">      Collection prime = (Collection)this.$new();</span>
+<span class="nc" id="L104">      prime.add(((Object)a)); </span>
+<span class="nc" id="L105">      prime.add(((Object)b)); </span>
 
-<span class="nc" id="L105">      return prime.yourself();</span>
+<span class="nc" id="L107">      return prime.yourself();</span>
       });
       });
     }
@@ -112,16 +114,16 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with_with(final ElementType a, final ElementType b, final ElementType c)
     {
-<span class="nc" id="L115">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with&quot;;</span>
-<span class="nc" id="L116">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L117">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L118">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L119">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L120">      prime.add(((Object)a)); </span>
-<span class="nc" id="L121">      prime.add(((Object)b)); </span>
-<span class="nc" id="L122">      prime.add(((Object)c)); </span>
+<span class="nc" id="L117">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with&quot;;</span>
+<span class="nc" id="L118">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L119">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L120">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L121">      Collection prime = (Collection)this.$new();</span>
+<span class="nc" id="L122">      prime.add(((Object)a)); </span>
+<span class="nc" id="L123">      prime.add(((Object)b)); </span>
+<span class="nc" id="L124">      prime.add(((Object)c)); </span>
 
-<span class="nc" id="L124">      return prime.yourself();</span>
+<span class="nc" id="L126">      return prime.yourself();</span>
       });
       });
     }
@@ -131,17 +133,17 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with_with_with(final ElementType a, final ElementType b, final ElementType c, final ElementType d)
     {
-<span class="nc" id="L134">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with_with&quot;;</span>
-<span class="nc" id="L135">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L136">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L137">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L138">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L139">      prime.add(((Object)a)); </span>
-<span class="nc" id="L140">      prime.add(((Object)b)); </span>
-<span class="nc" id="L141">      prime.add(((Object)c)); </span>
-<span class="nc" id="L142">      prime.add(((Object)d)); </span>
+<span class="nc" id="L136">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with_with&quot;;</span>
+<span class="nc" id="L137">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L138">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L139">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L140">      Collection prime = (Collection)this.$new();</span>
+<span class="nc" id="L141">      prime.add(((Object)a)); </span>
+<span class="nc" id="L142">      prime.add(((Object)b)); </span>
+<span class="nc" id="L143">      prime.add(((Object)c)); </span>
+<span class="nc" id="L144">      prime.add(((Object)d)); </span>
 
-<span class="nc" id="L144">      return prime.yourself();</span>
+<span class="nc" id="L146">      return prime.yourself();</span>
       });
       });
     }
@@ -151,36 +153,37 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; withAll(final CollectedReadably&lt;ElementType&gt; elements)
     {
-<span class="nc" id="L154">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L155">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L156">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L157">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L158">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L159">      prime.addAll(elements); </span>
+<span class="nc" id="L156">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;withAll&quot;;</span>
+<span class="nc" id="L157">      Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L158">      return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L159">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="nc" id="L160">      Collection prime = (Collection)this.$new();</span>
+<span class="nc" id="L161">      prime.addAll(elements); </span>
 
-<span class="nc" id="L161">      return prime.yourself();</span>
+<span class="nc" id="L163">      return prime.yourself();</span>
       });
       });
     }
   }
 
 
-<span class="fc" id="L168">    protected Classified elementType = Object.type();</span>
-<span class="fc" id="L169">    public Classified elementType() { return this.elementType; }</span>
-<span class="nc" id="L170">    public Object getElementType() { return (Object)this.elementType; }</span>
+<span class="fc" id="L170">    protected Classified elementType = Object.type();</span>
+<span class="fc" id="L171">    public Classified elementType() { return this.elementType; }</span>
+<span class="nc" id="L172">    public Object getElementType() { return (Object)this.elementType; }</span>
 
-<span class="nc" id="L172">    public Collection elementType(Classified value) { this.elementType = value; return this; }</span>
-<span class="nc" id="L173">    public void setElementType(Object value) { this.elementType = (Classified)value; }</span>
+<span class="nc" id="L174">    public Collection elementType(Classified value) { this.elementType = value; return this; }</span>
+<span class="nc" id="L175">    public void setElementType(Object value) { this.elementType = (Classified)value; }</span>
 
   ;
+
   /**
    * @return 
    */
   public   Collection rehash()
   {
-<span class="nc" id="L181">    java.lang.String exitID = &quot;Collection&gt;&gt;rehash&quot;;</span>
-<span class="nc" id="L182">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L183">    return (Collection)this;</span>
+<span class="nc" id="L184">    java.lang.String exitID = &quot;Collection&gt;&gt;rehash&quot;;</span>
+<span class="nc" id="L185">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L186">    return (Collection)this;</span>
   }
 
   /**
@@ -188,9 +191,9 @@ import java.util.List;
    */
   public   Integer capacity()
   {
-<span class="nc" id="L191">    java.lang.String exitID = &quot;Collection&gt;&gt;capacity&quot;;</span>
-<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L193">    return (Integer)this.size();</span>
+<span class="nc" id="L194">    java.lang.String exitID = &quot;Collection&gt;&gt;capacity&quot;;</span>
+<span class="nc" id="L195">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L196">    return (Integer)this.size();</span>
   }
 
   /**
@@ -198,9 +201,9 @@ import java.util.List;
    */
   public   int primitiveSize()
   {
-<span class="fc" id="L201">    java.lang.String exitID = &quot;Collection&gt;&gt;primitiveSize&quot;;</span>
-<span class="fc" id="L202">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L203">    return (int)this.size().primitiveInteger();</span>
+<span class="fc" id="L204">    java.lang.String exitID = &quot;Collection&gt;&gt;primitiveSize&quot;;</span>
+<span class="fc" id="L205">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L206">    return (int)this.size().primitiveInteger();</span>
   }
 
   /**
@@ -208,14 +211,14 @@ import java.util.List;
    */
   public   Integer size()
   {
-<span class="nc" id="L211">    java.lang.String exitID = &quot;Collection&gt;&gt;size&quot;;</span>
-<span class="nc" id="L212">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L213">    FastInteger tally = Zero.asFastInteger();</span>
-<span class="nc" id="L214">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L215">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L216">      tally.add(Unity);</span>
-<span class="nc" id="L217">    }, &quot;element&quot;));</span>
-<span class="nc" id="L218">    return (Integer)tally;</span>
+<span class="nc" id="L214">    java.lang.String exitID = &quot;Collection&gt;&gt;size&quot;;</span>
+<span class="nc" id="L215">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L216">    FastInteger tally = Zero.asFastInteger();</span>
+<span class="nc" id="L217">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L218">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L219">      tally.add(Unity);</span>
+<span class="nc" id="L220">    }, &quot;element&quot;));</span>
+<span class="nc" id="L221">    return (Integer)tally;</span>
   }
 
   /**
@@ -223,16 +226,16 @@ import java.util.List;
    */
   public   Integer occurrencesOf(final Subject candidate)
   {
-<span class="nc" id="L226">    java.lang.String exitID = &quot;Collection&gt;&gt;occurrencesOf&quot;;</span>
-<span class="nc" id="L227">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L228">    FastInteger tally = Zero.asFastInteger();</span>
-<span class="nc" id="L229">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L230">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L231">      return (candidate.equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L232">      tally.add(Unity);</span>
-<span class="nc" id="L233">    }, &quot;&quot;));</span>
+<span class="nc" id="L229">    java.lang.String exitID = &quot;Collection&gt;&gt;occurrencesOf&quot;;</span>
+<span class="nc" id="L230">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L231">    FastInteger tally = Zero.asFastInteger();</span>
+<span class="nc" id="L232">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L233">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L234">      return (candidate.equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L235">      tally.add(Unity);</span>
+<span class="nc" id="L236">    }, &quot;&quot;));</span>
     }, &quot;element&quot;));
-<span class="nc" id="L235">    return (Integer)tally;</span>
+<span class="nc" id="L238">    return (Integer)tally;</span>
   }
 
   /**
@@ -240,9 +243,9 @@ import java.util.List;
    */
   @Override public   java.lang.String toString()
   {
-<span class="fc" id="L243">    java.lang.String exitID = &quot;Collection&gt;&gt;toString&quot;;</span>
-<span class="fc" id="L244">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L245">    return (java.lang.String)this.printString().primitiveString();</span>
+<span class="fc" id="L246">    java.lang.String exitID = &quot;Collection&gt;&gt;toString&quot;;</span>
+<span class="fc" id="L247">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L248">    return (java.lang.String)this.printString().primitiveString();</span>
   }
 
   /**
@@ -250,9 +253,9 @@ import java.util.List;
    */
   @Override public   String printString()
   {
-<span class="fc" id="L253">    java.lang.String exitID = &quot;Collection&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L254">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L255">    return (String)String.from(this.asList().toString());</span>
+<span class="fc" id="L256">    java.lang.String exitID = &quot;Collection&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L257">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L258">    return (String)String.from(this.asList().toString());</span>
   }
 
   /**
@@ -260,9 +263,9 @@ import java.util.List;
    */
   public   List&lt;ElementType&gt; asList()
   {
-<span class="nc" id="L263">    java.lang.String exitID = &quot;Collection&gt;&gt;asList&quot;;</span>
-<span class="nc" id="L264">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L265">    return (List&lt;ElementType&gt;)this.asOrderedCollection().asList();</span>
+<span class="nc" id="L266">    java.lang.String exitID = &quot;Collection&gt;&gt;asList&quot;;</span>
+<span class="nc" id="L267">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L268">    return (List&lt;ElementType&gt;)this.asOrderedCollection().asList();</span>
   }
 
   /**
@@ -270,17 +273,17 @@ import java.util.List;
    */
   public   CollectedArray&lt;ElementType&gt; asArray()
   {
-<span class="nc" id="L273">    java.lang.String exitID = &quot;Collection&gt;&gt;asArray&quot;;</span>
-<span class="nc" id="L274">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L275">    Array result = Array.type().$new(this.size());</span>
+<span class="nc" id="L276">    java.lang.String exitID = &quot;Collection&gt;&gt;asArray&quot;;</span>
+<span class="nc" id="L277">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L278">    Array result = Array.type().$new(this.size());</span>
 
-<span class="nc" id="L277">    FastInteger index = SmallInteger.from(1).asFastInteger();</span>
-<span class="nc" id="L278">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L279">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L280">      result.at_put(index, element);</span>
-<span class="nc" id="L281">    index.add(SmallInteger.from(1));</span>
-<span class="nc" id="L282">    }, &quot;element&quot;));</span>
-<span class="nc" id="L283">    return (CollectedArray&lt;ElementType&gt;)result;</span>
+<span class="nc" id="L280">    FastInteger index = SmallInteger.from(1).asFastInteger();</span>
+<span class="nc" id="L281">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L282">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L283">      result.at_put(index, element);</span>
+<span class="nc" id="L284">    index.add(SmallInteger.from(1));</span>
+<span class="nc" id="L285">    }, &quot;element&quot;));</span>
+<span class="nc" id="L286">    return (CollectedArray&lt;ElementType&gt;)result;</span>
   }
 
   /**
@@ -288,13 +291,13 @@ import java.util.List;
    */
   public   CollectedBaggage&lt;ElementType&gt; asBag()
   {
-<span class="fc" id="L291">    java.lang.String exitID = &quot;Collection&gt;&gt;asBag&quot;;</span>
-<span class="fc" id="L292">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L294">    java.lang.String exitID = &quot;Collection&gt;&gt;asBag&quot;;</span>
+<span class="fc" id="L295">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="fc" id="L294">    Bag prime = (Bag)Bag.type().$new(this.size());</span>
-<span class="fc" id="L295">    prime.addAll(this); </span>
+<span class="fc" id="L297">    Bag prime = (Bag)Bag.type().$new(this.size());</span>
+<span class="fc" id="L298">    prime.addAll(this); </span>
 
-<span class="fc" id="L297">    return prime.yourself();</span>
+<span class="fc" id="L300">    return prime.yourself();</span>
     }
   }
 
@@ -303,14 +306,14 @@ import java.util.List;
    */
   public   CollectedOrdinally&lt;ElementType&gt; asOrderedCollection()
   {
-<span class="fc" id="L306">    java.lang.String exitID = &quot;Collection&gt;&gt;asOrderedCollection&quot;;</span>
-<span class="fc" id="L307">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L308">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
-<span class="fc" id="L309">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L310">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L311">      return result.addLast(element);</span>
+<span class="fc" id="L309">    java.lang.String exitID = &quot;Collection&gt;&gt;asOrderedCollection&quot;;</span>
+<span class="fc" id="L310">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L311">    OrderedCollection result = OrderedCollection.type().$new(this.size());</span>
+<span class="fc" id="L312">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L313">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L314">      return result.addLast(element);</span>
     }, &quot;element&quot;));
-<span class="fc" id="L313">    return (CollectedOrdinally&lt;ElementType&gt;)result;</span>
+<span class="fc" id="L316">    return (CollectedOrdinally&lt;ElementType&gt;)result;</span>
   }
 
   /**
@@ -318,13 +321,13 @@ import java.util.List;
    */
   public   CollectedDistinctly&lt;ElementType&gt; asSet()
   {
-<span class="nc" id="L321">    java.lang.String exitID = &quot;Collection&gt;&gt;asSet&quot;;</span>
-<span class="nc" id="L322">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L324">    java.lang.String exitID = &quot;Collection&gt;&gt;asSet&quot;;</span>
+<span class="nc" id="L325">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="nc" id="L324">    Set prime = (Set)Set.type().$new(this.size());</span>
-<span class="nc" id="L325">    prime.addAll(this); </span>
+<span class="nc" id="L327">    Set prime = (Set)Set.type().$new(this.size());</span>
+<span class="nc" id="L328">    prime.addAll(this); </span>
 
-<span class="nc" id="L327">    return prime.yourself();</span>
+<span class="nc" id="L330">    return prime.yourself();</span>
     }
   }
 
@@ -333,9 +336,9 @@ import java.util.List;
    */
   public   CollectedSortably&lt;ElementType&gt; sorted()
   {
-<span class="fc" id="L336">    java.lang.String exitID = &quot;Collection&gt;&gt;sorted&quot;;</span>
-<span class="fc" id="L337">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L338">    return (CollectedSortably&lt;ElementType&gt;)this.asSortedCollection();</span>
+<span class="fc" id="L339">    java.lang.String exitID = &quot;Collection&gt;&gt;sorted&quot;;</span>
+<span class="fc" id="L340">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L341">    return (CollectedSortably&lt;ElementType&gt;)this.asSortedCollection();</span>
   }
 
   /**
@@ -343,13 +346,13 @@ import java.util.List;
    */
   public   CollectedSortably&lt;ElementType&gt; asSortedCollection()
   {
-<span class="fc" id="L346">    java.lang.String exitID = &quot;Collection&gt;&gt;asSortedCollection&quot;;</span>
-<span class="fc" id="L347">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L349">    java.lang.String exitID = &quot;Collection&gt;&gt;asSortedCollection&quot;;</span>
+<span class="fc" id="L350">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="fc" id="L349">    SortedCollection prime = (SortedCollection)SortedCollection.type().$new(this.size());</span>
-<span class="fc" id="L350">    prime.addAll(this); </span>
+<span class="fc" id="L352">    SortedCollection prime = (SortedCollection)SortedCollection.type().$new(this.size());</span>
+<span class="fc" id="L353">    prime.addAll(this); </span>
 
-<span class="fc" id="L352">    return prime.reSort();</span>
+<span class="fc" id="L355">    return prime.reSort();</span>
     }
   }
 
@@ -358,14 +361,14 @@ import java.util.List;
    */
   public   CollectedSortably&lt;ElementType&gt; asSortedCollection(final DyadicPredicate sortBlock)
   {
-<span class="nc" id="L361">    java.lang.String exitID = &quot;Collection&gt;&gt;asSortedCollection&quot;;</span>
-<span class="nc" id="L362">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L364">    java.lang.String exitID = &quot;Collection&gt;&gt;asSortedCollection&quot;;</span>
+<span class="nc" id="L365">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="nc" id="L364">    SortedCollection prime = (SortedCollection)SortedCollection.type().$new(this.size());</span>
-<span class="nc" id="L365">    prime.sortBlock(sortBlock); </span>
-<span class="nc" id="L366">    prime.addAll(this); </span>
+<span class="nc" id="L367">    SortedCollection prime = (SortedCollection)SortedCollection.type().$new(this.size());</span>
+<span class="nc" id="L368">    prime.sortBlock(sortBlock); </span>
+<span class="nc" id="L369">    prime.addAll(this); </span>
 
-<span class="nc" id="L368">    return prime.reSort();</span>
+<span class="nc" id="L371">    return prime.reSort();</span>
     }
   }
 
@@ -374,9 +377,9 @@ import java.util.List;
    */
   @Override public   Collection $do(final MonadicValuable aBlock)
   {
-<span class="nc" id="L377">    java.lang.String exitID = &quot;Collection&gt;&gt;$do&quot;;</span>
-<span class="nc" id="L378">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L379">    return (Collection)this;</span>
+<span class="nc" id="L380">    java.lang.String exitID = &quot;Collection&gt;&gt;$do&quot;;</span>
+<span class="nc" id="L381">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L382">    return (Collection)this;</span>
   }
 
   /**
@@ -384,9 +387,9 @@ import java.util.List;
    */
   public   Collection reverseDo(final MonadicValuable aBlock)
   {
-<span class="nc" id="L387">    java.lang.String exitID = &quot;Collection&gt;&gt;reverseDo&quot;;</span>
-<span class="nc" id="L388">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L389">    return (Collection)this;</span>
+<span class="nc" id="L390">    java.lang.String exitID = &quot;Collection&gt;&gt;reverseDo&quot;;</span>
+<span class="nc" id="L391">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L392">    return (Collection)this;</span>
   }
 
   /**
@@ -394,14 +397,14 @@ import java.util.List;
    */
   public  &lt;CollectionType extends Collected&gt; CollectionType collect(final MonadicValuable transformBlock)
   {
-<span class="nc" id="L397">    java.lang.String exitID = &quot;Collection&gt;&gt;collect&quot;;</span>
-<span class="nc" id="L398">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L399">    CollectedVariably result = this.species().$new();</span>
-<span class="nc" id="L400">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L401">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L402">      return result.add(transformBlock.value(element));</span>
+<span class="nc" id="L400">    java.lang.String exitID = &quot;Collection&gt;&gt;collect&quot;;</span>
+<span class="nc" id="L401">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L402">    CollectedVariably result = this.species().$new();</span>
+<span class="nc" id="L403">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L404">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L405">      return result.add(transformBlock.value(element));</span>
     }, &quot;element&quot;));
-<span class="nc" id="L404">    return (CollectionType)((CollectionType)result);</span>
+<span class="nc" id="L407">    return (CollectionType)((CollectionType)result);</span>
   }
 
   /**
@@ -409,11 +412,11 @@ import java.util.List;
    */
   public   ElementType detect(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L412">    java.lang.String exitID = &quot;Collection&gt;&gt;detect&quot;;</span>
-<span class="nc" id="L413">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L414">    return (ElementType)this.detect_ifNone(testBlock, Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L415">      this.elementNotFound();</span>
-<span class="nc" id="L416">    return Nil.literal();</span>
+<span class="nc" id="L415">    java.lang.String exitID = &quot;Collection&gt;&gt;detect&quot;;</span>
+<span class="nc" id="L416">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L417">    return (ElementType)this.detect_ifNone(testBlock, Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L418">      this.elementNotFound();</span>
+<span class="nc" id="L419">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -422,16 +425,16 @@ import java.util.List;
    */
   public   ElementType detect_ifNone(final MonadicPredicate testBlock, final NiladicValuable missingBlock)
   {
-<span class="nc" id="L425">    java.lang.String exitID = &quot;Collection&gt;&gt;detect_ifNone&quot;;</span>
-<span class="nc" id="L426">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L427">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L428">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L429">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L430">      return (ElementType)f0.exit(exitID, testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L431">      return (ElementType)f0.exit(exitID, element);</span>
+<span class="nc" id="L428">    java.lang.String exitID = &quot;Collection&gt;&gt;detect_ifNone&quot;;</span>
+<span class="nc" id="L429">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L430">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L431">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L432">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L433">      return (ElementType)f0.exit(exitID, testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L434">      return (ElementType)f0.exit(exitID, element);</span>
     }, &quot;&quot;)));
     }, &quot;element&quot;));
-<span class="nc" id="L434">    return (ElementType)f0.exit(exitID, missingBlock.value());</span>
+<span class="nc" id="L437">    return (ElementType)f0.exit(exitID, missingBlock.value());</span>
     });
   }
 
@@ -440,18 +443,18 @@ import java.util.List;
    */
   public   Collection do_separatedBy(final MonadicValuable aBlock, final NiladicValuable betweenBlock)
   {
-<span class="nc" id="L443">    java.lang.String exitID = &quot;Collection&gt;&gt;do_separatedBy&quot;;</span>
-<span class="nc" id="L444">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L445">    Boolean betweenElements = False.literal() ; f0.bind(&quot;betweenElements&quot;, betweenElements);</span>
-<span class="nc" id="L446">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L447">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L448">      f0.getValue(&quot;betweenElements&quot;, Boolean.class).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L449">      betweenBlock.value();</span>
-<span class="nc" id="L450">    }, &quot;&quot;));</span>
-<span class="nc" id="L451">    aBlock.value(element);</span>
-<span class="nc" id="L452">    ; f0.bind(&quot;betweenElements&quot;, f0.getValue(&quot;betweenElements&quot;, Boolean.class).not());</span>
-<span class="nc" id="L453">    }, &quot;element&quot;));</span>
-<span class="nc" id="L454">    return (Collection)this;</span>
+<span class="nc" id="L446">    java.lang.String exitID = &quot;Collection&gt;&gt;do_separatedBy&quot;;</span>
+<span class="nc" id="L447">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L448">    Boolean betweenElements = False.literal() ; f0.bind(&quot;betweenElements&quot;, betweenElements);</span>
+<span class="nc" id="L449">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L450">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L451">      f0.getValue(&quot;betweenElements&quot;, Boolean.class).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L452">      betweenBlock.value();</span>
+<span class="nc" id="L453">    }, &quot;&quot;));</span>
+<span class="nc" id="L454">    aBlock.value(element);</span>
+<span class="nc" id="L455">    ; f0.bind(&quot;betweenElements&quot;, f0.getValue(&quot;betweenElements&quot;, Boolean.class).not());</span>
+<span class="nc" id="L456">    }, &quot;element&quot;));</span>
+<span class="nc" id="L457">    return (Collection)this;</span>
   }
 
   /**
@@ -459,14 +462,14 @@ import java.util.List;
    */
   public  &lt;ResultType extends Subject&gt; ResultType inject_into(final ResultType value, final DyadicValuable binaryBlock)
   {
-<span class="nc" id="L462">    java.lang.String exitID = &quot;Collection&gt;&gt;inject_into&quot;;</span>
-<span class="nc" id="L463">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L464">    Subject result = value ; f0.bind(&quot;result&quot;, result);</span>
-<span class="nc" id="L465">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L466">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L467">      ; f0.bind(&quot;result&quot;, binaryBlock.value_value(f0.getValue(&quot;result&quot;, Subject.class), element));</span>
-<span class="nc" id="L468">    }, &quot;element&quot;));</span>
-<span class="nc" id="L469">    return (ResultType)((ResultType)f0.getValue(&quot;result&quot;, Subject.class));</span>
+<span class="nc" id="L465">    java.lang.String exitID = &quot;Collection&gt;&gt;inject_into&quot;;</span>
+<span class="nc" id="L466">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L467">    Subject result = value ; f0.bind(&quot;result&quot;, result);</span>
+<span class="nc" id="L468">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L469">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L470">      ; f0.bind(&quot;result&quot;, binaryBlock.value_value(f0.getValue(&quot;result&quot;, Subject.class), element));</span>
+<span class="nc" id="L471">    }, &quot;element&quot;));</span>
+<span class="nc" id="L472">    return (ResultType)((ResultType)f0.getValue(&quot;result&quot;, Subject.class));</span>
   }
 
   /**
@@ -474,16 +477,16 @@ import java.util.List;
    */
   public  &lt;CollectionType extends Collected&gt; CollectionType reject(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L477">    java.lang.String exitID = &quot;Collection&gt;&gt;reject&quot;;</span>
-<span class="nc" id="L478">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L479">    CollectedVariably result = this.species().$new();</span>
-<span class="nc" id="L480">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L481">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L482">      return testBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L483">      return result.add(element);</span>
+<span class="nc" id="L480">    java.lang.String exitID = &quot;Collection&gt;&gt;reject&quot;;</span>
+<span class="nc" id="L481">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L482">    CollectedVariably result = this.species().$new();</span>
+<span class="nc" id="L483">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L484">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L485">      return testBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L486">      return result.add(element);</span>
     }, &quot;&quot;));
     }, &quot;element&quot;));
-<span class="nc" id="L486">    return (CollectionType)((CollectionType)result);</span>
+<span class="nc" id="L489">    return (CollectionType)((CollectionType)result);</span>
   }
 
   /**
@@ -491,16 +494,16 @@ import java.util.List;
    */
   public  &lt;CollectionType extends Collected&gt; CollectionType select(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L494">    java.lang.String exitID = &quot;Collection&gt;&gt;select&quot;;</span>
-<span class="nc" id="L495">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L496">    CollectedVariably result = this.species().$new();</span>
-<span class="nc" id="L497">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L498">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L499">      return testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L500">      return result.add(element);</span>
+<span class="nc" id="L497">    java.lang.String exitID = &quot;Collection&gt;&gt;select&quot;;</span>
+<span class="nc" id="L498">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L499">    CollectedVariably result = this.species().$new();</span>
+<span class="nc" id="L500">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L501">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L502">      return testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L503">      return result.add(element);</span>
     }, &quot;&quot;));
     }, &quot;element&quot;));
-<span class="nc" id="L503">    return (CollectionType)((CollectionType)result);</span>
+<span class="nc" id="L506">    return (CollectionType)((CollectionType)result);</span>
   }
 
   /**
@@ -508,10 +511,10 @@ import java.util.List;
    */
   public   Collection indexError()
   {
-<span class="nc" id="L511">    java.lang.String exitID = &quot;Collection&gt;&gt;indexError&quot;;</span>
-<span class="nc" id="L512">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L513">    this.error(String.from(&quot;Improper index for this collection&quot;));</span>
-<span class="nc" id="L514">    return (Collection)this;</span>
+<span class="nc" id="L514">    java.lang.String exitID = &quot;Collection&gt;&gt;indexError&quot;;</span>
+<span class="nc" id="L515">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L516">    this.error(String.from(&quot;Improper index for this collection&quot;));</span>
+<span class="nc" id="L517">    return (Collection)this;</span>
   }
 
   /**
@@ -519,10 +522,10 @@ import java.util.List;
    */
   public   Collection indexRangeError()
   {
-<span class="nc" id="L522">    java.lang.String exitID = &quot;Collection&gt;&gt;indexRangeError&quot;;</span>
-<span class="nc" id="L523">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L524">    this.error(String.from(&quot;Supplied index is out of bounds&quot;));</span>
-<span class="nc" id="L525">    return (Collection)this;</span>
+<span class="nc" id="L525">    java.lang.String exitID = &quot;Collection&gt;&gt;indexRangeError&quot;;</span>
+<span class="nc" id="L526">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L527">    this.error(String.from(&quot;Supplied index is out of bounds&quot;));</span>
+<span class="nc" id="L528">    return (Collection)this;</span>
   }
 
   /**
@@ -530,10 +533,10 @@ import java.util.List;
    */
   public   Collection indexError_limit(final Ordinal index, final Ordinal limit)
   {
-<span class="nc" id="L533">    java.lang.String exitID = &quot;Collection&gt;&gt;indexError_limit&quot;;</span>
-<span class="nc" id="L534">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L535">    this.error(index.printString().append(String.from(&quot; exceeds &quot;)).append(limit.printString()));</span>
-<span class="nc" id="L536">    return (Collection)this;</span>
+<span class="nc" id="L536">    java.lang.String exitID = &quot;Collection&gt;&gt;indexError_limit&quot;;</span>
+<span class="nc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L538">    this.error(index.printString().append(String.from(&quot; exceeds &quot;)).append(limit.printString()));</span>
+<span class="nc" id="L539">    return (Collection)this;</span>
   }
 
   /**
@@ -541,10 +544,10 @@ import java.util.List;
    */
   public   Collection elementNotFound()
   {
-<span class="nc" id="L544">    java.lang.String exitID = &quot;Collection&gt;&gt;elementNotFound&quot;;</span>
-<span class="nc" id="L545">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L546">    this.error(String.from(&quot;Desired collection element not found&quot;));</span>
-<span class="nc" id="L547">    return (Collection)this;</span>
+<span class="nc" id="L547">    java.lang.String exitID = &quot;Collection&gt;&gt;elementNotFound&quot;;</span>
+<span class="nc" id="L548">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L549">    this.error(String.from(&quot;Desired collection element not found&quot;));</span>
+<span class="nc" id="L550">    return (Collection)this;</span>
   }
 
   /**
@@ -552,10 +555,10 @@ import java.util.List;
    */
   public   Collection elementClassError()
   {
-<span class="nc" id="L555">    java.lang.String exitID = &quot;Collection&gt;&gt;elementClassError&quot;;</span>
-<span class="nc" id="L556">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L557">    this.error(String.from(&quot;Collection does not hold supplied kind of element&quot;));</span>
-<span class="nc" id="L558">    return (Collection)this;</span>
+<span class="nc" id="L558">    java.lang.String exitID = &quot;Collection&gt;&gt;elementClassError&quot;;</span>
+<span class="nc" id="L559">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L560">    this.error(String.from(&quot;Collection does not hold supplied kind of element&quot;));</span>
+<span class="nc" id="L561">    return (Collection)this;</span>
   }
 
   /**
@@ -563,10 +566,10 @@ import java.util.List;
    */
   public   Collection immutabilityError()
   {
-<span class="nc" id="L566">    java.lang.String exitID = &quot;Collection&gt;&gt;immutabilityError&quot;;</span>
-<span class="nc" id="L567">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L568">    this.error(String.from(&quot;Collection contents cannot be changed&quot;));</span>
-<span class="nc" id="L569">    return (Collection)this;</span>
+<span class="nc" id="L569">    java.lang.String exitID = &quot;Collection&gt;&gt;immutabilityError&quot;;</span>
+<span class="nc" id="L570">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L571">    this.error(String.from(&quot;Collection contents cannot be changed&quot;));</span>
+<span class="nc" id="L572">    return (Collection)this;</span>
   }
 
   /**
@@ -574,10 +577,10 @@ import java.util.List;
    */
   public   Collection compatibilityError()
   {
-<span class="nc" id="L577">    java.lang.String exitID = &quot;Collection&gt;&gt;compatibilityError&quot;;</span>
-<span class="nc" id="L578">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L579">    this.error(String.from(&quot;Collections are not comparable&quot;));</span>
-<span class="nc" id="L580">    return (Collection)this;</span>
+<span class="nc" id="L580">    java.lang.String exitID = &quot;Collection&gt;&gt;compatibilityError&quot;;</span>
+<span class="nc" id="L581">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L582">    this.error(String.from(&quot;Collections are not comparable&quot;));</span>
+<span class="nc" id="L583">    return (Collection)this;</span>
   }
 
   /**
@@ -585,10 +588,10 @@ import java.util.List;
    */
   public   Collection emptyCollectionError()
   {
-<span class="nc" id="L588">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCollectionError&quot;;</span>
-<span class="nc" id="L589">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L590">    this.error(String.from(&quot;This collection is empty&quot;));</span>
-<span class="nc" id="L591">    return (Collection)this;</span>
+<span class="nc" id="L591">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCollectionError&quot;;</span>
+<span class="nc" id="L592">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L593">    this.error(String.from(&quot;This collection is empty&quot;));</span>
+<span class="nc" id="L594">    return (Collection)this;</span>
   }
 
   /**
@@ -596,9 +599,9 @@ import java.util.List;
    */
   @Override public   Boolean isCollection()
   {
-<span class="fc" id="L599">    java.lang.String exitID = &quot;Collection&gt;&gt;isCollection&quot;;</span>
-<span class="fc" id="L600">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L601">    return (Boolean)True.literal();</span>
+<span class="fc" id="L602">    java.lang.String exitID = &quot;Collection&gt;&gt;isCollection&quot;;</span>
+<span class="fc" id="L603">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L604">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -606,10 +609,10 @@ import java.util.List;
    */
   @Override public   Boolean equals(final Subject candidate)
   {
-<span class="fc" id="L609">    java.lang.String exitID = &quot;Collection&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L610">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L611">    return (Boolean)((Object)candidate).isCollection().and(Predicate.with(f2 -&gt; {</span>
-<span class="fc" id="L612">      return (this.equals(((Collected)candidate)));</span>
+<span class="fc" id="L612">    java.lang.String exitID = &quot;Collection&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L613">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L614">    return (Boolean)((Object)candidate).isCollection().and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L615">      return (this.equals(((Collected)candidate)));</span>
     }, &quot;&quot;));
   }
 
@@ -618,9 +621,9 @@ import java.util.List;
    */
   public   Boolean equals(final Collected&lt;ElementType&gt; aCollection)
   {
-<span class="nc" id="L621">    java.lang.String exitID = &quot;Collection&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L622">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L623">    return (Boolean)False.literal();</span>
+<span class="nc" id="L624">    java.lang.String exitID = &quot;Collection&gt;&gt;equals&quot;;</span>
+<span class="nc" id="L625">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L626">    return (Boolean)False.literal();</span>
   }
 
   /**
@@ -628,16 +631,16 @@ import java.util.List;
    */
   public   Boolean allSatisfy(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L631">    java.lang.String exitID = &quot;Collection&gt;&gt;allSatisfy&quot;;</span>
-<span class="nc" id="L632">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L633">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L634">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L635">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L636">      return (Boolean)f0.exit(exitID, testBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L637">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L634">    java.lang.String exitID = &quot;Collection&gt;&gt;allSatisfy&quot;;</span>
+<span class="nc" id="L635">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L636">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L637">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L638">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L639">      return (Boolean)f0.exit(exitID, testBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L640">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;)));
     }, &quot;element&quot;));
-<span class="nc" id="L640">    return (Boolean)f0.exit(exitID, True.literal());</span>
+<span class="nc" id="L643">    return (Boolean)f0.exit(exitID, True.literal());</span>
     });
   }
 
@@ -646,16 +649,16 @@ import java.util.List;
    */
   public   Boolean anySatisfy(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L649">    java.lang.String exitID = &quot;Collection&gt;&gt;anySatisfy&quot;;</span>
-<span class="nc" id="L650">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L651">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L652">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L653">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L654">      return (Boolean)f0.exit(exitID, testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L655">      return (Boolean)f0.exit(exitID, True.literal());</span>
+<span class="nc" id="L652">    java.lang.String exitID = &quot;Collection&gt;&gt;anySatisfy&quot;;</span>
+<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L654">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L655">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L656">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L657">      return (Boolean)f0.exit(exitID, testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L658">      return (Boolean)f0.exit(exitID, True.literal());</span>
     }, &quot;&quot;)));
     }, &quot;element&quot;));
-<span class="nc" id="L658">    return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L661">    return (Boolean)f0.exit(exitID, False.literal());</span>
     });
   }
 
@@ -664,13 +667,13 @@ import java.util.List;
    */
   public   Boolean contains(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L667">    java.lang.String exitID = &quot;Collection&gt;&gt;contains&quot;;</span>
-<span class="nc" id="L668">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L669">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L670">    this.detect_ifNone(testBlock, Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L671">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L670">    java.lang.String exitID = &quot;Collection&gt;&gt;contains&quot;;</span>
+<span class="nc" id="L671">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L672">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L673">    this.detect_ifNone(testBlock, Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L674">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="nc" id="L673">    return (Boolean)f0.exit(exitID, True.literal());</span>
+<span class="nc" id="L676">    return (Boolean)f0.exit(exitID, True.literal());</span>
     });
   }
 
@@ -679,16 +682,16 @@ import java.util.List;
    */
   public   Boolean includes(final Subject anObject)
   {
-<span class="nc" id="L682">    java.lang.String exitID = &quot;Collection&gt;&gt;includes&quot;;</span>
-<span class="nc" id="L683">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L684">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L685">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L686">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
-<span class="nc" id="L687">      return (Boolean)f0.exit(exitID, (element.equals(anObject)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L688">      return (Boolean)f0.exit(exitID, True.literal());</span>
+<span class="nc" id="L685">    java.lang.String exitID = &quot;Collection&gt;&gt;includes&quot;;</span>
+<span class="nc" id="L686">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L687">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L688">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L689">      Hoot.Behaviors.Object element = f2.getValue(0).value();</span>
+<span class="nc" id="L690">      return (Boolean)f0.exit(exitID, (element.equals(anObject)).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L691">      return (Boolean)f0.exit(exitID, True.literal());</span>
     }, &quot;&quot;)));
     }, &quot;element&quot;));
-<span class="nc" id="L691">    return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L694">    return (Boolean)f0.exit(exitID, False.literal());</span>
     });
   }
 
@@ -697,9 +700,9 @@ import java.util.List;
    */
   public   boolean isEmpty()
   {
-<span class="fc" id="L700">    java.lang.String exitID = &quot;Collection&gt;&gt;isEmpty&quot;;</span>
-<span class="fc" id="L701">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L702">    return (boolean)(SmallInteger.from(0).equals(this.size())).primitiveBoolean();</span>
+<span class="fc" id="L703">    java.lang.String exitID = &quot;Collection&gt;&gt;isEmpty&quot;;</span>
+<span class="fc" id="L704">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L705">    return (boolean)(SmallInteger.from(0).equals(this.size())).primitiveBoolean();</span>
   }
 
   /**
@@ -707,9 +710,9 @@ import java.util.List;
    */
   public   Boolean notEmpty()
   {
-<span class="fc" id="L710">    java.lang.String exitID = &quot;Collection&gt;&gt;notEmpty&quot;;</span>
-<span class="fc" id="L711">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L712">    return (Boolean)Boolean.from(this.isEmpty()).not();</span>
+<span class="fc" id="L713">    java.lang.String exitID = &quot;Collection&gt;&gt;notEmpty&quot;;</span>
+<span class="fc" id="L714">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L715">    return (Boolean)Boolean.from(this.isEmpty()).not();</span>
   }
 
   /**
@@ -717,13 +720,13 @@ import java.util.List;
    */
   public   Collection emptyCheck()
   {
-<span class="fc" id="L720">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCheck&quot;;</span>
-<span class="fc" id="L721">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L722">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L723">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L724">      return (Collection)f0.exit(exitID, this.emptyCollectionError());</span>
+<span class="fc" id="L723">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCheck&quot;;</span>
+<span class="fc" id="L724">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L725">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L726">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L727">      return (Collection)f0.exit(exitID, this.emptyCollectionError());</span>
     }, &quot;&quot;));
-<span class="fc" id="L726">    return (Collection)this;</span>
+<span class="fc" id="L729">    return (Collection)this;</span>
     });
   }
 
@@ -732,9 +735,9 @@ import java.util.List;
    */
   public   int checkRange(final Ordinal index)
   {
-<span class="nc" id="L735">    java.lang.String exitID = &quot;Collection&gt;&gt;checkRange&quot;;</span>
-<span class="nc" id="L736">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L737">    return (int)this.checkIndex(index);</span>
+<span class="nc" id="L738">    java.lang.String exitID = &quot;Collection&gt;&gt;checkRange&quot;;</span>
+<span class="nc" id="L739">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L740">    return (int)this.checkIndex(index);</span>
   }
 
   /**
@@ -742,14 +745,14 @@ import java.util.List;
    */
   public   int checkGrows(final Ordinal index)
   {
-<span class="fc" id="L745">    java.lang.String exitID = &quot;Collection&gt;&gt;checkGrows&quot;;</span>
-<span class="fc" id="L746">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L747">    int i = (((Integer)index).primitiveInteger() - 1);</span>
-<span class="pc bpc" id="L748" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
-<span class="nc" id="L749">      this.indexError_limit(index, Unity);</span>
-<span class="nc" id="L750">      return Negativity.primitiveInteger();</span>
+<span class="fc" id="L748">    java.lang.String exitID = &quot;Collection&gt;&gt;checkGrows&quot;;</span>
+<span class="fc" id="L749">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L750">    int i = (((Integer)index).primitiveInteger() - 1);</span>
+<span class="pc bpc" id="L751" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
+<span class="nc" id="L752">      this.indexError_limit(index, Unity);</span>
+<span class="nc" id="L753">      return Negativity.primitiveInteger();</span>
     };
-<span class="fc" id="L752">    return (int)i;</span>
+<span class="fc" id="L755">    return (int)i;</span>
   }
 
   /**
@@ -757,18 +760,18 @@ import java.util.List;
    */
   public   int checkIndex(final Ordinal index)
   {
-<span class="fc" id="L760">    java.lang.String exitID = &quot;Collection&gt;&gt;checkIndex&quot;;</span>
-<span class="fc" id="L761">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L762">    int i = (((Integer)index).primitiveInteger() - 1);</span>
-<span class="pc bpc" id="L763" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
-<span class="nc" id="L764">      this.indexError_limit(index, Unity);</span>
-<span class="nc" id="L765">      return Negativity.primitiveInteger();</span>
+<span class="fc" id="L763">    java.lang.String exitID = &quot;Collection&gt;&gt;checkIndex&quot;;</span>
+<span class="fc" id="L764">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L765">    int i = (((Integer)index).primitiveInteger() - 1);</span>
+<span class="pc bpc" id="L766" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
+<span class="nc" id="L767">      this.indexError_limit(index, Unity);</span>
+<span class="nc" id="L768">      return Negativity.primitiveInteger();</span>
     };
-<span class="pc bpc" id="L767" title="1 of 2 branches missed.">    if (!((i &lt; this.primitiveSize()))) {</span>
-<span class="nc" id="L768">      this.indexError_limit(index, this.size());</span>
-<span class="nc" id="L769">      return Negativity.primitiveInteger();</span>
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">    if (!((i &lt; this.primitiveSize()))) {</span>
+<span class="nc" id="L771">      this.indexError_limit(index, this.size());</span>
+<span class="nc" id="L772">      return Negativity.primitiveInteger();</span>
     };
-<span class="fc" id="L771">    return (int)i;</span>
+<span class="fc" id="L774">    return (int)i;</span>
   }
 
   /**
@@ -776,18 +779,18 @@ import java.util.List;
    */
   public   int checkIndex_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
   {
-<span class="fc" id="L779">    java.lang.String exitID = &quot;Collection&gt;&gt;checkIndex_ifAbsent&quot;;</span>
-<span class="fc" id="L780">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L781">    int i = (((Integer)index).primitiveInteger() - 1);</span>
-<span class="pc bpc" id="L782" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
-<span class="nc" id="L783">      aBlock.value();</span>
-<span class="nc" id="L784">      return Negativity.primitiveInteger();</span>
+<span class="fc" id="L782">    java.lang.String exitID = &quot;Collection&gt;&gt;checkIndex_ifAbsent&quot;;</span>
+<span class="fc" id="L783">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L784">    int i = (((Integer)index).primitiveInteger() - 1);</span>
+<span class="pc bpc" id="L785" title="1 of 2 branches missed.">    if ((i &lt; 0)) {</span>
+<span class="nc" id="L786">      aBlock.value();</span>
+<span class="nc" id="L787">      return Negativity.primitiveInteger();</span>
     };
-<span class="pc bpc" id="L786" title="1 of 2 branches missed.">    if (!((i &lt; this.primitiveSize()))) {</span>
-<span class="nc" id="L787">      aBlock.value();</span>
-<span class="nc" id="L788">      return Negativity.primitiveInteger();</span>
+<span class="pc bpc" id="L789" title="1 of 2 branches missed.">    if (!((i &lt; this.primitiveSize()))) {</span>
+<span class="nc" id="L790">      aBlock.value();</span>
+<span class="nc" id="L791">      return Negativity.primitiveInteger();</span>
     };
-<span class="fc" id="L790">    return (int)i;</span>
+<span class="fc" id="L793">    return (int)i;</span>
   }
 
   /**
@@ -795,15 +798,15 @@ import java.util.List;
    */
   public   Collection registerType(final Object element)
   {
-<span class="fc" id="L798">    java.lang.String exitID = &quot;Collection&gt;&gt;registerType&quot;;</span>
-<span class="fc" id="L799">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L800">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L801">    Object.isNull(element).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L802">      return (Collection)f0.exit(exitID, this);</span>
+<span class="fc" id="L801">    java.lang.String exitID = &quot;Collection&gt;&gt;registerType&quot;;</span>
+<span class="fc" id="L802">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L803">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L804">    Object.isNull(element).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L805">      return (Collection)f0.exit(exitID, this);</span>
     }, &quot;&quot;));
 
-<span class="fc" id="L805">     elementType = element.species();</span>
-<span class="fc" id="L806">    return (Collection)this;</span>
+<span class="fc" id="L808">     elementType = element.species();</span>
+<span class="fc" id="L809">    return (Collection)this;</span>
     });
   }
 
@@ -812,13 +815,13 @@ import java.util.List;
    */
   public   Boolean collectsElements(final Object element)
   {
-<span class="fc" id="L815">    java.lang.String exitID = &quot;Collection&gt;&gt;collectsElements&quot;;</span>
-<span class="fc" id="L816">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L817">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L818">    Object.isNull(element).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L819">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L818">    java.lang.String exitID = &quot;Collection&gt;&gt;collectsElements&quot;;</span>
+<span class="fc" id="L819">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L820">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L821">    Object.isNull(element).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L822">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="fc" id="L821">    return (Boolean)f0.exit(exitID, Boolean.from(element.species().inheritsFrom(this.elementType())));</span>
+<span class="fc" id="L824">    return (Boolean)f0.exit(exitID, Boolean.from(element.species().inheritsFrom(this.elementType())));</span>
     });
   }
 
@@ -827,10 +830,10 @@ import java.util.List;
    */
   public   Integer findFirst(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L830">    java.lang.String exitID = &quot;Collection&gt;&gt;findFirst&quot;;</span>
-<span class="nc" id="L831">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L832">    return (Integer)this.findFirst_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L833">      return SmallInteger.from(0);</span>
+<span class="nc" id="L833">    java.lang.String exitID = &quot;Collection&gt;&gt;findFirst&quot;;</span>
+<span class="nc" id="L834">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L835">    return (Integer)this.findFirst_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L836">      return SmallInteger.from(0);</span>
     }, &quot;&quot;));
   }
 
@@ -839,10 +842,10 @@ import java.util.List;
    */
   public   Integer findLast(final MonadicPredicate testBlock)
   {
-<span class="nc" id="L842">    java.lang.String exitID = &quot;Collection&gt;&gt;findLast&quot;;</span>
-<span class="nc" id="L843">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L844">    return (Integer)this.findLast_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L845">      return SmallInteger.from(0);</span>
+<span class="nc" id="L845">    java.lang.String exitID = &quot;Collection&gt;&gt;findLast&quot;;</span>
+<span class="nc" id="L846">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L847">    return (Integer)this.findLast_ifAbsent(testBlock, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L848">      return SmallInteger.from(0);</span>
     }, &quot;&quot;));
   }
 
@@ -851,18 +854,18 @@ import java.util.List;
    */
   public   Integer findFirst_ifAbsent(final MonadicPredicate testBlock, final NiladicValuable exceptionBlock)
   {
-<span class="nc" id="L854">    java.lang.String exitID = &quot;Collection&gt;&gt;findFirst_ifAbsent&quot;;</span>
-<span class="nc" id="L855">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L856">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L857">    FastInteger index = SmallInteger.from(1).asFastInteger();</span>
-<span class="nc" id="L858">    this.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L859">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L860">      testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L861">      return (Integer)f0.exit(exitID, index);</span>
+<span class="nc" id="L857">    java.lang.String exitID = &quot;Collection&gt;&gt;findFirst_ifAbsent&quot;;</span>
+<span class="nc" id="L858">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L859">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L860">    FastInteger index = SmallInteger.from(1).asFastInteger();</span>
+<span class="nc" id="L861">    this.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L862">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L863">      testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L864">      return (Integer)f0.exit(exitID, index);</span>
     }, &quot;&quot;));
-<span class="nc" id="L863">    index.add(SmallInteger.from(1));</span>
-<span class="nc" id="L864">    }, &quot;element&quot;));</span>
-<span class="nc" id="L865">    return (Integer)f0.exit(exitID, exceptionBlock.value());</span>
+<span class="nc" id="L866">    index.add(SmallInteger.from(1));</span>
+<span class="nc" id="L867">    }, &quot;element&quot;));</span>
+<span class="nc" id="L868">    return (Integer)f0.exit(exitID, exceptionBlock.value());</span>
     });
   }
 
@@ -871,18 +874,18 @@ import java.util.List;
    */
   public   Integer findLast_ifAbsent(final MonadicPredicate testBlock, final NiladicValuable exceptionBlock)
   {
-<span class="nc" id="L874">    java.lang.String exitID = &quot;Collection&gt;&gt;findLast_ifAbsent&quot;;</span>
-<span class="nc" id="L875">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L876">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L877">    FastInteger index = this.size().asSmallInteger().asFastInteger();</span>
-<span class="nc" id="L878">    this.reverseDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L879">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L880">      testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L881">      return (Integer)f0.exit(exitID, index);</span>
+<span class="nc" id="L877">    java.lang.String exitID = &quot;Collection&gt;&gt;findLast_ifAbsent&quot;;</span>
+<span class="nc" id="L878">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L879">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L880">    FastInteger index = this.size().asSmallInteger().asFastInteger();</span>
+<span class="nc" id="L881">    this.reverseDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L882">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L883">      testBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L884">      return (Integer)f0.exit(exitID, index);</span>
     }, &quot;&quot;));
-<span class="nc" id="L883">    index.subtract(SmallInteger.from(1));</span>
-<span class="nc" id="L884">    }, &quot;element&quot;));</span>
-<span class="nc" id="L885">    return (Integer)f0.exit(exitID, exceptionBlock.value());</span>
+<span class="nc" id="L886">    index.subtract(SmallInteger.from(1));</span>
+<span class="nc" id="L887">    }, &quot;element&quot;));</span>
+<span class="nc" id="L888">    return (Integer)f0.exit(exitID, exceptionBlock.value());</span>
     });
   }
 }

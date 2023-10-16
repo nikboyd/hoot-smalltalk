@@ -77,18 +77,19 @@ import Hoot.Collections.OrderedCollection;
   ;
 <span class="fc" id="L78">  protected static final MBeanServer Manager = ManagementFactory.getPlatformMBeanServer();</span>
 <span class="fc" id="L79">  protected static final String MemoryUsageReport = String.from(&quot;%s: %s - %s = %s bytes used with %s cores&quot;);</span>
+
   /**
    * @return 
    */
   public   Integer coreCount()
   {
-<span class="fc" id="L85">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;coreCount&quot;;</span>
-<span class="fc" id="L86">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L87">    long coreCount = currentProcessors.longValue();</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">    if ((coreCount &gt; 2)) {</span>
-<span class="fc" id="L89">       coreCount = (coreCount / 2);</span>
+<span class="fc" id="L86">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;coreCount&quot;;</span>
+<span class="fc" id="L87">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L88">    long coreCount = currentProcessors.longValue();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">    if ((coreCount &gt; 2)) {</span>
+<span class="fc" id="L90">       coreCount = (coreCount / 2);</span>
     };
-<span class="fc" id="L91">    return (Integer)LongInteger.from(coreCount);</span>
+<span class="fc" id="L92">    return (Integer)LongInteger.from(coreCount);</span>
   }
 
   /**
@@ -96,9 +97,9 @@ import Hoot.Collections.OrderedCollection;
    */
   public   Transcript log()
   {
-<span class="fc" id="L99">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;log&quot;;</span>
-<span class="fc" id="L100">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L101">    return (Transcript)Transcript.log();</span>
+<span class="fc" id="L100">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;log&quot;;</span>
+<span class="fc" id="L101">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L102">    return (Transcript)Transcript.log();</span>
   }
 
   /**
@@ -106,11 +107,11 @@ import Hoot.Collections.OrderedCollection;
    */
   public   MetricsSnapshot reportUsage(final String snapshotName)
   {
-<span class="fc" id="L109">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;reportUsage&quot;;</span>
-<span class="fc" id="L110">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L111">    LongInteger usedMemory = (currentTotalMemory.minus(currentFreeMemory));</span>
-<span class="fc" id="L112">    this.log().printLine(MemoryUsageReport.formatWith(snapshotName, currentTotalMemory.printString(), currentFreeMemory.printString(), usedMemory.printString(), this.coreCount().printString()));</span>
-<span class="fc" id="L113">    return (MetricsSnapshot)this;</span>
+<span class="fc" id="L110">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;reportUsage&quot;;</span>
+<span class="fc" id="L111">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L112">    LongInteger usedMemory = (currentTotalMemory.minus(currentFreeMemory));</span>
+<span class="fc" id="L113">    this.log().printLine(MemoryUsageReport.formatWith(snapshotName, currentTotalMemory.printString(), currentFreeMemory.printString(), usedMemory.printString(), this.coreCount().printString()));</span>
+<span class="fc" id="L114">    return (MetricsSnapshot)this;</span>
   }
 
   /**
@@ -118,13 +119,13 @@ import Hoot.Collections.OrderedCollection;
    */
   public   void reportHeapUsage()
   {
-<span class="fc" id="L121">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;reportHeapUsage&quot;;</span>
-<span class="fc" id="L122">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L123">    MemoryUsage nonh = ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage();</span>
+<span class="fc" id="L122">    java.lang.String exitID = &quot;MetricsSnapshot&gt;&gt;reportHeapUsage&quot;;</span>
+<span class="fc" id="L123">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L124">    MemoryUsage nonh = ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage();</span>
 
-<span class="fc" id="L125">    MemoryUsage heap = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();</span>
-<span class="fc" id="L126">    this.log().printLine((&quot;nonH usage: &quot; + nonh));</span>
-<span class="fc" id="L127">    this.log().printLine((&quot;heap usage: &quot; + heap));</span>
-<span class="fc" id="L128">  }</span>
+<span class="fc" id="L126">    MemoryUsage heap = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();</span>
+<span class="fc" id="L127">    this.log().printLine((&quot;nonH usage: &quot; + nonh));</span>
+<span class="fc" id="L128">    this.log().printLine((&quot;heap usage: &quot; + heap));</span>
+<span class="fc" id="L129">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
