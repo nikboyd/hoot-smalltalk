@@ -81,6 +81,7 @@ public class Keyword {
     public static final String Private = "Private";
     public static final String Protected = "Protected";
     public static final String Override = "Override";
+    public static final String Default = "Default";
 
     public static final String Transient = "Transient";
     public static final String Abstract = "Abstract";
@@ -96,7 +97,7 @@ public class Keyword {
 
     private static final String[] MethodTypes = {
         "Public", "Protected", "Private",
-        "Abstract", "Native", "Void",
+        "Abstract", "Native", "Void", "Default",
         "Static", "Final", "Synchronized"
     };
 
@@ -143,6 +144,7 @@ public class Keyword {
         "Protected",
         "Private",
         "Transient",
+        "Default",
         "Final"
     };
 

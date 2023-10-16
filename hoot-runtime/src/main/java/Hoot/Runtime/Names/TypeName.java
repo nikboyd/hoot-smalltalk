@@ -8,6 +8,7 @@ import Hoot.Runtime.Notes.Decor;
 import Hoot.Runtime.Faces.Named;
 import Hoot.Runtime.Maps.Library;
 import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Behaviors.Scope;
 import Hoot.Runtime.Behaviors.Typified;
 import Hoot.Runtime.Notes.DetailedType;
 
@@ -97,17 +98,23 @@ public class TypeName implements Named {
 
         return new TypeName(heads, wrap(tails)).makeArrayed(arrayed); }
 
-    public static TypeName inferFrom(String variableName) {
+    // look for known typical Smalltalk variable naming conventions
+    private static final String[] Prefixes = { "other", "another", "an", "a", };
+    public static TypeName inferFrom(String variableName) { return inferFrom(variableName, null); }
+    public static TypeName inferFrom(String variableName, Scope s) {
         if (isEmpty(variableName)) return RootType();
-        for (String article : Articles) {
-            if (variableName.startsWith(article)) {
-                String result = variableName.substring(article.length());
-                if (isCapitalized(result)) {
-                    return TypeName.fromName(result);
-                }
+        if (hasSome(s) && s.isFacial()) {
+            if (Typified.from(s).matchesTail(variableName))
+                return TypeName.fromName(s.name());
+        }
+        for (String prefix : Prefixes) {
+            if (variableName.startsWith(prefix)) {
+                String result = variableName.substring(prefix.length());
+                if (isCapitalized(result)) return TypeName.fromName(result);
             }
         }
-        return RootType(); }
+        return RootType();
+    }
 
 
     public Global toGlobal() { return Global.withList(allNames()).makeArrayed(arrayedType); }
@@ -290,7 +297,6 @@ public class TypeName implements Named {
     private static final String Any = "Any";
     private static final String Wild = "*";
     private static final String Dollar = "$";
-    private static final String[] Articles = { "an", "a" };
 
     public static final Class<?> JavaRoot = java.lang.Object.class;
     public static final TypeName ObjectType = TypeName.from(JavaRoot);

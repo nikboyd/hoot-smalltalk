@@ -248,9 +248,13 @@ public class Library implements TypeName.Resolver {
 //        return RootType().fullName();
 //    }
 
+    public static final String ChunkFileType = ".st";
     public static final String SourceFileType = ".hoot";
-    public static FilenameFilter SourceFileFilter =
-        ((File dir, String name) -> name.endsWith(SourceFileType));
+    static String LanguageType = SourceFileType;
+    public static String languageType() { return LanguageType; }
+    public static String languageType(String type) { LanguageType = type; return type; }
+    public static FilenameFilter sourceFileFilter() {
+        return ((File dir, String name) -> name.endsWith(languageType())); }
 
     public static final String TargetFileType = ".java";
     public static FilenameFilter TargetFileFilter =

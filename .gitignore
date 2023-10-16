@@ -20,3 +20,5 @@ libs-hoot/src/main/java/
 libs-samples/src/main/java/
 libs-smalltalk/src/main/java/
 sample-code/src/main/java/
+
+hs_err*.log

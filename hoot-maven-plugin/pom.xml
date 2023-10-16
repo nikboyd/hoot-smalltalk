@@ -39,7 +39,7 @@
 
         <dependency>
             <groupId>org.apache.maven</groupId>
-            <artifactId>maven-aether-provider</artifactId>
+            <artifactId>maven-resolver-provider</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -47,23 +47,6 @@
             <artifactId>plexus-utils</artifactId>
             <version>3.5.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.sonatype.aether</groupId>
-            <artifactId>aether-api</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sonatype.aether</groupId>
-            <artifactId>aether-spi</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sonatype.aether</groupId>
-            <artifactId>aether-util</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-
         <dependency>
             <groupId>hoot-smalltalk</groupId>
             <artifactId>hoot-compiler-boot</artifactId>

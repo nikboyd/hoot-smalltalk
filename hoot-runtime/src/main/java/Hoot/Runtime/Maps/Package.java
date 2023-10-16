@@ -82,7 +82,7 @@ public class Package implements Named, Logging {
         return results;
     }
 
-    public List<String> sourceFaces() { return listFaces(sourceFolder(), SourceFileType, SourceFileFilter); }
+    public List<String> sourceFaces() { return listFaces(sourceFolder(), languageType(), sourceFileFilter()); }
     public List<String> targetFaces() { return listFaces(targetFolder(), TargetFileType, TargetFileFilter); }
     public List<String> listFaces(java.io.File folder, String type, FilenameFilter filter) {
         return map(wrap(folder.list(filter)), f -> removeTail(f, type)); }
@@ -94,7 +94,7 @@ public class Package implements Named, Logging {
         File targetFolder = targetFolder();
 
         if (!targetFolder.exists() && !targetFolder.mkdirs()) {
-            error("Can't create " + targetFolder.getAbsolutePath());
+            error("can't create " + targetFolder.getAbsolutePath());
             return null;
         }
 
@@ -215,12 +215,12 @@ public class Package implements Named, Logging {
 
     public static final String Slash = "/"; // cover Unix paths
     public static final String BackSlash = "\\"; // cover Windows too! --nik
-    static String slashToDot(String packagePath) { 
+    static String slashToDot(String packagePath) {
         return packagePath.replace(BackSlash, Blank).trim().replace(Slash, Blank).trim().replace(Blank, Dot); }
     public static String nameFrom(String packageName) { return slashToDot(nameWithout(WildCard, packageName)); }
     public static String pathFrom(String packageName) { return packageName.replace(Dot, separator()); }
     public static String separator() { return SystemUtils.IS_OS_WINDOWS ? BackSlash : Slash; }
-    public static String normalPath(String folderPath) { 
+    public static String normalPath(String folderPath) {
         return SystemUtils.IS_OS_WINDOWS ? folderPath.replace(Slash, BackSlash) : folderPath; }
 
     public void reportReflectively() {

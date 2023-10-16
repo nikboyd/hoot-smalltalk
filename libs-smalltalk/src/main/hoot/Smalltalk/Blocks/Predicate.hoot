@@ -13,7 +13,7 @@ Closure subclass: NiladicPredicate! MonadicPredicate! DyadicPredicate! Predicate
 
 Predicate members: "creating instances"
 [
-    @Primitive @Static Predicate! with: Argued? Frame : Subject! block : Java Lang String! ... argNames [ 
+    @Primitive @Static Predicate! with: Argued? Frame : ResultType! block : Java Lang String! ... argNames [ 
         ^(Predicate basicNew: (Enclosure withQuiet: block) block)  valueNames: argNames ]
 
     @Protected Predicate: Function? Frame : Subject! block [ super : block. ]

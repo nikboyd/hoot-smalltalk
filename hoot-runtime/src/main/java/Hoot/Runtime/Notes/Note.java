@@ -52,6 +52,7 @@ public class Note implements NoteSource {
     public static final Note TransientNote = Note.with(Transient);
     public static final Note ProtectedNote = Note.with(Protected);
     public static final Note OverrideNote = Note.with(Override);
+    public static final Note DefaultNote = Note.with(Default);
 
     /**
      * A note list source.
