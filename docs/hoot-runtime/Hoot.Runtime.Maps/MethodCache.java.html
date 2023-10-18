@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodCache.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Maps</a> &gt; <span class="el_source">MethodCache.java</span></div><h1>MethodCache.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Maps;
+
+import java.util.*;
+import java.lang.reflect.*;
+import java.util.stream.Collectors;
+
+import Hoot.Runtime.Faces.Valued;
+import Hoot.Runtime.Names.Keyword;
+import Hoot.Runtime.Names.Selector;
+import Hoot.Runtime.Blocks.Enclosure;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * Caches method references for a Java class.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class MethodCache implements Valued {
+
+<span class="nc" id="L22">    public MethodCache(Class aClass) { cacheClass = aClass; }</span>
+<span class="nc" id="L23">    public Class&lt;?&gt; cachedType() { return this.cacheClass; }</span>
+    private final Class cacheClass;
+
+<span class="nc" id="L26">    private boolean loaded = false;</span>
+<span class="nc" id="L27">    private final HashMap&lt;String, Method&gt; contents = emptyMap(Method.class);</span>
+    public void loadAllMethods() {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (loaded) return;</span>
+<span class="nc" id="L30">        Method[] methods = cachedType().getMethods();</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (Method method : methods) {</span>
+<span class="nc" id="L32">            Class[] types = method.getParameterTypes();</span>
+<span class="nc" id="L33">            String methodName = method.getName();</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (qualifiesForLoading(methodName, types)) {</span>
+<span class="nc" id="L35">                contents.put(methodName, method);</span>
+            }
+        }
+<span class="nc" id="L38">        loaded = true;</span>
+<span class="nc" id="L39">    }</span>
+
+    public HashSet&lt;String&gt; loadMethods() {
+<span class="nc" id="L42">        HashSet&lt;String&gt; result = emptySet(String.class);</span>
+<span class="nc" id="L43">        Method[] methods = cachedType().getDeclaredMethods();</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        for (Method method : methods) {</span>
+<span class="nc" id="L45">            Class[] types = method.getParameterTypes();</span>
+<span class="nc" id="L46">            String methodName = Keyword.from(method.getName(), types.length);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (qualifiesForLoading(methodName, types)) {</span>
+<span class="nc" id="L48">                contents.put(methodName, method);</span>
+<span class="nc" id="L49">                result.add(methodName);</span>
+            }
+        }
+<span class="nc" id="L52">        return result;</span>
+    }
+
+    public void flush() {
+<span class="nc" id="L56">        contents.clear();</span>
+<span class="nc" id="L57">        loaded = false;</span>
+<span class="nc" id="L58">    }</span>
+
+    public Set&lt;Selector&gt; allSelectors() {
+<span class="nc" id="L61">        loadAllMethods();</span>
+<span class="nc" id="L62">        return contents.keySet().stream()</span>
+<span class="nc" id="L63">                .map(name -&gt; Selector.named(name))</span>
+<span class="nc" id="L64">                .collect(Collectors.toSet());</span>
+    }
+
+    public Set&lt;Selector&gt; selectors() {
+<span class="nc" id="L68">        return mapSet(loadMethods(), name -&gt; Selector.named(name)); }</span>
+
+    public final Method methodNamed(String selector, int argumentCount) {
+
+        // if found previously, return cached method
+<span class="nc" id="L73">        Method aMethod = contents.get(selector);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (aMethod != null) return aMethod;</span>
+
+        // check special selectors for argument classes
+<span class="nc" id="L77">        Class arguments[] = specialSelector(selector);</span>
+
+        // determine method argument classes
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (arguments == null) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (selector.endsWith(IfAbsent)) {</span>
+<span class="nc" id="L82">                arguments = classesWithBlock(argumentCount, 1);</span>
+            }
+            else {
+<span class="nc" id="L85">                arguments = objectClasses(argumentCount);</span>
+            }
+        }
+
+        // find the method and cache its reference
+<span class="nc" id="L90">        String methodName = Keyword.with(selector).methodName();</span>
+        try {
+<span class="nc" id="L92">            aMethod = cachedType().getMethod(methodName, arguments);</span>
+<span class="nc" id="L93">            contents.put(selector, aMethod);</span>
+<span class="nc" id="L94">            return aMethod;</span>
+        }
+<span class="nc" id="L96">        catch(NoSuchMethodException e) {</span>
+<span class="nc" id="L97">            error(format(MissingMethod, cachedType().getName(), selector, argumentCount));</span>
+<span class="nc" id="L98">            return null;</span>
+        }
+    }
+
+    public final Constructor constructorFor(int argumentCount) {
+<span class="nc" id="L103">        Class argumentsTypes[] = objectClasses(argumentCount);</span>
+        try {
+<span class="nc" id="L105">            return cachedType().getConstructor(argumentsTypes);</span>
+        }
+<span class="nc" id="L107">        catch( NoSuchMethodException e ) {</span>
+<span class="nc" id="L108">            error(format(MissingConstruct, cachedType().getName(), argumentCount));</span>
+<span class="nc" id="L109">            return null;</span>
+        }
+    }
+
+    protected boolean qualifiesForLoading(String methodName, Class[] types) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        return qualifiesAsSpecial(methodName, types)</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            || qualifiesAsAbsentia(methodName, types)</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            || qualifiesAsNormal(methodName, types); }</span>
+
+<span class="fc" id="L118">    static final HashMap&lt;String, Class[]&gt; SpecialSelectors = emptyMap(Class[].class);</span>
+<span class="nc" id="L119">    protected static Class[] specialSelector(String methodName) { return SpecialSelectors.get(methodName); }</span>
+    protected boolean qualifiesAsSpecial(String methodName, Class[] types) {
+<span class="nc" id="L121">        Class[] arguments = specialSelector(methodName);</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">        if (arguments == null || types.length != arguments.length) return false;</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">        for(int t = 0; t &lt; types.length; t++) if (types[t] != arguments[t]) return false;</span>
+<span class="nc" id="L124">        return true;</span>
+    }
+
+    static final String IfAbsent = &quot;:ifAbsent:&quot;;
+    protected boolean qualifiesAsAbsentia(String methodName, Class[] types) {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (!methodName.endsWith(IfAbsent)) return false;</span>
+
+<span class="nc" id="L131">        Class[] arguments = classesWithBlock(types.length, 1);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for(int i = 0; i &lt; types.length; i++) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (types[i] != arguments[i]) return false;</span>
+        }
+
+<span class="nc" id="L136">        return true;</span>
+    }
+
+    protected boolean qualifiesAsNormal(String methodName, Class[] types) {
+<span class="nc" id="L140">        return matchAll(wrap(types), type -&gt; type.equals(Object.class)); }</span>
+
+    static final int CacheSize = 11;
+<span class="fc" id="L143">    static Class[][] ObjectClasses = new Class[CacheSize][];</span>
+    protected static Class[] objectClasses(int argumentCount) {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        return (argumentCount &lt; CacheSize) ? ObjectClasses[argumentCount] : objectClassArray(argumentCount); }</span>
+
+<span class="fc" id="L147">    static Class[] BlockClasses = { Enclosure.class, Enclosure.class, Enclosure.class };</span>
+    protected static Class[] classesWithBlock(int methodArgumentCount, int blockArgumentCount) {
+<span class="fc" id="L149">        Class result[] = objectClassArray(methodArgumentCount);</span>
+<span class="fc" id="L150">        result[methodArgumentCount - 1] = BlockClasses[blockArgumentCount];</span>
+<span class="fc" id="L151">        return result;</span>
+    }
+
+    protected static Class[] objectClassArray(int argumentCount) {
+<span class="fc" id="L155">        Class result[] = new Class[argumentCount];</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for(int i = 0; i &lt; argumentCount; i++) result[i] = Object.class;</span>
+<span class="fc" id="L157">        return result;</span>
+    }
+
+    static {
+<span class="fc" id="L161">        SpecialSelectors.put(&quot;do:&quot;, classesWithBlock(1, 1));</span>
+<span class="fc" id="L162">        SpecialSelectors.put(&quot;to:do:&quot;, classesWithBlock(2, 1));</span>
+<span class="fc" id="L163">        SpecialSelectors.put(&quot;from:to:do:&quot;, classesWithBlock(3, 1));</span>
+<span class="fc" id="L164">        SpecialSelectors.put(&quot;to:by:do:&quot;, classesWithBlock(3, 1));</span>
+
+<span class="fc" id="L166">        SpecialSelectors.put(&quot;detect:&quot;, classesWithBlock(1, 1));</span>
+<span class="fc" id="L167">        SpecialSelectors.put(&quot;select:&quot;, classesWithBlock(1, 1));</span>
+<span class="fc" id="L168">        SpecialSelectors.put(&quot;reject:&quot;, classesWithBlock(1, 1));</span>
+<span class="fc" id="L169">        SpecialSelectors.put(&quot;collect:&quot;, classesWithBlock(1, 1));</span>
+<span class="fc" id="L170">        SpecialSelectors.put(&quot;inject:into:&quot;, classesWithBlock(2, 2));</span>
+
+<span class="fc" id="L172">        SpecialSelectors.put(&quot;ensure:&quot;, classesWithBlock(1, 0));</span>
+<span class="fc" id="L173">        SpecialSelectors.put(&quot;ifCurtailed:&quot;, classesWithBlock(1, 0));</span>
+
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        for(int i = 0; i &lt; CacheSize; i++) {</span>
+<span class="fc" id="L176">            ObjectClasses[i] = objectClassArray(i);</span>
+        }
+<span class="fc" id="L178">    }</span>
+
+    private static final String MissingMethod = &quot;%s does not understand %s with %d argument(s)&quot;;
+    private static final String MissingConstruct = &quot;%s does not construct with %d argument(s)&quot;;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

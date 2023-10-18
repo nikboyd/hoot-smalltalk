@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Operand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Values</a> &gt; <span class="el_source">Operand.java</span></div><h1>Operand.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Values;
+
+import Hoot.Runtime.Faces.Named;
+import Hoot.Runtime.Faces.Selector;
+import Hoot.Runtime.Faces.Resulting;
+import Hoot.Runtime.Names.TypeName;
+import Hoot.Runtime.Emissions.Item;
+import Hoot.Runtime.Emissions.Emission;
+import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import Hoot.Runtime.Emissions.NamedItem;
+
+/**
+ * An operand. Many methods get overridden by subclasses.
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public abstract class Operand extends NamedItem implements Resulting {
+
+<span class="nc" id="L21">    protected Operand(Item container) { super(container); }</span>
+<span class="fc" id="L22">    protected Operand(NamedItem container) { super(container); }</span>
+<span class="nc" id="L23">    public Operand cleanTerm() { this.clean(); return this; }</span>
+<span class="nc" id="L24">    public Operand makeAssigned() { return this; }</span>
+
+<span class="pc" id="L26">    protected boolean isResult = false;</span>
+<span class="nc" id="L27">    public Operand makeResult() { this.isResult = true; return this; }</span>
+<span class="nc" id="L28">    @Override public boolean isResult() { return this.isResult; }</span>
+
+<span class="nc" id="L30">    public boolean hasCascades() { return false; }</span>
+<span class="nc" id="L31">    public boolean hasOnlyValue() { return false; }</span>
+
+<span class="nc" id="L33">    @Override public boolean isFramed() { return false; }</span>
+<span class="nc" id="L34">    public boolean isLiteral() { return false; }</span>
+<span class="nc" id="L35">    public boolean isConstruct() { return false; }</span>
+<span class="nc" id="L36">    public boolean isMessage() { return false; }</span>
+<span class="nc" id="L37">    public boolean isNest() { return false; }</span>
+//    public boolean isReference() { return false; }
+
+<span class="nc" id="L40">    public boolean producesPredicate() { return false; }</span>
+<span class="nc" id="L41">    public boolean throwsException() { return false; }</span>
+<span class="nc" id="L42">    public boolean needsStatement() { return true; }</span>
+<span class="nc" id="L43">    public boolean refersToMetaclass() { return false; }</span>
+<span class="nc" id="L44">    public boolean receiverNeedsTerm() { return false; }</span>
+<span class="nc" id="L45">    public boolean selfIsPrimary() { return false; }</span>
+
+<span class="nc" id="L47">    public Named asReference() { return (Named)this; }</span>
+<span class="nc" id="L48">    public TypeName typeResolver() { return RootType(); }</span>
+<span class="nc" id="L49">    public Class resolvedType() { return RootClass(); }</span>
+<span class="nc" id="L50">    public String resolvedTypeName() { return typeResolver().fullName(); }</span>
+<span class="nc" id="L51">    public boolean resolvesToPrimitive() { return typeResolver().isPrimitiveType(); }</span>
+
+    /**
+     * @return whether the receiver consumes an (operand)
+     * @param operand a potentially consumable operand
+     */
+<span class="nc" id="L57">    public boolean consumes(Operand operand) { return false; }</span>
+
+    /**
+     * @return whether a (selector) can be optimized against this operand
+     * @param selector a method selector
+     */
+    public boolean optimizes(Selector selector) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (selector.isOptimized()) return true;</span>
+<span class="nc" id="L65">        TypeName resolver = typeResolver();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (RootType().matches(resolver)) return false;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (BehaviorType().matches(resolver)) return false;</span>
+<span class="nc" id="L68">        return true; }</span>
+
+<span class="fc" id="L70">    @Override public Emission emitItem() { return emitOperand(); }</span>
+<span class="nc" id="L71">    @Override public Emission emitOptimized() { return emitOperand(); }</span>
+<span class="nc" id="L72">    @Override public Emission emitPrimitive() { return emitOperand(); }</span>
+
+<span class="nc" id="L74">    public Emission emitTerm() { return emitTerm(emitOperand()); }</span>
+<span class="nc" id="L75">    public Emission emitResult() { return emitResult(emitItem(&quot;Object&quot;), emitOperand()); }</span>
+<span class="nc" id="L76">    public Emission emitOperand() { return emitEmpty(); } // override this!</span>
+<span class="nc" id="L77">    public Emission emitStatement() { return emitStatement(emitOperand()); }</span>
+<span class="nc" id="L78">    public Emission emitBooleanTerm() { return emitCast(BooleanType().fullName(), emitOperand()); }</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    public Emission emitReceiver() { return (receiverNeedsTerm()) ? emitTerm() : emitOperand(); }</span>
+
+} // Operand
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Decor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hoot-runtime</a> &gt; <a href="index.source.html" class="el_package">Hoot.Runtime.Notes</a> &gt; <span class="el_source">Decor.java</span></div><h1>Decor.java</h1><pre class="source lang-java linenums">package Hoot.Runtime.Notes;
+
+import java.util.*;
+import static Hoot.Runtime.Functions.Utils.*;
+
+/**
+ * Hoot decor.
+ *
+ * &lt;h4&gt;Decor responsibilities:&lt;/h4&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;knows the standard Hoot decorations&lt;/li&gt;
+ * &lt;li&gt;detects the standard Hoot decorations&lt;/li&gt;
+ * &lt;li&gt;translates Hoot decorations into their Java equivalents&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @author nik &lt;nikboyd@sonic.net&gt;
+ * @see &quot;Copyright 2010,2021 Nikolas S Boyd.&quot;
+ * @see &quot;Permission is granted to copy this work provided this copyright statement is retained in all copies.&quot;
+ */
+public class Decor {
+
+<span class="fc" id="L22">    public Decor(String... notes) { this(wrap(notes)); }</span>
+<span class="pc" id="L23">    private Decor(List&lt;String&gt; notes) { notes.forEach(n -&gt; makeNote(n)); }</span>
+<span class="nc" id="L24">    public static Decor with(List&lt;String&gt; notes) { return new Decor(notes); }</span>
+<span class="nc" id="L25">    public static Decor with(String... notes) { return new Decor(notes); }</span>
+
+<span class="fc" id="L27">    private final List&lt;String&gt; notes = emptyList(String.class);</span>
+<span class="nc" id="L28">    public List&lt;String&gt; notes() { return copyList(this.notes); }</span>
+<span class="nc" id="L29">    public boolean isEmpty() { return this.notes.isEmpty(); }</span>
+
+    // Hoot decorators
+    public static final String Notice = &quot;Notice&quot;;
+<span class="nc" id="L33">    public boolean hasNotice() { return hasNote(Notice); }</span>
+
+    public static final String Property = &quot;Property&quot;;
+<span class="nc" id="L36">    public boolean hasProperty() { return hasNote(Property); }</span>
+
+    public static final String Primitive = &quot;Primitive&quot;;
+<span class="nc" id="L39">    public boolean hasPrimitive() { return hasNote(Primitive); }</span>
+
+    public static final String Generic = &quot;Generic&quot;;
+<span class="fc" id="L42">    public boolean hasGeneric() { return hasNote(Generic); }</span>
+
+    // Java decorators
+    public static final String Final = &quot;Final&quot;;
+    public static final String Native = &quot;Native&quot;;
+    public static final String Private = &quot;Private&quot;;
+    public static final String Abstract = &quot;Abstract&quot;;
+    public static final String Transient = &quot;Transient&quot;;
+    public static final String Synchronized = &quot;Synchronized&quot;;
+
+    public static final String Protected = &quot;Protected&quot;;
+<span class="nc" id="L53">    public boolean hasProtected() { return hasNote(Protected); }</span>
+
+    public static final String Public = &quot;Public&quot;;
+<span class="nc" id="L56">    public boolean hasPublic() { return hasNote(Public); }</span>
+
+    public static final String Static = &quot;Static&quot;;
+<span class="nc" id="L59">    public boolean hasStatic() { return hasNote(Static); }</span>
+
+    public static final String Default = &quot;Default&quot;;
+<span class="nc" id="L62">    public boolean hasDefault() { return hasNote(Default); }</span>
+
+    public static final String DefaultMethodAccess = Public;
+    public static final String DefaultVariableAccess = Protected;
+<span class="fc" id="L66">    private static final String[] MethodAccess = { Public, Protected, Private };</span>
+<span class="fc" id="L67">    public static final List&lt;String&gt; AccessNotes = wrap(MethodAccess);</span>
+<span class="nc" id="L68">    public boolean hasAccess() { return hasNoteType(AccessNotes); }</span>
+<span class="fc" id="L69">    public boolean hasNote(String note) { return matchAny(this.notes, n -&gt; n.equals(note)); }</span>
+<span class="nc" id="L70">    public boolean hasNoteType(final List&lt;String&gt; notes) { return matchAny(this.notes, n -&gt; notes.contains(n)); }</span>
+
+<span class="nc" id="L72">    public void makeStatic() { makeNote(Static); }</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    public void makeProtected() { if (!hasAccess()) this.notes.add(Protected); }</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    public void makePublic() { if (!hasAccess()) this.notes.add(Public); }</span>
+<span class="fc" id="L75">    public void makeNote(List&lt;String&gt; notes) { notes.forEach(n -&gt; makeNote(n)); }</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">    public void makeNote(String note) { if (!hasNote(note)) this.notes.add(note); }</span>
+<span class="nc" id="L77">    public List&lt;String&gt; notesWithout(String... strays) { return notesWithout(wrap(strays)); }</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">    public List&lt;String&gt; notesWithout(List&lt;String&gt; strays) { return select(this.notes, n -&gt; !strays.contains(n)); }</span>
+
+<span class="fc" id="L80">    private static final String[] NotesFilters = { Notice, Property, Primitive };</span>
+<span class="fc" id="L81">    public static final List&lt;String&gt; HootNotes = wrap(NotesFilters);</span>
+<span class="fc" id="L82">    public static boolean hootNote(String note) { return HootNotes.contains(note); }</span>
+
+<span class="fc" id="L84">    private static final String[] ClassTypes = { Abstract, Final };</span>
+<span class="fc" id="L85">    public static final List&lt;String&gt; ClassNotes = wrap(ClassTypes);</span>
+<span class="fc" id="L86">    public static boolean classNote(String note) { return ClassNotes.contains(note); }</span>
+
+<span class="fc" id="L88">    private static final String[] MethodTypes = {</span>
+        Public, Protected, Private, Abstract, Default, Native, Static, Final, Synchronized };
+<span class="fc" id="L90">    public static final List&lt;String&gt; MethodNotes = wrap(MethodTypes);</span>
+<span class="fc" id="L91">    public static boolean methodNote(String note) { return MethodNotes.contains(note); }</span>
+
+<span class="fc" id="L93">    private static final String[] VariableTypes = { Public, Protected, Private, Static, Final };</span>
+<span class="fc" id="L94">    public static final List&lt;String&gt; VariableNotes = wrap(VariableTypes);</span>
+<span class="fc" id="L95">    public static boolean variableNote(String note) { return VariableNotes.contains(note); }</span>
+
+<span class="fc" id="L97">    private static final String[] ArgumentTypes = { Final };</span>
+<span class="fc" id="L98">    public static final List&lt;String&gt; ArgumentNotes = wrap(ArgumentTypes);</span>
+<span class="fc" id="L99">    public static boolean argumentNote(String note) { return ArgumentNotes.contains(note); }</span>
+
+<span class="fc" id="L101">    private static final String[] AbstractedBlocks = { Abstract, Native };</span>
+<span class="fc" id="L102">    public static final List&lt;String&gt; AbstractNotes = wrap(AbstractedBlocks);</span>
+<span class="nc" id="L103">    public boolean isAbstracted() { return hasNoteType(AbstractNotes); }</span>
+
+    /**
+     * Contains decor, and provides access.
+     */
+    public static interface DecorSource {
+
+        public Decor decor();
+
+    } // DecorSource
+
+} // Decor
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
