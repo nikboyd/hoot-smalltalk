@@ -23,10 +23,16 @@
         <version>2020</version>
     </parent>
 
+    <properties>
+        <api-module>libs-smalltalk</api-module>
+        <api-classes>Smalltalk</api-classes>
+        <api-class-path>../${api-module}/target/classes/${api-classes}</api-class-path>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>hoot-smalltalk</groupId>
-            <artifactId>libs-smalltalk</artifactId>
+            <artifactId>${api-module}</artifactId>
         </dependency>
         <dependency>
             <groupId>hoot-smalltalk</groupId>
@@ -76,6 +82,23 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven.compiler}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals><goal>copy-resources</goal></goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${api-class-path}</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/classes/${api-classes}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

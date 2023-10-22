@@ -79,9 +79,9 @@ Interval members: "comparing"
     Boolean! = Collected! aCollection [
         (Interval type accepts: aCollection) ifFalse: [ ^super equals: aCollection ].
         Interval! candidate := Interval <- aCollection.
-        ^(candidate start == self start) and: [
-         (candidate stop == self stop) and: [
-         (candidate step == self step) ]]
+        ^(candidate start = self start) and: [
+         (candidate stop = self stop) and: [
+         (candidate step = self step) ]]
     ]
 
     @Primitive Java Lang Int! hashCode [

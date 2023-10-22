@@ -13,14 +13,16 @@ BasicDictionaryTest members: "testing dictionary"
     Dictionary! d := Dictionary new.
 
     @Static @Final String! ValueReport := 'key %s = %s'. "note BUG! = quote count at end when doubled"
-    reportKey: key value: value [ self log printLine: (ValueReport formatWith: key printString : value printString). ]
+    String! formatKey: key value: value [ ^ValueReport formatWith: key printString : value printString ]
+    reportKey: key value: value [ self log printLine: (self formatKey: key value: value). ]
+    reportDic: Dictionary! d [ d keysAndValuesDo: [ :key :value | self reportKey: key value: value ]. ]
 
     Void! runTest [
         self log print: 'dictionary = '.
         sample do: [ :each | d at: each printString put: each ]. "1st fill d"
         self assertTrue: [ self log printLine: 'sampled'. ^d size == sample size ].
 
-        d keysAndValuesDo: [ :key :value | self reportKey: key value: value ].
+        self reportDic: d.
         self passed: 'dictionary key-value test'.
 
         d associationsDo: [ :Association! assoc | self assertTrue: [ ^sample includes: assoc value ]. ].
@@ -33,7 +35,24 @@ BasicDictionaryTest members: "testing dictionary"
         self passed: 'dictionary keys test'.
 
         d associationsDo: [ :Association! assoc | 
-            a := (assoc key associateWith: assoc value). self assertTrue: [ ^a = assoc ]. ].
+            a := (assoc key associateWith: assoc value).
+            self assertTrue: [ ^a = assoc ].
+        ].
         self passed: 'full associates test'.
+
+        Dictionary! done := Dictionary type withAll: d.
+        self reportDic: done.
+        self passed: 'copy dictionary test'.
+
+        done := Dictionary type synchronizedFrom: d primitiveContents.
+        self reportDic: done.
+        self passed: 'copy sync prim dictionary test'.
+
+        done := Dictionary type from: d primitiveContents.
+        self reportDic: done.
+        self passed: 'copy prim dictionary test'.
+
+        self report: 'done keyAtValue: 5 = ', (done keyAtValue: 5) printString.
+        self report: 'done at: 5 = ', (done at: '5') printString.
     ]
 ]
