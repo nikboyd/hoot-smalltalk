@@ -179,9 +179,10 @@ Object members: "performing methods"
 Object members: "printing"
 [
     printOn: StreamedSink! aStream [ aStream nextPutAll: self printString. ]
+
+    String! printLine [ ^self printString printLine ]
     String! printString [ ^self species namePrefix , self class name ]
-    String! printTerm [ "a printable term for a formula"
-        ^'( ', self printString , ' )' ]
+    String! printTerm [ "a printable term for a formula" ^'( ', self printString , ' )' ]
 ]
 
 Object members: "handling errors"

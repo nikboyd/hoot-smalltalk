@@ -6,32 +6,30 @@ Hoot Magnitudes Integer import.
 Hoot Magnitudes SmallInteger importStatics.
 Hoot Collections Dictionary import.
 
+Smalltalk Collections Collected import.
+
 TestBase subclass: BasicDictionaryTest. "dictionary regression tests"
 BasicDictionaryTest members: "testing dictionary"
 [
     Array! sample := #( 5 4 3 2 1 ).
     Dictionary! d := Dictionary new.
 
-    @Static @Final String! ValueReport := 'key %s = %s'. "note BUG! = quote count at end when doubled"
-    String! formatKey: key value: value [ ^ValueReport formatWith: key printString : value printString ]
-    reportKey: key value: value [ self log printLine: (self formatKey: key value: value). ]
-    reportDic: Dictionary! d [ d keysAndValuesDo: [ :key :value | self reportKey: key value: value ]. ]
-
     Void! runTest [
-        self log print: 'dictionary = '.
         sample do: [ :each | d at: each printString put: each ]. "1st fill d"
-        self assertTrue: [ self log printLine: 'sampled'. ^d size == sample size ].
-
-        self reportDic: d.
+        self report: 'd size == sample size' value: (d size == sample size).
+        self report: 'd filled from sample' elements: d.
         self passed: 'dictionary key-value test'.
 
         d associationsDo: [ :Association! assoc | self assertTrue: [ ^sample includes: assoc value ]. ].
         self passed: 'dictionary associates test'.
 
+        self report: d values printString.
         d valuesDo: [ :v | self assertTrue: [ ^sample includes: v ]. ].
+        self assertTrue: [ ^d includes: 3 ].
         self passed: 'dictionary values test'.
 
         d keysDo: [ :String! k | self assertTrue: [ ^sample includes: k toInteger ]. ].
+        self assertTrue: [ ^d includesKey: '3' ].
         self passed: 'dictionary keys test'.
 
         d associationsDo: [ :Association! assoc | 
@@ -41,18 +39,32 @@ BasicDictionaryTest members: "testing dictionary"
         self passed: 'full associates test'.
 
         Dictionary! done := Dictionary type withAll: d.
-        self reportDic: done.
+        self report: 'd copied' elements: done.
+        self assertTrue: [ ^d equals: Collected <- (Dictionary type withAll: d) ].
+        self report: 'd select < 4' elements: (d select: [ : Integer! value | ^value < 4 ] toPredicate).
+        self report: 'd reject < 3' elements: (d reject: [ : Integer! value | ^value < 3 ] toPredicate).
         self passed: 'copy dictionary test'.
 
         done := Dictionary type synchronizedFrom: d primitiveContents.
-        self reportDic: done.
-        self passed: 'copy sync prim dictionary test'.
+        self report: 'd sync prim copy' elements: done.
 
         done := Dictionary type from: d primitiveContents.
-        self reportDic: done.
-        self passed: 'copy prim dictionary test'.
+        self report: 'd prim copy' elements: done.
 
         self report: 'done keyAtValue: 5 = ', (done keyAtValue: 5) printString.
         self report: 'done at: 5 = ', (done at: '5') printString.
     ]
+
+    Void! report: String! testName value: Boolean! value [
+        self log print: testName. self log print: ' ? '.
+        self log print: value printString. self log cr. ]
+
+    Void! report: String! collectionName elements: Dictionary! d [
+        self log print: collectionName. self log printLine: ' = ( '.
+        self reportDic: d. self log print: ')'. self log cr. ]
+
+    @Static @Final String! ValueReport := 'key %s = %s'. "note BUG! = quote count at end when doubled"
+    String! formatKey: key value: value [ ^ValueReport formatWith: key printString : value printString ]
+    reportKey: key value: value [ self log printLine: (self formatKey: key value: value). ]
+    reportDic: Dictionary! d [ d keysAndValuesDo: [ :key :value | self reportKey: key value: value ]. ]
 ]

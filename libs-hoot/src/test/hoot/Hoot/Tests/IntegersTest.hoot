@@ -78,11 +78,10 @@ IntegersTest members: "testing integers"
 
     testIntervals [
         self assertFalse: [ Interval type new notEmpty ].
-        self report: (1 to: 5) printString.
         Interval! x := 0 to: 50.
         x reverse. x first. x last. x size.
         self assertTrue: [ x notEmpty ].
-        self report: '(1 to: 5) = ', (1 to: 5) printElements.
+        self report: '(1 to: 5) = ', (1 to: 5) printString.
         self assertTrue:  [ (1 to: 5) includes: 3 ].
         self assertFalse: [ (1 to: 5) includes: 7 ].
         self assertTrue:  [ (1 to: 5) equals: Collected <- (1 to: 5) ].

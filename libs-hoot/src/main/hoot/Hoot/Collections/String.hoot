@@ -214,6 +214,7 @@ String members: "testing behavior"
 
 String "printing" members:
 [
+    printLine [ ^self add: Character type cr; yourself ]
     printString [ ^String from: (Primitive quoteLiterally: self primitiveString) ]
     rightPadded: Integer! count [ ^String from: (StringUtils rightPad: self asPrimitive : count intValue) ]
 

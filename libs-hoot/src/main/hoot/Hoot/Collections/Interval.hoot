@@ -107,7 +107,6 @@ Interval members: "accessing elements"
 
 Interval members: "printing"
 [
-    String! printElements [ ^(self collect: [ : Integer! value | value printString ]) printString ]
     String! printString [ ^( '(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
 ]
 

@@ -98,7 +98,7 @@ Dictionary members: "accessing elements"
 
     ElementType! atAllPut: ElementType! element [ ^self atAll: self keys put: element ]
 
-    CollectedSequentially? ElementType! values [
+    OrderedCollection? ElementType! values [
         @Final OrderedCollection? ElementType! results := OrderedCollection new: self size.
         self keysAndValuesDo: [ : KeyType! key : ElementType! element | results add: element ].
         ^results ]
@@ -124,8 +124,7 @@ Dictionary "comparing" members:
         ^Boolean from: (contents equals: aCollection primitiveContents) ]
 
     Boolean! = Collected! aCollection [
-        (aCollection isKindOf: Dictionary type) ifFalse: [ ^false ].
-        ^self = (Dictionary <- aCollection) ]
+        ^(Dictionary type accepts: aCollection) and: [ self = (Dictionary <- aCollection) ] ]
 
     Java Lang Int! hashCode [ ^contents hashCode ]
 ]
