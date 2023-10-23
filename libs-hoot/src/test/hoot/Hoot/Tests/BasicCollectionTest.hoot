@@ -38,10 +38,20 @@ BasicCollectionTest members:
         self report: 'sample array   ' elements: sample.
         2 timesRepeat: [ o addAll: sample ].
         self report: 'twice collected' elements: o.
+
         self assertTrue: [ sample size * 2 == o size ].
         self passed: 'ordered collection size test'.
+
         o do: [ :each | self assertTrue: [ sample includes: each ]. ].
         self passed: 'ordered collection values test'.
+
+        self report: '( 1 )' elements: (OrderedCollection type with: 1).
+        self report: '( 1 2 )' elements: (OrderedCollection type with: 1 with: 2).
+        self report: '( 1 2 3 )' elements: (OrderedCollection type with: 1 with: 2 with: 3).
+        self report: '( 1 2 3 4 )' elements: (OrderedCollection type with: 1 with: 2 with: 3 with: 4).
+        self report: 'new with all sample' elements: (OrderedCollection type withAll: sample).
+        self report: 'sample remove last 3' elements: ((OrderedCollection type withAll: sample) removeLast: 3).
+        self report: 'sample remove first 3' elements: ((OrderedCollection type withAll: sample) removeFirst: 3).
     ]
 
     testBagsSets [

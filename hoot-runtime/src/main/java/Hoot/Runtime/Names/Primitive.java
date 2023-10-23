@@ -19,6 +19,7 @@ import static Hoot.Runtime.Names.Name.Dot;
 import static Hoot.Runtime.Names.Keyword.Arrayed;
 import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
+import java.util.Map.Entry;
 
 /**
  * Knows primitive Java types.
@@ -189,6 +190,7 @@ public class Primitive implements Logging {
             .divide(new BigDecimal(denominator),
                 scale, RoundingMode.HALF_UP); }
 
+    public static final Primitive Reporter = new Primitive();
     public static BigInteger[] integersFrom(Double... ds) {
         BigInteger[] results = {
             BigDecimal.valueOf(ds[0]).toBigInteger(),
@@ -271,6 +273,9 @@ public class Primitive implements Logging {
     public static Boolean elementaryTrue() { return java.lang.Boolean.TRUE; }
 
     public static float getFloat(String value) { return Float.parseFloat(value); }
+
+    public static final String Dollar = "$";
+    public static final String Pound = "#";
     public static String getLiteral(String value) {
         if (isEmpty(value)) return Empty;
         if (value.startsWith(Dollar)) return quoteWith(SingleQuote, value.substring(1));
@@ -411,6 +416,7 @@ public class Primitive implements Logging {
             matchAny(ElementaryPackages, prefix -> simplifiedType(typeName).startsWith(prefix)) :
             matchAny(ElementaryPackages, prefix -> prefix.startsWith(simplifiedType(typeName))); }
 
+    public static final String[] EmptyArray = { };
     public static String[] wrapsFrom(String typeName) {
         if (PrimitiveWrappers.containsKey(typeName)) {
             String[] result = { PrimitiveWrappers.get(typeName), PrimitiveUnwrappers.get(typeName) };
@@ -426,11 +432,13 @@ public class Primitive implements Logging {
         return empty;
     }
 
+    public static <K, T> K findKey(T value, Map<K,T> map) {
+        for (Entry<K,T> entry : map.entrySet()) {
+            if (entry.getValue().equals(value)) return entry.getKey();
+        }
+        return null;
+    }
 
-    public static final String Dollar = "$";
-    public static final String Pound = "#";
     public static final String Blank = " ";
-    public static final String[] EmptyArray = { };
-    public static final Primitive Reporter = new Primitive();
 
 } // Primitive

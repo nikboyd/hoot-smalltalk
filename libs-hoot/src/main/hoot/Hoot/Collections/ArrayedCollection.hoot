@@ -23,10 +23,10 @@ ArrayedCollection members: "accessing elements"
         ^element "override this!" ]
 
     ElementType! atAll: CollectedReadably? Ordinal! indices put: ElementType! element [
-     	indices do: [ : Integer! index | self at: index put: element ].
+     	indices do: [ : Integer! index | self at: index put: element. ].
         ^element ]
 
     ElementType! atAllPut: ElementType! element [
-     	1 to: self size do: [ : Integer! index | self at: index put: element ].
+     	1 to: self size do: [ : Integer! index | self at: index put: element. ].
         ^element ]
 ]

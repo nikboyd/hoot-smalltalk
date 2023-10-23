@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Collections Interval import.
 Hoot Magnitudes SmallInteger importStatics.
+Smalltalk Collections Collected import.
 
 TestBase subclass: IntegersTest.
 "Confirms proper operation of various integer behaviors."
@@ -76,12 +77,20 @@ IntegersTest members: "testing integers"
     ]
 
     testIntervals [
-        self report: (1 to: 5) printString.
+        self assertFalse: [ Interval type new notEmpty ].
         Interval! x := 0 to: 50.
         x reverse. x first. x last. x size.
         self assertTrue: [ x notEmpty ].
-        self report: '(1 to: 5) collected = ', 
-            ((1 to: 5) collect: [ : Integer! value | value printString ]) printString.
+        self report: '(1 to: 5) = ', (1 to: 5) printString.
+        self assertTrue:  [ (1 to: 5) includes: 3 ].
+        self assertFalse: [ (1 to: 5) includes: 7 ].
+        self assertTrue:  [ (1 to: 5) equals: Collected <- (1 to: 5) ].
+
+        "suppress exceptions"
+        [ (1 to: 5) add: 6 ] runQuiet.
+        [ (1 to: 5) removeFirst ] runQuiet.
+        [ (1 to: 5) removeLast ] runQuiet.
+        [ (1 to: 5) removeAll ] runQuiet.
         self passed: 'intervals tests'.
     ]
 ]

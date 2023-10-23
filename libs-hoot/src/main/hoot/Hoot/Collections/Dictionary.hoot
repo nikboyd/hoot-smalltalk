@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Integer import.
 Hoot Streams WriteStream import.
+Hoot Runtime Names Primitive import.
 
 Smalltalk Core Posit import.
 Smalltalk Core Subject import.
@@ -27,7 +28,7 @@ Dictionary class members: "creating instances"
     Dictionary! withAll: CollectedDictionary? KeyType -> Scalar : ElementType -> Subject! pairedElements [
         Dictionary! results := self new: pairedElements size.
         pairedElements keysAndValuesDo:
-            [ : KeyType! key : ElementType! value | results at: Magnitude <- key put: Object <- value. ].
+            [ : KeyType! key : ElementType! value | results at: Object <- key put: Object <- value. ].
         ^results ]
 
     Dictionary! from: Java Util Map! primitiveMap [
@@ -63,12 +64,10 @@ Dictionary members: "accessing keys"
         "the index of an element"
         ^self indexOf: element ifAbsent: [ self elementNotFound. ^nil ] ]
 
-    KeyType! indexOf: ElementType! element ifAbsent: NiladicValuable! aBlock [
+    @Primitive KeyType! indexOf: ElementType! element ifAbsent: NiladicValuable! aBlock [
         "the index of an element, or the value of aBlock"
-        self keysAndValuesDo: [ :key :value |
-            value = element ifTrue: [ ^key ]
-        ].
-        ^aBlock value ]
+        KeyType! key := Primitive findKey: element : contents.
+        ^( key == nil ) ifTrue: [ aBlock value ] ifFalse: [ key ] ]
 
     KeyType! keyAtValue: ElementType! element [ ^self indexOf: element ]
     KeyType! keyAtValue: ElementType! element ifAbsent: NiladicValuable! aBlock [
@@ -99,7 +98,7 @@ Dictionary members: "accessing elements"
 
     ElementType! atAllPut: ElementType! element [ ^self atAll: self keys put: element ]
 
-    CollectedSequentially? ElementType! values [
+    OrderedCollection? ElementType! values [
         @Final OrderedCollection? ElementType! results := OrderedCollection new: self size.
         self keysAndValuesDo: [ : KeyType! key : ElementType! element | results add: element ].
         ^results ]
@@ -125,8 +124,7 @@ Dictionary "comparing" members:
         ^Boolean from: (contents equals: aCollection primitiveContents) ]
 
     Boolean! = Collected! aCollection [
-        (aCollection isKindOf: Dictionary type) ifFalse: [ ^false ].
-        ^self = (Dictionary <- aCollection) ]
+        ^(Dictionary type accepts: aCollection) and: [ self = (Dictionary <- aCollection) ] ]
 
     Java Lang Int! hashCode [ ^contents hashCode ]
 ]

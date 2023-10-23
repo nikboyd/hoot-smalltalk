@@ -265,3 +265,8 @@ Collection members: "locating elements"
         ].
         ^exceptionBlock value ]
 ]
+
+Collection members: "printing elements"
+[
+    OrderedCollection? String! printElements [ ^self collect: [ :element | element printLine ] ]
+]
