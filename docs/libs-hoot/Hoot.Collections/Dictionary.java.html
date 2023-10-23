@@ -24,6 +24,7 @@ import Hoot.Magnitudes.Float;
 import Hoot.Magnitudes.Double;
 import Hoot.Magnitudes.Integer;
 import Hoot.Streams.WriteStream;
+import Hoot.Runtime.Names.Primitive;
 import Smalltalk.Core.Posit;
 import Smalltalk.Core.Subject;
 import Smalltalk.Collections.*;
@@ -34,20 +35,20 @@ import Smalltalk.Magnitudes.Associated;
 public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt; extends Collection&lt;ElementType&gt; implements CollectedDictionary&lt;KeyType, ElementType&gt;
 {
 
-<span class="fc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
-<span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L38">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="nc" id="L39">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Collection.Metaclass implements CollectedDictionary.Metatype
   {
-<span class="fc" id="L41">    static final Dictionary.Metaclass $class = new Dictionary.Metaclass();</span>
+<span class="fc" id="L42">    static final Dictionary.Metaclass $class = new Dictionary.Metaclass();</span>
     public Metaclass() {
-<span class="fc" id="L43">      this(Dictionary.Metaclass.class);</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L44">      this(Dictionary.Metaclass.class);</span>
+<span class="fc" id="L45">    }</span>
 
     public Metaclass(java.lang.Class aClass) {
-<span class="fc" id="L47">      super(aClass);</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L48">      super(aClass);</span>
+<span class="fc" id="L49">    }</span>
 
-<span class="fc" id="L50">    @Override public java.lang.Class outerClass() { return Dictionary.class; }</span>
+<span class="fc" id="L51">    @Override public java.lang.Class outerClass() { return Dictionary.class; }</span>
 
 
     /**
@@ -55,10 +56,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
      */
     @Override public   Dictionary $new()
     {
-<span class="fc" id="L58">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;$new&quot;;</span>
-<span class="fc" id="L59">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L60">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L61">      return (Dictionary)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+<span class="fc" id="L59">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L60">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L61">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L62">      return (Dictionary)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
       });
     }
 
@@ -67,10 +68,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
      */
     @Override public   Dictionary $new(final Ordinal capacity)
     {
-<span class="fc" id="L70">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;$new&quot;;</span>
-<span class="fc" id="L71">      Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L72">      return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L73">      return (Dictionary)f0.exit(exitID, new Dictionary(capacity));</span>
+<span class="fc" id="L71">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L72">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L73">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L74">      return (Dictionary)f0.exit(exitID, new Dictionary(capacity));</span>
       });
     }
 
@@ -79,16 +80,16 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
      */
     public  &lt;ElementType extends Subject, KeyType extends Scalar&gt; Dictionary withAll(final CollectedDictionary&lt;KeyType, ElementType&gt; pairedElements)
     {
-<span class="nc" id="L82">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L83">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L84">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L85">      Dictionary results = this.$new(pairedElements.size());</span>
-<span class="nc" id="L86">      pairedElements.keysAndValuesDo(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L87">        KeyType key = f3.getValue(0).value();</span>
-<span class="nc" id="L88">        ElementType value = f3.getValue(1).value();</span>
-<span class="nc" id="L89">        results.at_put(((Magnitude)key), ((Object)value));</span>
-<span class="nc" id="L90">      }, &quot;key&quot;, &quot;value&quot;));</span>
-<span class="nc" id="L91">      return (Dictionary)f0.exit(exitID, results);</span>
+<span class="fc" id="L83">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;withAll&quot;;</span>
+<span class="fc" id="L84">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L85">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L86">      Dictionary results = this.$new(pairedElements.size());</span>
+<span class="fc" id="L87">      pairedElements.keysAndValuesDo(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L88">        KeyType key = f3.getValue(0).value();</span>
+<span class="fc" id="L89">        ElementType value = f3.getValue(1).value();</span>
+<span class="fc" id="L90">        results.at_put(((Object)key), ((Object)value));</span>
+<span class="fc" id="L91">      }, &quot;key&quot;, &quot;value&quot;));</span>
+<span class="fc" id="L92">      return (Dictionary)f0.exit(exitID, results);</span>
       });
     }
 
@@ -97,10 +98,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
      */
     public   Dictionary from(final java.util.Map primitiveMap)
     {
-<span class="nc" id="L100">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;from&quot;;</span>
-<span class="nc" id="L101">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L102">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L103">      return (Dictionary)f0.exit(exitID, new Dictionary(primitiveMap));</span>
+<span class="fc" id="L101">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;from&quot;;</span>
+<span class="fc" id="L102">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L103">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L104">      return (Dictionary)f0.exit(exitID, new Dictionary(primitiveMap));</span>
       });
     }
 
@@ -109,10 +110,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
      */
     public   Dictionary synchronizedFrom(final java.util.Map primitiveMap)
     {
-<span class="nc" id="L112">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;synchronizedFrom&quot;;</span>
-<span class="nc" id="L113">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L114">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L115">      return (Dictionary)f0.exit(exitID, this.from(primitiveMap));</span>
+<span class="fc" id="L113">      java.lang.String exitID = &quot;DictionaryMetatype&gt;&gt;synchronizedFrom&quot;;</span>
+<span class="fc" id="L114">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L115">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L116">      return (Dictionary)f0.exit(exitID, this.from(primitiveMap));</span>
       });
     }
   }
@@ -125,39 +126,39 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   protected    Dictionary()
   {
-<span class="fc" id="L128">    this(new java.util.HashMap());</span>
-<span class="fc" id="L129">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
-<span class="fc" id="L130">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L131">  }</span>
+<span class="fc" id="L129">    this(new java.util.HashMap());</span>
+<span class="fc" id="L130">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
+<span class="fc" id="L131">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L132">  }</span>
 
   /**
    * 
    */
   protected    Dictionary(final Ordinal capacity)
   {
-<span class="fc" id="L138">    this(new java.util.HashMap(capacity.intValue()));</span>
-<span class="fc" id="L139">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
-<span class="fc" id="L140">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L141">  }</span>
+<span class="fc" id="L139">    this(new java.util.HashMap(capacity.intValue()));</span>
+<span class="fc" id="L140">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
+<span class="fc" id="L141">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L142">  }</span>
 
   /**
    * 
    */
   protected    Dictionary(final java.util.Map primitiveMap)
-<span class="fc" id="L147">  {</span>
-<span class="fc" id="L148">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
-<span class="fc" id="L149">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L150">     contents = java.util.Collections.synchronizedMap(primitiveMap);</span>
-<span class="fc" id="L151">  }</span>
+<span class="fc" id="L148">  {</span>
+<span class="fc" id="L149">    java.lang.String exitID = &quot;Dictionary&gt;&gt;Dictionary&quot;;</span>
+<span class="fc" id="L150">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L151">     contents = java.util.Collections.synchronizedMap(primitiveMap);</span>
+<span class="fc" id="L152">  }</span>
 
   /**
    * @return 
    */
   public   java.util.Map primitiveContents()
   {
-<span class="nc" id="L158">    java.lang.String exitID = &quot;Dictionary&gt;&gt;primitiveContents&quot;;</span>
-<span class="nc" id="L159">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L160">    return (java.util.Map)contents;</span>
+<span class="fc" id="L159">    java.lang.String exitID = &quot;Dictionary&gt;&gt;primitiveContents&quot;;</span>
+<span class="fc" id="L160">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L161">    return (java.util.Map)contents;</span>
   }
 
   /**
@@ -165,9 +166,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Integer size()
   {
-<span class="fc" id="L168">    java.lang.String exitID = &quot;Dictionary&gt;&gt;size&quot;;</span>
-<span class="fc" id="L169">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L170">    return (Integer)SmallInteger.from(contents.size());</span>
+<span class="fc" id="L169">    java.lang.String exitID = &quot;Dictionary&gt;&gt;size&quot;;</span>
+<span class="fc" id="L170">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L171">    return (Integer)SmallInteger.from(contents.size());</span>
   }
 
   /**
@@ -175,9 +176,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Set&lt;KeyType&gt; keys()
   {
-<span class="fc" id="L178">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keys&quot;;</span>
-<span class="fc" id="L179">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L180">    return (Set&lt;KeyType&gt;)Set.from(contents.keySet());</span>
+<span class="fc" id="L179">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keys&quot;;</span>
+<span class="fc" id="L180">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L181">    return (Set&lt;KeyType&gt;)Set.from(contents.keySet());</span>
   }
 
   /**
@@ -185,11 +186,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   KeyType indexOf(final ElementType element)
   {
-<span class="nc" id="L188">    java.lang.String exitID = &quot;Dictionary&gt;&gt;indexOf&quot;;</span>
-<span class="nc" id="L189">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L190">    return (KeyType)this.indexOf_ifAbsent(element, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L191">      this.elementNotFound();</span>
-<span class="nc" id="L192">    return Nil.literal();</span>
+<span class="fc" id="L189">    java.lang.String exitID = &quot;Dictionary&gt;&gt;indexOf&quot;;</span>
+<span class="fc" id="L190">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L191">    return (KeyType)this.indexOf_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L192">      this.elementNotFound();</span>
+<span class="nc" id="L193">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -198,18 +199,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   KeyType indexOf_ifAbsent(final ElementType element, final NiladicValuable aBlock)
   {
-<span class="nc" id="L201">    java.lang.String exitID = &quot;Dictionary&gt;&gt;indexOf_ifAbsent&quot;;</span>
-<span class="nc" id="L202">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L203">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L204">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L205">      Hoot.Behaviors.Object key = f2.getValue(0).value();</span>
-<span class="nc" id="L206">      Hoot.Behaviors.Object value = f2.getValue(1).value();</span>
-<span class="nc" id="L207">      return (KeyType)f0.exit(exitID, (value.equals(element)).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L208">      return (KeyType)f0.exit(exitID, key);</span>
-    }, &quot;&quot;)));
-    }, &quot;key&quot;, &quot;value&quot;));
-<span class="nc" id="L211">    return (KeyType)f0.exit(exitID, aBlock.value());</span>
-    });
+<span class="fc" id="L202">    java.lang.String exitID = &quot;Dictionary&gt;&gt;indexOf_ifAbsent&quot;;</span>
+<span class="fc" id="L203">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L204">    KeyType key = Primitive.findKey(element, contents);</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">    return (KeyType)(Boolean.primitiveValue((key == null)) ? aBlock.value() : key);</span>
   }
 
   /**
@@ -217,9 +210,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   KeyType keyAtValue(final ElementType element)
   {
-<span class="nc" id="L220">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keyAtValue&quot;;</span>
-<span class="nc" id="L221">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L222">    return (KeyType)this.indexOf(element);</span>
+<span class="fc" id="L213">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keyAtValue&quot;;</span>
+<span class="fc" id="L214">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L215">    return (KeyType)this.indexOf(element);</span>
   }
 
   /**
@@ -227,9 +220,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   KeyType keyAtValue_ifAbsent(final ElementType element, final NiladicValuable aBlock)
   {
-<span class="nc" id="L230">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keyAtValue_ifAbsent&quot;;</span>
-<span class="nc" id="L231">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L232">    return (KeyType)this.indexOf_ifAbsent(element, aBlock);</span>
+<span class="nc" id="L223">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keyAtValue_ifAbsent&quot;;</span>
+<span class="nc" id="L224">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L225">    return (KeyType)this.indexOf_ifAbsent(element, aBlock);</span>
   }
 
   /**
@@ -237,13 +230,13 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType at(final KeyType index)
   {
-<span class="nc" id="L240">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at&quot;;</span>
-<span class="nc" id="L241">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">    if (contents.containsKey(index)) {</span>
-<span class="nc" id="L243">      return contents.get(index);</span>
+<span class="fc" id="L233">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at&quot;;</span>
+<span class="fc" id="L234">    Frame f0 = new Frame(exitID);</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">    if (contents.containsKey(index)) {</span>
+<span class="fc" id="L236">      return contents.get(index);</span>
     };
-<span class="nc" id="L245">    this.elementNotFound();</span>
-<span class="nc" id="L246">    return (ElementType)null;</span>
+<span class="nc" id="L238">    this.elementNotFound();</span>
+<span class="nc" id="L239">    return (ElementType)null;</span>
   }
 
   /**
@@ -251,12 +244,12 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType at_ifAbsent(final KeyType index, final NiladicValuable aBlock)
   {
-<span class="fc" id="L254">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_ifAbsent&quot;;</span>
-<span class="fc" id="L255">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">    if (contents.containsKey(index)) {</span>
-<span class="fc" id="L257">      return contents.get(index);</span>
+<span class="fc" id="L247">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_ifAbsent&quot;;</span>
+<span class="fc" id="L248">    Frame f0 = new Frame(exitID);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">    if (contents.containsKey(index)) {</span>
+<span class="fc" id="L250">      return contents.get(index);</span>
     };
-<span class="fc" id="L259">    return (ElementType)aBlock.value();</span>
+<span class="fc" id="L252">    return (ElementType)aBlock.value();</span>
   }
 
   /**
@@ -264,10 +257,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType at_ifAbsentPut(final KeyType index, final NiladicValuable aBlock)
   {
-<span class="nc" id="L267">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_ifAbsentPut&quot;;</span>
-<span class="nc" id="L268">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L269">    return (ElementType)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L270">      return this.at_put(index, aBlock.value());</span>
+<span class="nc" id="L260">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_ifAbsentPut&quot;;</span>
+<span class="nc" id="L261">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L262">    return (ElementType)this.at_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L263">      return this.at_put(index, aBlock.value());</span>
     }, &quot;&quot;));
   }
 
@@ -276,10 +269,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType at_put(final KeyType index, final ElementType element)
   {
-<span class="fc" id="L279">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_put&quot;;</span>
-<span class="fc" id="L280">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L281">    contents.put(index, element);</span>
-<span class="fc" id="L282">    return (ElementType)element;</span>
+<span class="fc" id="L272">    java.lang.String exitID = &quot;Dictionary&gt;&gt;at_put&quot;;</span>
+<span class="fc" id="L273">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L274">    contents.put(index, element);</span>
+<span class="fc" id="L275">    return (ElementType)element;</span>
   }
 
   /**
@@ -287,13 +280,13 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType atAll_put(final CollectedDistinctly&lt;KeyType&gt; indices, final ElementType element)
   {
-<span class="nc" id="L290">    java.lang.String exitID = &quot;Dictionary&gt;&gt;atAll_put&quot;;</span>
-<span class="nc" id="L291">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L292">    indices.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L293">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L294">      return this.at_put(key, element);</span>
+<span class="nc" id="L283">    java.lang.String exitID = &quot;Dictionary&gt;&gt;atAll_put&quot;;</span>
+<span class="nc" id="L284">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L285">    indices.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L286">      KeyType key = f2.getValue(0).value();</span>
+<span class="nc" id="L287">      return this.at_put(key, element);</span>
     }, &quot;key&quot;));
-<span class="nc" id="L296">    return (ElementType)element;</span>
+<span class="nc" id="L289">    return (ElementType)element;</span>
   }
 
   /**
@@ -301,25 +294,25 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType atAllPut(final ElementType element)
   {
-<span class="nc" id="L304">    java.lang.String exitID = &quot;Dictionary&gt;&gt;atAllPut&quot;;</span>
-<span class="nc" id="L305">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L306">    return (ElementType)this.atAll_put(this.keys(), element);</span>
+<span class="nc" id="L297">    java.lang.String exitID = &quot;Dictionary&gt;&gt;atAllPut&quot;;</span>
+<span class="nc" id="L298">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L299">    return (ElementType)this.atAll_put(this.keys(), element);</span>
   }
 
   /**
    * @return 
    */
-  public   CollectedSequentially&lt;ElementType&gt; values()
+  public   OrderedCollection&lt;ElementType&gt; values()
   {
-<span class="nc" id="L314">    java.lang.String exitID = &quot;Dictionary&gt;&gt;values&quot;;</span>
-<span class="nc" id="L315">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L316">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new(this.size());</span>
-<span class="nc" id="L317">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L318">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L319">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L320">      return results.add(element);</span>
+<span class="fc" id="L307">    java.lang.String exitID = &quot;Dictionary&gt;&gt;values&quot;;</span>
+<span class="fc" id="L308">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L309">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new(this.size());</span>
+<span class="fc" id="L310">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L311">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L312">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L313">      return results.add(element);</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L322">    return (CollectedSequentially&lt;ElementType&gt;)results;</span>
+<span class="fc" id="L315">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
   }
 
   /**
@@ -327,9 +320,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType add(final ElementType element)
   {
-<span class="nc" id="L330">    java.lang.String exitID = &quot;Dictionary&gt;&gt;add&quot;;</span>
-<span class="nc" id="L331">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L332">    return (ElementType)element;</span>
+<span class="nc" id="L323">    java.lang.String exitID = &quot;Dictionary&gt;&gt;add&quot;;</span>
+<span class="nc" id="L324">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L325">    return (ElementType)element;</span>
   }
 
   /**
@@ -337,9 +330,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Collected&lt;ElementType&gt; addAll(final Collected&lt;ElementType&gt; elements)
   {
-<span class="nc" id="L340">    java.lang.String exitID = &quot;Dictionary&gt;&gt;addAll&quot;;</span>
-<span class="nc" id="L341">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L342">    return (Collected&lt;ElementType&gt;)elements;</span>
+<span class="nc" id="L333">    java.lang.String exitID = &quot;Dictionary&gt;&gt;addAll&quot;;</span>
+<span class="nc" id="L334">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L335">    return (Collected&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -347,10 +340,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Association add(final Associated pairedElement)
   {
-<span class="nc" id="L350">    java.lang.String exitID = &quot;Dictionary&gt;&gt;add&quot;;</span>
-<span class="nc" id="L351">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L352">    this.at_put(pairedElement.key(), ((ElementType)pairedElement.value()));</span>
-<span class="nc" id="L353">    return (Association)((Association)pairedElement);</span>
+<span class="nc" id="L343">    java.lang.String exitID = &quot;Dictionary&gt;&gt;add&quot;;</span>
+<span class="nc" id="L344">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L345">    this.at_put(pairedElement.key(), ((ElementType)pairedElement.value()));</span>
+<span class="nc" id="L346">    return (Association)((Association)pairedElement);</span>
   }
 
   /**
@@ -358,14 +351,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   CollectedDictionary addAll(final CollectedDictionary&lt;KeyType, ElementType&gt; pairedElements)
   {
-<span class="nc" id="L361">    java.lang.String exitID = &quot;Dictionary&gt;&gt;addAll&quot;;</span>
-<span class="nc" id="L362">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L363">    pairedElements.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L364">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L365">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L366">      return this.at_put(key, element);</span>
+<span class="nc" id="L354">    java.lang.String exitID = &quot;Dictionary&gt;&gt;addAll&quot;;</span>
+<span class="nc" id="L355">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L356">    pairedElements.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L357">      KeyType key = f2.getValue(0).value();</span>
+<span class="nc" id="L358">      ElementType element = f2.getValue(1).value();</span>
+<span class="nc" id="L359">      return this.at_put(key, element);</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L368">    return (CollectedDictionary)pairedElements;</span>
+<span class="nc" id="L361">    return (CollectedDictionary)pairedElements;</span>
   }
 
   /**
@@ -373,9 +366,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Boolean equals(final Dictionary aCollection)
   {
-<span class="nc" id="L376">    java.lang.String exitID = &quot;Dictionary&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L377">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L378">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
+<span class="fc" id="L369">    java.lang.String exitID = &quot;Dictionary&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L370">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L371">    return (Boolean)Boolean.from(contents.equals(aCollection.primitiveContents()));</span>
   }
 
   /**
@@ -383,14 +376,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Boolean equals(final Collected aCollection)
   {
-<span class="nc" id="L386">    java.lang.String exitID = &quot;Dictionary&gt;&gt;equals&quot;;</span>
-<span class="nc" id="L387">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L388">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L389">    aCollection.isKindOf(Dictionary.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L390">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L379">    java.lang.String exitID = &quot;Dictionary&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L380">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L381">    return (Boolean)Dictionary.type().accepts(aCollection).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L382">      return (this.equals(((Dictionary)aCollection)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L392">    return (Boolean)f0.exit(exitID, (this.equals(((Dictionary)aCollection))));</span>
-    });
   }
 
   /**
@@ -398,9 +388,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   int hashCode()
   {
-<span class="nc" id="L401">    java.lang.String exitID = &quot;Dictionary&gt;&gt;hashCode&quot;;</span>
-<span class="nc" id="L402">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L403">    return (int)contents.hashCode();</span>
+<span class="nc" id="L391">    java.lang.String exitID = &quot;Dictionary&gt;&gt;hashCode&quot;;</span>
+<span class="nc" id="L392">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L393">    return (int)contents.hashCode();</span>
   }
 
   /**
@@ -408,14 +398,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary associationsDo(final MonadicValuable aBlock)
   {
-<span class="fc" id="L411">    java.lang.String exitID = &quot;Dictionary&gt;&gt;associationsDo&quot;;</span>
-<span class="fc" id="L412">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L413">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L414">      KeyType key = f2.getValue(0).value();</span>
-<span class="fc" id="L415">      ElementType element = f2.getValue(1).value();</span>
-<span class="fc" id="L416">      return aBlock.value(Association.withKey_withValue(key, element));</span>
+<span class="fc" id="L401">    java.lang.String exitID = &quot;Dictionary&gt;&gt;associationsDo&quot;;</span>
+<span class="fc" id="L402">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L403">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L404">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L405">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L406">      return aBlock.value(Association.withKey_withValue(key, element));</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="fc" id="L418">    return (Dictionary)this;</span>
+<span class="fc" id="L408">    return (Dictionary)this;</span>
   }
 
   /**
@@ -423,15 +413,15 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Dictionary collect(final MonadicValuable aBlock)
   {
-<span class="nc" id="L426">    java.lang.String exitID = &quot;Dictionary&gt;&gt;collect&quot;;</span>
-<span class="nc" id="L427">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L428">    Dictionary results = Dictionary.type().$new(this.size());</span>
-<span class="nc" id="L429">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L430">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L431">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L432">      return results.at_put(key, aBlock.value(element));</span>
+<span class="nc" id="L416">    java.lang.String exitID = &quot;Dictionary&gt;&gt;collect&quot;;</span>
+<span class="nc" id="L417">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L418">    Dictionary results = Dictionary.type().$new(this.size());</span>
+<span class="nc" id="L419">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L420">      KeyType key = f2.getValue(0).value();</span>
+<span class="nc" id="L421">      ElementType element = f2.getValue(1).value();</span>
+<span class="nc" id="L422">      return results.at_put(key, aBlock.value(element));</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L434">    return (Dictionary)results;</span>
+<span class="nc" id="L424">    return (Dictionary)results;</span>
   }
 
   /**
@@ -439,14 +429,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Dictionary $do(final MonadicValuable aBlock)
   {
-<span class="nc" id="L442">    java.lang.String exitID = &quot;Dictionary&gt;&gt;$do&quot;;</span>
-<span class="nc" id="L443">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L444">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L445">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L446">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L447">      return aBlock.value(element);</span>
+<span class="nc" id="L432">    java.lang.String exitID = &quot;Dictionary&gt;&gt;$do&quot;;</span>
+<span class="nc" id="L433">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L434">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L435">      KeyType key = f2.getValue(0).value();</span>
+<span class="nc" id="L436">      ElementType element = f2.getValue(1).value();</span>
+<span class="nc" id="L437">      return aBlock.value(element);</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L449">    return (Dictionary)this;</span>
+<span class="nc" id="L439">    return (Dictionary)this;</span>
   }
 
   /**
@@ -454,13 +444,13 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary keysAndValuesDo(final DyadicValuable aBlock)
   {
-<span class="fc" id="L457">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keysAndValuesDo&quot;;</span>
-<span class="fc" id="L458">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L459">    this.keys().$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L460">      Scalar key = f2.getValue(0).value();</span>
-<span class="fc" id="L461">      return aBlock.value_value(key, contents.get(key));</span>
+<span class="fc" id="L447">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keysAndValuesDo&quot;;</span>
+<span class="fc" id="L448">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L449">    this.keys().$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L450">      Scalar key = f2.getValue(0).value();</span>
+<span class="fc" id="L451">      return aBlock.value_value(key, contents.get(key));</span>
     }, &quot;key&quot;));
-<span class="fc" id="L463">    return (Dictionary)this;</span>
+<span class="fc" id="L453">    return (Dictionary)this;</span>
   }
 
   /**
@@ -468,13 +458,13 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary sortedKeysAndValuesDo(final DyadicValuable aBlock)
   {
-<span class="fc" id="L471">    java.lang.String exitID = &quot;Dictionary&gt;&gt;sortedKeysAndValuesDo&quot;;</span>
-<span class="fc" id="L472">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L473">    this.keys().sorted().$do(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L474">      Scalar key = f2.getValue(0).value();</span>
-<span class="fc" id="L475">      return aBlock.value_value(key, contents.get(key));</span>
+<span class="fc" id="L461">    java.lang.String exitID = &quot;Dictionary&gt;&gt;sortedKeysAndValuesDo&quot;;</span>
+<span class="fc" id="L462">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L463">    this.keys().sorted().$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L464">      Scalar key = f2.getValue(0).value();</span>
+<span class="fc" id="L465">      return aBlock.value_value(key, contents.get(key));</span>
     }, &quot;key&quot;));
-<span class="fc" id="L477">    return (Dictionary)this;</span>
+<span class="fc" id="L467">    return (Dictionary)this;</span>
   }
 
   /**
@@ -482,14 +472,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary keysDo(final MonadicValuable aBlock)
   {
-<span class="fc" id="L485">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keysDo&quot;;</span>
-<span class="fc" id="L486">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L487">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L488">      KeyType key = f2.getValue(0).value();</span>
-<span class="fc" id="L489">      ElementType element = f2.getValue(1).value();</span>
-<span class="fc" id="L490">      return aBlock.value(key);</span>
+<span class="fc" id="L475">    java.lang.String exitID = &quot;Dictionary&gt;&gt;keysDo&quot;;</span>
+<span class="fc" id="L476">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L477">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L478">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L479">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L480">      return aBlock.value(key);</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="fc" id="L492">    return (Dictionary)this;</span>
+<span class="fc" id="L482">    return (Dictionary)this;</span>
   }
 
   /**
@@ -497,14 +487,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary valuesDo(final MonadicValuable aBlock)
   {
-<span class="fc" id="L500">    java.lang.String exitID = &quot;Dictionary&gt;&gt;valuesDo&quot;;</span>
-<span class="fc" id="L501">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L502">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="fc" id="L503">      KeyType key = f2.getValue(0).value();</span>
-<span class="fc" id="L504">      ElementType element = f2.getValue(1).value();</span>
-<span class="fc" id="L505">      return aBlock.value(element);</span>
+<span class="fc" id="L490">    java.lang.String exitID = &quot;Dictionary&gt;&gt;valuesDo&quot;;</span>
+<span class="fc" id="L491">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L492">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L493">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L494">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L495">      return aBlock.value(element);</span>
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="fc" id="L507">    return (Dictionary)this;</span>
+<span class="fc" id="L497">    return (Dictionary)this;</span>
   }
 
   /**
@@ -512,17 +502,17 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Dictionary reject(final MonadicPredicate aBlock)
   {
-<span class="nc" id="L515">    java.lang.String exitID = &quot;Dictionary&gt;&gt;reject&quot;;</span>
-<span class="nc" id="L516">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L517">    Dictionary results = Dictionary.type().$new(this.size());</span>
-<span class="nc" id="L518">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L519">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L520">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L521">      return aBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L522">      return results.at_put(key, element);</span>
+<span class="fc" id="L505">    java.lang.String exitID = &quot;Dictionary&gt;&gt;reject&quot;;</span>
+<span class="fc" id="L506">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L507">    Dictionary results = Dictionary.type().$new(this.size());</span>
+<span class="fc" id="L508">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L509">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L510">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L511">      return aBlock.value(element).ifFalse(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L512">      return results.at_put(key, element);</span>
     }, &quot;&quot;));
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L525">    return (Dictionary)results;</span>
+<span class="fc" id="L515">    return (Dictionary)results;</span>
   }
 
   /**
@@ -530,17 +520,17 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Dictionary select(final MonadicPredicate aBlock)
   {
-<span class="nc" id="L533">    java.lang.String exitID = &quot;Dictionary&gt;&gt;select&quot;;</span>
-<span class="nc" id="L534">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L535">    Dictionary results = Dictionary.type().$new(this.size());</span>
-<span class="nc" id="L536">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L537">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L538">      ElementType element = f2.getValue(1).value();</span>
-<span class="nc" id="L539">      return aBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L540">      return results.at_put(key, element);</span>
+<span class="fc" id="L523">    java.lang.String exitID = &quot;Dictionary&gt;&gt;select&quot;;</span>
+<span class="fc" id="L524">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L525">    Dictionary results = Dictionary.type().$new(this.size());</span>
+<span class="fc" id="L526">    this.keysAndValuesDo(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L527">      KeyType key = f2.getValue(0).value();</span>
+<span class="fc" id="L528">      ElementType element = f2.getValue(1).value();</span>
+<span class="fc" id="L529">      return aBlock.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L530">      return results.at_put(key, element);</span>
     }, &quot;&quot;));
     }, &quot;key&quot;, &quot;element&quot;));
-<span class="nc" id="L543">    return (Dictionary)results;</span>
+<span class="fc" id="L533">    return (Dictionary)results;</span>
   }
 
   /**
@@ -548,10 +538,10 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary removeAll()
   {
-<span class="fc" id="L551">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAll&quot;;</span>
-<span class="fc" id="L552">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L553">    contents.clear();</span>
-<span class="fc" id="L554">    return (Dictionary)this;</span>
+<span class="fc" id="L541">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAll&quot;;</span>
+<span class="fc" id="L542">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L543">    contents.clear();</span>
+<span class="fc" id="L544">    return (Dictionary)this;</span>
   }
 
   /**
@@ -559,11 +549,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType removeKey(final KeyType key)
   {
-<span class="nc" id="L562">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeKey&quot;;</span>
-<span class="nc" id="L563">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L564">    return (ElementType)this.removeKey_ifAbsent(key, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L565">      this.elementNotFound();</span>
-<span class="nc" id="L566">    return Nil.literal();</span>
+<span class="nc" id="L552">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeKey&quot;;</span>
+<span class="nc" id="L553">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L554">    return (ElementType)this.removeKey_ifAbsent(key, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L555">      this.elementNotFound();</span>
+<span class="nc" id="L556">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -572,11 +562,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType removeKey_ifAbsent(final KeyType key, final NiladicValuable aBlock)
   {
-<span class="nc" id="L575">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeKey_ifAbsent&quot;;</span>
-<span class="nc" id="L576">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L577">    ElementType result = this.at_ifAbsent(key, aBlock);</span>
-<span class="nc" id="L578">    contents.remove(key);</span>
-<span class="nc" id="L579">    return (ElementType)result;</span>
+<span class="nc" id="L565">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeKey_ifAbsent&quot;;</span>
+<span class="nc" id="L566">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L567">    ElementType result = this.at_ifAbsent(key, aBlock);</span>
+<span class="nc" id="L568">    contents.remove(key);</span>
+<span class="nc" id="L569">    return (ElementType)result;</span>
   }
 
   /**
@@ -584,14 +574,14 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary removeAllKeys(final CollectedDistinctly&lt;KeyType&gt; keys)
   {
-<span class="nc" id="L587">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllKeys&quot;;</span>
-<span class="nc" id="L588">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L589">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L590">    this.removeAllKeys_ifAbsent(keys, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L591">      this.elementNotFound();</span>
-<span class="nc" id="L592">    return (Dictionary)f0.exit(exitID, Nil.literal().asPrimitive());</span>
+<span class="nc" id="L577">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllKeys&quot;;</span>
+<span class="nc" id="L578">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L579">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L580">    this.removeAllKeys_ifAbsent(keys, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L581">      this.elementNotFound();</span>
+<span class="nc" id="L582">    return (Dictionary)f0.exit(exitID, Nil.literal().asPrimitive());</span>
     }, &quot;&quot;));
-<span class="nc" id="L594">    return (Dictionary)this;</span>
+<span class="nc" id="L584">    return (Dictionary)this;</span>
     });
   }
 
@@ -600,16 +590,16 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Dictionary removeAllKeys_ifAbsent(final CollectedDistinctly&lt;KeyType&gt; keys, final MonadicValuable aBlock)
   {
-<span class="nc" id="L603">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllKeys_ifAbsent&quot;;</span>
-<span class="nc" id="L604">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L605">    Dictionary results = Dictionary.type().$new(this.size());</span>
-<span class="nc" id="L606">    keys.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L607">      KeyType key = f2.getValue(0).value();</span>
-<span class="nc" id="L608">      results.at_put(key, this.removeKey_ifAbsent(key, Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L609">      return aBlock.value(key);</span>
+<span class="nc" id="L593">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllKeys_ifAbsent&quot;;</span>
+<span class="nc" id="L594">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L595">    Dictionary results = Dictionary.type().$new(this.size());</span>
+<span class="nc" id="L596">    keys.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L597">      KeyType key = f2.getValue(0).value();</span>
+<span class="nc" id="L598">      results.at_put(key, this.removeKey_ifAbsent(key, Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L599">      return aBlock.value(key);</span>
     }, &quot;&quot;)));
-<span class="nc" id="L611">    }, &quot;key&quot;));</span>
-<span class="nc" id="L612">    return (Dictionary)results;</span>
+<span class="nc" id="L601">    }, &quot;key&quot;));</span>
+<span class="nc" id="L602">    return (Dictionary)results;</span>
   }
 
   /**
@@ -617,11 +607,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType remove(final ElementType element)
   {
-<span class="nc" id="L620">    java.lang.String exitID = &quot;Dictionary&gt;&gt;remove&quot;;</span>
-<span class="nc" id="L621">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L622">    return (ElementType)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L623">      this.elementNotFound();</span>
-<span class="nc" id="L624">    return Nil.literal();</span>
+<span class="nc" id="L610">    java.lang.String exitID = &quot;Dictionary&gt;&gt;remove&quot;;</span>
+<span class="nc" id="L611">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L612">    return (ElementType)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L613">      this.elementNotFound();</span>
+<span class="nc" id="L614">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -630,9 +620,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   ElementType remove_ifAbsent(final ElementType element, final NiladicValuable aBlock)
   {
-<span class="nc" id="L633">    java.lang.String exitID = &quot;Dictionary&gt;&gt;remove_ifAbsent&quot;;</span>
-<span class="nc" id="L634">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L635">    return (ElementType)this.removeKey(this.keyAtValue_ifAbsent(element, aBlock));</span>
+<span class="nc" id="L623">    java.lang.String exitID = &quot;Dictionary&gt;&gt;remove_ifAbsent&quot;;</span>
+<span class="nc" id="L624">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L625">    return (ElementType)this.removeKey(this.keyAtValue_ifAbsent(element, aBlock));</span>
   }
 
   /**
@@ -640,17 +630,17 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Collected&lt;ElementType&gt; removeAll(final Collected&lt;ElementType&gt; elements)
   {
-<span class="nc" id="L643">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L644">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L645">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L646">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L633">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L634">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L635">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L636">      ElementType element = f2.getValue(0).value();</span>
       
-<span class="nc" id="L648">    KeyType key = this.keyAtValue(element);</span>
-<span class="nc" id="L649">    return key.notNil().ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L650">      return this.removeKey(key);</span>
+<span class="nc" id="L638">    KeyType key = this.keyAtValue(element);</span>
+<span class="nc" id="L639">    return key.notNil().ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L640">      return this.removeKey(key);</span>
     }, &quot;&quot;));
     }, &quot;element&quot;));
-<span class="nc" id="L653">    return (Collected&lt;ElementType&gt;)elements;</span>
+<span class="nc" id="L643">    return (Collected&lt;ElementType&gt;)elements;</span>
   }
 
   /**
@@ -658,17 +648,17 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   OrderedCollection&lt;ElementType&gt; removeAllSuchThat(final MonadicPredicate criteria)
   {
-<span class="nc" id="L661">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllSuchThat&quot;;</span>
-<span class="nc" id="L662">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L663">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new();</span>
-<span class="nc" id="L664">    this.valuesDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L665">      ElementType element = f2.getValue(0).value();</span>
-<span class="nc" id="L666">      return criteria.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
-<span class="nc" id="L667">      results.add(element);</span>
-<span class="nc" id="L668">    this.removeKey(this.keyAtValue(element));</span>
-<span class="nc" id="L669">    }, &quot;&quot;));</span>
+<span class="nc" id="L651">    java.lang.String exitID = &quot;Dictionary&gt;&gt;removeAllSuchThat&quot;;</span>
+<span class="nc" id="L652">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L653">    OrderedCollection&lt;ElementType&gt; results = OrderedCollection.type().$new();</span>
+<span class="nc" id="L654">    this.valuesDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L655">      ElementType element = f2.getValue(0).value();</span>
+<span class="nc" id="L656">      return criteria.value(element).ifTrue(Closure.with(f3 -&gt; {</span>
+<span class="nc" id="L657">      results.add(element);</span>
+<span class="nc" id="L658">    this.removeKey(this.keyAtValue(element));</span>
+<span class="nc" id="L659">    }, &quot;&quot;));</span>
     }, &quot;element&quot;));
-<span class="nc" id="L671">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
+<span class="nc" id="L661">    return (OrderedCollection&lt;ElementType&gt;)results;</span>
   }
 
   /**
@@ -676,9 +666,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   boolean isEmpty()
   {
-<span class="nc" id="L679">    java.lang.String exitID = &quot;Dictionary&gt;&gt;isEmpty&quot;;</span>
-<span class="nc" id="L680">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L681">    return (boolean)contents.isEmpty();</span>
+<span class="nc" id="L669">    java.lang.String exitID = &quot;Dictionary&gt;&gt;isEmpty&quot;;</span>
+<span class="nc" id="L670">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L671">    return (boolean)contents.isEmpty();</span>
   }
 
   /**
@@ -686,9 +676,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   @Override public   Boolean includes(final Subject element)
   {
-<span class="nc" id="L689">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includes&quot;;</span>
-<span class="nc" id="L690">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L691">    return (Boolean)Boolean.from(contents.containsValue(((ElementType)element)));</span>
+<span class="fc" id="L679">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L680">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L681">    return (Boolean)Boolean.from(contents.containsValue(((ElementType)element)));</span>
   }
 
   /**
@@ -696,9 +686,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Boolean includesIndex(final KeyType index)
   {
-<span class="nc" id="L699">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesIndex&quot;;</span>
-<span class="nc" id="L700">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L701">    return (Boolean)Boolean.from(contents.containsKey(index));</span>
+<span class="fc" id="L689">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesIndex&quot;;</span>
+<span class="fc" id="L690">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L691">    return (Boolean)Boolean.from(contents.containsKey(index));</span>
   }
 
   /**
@@ -706,9 +696,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Posit includesKey(final KeyType key)
   {
-<span class="nc" id="L709">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesKey&quot;;</span>
-<span class="nc" id="L710">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L711">    return (Posit)this.includesIndex(key);</span>
+<span class="fc" id="L699">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesKey&quot;;</span>
+<span class="fc" id="L700">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L701">    return (Posit)this.includesIndex(key);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

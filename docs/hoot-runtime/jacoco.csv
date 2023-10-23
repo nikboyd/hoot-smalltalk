@@ -3,7 +3,7 @@ hoot-runtime,Hoot.Runtime.Names,Global,129,179,34,14,12,29,32,24,8,24
 hoot-runtime,Hoot.Runtime.Names,TypeName,305,801,66,92,41,138,66,87,18,56
 hoot-runtime,Hoot.Runtime.Names,Selector,131,230,15,1,21,54,26,10,18,10
 hoot-runtime,Hoot.Runtime.Names,Name,99,718,28,44,23,138,25,28,4,13
-hoot-runtime,Hoot.Runtime.Names,Primitive,407,851,39,35,68,179,67,56,40,46
+hoot-runtime,Hoot.Runtime.Names,Primitive,429,851,43,35,72,179,70,56,41,46
 hoot-runtime,Hoot.Runtime.Names,Signature,287,128,34,2,46,20,43,13,25,13
 hoot-runtime,Hoot.Runtime.Behaviors,Signed,317,0,50,0,46,0,42,0,17,0
 hoot-runtime,Hoot.Runtime.Behaviors,HootRegistry,161,702,5,5,22,59,28,19,23,19

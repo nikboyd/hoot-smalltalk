@@ -647,11 +647,26 @@ public class String extends CharacterString implements MutableString
   /**
    * @return 
    */
+  @Override public   String printLine()
+  {
+<span class="nc" id="L652">    java.lang.String exitID = &quot;String&gt;&gt;printLine&quot;;</span>
+<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
+    {
+<span class="nc" id="L655">    String prime = this;</span>
+<span class="nc" id="L656">    prime.add(Character.type().cr()); </span>
+
+<span class="nc" id="L658">    return prime.yourself();</span>
+    }
+  }
+
+  /**
+   * @return 
+   */
   @Override public   String printString()
   {
-<span class="fc" id="L652">    java.lang.String exitID = &quot;String&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L653">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L654">    return (String)String.from(Primitive.quoteLiterally(this.primitiveString()));</span>
+<span class="fc" id="L667">    java.lang.String exitID = &quot;String&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L668">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L669">    return (String)String.from(Primitive.quoteLiterally(this.primitiveString()));</span>
   }
 
   /**
@@ -659,9 +674,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String rightPadded(final Integer count)
   {
-<span class="fc" id="L662">    java.lang.String exitID = &quot;String&gt;&gt;rightPadded&quot;;</span>
-<span class="fc" id="L663">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L664">    return (String)String.from(StringUtils.rightPad(this.asPrimitive(), count.intValue()));</span>
+<span class="fc" id="L677">    java.lang.String exitID = &quot;String&gt;&gt;rightPadded&quot;;</span>
+<span class="fc" id="L678">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L679">    return (String)String.from(StringUtils.rightPad(this.asPrimitive(), count.intValue()));</span>
   }
 
   /**
@@ -669,9 +684,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final String ... args)
   {
-<span class="fc" id="L672">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L673">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L674">    return (String)String.from(this.formatWith(Utils.wrap(args)));</span>
+<span class="fc" id="L687">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L688">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L689">    return (String)String.from(this.formatWith(Utils.wrap(args)));</span>
   }
 
   /**
@@ -679,9 +694,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final List&lt;String&gt; args)
   {
-<span class="fc" id="L682">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L683">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L684">    return (String)this.formatWith(String.primitiveArrayFrom(args));</span>
+<span class="fc" id="L697">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L698">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L699">    return (String)this.formatWith(String.primitiveArrayFrom(args));</span>
   }
 
   /**
@@ -689,10 +704,10 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final java.lang.String ... args)
   {
-<span class="fc" id="L692">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L693">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L694">    java.lang.Object [] vargs = args;</span>
-<span class="fc" id="L695">    return (String)String.from(java.lang.String.format(this.asPrimitive(), vargs));</span>
+<span class="fc" id="L707">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L708">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L709">    java.lang.Object [] vargs = args;</span>
+<span class="fc" id="L710">    return (String)String.from(java.lang.String.format(this.asPrimitive(), vargs));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
