@@ -109,7 +109,7 @@ SequencedCollection members: "copying elements"
 
     SequencedCollection? ElementType! copyRange: Interval! range [ ^self copyFrom: range first to: range last ]
     SequencedCollection? ElementType! copyFrom: Ordinal! start to: Ordinal! stop [
-        self notEmpty ifFalse: [ ^self copy ].
+        self isEmpty ifTrue: [ ^self copy ].
      	Integer! newSize := Unity + (stop - start).
         ^(self species new: newSize)
             replaceFrom: Unity to: newSize with: self startingAt: start;
@@ -127,7 +127,7 @@ SequencedCollection members: "copying elements"
             matchIndex value: (self indexOfSubCollection: oldElements startingAt: matchIndex value).
         ].
 
-        ^matchIndices notEmpty ifTrue: [
+        ^matchIndices isEmpty ifTrue: [ self copy "just copy this" ] ifFalse: [
             "Copy the collection, replacing all the occurrences."
             FastInteger! newIndex := Unity faster.
             FastInteger! newPlace := Zero faster.
@@ -135,7 +135,7 @@ SequencedCollection members: "copying elements"
             OrderedCollection! results := OrderedCollection new: newSize.
             results registerType: oldElements first.
 
-            [ matchIndices notEmpty ] whileTrue: [
+            [ matchIndices isEmpty ] whileFalse: [
                 matchIndex value: matchIndices removeFirst.
                 "Copy the subcollection up to the match."
                 newPlace value: newIndex + matchIndex - oldIndex.
@@ -148,9 +148,6 @@ SequencedCollection members: "copying elements"
             "Copy the collection beyond the last match."
             results replaceFrom: newIndex value to: results size with: self startingAt: oldIndex value.
             results
-        ]
-        ifFalse: [
-            self copy "just copy"
         ]
     ]
 
@@ -232,7 +229,7 @@ SequencedCollection "enumerating" members:
     do: MonadicValuable! aBlock [ Unity to: self size do: [ : Integer! i | aBlock value: (self at: i) ] ]
 
     do: MonadicValuable! aBlock separatedBy: NiladicValuable! separateBlock [
-     	self notEmpty ifFalse: [ ^self ]. aBlock value: (self at: 1).
+     	self isEmpty ifTrue: [ ^self ]. aBlock value: (self at: 1).
         Duality to: self size do: [ : Integer! i | separateBlock value. aBlock value: (self at: i) ] ]
 
     reverseDo: MonadicValuable! aBlock [

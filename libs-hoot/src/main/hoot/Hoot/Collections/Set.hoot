@@ -139,6 +139,5 @@ Set members: "streaming"
 
 Set members: "testing"
 [
-    Java Lang Boolean! isEmpty [ ^contents isEmpty ]
     Boolean! includes: Subject! element [ ^Boolean from: (contents contains: element) ]
 ]

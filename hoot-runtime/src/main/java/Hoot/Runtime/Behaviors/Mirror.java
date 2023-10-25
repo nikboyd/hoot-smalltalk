@@ -24,8 +24,8 @@ public class Mirror extends Item implements Typified {
     public Mirror() { this(null); }
     public Mirror(Class<?> reflectedClass) { super(null); aClass = reflectedClass; }
 
-    @Override public int hashCode() { return isEmpty() ? super.hashCode() : aClass.hashCode(); }
-    protected boolean equals(Mirror m) { return (isEmpty() && m.isEmpty()) || (aClass.equals(m.aClass)); }
+    @Override public int hashCode() { return hasNoClass() ? super.hashCode() : aClass.hashCode(); }
+    protected boolean equals(Mirror m) { return (hasNoClass() && m.hasNoClass()) || (aClass.equals(m.aClass)); }
     @Override public boolean equals(Object mirror) {
         return hasAny(mirror) && getClass() == mirror.getClass() && falseOr(m -> this.equals(m), (Mirror) mirror); }
 
@@ -53,7 +53,7 @@ public class Mirror extends Item implements Typified {
     public static final Mirror EmptyMirror = new Mirror();
     public static Mirror emptyMirror() { return EmptyMirror; }
     @Override public Typified superclass() { return superior(); }
-    public Mirror superior() { return isEmpty() ? emptyMirror() : superMirror(); }
+    public Mirror superior() { return hasNoClass() ? emptyMirror() : superMirror(); }
     private Mirror superMirror() { return Mirror.forClass(reflectedSuperclass()); }
 
     public static Class[] unwrapTypes(List<Typified> types) {
@@ -68,6 +68,7 @@ public class Mirror extends Item implements Typified {
 
     protected Class<?> aClass; // class upon which to reflect
     @Override public void release() { aClass = null; }
+    @Override public boolean hasNoClass() { return hasNone(aClass); }
     @Override public boolean isEmpty() { return hasNone(aClass); }
     @Override public boolean isReflective() { return true; }
     @Override public Class<?> primitiveClass() { return aClass; }
@@ -76,11 +77,11 @@ public class Mirror extends Item implements Typified {
 
     public Class<?> reflectedClass() { return primitiveClass(); }
     private Class<?> reflectedSuperclass() { return reflectedClass().getSuperclass(); }
-    @Override public Class<?> outerClass() { return isEmpty() ? null : aClass.getEnclosingClass(); }
+    @Override public Class<?> outerClass() { return hasNoClass() ? null : aClass.getEnclosingClass(); }
 
-    @Override public String name() { return isEmpty() ? Empty : primitiveClass().getName(); }
-    @Override public String shortName() { return isEmpty() ? Empty : Name.typeName(name()); }
-    @Override public String description() { return isEmpty() ? Empty : primitiveClass().getCanonicalName(); }
+    @Override public String name() { return hasNoClass() ? Empty : primitiveClass().getName(); }
+    @Override public String shortName() { return hasNoClass() ? Empty : Name.typeName(name()); }
+    @Override public String description() { return hasNoClass() ? Empty : primitiveClass().getCanonicalName(); }
 
     public boolean hasMetaclass() { return (fieldType(MetaMember) != null); }
     public Field metaclassField() { return fieldNamed(MetaMember); }
@@ -112,9 +113,9 @@ public class Mirror extends Item implements Typified {
 
     @Override public List<Typified> simpleHeritage() {
         ArrayList<Typified> results = emptyList(Typified.class);
-        if (!isEmpty()) {
+        if (!hasNoClass()) {
             Typified superior = superior();
-            if (!superior.isEmpty()) {
+            if (!superior.hasNoClass()) {
                 results.add(superior);
                 results.addAll(superior.simpleHeritage());
             }
@@ -129,7 +130,7 @@ public class Mirror extends Item implements Typified {
             results.add(mirror);
             results.addAll(mirror.typeHeritage());
         });
-        if (!superior().isEmpty()) {
+        if (!superior().hasNoClass()) {
             simpleHeritage().forEach(superType -> {
                 wrap(superType.primitiveClass().getInterfaces()).forEach(impType -> {
                     Typified aType = Mirror.forClass(impType);
@@ -185,7 +186,7 @@ public class Mirror extends Item implements Typified {
 
     private Field findField(String fieldName) {
         try {
-            if (isEmpty()) return null;
+            if (hasNoClass()) return null;
             return aClass.getDeclaredField(fieldName);
         } catch (NoSuchFieldException ex) {
             return superior().fieldNamed(fieldName);
@@ -195,7 +196,7 @@ public class Mirror extends Item implements Typified {
     @SuppressWarnings("UseSpecificCatch")
     public Method findMethod(String methodName, Class[] arguments) {
         try {
-            if (isEmpty()) return null;
+            if (hasNoClass()) return null;
             return aClass.getDeclaredMethod(methodName, arguments);
         } catch (Throwable ex) {
             return superior().methodNamed(methodName, arguments);

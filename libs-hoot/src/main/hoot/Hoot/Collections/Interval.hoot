@@ -69,7 +69,7 @@ Interval "accessing" members:
 
     Integer! first [ self emptyCheck. ^self start ]
     Integer! last  [ self emptyCheck. ^(self stop - (self stop - self start \\ step)) asInteger ]
-    Integer! size  [ ^self notEmpty ifTrue: [ SmallInteger from: self countSteps ] ifFalse: [ Zero ] ]
+    Integer! size  [ ^self isEmpty ifTrue: [ Zero ] ifFalse: [ SmallInteger from: self countSteps ] ]
 
     Behavior! species [ ^Behavior <- OrderedCollection type ]
 ]
@@ -107,7 +107,14 @@ Interval members: "accessing elements"
 
 Interval members: "printing"
 [
-    String! printString [ ^( '(' , start printString , ' to: ' , stop printString , ' by: ' , step printString , ')' ) ]
+    @Static @Final String! UnityForm := '( %s to: %s )'.
+    @Static @Final String! GeneralForm := '( %s to: %s by: %s )'.
+    @Private String! reportForm [ ^step = 1 ifTrue: [ UnityForm ] ifFalse: [ GeneralForm ] ]
+    String! printString [ 
+        ^self reportForm formatWith: 
+            String <- start printString : 
+            String <- stop printString : 
+            String <- step printString ]
 ]
 
 Interval members: "copying elements"
@@ -148,14 +155,13 @@ Interval members: "testing"
     Boolean! stepsDown [ ^step < 0 ]
     @Primitive Java Lang Boolean! stepsDownward [ ^step intValue < 0 ]
 
-    @Primitive Java Lang Boolean! isEmpty [
-        (step intValue == 0) ifTrue: [ ^true ].
-    	^step intValue < 0
-            ifTrue:  [ (start intValue < stop intValue) ]
-            ifFalse: [ (stop intValue < start intValue) ] ]
+    Boolean! isEmpty [
+        ^(0 = step) or: [ self stepsDown
+            ifTrue:  [ (start < stop) ]
+            ifFalse: [ (stop  < start) ] ] ]
 
     Boolean! includes: Subject! aValue [
-        (aValue isKindOf: Integer type) ifFalse: [ ^false ].
+        (Integer type accepts: aValue) ifFalse: [ ^false ].
         Integer! candidate := Integer <- aValue.
         ^(Boolean from: ((candidate < self first) or: [candidate > self last])) not ]
 ]

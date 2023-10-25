@@ -168,6 +168,8 @@ public class Keyword {
     public static final String ReturnMessage = "$return";
     public static final String NewMessage = "$new";
     public static final String DoMessage = "$do";
+    public static final String EmptySelector = "isEmpty";
+    public static final String EmptyMessage = SCORE + EmptySelector;
 
     public static final String Import = "import";
     public static final String ImportAll = "importAll";
@@ -211,6 +213,7 @@ public class Keyword {
      */
     static {
         for (String s : MappedSelectors) MethodMap.put(s, Dollar + s);
+        MethodMap.put(EmptySelector, EmptyMessage);
     }
 
 } // Keyword

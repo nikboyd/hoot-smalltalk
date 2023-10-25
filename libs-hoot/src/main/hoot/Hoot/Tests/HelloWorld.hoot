@@ -8,7 +8,7 @@ TestableClosure subclass: HelloWorld. "prints 'Hello World' on the console"
 HelloWorld members:
 [
     printHello [ self log print: 'Hello World!'. ]
-    printWithArgs: String! joinedArgs [ joinedArgs notEmpty ifTrue: [ self log print: ' with ', joinedArgs. ] ]
+    printWithArgs: String! joinedArgs [ joinedArgs isEmpty ifFalse: [ self log print: ' with ', joinedArgs. ] ]
 
     Void! runTest [ self runWithArgs: (String listWithEach: self arguments). ]
     Void! runWithArgs: List? String! args [

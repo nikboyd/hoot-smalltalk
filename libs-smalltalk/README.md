@@ -32,10 +32,14 @@ can be instantiated.
 Many of the exception types and collection types defined in the standard are mapped directly to classes in Hoot Smalltalk,
 especially those whose names are called out in the **Standard Globals** (5.2).
 
-The method **Collected.isEmpty** in the collection protocols 5.7.1 required special treatment 
-because of the native Java **String.isEmpty** method.
+The method **Collected.isEmpty** in the collection protocols 5.7.1 required special treatment because of the 
+native Java **String.isEmpty** method.
 The native Java method has a primitive **boolean** result that cannot be replaced by **Smalltalk Core Posit**.
-This imposed pervasive changes in the Smalltalk code to use **notEmpty** instead, and flip the test logic.
+
+This imposed pervasive changes in the Smalltalk code to use **_isEmpty** instead. 
+So, the compiler recognizes when the special selector **isEmpty** appears in Smalltalk code, 
+translates that with a leading underscore, and replaces its usage as appropriate.
+The Hoot library code followed suit where appropriate.
 
 | **Section** | **ANSI Smalltalk** | **Hoot Smalltalk** |
 | ----------- | ------------------ | ------------------ |

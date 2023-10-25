@@ -80,7 +80,7 @@ Character class members: "testing characters"
 Character class members: "accessing flyweights"
 [
     "initializes the flyweight instances"
-    @Protected @Primitive Void! initialize [ AsciiCharacters isEmpty ifTrue: [ Character initializeFlyweights ]. ]
+    @Protected @Primitive Void! initialize [ AsciiCharacters size == 0 ifTrue: [ Character initializeFlyweights ]. ]
 
     Character! codePoint: Ordinal! codePoint [ ^self from: codePoint intValue ]
     Character! value: Ordinal! codePoint [ ^self codePoint: codePoint ]
