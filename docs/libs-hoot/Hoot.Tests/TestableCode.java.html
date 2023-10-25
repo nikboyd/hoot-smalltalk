@@ -107,7 +107,7 @@ public class TestableCode extends TestableClosure
   {
 <span class="fc" id="L108">    java.lang.String exitID = &quot;TestableCode&gt;&gt;showCode&quot;;</span>
 <span class="fc" id="L109">    Frame f0 = new Frame(exitID);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">    if (code.isEmpty()) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">    if ((code.size().intValue() == 0)) {</span>
 <span class="fc" id="L111">      this.log().cr();</span>
 <span class="fc" id="L112">      return this;</span>
     };

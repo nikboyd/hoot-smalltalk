@@ -329,7 +329,7 @@ import Smalltalk.Core.Subject;
 <span class="fc" id="L329">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;copyFrom_to&quot;;</span>
 <span class="fc" id="L330">    Frame f0 = new Frame(exitID);</span>
 <span class="fc" id="L331">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L332">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L332">    this._isEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L333">      return (SequencedCollection&lt;ElementType&gt;)f0.exit(exitID, this.copy());</span>
     }, &quot;&quot;));
 
@@ -362,30 +362,30 @@ import Smalltalk.Core.Subject;
 <span class="fc" id="L362">    matchIndex.add(oldElements.size());</span>
 <span class="fc" id="L363">    matchIndex.value(this.indexOfSubCollection_startingAt(oldElements, matchIndex.value()));</span>
 <span class="fc" id="L364">    }, &quot;&quot;));</span>
-<span class="fc" id="L365">    return (SequencedCollection&lt;ElementType&gt;)matchIndices.notEmpty().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L365">    return (SequencedCollection&lt;ElementType&gt;)matchIndices._isEmpty().ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L366">      return this.copy();</span>
+<span class="fc" id="L367">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
       
-<span class="fc" id="L367">    FastInteger newIndex = Unity.faster();</span>
+<span class="fc" id="L369">    FastInteger newIndex = Unity.faster();</span>
 
-<span class="fc" id="L369">    FastInteger newPlace = Zero.faster();</span>
+<span class="fc" id="L371">    FastInteger newPlace = Zero.faster();</span>
 
-<span class="fc" id="L371">    Integer newSize = (this.size().plus(((newElements.size().minus(oldElements.size())).times(matchIndices.size())))).asInteger();</span>
+<span class="fc" id="L373">    Integer newSize = (this.size().plus(((newElements.size().minus(oldElements.size())).times(matchIndices.size())))).asInteger();</span>
 
-<span class="fc" id="L373">    OrderedCollection results = OrderedCollection.type().$new(newSize);</span>
-<span class="fc" id="L374">    results.registerType(oldElements.first());</span>
-<span class="fc" id="L375">    Predicate.with(f3 -&gt; {</span>
-<span class="fc" id="L376">      return matchIndices.notEmpty();</span>
-<span class="fc" id="L377">    }, &quot;&quot;).whileTrue(Closure.with(f3 -&gt; {</span>
-<span class="fc" id="L378">      matchIndex.value(matchIndices.removeFirst());</span>
-<span class="fc" id="L379">    newPlace.value(newIndex.plus(matchIndex).minus(oldIndex));</span>
-<span class="fc" id="L380">    results.replaceFrom_to_with_startingAt(newIndex, (newPlace.plus(Negativity)), this, oldIndex);</span>
-<span class="fc" id="L381">    oldIndex.value((matchIndex.value().plus(oldElements.size())).asInteger());</span>
-<span class="fc" id="L382">    newIndex.value((newPlace.value().plus(newElements.size())).asInteger());</span>
-<span class="fc" id="L383">    return results.replaceFrom_to_with_startingAt(newPlace, (newIndex.plus(Negativity)), newElements, Unity);</span>
+<span class="fc" id="L375">    OrderedCollection results = OrderedCollection.type().$new(newSize);</span>
+<span class="fc" id="L376">    results.registerType(oldElements.first());</span>
+<span class="fc" id="L377">    Predicate.with(f3 -&gt; {</span>
+<span class="fc" id="L378">      return matchIndices._isEmpty();</span>
+<span class="fc" id="L379">    }, &quot;&quot;).whileFalse(Closure.with(f3 -&gt; {</span>
+<span class="fc" id="L380">      matchIndex.value(matchIndices.removeFirst());</span>
+<span class="fc" id="L381">    newPlace.value(newIndex.plus(matchIndex).minus(oldIndex));</span>
+<span class="fc" id="L382">    results.replaceFrom_to_with_startingAt(newIndex, (newPlace.plus(Negativity)), this, oldIndex);</span>
+<span class="fc" id="L383">    oldIndex.value((matchIndex.value().plus(oldElements.size())).asInteger());</span>
+<span class="fc" id="L384">    newIndex.value((newPlace.value().plus(newElements.size())).asInteger());</span>
+<span class="fc" id="L385">    return results.replaceFrom_to_with_startingAt(newPlace, (newIndex.plus(Negativity)), newElements, Unity);</span>
     }, &quot;&quot;));
-<span class="fc" id="L385">    results.replaceFrom_to_with_startingAt(newIndex.value(), results.size(), this, oldIndex.value());</span>
-<span class="fc" id="L386">    return results;</span>
-<span class="fc" id="L387">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L388">      return this.copy();</span>
+<span class="fc" id="L387">    results.replaceFrom_to_with_startingAt(newIndex.value(), results.size(), this, oldIndex.value());</span>
+<span class="fc" id="L388">    return results;</span>
     }, &quot;&quot;));
   }
 
@@ -627,7 +627,7 @@ import Smalltalk.Core.Subject;
 <span class="nc" id="L627">    java.lang.String exitID = &quot;SequencedCollection&gt;&gt;do_separatedBy&quot;;</span>
 <span class="nc" id="L628">    Frame f0 = new Frame(exitID);</span>
 <span class="nc" id="L629">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L630">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L630">    this._isEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L631">      return (SequencedCollection)f0.exit(exitID, this);</span>
     }, &quot;&quot;));
 <span class="nc" id="L633">    aBlock.value(this.at(SmallInteger.from(1)));</span>

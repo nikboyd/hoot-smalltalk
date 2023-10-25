@@ -150,14 +150,9 @@ public class IdentityDictionary&lt;KeyType extends Magnitude, ElementType extend
   {
 <span class="nc" id="L151">    java.lang.String exitID = &quot;IdentityDictionary&gt;&gt;equals&quot;;</span>
 <span class="nc" id="L152">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L153">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L154">    aCollection.isKindOf(IdentityDictionary.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L155">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L153">    return (Boolean)IdentityDictionary.type().accepts(aCollection).and(Predicate.with(f2 -&gt; {</span>
+<span class="nc" id="L154">      return (this.equals(((IdentityDictionary)aCollection)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L157">    return (Boolean)f0.exit(exitID, IdentityDictionary.type().accepts(aCollection).and(Predicate.with(f2 -&gt; {</span>
-<span class="nc" id="L158">      return (this.equals(((IdentityDictionary)aCollection)));</span>
-    }, &quot;&quot;)));
-    });
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -48,7 +48,7 @@ import java.util.*;
   {
 <span class="fc" id="L49">    java.lang.String exitID = &quot;HelloWorld&gt;&gt;printWithArgs&quot;;</span>
 <span class="fc" id="L50">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L51">    joinedArgs.notEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L51">    joinedArgs._isEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
 <span class="fc" id="L52">      this.log().print((String.from(&quot; with &quot;).append(joinedArgs)));</span>
 <span class="fc" id="L53">    }, &quot;&quot;));</span>
 <span class="fc" id="L54">    return (HelloWorld)this;</span>

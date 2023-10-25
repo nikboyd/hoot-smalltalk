@@ -698,11 +698,11 @@ import java.util.List;
   /**
    * @return 
    */
-  public   boolean isEmpty()
+  public   Boolean _isEmpty()
   {
-<span class="fc" id="L703">    java.lang.String exitID = &quot;Collection&gt;&gt;isEmpty&quot;;</span>
+<span class="fc" id="L703">    java.lang.String exitID = &quot;Collection&gt;&gt;_isEmpty&quot;;</span>
 <span class="fc" id="L704">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L705">    return (boolean)(SmallInteger.from(0).equals(this.size())).primitiveBoolean();</span>
+<span class="fc" id="L705">    return (Boolean)(SmallInteger.from(0).equals(this.size()));</span>
   }
 
   /**
@@ -712,7 +712,7 @@ import java.util.List;
   {
 <span class="fc" id="L713">    java.lang.String exitID = &quot;Collection&gt;&gt;notEmpty&quot;;</span>
 <span class="fc" id="L714">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L715">    return (Boolean)Boolean.from(this.isEmpty()).not();</span>
+<span class="fc" id="L715">    return (Boolean)(SmallInteger.from(0).lessThan(this.size()));</span>
   }
 
   /**
@@ -723,7 +723,7 @@ import java.util.List;
 <span class="fc" id="L723">    java.lang.String exitID = &quot;Collection&gt;&gt;emptyCheck&quot;;</span>
 <span class="fc" id="L724">    Frame f0 = new Frame(exitID);</span>
 <span class="fc" id="L725">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L726">    this.notEmpty().ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L726">    this._isEmpty().ifTrue(Closure.with(f2 -&gt; {</span>
 <span class="nc" id="L727">      return (Collection)f0.exit(exitID, this.emptyCollectionError());</span>
     }, &quot;&quot;));
 <span class="fc" id="L729">    return (Collection)this;</span>

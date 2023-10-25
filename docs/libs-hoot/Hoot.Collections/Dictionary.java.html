@@ -664,21 +664,11 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
   /**
    * @return 
    */
-  @Override public   boolean isEmpty()
-  {
-<span class="nc" id="L669">    java.lang.String exitID = &quot;Dictionary&gt;&gt;isEmpty&quot;;</span>
-<span class="nc" id="L670">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L671">    return (boolean)contents.isEmpty();</span>
-  }
-
-  /**
-   * @return 
-   */
   @Override public   Boolean includes(final Subject element)
   {
-<span class="fc" id="L679">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includes&quot;;</span>
-<span class="fc" id="L680">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L681">    return (Boolean)Boolean.from(contents.containsValue(((ElementType)element)));</span>
+<span class="fc" id="L669">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L670">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L671">    return (Boolean)Boolean.from(contents.containsValue(((ElementType)element)));</span>
   }
 
   /**
@@ -686,9 +676,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Boolean includesIndex(final KeyType index)
   {
-<span class="fc" id="L689">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesIndex&quot;;</span>
-<span class="fc" id="L690">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L691">    return (Boolean)Boolean.from(contents.containsKey(index));</span>
+<span class="fc" id="L679">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesIndex&quot;;</span>
+<span class="fc" id="L680">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L681">    return (Boolean)Boolean.from(contents.containsKey(index));</span>
   }
 
   /**
@@ -696,9 +686,9 @@ public class Dictionary&lt;KeyType extends Object, ElementType extends Object&gt
    */
   public   Posit includesKey(final KeyType key)
   {
-<span class="fc" id="L699">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesKey&quot;;</span>
-<span class="fc" id="L700">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L701">    return (Posit)this.includesIndex(key);</span>
+<span class="fc" id="L689">    java.lang.String exitID = &quot;Dictionary&gt;&gt;includesKey&quot;;</span>
+<span class="fc" id="L690">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L691">    return (Posit)this.includesIndex(key);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

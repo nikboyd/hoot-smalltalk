@@ -24,8 +24,8 @@ public class Mirror extends Item implements Typified {
 <span class="fc" id="L24">    public Mirror() { this(null); }</span>
 <span class="fc" id="L25">    public Mirror(Class&lt;?&gt; reflectedClass) { super(null); aClass = reflectedClass; }</span>
 
-<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    @Override public int hashCode() { return isEmpty() ? super.hashCode() : aClass.hashCode(); }</span>
-<span class="nc bnc" id="L28" title="All 6 branches missed.">    protected boolean equals(Mirror m) { return (isEmpty() &amp;&amp; m.isEmpty()) || (aClass.equals(m.aClass)); }</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    @Override public int hashCode() { return hasNoClass() ? super.hashCode() : aClass.hashCode(); }</span>
+<span class="nc bnc" id="L28" title="All 6 branches missed.">    protected boolean equals(Mirror m) { return (hasNoClass() &amp;&amp; m.hasNoClass()) || (aClass.equals(m.aClass)); }</span>
     @Override public boolean equals(Object mirror) {
 <span class="nc bnc" id="L30" title="All 6 branches missed.">        return hasAny(mirror) &amp;&amp; getClass() == mirror.getClass() &amp;&amp; falseOr(m -&gt; this.equals(m), (Mirror) mirror); }</span>
 
@@ -53,7 +53,7 @@ public class Mirror extends Item implements Typified {
 <span class="fc" id="L53">    public static final Mirror EmptyMirror = new Mirror();</span>
 <span class="fc" id="L54">    public static Mirror emptyMirror() { return EmptyMirror; }</span>
 <span class="nc" id="L55">    @Override public Typified superclass() { return superior(); }</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">    public Mirror superior() { return isEmpty() ? emptyMirror() : superMirror(); }</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">    public Mirror superior() { return hasNoClass() ? emptyMirror() : superMirror(); }</span>
 <span class="fc" id="L57">    private Mirror superMirror() { return Mirror.forClass(reflectedSuperclass()); }</span>
 
     public static Class[] unwrapTypes(List&lt;Typified&gt; types) {
@@ -68,142 +68,143 @@ public class Mirror extends Item implements Typified {
 
     protected Class&lt;?&gt; aClass; // class upon which to reflect
 <span class="nc" id="L70">    @Override public void release() { aClass = null; }</span>
-<span class="fc" id="L71">    @Override public boolean isEmpty() { return hasNone(aClass); }</span>
-<span class="fc" id="L72">    @Override public boolean isReflective() { return true; }</span>
-<span class="fc" id="L73">    @Override public Class&lt;?&gt; primitiveClass() { return aClass; }</span>
-<span class="fc" id="L74">    public boolean isTypical() { return Typified.class.isInstance(aClass); }</span>
-<span class="nc" id="L75">    public Typified reflectedType() { return Typified.class.cast(aClass); }</span>
+<span class="fc" id="L71">    @Override public boolean hasNoClass() { return hasNone(aClass); }</span>
+<span class="fc" id="L72">    @Override public boolean isEmpty() { return hasNone(aClass); }</span>
+<span class="fc" id="L73">    @Override public boolean isReflective() { return true; }</span>
+<span class="fc" id="L74">    @Override public Class&lt;?&gt; primitiveClass() { return aClass; }</span>
+<span class="fc" id="L75">    public boolean isTypical() { return Typified.class.isInstance(aClass); }</span>
+<span class="nc" id="L76">    public Typified reflectedType() { return Typified.class.cast(aClass); }</span>
 
-<span class="fc" id="L77">    public Class&lt;?&gt; reflectedClass() { return primitiveClass(); }</span>
-<span class="fc" id="L78">    private Class&lt;?&gt; reflectedSuperclass() { return reflectedClass().getSuperclass(); }</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">    @Override public Class&lt;?&gt; outerClass() { return isEmpty() ? null : aClass.getEnclosingClass(); }</span>
+<span class="fc" id="L78">    public Class&lt;?&gt; reflectedClass() { return primitiveClass(); }</span>
+<span class="fc" id="L79">    private Class&lt;?&gt; reflectedSuperclass() { return reflectedClass().getSuperclass(); }</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">    @Override public Class&lt;?&gt; outerClass() { return hasNoClass() ? null : aClass.getEnclosingClass(); }</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">    @Override public String name() { return isEmpty() ? Empty : primitiveClass().getName(); }</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">    @Override public String shortName() { return isEmpty() ? Empty : Name.typeName(name()); }</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">    @Override public String description() { return isEmpty() ? Empty : primitiveClass().getCanonicalName(); }</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    @Override public String name() { return hasNoClass() ? Empty : primitiveClass().getName(); }</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">    @Override public String shortName() { return hasNoClass() ? Empty : Name.typeName(name()); }</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">    @Override public String description() { return hasNoClass() ? Empty : primitiveClass().getCanonicalName(); }</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">    public boolean hasMetaclass() { return (fieldType(MetaMember) != null); }</span>
-<span class="nc" id="L86">    public Field metaclassField() { return fieldNamed(MetaMember); }</span>
-<span class="fc" id="L87">    public Class&lt;?&gt; metaclassType() { return fieldType(MetaMember); }</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">    @Override public Typified $class() { return hasMetaclass() ? Mirror.forClass(metaclassType()) : null; }</span>
-<span class="nc" id="L89">    public Typified metaclassInstance() { return nullOrTryLoudly(() -&gt; (Typified)metaclassField().get(null)); }</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">    public boolean hasMetaclass() { return (fieldType(MetaMember) != null); }</span>
+<span class="nc" id="L87">    public Field metaclassField() { return fieldNamed(MetaMember); }</span>
+<span class="fc" id="L88">    public Class&lt;?&gt; metaclassType() { return fieldType(MetaMember); }</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    @Override public Typified $class() { return hasMetaclass() ? Mirror.forClass(metaclassType()) : null; }</span>
+<span class="nc" id="L90">    public Typified metaclassInstance() { return nullOrTryLoudly(() -&gt; (Typified)metaclassField().get(null)); }</span>
 
-<span class="fc" id="L91">    public Field fieldNamed(String fieldName) { return findField(fieldName); }</span>
+<span class="fc" id="L92">    public Field fieldNamed(String fieldName) { return findField(fieldName); }</span>
     public Class&lt;?&gt; fieldType(String fieldName) {
-<span class="fc" id="L93">        return nullOr(f -&gt; f.getType(), fieldNamed(fieldName)); }</span>
+<span class="fc" id="L94">        return nullOr(f -&gt; f.getType(), fieldNamed(fieldName)); }</span>
 
-<span class="nc" id="L95">    @Override public Signed getSigned(Signed s) { return nullOr(m -&gt; Signature.from(m), methodSigned(s)); }</span>
+<span class="nc" id="L96">    @Override public Signed getSigned(Signed s) { return nullOr(m -&gt; Signature.from(m), methodSigned(s)); }</span>
     public Method methodSigned(Signed s) {
-<span class="nc" id="L97">        return findFirst(select(wrap(aClass.getDeclaredMethods()),</span>
-<span class="nc" id="L98">            m -&gt; m.getName().equals(s.methodName())),</span>
-<span class="nc" id="L99">            m -&gt; Signature.from(m).matchesArgumentTypes(s)); }</span>
+<span class="nc" id="L98">        return findFirst(select(wrap(aClass.getDeclaredMethods()),</span>
+<span class="nc" id="L99">            m -&gt; m.getName().equals(s.methodName())),</span>
+<span class="nc" id="L100">            m -&gt; Signature.from(m).matchesArgumentTypes(s)); }</span>
 
     public Method methodSigned(String signature) {
-<span class="nc" id="L102">        List&lt;String&gt; parts = Signature.parse(signature);</span>
-<span class="nc" id="L103">        return methodNamed(parts.get(1), Signature.argumentTypes(parts)); }</span>
+<span class="nc" id="L103">        List&lt;String&gt; parts = Signature.parse(signature);</span>
+<span class="nc" id="L104">        return methodNamed(parts.get(1), Signature.argumentTypes(parts)); }</span>
 
-<span class="nc" id="L105">    public Method methodNamed(String methodName, Class[] arguments) { return findMethod(methodName, arguments); }</span>
+<span class="nc" id="L106">    public Method methodNamed(String methodName, Class[] arguments) { return findMethod(methodName, arguments); }</span>
     public Class&lt;?&gt; methodType(String methodName, Class[] arguments) {
-<span class="nc" id="L107">        return nullOr(m -&gt; m.getReturnType(), methodNamed(methodName, arguments)); }</span>
+<span class="nc" id="L108">        return nullOr(m -&gt; m.getReturnType(), methodNamed(methodName, arguments)); }</span>
 
-<span class="nc" id="L109">    @Override public Class&lt;?&gt; resolveType(Named reference) { return fieldType(reference.name().toString()); }</span>
+<span class="nc" id="L110">    @Override public Class&lt;?&gt; resolveType(Named reference) { return fieldType(reference.name().toString()); }</span>
     @Override public String resolveTypeName(Named reference) {
-<span class="nc" id="L111">        return emptyOr(type -&gt; type.getCanonicalName(), resolveType(reference)); }</span>
+<span class="nc" id="L112">        return emptyOr(type -&gt; type.getCanonicalName(), resolveType(reference)); }</span>
 
     @Override public List&lt;Typified&gt; simpleHeritage() {
-<span class="fc" id="L114">        ArrayList&lt;Typified&gt; results = emptyList(Typified.class);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (!isEmpty()) {</span>
-<span class="fc" id="L116">            Typified superior = superior();</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">            if (!superior.isEmpty()) {</span>
-<span class="fc" id="L118">                results.add(superior);</span>
-<span class="fc" id="L119">                results.addAll(superior.simpleHeritage());</span>
+<span class="fc" id="L115">        ArrayList&lt;Typified&gt; results = emptyList(Typified.class);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (!hasNoClass()) {</span>
+<span class="fc" id="L117">            Typified superior = superior();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (!superior.hasNoClass()) {</span>
+<span class="fc" id="L119">                results.add(superior);</span>
+<span class="fc" id="L120">                results.addAll(superior.simpleHeritage());</span>
             }
         }
-<span class="fc" id="L122">        return results;</span>
+<span class="fc" id="L123">        return results;</span>
     }
 
     @Override public List&lt;Typified&gt; typeHeritage() {
-<span class="fc" id="L126">        Set&lt;Typified&gt; results = emptySet(Typified.class);</span>
-<span class="fc" id="L127">        wrap(primitiveClass().getInterfaces()).forEach(type -&gt; {</span>
-<span class="fc" id="L128">            Typified mirror = Mirror.forClass(type);</span>
-<span class="fc" id="L129">            results.add(mirror);</span>
-<span class="fc" id="L130">            results.addAll(mirror.typeHeritage());</span>
-<span class="fc" id="L131">        });</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (!superior().isEmpty()) {</span>
-<span class="fc" id="L133">            simpleHeritage().forEach(superType -&gt; {</span>
-<span class="fc" id="L134">                wrap(superType.primitiveClass().getInterfaces()).forEach(impType -&gt; {</span>
-<span class="fc" id="L135">                    Typified aType = Mirror.forClass(impType);</span>
-<span class="fc" id="L136">                    results.add(aType);</span>
-<span class="fc" id="L137">                    results.addAll(aType.typeHeritage());</span>
-<span class="fc" id="L138">                });</span>
-<span class="fc" id="L139">            });</span>
+<span class="fc" id="L127">        Set&lt;Typified&gt; results = emptySet(Typified.class);</span>
+<span class="fc" id="L128">        wrap(primitiveClass().getInterfaces()).forEach(type -&gt; {</span>
+<span class="fc" id="L129">            Typified mirror = Mirror.forClass(type);</span>
+<span class="fc" id="L130">            results.add(mirror);</span>
+<span class="fc" id="L131">            results.addAll(mirror.typeHeritage());</span>
+<span class="fc" id="L132">        });</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (!superior().hasNoClass()) {</span>
+<span class="fc" id="L134">            simpleHeritage().forEach(superType -&gt; {</span>
+<span class="fc" id="L135">                wrap(superType.primitiveClass().getInterfaces()).forEach(impType -&gt; {</span>
+<span class="fc" id="L136">                    Typified aType = Mirror.forClass(impType);</span>
+<span class="fc" id="L137">                    results.add(aType);</span>
+<span class="fc" id="L138">                    results.addAll(aType.typeHeritage());</span>
+<span class="fc" id="L139">                });</span>
+<span class="fc" id="L140">            });</span>
         }
-<span class="fc" id="L141">        return copyList(results);</span>
+<span class="fc" id="L142">        return copyList(results);</span>
     }
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">    @Override public boolean resolves(Named reference) { return fieldNamed(reference.shortName()) != null; }</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">    @Override public boolean resolves(Named reference) { return fieldNamed(reference.shortName()) != null; }</span>
     @Override public boolean overridenBy(Signed s) {
-<span class="nc" id="L146">        Typified mFace = s.faceType();</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (mFace.inheritsFrom(this)) {</span>
-<span class="nc" id="L148">            Method result = methodSigned(s);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">            if (hasAny(result)) return true;</span>
+<span class="nc" id="L147">        Typified mFace = s.faceType();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (mFace.inheritsFrom(this)) {</span>
+<span class="nc" id="L149">            Method result = methodSigned(s);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (hasAny(result)) return true;</span>
 //            if (result == null) return false;
 //            return s.overrides(Signature.from(result));
         }
-<span class="nc" id="L153">        return false;</span>
+<span class="nc" id="L154">        return false;</span>
     }
 
-<span class="nc" id="L156">    @Override public Signed getSigned(String s) { return Signature.from(methodSigned(s)); }</span>
+<span class="nc" id="L157">    @Override public Signed getSigned(String s) { return Signature.from(methodSigned(s)); }</span>
     @Override public String matchSignatures(Signed s) {
-<span class="nc" id="L158">        String fullSig = s.fullSignature();</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (getSigned(fullSig) != null) return fullSig;</span>
+<span class="nc" id="L159">        String fullSig = s.fullSignature();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (getSigned(fullSig) != null) return fullSig;</span>
 
-<span class="nc" id="L161">        String erasedSig = s.erasedSignature();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (getSigned(erasedSig) != null) return erasedSig;</span>
+<span class="nc" id="L162">        String erasedSig = s.erasedSignature();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (getSigned(erasedSig) != null) return erasedSig;</span>
 
-<span class="nc" id="L164">        String shortSig = s.shortSignature();</span>
-<span class="nc" id="L165">        List&lt;String&gt; parts = Signature.parse(shortSig);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (s.argumentCount() &gt; 0) {</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">            for (Method m : aClass.getMethods()) {</span>
-<span class="nc" id="L168">                Signature sig = Signature.from(m);</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">                if (sig.shortSignature().equals(parts.get(1))) {</span>
-<span class="nc" id="L170">                    return sig.shortSignature();</span>
+<span class="nc" id="L165">        String shortSig = s.shortSignature();</span>
+<span class="nc" id="L166">        List&lt;String&gt; parts = Signature.parse(shortSig);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (s.argumentCount() &gt; 0) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            for (Method m : aClass.getMethods()) {</span>
+<span class="nc" id="L169">                Signature sig = Signature.from(m);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                if (sig.shortSignature().equals(parts.get(1))) {</span>
+<span class="nc" id="L171">                    return sig.shortSignature();</span>
                 }
             }
         }
 
-<span class="nc" id="L175">        return Empty;</span>
+<span class="nc" id="L176">        return Empty;</span>
     }
 
     // registered class mirrors
-<span class="fc" id="L179">    protected static Map&lt;Class, Mirror&gt; Registry = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L180">    protected static Map&lt;Class, Mirror&gt; Registry = new HashMap&lt;&gt;();</span>
     public static void releaseAll() {
-<span class="nc" id="L181">        Registry.entrySet().forEach(entry -&gt; entry.getValue().release());</span>
-<span class="nc" id="L182">        Registry.clear();</span>
-<span class="nc" id="L183">    }</span>
+<span class="nc" id="L182">        Registry.entrySet().forEach(entry -&gt; entry.getValue().release());</span>
+<span class="nc" id="L183">        Registry.clear();</span>
+<span class="nc" id="L184">    }</span>
 
 
     private Field findField(String fieldName) {
         try {
-<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (isEmpty()) return null;</span>
-<span class="fc" id="L189">            return aClass.getDeclaredField(fieldName);</span>
-<span class="fc" id="L190">        } catch (NoSuchFieldException ex) {</span>
-<span class="fc" id="L191">            return superior().fieldNamed(fieldName);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">            if (hasNoClass()) return null;</span>
+<span class="fc" id="L190">            return aClass.getDeclaredField(fieldName);</span>
+<span class="fc" id="L191">        } catch (NoSuchFieldException ex) {</span>
+<span class="fc" id="L192">            return superior().fieldNamed(fieldName);</span>
         }
     }
 
     @SuppressWarnings(&quot;UseSpecificCatch&quot;)
     public Method findMethod(String methodName, Class[] arguments) {
         try {
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">            if (isEmpty()) return null;</span>
-<span class="fc" id="L199">            return aClass.getDeclaredMethod(methodName, arguments);</span>
-<span class="nc" id="L200">        } catch (Throwable ex) {</span>
-<span class="nc" id="L201">            return superior().methodNamed(methodName, arguments);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">            if (hasNoClass()) return null;</span>
+<span class="fc" id="L200">            return aClass.getDeclaredMethod(methodName, arguments);</span>
+<span class="nc" id="L201">        } catch (Throwable ex) {</span>
+<span class="nc" id="L202">            return superior().methodNamed(methodName, arguments);</span>
         }
     }
 
     public Method findMethod(String methodName, List&lt;String&gt; typeNames) {
-<span class="nc" id="L206">        return null; // ??</span>
+<span class="nc" id="L207">        return null; // ??</span>
     }
 
 } // Mirror

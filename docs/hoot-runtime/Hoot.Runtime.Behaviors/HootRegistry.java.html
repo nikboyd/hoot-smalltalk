@@ -79,54 +79,55 @@ import Hoot.Runtime.Faces.Logging;
 <span class="nc" id="L79">    public static Valued nilValue() { return getValue(NilType().findClass()); }</span>
 <span class="nc" id="L80">    public static ConditionalValue trueValue() { return getValue(TrueType().findClass()); }</span>
 <span class="nc" id="L81">    public static ConditionalValue falseValue() { return getValue(FalseType().findClass()); }</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">    public static ConditionalValue positFrom(boolean value) { return value? trueValue(): falseValue(); }</span>
 
-<span class="nc" id="L83">    public static boolean isRunning() { return false; }</span>
-<span class="nc" id="L84">    public static boolean isReady() { return false; }</span>
+<span class="nc" id="L84">    public static boolean isRunning() { return false; }</span>
+<span class="nc" id="L85">    public static boolean isReady() { return false; }</span>
 
-<span class="fc" id="L86">    static final TypeName[] LiteralTypes = {</span>
-<span class="fc" id="L87">        NilType(), TrueType(), FalseType(), StringType(), SymbolType(),</span>
-<span class="fc" id="L88">        CharacterType(), IntegerType(), FixedType(), FloatType(), DoubleType(),</span>
-<span class="fc" id="L89">        ArrayType(),</span>
+<span class="fc" id="L87">    static final TypeName[] LiteralTypes = {</span>
+<span class="fc" id="L88">        NilType(), TrueType(), FalseType(), StringType(), SymbolType(),</span>
+<span class="fc" id="L89">        CharacterType(), IntegerType(), FixedType(), FloatType(), DoubleType(),</span>
+<span class="fc" id="L90">        ArrayType(),</span>
     };
 
-<span class="fc" id="L92">    static final TypeName[] CollectionTypes = {</span>
-<span class="fc" id="L93">        TypeName.fromCache(Hoot, Collections, &quot;Set&quot;),</span>
-<span class="fc" id="L94">        TypeName.fromCache(Hoot, Collections, &quot;Bag&quot;),</span>
-<span class="fc" id="L95">        TypeName.fromCache(Hoot, Collections, &quot;ByteArray&quot;),</span>
-<span class="fc" id="L96">        TypeName.fromCache(Hoot, Collections, &quot;Dictionary&quot;),</span>
-<span class="fc" id="L97">        TypeName.fromCache(Hoot, Collections, &quot;IdentityDictionary&quot;),</span>
-<span class="fc" id="L98">        TypeName.fromCache(Hoot, Collections, &quot;IdentitySet&quot;),</span>
-<span class="fc" id="L99">        TypeName.fromCache(Hoot, Collections, &quot;OrderedCollection&quot;),</span>
-<span class="fc" id="L100">        TypeName.fromCache(Hoot, Collections, &quot;SortedCollection&quot;),</span>
-<span class="fc" id="L101">        TypeName.fromCache(Hoot, Collections, &quot;Interval&quot;),</span>
+<span class="fc" id="L93">    static final TypeName[] CollectionTypes = {</span>
+<span class="fc" id="L94">        TypeName.fromCache(Hoot, Collections, &quot;Set&quot;),</span>
+<span class="fc" id="L95">        TypeName.fromCache(Hoot, Collections, &quot;Bag&quot;),</span>
+<span class="fc" id="L96">        TypeName.fromCache(Hoot, Collections, &quot;ByteArray&quot;),</span>
+<span class="fc" id="L97">        TypeName.fromCache(Hoot, Collections, &quot;Dictionary&quot;),</span>
+<span class="fc" id="L98">        TypeName.fromCache(Hoot, Collections, &quot;IdentityDictionary&quot;),</span>
+<span class="fc" id="L99">        TypeName.fromCache(Hoot, Collections, &quot;IdentitySet&quot;),</span>
+<span class="fc" id="L100">        TypeName.fromCache(Hoot, Collections, &quot;OrderedCollection&quot;),</span>
+<span class="fc" id="L101">        TypeName.fromCache(Hoot, Collections, &quot;SortedCollection&quot;),</span>
+<span class="fc" id="L102">        TypeName.fromCache(Hoot, Collections, &quot;Interval&quot;),</span>
     };
 
-<span class="fc" id="L104">    static final TypeName[] MagnitudeTypes = {</span>
-<span class="fc" id="L105">        TypeName.fromCache(Hoot, Magnitudes, &quot;Time&quot;),</span>
-<span class="fc" id="L106">        TypeName.fromCache(Hoot, Magnitudes, &quot;Fraction&quot;),</span>
-<span class="fc" id="L107">        TypeName.fromCache(Hoot, Magnitudes, &quot;Association&quot;),</span>
-<span class="fc" id="L108">        TypeName.fromCache(Hoot, Magnitudes, &quot;FastInteger&quot;),</span>
-<span class="fc" id="L109">        TypeName.fromCache(Hoot, Magnitudes, &quot;LargeInteger&quot;),</span>
-<span class="fc" id="L110">        TypeName.fromCache(Hoot, Magnitudes, &quot;LongInteger&quot;),</span>
+<span class="fc" id="L105">    static final TypeName[] MagnitudeTypes = {</span>
+<span class="fc" id="L106">        TypeName.fromCache(Hoot, Magnitudes, &quot;Time&quot;),</span>
+<span class="fc" id="L107">        TypeName.fromCache(Hoot, Magnitudes, &quot;Fraction&quot;),</span>
+<span class="fc" id="L108">        TypeName.fromCache(Hoot, Magnitudes, &quot;Association&quot;),</span>
+<span class="fc" id="L109">        TypeName.fromCache(Hoot, Magnitudes, &quot;FastInteger&quot;),</span>
+<span class="fc" id="L110">        TypeName.fromCache(Hoot, Magnitudes, &quot;LargeInteger&quot;),</span>
+<span class="fc" id="L111">        TypeName.fromCache(Hoot, Magnitudes, &quot;LongInteger&quot;),</span>
     };
 
-<span class="fc" id="L113">    static final TypeName[] ExceptionTypes = {</span>
-<span class="fc" id="L114">        TypeName.fromCache(Hoot, Exceptions, &quot;Exception&quot;),</span>
-<span class="fc" id="L115">        TypeName.fromCache(Hoot, Exceptions, &quot;Error&quot;),</span>
-<span class="fc" id="L116">        TypeName.fromCache(Hoot, Exceptions, &quot;ControlError&quot;),</span>
-<span class="fc" id="L117">        TypeName.fromCache(Hoot, Exceptions, &quot;Warning&quot;),</span>
-<span class="fc" id="L118">        TypeName.fromCache(Hoot, Exceptions, &quot;ArithmeticError&quot;),</span>
-<span class="fc" id="L119">        TypeName.fromCache(Hoot, Exceptions, &quot;ZeroDivide&quot;),</span>
+<span class="fc" id="L114">    static final TypeName[] ExceptionTypes = {</span>
+<span class="fc" id="L115">        TypeName.fromCache(Hoot, Exceptions, &quot;Exception&quot;),</span>
+<span class="fc" id="L116">        TypeName.fromCache(Hoot, Exceptions, &quot;Error&quot;),</span>
+<span class="fc" id="L117">        TypeName.fromCache(Hoot, Exceptions, &quot;ControlError&quot;),</span>
+<span class="fc" id="L118">        TypeName.fromCache(Hoot, Exceptions, &quot;Warning&quot;),</span>
+<span class="fc" id="L119">        TypeName.fromCache(Hoot, Exceptions, &quot;ArithmeticError&quot;),</span>
+<span class="fc" id="L120">        TypeName.fromCache(Hoot, Exceptions, &quot;ZeroDivide&quot;),</span>
     };
 
-<span class="fc" id="L122">    static final TypeName[] StreamTypes = {</span>
-<span class="fc" id="L123">        TypeName.fromCache(Hoot, Streams, &quot;Transcript&quot;),</span>
-<span class="fc" id="L124">        TypeName.fromCache(Hoot, Streams, &quot;TextWriteStream&quot;),</span>
+<span class="fc" id="L123">    static final TypeName[] StreamTypes = {</span>
+<span class="fc" id="L124">        TypeName.fromCache(Hoot, Streams, &quot;Transcript&quot;),</span>
+<span class="fc" id="L125">        TypeName.fromCache(Hoot, Streams, &quot;TextWriteStream&quot;),</span>
     };
 
     static {
-<span class="fc" id="L128">        registerType(Mirror.forClass(JavaRoot));</span>
-<span class="fc" id="L129">    }</span>
+<span class="fc" id="L129">        registerType(Mirror.forClass(JavaRoot));</span>
+<span class="fc" id="L130">    }</span>
 
 } // HootRegistry
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

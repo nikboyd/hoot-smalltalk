@@ -6,9 +6,9 @@ hoot-runtime,Hoot.Runtime.Names,Name,99,718,28,44,23,138,25,28,4,13
 hoot-runtime,Hoot.Runtime.Names,Primitive,429,851,43,35,72,179,70,56,41,46
 hoot-runtime,Hoot.Runtime.Names,Signature,287,128,34,2,46,20,43,13,25,13
 hoot-runtime,Hoot.Runtime.Behaviors,Signed,317,0,50,0,46,0,42,0,17,0
-hoot-runtime,Hoot.Runtime.Behaviors,HootRegistry,161,702,5,5,22,59,28,19,23,19
-hoot-runtime,Hoot.Runtime.Behaviors,Mirror,302,269,38,22,44,58,54,42,31,35
-hoot-runtime,Hoot.Runtime.Behaviors,Typified,150,31,14,2,35,5,32,7,25,6
+hoot-runtime,Hoot.Runtime.Behaviors,HootRegistry,167,702,7,5,23,59,30,19,24,19
+hoot-runtime,Hoot.Runtime.Behaviors,Mirror,302,273,38,22,44,59,54,43,31,36
+hoot-runtime,Hoot.Runtime.Behaviors,Typified,154,31,14,2,36,5,33,7,26,6
 hoot-runtime,Hoot.Runtime.Behaviors,Scope,119,39,11,1,23,8,26,7,20,7
 hoot-runtime,Hoot.Runtime.Behaviors,Invoke,96,281,12,18,12,50,15,35,6,29
 hoot-runtime,Hoot.Runtime.Notes,Note,36,163,17,9,3,31,16,26,3,26

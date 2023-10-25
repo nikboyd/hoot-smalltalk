@@ -327,7 +327,7 @@ public abstract class Behavior extends Object implements Classified
   {
 <span class="nc" id="L328">    java.lang.String exitID = &quot;Behavior&gt;&gt;allSuperclassesDo&quot;;</span>
 <span class="nc" id="L329">    Frame f0 = new Frame(exitID);</span>
-<span class="nc bnc" id="L330" title="All 2 branches missed.">    if (this.superclass().isEmpty()) {</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">    if (this.superclass().hasNoClass()) {</span>
 <span class="nc" id="L331">      return this;</span>
     };
 <span class="nc" id="L333">    ((Behavior)this.superclass()).onlySuperclassesDo(aBlock);</span>
@@ -342,7 +342,7 @@ public abstract class Behavior extends Object implements Classified
 <span class="nc" id="L342">    java.lang.String exitID = &quot;Behavior&gt;&gt;onlySuperclassesDo&quot;;</span>
 <span class="nc" id="L343">    Frame f0 = new Frame(exitID);</span>
 <span class="nc" id="L344">    aBlock.value(this.yourself());</span>
-<span class="nc bnc" id="L345" title="All 2 branches missed.">    if (this.superclass().isEmpty()) {</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">    if (this.superclass().hasNoClass()) {</span>
 <span class="nc" id="L346">      return this;</span>
     };
 <span class="nc" id="L348">    ((Behavior)this.superclass()).onlySuperclassesDo(aBlock);</span>
@@ -456,7 +456,7 @@ public abstract class Behavior extends Object implements Classified
     };
 
 <span class="fc" id="L458">    Typified result = HootRegistry.getType(this.primitiveSuperclass());</span>
-<span class="fc bfc" id="L459" title="All 2 branches covered.">    if (result.isEmpty()) {</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">    if (result.hasNoClass()) {</span>
 <span class="fc" id="L460">      return False.literal();</span>
     };
 <span class="fc" id="L462">    return (Boolean)True.literal();</span>
@@ -484,7 +484,7 @@ public abstract class Behavior extends Object implements Classified
     };
 
 <span class="fc" id="L486">    Typified result = HootRegistry.getType(this.primitiveSuperclass());</span>
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">    if (result.isEmpty()) {</span>
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">    if (result.hasNoClass()) {</span>
 <span class="nc" id="L488">      return null;</span>
     };
 <span class="fc" id="L490">    return (Classified)result;</span>
