@@ -40,6 +40,7 @@ public class KeywordTest {
         assertTrue(Keyword.with("new:").methodName().equals(NewMessage));
         assertTrue(Keyword.with("class").methodName().equals(ClassMessage));
         assertTrue(Keyword.with("basicNew:").methodName().equals("basicNew"));
+        assertTrue(Keyword.with("isEmpty").methodName().equals("_isEmpty"));
 
         String[] samples = { "with:" };
         assertTrue(Keyword.with(wrap(samples)).methodName().equals("with"));

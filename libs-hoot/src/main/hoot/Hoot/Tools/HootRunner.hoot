@@ -27,7 +27,7 @@ HootRunner members: "running code"
 [
     @Primitive Void! runWith: Java Lang String! ... args [
         List? String! argList := String listWith: (Utils wrap: args).
-        argList isEmpty ifTrue: [ self reportMissingClass. ] ifFalse: [
+        argList size == 0 ifTrue: [ self reportMissingClass. ] ifFalse: [
             String! className := argList remove: 0.
             self reportClass: className with: argList.
             self run: className with: argList.

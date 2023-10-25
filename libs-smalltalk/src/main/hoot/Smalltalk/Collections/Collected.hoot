@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Java Util List import.
 Smalltalk Magnitudes Ordinal import.
+Hoot Runtime Behaviors HootRegistry import.
 
 Subject subtype: 
 Collected? ElementType -> Subject.
@@ -76,8 +77,7 @@ Collected "testing" members:
     Posit! anySatisfy: MonadicPredicate! testBlock
         "whether any element has true == (testBlock value: element)" []
 
-    "Java Lang Boolean! isEmpty 'whether (this size == 0)' []" "can't implement this method"
-
+    @Default @Primitive Posit! _isEmpty [ ^HootRegistry positFrom: (self size intValue == 0) ]
     Posit! notEmpty "whether (this size > 0)" []
     Posit! includes: Subject! candidate "whether any element = candidate" []
 

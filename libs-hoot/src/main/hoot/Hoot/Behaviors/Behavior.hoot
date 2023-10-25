@@ -119,13 +119,13 @@ Behavior members: "enumerating classes"
 
     @Primitive Behavior! allSuperclassesDo: Closure! aBlock [
         "evaluates a block with every (only!) superclass"
-        self superclass isEmpty ifTrue: [ ^self ]. "bail out"
+        self superclass hasNoClass ifTrue: [ ^self ]. "bail out"
         (Behavior <- self superclass) onlySuperclassesDo: aBlock.
         ^self ]
 
     @Private @Primitive Behavior! onlySuperclassesDo: Closure! aBlock [
         aBlock value: self yourself.
-        self superclass isEmpty ifTrue: [ ^self ]. "bail out"
+        self superclass hasNoClass ifTrue: [ ^self ]. "bail out"
         (Behavior <- self superclass) onlySuperclassesDo: aBlock.
         ^self ]
 
@@ -168,14 +168,14 @@ Behavior members: "reflecting behavior"
     @Primitive Boolean! hasHeritage [
         (self primitiveSuperclass == nil) ifTrue: [ ^False literal ].
         Typified! result := HootRegistry getType: self primitiveSuperclass.
-        result isEmpty ifTrue: [ ^False literal ].
+        result hasNoClass ifTrue: [ ^False literal ].
         ^True literal ]
 
     @Final Behavior! superior "the superclass as a Behavior" [ ^Behavior <- self superclass ]
     @Primitive Classified! superclass [
         self hasHeritage asPrimitive ifFalse: [ ^null ].
         Typified! result := HootRegistry getType: self primitiveSuperclass.
-        result isEmpty ifTrue: [ ^null ].
+        result hasNoClass ifTrue: [ ^null ].
         ^result ]
 ]
 

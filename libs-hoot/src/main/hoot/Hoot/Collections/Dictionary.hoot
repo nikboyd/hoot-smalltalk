@@ -218,9 +218,7 @@ Dictionary members: "removing elements"
 
 Dictionary "testing" members:
 [
-    Java Lang Boolean! isEmpty [ ^contents isEmpty ]
     Boolean! includes: Subject! element [ ^Boolean from: (contents containsValue: ElementType <- element) ]
     Boolean! includesIndex: KeyType! index [ ^Boolean from: (contents containsKey: index) ]
-
     Posit! includesKey: KeyType! key [ ^self includesIndex: key ]
 ]

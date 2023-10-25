@@ -45,6 +45,5 @@ IdentityDictionary members: "comparing"
         ^Boolean from: (contents equals: aCollection primitiveContents) ]
 
     Boolean! = Collected! aCollection [
-        (aCollection isKindOf: IdentityDictionary type) ifFalse: [ ^false ].
         ^(IdentityDictionary type accepts: aCollection) and: [ self = (IdentityDictionary <- aCollection) ] ]
 ]

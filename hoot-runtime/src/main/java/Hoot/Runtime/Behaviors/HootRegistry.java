@@ -79,6 +79,7 @@ public class HootRegistry implements Logging {
     public static Valued nilValue() { return getValue(NilType().findClass()); }
     public static ConditionalValue trueValue() { return getValue(TrueType().findClass()); }
     public static ConditionalValue falseValue() { return getValue(FalseType().findClass()); }
+    public static ConditionalValue positFrom(boolean value) { return value? trueValue(): falseValue(); }
 
     public static boolean isRunning() { return false; }
     public static boolean isReady() { return false; }

@@ -42,11 +42,12 @@ public interface Typified extends Valued.Metatype, Named, Logging {
     default String packageName() { return typeMirror().primitiveClass().getPackage().getName(); }
     default TypeName typeResolver() { return TypeName.fromOther(this); }
 
+    default boolean hasNoClass() { return typeMirror().hasNoClass(); }
     default boolean isEmpty() { return typeMirror().isEmpty(); }
     default boolean hasMetaface() { return $class() != null; }
     default boolean isReflective() { return false; }
 
-    default boolean isRoot() { return !isEmpty() && typeResolver().isRootType(); }
+    default boolean isRoot() { return !hasNoClass() && typeResolver().isRootType(); }
     default boolean isElementaryType() { return typeResolver().isElementaryType(); }
     default boolean isEraseableType() {
         return (isRoot()) || typeResolver().isEraseableType() ||

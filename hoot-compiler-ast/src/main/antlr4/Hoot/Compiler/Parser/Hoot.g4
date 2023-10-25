@@ -449,7 +449,7 @@ ImportStatics : 'importStatics' ;
 KeywordHead : Name Colon ;
 KeywordTail : Colon ;
 GlobalName  : UpperCase Tail* ;
-LocalName   : LowerCase Tail* ;
+LocalName   : Score? LowerCase Tail* ;
 
 fragment Colon  : ':' ;
 fragment Name   : Letter Tail* ;
@@ -519,6 +519,7 @@ fragment Or       : '|' ;
 // letters + digits
 //==================================================================================================
 
+fragment Score          : [_];
 fragment UpperCase      : [A-Z] ;
 fragment LowerCase      : [a-z] ;
 fragment DecimalDigit   : [0-9] ;

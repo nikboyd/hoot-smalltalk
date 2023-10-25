@@ -26,7 +26,7 @@ TestableCode members: "evaluating code"
 
     Java Lang Object! evaluateCode: String! code [ ^ClosureCompiler evaluate: code asPrimitive ]
     @Primitive TestableCode! showCode: String! code [
-        code isEmpty ifTrue: [ self log cr. ^self ].
+        code size intValue == 0 ifTrue: [ self log cr. ^self ].
         Java Lang Object! result := (self evaluateCode: code).
         Java Lang Class! resultType := Primitive JavaRoot.
         (result == null) ifTrue: [ result := 'null' ] ifFalse: [ resultType := result getClass ].
