@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Org Junit lowerCase importAll.
 Smalltalk Collections importAll.
+Smalltalk Magnitudes Scalar import.
 
 TestBase subclass: BasicCollectionTest.
 "Confirms proper operation of collections."
@@ -20,6 +21,8 @@ BasicCollectionTest members:
     @Override Void! runTest [
         self testBasics.
         self log cr.
+        self testBytes.
+        self log cr.
         self testBagsSets.
         self log cr.
         self testCompares.
@@ -32,6 +35,12 @@ BasicCollectionTest members:
         self log cr.
         self testCopies.
         self testReplacements.
+    ]
+
+    testBytes [
+        ByteArray! bin := ByteArray type withAll: #( 5 4 3 2 1 ).
+        self report: bin printString.
+        self passed: 'byte array tests'.
     ]
 
     testBasics [
@@ -81,15 +90,47 @@ BasicCollectionTest members:
 
     testStrings [
         String! aString := 'aaaa' , 'bbbb'.
-        self log print: 'concat = '. self log printLine: aString.
-        self log print: 'upper  = '. self log printLine: aString asUppercase.
-        self log print: 'lower  = '. self log printLine: aString asUppercase asLowercase.
+        self report: 'concat' value: aString.
+        self report: 'select' value: aString asSelector printString.
+        self report: 'upper ' value: aString asUppercase.
+        self report: 'lower ' value: aString asUppercase asLowercase.
         self assertTrue: [ aString = aString asUppercase asLowercase ].
-        self passed: 'string comparison test'.
+        self assertTrue: [ 'aaaa' isLiteral ].
+        self assertTrue: [ 'aaaa' isString ].
+        self assertTrue: [ 'aaaa' includes: 'a' ].
+        self assertTrue: [ 'aaaa' <  (Scalar <- 'b' ) ].
+        self assertTrue: [ 'aaaa' <= (Scalar <- 'b' ) ].
+        self assertTrue: [ 'bbbb' >  (Scalar <- 'a' ) ].
+        self assertTrue: [ 'bbbb' >= (Scalar <- 'a' ) ].
+        self assertTrue: [ 'aaaa' >= 'aaa' ].
+        self assertTrue: [ 'bbbb' between: 'aaaa' and: 'cccc' ].
+        self assertTrue: [ aString reverse includes: $a ].
+        self report: 'min' value: String <- ( 'aaa' min: 'bbb' ).
+        self report: 'max' value: String <- ( 'aaa' max: 'bbb' ).
+        self passed: 'string comparison tests'.
+        self log cr.
+
+        aString removeFirst. aString removeLast.
+        self report: 'shorter' value: aString.
+        aString add: $B. aString addAll: 'CCC'.
+        self report: 'longer ' value: aString.
+
+        String! x := String emptyString.
+        self report: 'empty  ' value: x.
+        x := (x rightPadded: 5).
+        self report: 'padded ' value: x.
+        x at: 1 put: $a.
+        self report: 'pad [1]' value: x.
+
+        x add: $b after: $a.
+        x add: $b before: $a.
+        x :=  x trim.
+        x addAllLast: 'ble'.
+        self report: 'babble ' value: x.
     ]
 
     testMatches [
-        self report: '(aaabbbccc) matches regex (aaa.*)' value: ('aaa.*'   matches: 'aaabbbccc').
+        self report: '(aaabbbccc) matches regex (aaa.*)'  value: ('aaa.*'   matches: 'aaabbbccc').
         self report: '(aaabbbccc) matches regex (a+b+c+)' value: ('a+b+c+' matches: 'aaabbbccc').
         self passed: 'string pattern match tests'.
     ]
@@ -111,6 +152,10 @@ BasicCollectionTest members:
         self report: 'names replacing ccc with eee' elements: (names copyReplacing: 'ccc' withObject: 'eee').
         self passed: 'element replacements'.
     ]
+
+    Void! report: String! testName value: CharacterString! value [
+        self log print: testName. self log print: ' = '.
+        self log print: (String <- value) printString. self log cr. ]
 
     Void! report: String! testName value: Boolean! value [
         self log print: testName. self log print: ' ? '.

@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Integer import.
 Hoot Runtime Names Primitive import.
+Org Apache Commons Codec Binary lowerCase importAll.
 
 Smalltalk Core Subject import.
 Smalltalk Collections importAll.
@@ -16,6 +17,12 @@ ByteArray class members: "creating instances"
     ByteArray! new [ "a new empty ByteArray" ^self new: 0 ]
     ByteArray! new: Ordinal! capacity [ ^ByteArray basicNew: capacity ]
     ByteArray! withAll: Java Lang Byte! ... elements [ ^ByteArray basicNew: elements ]
+    ByteArray! withAll: Array? Integer! byteValues [
+        ByteArray! results := ByteArray new: byteValues size.
+        FastInteger! index := 1 faster.
+        byteValues do: [ :Integer! v | results at: index put: Ordinal <- v. index increment. ].
+        ^results
+    ]
 ]
 
 ByteArray members: "constructing instances"
@@ -65,6 +72,13 @@ ByteArray members: "enumerating"
     do: MonadicValuable! aBlock [
         1 to: self size do: [ : Integer! index | aBlock value: (self get: (index - 1) primitiveInteger) ].
     ]
+]
+
+ByteArray members: "printing"
+[
+    @Protected Java Lang String! rawHex [ ^Hex encodeHexString: self primitiveContents ]
+    String! hexString [ ^String from: self rawHex ]
+    String! printString [ ^'#', self hexString ]
 ]
 
 ByteArray members: "mutations - not allowed"

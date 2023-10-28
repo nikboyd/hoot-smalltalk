@@ -62,8 +62,7 @@ Array members: "accessing"
 
 Array members: "adding elements"
 [
-    @Protected ElementType! add: ElementType! element at: Int! index [
-        contents add: index : element. ^element ]
+    @Protected ElementType! add: ElementType! element at: Int! index [ contents add: index : element. ^element ]
 ]
 
 Array members: "accessing elements"
@@ -72,8 +71,7 @@ Array members: "accessing elements"
         ^self get: (self checkIndex: index ifAbsent: aBlock) ]
 
     ElementType! at: Ordinal! index put: ElementType! element [
-        contents set: (self checkIndex: index) : element.
-        ^element ]
+        contents set: (self checkIndex: index) : element.  ^element ]
 ]
 
 Array members: "converting"
