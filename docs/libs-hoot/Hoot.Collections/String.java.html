@@ -291,18 +291,42 @@ public class String extends CharacterString implements MutableString
    */
   public   Character at_put(final Ordinal index, final Object element)
   {
-<span class="nc" id="L294">    java.lang.String exitID = &quot;String&gt;&gt;at_put&quot;;</span>
-<span class="nc" id="L295">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L296">    Character c = ((Character)element);</span>
+<span class="fc" id="L294">    java.lang.String exitID = &quot;String&gt;&gt;at_put&quot;;</span>
+<span class="fc" id="L295">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L296">    Character c = ((Character)element);</span>
 
-<span class="nc" id="L298">    int i = this.checkGrows(index);</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">    if ((i &lt; contents.length())) {</span>
-<span class="nc" id="L300">      contents.setCharAt(i, c.primitiveCharacter());</span>
+<span class="fc" id="L298">    int i = this.checkGrows(index);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">    if ((i &lt; contents.length())) {</span>
+<span class="fc" id="L300">      contents.setCharAt(i, c.primitiveCharacter());</span>
     }
     else {
 <span class="nc" id="L303">      contents.append(c.primitiveCharacter());</span>
     };
-<span class="nc" id="L305">    return (Character)c;</span>
+<span class="fc" id="L305">    return (Character)c;</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer indexOf_ifAbsent(final Object element, final NiladicValuable noneBlock)
+  {
+<span class="fc" id="L313">    java.lang.String exitID = &quot;String&gt;&gt;indexOf_ifAbsent&quot;;</span>
+<span class="fc" id="L314">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L315">    return (Integer)this.indexOf_ifAbsent(((Character)element), noneBlock);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   Integer indexOf_ifAbsent(final Character element, final NiladicValuable noneBlock)
+  {
+<span class="fc" id="L323">    java.lang.String exitID = &quot;String&gt;&gt;indexOf_ifAbsent&quot;;</span>
+<span class="fc" id="L324">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L325">    int index = contents.indexOf(element.toString());</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">    if (!((index &lt; 0))) {</span>
+<span class="fc" id="L327">      return SmallInteger.from((index + 1));</span>
+    };
+<span class="nc" id="L329">    return (Integer)noneBlock.value();</span>
   }
 
   /**
@@ -310,10 +334,10 @@ public class String extends CharacterString implements MutableString
    */
   protected   Object add_at(final Object element, final int index)
   {
-<span class="nc" id="L313">    java.lang.String exitID = &quot;String&gt;&gt;add_at&quot;;</span>
-<span class="nc" id="L314">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L315">    contents.insert(index, element);</span>
-<span class="nc" id="L316">    return (Object)element;</span>
+<span class="nc" id="L337">    java.lang.String exitID = &quot;String&gt;&gt;add_at&quot;;</span>
+<span class="nc" id="L338">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L339">    contents.insert(index, element);</span>
+<span class="nc" id="L340">    return (Object)element;</span>
   }
 
   /**
@@ -321,9 +345,9 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add(final Subject element)
   {
-<span class="nc" id="L324">    java.lang.String exitID = &quot;String&gt;&gt;add&quot;;</span>
-<span class="nc" id="L325">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L326">    return (Character)this.add(((Character)element));</span>
+<span class="fc" id="L348">    java.lang.String exitID = &quot;String&gt;&gt;add&quot;;</span>
+<span class="fc" id="L349">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L350">    return (Character)this.add(((Character)element));</span>
   }
 
   /**
@@ -331,10 +355,10 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add(final Character c)
   {
-<span class="fc" id="L334">    java.lang.String exitID = &quot;String&gt;&gt;add&quot;;</span>
-<span class="fc" id="L335">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L336">    contents.append(c.primitiveCharacter());</span>
-<span class="fc" id="L337">    return (Character)c;</span>
+<span class="fc" id="L358">    java.lang.String exitID = &quot;String&gt;&gt;add&quot;;</span>
+<span class="fc" id="L359">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L360">    contents.append(c.primitiveCharacter());</span>
+<span class="fc" id="L361">    return (Character)c;</span>
   }
 
   /**
@@ -342,10 +366,10 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add_after(final Object element, final Object target)
   {
-<span class="nc" id="L345">    java.lang.String exitID = &quot;String&gt;&gt;add_after&quot;;</span>
-<span class="nc" id="L346">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L347">    return (Character)this.add_afterIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L348">      return this.elementNotFound();</span>
+<span class="fc" id="L369">    java.lang.String exitID = &quot;String&gt;&gt;add_after&quot;;</span>
+<span class="fc" id="L370">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L371">    return (Character)this.add_afterIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L372">      return this.elementNotFound();</span>
     }, &quot;&quot;)));
   }
 
@@ -354,13 +378,13 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add_afterIndex(final Object element, final Ordinal index)
   {
-<span class="nc" id="L357">    java.lang.String exitID = &quot;String&gt;&gt;add_afterIndex&quot;;</span>
-<span class="nc" id="L358">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L359">    int i = this.checkRange(((Ordinal)(index.plus(SmallInteger.from(1)))));</span>
+<span class="fc" id="L381">    java.lang.String exitID = &quot;String&gt;&gt;add_afterIndex&quot;;</span>
+<span class="fc" id="L382">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L383">    int i = this.checkRange(((Ordinal)(index.plus(SmallInteger.from(1)))));</span>
 
-<span class="nc" id="L361">    Character c = ((Character)element);</span>
-<span class="nc" id="L362">    contents.insert(i, c.primitiveCharacter());</span>
-<span class="nc" id="L363">    return (Character)c;</span>
+<span class="fc" id="L385">    Character c = ((Character)element);</span>
+<span class="fc" id="L386">    contents.insert(i, c.primitiveCharacter());</span>
+<span class="fc" id="L387">    return (Character)c;</span>
   }
 
   /**
@@ -368,10 +392,10 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add_before(final Object element, final Object target)
   {
-<span class="nc" id="L371">    java.lang.String exitID = &quot;String&gt;&gt;add_before&quot;;</span>
-<span class="nc" id="L372">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L373">    return (Character)this.add_beforeIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L374">      return this.elementNotFound();</span>
+<span class="fc" id="L395">    java.lang.String exitID = &quot;String&gt;&gt;add_before&quot;;</span>
+<span class="fc" id="L396">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L397">    return (Character)this.add_beforeIndex(element, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L398">      return this.elementNotFound();</span>
     }, &quot;&quot;)));
   }
 
@@ -380,13 +404,13 @@ public class String extends CharacterString implements MutableString
    */
   public   Character add_beforeIndex(final Object element, final Ordinal index)
   {
-<span class="nc" id="L383">    java.lang.String exitID = &quot;String&gt;&gt;add_beforeIndex&quot;;</span>
-<span class="nc" id="L384">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L385">    int i = this.checkRange(index);</span>
+<span class="fc" id="L407">    java.lang.String exitID = &quot;String&gt;&gt;add_beforeIndex&quot;;</span>
+<span class="fc" id="L408">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L409">    int i = this.checkRange(index);</span>
 
-<span class="nc" id="L387">    Character c = ((Character)element);</span>
-<span class="nc" id="L388">    contents.insert(i, c.primitiveCharacter());</span>
-<span class="nc" id="L389">    return (Character)c;</span>
+<span class="fc" id="L411">    Character c = ((Character)element);</span>
+<span class="fc" id="L412">    contents.insert(i, c.primitiveCharacter());</span>
+<span class="fc" id="L413">    return (Character)c;</span>
   }
 
   /**
@@ -394,11 +418,11 @@ public class String extends CharacterString implements MutableString
    */
   public   CollectedReadably&lt;Character&gt; addAll_after(final CollectedReadably elements, final Object target)
   {
-<span class="nc" id="L397">    java.lang.String exitID = &quot;String&gt;&gt;addAll_after&quot;;</span>
-<span class="nc" id="L398">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L399">    return (CollectedReadably&lt;Character&gt;)this.addAll_afterIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L400">      this.elementNotFound();</span>
-<span class="nc" id="L401">    }, &quot;&quot;)));</span>
+<span class="nc" id="L421">    java.lang.String exitID = &quot;String&gt;&gt;addAll_after&quot;;</span>
+<span class="nc" id="L422">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L423">    return (CollectedReadably&lt;Character&gt;)this.addAll_afterIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L424">      this.elementNotFound();</span>
+<span class="nc" id="L425">    }, &quot;&quot;)));</span>
   }
 
   /**
@@ -406,15 +430,15 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   CollectedReadably&lt;Character&gt; addAll_afterIndex(final CollectedReadably elements, final Ordinal index)
   {
-<span class="nc" id="L409">    java.lang.String exitID = &quot;String&gt;&gt;addAll_afterIndex&quot;;</span>
-<span class="nc" id="L410">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L411">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L412">      Ordinal i = f2.getValue(0).value();</span>
-<span class="nc" id="L413">      Character e = f2.getValue(1).value();</span>
-<span class="nc" id="L414">      this.add_afterIndex(e, i);</span>
-<span class="nc" id="L415">    return (i.plus(SmallInteger.from(1)));</span>
+<span class="nc" id="L433">    java.lang.String exitID = &quot;String&gt;&gt;addAll_afterIndex&quot;;</span>
+<span class="nc" id="L434">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L435">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L436">      Ordinal i = f2.getValue(0).value();</span>
+<span class="nc" id="L437">      Character e = f2.getValue(1).value();</span>
+<span class="nc" id="L438">      this.add_afterIndex(e, i);</span>
+<span class="nc" id="L439">    return (i.plus(SmallInteger.from(1)));</span>
     }, &quot;i&quot;, &quot;e&quot;));
-<span class="nc" id="L417">    return (CollectedReadably&lt;Character&gt;)elements;</span>
+<span class="nc" id="L441">    return (CollectedReadably&lt;Character&gt;)elements;</span>
   }
 
   /**
@@ -422,10 +446,10 @@ public class String extends CharacterString implements MutableString
    */
   public   CollectedReadably&lt;Character&gt; addAll_before(final CollectedReadably elements, final Object target)
   {
-<span class="nc" id="L425">    java.lang.String exitID = &quot;String&gt;&gt;addAll_before&quot;;</span>
-<span class="nc" id="L426">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L427">    return (CollectedReadably&lt;Character&gt;)this.addAll_beforeIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L428">      return this.elementNotFound();</span>
+<span class="nc" id="L449">    java.lang.String exitID = &quot;String&gt;&gt;addAll_before&quot;;</span>
+<span class="nc" id="L450">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L451">    return (CollectedReadably&lt;Character&gt;)this.addAll_beforeIndex(elements, this.indexOf_ifAbsent(target, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L452">      return this.elementNotFound();</span>
     }, &quot;&quot;)));
   }
 
@@ -434,15 +458,15 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   CollectedReadably&lt;Character&gt; addAll_beforeIndex(final CollectedReadably elements, final Ordinal index)
   {
-<span class="nc" id="L437">    java.lang.String exitID = &quot;String&gt;&gt;addAll_beforeIndex&quot;;</span>
-<span class="nc" id="L438">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L439">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L440">      Ordinal i = f2.getValue(0).value();</span>
-<span class="nc" id="L441">      Character e = f2.getValue(1).value();</span>
-<span class="nc" id="L442">      this.add_beforeIndex(e, i);</span>
-<span class="nc" id="L443">    return (i.plus(SmallInteger.from(1)));</span>
+<span class="nc" id="L461">    java.lang.String exitID = &quot;String&gt;&gt;addAll_beforeIndex&quot;;</span>
+<span class="nc" id="L462">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L463">    elements.inject_into(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L464">      Ordinal i = f2.getValue(0).value();</span>
+<span class="nc" id="L465">      Character e = f2.getValue(1).value();</span>
+<span class="nc" id="L466">      this.add_beforeIndex(e, i);</span>
+<span class="nc" id="L467">    return (i.plus(SmallInteger.from(1)));</span>
     }, &quot;i&quot;, &quot;e&quot;));
-<span class="nc" id="L445">    return (CollectedReadably&lt;Character&gt;)elements;</span>
+<span class="nc" id="L469">    return (CollectedReadably&lt;Character&gt;)elements;</span>
   }
 
   /**
@@ -450,13 +474,13 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   Collected&lt;Character&gt; addAll(final Collected elements)
   {
-<span class="nc" id="L453">    java.lang.String exitID = &quot;String&gt;&gt;addAll&quot;;</span>
-<span class="nc" id="L454">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L455">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L456">      Character element = f2.getValue(0).value();</span>
-<span class="nc" id="L457">      return this.add(element);</span>
+<span class="fc" id="L477">    java.lang.String exitID = &quot;String&gt;&gt;addAll&quot;;</span>
+<span class="fc" id="L478">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L479">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L480">      Character element = f2.getValue(0).value();</span>
+<span class="fc" id="L481">      return this.add(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L459">    return (Collected&lt;Character&gt;)elements;</span>
+<span class="fc" id="L483">    return (Collected&lt;Character&gt;)elements;</span>
   }
 
   /**
@@ -464,13 +488,13 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   CollectedReadably&lt;Character&gt; addAllFirst(final CollectedReadably elements)
   {
-<span class="nc" id="L467">    java.lang.String exitID = &quot;String&gt;&gt;addAllFirst&quot;;</span>
-<span class="nc" id="L468">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L469">    elements.reverseDo(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L470">      Character element = f2.getValue(0).value();</span>
-<span class="nc" id="L471">      return this.addFirst(element);</span>
+<span class="nc" id="L491">    java.lang.String exitID = &quot;String&gt;&gt;addAllFirst&quot;;</span>
+<span class="nc" id="L492">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L493">    elements.reverseDo(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L494">      Character element = f2.getValue(0).value();</span>
+<span class="nc" id="L495">      return this.addFirst(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L473">    return (CollectedReadably&lt;Character&gt;)elements;</span>
+<span class="nc" id="L497">    return (CollectedReadably&lt;Character&gt;)elements;</span>
   }
 
   /**
@@ -478,13 +502,13 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   CollectedReadably&lt;Character&gt; addAllLast(final CollectedReadably elements)
   {
-<span class="nc" id="L481">    java.lang.String exitID = &quot;String&gt;&gt;addAllLast&quot;;</span>
-<span class="nc" id="L482">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L483">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L484">      Character element = f2.getValue(0).value();</span>
-<span class="nc" id="L485">      return this.addLast(element);</span>
+<span class="fc" id="L505">    java.lang.String exitID = &quot;String&gt;&gt;addAllLast&quot;;</span>
+<span class="fc" id="L506">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L507">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L508">      Character element = f2.getValue(0).value();</span>
+<span class="fc" id="L509">      return this.addLast(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L487">    return (CollectedReadably&lt;Character&gt;)elements;</span>
+<span class="fc" id="L511">    return (CollectedReadably&lt;Character&gt;)elements;</span>
   }
 
   /**
@@ -492,11 +516,11 @@ public class String extends CharacterString implements MutableString
    */
   public   Character addFirst(final Object element)
   {
-<span class="nc" id="L495">    java.lang.String exitID = &quot;String&gt;&gt;addFirst&quot;;</span>
-<span class="nc" id="L496">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L497">    Character c = ((Character)element);</span>
-<span class="nc" id="L498">    this.add_beforeIndex(c, SmallInteger.from(1));</span>
-<span class="nc" id="L499">    return (Character)c;</span>
+<span class="nc" id="L519">    java.lang.String exitID = &quot;String&gt;&gt;addFirst&quot;;</span>
+<span class="nc" id="L520">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L521">    Character c = ((Character)element);</span>
+<span class="nc" id="L522">    this.add_beforeIndex(c, SmallInteger.from(1));</span>
+<span class="nc" id="L523">    return (Character)c;</span>
   }
 
   /**
@@ -504,9 +528,19 @@ public class String extends CharacterString implements MutableString
    */
   public   Character addLast(final Object element)
   {
-<span class="nc" id="L507">    java.lang.String exitID = &quot;String&gt;&gt;addLast&quot;;</span>
-<span class="nc" id="L508">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L509">    return (Character)this.add(element);</span>
+<span class="fc" id="L531">    java.lang.String exitID = &quot;String&gt;&gt;addLast&quot;;</span>
+<span class="fc" id="L532">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L533">    return (Character)this.add(element);</span>
+  }
+
+  /**
+   * @return 
+   */
+  public   String trim()
+  {
+<span class="fc" id="L541">    java.lang.String exitID = &quot;String&gt;&gt;trim&quot;;</span>
+<span class="fc" id="L542">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L543">    return (String)String.from(contents.toString().trim());</span>
   }
 
   /**
@@ -514,10 +548,10 @@ public class String extends CharacterString implements MutableString
    */
   public   String removeAll()
   {
-<span class="nc" id="L517">    java.lang.String exitID = &quot;String&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L518">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L519">     contents = new StringBuffer();</span>
-<span class="nc" id="L520">    return (String)this;</span>
+<span class="nc" id="L551">    java.lang.String exitID = &quot;String&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L552">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L553">     contents = new StringBuffer();</span>
+<span class="nc" id="L554">    return (String)this;</span>
   }
 
   /**
@@ -525,11 +559,11 @@ public class String extends CharacterString implements MutableString
    */
   public   Character removeAtIndex(final Ordinal index)
   {
-<span class="nc" id="L528">    java.lang.String exitID = &quot;String&gt;&gt;removeAtIndex&quot;;</span>
-<span class="nc" id="L529">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L530">    return (Character)this.removeAtIndex_ifAbsent(index, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L531">      this.indexRangeError();</span>
-<span class="nc" id="L532">    return Nil.literal();</span>
+<span class="nc" id="L562">    java.lang.String exitID = &quot;String&gt;&gt;removeAtIndex&quot;;</span>
+<span class="nc" id="L563">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L564">    return (Character)this.removeAtIndex_ifAbsent(index, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L565">      this.indexRangeError();</span>
+<span class="nc" id="L566">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -538,13 +572,13 @@ public class String extends CharacterString implements MutableString
    */
   public   Character removeAtIndex_ifAbsent(final Ordinal index, final NiladicValuable aBlock)
   {
-<span class="nc" id="L541">    java.lang.String exitID = &quot;String&gt;&gt;removeAtIndex_ifAbsent&quot;;</span>
-<span class="nc" id="L542">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L543">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
+<span class="nc" id="L575">    java.lang.String exitID = &quot;String&gt;&gt;removeAtIndex_ifAbsent&quot;;</span>
+<span class="nc" id="L576">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L577">    int i = this.checkIndex_ifAbsent(index, aBlock);</span>
 
-<span class="nc" id="L545">    Character c = Character.from(contents.charAt(i));</span>
-<span class="nc" id="L546">    contents.deleteCharAt(i);</span>
-<span class="nc" id="L547">    return (Character)c;</span>
+<span class="nc" id="L579">    Character c = Character.from(contents.charAt(i));</span>
+<span class="nc" id="L580">    contents.deleteCharAt(i);</span>
+<span class="nc" id="L581">    return (Character)c;</span>
   }
 
   /**
@@ -552,11 +586,11 @@ public class String extends CharacterString implements MutableString
    */
   public   Character remove(final Object element)
   {
-<span class="nc" id="L555">    java.lang.String exitID = &quot;String&gt;&gt;remove&quot;;</span>
-<span class="nc" id="L556">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L557">    return (Character)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L558">      this.elementNotFound();</span>
-<span class="nc" id="L559">    return Nil.literal();</span>
+<span class="nc" id="L589">    java.lang.String exitID = &quot;String&gt;&gt;remove&quot;;</span>
+<span class="nc" id="L590">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L591">    return (Character)this.remove_ifAbsent(element, Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L592">      this.elementNotFound();</span>
+<span class="nc" id="L593">    return Nil.literal();</span>
     }, &quot;&quot;));
   }
 
@@ -565,9 +599,9 @@ public class String extends CharacterString implements MutableString
    */
   public   Character remove_ifAbsent(final Object element, final NiladicValuable aBlock)
   {
-<span class="nc" id="L568">    java.lang.String exitID = &quot;String&gt;&gt;remove_ifAbsent&quot;;</span>
-<span class="nc" id="L569">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L570">    return (Character)this.removeAtIndex(this.indexOf_ifAbsent(element, aBlock));</span>
+<span class="nc" id="L602">    java.lang.String exitID = &quot;String&gt;&gt;remove_ifAbsent&quot;;</span>
+<span class="nc" id="L603">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L604">    return (Character)this.removeAtIndex(this.indexOf_ifAbsent(element, aBlock));</span>
   }
 
   /**
@@ -575,13 +609,13 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   Collected removeAll(final Collected elements)
   {
-<span class="nc" id="L578">    java.lang.String exitID = &quot;String&gt;&gt;removeAll&quot;;</span>
-<span class="nc" id="L579">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L580">    elements.$do(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L581">      Character element = f2.getValue(0).value();</span>
-<span class="nc" id="L582">      return this.remove(element);</span>
+<span class="nc" id="L612">    java.lang.String exitID = &quot;String&gt;&gt;removeAll&quot;;</span>
+<span class="nc" id="L613">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L614">    elements.$do(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L615">      Character element = f2.getValue(0).value();</span>
+<span class="nc" id="L616">      return this.remove(element);</span>
     }, &quot;element&quot;));
-<span class="nc" id="L584">    return (Collected)elements;</span>
+<span class="nc" id="L618">    return (Collected)elements;</span>
   }
 
   /**
@@ -589,13 +623,13 @@ public class String extends CharacterString implements MutableString
    */
   public   Character removeFirst()
   {
-<span class="nc" id="L592">    java.lang.String exitID = &quot;String&gt;&gt;removeFirst&quot;;</span>
-<span class="nc" id="L593">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L594">    this.emptyCheck();</span>
+<span class="fc" id="L626">    java.lang.String exitID = &quot;String&gt;&gt;removeFirst&quot;;</span>
+<span class="fc" id="L627">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L628">    this.emptyCheck();</span>
 
-<span class="nc" id="L596">    Character c = Character.from(contents.charAt(SmallInteger.from(0).asPrimitive()));</span>
-<span class="nc" id="L597">    contents.deleteCharAt(SmallInteger.from(0).asPrimitive());</span>
-<span class="nc" id="L598">    return (Character)c;</span>
+<span class="fc" id="L630">    Character c = Character.from(contents.charAt(SmallInteger.from(0).asPrimitive()));</span>
+<span class="fc" id="L631">    contents.deleteCharAt(SmallInteger.from(0).asPrimitive());</span>
+<span class="fc" id="L632">    return (Character)c;</span>
   }
 
   /**
@@ -603,15 +637,15 @@ public class String extends CharacterString implements MutableString
    */
   public   Character removeLast()
   {
-<span class="nc" id="L606">    java.lang.String exitID = &quot;String&gt;&gt;removeLast&quot;;</span>
-<span class="nc" id="L607">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L608">    this.emptyCheck();</span>
+<span class="fc" id="L640">    java.lang.String exitID = &quot;String&gt;&gt;removeLast&quot;;</span>
+<span class="fc" id="L641">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L642">    this.emptyCheck();</span>
 
-<span class="nc" id="L610">    int index = (contents.length() - 1);</span>
+<span class="fc" id="L644">    int index = (contents.length() - 1);</span>
 
-<span class="nc" id="L612">    Character c = Character.from(contents.charAt(index));</span>
-<span class="nc" id="L613">    contents.deleteCharAt(index);</span>
-<span class="nc" id="L614">    return (Character)c;</span>
+<span class="fc" id="L646">    Character c = Character.from(contents.charAt(index));</span>
+<span class="fc" id="L647">    contents.deleteCharAt(index);</span>
+<span class="fc" id="L648">    return (Character)c;</span>
   }
 
   /**
@@ -619,9 +653,9 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   String append(final CharacterString aString)
   {
-<span class="fc" id="L622">    java.lang.String exitID = &quot;String&gt;&gt;append&quot;;</span>
-<span class="fc" id="L623">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L624">    return (String)String.from((this.primitiveString() + aString.primitiveString()));</span>
+<span class="fc" id="L656">    java.lang.String exitID = &quot;String&gt;&gt;append&quot;;</span>
+<span class="fc" id="L657">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L658">    return (String)String.from((this.primitiveString() + aString.primitiveString()));</span>
   }
 
   /**
@@ -629,9 +663,9 @@ public class String extends CharacterString implements MutableString
    */
   public   TextWriteStream writeStream()
   {
-<span class="fc" id="L632">    java.lang.String exitID = &quot;String&gt;&gt;writeStream&quot;;</span>
-<span class="fc" id="L633">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L634">    return (TextWriteStream)TextWriteStream.type().with(this);</span>
+<span class="fc" id="L666">    java.lang.String exitID = &quot;String&gt;&gt;writeStream&quot;;</span>
+<span class="fc" id="L667">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L668">    return (TextWriteStream)TextWriteStream.type().with(this);</span>
   }
 
   /**
@@ -639,9 +673,9 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   Boolean isLiteral()
   {
-<span class="nc" id="L642">    java.lang.String exitID = &quot;String&gt;&gt;isLiteral&quot;;</span>
-<span class="nc" id="L643">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L644">    return (Boolean)True.literal();</span>
+<span class="fc" id="L676">    java.lang.String exitID = &quot;String&gt;&gt;isLiteral&quot;;</span>
+<span class="fc" id="L677">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L678">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -649,13 +683,13 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   String printLine()
   {
-<span class="nc" id="L652">    java.lang.String exitID = &quot;String&gt;&gt;printLine&quot;;</span>
-<span class="nc" id="L653">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L686">    java.lang.String exitID = &quot;String&gt;&gt;printLine&quot;;</span>
+<span class="nc" id="L687">    Frame f0 = new Frame(exitID);</span>
     {
-<span class="nc" id="L655">    String prime = this;</span>
-<span class="nc" id="L656">    prime.add(Character.type().cr()); </span>
+<span class="nc" id="L689">    String prime = this;</span>
+<span class="nc" id="L690">    prime.add(Character.type().cr()); </span>
 
-<span class="nc" id="L658">    return prime.yourself();</span>
+<span class="nc" id="L692">    return prime.yourself();</span>
     }
   }
 
@@ -664,9 +698,9 @@ public class String extends CharacterString implements MutableString
    */
   @Override public   String printString()
   {
-<span class="fc" id="L667">    java.lang.String exitID = &quot;String&gt;&gt;printString&quot;;</span>
-<span class="fc" id="L668">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L669">    return (String)String.from(Primitive.quoteLiterally(this.primitiveString()));</span>
+<span class="fc" id="L701">    java.lang.String exitID = &quot;String&gt;&gt;printString&quot;;</span>
+<span class="fc" id="L702">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L703">    return (String)String.from(Primitive.quoteLiterally(this.primitiveString()));</span>
   }
 
   /**
@@ -674,9 +708,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String rightPadded(final Integer count)
   {
-<span class="fc" id="L677">    java.lang.String exitID = &quot;String&gt;&gt;rightPadded&quot;;</span>
-<span class="fc" id="L678">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L679">    return (String)String.from(StringUtils.rightPad(this.asPrimitive(), count.intValue()));</span>
+<span class="fc" id="L711">    java.lang.String exitID = &quot;String&gt;&gt;rightPadded&quot;;</span>
+<span class="fc" id="L712">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L713">    return (String)String.from(StringUtils.rightPad(this.asPrimitive(), count.intValue()));</span>
   }
 
   /**
@@ -684,9 +718,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final String ... args)
   {
-<span class="fc" id="L687">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L688">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L689">    return (String)String.from(this.formatWith(Utils.wrap(args)));</span>
+<span class="fc" id="L721">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L722">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L723">    return (String)String.from(this.formatWith(Utils.wrap(args)));</span>
   }
 
   /**
@@ -694,9 +728,9 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final List&lt;String&gt; args)
   {
-<span class="fc" id="L697">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L698">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L699">    return (String)this.formatWith(String.primitiveArrayFrom(args));</span>
+<span class="fc" id="L731">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L732">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L733">    return (String)this.formatWith(String.primitiveArrayFrom(args));</span>
   }
 
   /**
@@ -704,10 +738,10 @@ public class String extends CharacterString implements MutableString
    */
   public   String formatWith(final java.lang.String ... args)
   {
-<span class="fc" id="L707">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
-<span class="fc" id="L708">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L709">    java.lang.Object [] vargs = args;</span>
-<span class="fc" id="L710">    return (String)String.from(java.lang.String.format(this.asPrimitive(), vargs));</span>
+<span class="fc" id="L741">    java.lang.String exitID = &quot;String&gt;&gt;formatWith&quot;;</span>
+<span class="fc" id="L742">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L743">    java.lang.Object [] vargs = args;</span>
+<span class="fc" id="L744">    return (String)String.from(java.lang.String.format(this.asPrimitive(), vargs));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

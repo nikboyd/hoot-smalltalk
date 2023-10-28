@@ -27,14 +27,14 @@ libs-hoot,Smalltalk.Collections,Collected,17,0,2,0,3,0,2,0,1,0
 libs-hoot,Hoot.Metrics,MetricsSnapshot,80,143,1,1,20,30,21,6,20,6
 libs-hoot,Hoot.Tools,HootRunner.Metaclass,0,15,0,0,0,6,0,4,0,4
 libs-hoot,Hoot.Tools,HootRunner,17,167,1,3,5,43,4,11,3,10
-libs-hoot,Hoot.Collections,Symbol,152,39,0,0,42,12,13,3,13,3
-libs-hoot,Hoot.Collections,Collection,1265,356,5,5,230,78,85,24,80,24
-libs-hoot,Hoot.Collections,CharacterString,763,235,1,1,125,55,50,19,49,19
-libs-hoot,Hoot.Collections,ByteArray,289,0,2,0,73,0,22,0,21,0
+libs-hoot,Hoot.Collections,Symbol,139,52,0,0,39,15,12,4,12,4
+libs-hoot,Hoot.Collections,Collection,1254,367,5,5,227,81,84,25,79,25
+libs-hoot,Hoot.Collections,CharacterString,287,602,0,0,57,110,23,42,23,42
+libs-hoot,Hoot.Collections,ByteArray,211,113,2,0,53,29,16,9,15,9
 libs-hoot,Hoot.Collections,ArrayedCollection.Metaclass,0,15,0,0,0,6,0,4,0,4
 libs-hoot,Hoot.Collections,Array.Metaclass,250,40,0,0,32,10,16,6,16,6
 libs-hoot,Hoot.Collections,SequencedCollection,1658,1130,7,3,266,170,105,50,101,49
-libs-hoot,Hoot.Collections,String,693,386,6,4,145,89,46,28,41,28
+libs-hoot,Hoot.Collections,String,423,706,6,6,87,159,33,45,27,45
 libs-hoot,Hoot.Collections,Bag.Metaclass,24,39,0,0,4,10,2,6,2,6
 libs-hoot,Hoot.Collections,String.Metaclass,0,88,0,0,0,18,0,10,0,10
 libs-hoot,Hoot.Collections,IdentitySet.Metaclass,74,39,0,0,12,10,6,6,6,6
@@ -58,7 +58,7 @@ libs-hoot,Hoot.Collections,StringPattern.Metaclass,0,15,0,0,0,6,0,4,0,4
 libs-hoot,Hoot.Collections,Interval.Metaclass,0,98,0,0,0,18,0,10,0,10
 libs-hoot,Hoot.Collections,IdentityDictionary.Metaclass,24,63,0,0,4,14,2,8,2,8
 libs-hoot,Hoot.Collections,Dictionary,577,650,3,5,108,125,39,39,36,38
-libs-hoot,Hoot.Collections,ByteArray.Metaclass,72,15,0,0,12,6,6,4,6,4
+libs-hoot,Hoot.Collections,ByteArray.Metaclass,48,97,0,0,8,21,4,9,4,9
 libs-hoot,Hoot.Collections,OrderedCollection.Metaclass,49,264,0,0,8,38,4,20,4,20
 libs-hoot,Hoot.Collections,Array,141,209,0,0,40,50,11,15,11,15
 libs-hoot,Hoot.Streams,TextWriteStream,24,47,0,0,6,13,2,4,2,4
@@ -81,7 +81,7 @@ libs-hoot,Hoot.Streams,ReadStream.Metaclass,24,15,0,0,4,6,2,4,2,4
 libs-hoot,Hoot.Streams,FileWriteStream,57,26,0,0,18,9,5,3,5,3
 libs-hoot,Hoot.Streams,WriteStream,105,66,0,0,24,16,8,6,8,6
 libs-hoot,Hoot.Streams,BinaryFileReadStream.Metaclass,48,15,0,0,8,6,4,4,4,4
-libs-hoot,Hoot.Streams,Transcript,235,106,0,0,58,32,12,10,12,10
+libs-hoot,Hoot.Streams,Transcript,249,92,0,0,62,28,13,9,13,9
 libs-hoot,Hoot.Streams,FileStream.Metaclass,0,94,0,0,0,18,0,10,0,10
 libs-hoot,Hoot.Streams,TextWriteStream.Metaclass,25,39,0,0,4,10,2,6,2,6
 libs-hoot,Hoot.Streams,FileReadStream,196,13,0,0,38,5,15,2,15,2
@@ -200,7 +200,7 @@ libs-hoot,Hoot.Magnitudes,Fixed.Metaclass,75,46,0,0,12,10,6,6,6,6
 libs-hoot,Hoot.Magnitudes,FastInteger.Metaclass,0,15,0,0,0,6,0,4,0,4
 libs-hoot,Hoot.Magnitudes,Double,761,119,14,0,141,26,57,8,50,8
 libs-hoot,Hoot.Magnitudes,Fraction,223,351,1,1,39,80,15,24,14,24
-libs-hoot,Hoot.Magnitudes,SmallInteger,317,843,13,17,64,186,34,59,22,56
+libs-hoot,Hoot.Magnitudes,SmallInteger,316,844,12,18,64,186,33,60,22,56
 libs-hoot,Hoot.Magnitudes,Character.Metaclass,605,185,2,2,109,41,54,18,52,18
 libs-hoot,Hoot.Magnitudes,Time.Metaclass,22,15,0,0,4,6,2,4,2,4
 libs-hoot,Hoot.Magnitudes,Fraction.Metaclass,22,116,0,0,4,23,2,10,2,10

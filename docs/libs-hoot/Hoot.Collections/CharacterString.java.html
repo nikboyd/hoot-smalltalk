@@ -124,14 +124,13 @@ import Smalltalk.Magnitudes.Scalar;
   /**
    * @return 
    */
-  @Override public   Boolean equals(final Collected candidate)
+  @Override public   Boolean equals(final Collected value)
   {
 <span class="fc" id="L129">    java.lang.String exitID = &quot;CharacterString&gt;&gt;equals&quot;;</span>
 <span class="fc" id="L130">    Frame f0 = new Frame(exitID);</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">    if (!(candidate instanceof CharacterString)) {</span>
-<span class="nc" id="L132">      return False.literal();</span>
-    };
-<span class="fc" id="L134">    return (Boolean)this.equals(((CharacterString)candidate));</span>
+<span class="fc" id="L131">    return (Boolean)CharacterString.type().accepts(value).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L132">      return this.equals(((CharacterString)value));</span>
+    }, &quot;&quot;));
   }
 
   /**
@@ -139,9 +138,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean equals(final CharacterString aString)
   {
-<span class="fc" id="L142">    java.lang.String exitID = &quot;CharacterString&gt;&gt;equals&quot;;</span>
-<span class="fc" id="L143">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L144">    return (Boolean)Boolean.from(this.primitiveString().equals(aString.primitiveString()));</span>
+<span class="fc" id="L141">    java.lang.String exitID = &quot;CharacterString&gt;&gt;equals&quot;;</span>
+<span class="fc" id="L142">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L143">    return (Boolean)Boolean.from(this.primitiveString().equals(aString.primitiveString()));</span>
   }
 
   /**
@@ -149,12 +148,12 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean lessThan(final ReadableString upperBound)
   {
-<span class="fc" id="L152">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L153">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L154">    CharacterString boundary = ((CharacterString)upperBound);</span>
+<span class="fc" id="L151">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L152">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L153">    CharacterString boundary = ((CharacterString)upperBound);</span>
 
-<span class="fc" id="L156">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
-<span class="fc" id="L157">    return (Boolean)(SmallInteger.from(comparison).lessThan(SmallInteger.from(0)));</span>
+<span class="fc" id="L155">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="fc" id="L156">    return (Boolean)(SmallInteger.from(comparison).lessThan(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -162,12 +161,12 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notMore(final ReadableString upperBound)
   {
-<span class="nc" id="L165">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
-<span class="nc" id="L166">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L167">    CharacterString boundary = ((CharacterString)upperBound);</span>
+<span class="fc" id="L164">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
+<span class="fc" id="L165">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L166">    CharacterString boundary = ((CharacterString)upperBound);</span>
 
-<span class="nc" id="L169">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
-<span class="nc" id="L170">    return (Boolean)(SmallInteger.from(comparison).notMore(SmallInteger.from(0)));</span>
+<span class="fc" id="L168">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="fc" id="L169">    return (Boolean)(SmallInteger.from(comparison).notMore(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -175,12 +174,12 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean moreThan(final ReadableString lowerBound)
   {
-<span class="nc" id="L178">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L179">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L180">    CharacterString boundary = ((CharacterString)lowerBound);</span>
+<span class="fc" id="L177">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L178">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L179">    CharacterString boundary = ((CharacterString)lowerBound);</span>
 
-<span class="nc" id="L182">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
-<span class="nc" id="L183">    return (Boolean)(SmallInteger.from(comparison).moreThan(SmallInteger.from(0)));</span>
+<span class="fc" id="L181">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="fc" id="L182">    return (Boolean)(SmallInteger.from(comparison).moreThan(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -188,12 +187,12 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean notLess(final ReadableString lowerBound)
   {
-<span class="nc" id="L191">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
-<span class="nc" id="L192">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L193">    CharacterString boundary = ((CharacterString)lowerBound);</span>
+<span class="fc" id="L190">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
+<span class="fc" id="L191">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L192">    CharacterString boundary = ((CharacterString)lowerBound);</span>
 
-<span class="nc" id="L195">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
-<span class="nc" id="L196">    return (Boolean)(SmallInteger.from(comparison).notLess(SmallInteger.from(0)));</span>
+<span class="fc" id="L194">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="fc" id="L195">    return (Boolean)(SmallInteger.from(comparison).notLess(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -201,12 +200,12 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean sameAs(final ReadableString candidate)
   {
-<span class="nc" id="L204">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
-<span class="nc" id="L205">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L206">    CharacterString boundary = ((CharacterString)candidate);</span>
+<span class="nc" id="L203">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
+<span class="nc" id="L204">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L205">    CharacterString boundary = ((CharacterString)candidate);</span>
 
-<span class="nc" id="L208">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
-<span class="nc" id="L209">    return (Boolean)(SmallInteger.from(comparison).equals(SmallInteger.from(0)));</span>
+<span class="nc" id="L207">    int comparison = this.primitiveString().compareTo(boundary.primitiveString());</span>
+<span class="nc" id="L208">    return (Boolean)(SmallInteger.from(comparison).equals(SmallInteger.from(0)));</span>
   }
 
   /**
@@ -214,23 +213,15 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean between_and(final Scalar lowerBound, final Scalar upperBound)
   {
-<span class="nc" id="L217">    java.lang.String exitID = &quot;CharacterString&gt;&gt;between_and&quot;;</span>
-<span class="nc" id="L218">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L219">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L220">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L221">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L216">    java.lang.String exitID = &quot;CharacterString&gt;&gt;between_and&quot;;</span>
+<span class="fc" id="L217">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L218">    return (Boolean)CharacterString.type().accepts(lowerBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L219">      return CharacterString.type().accepts(upperBound).and(Predicate.with(f3 -&gt; {</span>
+<span class="fc" id="L220">      return (this.notLess(((CharacterString)lowerBound))).and(Predicate.with(f4 -&gt; {</span>
+<span class="fc" id="L221">      return (this.notMore(((CharacterString)upperBound)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L223">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L224">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="nc" id="L226">    (this.lessThan(((CharacterString)lowerBound))).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L227">      return (Boolean)f0.exit(exitID, False.literal());</span>
     }, &quot;&quot;));
-<span class="nc" id="L229">    (this.moreThan(((CharacterString)upperBound))).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L230">      return (Boolean)f0.exit(exitID, False.literal());</span>
-    }, &quot;&quot;));
-<span class="nc" id="L232">    return (Boolean)f0.exit(exitID, True.literal());</span>
-    });
   }
 
   /**
@@ -238,16 +229,17 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Ordered max(final Scalar value)
   {
-<span class="nc" id="L241">    java.lang.String exitID = &quot;CharacterString&gt;&gt;max&quot;;</span>
-<span class="nc" id="L242">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L243">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L244">    value.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L245">      return (Ordered)f0.exit(exitID, this.max(value.printString()));</span>
+<span class="fc" id="L232">    java.lang.String exitID = &quot;CharacterString&gt;&gt;max&quot;;</span>
+<span class="fc" id="L233">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L234">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L235">    CharacterString.type().accepts(value).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L236">      return (Ordered)f0.exit(exitID, this.max(value.printString()));</span>
     }, &quot;&quot;));
-<span class="nc" id="L247">    (this.moreThan(((CharacterString)value))).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L248">      return (Ordered)f0.exit(exitID, this);</span>
-    }, &quot;&quot;));
-<span class="nc" id="L250">    return (Ordered)f0.exit(exitID, value);</span>
+<span class="fc" id="L238">    return (Ordered)f0.exit(exitID, (this.moreThan(((CharacterString)value))).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L239">      return this;</span>
+<span class="fc" id="L240">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L241">      return value;</span>
+    }, &quot;&quot;)));
     });
   }
 
@@ -256,16 +248,17 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Ordered min(final Scalar value)
   {
-<span class="nc" id="L259">    java.lang.String exitID = &quot;CharacterString&gt;&gt;min&quot;;</span>
-<span class="nc" id="L260">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L261">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L262">    value.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L263">      return (Ordered)f0.exit(exitID, this.min(value.printString()));</span>
+<span class="fc" id="L251">    java.lang.String exitID = &quot;CharacterString&gt;&gt;min&quot;;</span>
+<span class="fc" id="L252">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L253">    return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L254">    CharacterString.type().accepts(value).ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L255">      return (Ordered)f0.exit(exitID, this.min(value.printString()));</span>
     }, &quot;&quot;));
-<span class="nc" id="L265">    (this.lessThan(((CharacterString)value))).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L266">      return (Ordered)f0.exit(exitID, this);</span>
-    }, &quot;&quot;));
-<span class="nc" id="L268">    return (Ordered)f0.exit(exitID, value);</span>
+<span class="fc" id="L257">    return (Ordered)f0.exit(exitID, (this.lessThan(((CharacterString)value))).ifTrue_ifFalse(Closure.with(f2 -&gt; {</span>
+<span class="fc" id="L258">      return this;</span>
+<span class="fc" id="L259">    }, &quot;&quot;), Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L260">      return value;</span>
+    }, &quot;&quot;)));
     });
   }
 
@@ -274,14 +267,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean lessThan(final Scalar upperBound)
   {
-<span class="fc" id="L277">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
-<span class="fc" id="L278">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L279">    return f0.evaluate(() -&gt; {</span>
-<span class="fc" id="L280">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L281">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L270">    java.lang.String exitID = &quot;CharacterString&gt;&gt;lessThan&quot;;</span>
+<span class="fc" id="L271">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L272">    return (Boolean)CharacterString.type().accepts(upperBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L273">      return (this.lessThan(((CharacterString)upperBound)));</span>
     }, &quot;&quot;));
-<span class="fc" id="L283">    return (Boolean)f0.exit(exitID, (this.lessThan(((CharacterString)upperBound))));</span>
-    });
   }
 
   /**
@@ -289,14 +279,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean notMore(final Scalar upperBound)
   {
-<span class="nc" id="L292">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
-<span class="nc" id="L293">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L294">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L295">    upperBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L296">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L282">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notMore&quot;;</span>
+<span class="fc" id="L283">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L284">    return (Boolean)CharacterString.type().accepts(upperBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L285">      return (this.notMore(((CharacterString)upperBound)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L298">    return (Boolean)f0.exit(exitID, (this.notMore(((CharacterString)upperBound))));</span>
-    });
   }
 
   /**
@@ -304,14 +291,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean moreThan(final Scalar lowerBound)
   {
-<span class="nc" id="L307">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
-<span class="nc" id="L308">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L309">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L310">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L311">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L294">    java.lang.String exitID = &quot;CharacterString&gt;&gt;moreThan&quot;;</span>
+<span class="fc" id="L295">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L296">    return (Boolean)CharacterString.type().accepts(lowerBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L297">      return (this.moreThan(((CharacterString)lowerBound)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L313">    return (Boolean)f0.exit(exitID, (this.moreThan(((CharacterString)lowerBound))));</span>
-    });
   }
 
   /**
@@ -319,14 +303,11 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean notLess(final Scalar lowerBound)
   {
-<span class="nc" id="L322">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
-<span class="nc" id="L323">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L324">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L325">    lowerBound.isKindOf(CharacterString.type()).ifFalse(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L326">      return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="fc" id="L306">    java.lang.String exitID = &quot;CharacterString&gt;&gt;notLess&quot;;</span>
+<span class="fc" id="L307">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L308">    return (Boolean)CharacterString.type().accepts(lowerBound).and(Predicate.with(f2 -&gt; {</span>
+<span class="fc" id="L309">      return (this.notLess(((CharacterString)lowerBound)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L328">    return (Boolean)f0.exit(exitID, (this.notLess(((CharacterString)lowerBound))));</span>
-    });
   }
 
   /**
@@ -334,9 +315,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean isString()
   {
-<span class="nc" id="L337">    java.lang.String exitID = &quot;CharacterString&gt;&gt;isString&quot;;</span>
-<span class="nc" id="L338">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L339">    return (Boolean)True.literal();</span>
+<span class="fc" id="L318">    java.lang.String exitID = &quot;CharacterString&gt;&gt;isString&quot;;</span>
+<span class="fc" id="L319">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L320">    return (Boolean)True.literal();</span>
   }
 
   /**
@@ -344,9 +325,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean sameAs(final String aString)
   {
-<span class="nc" id="L347">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
-<span class="nc" id="L348">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L349">    return (Boolean)aString.sameAsString(this);</span>
+<span class="nc" id="L328">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAs&quot;;</span>
+<span class="nc" id="L329">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L330">    return (Boolean)aString.sameAsString(this);</span>
   }
 
   /**
@@ -354,9 +335,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean sameAsString(final CharacterString aString)
   {
-<span class="nc" id="L357">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAsString&quot;;</span>
-<span class="nc" id="L358">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L359">    return (Boolean)Boolean.from(this.primitiveString().equalsIgnoreCase(aString.primitiveString()));</span>
+<span class="nc" id="L338">    java.lang.String exitID = &quot;CharacterString&gt;&gt;sameAsString&quot;;</span>
+<span class="nc" id="L339">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L340">    return (Boolean)Boolean.from(this.primitiveString().equalsIgnoreCase(aString.primitiveString()));</span>
   }
 
   /**
@@ -364,16 +345,16 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   Boolean includes(final Subject anObject)
   {
-<span class="nc" id="L367">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
-<span class="nc" id="L368">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L369">    return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L370">    anObject.isKindOf(String.type()).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L371">      return (Boolean)f0.exit(exitID, this.includes(((String)anObject)));</span>
+<span class="nc" id="L348">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="nc" id="L349">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L350">    return f0.evaluate(() -&gt; {</span>
+<span class="nc" id="L351">    String.type().accepts(anObject).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L352">      return (Boolean)f0.exit(exitID, this.includes(((String)anObject)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L373">    anObject.isKindOf(Character.type()).ifTrue(Closure.with(f2 -&gt; {</span>
-<span class="nc" id="L374">      return (Boolean)f0.exit(exitID, this.includes(((Character)anObject)));</span>
+<span class="nc" id="L354">    Character.type().accepts(anObject).ifTrue(Closure.with(f2 -&gt; {</span>
+<span class="nc" id="L355">      return (Boolean)f0.exit(exitID, this.includes(((Character)anObject)));</span>
     }, &quot;&quot;));
-<span class="nc" id="L376">    return (Boolean)f0.exit(exitID, False.literal());</span>
+<span class="nc" id="L357">    return (Boolean)f0.exit(exitID, False.literal());</span>
     });
   }
 
@@ -382,9 +363,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean includes(final String s)
   {
-<span class="nc" id="L385">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
-<span class="nc" id="L386">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L387">    return (Boolean)Boolean.from(this.primitiveString().contains(s.primitiveString()));</span>
+<span class="fc" id="L366">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L367">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L368">    return (Boolean)Boolean.from(this.primitiveString().contains(s.primitiveString()));</span>
   }
 
   /**
@@ -392,9 +373,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean includes(final Character c)
   {
-<span class="fc" id="L395">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
-<span class="fc" id="L396">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L397">    return (Boolean)Boolean.from(this.primitiveString().contains(c.asString().primitiveString()));</span>
+<span class="fc" id="L376">    java.lang.String exitID = &quot;CharacterString&gt;&gt;includes&quot;;</span>
+<span class="fc" id="L377">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L378">    return (Boolean)Boolean.from(this.primitiveString().contains(c.asString().primitiveString()));</span>
   }
 
   /**
@@ -402,9 +383,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   String reverse()
   {
-<span class="nc" id="L405">    java.lang.String exitID = &quot;CharacterString&gt;&gt;reverse&quot;;</span>
-<span class="nc" id="L406">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L407">    return (String)String.from(Primitive.reverse(this.primitiveString()));</span>
+<span class="fc" id="L386">    java.lang.String exitID = &quot;CharacterString&gt;&gt;reverse&quot;;</span>
+<span class="fc" id="L387">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L388">    return (String)String.from(Primitive.reverse(this.primitiveString()));</span>
   }
 
   /**
@@ -412,9 +393,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   CharacterString append(final CollectedReadably aString)
   {
-<span class="nc" id="L415">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
-<span class="nc" id="L416">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L417">    return (CharacterString)(this.append(((CharacterString)aString)));</span>
+<span class="nc" id="L396">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
+<span class="nc" id="L397">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L398">    return (CharacterString)(this.append(((CharacterString)aString)));</span>
   }
 
   /**
@@ -422,9 +403,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   CharacterString append(final CharacterString aString)
   {
-<span class="nc" id="L425">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
-<span class="nc" id="L426">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L427">    return (CharacterString)String.from((this.primitiveString() + aString.asPrimitive()));</span>
+<span class="nc" id="L406">    java.lang.String exitID = &quot;CharacterString&gt;&gt;append&quot;;</span>
+<span class="nc" id="L407">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L408">    return (CharacterString)String.from((this.primitiveString() + aString.asPrimitive()));</span>
   }
 
   /**
@@ -432,9 +413,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   String asString()
   {
-<span class="fc" id="L435">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asString&quot;;</span>
-<span class="fc" id="L436">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L437">    return (String)String.from(this.primitiveString());</span>
+<span class="fc" id="L416">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asString&quot;;</span>
+<span class="fc" id="L417">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L418">    return (String)String.from(this.primitiveString());</span>
   }
 
   /**
@@ -442,9 +423,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Symbol asSymbol()
   {
-<span class="fc" id="L445">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSymbol&quot;;</span>
-<span class="fc" id="L446">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L447">    return (Symbol)Symbol.from(this.primitiveString());</span>
+<span class="fc" id="L426">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSymbol&quot;;</span>
+<span class="fc" id="L427">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L428">    return (Symbol)Symbol.from(this.primitiveString());</span>
   }
 
   /**
@@ -452,9 +433,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Symbol asSelector()
   {
-<span class="fc" id="L455">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSelector&quot;;</span>
-<span class="fc" id="L456">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L457">    return (Symbol)this.asSymbol();</span>
+<span class="fc" id="L436">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asSelector&quot;;</span>
+<span class="fc" id="L437">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L438">    return (Symbol)this.asSymbol();</span>
   }
 
   /**
@@ -462,9 +443,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   CharacterString asLowercase()
   {
-<span class="fc" id="L465">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asLowercase&quot;;</span>
-<span class="fc" id="L466">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L467">    return (CharacterString)String.from(this.primitiveString().toLowerCase());</span>
+<span class="fc" id="L446">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asLowercase&quot;;</span>
+<span class="fc" id="L447">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L448">    return (CharacterString)String.from(this.primitiveString().toLowerCase());</span>
   }
 
   /**
@@ -472,9 +453,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   CharacterString asUppercase()
   {
-<span class="fc" id="L475">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asUppercase&quot;;</span>
-<span class="fc" id="L476">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L477">    return (CharacterString)String.from(this.primitiveString().toUpperCase());</span>
+<span class="fc" id="L456">    java.lang.String exitID = &quot;CharacterString&gt;&gt;asUppercase&quot;;</span>
+<span class="fc" id="L457">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L458">    return (CharacterString)String.from(this.primitiveString().toUpperCase());</span>
   }
 
   /**
@@ -482,9 +463,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   @Override public   TextReadStream readStream()
   {
-<span class="fc" id="L485">    java.lang.String exitID = &quot;CharacterString&gt;&gt;readStream&quot;;</span>
-<span class="fc" id="L486">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L487">    return (TextReadStream)TextReadStream.type().with(this.asString());</span>
+<span class="fc" id="L466">    java.lang.String exitID = &quot;CharacterString&gt;&gt;readStream&quot;;</span>
+<span class="fc" id="L467">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L468">    return (TextReadStream)TextReadStream.type().with(this.asString());</span>
   }
 
   /**
@@ -492,9 +473,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Boolean matches(final String aString)
   {
-<span class="fc" id="L495">    java.lang.String exitID = &quot;CharacterString&gt;&gt;matches&quot;;</span>
-<span class="fc" id="L496">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L497">    return (Boolean)new StringPattern(this).accepts(aString);</span>
+<span class="fc" id="L476">    java.lang.String exitID = &quot;CharacterString&gt;&gt;matches&quot;;</span>
+<span class="fc" id="L477">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L478">    return (Boolean)new StringPattern(this).accepts(aString);</span>
   }
 
   /**
@@ -502,9 +483,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   List&lt;String&gt; subStrings()
   {
-<span class="nc" id="L505">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
-<span class="nc" id="L506">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L507">    return (List&lt;String&gt;)this.subStrings(Character.type().space().asString());</span>
+<span class="nc" id="L486">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L487">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L488">    return (List&lt;String&gt;)this.subStrings(Character.type().space().asString());</span>
   }
 
   /**
@@ -512,9 +493,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   Array subStrings(final ReadableString separators)
   {
-<span class="nc" id="L515">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
-<span class="nc" id="L516">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L517">    return (Array)new Array(this.subStrings(((String)separators)));</span>
+<span class="nc" id="L496">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L497">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L498">    return (Array)new Array(this.subStrings(((String)separators)));</span>
   }
 
   /**
@@ -522,9 +503,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   List&lt;String&gt; subStrings(final String separators)
   {
-<span class="nc" id="L525">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
-<span class="nc" id="L526">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L527">    return (List&lt;String&gt;)String.listWith(this.tokenized(separators));</span>
+<span class="nc" id="L506">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subStrings&quot;;</span>
+<span class="nc" id="L507">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L508">    return (List&lt;String&gt;)String.listWith(this.tokenized(separators));</span>
   }
 
   /**
@@ -532,9 +513,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   protected   List&lt;java.lang.String&gt; tokenized(final String separators)
   {
-<span class="nc" id="L535">    java.lang.String exitID = &quot;CharacterString&gt;&gt;tokenized&quot;;</span>
-<span class="nc" id="L536">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L537">    return (List&lt;java.lang.String&gt;)Primitive.tokenize(this.primitiveString(), separators.primitiveString());</span>
+<span class="nc" id="L516">    java.lang.String exitID = &quot;CharacterString&gt;&gt;tokenized&quot;;</span>
+<span class="nc" id="L517">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L518">    return (List&lt;java.lang.String&gt;)Primitive.tokenize(this.primitiveString(), separators.primitiveString());</span>
   }
 
   /**
@@ -542,9 +523,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   int length()
   {
-<span class="fc" id="L545">    java.lang.String exitID = &quot;CharacterString&gt;&gt;length&quot;;</span>
-<span class="fc" id="L546">    Frame f0 = new Frame(exitID);</span>
-<span class="fc" id="L547">    return (int)this.primitiveString().length();</span>
+<span class="fc" id="L526">    java.lang.String exitID = &quot;CharacterString&gt;&gt;length&quot;;</span>
+<span class="fc" id="L527">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L528">    return (int)this.primitiveString().length();</span>
   }
 
   /**
@@ -552,9 +533,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   char charAt(final int index)
   {
-<span class="nc" id="L555">    java.lang.String exitID = &quot;CharacterString&gt;&gt;charAt&quot;;</span>
-<span class="nc" id="L556">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L557">    return (char)this.primitiveString().charAt(index);</span>
+<span class="nc" id="L536">    java.lang.String exitID = &quot;CharacterString&gt;&gt;charAt&quot;;</span>
+<span class="nc" id="L537">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L538">    return (char)this.primitiveString().charAt(index);</span>
   }
 
   /**
@@ -562,9 +543,9 @@ import Smalltalk.Magnitudes.Scalar;
    */
   public   CharacterString subSequence(final int start, final int end)
   {
-<span class="nc" id="L565">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subSequence&quot;;</span>
-<span class="nc" id="L566">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L567">    return (CharacterString)String.from(this.primitiveString().subSequence(start, end).toString());</span>
+<span class="nc" id="L546">    java.lang.String exitID = &quot;CharacterString&gt;&gt;subSequence&quot;;</span>
+<span class="nc" id="L547">    Frame f0 = new Frame(exitID);</span>
+<span class="nc" id="L548">    return (CharacterString)String.from(this.primitiveString().subSequence(start, end).toString());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
