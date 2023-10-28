@@ -91,6 +91,18 @@ String members: "accessing elements"
         ^c ]
 ]
 
+String members: "locating elements"
+[
+    Integer! indexOf: Object! element ifAbsent: NiladicValuable! noneBlock [
+     	^self indexOf: Character <- element ifAbsent: noneBlock ]
+
+    @Primitive Integer! indexOf: Character! element ifAbsent: NiladicValuable! noneBlock [
+        Int! index := contents indexOf: element toString.
+        (index < 0) ifFalse: [ ^SmallInteger from: (index + 1) ].
+        ^noneBlock value
+    ]
+]
+
 String members: "adding elements"
 [
     @Protected Object! add: Object! element at: Int! index [
@@ -160,6 +172,7 @@ String members: "adding elements"
 
 String members: "removing elements"
 [
+    String! trim [ ^String from: contents toString trim ]
     String! removeAll [ contents := StringBuffer basicNew. ]
 
     Character! removeAtIndex: Ordinal! index [

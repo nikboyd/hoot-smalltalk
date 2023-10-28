@@ -42,9 +42,8 @@ CharacterString members: "accessing classes"
 CharacterString "comparing" members:
 [
     Int! hashCode [ ^self primitiveString hashCode ]
-    @Primitive Boolean! = Collected! candidate [
-        (candidate instanceOf: CharacterString) ifFalse: [ ^False literal ].
-        ^self equals: (CharacterString <- candidate) ]
+    Boolean! = Collected! value [
+        ^(CharacterString type accepts: value) and: [ self equals: (CharacterString <- value) ] ]
 
     Boolean! = CharacterString! aString [
         ^Boolean from: (self primitiveString equals: aString primitiveString) ]
@@ -75,37 +74,30 @@ CharacterString "comparing" members:
         ^(SmallInteger from: comparison) = 0 ]
 
     Boolean! between: Scalar! lowerBound and: Scalar! upperBound [
-        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        (self < (CharacterString <- lowerBound)) ifTrue: [ ^false ].
-        (self > (CharacterString <- upperBound)) ifTrue: [ ^false ].
-        ^true ]
+        ^(CharacterString type accepts: lowerBound) and: [ 
+         (CharacterString type accepts: upperBound) and: [
+         (self >= (CharacterString <- lowerBound))  and: [
+         (self <= (CharacterString <- upperBound))  ]]]  ]
 
     Ordered! max: Scalar! value [ "(the greater of this AND value)"
-        (value isKindOf: CharacterString type) ifFalse: [ ^self max: value printString ].
-    	self > (CharacterString <- value) ifTrue: [ ^self ].
-        ^value ]
+        (CharacterString type accepts: value) ifFalse: [ ^self max: value printString ].
+    	^(self > (CharacterString <- value)) ifTrue: [ self ] ifFalse: [ value ] ]
 
     Ordered! min: Scalar! value [ "(the lesser of this AND value)"
-        (value isKindOf: CharacterString type) ifFalse: [ ^self min: value printString ].
-    	self < (CharacterString <- value) ifTrue: [ ^self ].
-        ^value ]
+        (CharacterString type accepts: value) ifFalse: [ ^self min: value printString ].
+    	^(self < (CharacterString <- value)) ifTrue: [ self ] ifFalse: [ value ] ]
 
     Boolean! < Scalar! upperBound [ "whether (this < upperBound)"
-        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        ^self < (CharacterString <- upperBound) ]
+        ^(CharacterString type accepts: upperBound) and: [ self < (CharacterString <- upperBound) ] ]
 
     Boolean! <= Scalar! upperBound [ "whether (this <= upperBound)"
-        (upperBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        ^self <= (CharacterString <- upperBound) ]
+        ^(CharacterString type accepts: upperBound) and: [ self <= (CharacterString <- upperBound) ] ]
 
     Boolean! > Scalar! lowerBound [ "whether (this > lowerBound)"
-        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        ^self > (CharacterString <- lowerBound) ]
+        ^(CharacterString type accepts: lowerBound) and: [ self > (CharacterString <- lowerBound) ] ]
 
     Boolean! >= Scalar! lowerBound [ "whether (this >= lowerBound)"
-        (lowerBound isKindOf: CharacterString type) ifFalse: [ ^false ].
-        ^self >= (CharacterString <- lowerBound) ]
+        ^(CharacterString type accepts: lowerBound) and: [ self >= (CharacterString <- lowerBound) ] ]
 ]
 
 CharacterString "testing" members:
@@ -116,12 +108,12 @@ CharacterString "testing" members:
         ^Boolean from: (self primitiveString equalsIgnoreCase: aString primitiveString) ]
 
     Boolean! includes: Subject! anObject [
-        (anObject isKindOf: String type) ifTrue: [ ^self includes: String <- anObject ].
-        (anObject isKindOf: Character type) ifTrue: [ ^self includes: Character <- anObject ].
+        (String type accepts: anObject)    ifTrue: [ ^self includes: String <- anObject ].
+        (Character type accepts: anObject) ifTrue: [ ^self includes: Character <- anObject ].
         ^false
     ]
 
-    Boolean! includes: String! s [ ^Boolean from: (self primitiveString contains: s primitiveString) ]
+    Boolean! includes: String! s    [ ^Boolean from: (self primitiveString contains: s primitiveString) ]
     Boolean! includes: Character! c [ ^Boolean from: (self primitiveString contains: c asString primitiveString) ]
 ]
 
@@ -132,9 +124,7 @@ CharacterString "enumerating" members:
 
 CharacterString members: "copying elements"
 [
-    CharacterString! , CollectedReadably! aString [
-        ^self , (CharacterString <- aString) ]
-
+    CharacterString! , CollectedReadably! aString [ ^self , (CharacterString <- aString) ]
     @Primitive CharacterString! , CharacterString! aString [
         ^String from: (self primitiveString + aString asPrimitive) ]
 
