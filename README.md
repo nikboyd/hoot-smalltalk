@@ -1,15 +1,21 @@
 ### Hoot Smalltalk
 
-![Hoot Owl][logo]
+<div align="left" >
+<img align="left" src="logo.png" width="280" />
+</div>
 
 [Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
 * Hoot is [_experimental_](#introduction).
 * Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
-* Hoot integrates the best [features](#features) of Smalltalk (syntax) with those of Java (VM).
+* Hoot integrates better Smalltalk [features](#features) with those of a JVM.
 
 [Coverage Test Results][hub-coverage] 
 
-![Runtime Coverage][runtime-coverage] ![Compiler Coverage][compiler-coverage] ![Plugin Coverage][plugin-coverage] ![Library Coverage][libs-coverage] ![Maven Result][maven-badge] 
+![Maven Result][maven-badge] <br/>
+![Compiler Coverage][compiler-coverage] 
+![Plugin Coverage][plugin-coverage] <br/>
+![Runtime Coverage][runtime-coverage] 
+![Library Coverage][libs-coverage] 
 
 
 | **Section** | **Discussions** |
