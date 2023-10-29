@@ -481,7 +481,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
 
 
-[logo]: hoot-design/hoot-owl.svg "Hoot Owl"
+[logo]: logo.png "Hoot Owl"
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
