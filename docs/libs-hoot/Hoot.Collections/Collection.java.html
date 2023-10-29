@@ -34,7 +34,7 @@ import java.util.List;
 <span class="fc" id="L34">public abstract class Collection&lt;ElementType extends Object&gt; extends Object implements CollectedVariably&lt;ElementType&gt;</span>
 {
 
-<span class="nc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
+<span class="fc" id="L37">  public static Metaclass type() { return (Metaclass)Metaclass.$class; }</span>
 <span class="nc" id="L38">  @Override public Metaclass $class() { return (Metaclass)Metaclass.$class; }</span>
   public static class Metaclass extends Object.Metaclass implements CollectedVariably.Metatype
   {
@@ -55,10 +55,10 @@ import java.util.List;
      */
     @Override public   Collection $new()
     {
-<span class="nc" id="L58">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L59">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L60">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L61">      return (Collection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
+<span class="fc" id="L58">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L59">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L60">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L61">      return (Collection)f0.exit(exitID, this.$new(SmallInteger.from(10)));</span>
       });
     }
 
@@ -67,10 +67,10 @@ import java.util.List;
      */
     @Override public   Collection $new(final Ordinal capacity)
     {
-<span class="nc" id="L70">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L71">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L72">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L73">      return (Collection)f0.exit(exitID, new OrderedCollection(capacity));</span>
+<span class="fc" id="L70">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L71">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L72">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L73">      return (Collection)f0.exit(exitID, new OrderedCollection(capacity));</span>
       });
     }
 
@@ -96,15 +96,15 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with(final ElementType a, final ElementType b)
     {
-<span class="nc" id="L99">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with&quot;;</span>
-<span class="nc" id="L100">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L101">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L102">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L103">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L104">      prime.add(((Object)a)); </span>
-<span class="nc" id="L105">      prime.add(((Object)b)); </span>
+<span class="fc" id="L99">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with&quot;;</span>
+<span class="fc" id="L100">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L101">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L102">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="fc" id="L103">      Collection prime = (Collection)this.$new();</span>
+<span class="fc" id="L104">      prime.add(((Object)a)); </span>
+<span class="fc" id="L105">      prime.add(((Object)b)); </span>
 
-<span class="nc" id="L107">      return prime.yourself();</span>
+<span class="fc" id="L107">      return prime.yourself();</span>
       });
       });
     }
@@ -114,16 +114,16 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with_with(final ElementType a, final ElementType b, final ElementType c)
     {
-<span class="nc" id="L117">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with&quot;;</span>
-<span class="nc" id="L118">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L119">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L120">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L121">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L122">      prime.add(((Object)a)); </span>
-<span class="nc" id="L123">      prime.add(((Object)b)); </span>
-<span class="nc" id="L124">      prime.add(((Object)c)); </span>
+<span class="fc" id="L117">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with&quot;;</span>
+<span class="fc" id="L118">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L119">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L120">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="fc" id="L121">      Collection prime = (Collection)this.$new();</span>
+<span class="fc" id="L122">      prime.add(((Object)a)); </span>
+<span class="fc" id="L123">      prime.add(((Object)b)); </span>
+<span class="fc" id="L124">      prime.add(((Object)c)); </span>
 
-<span class="nc" id="L126">      return prime.yourself();</span>
+<span class="fc" id="L126">      return prime.yourself();</span>
       });
       });
     }
@@ -133,17 +133,17 @@ import java.util.List;
      */
     public  &lt;ElementType extends Subject&gt; CollectedVariably&lt;ElementType&gt; with_with_with_with(final ElementType a, final ElementType b, final ElementType c, final ElementType d)
     {
-<span class="nc" id="L136">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with_with&quot;;</span>
-<span class="nc" id="L137">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L138">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L139">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
-<span class="nc" id="L140">      Collection prime = (Collection)this.$new();</span>
-<span class="nc" id="L141">      prime.add(((Object)a)); </span>
-<span class="nc" id="L142">      prime.add(((Object)b)); </span>
-<span class="nc" id="L143">      prime.add(((Object)c)); </span>
-<span class="nc" id="L144">      prime.add(((Object)d)); </span>
+<span class="fc" id="L136">      java.lang.String exitID = &quot;CollectionMetatype&gt;&gt;with_with_with_with&quot;;</span>
+<span class="fc" id="L137">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L138">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L139">      return (CollectedVariably&lt;ElementType&gt;)f0.exit(exitID, (fp) -&gt; {</span>
+<span class="fc" id="L140">      Collection prime = (Collection)this.$new();</span>
+<span class="fc" id="L141">      prime.add(((Object)a)); </span>
+<span class="fc" id="L142">      prime.add(((Object)b)); </span>
+<span class="fc" id="L143">      prime.add(((Object)c)); </span>
+<span class="fc" id="L144">      prime.add(((Object)d)); </span>
 
-<span class="nc" id="L146">      return prime.yourself();</span>
+<span class="fc" id="L146">      return prime.yourself();</span>
       });
       });
     }

@@ -53,10 +53,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     @Override public  &lt;ElementType extends Subject&gt; Array with(final ElementType a)
     {
-<span class="nc" id="L56">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with&quot;;</span>
-<span class="nc" id="L57">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L58">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L59">      return (Array)f0.exit(exitID, ((Array)super.with(((Object)a))));</span>
+<span class="fc" id="L56">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with&quot;;</span>
+<span class="fc" id="L57">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L58">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L59">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a))));</span>
       });
     }
 
@@ -65,10 +65,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     @Override public  &lt;ElementType extends Subject&gt; Array with_with(final ElementType a, final ElementType b)
     {
-<span class="nc" id="L68">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with&quot;;</span>
-<span class="nc" id="L69">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L70">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L71">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b))));</span>
+<span class="fc" id="L68">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with&quot;;</span>
+<span class="fc" id="L69">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L70">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L71">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b))));</span>
       });
     }
 
@@ -77,10 +77,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     @Override public  &lt;ElementType extends Subject&gt; Array with_with_with(final ElementType a, final ElementType b, final ElementType c)
     {
-<span class="nc" id="L80">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with_with&quot;;</span>
-<span class="nc" id="L81">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L82">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L83">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b), ((Object)c))));</span>
+<span class="fc" id="L80">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with_with&quot;;</span>
+<span class="fc" id="L81">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L82">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L83">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b), ((Object)c))));</span>
       });
     }
 
@@ -89,10 +89,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     @Override public  &lt;ElementType extends Subject&gt; Array with_with_with_with(final ElementType a, final ElementType b, final ElementType c, final ElementType d)
     {
-<span class="nc" id="L92">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with_with_with&quot;;</span>
-<span class="nc" id="L93">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L94">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L95">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b), ((Object)c), ((Object)d))));</span>
+<span class="fc" id="L92">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;with_with_with_with&quot;;</span>
+<span class="fc" id="L93">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L94">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L95">      return (Array)f0.exit(exitID, ((Array)this.withAll(((Object)a), ((Object)b), ((Object)c), ((Object)d))));</span>
       });
     }
 
@@ -101,10 +101,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     public  &lt;ElementType extends Object&gt; Array&lt;ElementType&gt; withAll(final ElementType ... elements)
     {
-<span class="nc" id="L104">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L105">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L106">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L107">      return (Array&lt;ElementType&gt;)f0.exit(exitID, new Array(elements));</span>
+<span class="fc" id="L104">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withAll&quot;;</span>
+<span class="fc" id="L105">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L106">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L107">      return (Array&lt;ElementType&gt;)f0.exit(exitID, new Array(elements));</span>
       });
     }
 
@@ -113,10 +113,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     public  &lt;ElementType extends Subject&gt; Array withThese(final CollectedReadably&lt;ElementType&gt; aCollection)
     {
-<span class="nc" id="L116">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withThese&quot;;</span>
-<span class="nc" id="L117">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L118">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L119">      return (Array)f0.exit(exitID, new Array(aCollection.asList()));</span>
+<span class="fc" id="L116">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withThese&quot;;</span>
+<span class="fc" id="L117">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L118">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L119">      return (Array)f0.exit(exitID, new Array(aCollection.asList()));</span>
       });
     }
 
@@ -125,10 +125,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     @Override public   Array $new()
     {
-<span class="nc" id="L128">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;$new&quot;;</span>
-<span class="nc" id="L129">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L130">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L131">      return (Array)f0.exit(exitID, this.$new(SmallInteger.from(0)));</span>
+<span class="fc" id="L128">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;$new&quot;;</span>
+<span class="fc" id="L129">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L130">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L131">      return (Array)f0.exit(exitID, this.$new(SmallInteger.from(0)));</span>
       });
     }
 
@@ -149,10 +149,10 @@ public class Array&lt;ElementType extends Object&gt; extends ArrayedCollection&l
      */
     public   Array&lt;String&gt; withStrings(final java.lang.String ... textStrings)
     {
-<span class="nc" id="L152">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withStrings&quot;;</span>
-<span class="nc" id="L153">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L154">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L155">      return (Array&lt;String&gt;)f0.exit(exitID, new Array(String.listWith(textStrings)));</span>
+<span class="fc" id="L152">      java.lang.String exitID = &quot;ArrayMetatype&gt;&gt;withStrings&quot;;</span>
+<span class="fc" id="L153">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L154">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L155">      return (Array&lt;String&gt;)f0.exit(exitID, new Array(String.listWith(textStrings)));</span>
       });
     }
   }

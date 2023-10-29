@@ -55,10 +55,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     @Override public  &lt;ElementType extends Subject&gt; Set with(final ElementType a)
     {
-<span class="nc" id="L58">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with&quot;;</span>
-<span class="nc" id="L59">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L60">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L61">      return (Set)f0.exit(exitID, ((Set)super.with(((Object)a))));</span>
+<span class="fc" id="L58">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with&quot;;</span>
+<span class="fc" id="L59">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L60">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L61">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a))));</span>
       });
     }
 
@@ -67,10 +67,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     @Override public  &lt;ElementType extends Subject&gt; Set with_with(final ElementType a, final ElementType b)
     {
-<span class="nc" id="L70">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with&quot;;</span>
-<span class="nc" id="L71">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L72">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L73">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b))));</span>
+<span class="fc" id="L70">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with&quot;;</span>
+<span class="fc" id="L71">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L72">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L73">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b))));</span>
       });
     }
 
@@ -79,10 +79,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     @Override public  &lt;ElementType extends Subject&gt; Set with_with_with(final ElementType a, final ElementType b, final ElementType c)
     {
-<span class="nc" id="L82">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with_with&quot;;</span>
-<span class="nc" id="L83">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L84">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L85">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b), ((Object)c))));</span>
+<span class="fc" id="L82">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with_with&quot;;</span>
+<span class="fc" id="L83">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L84">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L85">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b), ((Object)c))));</span>
       });
     }
 
@@ -91,10 +91,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     @Override public  &lt;ElementType extends Subject&gt; Set with_with_with_with(final ElementType a, final ElementType b, final ElementType c, final ElementType d)
     {
-<span class="nc" id="L94">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with_with_with&quot;;</span>
-<span class="nc" id="L95">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L96">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L97">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b), ((Object)c), ((Object)d))));</span>
+<span class="fc" id="L94">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;with_with_with_with&quot;;</span>
+<span class="fc" id="L95">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L96">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L97">      return (Set)f0.exit(exitID, ((Set)this.withAll(((Object)a), ((Object)b), ((Object)c), ((Object)d))));</span>
       });
     }
 
@@ -103,10 +103,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     @Override public  &lt;ElementType extends Subject&gt; Set withAll(final CollectedReadably&lt;ElementType&gt; elements)
     {
-<span class="nc" id="L106">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L107">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L108">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L109">      return (Set)f0.exit(exitID, ((Set)super.withAll(elements)));</span>
+<span class="fc" id="L106">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;withAll&quot;;</span>
+<span class="fc" id="L107">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L108">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L109">      return (Set)f0.exit(exitID, ((Set)super.withAll(elements)));</span>
       });
     }
 
@@ -115,10 +115,10 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
      */
     public  &lt;ElementType extends Object&gt; Set&lt;ElementType&gt; withAll(final ElementType ... elements)
     {
-<span class="nc" id="L118">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;withAll&quot;;</span>
-<span class="nc" id="L119">      Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L120">      return f0.evaluate(() -&gt; {</span>
-<span class="nc" id="L121">      return (Set&lt;ElementType&gt;)f0.exit(exitID, Set.from(Arrays.asList(elements)));</span>
+<span class="fc" id="L118">      java.lang.String exitID = &quot;SetMetatype&gt;&gt;withAll&quot;;</span>
+<span class="fc" id="L119">      Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L120">      return f0.evaluate(() -&gt; {</span>
+<span class="fc" id="L121">      return (Set&lt;ElementType&gt;)f0.exit(exitID, Set.from(Arrays.asList(elements)));</span>
       });
     }
 
@@ -206,9 +206,9 @@ public class Set&lt;ElementType extends Object&gt; extends Collection&lt;Element
    */
   public static  &lt;ElementType extends Object&gt; Set&lt;ElementType&gt; from(final java.util.List&lt;ElementType&gt; aList)
   {
-<span class="nc" id="L209">    java.lang.String exitID = &quot;Set&gt;&gt;$from&quot;;</span>
-<span class="nc" id="L210">    Frame f0 = new Frame(exitID);</span>
-<span class="nc" id="L211">    return (Set&lt;ElementType&gt;)Set.from(new java.util.HashSet(aList));</span>
+<span class="fc" id="L209">    java.lang.String exitID = &quot;Set&gt;&gt;$from&quot;;</span>
+<span class="fc" id="L210">    Frame f0 = new Frame(exitID);</span>
+<span class="fc" id="L211">    return (Set&lt;ElementType&gt;)Set.from(new java.util.HashSet(aList));</span>
   }
 
   /**
