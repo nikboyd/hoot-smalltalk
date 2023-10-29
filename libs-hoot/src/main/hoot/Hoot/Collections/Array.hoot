@@ -16,7 +16,7 @@ Array? ElementType -> Object. "A literal array."
 
 Array class members: "creating instances"
 [
-    with: ElementType -> Subject! a [ ^Array <- (super with: Object <- a) ]
+    with: ElementType -> Subject! a [ ^Array <- (self withAll: Object <- a) ]
 
     with: ElementType -> Subject! a
     with: ElementType -> Subject! b [ ^Array <- (self withAll: Object <- a : Object <- b) ]

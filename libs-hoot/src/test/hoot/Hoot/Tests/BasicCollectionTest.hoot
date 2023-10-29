@@ -54,6 +54,11 @@ BasicCollectionTest members:
         o do: [ :each | self assertTrue: [ sample includes: each ]. ].
         self passed: 'ordered collection values test'.
 
+        self report: 'collect 1' elements: (Collection type with: 1).
+        self report: 'collect 2' elements: (Collection type with: 1 with: 2).
+        self report: 'collect 3' elements: (Collection type with: 1 with: 2 with: 3).
+        self report: 'collect 4' elements: (Collection type with: 1 with: 2 with: 3 with: 4).
+
         self report: '( 1 )' elements: (OrderedCollection type with: 1).
         self report: '( 1 2 )' elements: (OrderedCollection type with: 1 with: 2).
         self report: '( 1 2 3 )' elements: (OrderedCollection type with: 1 with: 2 with: 3).
@@ -61,6 +66,14 @@ BasicCollectionTest members:
         self report: 'new with all sample' elements: (OrderedCollection type withAll: sample).
         self report: 'sample remove last 3' elements: ((OrderedCollection type withAll: sample) removeLast: 3).
         self report: 'sample remove first 3' elements: ((OrderedCollection type withAll: sample) removeFirst: 3).
+
+        self report: '[ ]' elements: Array type new.
+        self report: '[ 1 ]' elements: (Array type with: 1).
+        self report: '[ 1 2 ]' elements: (Array type with: 1 with: 2).
+        self report: '[ 1 2 3 ]' elements: (Array type with: 1 with: 2 with: 3).
+        self report: '[ 1 2 3 4 ]' elements: (Array type with: 1 with: 2 with: 3 with: 4).
+        self report: '[ aaa bbb ]' elements: (Array type withStrings: 'aaa' primitiveString : 'bbb' primitiveString).
+        self report: '[ 1 2 3 4 ]' elements: ( Array type withThese: #( 1 2 3 4 ) ).
     ]
 
     testBagsSets [
@@ -72,6 +85,11 @@ BasicCollectionTest members:
         self report: 'set w/2 samples' elements: s.
         s removeAll: sample.
         self report: 'after removal  ' elements: s.
+        self report: 'set 1' elements: (Set type with: 1).
+        self report: 'set 2' elements: (Set type with: 1 with: 2).
+        self report: 'set 3' elements: (Set type with: 1 with: 2 with: 3).
+        self report: 'set 4' elements: (Set type with: 1 with: 2 with: 3 with: 4).
+        self report: 'set 4' elements: (Set type withAll: #( 1 2 3 4 )).
     ]
 
     testCompares [
