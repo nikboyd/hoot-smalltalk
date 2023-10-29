@@ -20,8 +20,7 @@ Set? ElementType -> Object. "A distinctly collected set of unique elements."
 
 Set class members: "creating instances"
 [
-    with: ElementType -> Subject! a [
-        ^Set <- (super with: Object <- a) ]
+    with: ElementType -> Subject! a [ ^Set <- (self withAll: Object <- a) ]
 
     with: ElementType -> Subject! a with: ElementType -> Subject! b [
         ^Set <- (self withAll: Object <- a : Object <- b) ]
