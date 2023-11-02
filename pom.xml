@@ -18,6 +18,7 @@
     </licenses>
 
     <modules>
+        <module>java-extend</module>
         <module>hoot-abstracts</module>
         <module>hoot-runtime</module>
         <module>hoot-compiler-ast</module>
@@ -119,6 +120,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>hoot-smalltalk</groupId>
+                <artifactId>java-extend</artifactId>
+                <version>2020.0101.0101</version>
+            </dependency>
             <dependency>
                 <groupId>hoot-smalltalk</groupId>
                 <artifactId>hoot-abstracts</artifactId>

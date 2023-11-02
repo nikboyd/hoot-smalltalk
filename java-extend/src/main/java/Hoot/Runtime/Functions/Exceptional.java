@@ -2,9 +2,6 @@ package Hoot.Runtime.Functions;
 
 import java.util.function.Consumer;
 import static Hoot.Runtime.Functions.Utils.*;
-import static Hoot.Runtime.Functions.Exceptional.Runner.*;
-import static Hoot.Runtime.Functions.Exceptional.Result.*;
-import static Hoot.Runtime.Functions.Exceptional.Argued.*;
 
 /**
  * Common standard utility functions for executing closures and handling exceptions.
@@ -32,8 +29,8 @@ public interface Exceptional extends Hoot.Runtime.Faces.Logging {
 
     public static void runLoudly(Runner r, Handler<Throwable> h) { runLoudly(r, h, NoOp); }
     public static void runLoudly(Runner r, Runnable... finish) { runLoudly(r, ErrorHandler, finish); }
-    public static void runLoudly(Runner r, Handler<Throwable> h, Runnable... finish) { runSurely(r, h, finish); }
-    public static void runQuietly(Runner r, Runnable... finish) { runSurely(r, DebugHandler, finish); }
+    public static void runLoudly(Runner r, Handler<Throwable> h, Runnable... finish) { Runner.runSurely(r, h, finish); }
+    public static void runQuietly(Runner r, Runnable... finish) { Runner.runSurely(r, DebugHandler, finish); }
 
     public static <R> R nullOrTryLoudly(Result<? extends R> r, Runnable... finish) { return defaultOrTryLoudly(r, null, finish); }
     public static <R> R nullOrTryQuietly(Result<? extends R> r, Runnable... finish) { return defaultOrTryQuietly(r, null, finish); }
@@ -45,16 +42,16 @@ public interface Exceptional extends Hoot.Runtime.Faces.Logging {
     public static <R> R defaultOrTryQuietly(Result<R> r, R defaultValue) { return defaultOrTryQuietly(r, defaultValue, NoOp); }
 
     public static <R> R defaultOrTryLoudly(Result<R> r, R defaultValue, Runnable... finish) {
-        return defaultOrTrySurely(r, ErrorHandler, defaultValue, finish); }
+        return Result.defaultOrTrySurely(r, ErrorHandler, defaultValue, finish); }
 
     public static <R> R defaultOrTryQuietly(Result<R> r, R defaultValue, Runnable... finish) {
-        return defaultOrTrySurely(r, DebugHandler, defaultValue, finish); }
+        return Result.defaultOrTrySurely(r, DebugHandler, defaultValue, finish); }
 
     public static <T, R> R defaultOrTryLoudly(Argued<T, R> r, T item, R defaultValue, Runnable... finish) {
-        return defaultOrTrySurely(r, item, ErrorHandler, defaultValue, finish); }
+        return Argued.defaultOrTrySurely(r, item, ErrorHandler, defaultValue, finish); }
 
     public static <T, R> R defaultOrTryQuietly(Argued<T, R> r, T item, R defaultValue, Runnable... finish) {
-        return defaultOrTrySurely(r, item, DebugHandler, defaultValue, finish); }
+        return Argued.defaultOrTrySurely(r, item, DebugHandler, defaultValue, finish); }
 
     public static <T, R> R nullOrTryLoudly(Argued<T, ? extends R> r, T item, Runnable... finish) {
         return defaultOrTryLoudly(r, item, null, finish); }

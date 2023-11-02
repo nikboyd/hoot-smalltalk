@@ -10,6 +10,7 @@ import org.codehaus.plexus.configuration.*;
 import Hoot.Runtime.Faces.Logging;
 import Hoot.Compiler.Mojo.HootMojo;
 import static Hoot.Runtime.Functions.Exceptional.*;
+import hoot_smalltalk.hoot_maven_plugin.HelpMojo;
 
 /**
  * A hoot-maven-plugin test fixture.
@@ -26,6 +27,7 @@ public class MojoTest implements Logging {
     // configured files
     static final File PomFile = new File(TestPOM);
 
+    @Test public void testHelp() throws Exception { new HelpMojo().execute(); }
     @Test public void testMojo() throws Exception { loadMojo().execute(); }
     HootMojo loadMojo() { return nullOrTryLoudly(() -> (HootMojo)lookupMojo()); }
 
