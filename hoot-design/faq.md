@@ -263,8 +263,8 @@ Re-order the bits of code so that variable declarations **always precede their u
 | [Exceptions](exceptions.md#exceptions) | [Features](../#features) | [Compiler Usage](usage.md#hoot-compiler-usage) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 

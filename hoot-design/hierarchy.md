@@ -7,8 +7,8 @@
 | [Classes](libs.md#classes-and-metaclasses) | [Features](../#features) | [Types](libs.md#types-and-metatypes) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 

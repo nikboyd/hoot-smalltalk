@@ -33,8 +33,8 @@ platform class. Here are a few representative examples:
 
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 [hoot-maven-plugin]: ../hoot-maven-plugin/README.md#hoot-maven-plugin

@@ -15,8 +15,8 @@ the AST nodes have been separated out from the remaining compiler.
 
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 [graal-vm]: https://www.graalvm.org/docs/introduction/

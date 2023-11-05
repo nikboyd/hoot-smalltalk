@@ -183,8 +183,8 @@ You can find more details about the mapping of the ANSI standard in the
 
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 

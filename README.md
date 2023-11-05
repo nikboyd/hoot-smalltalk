@@ -1,14 +1,10 @@
 ### Hoot Smalltalk
 
 <div align="left" >
-<img align="left" src="logo.png" width="280" />
+<img align="left" src="logo.png" width="150" />
 </div>
 
-[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
-* Hoot is [_experimental_](#introduction).
-* Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
-* Hoot integrates better Smalltalk [features](#features) with those of a JVM.
-
+[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].<br/>
 [Coverage Test Results][hub-coverage] 
 
 ![Maven Result][maven-badge] <br/>
@@ -17,45 +13,51 @@
 ![Runtime Coverage][runtime-coverage] 
 ![Library Coverage][libs-coverage] 
 
+* Hoot is [_experimental_](#introduction).
+* Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
+* Hoot integrates better Smalltalk [features](#features) with those of a JVM.
 
 | **Section** | **Discussions** |
 | ----------- | --------------- |
 | [Introduction](#introduction) | some background for Hoot Smalltalk |
-| [Platform Requirements](#platform-requirements) | tools needed to build Hoot Smalltalk and work with it |
+| [Platform Requirements](#platform-requirements) | tools needed to build and work with Hoot |
 | [Project Structure](#project-structure) | structure of this project repository |
 | [Bundled Libraries](#bundled-libraries) | location and configuration of the project bundles |
 | [Hoot Smalltalk Compiler](#hoot-smalltalk-compiler) | tools used to construct the compiler |
-| [Source Code Inclusion](#source-code-inclusion) | following in the footsteps of long-standing Smalltalk tradition |
-| [Project Planning](#project-planning) | recommendations for how to structure _your_ Hoot Smalltalk projects |
+| [Source Code Inclusion](#source-code-inclusion) | follows in the footsteps of ST tradition |
+| [Project Planning](#project-planning) | how to structure _your_ Hoot projects |
 | [Hoot Smalltalk Features](#features) | lists the features of Hoot Smalltalk |
 | [Frequently Asked Questions][faq] | frequently asked questions |
 
 #### Introduction
 
-Hoot Smalltalk is an experimental new programming language which builds on experience and understanding gained during
-the development of [Bistro Smalltalk][bistro].
+Hoot Smalltalk (aka Hoot) is `experimental`. 
 Hoot Smalltalk is the natural and conceptual successor to [Bistro Smalltalk][bistro].
+Hoot builds on and extends the experience and understanding gained during
+the development of [Bistro Smalltalk][bistro].
 
 Whereas, the Bistro grammar included and supported some Java keywords like `static`, `public`, `private`,
 Hoot Smalltalk makes all such code decorations optional [annotations][notes], and it uses naming conventions,
-type inference, and [Lambda functions][lambdas] to support _strong_ dynamic types at runtime.
+type inference, and [Lambda functions][lambdas] to support _**strong**_ dynamic types at runtime.
 
 Hoot Smalltalk extends some of the ideas pioneered in Bistro:
 
 * the [simplicity][st-syntax] and expressiveness of Smalltalk  message syntax,
 * support for _most_ [ANSI standard Smalltalk][lib] type protocols,
-* support for [_optional_ type annotations][optional],
-* support for [_generic_ types annotations][generics].
+* support for [_optional_ types][optional] via annotations,
+* support for [_generic_ types][generics] via annotations.
 
 Hoot Smalltalk also takes advantage of many existing tools and libraries.
 
-* no image-based persistence,
 * no proprietary virtual machine,
-* integration with existing tools,
+* no image-based persistence,
+* integration with existing tools (like [Git][git-doc] and GitHub),
 * easy integration with other class libraries.
 
 Example: You can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
-Hoot Smalltalk provides its own [testing framework][tests] that ultimately integrates with [JUnit 4.11][junit].
+Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
+
+#### No Image
 
 Hoot Smalltalk does not use [image-based persistence][st-image] for storing its code.
 Rather, like many programming languages, it uses simple text files with `.hoot` file type suffix.
@@ -65,10 +67,13 @@ Simple text files also allow you to use any of the existing integrated developme
 Hoot Smalltalk was developed with [NetBeans][net-beans], largely because of its mature support for
 and integration with [Maven][maven].
 
+#### BYOVM
+
 Hoot Smalltalk does not provide its own [virtual machine][st-image], like some [Smalltalks][st-imps].
 Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over the last few decades.
 The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove the choice of Java
 as the primary foundation for Hoot Smalltalk.
+That Java derived many of its early technical foundations from Smalltalk also helps.
 
 #### Platform Requirements
 
@@ -119,15 +124,16 @@ esp. if you want to track the further development of Hoot Smalltalk.
 
 More discussions about this will emerge as they gain focus. For now, the opportunities seem quite substantial.
 
-#### Building from Sources ####
+#### Words of Advice!
 
-Some Words of Advice!
-
-* Always ensure you have set **JAVA_HOME** for your chosen JDK version: the Hoot compiler _needs_ this.
-* Always start fresh, with an empty local **.m2/repository**, when switching JDK versions. 
+* Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
+* Always start _fresh_, with an empty local **.m2/repository**, when switching JDK versions. 
 * Don't muddy the waters!
 * Use small cycles when writing new code. Start with working code, then: ...
-* Write a test, write new code, test the code, repeat until the test passes and you have working code again.
+* SOP: write a test, write new code, test the code, ...
+* Repeat until the test passes and you have working code again.
+
+#### Building from Sources
 
 Clone this repository, and run the following shell command in the base project folder:
 
@@ -166,18 +172,19 @@ downstream libraries.
 This repository is organized into the following Maven projects, each of which builds a portion of Hoot overall.
 Some of these use a mix of languages, but there's always a _primary_ language, as indicated.
 
-| **Project** | **Summary** | **Language** | **Contents** |
-| ----------- | ----------- | ------------ | ------------ |
-| [hoot-abstracts][hoot-abstracts] | abstractions | Java | interfaces for the runtime and a few basic classes |
-| [hoot-runtime][hoot-runtime]     | runtime | Java | essential Hoot runtime foundation classes |
-| [hoot-compiler-ast][hoot-compiler-ast] | AST | Java | AST nodes, Hoot [grammar][grammar] |
-| [hoot-compiler][hoot-compiler]   | compiler | Java | compiler CLI, [templates][code-lib] |
-| [hoot-compiler-boot][hoot-compiler-boot] | launch | Java | app to launch the compiler from a command |
-| [hoot-maven-plugin][hoot-maven-plugin] | compiler plugin | Java | runs the compiler for a library project |
-| [libs-smalltalk][libs-smalltalk] | Smalltalk types | Hoot | Smalltalk library types + compile via the plugin |
-| [libs-hoot][libs-hoot]           | Hoot classes | Hoot | Hoot library classes + compile via the plugin |
-| [hoot-compiler-bundle][hoot-bundle] | compiler bundle | both | plugin + compiler + runtime libs |
-| [hoot-libs-bundle][libs-bundle]  | library bundle | both | compiled hoot classes + runtime libs |
+| **Library** | **Code** | **Contents** |
+| ----------- | ------------ | ------------ |
+| [java-extend][java-extend]       | Java | Java library extensions |
+| [hoot-abstracts][hoot-abstracts] | Java | interfaces for the runtime and a few basic classes |
+| [hoot-runtime][hoot-runtime]     | Java | essential Hoot runtime foundation classes |
+| [hoot-compiler-ast][hoot-compiler-ast] | Java | AST nodes, Hoot [grammar][grammar] |
+| [hoot-compiler][hoot-compiler]   | Java | compiler CLI, [templates][code-lib] |
+| [hoot-compiler-boot][hoot-compiler-boot] | Java | app to launch the compiler from a command |
+| [hoot-maven-plugin][hoot-maven-plugin] | Java | runs the compiler for a library project |
+| [libs-smalltalk][libs-smalltalk]    | Hoot | Smalltalk library types + compile via the plugin |
+| [libs-hoot][libs-hoot]              | Hoot | Hoot library classes + compile via the plugin |
+| [hoot-compiler-bundle][hoot-bundle] | both | plugin + compiler + runtime libs |
+| [hoot-libs-bundle][libs-bundle]     | both | compiled hoot classes + runtime libs |
 
 #### Bundled Libraries
 
@@ -455,34 +462,34 @@ Each link below leads to discussions of the specific language feature design det
 | **Feature** | **Summary** |
 | ----------- | ----------- |
 | [Language Model][model]    | Hoot Smalltalk has a _declarative_ language model. |
-| [Name Spaces][spaces]      | Hoot Smalltalk class packages and name spaces are based on folders. |
-| [Classes][classes]         | Hoot Smalltalk classes are hybrids based primarily on standard Smalltalk. |
-| [Meta-classes][classes]    | Hoot Smalltalk supports meta-classes like those found in standard Smalltalk. |
-| [Types][types]             | Hoot Smalltalk supports first-class interfaces (as types) like Java. |
-| [Meta-types][types]        | Hoot Smalltalk types can have associated meta-types. |
-| [Access Control][access]   | Hoot Smalltalk can use access controls: @**Public**, @**Protected**, @**Private**. |
-| [Decorations][decor]       | Hoot Smalltalk supports: @**Abstract**, @**Final**,   @**Static**. |
-| [Annotations][notes]       | Hoot Smalltalk translates other annotations into those of its host language. |
-| [Optional Types][optional] | Hoot Smalltalk variable and argument type specifications are _optional_. |
-| [Generic Types][generics]  | Hoot Smalltalk supports definition and use of **generic types**. |
-| [Methods][methods]         | Hoot Smalltalk methods resemble those of standard Smalltalk. |
-| [Interoperability][xop]    | Hoot Smalltalk method names become compatible host method names. |
-| [Primitives][prims]        | Hoot Smalltalk supports @**Primitive** methods. |
-| [Comments][comments]       | Hoot Smalltalk comments are copied into the host language. |
-| [Standard Library][lib]    | Hoot Smalltalk includes types that define [ANSI Smalltalk][st-ansi] protocols. |
-| [Blocks][blocks]           | Hoot Smalltalk blocks are implemented with Java Lambdas. |
-| [Threads][threads]         | Hoot Smalltalk blocks support the **fork** protocol for spawning threads. |
-| [Exceptions][except]       | Hoot Smalltalk supports both Smalltalk and Java exception handling. |
-| [Tests][tests]             | Hoot Smalltalk also includes a [test framework][tests]. |
-| [Questions][faq]           | Frequently Asked Questions FAQ about Hoot Smalltalk. |
+| [Name Spaces][spaces]      | Hoot class packages and name spaces are based on folders. |
+| [Classes][classes]         | Hoot classes are hybrids like standard Smalltalk. |
+| [Meta-classes][classes]    | Hoot supports meta-classes like those in standard Smalltalk. |
+| [Types][types]             | Hoot supports first-class interfaces (as types) like Java. |
+| [Meta-types][types]        | Hoot types can have associated meta-types. |
+| [Access Control][access]   | Hoot can use access controls: @**Public**, @**Protected**, @**Private**. |
+| [Decorations][decor]       | Hoot supports: @**Abstract**, @**Final**,   @**Static**, @**Default**. |
+| [Annotations][notes]       | Hoot translates other annotations to a host language. |
+| [Optional Types][optional] | Hoot variable and argument type specifications are _optional_. |
+| [Generic Types][generics]  | Hoot supports definition and use of **generic types**. |
+| [Methods][methods]         | Hoot methods resemble those of standard Smalltalk. |
+| [Interoperability][xop]    | Hoot method names become compatible host method names. |
+| [Primitives][prims]        | Hoot supports @**Primitive** methods. |
+| [Comments][comments]       | Hoot comments are copied into the host language. |
+| [Standard Library][lib]    | Hoot includes types that define [ANSI Smalltalk][st-ansi] protocols. |
+| [Blocks][blocks]           | Hoot blocks are implemented with Java Lambdas. |
+| [Threads][threads]         | Hoot blocks support the **fork** protocol for spawning threads. |
+| [Exceptions][except]       | Hoot supports both Smalltalk and Java exception handling. |
+| [Tests][tests]             | Hoot also includes a [test framework][tests]. |
+| [FAQ][faq]                 | Frequently asked questions about Hoot. |
 
 | **Back** | **Up** | **Next** |
 | -------- | ------ | -------- |
 | ... | ... | [Language Model](hoot-design/model.md#language-model) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
 
@@ -558,6 +565,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [console-apps]: hoot-design/tests.md#running-applications
 [hoot-dotnet]: hoot-design/dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
 
+[java-extend]: java-extend/README.md#java-extensions
 [hoot-abstracts]: hoot-abstracts/README.md#hoot-abstractions
 [hoot-runtime]: hoot-runtime/README.md#hoot-runtime-library
 [hoot-compiler-ast]: hoot-compiler-ast/README.md#hoot-compiler-library

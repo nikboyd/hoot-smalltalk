@@ -40,7 +40,9 @@ All access controls are enforced at runtime by the Java VM.
 
 #### Decorations ####
 
-Hoot Smalltalk also supports the common decorators, such as @**Abstract**, @**Final**, @**Static**.
+Hoot Smalltalk supports the common decorators, @**Abstract**, @**Final**, @**Static**, @**Default**.
+A @**Default** method in a type definition is especially useful for _grafting_ shared
+common behaviors onto class hierarchies that are otherwise unrelated.
 
 #### Optional Types ####
 
@@ -49,7 +51,7 @@ Variables can also be assigned initial values. Here's an example of such an assi
 
 ```smalltalk
 "define a static constant"
-@Private! @Static! Integer! Zero := 0.
+@Private @Static Integer! Zero := 0.
 ```
 
 Note this example integrates the use of annotations, type specification, variable declaration, and
@@ -57,7 +59,7 @@ variable initialization. Here's an example method signature:
 
 ```smalltalk
 "define a sort method"
-@Public! Boolean! sort: Integer! a : Integer! b [ "..." ]
+@Public Boolean! sort: Integer! a : Integer! b [ "..." ]
 ```
 
 Again, note the use of annotations and type specifications. This could also have been defined as follows:
@@ -101,8 +103,8 @@ So, it supports the same protocols defined by that standard library type.
 | [Name Spaces](libs.md#name-spaces) | [Features](../#features) | [Methods](methods.md#methods) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd.
-Permission is granted to copy this work provided this copyright statement is retained in all copies.
+Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
