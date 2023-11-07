@@ -4,9 +4,9 @@
 
 | Coverage | Test Results |
 |:-------- |:------------ |
-| ![Runtime Coverage][runtime-coverage] | [Hoot Runtime Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/) |
 | ![Compiler Coverage][compiler-coverage] | [Hoot Compiler Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/) |
 | ![Plugin Coverage][plugin-coverage] | [Hoot Maven Plugin Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/) |
+| ![Runtime Coverage][runtime-coverage] | [Hoot Runtime Tests](https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/) |
 | ![Library Coverage][libs-coverage] | [Hoot Library Tests](https://nikboyd.github.io/hoot-smalltalk/libs-hoot/) |
 
 [maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.png

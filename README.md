@@ -4,14 +4,18 @@
 <img align="left" src="logo.png" width="150" />
 </div>
 
-[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].<br/>
-[Coverage Test Results][hub-coverage] 
-
-![Maven Result][maven-badge] <br/>
+[Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
+![Maven Result][maven-badge]
+<br/>
+<br/>
 ![Compiler Coverage][compiler-coverage] 
-![Plugin Coverage][plugin-coverage] <br/>
+![Plugin Coverage][plugin-coverage]
+<br/>
 ![Runtime Coverage][runtime-coverage] 
-![Library Coverage][libs-coverage] 
+![Library Coverage][libs-coverage]
+<br/>
+[All Test Results][hub-coverage]
+<br/>
 
 * Hoot is [_experimental_](#introduction).
 * Hoot runs Smalltalk on top of the Java Virtual Machine [JVM][jvm].
@@ -54,7 +58,7 @@ Hoot Smalltalk also takes advantage of many existing tools and libraries.
 * integration with existing tools (like [Git][git-doc] and GitHub),
 * easy integration with other class libraries.
 
-Example: You can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
+You can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
 Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
 
 #### No Image
@@ -127,8 +131,8 @@ More discussions about this will emerge as they gain focus. For now, the opportu
 #### Words of Advice!
 
 * Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
-* Always start _fresh_, with an empty local **.m2/repository**, when switching JDK versions. 
-* Don't muddy the waters!
+* Don't muddy the waters! Always start _fresh_,  ...
+* With an empty local **.m2/repository**, when switching JDK versions. 
 * Use small cycles when writing new code. Start with working code, then: ...
 * SOP: write a test, write new code, test the code, ...
 * Repeat until the test passes and you have working code again.

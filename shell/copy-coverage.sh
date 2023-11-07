@@ -4,7 +4,7 @@
 mvn_code=$1
 
 if [[ $mvn_code == 0 ]]; then
-    lib_folders="hoot-runtime hoot-compiler hoot-maven-plugin libs-hoot"
+    lib_folders="hoot-compiler hoot-maven-plugin hoot-runtime libs-hoot"
     for lib_name in $lib_folders; do
         cover_folder="$lib_name/target/site/jacoco"
         cover_file="$lib_name/target/site/jacoco/index.html"
