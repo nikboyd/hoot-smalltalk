@@ -68,6 +68,10 @@
                     <include>**/*.hoot</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>target/site/jacoco</directory>
+                <targetPath>resources/docs/${artifactId}</targetPath>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -121,6 +125,41 @@
                     <execution><id>post-unit-test</id>
                        <phase>test</phase>
                        <goals><goal>report</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>build-lib-badge</id>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>bash</executable>
+                            <workingDirectory>${user.dir}</workingDirectory>
+                            <arguments>
+                                <argument>shell/build-cover-badge.sh</argument>
+                                <argument>0</argument>
+                                <argument>${artifactId}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build-mvn-badge</id>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>bash</executable>
+                            <workingDirectory>${user.dir}</workingDirectory>
+                            <arguments>
+                                <argument>shell/build-mvn-badge.sh</argument>
+                                <argument>0</argument>
+                                <argument>${version.hoot}</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

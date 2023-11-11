@@ -13,7 +13,12 @@ maven_opts="-U -B "
 if [ $1 ]; then maven_opts+="$1"; fi
 
 mvn $maven_opts clean
-mvn $maven_opts versions:set -DgroupId=hoot-smalltalk -DartifactId=* -DoldVersion=$stamp_test -DnewVersion=$stamp
+
+# cloud builds also do the following
+if [[ $USER == runner ]]; then # change timestamp in poms
+    mvn $maven_opts versions:set -DgroupId=hoot-smalltalk -DartifactId=* -DoldVersion=$stamp_test -DnewVersion=$stamp
+fi
+
 mvn $maven_opts install
 mvn_code=$?
 

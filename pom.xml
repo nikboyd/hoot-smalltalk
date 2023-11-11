@@ -30,6 +30,7 @@
         <module>libs-hoot</module>
         <module>libs-port</module>
         <module>hoot-libs-bundle</module>
+        <module>hoot-docs-bundle</module>
     </modules>
 
     <properties>
@@ -54,6 +55,8 @@
         <version.maven.compiler>3.11.0</version.maven.compiler>
         <version.maven.surefire>2.22.1</version.maven.surefire>
         <version.maven.jacoco>0.8.10</version.maven.jacoco>
+        <version.maven-ant>1.8</version.maven-ant>
+        <runner-base>${user.dir}/shell</runner-base>
 
         <gitlab-group>9887672</gitlab-group>
         <gitlab-project>10019964</gitlab-project>
