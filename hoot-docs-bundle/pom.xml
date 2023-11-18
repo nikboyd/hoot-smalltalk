@@ -26,12 +26,11 @@
     <dependencies>
         <dependency>
             <groupId>hoot-smalltalk</groupId>
-            <artifactId>libs-hoot</artifactId>
+            <artifactId>java-extend</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${version.spring-boot}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

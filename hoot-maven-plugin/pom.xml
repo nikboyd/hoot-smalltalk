@@ -86,7 +86,7 @@
             </resource>
             <resource>
                 <directory>target/site/jacoco</directory>
-                <targetPath>resources/docs/${artifactId}</targetPath>
+                <targetPath>resources/docs/${project.artifactId}</targetPath>
             </resource>
         </resources>
         <plugins>
@@ -145,7 +145,7 @@
                             <arguments>
                                 <argument>shell/build-cover-badge.sh</argument>
                                 <argument>0</argument>
-                                <argument>${artifactId}</argument>
+                                <argument>${project.artifactId}</argument>
                             </arguments>
                         </configuration>
                     </execution>
