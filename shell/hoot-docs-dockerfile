@@ -1,0 +1,8 @@
+# hoot-docs-docker file ubuntu jammy + java 17
+FROM ubuntu:jammy
+
+ENV TZ="America/Los_Angeles"
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y update && apt-get -y upgrade \
+  && apt-get install -y software-properties-common \
+     iputils-ping tzdata chrony git sudo wget curl vim lsof ssh zip unzip
