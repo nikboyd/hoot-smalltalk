@@ -1,8 +1,27 @@
 # hoot-docs-docker file ubuntu jammy + java 17
 FROM ubuntu:jammy
+EXPOSE 8080
 
 ENV TZ="America/Los_Angeles"
 ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get -y update && apt-get -y upgrade \
   && apt-get install -y software-properties-common \
      iputils-ping tzdata chrony git sudo wget curl vim lsof ssh zip unzip
+
+RUN apt-get -y upgrade && apt-get install -y openjdk-17-jre-headless \
+  && echo "2" | sudo update-alternatives --config java
+
+RUN  groupadd -r hoot \
+  && useradd --no-log-init -r -g hoot hoot \
+  && printf "h00t\nh00t" | passwd hoot \
+  && adduser hoot sudo \
+  && echo "hoot ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+RUN  mkdir -p /home/hoot
+
+COPY jars/*.jar /home/hoot/
+RUN chown -R hoot: /home/hoot
+USER hoot
+WORKDIR /home/hoot
+CMD ["java","-jar","hoot-docs-bundle.jar"]
