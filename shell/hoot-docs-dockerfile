@@ -6,8 +6,7 @@ ENV TZ="America/Los_Angeles"
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y update && apt-get -y upgrade \
-  && apt-get install -y software-properties-common \
-     iputils-ping tzdata chrony git sudo wget curl vim lsof ssh zip unzip
+  && apt-get install -y iputils-ping tzdata chrony git sudo
 
 RUN apt-get -y upgrade && apt-get install -y openjdk-17-jre-headless \
   && echo "2" | sudo update-alternatives --config java
@@ -22,6 +21,11 @@ RUN  mkdir -p /home/hoot
 
 COPY jars/*.jar /home/hoot/
 RUN chown -R hoot: /home/hoot
-USER hoot
 WORKDIR /home/hoot
+USER hoot
+
+LABEL "org.opencontainers.image.source"="https://github.com/nikboyd/hoot-smalltalk"
+LABEL "org.opencontainers.image.description"="Hoot Smalltalk test coverage reports"
+LABEL "org.opencontainers.image.licenses"="MIT"
+
 CMD ["java","-jar","hoot-docs-bundle.jar"]
