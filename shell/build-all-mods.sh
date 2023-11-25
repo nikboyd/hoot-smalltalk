@@ -29,18 +29,18 @@ if [[ $USER == runner ]]; then
     shell/deploy-libs.sh $mvn_code $stamp
 
     # clear build changes from file system
-    git stash -u
+    #git stash -u
 
     # build badges after tests
-    shell/build-mvn-badge.sh $mvn_code $stamp
-    shell/build-cover-badges.sh $mvn_code
+    #shell/build-mvn-badge.sh $mvn_code $stamp
+    #shell/build-cover-badges.sh $mvn_code
 
     # copy coverage reports
-    shell/copy-coverage.sh $mvn_code
-    ls docs/hoot-runtime/
+    #shell/copy-coverage.sh $mvn_code
+    #ls docs/hoot-runtime/
 
     # push test coverage reports
-    shell/push-coverage.sh $mvn_code
+    #shell/push-coverage.sh $mvn_code
 
     # build and push version tag
     shell/build-git-tag.sh $mvn_code $stamp
