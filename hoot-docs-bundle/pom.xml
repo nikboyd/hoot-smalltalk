@@ -7,9 +7,9 @@
         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hoot-smalltalk</groupId>
-    <artifactId>hoot-compiler-boot</artifactId>
-    <version>2020.0101.0101</version>
+    <artifactId>hoot-docs-bundle</artifactId>
     <packaging>jar</packaging>
+    <version>2020.0101.0101</version>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -26,11 +26,11 @@
     <dependencies>
         <dependency>
             <groupId>hoot-smalltalk</groupId>
-            <artifactId>hoot-compiler</artifactId>
+            <artifactId>java-extend</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -41,6 +41,7 @@
     </dependencies>
 
     <build>
+        <finalName>hoot-docs-bundle</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -52,7 +53,43 @@
                     <include>LICENSE.txt</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>index.html</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../hoot-runtime/target/site/jacoco</directory>
+                <targetPath>META-INF/resources/hoot-runtime</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../libs-hoot/target/site/jacoco</directory>
+                <targetPath>META-INF/resources/libs-hoot</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../hoot-compiler/target/site/jacoco</directory>
+                <targetPath>META-INF/resources/hoot-compiler</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../hoot-maven-plugin/target/site/jacoco</directory>
+                <targetPath>META-INF/resources/hoot-plugin</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -32,11 +32,6 @@
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <version>2.7.8</version>
-        </dependency>
 
         <dependency>
             <groupId>hoot-smalltalk</groupId>
@@ -46,6 +41,18 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>commons-compiler</artifactId>
+            <version>3.1.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.1.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -61,6 +68,10 @@
                 <includes>
                     <include>LICENSE.txt</include>
                 </includes>
+            </resource>
+            <resource>
+                <directory>target/site/jacoco</directory>
+                <targetPath>resources/docs/${project.artifactId}</targetPath>
             </resource>
         </resources>
         <plugins>
@@ -104,7 +115,27 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>build-lib-badge</id>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>bash</executable>
+                            <workingDirectory>${user.dir}</workingDirectory>
+                            <arguments>
+                                <argument>shell/build-cover-badge.sh</argument>
+                                <argument>0</argument>
+                                <argument>${project.artifactId}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

@@ -5,6 +5,7 @@ nb*.xml
 
 target/
 workspace/
+docs/jars/
 
 # build residue
 cached-poms.txt

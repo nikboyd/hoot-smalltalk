@@ -1,5 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-hoot-maven-plugin,Hoot.Compiler.Mojo,HootMojo,90,234,6,8,15,45,10,25,4,24
-hoot-maven-plugin,Hoot.Compiler.Mojo,Servant,64,162,3,5,5,26,3,17,1,15
-hoot-maven-plugin,Hoot.Compiler.Mojo,Discovery,20,161,4,4,1,32,4,19,0,19
-hoot-maven-plugin,hoot_smalltalk.hoot_maven_plugin,HelpMojo,271,502,61,51,53,103,42,30,2,14
