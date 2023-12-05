@@ -1,10 +1,10 @@
 # hoot-smalltalk google cloud build
 steps:
-  # build check run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: check_run
+  # pull docs bundle
+  - name: 'maven:3-eclipse-temurin-17'
+    id: pull_bundle
     entrypoint: 'bash'
-    args: [ '-c', "echo 'cloud build'" ]
+    args: [ '-c', "docs/fetch-docs-bundle.sh" ]
 
 #options:
    # build normal with 8 cores

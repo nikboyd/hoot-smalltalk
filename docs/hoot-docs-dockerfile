@@ -28,4 +28,4 @@ LABEL "org.opencontainers.image.source"="https://github.com/nikboyd/hoot-smallta
 LABEL "org.opencontainers.image.description"="Hoot Smalltalk test coverage reports"
 LABEL "org.opencontainers.image.licenses"="MIT"
 
-CMD ["java","-jar","hoot-docs-bundle.jar"]
+CMD ["/bin/bash","-c","java -jar $(ls hoot-docs-bundle*.jar)"]

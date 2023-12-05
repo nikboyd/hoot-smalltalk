@@ -2,7 +2,7 @@
 # fetch-secrets.sh fetch account secrets
 
 work=$( pwd )
-names="admin gitlab cloudsmith trigger"
+names="admin github cloudsmith trigger"
 for secret in $names; do
     gcloud secrets versions access latest \
         --secret=hoot-secret-$secret --format='get(payload.data)' \

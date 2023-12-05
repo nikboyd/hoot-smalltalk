@@ -10,7 +10,7 @@ if [ -d /workspace ]; then
 fi
 
 # fetch library version
-version=$( ./query-repo.sh $1 )
+version=$( shell/query-repo.sh $1 )
 lib_name="$1"
 lib_type="jar"
 if [ $2 ]; then lib_type="$2"; fi
