@@ -1,10 +1,18 @@
 # hoot-smalltalk google cloud build
 steps:
+  # confirm sources
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: pull_sources
+    entrypoint: 'bash'
+    args: [ '-c', "chmod +x docs/*.sh; chmod +x shell/*.sh; shell/install-tools.sh" ]
+
   # pull docs bundle
   - name: 'maven:3-eclipse-temurin-17'
     id: pull_bundle
     entrypoint: 'bash'
-    args: [ '-c', "docs/fetch-docs-bundle.sh" ]
+    args: [ '-c', "ls -al docs/; ls -al shell/; python --version" ]
+    waitFor:
+      - pull_sources
 
 #options:
    # build normal with 8 cores
