@@ -1,4 +1,4 @@
-#!bash
+#!/usr/bin/env bash
 # installs common tools
 
 sudo apt-get update
