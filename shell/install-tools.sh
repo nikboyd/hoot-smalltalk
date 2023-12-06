@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!bash
 # installs common tools
 
 sudo apt-get update
