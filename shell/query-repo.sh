@@ -6,4 +6,8 @@ lib_query="name:$1"
 
 # list latest version of library
 version=$( cloudsmith list pkgs $lib_repo -q $lib_query | sort -r -k 3 | head -3 | tail -1 | awk '{print $3}' )
+if [ -d /workspace ]; then
+   echo "$version" > /workspace/$1-version.txt
+fi
+
 echo "$version"
