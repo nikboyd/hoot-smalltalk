@@ -2,7 +2,7 @@
 # pull-lib.sh ... pull JAR from cloudsmith package repository, $1=library name, $2=library type, $3=library version
 
 get_deps='org.apache.maven.plugins:maven-dependency-plugin:2.8:get'
-location='central::default::hoot-libs'
+location='central::default::github'
 lib_group='hoot-smalltalk'
 lib_name="$1"
 lib_type="jar"
