@@ -13,7 +13,7 @@ lib_vers=''
 if [ $3 ]; then lib_vers="$3"; fi
 
 mvn_opts='-U -B'
-if [[ $USER == runner ]]; then # cloud build
+if [ -d /workspace ]; then # cloud build
    mvn_opts+=" --settings .m2/lib-settings.xml"
    if [ ! $3 ]; then lib_vers=$( cat $1-version.txt ); fi
 else # fetch lib version locally
