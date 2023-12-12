@@ -3,9 +3,9 @@
 
 rm -fr docs/jars
 mkdir -p docs/jars
-docs_loc=".m2/repository/hoot-smalltalk"
+docs_loc="/workspace/.m2/repository/hoot-smalltalk"
 docs_lib=hoot-docs-bundle
 docs_version=$1
 docs_file="$docs_lib-$docs_version.jar"
-cp ~/$docs_loc/$docs_lib/$docs_version/$docs_file docs/jars/
+cp $docs_loc/$docs_lib/$docs_version/$docs_file docs/jars/
 ls -al docs/jars/
