@@ -4,16 +4,68 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     id: pull_sources
     entrypoint: 'bash'
-    args: [ '-c', "chmod +x docs/*.sh; chmod +x shell/*.sh; shell/install-tools.sh" ]
+    args: [ '-c', "chmod +x docs/*.sh; chmod +x shell/*.sh" ]
+
+  # install tools
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: install_tools
+    entrypoint: 'bash'
+    args: [ '-c', "shell/install-tools.sh; shell/install-cloudsmith.sh; shell/query-repo.sh hoot-docs-bundle" ]
+    waitFor:
+      - pull_sources
+
+  # fetch account secrets
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: fetch_secrets
+    entrypoint: 'bash'
+    args: [ '-c', "shell/fetch-secrets.sh" ]
+    waitFor:
+    - install_tools
 
   # pull docs bundle
   - name: 'maven:3-eclipse-temurin-17'
     id: pull_bundle
     entrypoint: 'bash'
-    args: [ '-c', "ls -al docs/; ls -al shell/; python --version" ]
+    args:
+      - '-c'
+      - |
+        export MAVEN_REPO_PASS=$(echo "$(< /workspace/hoot-secret-github.txt)")
+        shell/pull-lib.sh hoot-docs-bundle jar $(< /workspace/hoot-docs-bundle-version.txt)
+        docs/copy-docs-bundle.sh $(< /workspace/hoot-docs-bundle-version.txt)
+    env:
+      - 'MAVEN_REPO_USER=nikboyd'
     waitFor:
-      - pull_sources
+      - fetch_secrets
 
-#options:
-   # build normal with 8 cores
-   #machineType: 'N1_HIGHCPU_8'
+  # build container image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: build_image
+    script: |
+      docker build -t $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA -f $DOCS_FILE docs
+      docker push $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA
+    automapSubstitutions: true
+    env:
+      - 'DOCS_REGION=us-west1-docker.pkg.dev'
+      - 'DOCS_REPO=hoot-docs-images'
+      - 'DOCS_HOST=hoot-docs-host'
+      - 'DOCS_FILE=docs/hoot-docs-dockerfile'
+    waitFor:
+    - pull_bundle
+
+  # run container
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: run_docs
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'hoot-docs-runner'
+      - '--image'
+      - $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA
+      - '--region'
+      - 'us-west1'
+    env:
+      - 'DOCS_REGION=us-west1-docker.pkg.dev'
+      - 'DOCS_REPO=hoot-docs-images'
+      - 'DOCS_HOST=hoot-docs-host'
+      - 'DOCS_FILE=docs/hoot-docs-dockerfile'
