@@ -5,6 +5,7 @@
 </div>
 
 [Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
+<br/>
 ![Maven Result][maven-badge]
 <br/>
 <br/>
