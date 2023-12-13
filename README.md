@@ -590,7 +590,6 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [cloud-smith]: https://cloudsmith.com/
 
 [hub-package]: https://github.com/nikboyd/hoot-smalltalk/packages/1130290
-[hub-coverage]: https://nikboyd.github.io/hoot-smalltalk/
 [hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
 [hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
 [hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
@@ -604,8 +603,9 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [lab-trigger]: shell/build-all-mods.sh#L42
 [install-tools]: shell/install-tools.sh#L4
 
-[maven-badge]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/maven_badge.png
-[runtime-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-runtime/coverage_badge.png
-[compiler-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-compiler/coverage_badge.png
-[plugin-coverage]: https://nikboyd.github.io/hoot-smalltalk/hoot-maven-plugin/coverage_badge.png
-[libs-coverage]: https://nikboyd.github.io/hoot-smalltalk/libs-hoot/coverage_badge.png
+[hub-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/
+[maven-badge]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/maven_badge.png
+[runtime-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/coverage_badge.png
+[compiler-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/coverage_badge.png
+[plugin-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/coverage_badge.png
+[libs-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/coverage_badge.png
