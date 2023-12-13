@@ -40,10 +40,11 @@ steps:
   # build container image
   - name: 'gcr.io/cloud-builders/docker'
     id: build_image
-    script: |
-      docker build -t $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA -f $DOCS_FILE docs
-      docker push $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA
     automapSubstitutions: true
+    script: |
+      export DOCS_TAG=$( date +"%Y.%m%d.%H%M" )
+      docker build -t $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG -f $DOCS_FILE docs
+      docker push $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG
     env:
       - 'DOCS_REGION=us-west1-docker.pkg.dev'
       - 'DOCS_REPO=hoot-docs-images'
@@ -53,19 +54,14 @@ steps:
     - pull_bundle
 
   # run container
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    id: run_docs
-    entrypoint: gcloud
-    args:
-      - 'run'
-      - 'deploy'
-      - 'hoot-docs-runner'
-      - '--image'
-      - $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$COMMIT_SHA
-      - '--region'
-      - 'us-west1'
-    env:
-      - 'DOCS_REGION=us-west1-docker.pkg.dev'
-      - 'DOCS_REPO=hoot-docs-images'
-      - 'DOCS_HOST=hoot-docs-host'
-      - 'DOCS_FILE=docs/hoot-docs-dockerfile'
+#  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#    id: run_docs
+#    entrypoint: gcloud
+#    args:
+#      - 'run'
+#      - 'deploy'
+#      - 'hoot-docs-runner'
+#      - '--image'
+#      - 'us-west1-docker.pkg.dev/hoot-docs-images/hoot-docs-host:latest'
+#      - '--region'
+#      - 'us-west1'
