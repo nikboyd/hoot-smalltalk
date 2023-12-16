@@ -43,10 +43,12 @@ steps:
     automapSubstitutions: true
     script: |
       export DOCS_TAG=$( date +"%Y.%m%d.%H%M" )
-      docker build -t $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG -f $DOCS_FILE docs
-      docker push $DOCS_REGION/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG
+      echo "$DOCS_TAG" > /workspace/hoot-docs-host-tag.txt
+      docker build -t $DOCS_PACK/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG -f $DOCS_FILE docs
+      docker push $DOCS_PACK/$PROJECT_ID/$DOCS_REPO/$DOCS_HOST:$DOCS_TAG
     env:
-      - 'DOCS_REGION=us-west1-docker.pkg.dev'
+      - 'DOCS_REGION=us-west1'
+      - 'DOCS_PACK=us-west1-docker.pkg.dev'
       - 'DOCS_REPO=hoot-docs-images'
       - 'DOCS_HOST=hoot-docs-host'
       - 'DOCS_FILE=docs/hoot-docs-dockerfile'
@@ -54,14 +56,9 @@ steps:
     - pull_bundle
 
   # run container
-#  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-#    id: run_docs
-#    entrypoint: gcloud
-#    args:
-#      - 'run'
-#      - 'deploy'
-#      - 'hoot-docs-runner'
-#      - '--image'
-#      - 'us-west1-docker.pkg.dev/hoot-docs-images/hoot-docs-host:latest'
-#      - '--region'
-#      - 'us-west1'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: run_docs
+    entrypoint: 'bash'
+    args: [ '-c', "gcloud run deploy hoot-docs-host --region us-west1 --image us-west1-docker.pkg.dev/$PROJECT_ID/hoot-docs-images/hoot-docs-host:$(< /workspace/hoot-docs-host-tag.txt)" ]
+    waitFor:
+    - build_image
