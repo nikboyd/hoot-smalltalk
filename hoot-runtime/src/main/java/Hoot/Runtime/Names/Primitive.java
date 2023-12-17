@@ -252,7 +252,9 @@ public class Primitive implements Logging {
     }
 
     public static int invertBits(int bits) { return ~bits; }
+    public static long invertBits(long bits) { return ~bits; }
     public static int xorBits(int a, int b) { return a ^ b; }
+    public static long xorBits(long a, long b) { return a ^ b; }
 
     public static Double elementaryMaxDouble() { return java.lang.Double.MAX_VALUE; }
     public static Double elementaryMinDouble() { return java.lang.Double.MIN_VALUE; }
