@@ -10,7 +10,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     id: install_tools
     entrypoint: 'bash'
-    args: [ '-c', "shell/install-tools.sh; shell/install-cloudsmith.sh; shell/query-repo.sh hoot-docs-bundle" ]
+    args: [ '-c', "shell/install-tools.sh" ]
     waitFor:
       - pull_sources
 
@@ -30,10 +30,11 @@ steps:
       - '-c'
       - |
         export MAVEN_REPO_PASS=$(echo "$(< /workspace/hoot-secret-github.txt)")
-        shell/pull-lib.sh hoot-docs-bundle jar $(< /workspace/hoot-docs-bundle-version.txt)
-        docs/copy-docs-bundle.sh $(< /workspace/hoot-docs-bundle-version.txt)
+        shell/pull-lib.sh hoot-docs-bundle jar $TAG_NAME
+        docs/copy-docs-bundle.sh $TAG_NAME
     env:
       - 'MAVEN_REPO_USER=nikboyd'
+      - "TAG_NAME=$TAG_NAME"
     waitFor:
       - fetch_secrets
 
