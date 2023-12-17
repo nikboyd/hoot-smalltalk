@@ -19,7 +19,7 @@ if [ -d /workspace ]; then # cloud build
    local_repo="-Dmaven.repo.local=/workspace/.m2/repository"
    if [ ! $3 ]; then lib_vers=$( cat $1-version.txt ); fi
 else # fetch lib version locally
-   if [ ! $3 ]; then lib_vers=$( shell/query-repo.sh $1 ); fi
+   if [ ! $3 ]; then lib_vers=$( git describe --abbrev=0 ); fi
 fi
 
 echo "pulling $lib_group:$lib_name:$lib_vers:$lib_type"
