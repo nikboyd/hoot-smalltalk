@@ -40,6 +40,9 @@ public class Import extends Message {
     public static final Global SmalltalkCore = Global.with("Smalltalk", "Core");
     public static Import smalltalkCore(File aFile) { return from(aFile, SmalltalkCore, ImportAll); }
 
+    public static final Global SmalltalkMags = Global.with("Smalltalk", "Magnitudes");
+    public static Import smalltalkMags(File aFile) { return from(aFile, SmalltalkMags, ImportAll); }
+
     public static final Global HootExceptions = Global.with("Hoot", "Exceptions");
     public static final Global HootBehaviors = Global.with("Hoot", "Behaviors");
     public static Import hootBehaviors(File aFile) { return from(aFile, HootBehaviors, ImportAll); }

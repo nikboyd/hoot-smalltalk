@@ -85,6 +85,10 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         if (!SmalltalkBlocks.typeName().equals(packageName())) {
             importFace(Import.smalltalkBlocks(this));
         }
+
+        if (!SmalltalkMags.typeName().equals(packageName())) {
+            importFace(Import.smalltalkMags(this));
+        }
     }
 
     public void addHootLibraryImports() {

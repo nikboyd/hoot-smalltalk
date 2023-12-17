@@ -19,6 +19,9 @@ Rational subclass: @Abstract Ordinal! IntegerValue! Integer. "An integer value."
 
 Integer class members:
 [
+    Integer! zero [ ^SmallInteger Zero ]
+    Integer! unity [ ^SmallInteger Unity ]
+
     Java Lang Char! radixDigit: Number! index [ "a radix digit"
      	^RadixDigits charAt: index asSmallInteger primitiveInteger ]
 ]
@@ -88,12 +91,12 @@ Integer members: "manipulating bits"
     Boolean! anyMask: Ordinal! mask [ ^(self bitAnd: mask) ~= 0 ]
     Boolean! noMask: Ordinal! mask [ ^(self bitAnd: mask) == 0 ]
 
-    bitAt: Ordinal! index [ ^self bitAt: (Integer <- index) asSmallInteger ]
+    bitAt: Ordinal! index [ ^self asLongInteger bitAt: (Integer <- index) asSmallInteger ]
     bitAt: Ordinal! index put: Ordinal! bitValue [
         ^self bitAt: (Integer <- index) asSmallInteger
             put: (Integer <- bitValue) asSmallInteger ]
 
-    bitShift: Ordinal! count [ ^self bitAt: (Integer <- count) asSmallInteger ]
+    bitShift: Ordinal! count [ ^self asLongInteger bitShift: (Integer <- count) asSmallInteger ]
     highBit [ ^self asLargeInteger highBit ]
 ]
 
@@ -139,7 +142,7 @@ Integer "mathematics" members:
 
     factorial [
      	self < self class zero ifTrue: [ self error: 'Negative integers cannot use #factorial'. ].
-        FastInteger! result := self class unity.
+        FastInteger! result := self class unity faster.
         self class unity to: self do: [ : SmallInteger! n | result multiplyBy: n ].
         ^result asInteger ]
 
@@ -153,11 +156,10 @@ Integer "mathematics" members:
 Integer "enumerating" members:
 [
     timesRepeat: NiladicValuable! aBlock [
-     	FastInteger! count := self class unity.
-        SmallInteger! unity := self class unity.
+     	FastInteger! count := self class unity faster.
         [ count <= self ] whileTrue: [
             aBlock value.
-            count add: unity.
+            count increment.
         ].
     ]
 ]

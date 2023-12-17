@@ -81,3 +81,47 @@ LongInteger members: "arithmetic"
         aNumber asPrimitive == 0 ifTrue: [ self zeroDivide. ^self ].
         ^LongInteger from: (self asPrimitive % aNumber asPrimitive) ]
 ]
+
+LongInteger members: "manipulating bits - concrete"
+[
+    @Primitive Integer! bitInvert [ ^LongInteger from: (Primitive invertBits: self longValue) ]
+    @Primitive LongInteger! bitAnd: Ordinal! anInteger [ ^LongInteger from: self longValue & anInteger longValue ]
+    @Primitive LongInteger! bitOr:  Ordinal! anInteger [ ^LongInteger from: self longValue | anInteger longValue ]
+    @Primitive LongInteger! bitXor: Ordinal! anInteger [
+        ^LongInteger from: (Primitive xorBits: self longValue : anInteger longValue) ]
+
+
+    @Primitive Integer! bitAt: Ordinal! index [
+        @Final Java Lang Int! x := (Integer <- index) primitiveInteger - 1.
+        ((x < 0) | (x > 31)) ifTrue:
+            [ (IllegalArgumentException basicNew: 'Bit index out of range, not 1 - 32') throw ].
+
+        @Final LongInteger! s := LongInteger from: (1 << x).
+        ^(self bitAnd: s) primitiveInteger == 0
+            ifTrue: [ SmallInteger Zero ]
+            ifFalse: [ SmallInteger Unity ]
+    ]
+
+    @Primitive LongInteger! bitAt: Ordinal! index put: Ordinal! bitValue [
+        @Final Java Lang Int! x := (Integer <- index) intValue - 1.
+        Java Lang Int! v := (Integer <- bitValue) intValue.
+        ((x < 0) | (x > 31)) ifTrue:
+            [ (IllegalArgumentException basicNew: 'Bit index out of range, not 1 - 32') throw ].
+
+        @Final LongInteger! s := LongInteger from: (1 << x).
+        (v == 0) ifTrue: [ ^LongInteger from: self longValue & s bitInvert longValue ].
+        (v == 1) ifTrue: [ ^LongInteger from: self longValue | s longValue ].
+
+        (IllegalArgumentException basicNew: 'Bit value must be 0 or 1') throw
+    ]
+]
+
+LongInteger members: "bit shifts - primitive"
+[
+    @Primitive LongInteger! rightShift: Integer! count [ ^LongInteger from: self longValue >> count intValue ]
+    @Primitive LongInteger! leftShift:  Integer! count [ ^LongInteger from: self longValue << count intValue ]
+    @Primitive LongInteger! bitShift:   Ordinal! count [
+        (Integer <- count) primitiveInteger < 0 ifTrue: [ ^self rightShift: Integer <- count negated ].
+        ^self leftShift: Integer <- count
+    ]
+]

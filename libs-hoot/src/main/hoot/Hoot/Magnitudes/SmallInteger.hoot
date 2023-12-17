@@ -142,6 +142,7 @@ SmallInteger members: "converting values"
 
     asSmallInteger [ ^self ]
     String! asString [ ^self printString ]
+    Character! codePoint [ ^Character type codePoint: self ]
     FastInteger! asFastInteger [ ^FastInteger fromInteger: self ]
 ]
 
@@ -165,7 +166,7 @@ SmallInteger members: "manipulating bits - concrete"
         ^SmallInteger from: (Primitive xorBits: self intValue : anInteger intValue) ]
 
 
-    @Primitive SmallInteger! bitAt: Ordinal! index [
+    @Primitive Integer! bitAt: Ordinal! index [
         @Final Java Lang Int! x := (Integer <- index) primitiveInteger - 1.
         ((x < 0) | (x > 31)) ifTrue:
             [ (IllegalArgumentException basicNew: 'Bit index out of range, not 1 - 32') throw ].
@@ -188,17 +189,16 @@ SmallInteger members: "manipulating bits - concrete"
 
         (IllegalArgumentException basicNew: 'Bit value must be 0 or 1') throw
     ]
-
-    @Primitive SmallInteger! bitShift: Ordinal! count [
-        (Integer <- count) primitiveInteger < 0 ifTrue: [ ^self rightShift: Integer <- count negated ].
-        ^self leftShift: Integer <- count
-    ]
 ]
 
 SmallInteger members: "bit shifts - primitive"
 [
     @Primitive SmallInteger! rightShift: Integer! count [ ^SmallInteger from: self intValue >> count intValue ]
     @Primitive SmallInteger! leftShift:  Integer! count [ ^SmallInteger from: self intValue << count intValue ]
+    @Primitive SmallInteger! bitShift:   Ordinal! count [
+        (Integer <- count) primitiveInteger < 0 ifTrue: [ ^self rightShift: Integer <- count negated ].
+        ^self leftShift: Integer <- count
+    ]
 ]
 
 SmallInteger members: "testing behavior"

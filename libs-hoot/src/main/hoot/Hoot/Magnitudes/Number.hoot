@@ -23,6 +23,9 @@ Magnitude subclass: @Abstract Smalltalk Magnitudes Numeric! Smalltalk Magnitudes
 
 Number class members: "accessing constants"
 [
+    Number! zero [ ^SmallInteger Zero ]
+    Number! unity [ ^SmallInteger Unity ]
+
     Floater! e [ ^Double basicNew: Math E ]
     Floater! pi [ ^Double basicNew: Math PI ]
 
@@ -48,8 +51,8 @@ Number class members: "coercing value types"
         self error: 'concrete derived metaclasses must override this method.'. ^null ]
 
     NumericType -> Number! coerce: Object! aNumber "a coerced number" [ ^self coerce: (Number <- aNumber) ]
-    NumericType -> Number! zero "additive identity" [ ^NumericType <- (self coerce: Zero) ]
-    NumericType -> Number! unity "product identity" [ ^NumericType <- (self coerce: Unity) ]
+    NumericType -> Number! zeroCoerced "additive identity" [ ^NumericType <- (self coerce: Zero) ]
+    NumericType -> Number! unityCoerced "product identity" [ ^NumericType <- (self coerce: Unity) ]
 
     @Protected Number Metaclass! fromType: Classified! numberClass [ ^numberClass ]
 ]
