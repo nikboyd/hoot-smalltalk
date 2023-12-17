@@ -9,7 +9,7 @@ lib_type="jar"
 if [ $2 ]; then lib_type="$2"; fi
 
 # set library version
-lib_vers=''
+lib_vers=$( git describe --abbrev=0 )
 if [ $3 ]; then lib_vers="$3"; fi
 
 mvn_opts='-U -B'
