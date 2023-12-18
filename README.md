@@ -165,7 +165,7 @@ mvn -U -B -pl libs-hoot test -Dtest=BenchmarkTest
 See the included [tests folder][hoot-tests] for a list of the available tests you can run.
 There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
 See the additional [notes][tests] about using this way of running tests with the bundle.
-You can also review the uploaded [test results](https://nikboyd.github.io/hoot-smalltalk/).
+You can also review the uploaded [test results][hub-coverage].
 
 #### Project Structure
 
@@ -190,6 +190,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 | [libs-hoot][libs-hoot]              | Hoot | Hoot library classes + compile via the plugin |
 | [hoot-compiler-bundle][hoot-bundle] | both | plugin + compiler + runtime libs |
 | [hoot-libs-bundle][libs-bundle]     | both | compiled hoot classes + runtime libs |
+| [hoot-docs-bundle][docs-bundle]     | Java | bundled test coverage reports |
 
 #### Bundled Libraries
 
@@ -583,6 +584,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [libs-smalltalk]: libs-smalltalk/README.md#hoot-smalltalk-type-library
 [hoot-bundle]: hoot-compiler-bundle/README.md
 [libs-bundle]: hoot-libs-bundle/README.md
+[docs-bundle]: hoot-docs-bundle/README.md
 [plugin-example]: libs-hoot/pom.xml#L44
 [java-profiles]: pom.xml#L316
 
