@@ -232,7 +232,8 @@ runs-on: macos-latest
 
 After reviewing and using some alternatives for hosting the build, [GitHub Actions][hub-build]
 was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
-Thereafter, the [test coverage reports][hub-coverage] were hosted in GitHub with Pages.
+Thereafter, the [test coverage reports][hub-coverage] were migrated from GitHub Pages
+to Google with the [hoot-docs-bundle][docs-bundle].
 
 #### Hoot Smalltalk Compiler
 
