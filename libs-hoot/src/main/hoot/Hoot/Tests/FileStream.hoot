@@ -16,17 +16,30 @@ FileStream members:
         (Boolean from: testFolder exists) ifFalse: [ testFolder mkdir. ].
 
         String! fileName := 'target/stream.test.txt'.
-        String! fileOut := 'target/parsed.text.txt'.
-        String! text := 'a quick brown fox jumped over a lazy dog'.
-
-        oStream := TextFileWriteStream write: fileName.
-        oStream nextPutAll: text; cr.
-        oStream close.
+        self writeText: fileName.
 
         self log cr.
-        self log printLine: (FileReport formatWith: 'wrote into ' : fileName : text).
-        self log printLine: (FileReport formatWith: 'reads from ' : fileName : '').
+        self log printLine: (FileReport formatWith: 'wrote into' : fileName : Sample printString).
+        self log printLine: (FileReport formatWith: 'reads from' : fileName : '').
 
+        String! fileOut := 'target/parsed.text.txt'.
+        self rewriteText: fileName to: fileOut.
+
+        self writeBinary: fileName.
+        String! text := self readBinary: fileName.
+        self log print: 'as binary '.
+        self log printLine: text printString.
+        self log printLine.
+    ]
+
+    @Static @Final String! Sample := 'a quick brown fox jumped over a lazy dog'.
+    Void! writeText: String! fileName [
+        oStream := TextFileWriteStream write: fileName.
+        oStream nextPutAll: Sample; cr.
+        oStream close.
+    ]
+
+    Void! rewriteText: String! fileName to: String! fileOut [
         iStream := TextFileReadStream read: fileName.
         newStream := TextFileWriteStream write: fileOut.
         [ ^iStream atEnd ] whileFalse: [
@@ -35,6 +48,19 @@ FileStream members:
             self log printLine: line.
         ].
         iStream close.
+        newStream close.
+    ]
+
+    Void! writeBinary: String! fileName [
+        oStream := BinaryFileWriteStream write: fileName.
+        oStream nextPutAll: Sample primitiveString.
         oStream close.
+    ]
+
+    String! readBinary: String! fileName [
+        iStream := BinaryFileReadStream read: fileName.
+        ByteArray! result := iStream contents.
+        iStream close.
+        ^String from: (Java Lang String basicNew: result primitiveContents)
     ]
 ]

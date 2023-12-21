@@ -24,6 +24,7 @@ BinaryFileReadStream class members: "creating instances"
 BinaryFileReadStream members: "constructing instances"
 [
     @Protected! BinaryFileReadStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+    @Static BinaryFileReadStream! read: String! fileName [ ^FileReadStream type read: fileName type: #binary ]
 ]
 
 BinaryFileReadStream members: "accessing"
@@ -39,9 +40,9 @@ BinaryFileReadStream members: "accessing"
 
 BinaryFileReadStream members: "testing"
 [
-    Boolean! isText [ ^true ]
-    Boolean! isBinary [ ^false ]
-    Symbol! externalType [ ^#text ]
+    Boolean! isText [ ^false ]
+    Boolean! isBinary [ ^true ]
+    Symbol! externalType [ ^#binary ]
 ]
 
 BinaryFileReadStream members: "reading"

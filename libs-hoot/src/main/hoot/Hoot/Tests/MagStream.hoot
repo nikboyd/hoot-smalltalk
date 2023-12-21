@@ -1,0 +1,27 @@
+@Notice :'Copyright 2010,2023 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+'!
+
+Hoot Streams importAll.
+
+TestableClosure subclass: MagStream.
+"Regression tests a number stream."
+
+TextStream members:
+[
+    Array! sample := #( 9 8 7 6 5 4 3 2 1 0 ).
+    Void! runTest [
+        OrderedCollection! o := OrderedCollection type withAll: sample.
+        ReadStream! rStream := o readStream.
+        OrderedCollection! m := OrderedCollection type new. m registerType: 0.
+        WriteStream! wStream := m writeStream.
+        [ ^rStream atEnd ] whileFalse: [
+            SmallInteger! n := SmallInteger <- rStream next.
+            wStream nextPut: n.
+            self log print: n printString.
+        ].
+        wStream close. rStream close.
+        self log printLine.
+        self log printLine: wStream contents size printString.
+    ]
+]

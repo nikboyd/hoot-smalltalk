@@ -14,7 +14,7 @@ FileStream? ElementType -> Object. "A stream over a file."
 
 FileStream class members: "creating instances"
 [
-    TextFileReadStream! read: String! fileName [ ^FileReadStream type read: fileName type: #text ]
+    TextFileReadStream!  read:  String! fileName [ ^FileReadStream type read: fileName type: #text ]
     TextFileWriteStream! write: String! fileName [ ^self write: fileName mode: #create ]
     TextFileWriteStream! write: String! fileName mode: Symbol! mode [ ^FileWriteStream type write: fileName mode: mode check: false type: #text ]
 ]
