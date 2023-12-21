@@ -2,7 +2,7 @@
 # build-all-mods.sh build all hoot modules, $1=additional maven options
 
 work=$( pwd )
-echo "running hoot build here: $work"
+echo "$USER running hoot build here: $work"
 
 stamp_test="2020.0101.0101"
 stamp=$( date +"%Y.%m%d.%H%M" )

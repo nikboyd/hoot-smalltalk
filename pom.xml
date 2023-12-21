@@ -55,6 +55,7 @@
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
         <version.maven-plugin>3.9.0</version.maven-plugin>
+        <version.maven-resources>3.3.1</version.maven-resources>
         <version.maven.compiler>3.11.0</version.maven.compiler>
         <version.maven.surefire>2.22.1</version.maven.surefire>
         <version.maven.jacoco>0.8.10</version.maven.jacoco>
@@ -268,9 +269,19 @@
                     <version>2020.0101.0101</version>
                 </plugin>
                 <plugin>
+                    <groupId>hoot-smalltalk</groupId>
+                    <artifactId>hoot-maven-plugin</artifactId>
+                    <version>2020.0101.0101</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${version.maven.compiler}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.maven-resources}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
