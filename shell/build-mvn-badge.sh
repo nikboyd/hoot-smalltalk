@@ -3,6 +3,7 @@
 
 mvn_code=$1
 version=$2
+if [ ! $2 ]; then version="$HOOT_VERSION"; fi
 
 # locate coverage reports
 cover_folder="hoot-runtime/target/site/jacoco"
