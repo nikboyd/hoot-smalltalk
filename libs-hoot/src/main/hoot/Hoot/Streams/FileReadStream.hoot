@@ -21,8 +21,8 @@ FileReadStream class members: "creating instances"
     FileReadStream! read: ReadableString! fileName type: ReadableString! fileType [
         ^self open: String <- fileName type: Symbol <- fileType ]
 
-    FileReadStream! open: String! fileName type: Symbol! fileType [
-        (#binary == fileType) ifTrue: [ 
+    @Primitive FileReadStream! open: String! fileName type: Symbol! fileType [
+        ('binary' equals: fileType primitiveString) ifTrue: [ 
             ^BinaryFileReadStream type on: (Primitive readFile: fileName primitiveString) ].
         ^TextFileReadStream type on: (Primitive readFile: fileName primitiveString)
     ]

@@ -9,8 +9,13 @@ TestableClosure subclass: TextStream.
 
 TextStream members:
 [
-    @Static @Final String! TextReport := '%s w/o vowels = %s'.
     Void! runTest [
+        self testVowelRemoval.
+        self testUpToVowels.
+    ]
+
+    @Static @Final String! TextReport := '%s w/o vowels = %s'.
+    Void! testVowelRemoval [
         String! vowels := 'aeiou'.
         String! source := 'abcdefghijklmnopqrstuvwxyz'.
         TextReadStream! iStream := source readStream.
@@ -20,5 +25,18 @@ TextStream members:
             (vowels includes: c) ifFalse: [ oStream nextPut: c ].
         ].
         self log printLine: (TextReport formatWith: source : oStream contents).
+    ]
+
+    Void! testUpToVowels [
+        String! vowels := 'aeiou'.
+        String! source := 'abcdefghijklmnopqrstuvwxyz'.
+        TextReadStream! vStream := vowels readStream.
+        TextReadStream! rStream := source readStream.
+        TextWriteStream! wStream := String type writeStream: source size.
+        [ ^vStream atEnd ] whileFalse: [
+            Character! c := vStream next.
+            wStream nextPutAll: ( rStream upTo: c ).
+        ].
+        self log printLine: (TextReport formatWith: source : wStream contents).
     ]
 ]

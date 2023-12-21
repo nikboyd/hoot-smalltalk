@@ -29,10 +29,11 @@ TextReadStream "reading" members:
 
     String! upTo: Character! target [
         result := String emptyString.
-        [ self atEnd ] whileFalse: [
-            Character! c := self next.
-            target = c ifTrue: [ ^result ].
-            result at: result size + 1 put: c.
+        FastInteger! check := 0 faster. "loop check"
+        [ self atEnd or: [ check > 0 ] ] whileFalse: [
+            Character! c := self next. 
+            (target = c) ifTrue: [ check increment. ] "done"
+                ifFalse: [ result at: (result size + 1) put: c. ].
         ].
         ^result
     ]

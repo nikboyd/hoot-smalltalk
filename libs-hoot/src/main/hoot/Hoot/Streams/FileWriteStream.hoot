@@ -18,6 +18,8 @@ FileWriteStream? ElementType -> Object. "Writes into a file."
 FileWriteStream class members: "creating instances"
 [
     FileWriteStream! write: ReadableString! fileName [ ^self write: fileName mode: #create ]
+    FileWriteStream! write: ReadableString! fileName type: ReadableString! fileType [
+        ^self open: String <- fileName type: Symbol <- fileType mode: #create check: false ]
     FileWriteStream! write: ReadableString! fileName mode: ReadableString! mode [
         ^self open: String <- fileName type: #text mode: Symbol <- mode check: false ]
 

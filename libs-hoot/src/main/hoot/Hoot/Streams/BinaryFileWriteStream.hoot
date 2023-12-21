@@ -21,6 +21,7 @@ BinaryFileWriteStream class members: "creating instances"
 BinaryFileWriteStream members: "constructing instances"
 [
     @Protected! BinaryFileWriteStream: RandomAccessFile! primitiveFile [ super : primitiveFile. ]
+    @Static BinaryFileWriteStream! write: String! fileName [ ^FileWriteStream type write: fileName type: #binary ]
 ]
 
 BinaryFileWriteStream members: "accessing"
@@ -45,12 +46,8 @@ BinaryFileWriteStream members: "writing"
     nextPutAll: Java Lang String! elements [
         [ file writeBytes: elements. ^null ] runLoud. ^self ]
 
-    nextPutAll: String! elements [ ^self nextPutAll: elements primitiveString ]
-
-    nextPutAll: CollectedReadably? Integer! elements [
-        StringBuilder! b := StringBuilder basicNew.
-        elements do: [ :Integer! each | b append: each primitiveCharacter. ].
-        ^self nextPutAll: b toString ]
+    @Override @Primitive BinaryFileWriteStream! nextPutAll: CollectedReadably? Integer! elements [
+        [ file writeBytes: (CharacterString <- elements) primitiveString. ^null ] runLoud. ^self ]
 ]
 
 BinaryFileWriteStream members: "testing"

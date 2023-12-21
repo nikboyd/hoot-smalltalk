@@ -10,5 +10,6 @@ StreamsTest members:
     Void! runTest [
         TextStream basicNew doIt; reportSnapshots.
         FileStream basicNew doIt; reportSnapshots.
+        MagStream basicNew doIt.
     ]
 ]

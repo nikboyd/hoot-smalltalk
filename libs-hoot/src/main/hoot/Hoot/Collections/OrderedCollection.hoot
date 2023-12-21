@@ -4,6 +4,7 @@ Permission is granted to copy this work provided this copyright statement is ret
 
 Hoot Magnitudes Number import.
 Hoot Magnitudes Integer import.
+Hoot Streams ReadStream import.
 Hoot Streams WriteStream import.
 
 Smalltalk Magnitudes Ordinal import.
@@ -181,4 +182,5 @@ OrderedCollection members: "removing elements"
 OrderedCollection members: "streaming"
 [
     WriteStream! writeStream [ ^WriteStream type with: self ]
+    ReadStream! readStream [ ^ReadStream type on: self ]
 ]
