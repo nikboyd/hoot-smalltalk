@@ -157,7 +157,7 @@
                             <arguments>
                                 <argument>shell/build-mvn-badge.sh</argument>
                                 <argument>0</argument>
-                                <argument>${version.hoot}</argument>
+                                <argument>${env.HOOT_VERSION:2020.0101.0101}</argument>
                             </arguments>
                         </configuration>
                     </execution>

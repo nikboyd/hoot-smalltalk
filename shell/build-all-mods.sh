@@ -6,6 +6,8 @@ echo "$USER running hoot build here: $work"
 
 stamp_test="2020.0101.0101"
 stamp=$( date +"%Y.%m%d.%H%M" )
+export HOOT_VERSION="$stamp"
+
 echo "pom.xml" >> .gitignore
 
 # also see: .mvn/jvm.config
