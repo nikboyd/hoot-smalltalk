@@ -1,10 +1,11 @@
 #!/bin/bash
-# build-cover-badge.sh build a badge showing test coverage percent, $1=build result, $2=library name
+# build-cover-badge.sh build a badge showing test coverage percent, $1=build result, $2=library name, $3=full name
 
 mvn_code=$1
 lib_name=$2
 lib_label=$( echo "$2" | awk -F- '{print $NF}' )
 lib_label+="%20coverage"
+if [ $3 ]; then lib_label="$3%20coverage"; fi
 #echo "$lib_label"
 
 # locate coverage reports

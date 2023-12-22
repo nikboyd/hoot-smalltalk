@@ -144,6 +144,7 @@
                                 <argument>shell/build-cover-badge.sh</argument>
                                 <argument>0</argument>
                                 <argument>${project.artifactId}</argument>
+                                <argument>library</argument>
                             </arguments>
                         </configuration>
                     </execution>
