@@ -18,6 +18,36 @@ LiteralsTest members: [
 
         '[ #testLiterals asPrimitive ]'
         '[ ''Hello World'' asPrimitive ]'
+
+        '[ nil isBehavior ]'
+        '[ nil isClass ]'
+        '[ nil isMetaclass ]'
+        '[ nil isArray ]'
+        '[ nil isBoolean ]'
+        '[ nil isCharacter ]'
+        '[ nil isCollection ]'
+        '[ nil isCharacter ]'
+        '[ nil isInteger ]'
+        '[ nil isSmallInteger ]'
+        '[ nil isFloat ]'
+        '[ nil isString ]'
+        '[ nil isNil ]'
+        '[ nil printString ]'
+
+        '[ 5 isBehavior ]'
+        '[ 5 isClass ]'
+        '[ 5 isMetaclass ]'
+        '[ 5 isArray ]'
+        '[ 5 isBoolean ]'
+        '[ 5 isCharacter ]'
+        '[ 5 isCollection ]'
+        '[ 5 isCharacter ]'
+        '[ 5 isInteger ]'
+        '[ 5 isSmallInteger ]'
+        '[ 5 isFloat ]'
+        '[ 5 isString ]'
+        '[ 5 isNil ]'
+        '[ 5 printString ]'
     ).
 
     Void! runTest [ (TestableCode withAll: testBlocks) runTests. ]
