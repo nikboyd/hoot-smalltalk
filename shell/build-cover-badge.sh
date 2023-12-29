@@ -23,5 +23,7 @@ else
 fi
 
 cover_url="https://raster.shields.io/badge/coverage-$cover_percent-$cover_color?label=$lib_label"
-curl $cover_url > $cover_folder/coverage_badge.png
-#echo "$cover_url"
+if [ -d $cover_folder ]; then
+    #echo "$cover_url"
+    curl $cover_url > $cover_folder/coverage_badge.png
+fi
