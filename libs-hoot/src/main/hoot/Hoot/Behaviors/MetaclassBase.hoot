@@ -2,20 +2,16 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
-Hoot Runtime Maps MethodCache import.
 Hoot Runtime Behaviors Typified import.
 Hoot Runtime Behaviors HootRegistry import.
 
-Behavior subclass: MetaclassBase. "Supports polymorphic meta-behavior for classes."
+Behavior subclass: MetaclassBase. 
+"Meta-class prototype supports polymorphic meta-behavior for classes."
 
 MetaclassBase members: "constructing instances"
 [
-    MetaclassBase: Java Lang Class! aClass "constructs a new Metaclass" [
-        super.
-        methodDictionary := MethodCache basicNew: aClass.
-        "HootRegistry registerType: MetaclassBase basicNew."
-        self registerType.
-    ]
+    MetaclassBase: Typified! aClass [ super : aClass. ]
+    MetaclassBase: Java Lang Class! aClass [ super : aClass. ]
 ]
 
 MetaclassBase members: "testing behavior"
@@ -25,10 +21,5 @@ MetaclassBase members: "testing behavior"
 
 MetaclassBase members: "accessing values"
 [
-    Behavior! instanceClass [ ^HootRegistry getType: self outerClass ]
-
-    @Primitive String! namePrefix [
-        Character! first := Character from: (self primitiveClass getName charAt: 0).
-        first isVowel asPrimitive ifTrue: [ ^String from: 'an ' ].
-        ^String from: 'a ' ]
+    Behavior! instanceClass [ ^HootRegistry getRegistered: self outerClass ]
 ]

@@ -9,7 +9,7 @@ import Hoot.Runtime.Faces.Valued;
 import Hoot.Runtime.Faces.Logging;
 import Hoot.Runtime.Faces.Selector;
 import Hoot.Runtime.Blocks.Enclosure;
-import Hoot.Runtime.Behaviors.Invoke;
+import Hoot.Runtime.Behaviors.MethodCall;
 import static Hoot.Runtime.Blocks.Enclosure.*;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Faces.Logging.*;
@@ -141,7 +141,7 @@ public class Frame implements Logging {
      * @throws Throwable if raised
      */
     public <R> R perform(Selector selector) throws Throwable {
-        return Invoke.with(popReversed(countArguments())).call(selector); }
+        return MethodCall.with(popReversed(countArguments())).call(selector); }
 
     public int countArguments() {
         return (stackDepth() == 0) ? 0 :

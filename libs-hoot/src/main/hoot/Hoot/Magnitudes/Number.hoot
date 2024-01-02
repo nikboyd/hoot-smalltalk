@@ -6,6 +6,7 @@ Java Lang Math import.
 Java Math BigInteger import.
 Java Math BigDecimal import.
 Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors Typified import.
 
 Hoot Geometry Point import.
 Hoot Collections Interval import.
@@ -54,7 +55,7 @@ Number class members: "coercing value types"
     NumericType -> Number! zeroCoerced "additive identity" [ ^NumericType <- (self coerce: Zero) ]
     NumericType -> Number! unityCoerced "product identity" [ ^NumericType <- (self coerce: Unity) ]
 
-    @Protected Number Metaclass! fromType: Classified! numberClass [ ^numberClass ]
+    @Protected Number Metaclass! fromType: Typified! numberClass [ ^numberClass ]
 ]
 
 Number members:
@@ -65,7 +66,7 @@ Number members:
 Number members: "coercing values"
 [
     Boolean! lessGeneral: Numeric! aNumber [ Number! n := Number <- aNumber. ^self generality < n generality ]
-    NumericType -> Number! coerceTo: Classified! numberClass [ ^self coerceTo: (self class fromType: numberClass) ]
+    NumericType -> Number! coerceTo: Typified! numberClass [ ^self coerceTo: (self class fromType: numberClass) ]
     NumericType -> Number! coerceTo: Number Metaclass! numberClass [ ^numberClass coerce: this ]
     @Abstract Integer! generality "level of generality for coercion" []
 ]

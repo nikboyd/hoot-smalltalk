@@ -3,9 +3,9 @@ package Hoot.Compiler.Scopes;
 import org.antlr.v4.runtime.*;
 import Hoot.Runtime.Faces.UnitFile;
 import Hoot.Runtime.Faces.FileParser;
-import Hoot.Runtime.Behaviors.Invoke;
 import Hoot.Runtime.Names.Selector;
 import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Behaviors.MethodCall;
 import static Hoot.Compiler.Notes.Comment.*;
 import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
@@ -30,7 +30,7 @@ public class TokenCompiler implements Logging {
 
     Selector selectedParser(String fileType) { return Selector.named(ParserTypes.get(fileType)); }
     private FileParser createParser(String fileType) {
-        return Invoke.with().with(selectedParser(fileType)).call(); }
+        return MethodCall.make(selectedParser(fileType)); }
 
     public TokenCompiler(File aFile, String fileType) {
         this.tokenFile = aFile; this.fileParser = createParser(fileType); }

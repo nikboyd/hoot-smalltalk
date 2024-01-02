@@ -41,6 +41,6 @@ MetaclassBase members: "accessing values"
 
     Behavior! instanceClass [
         Typified! result := HootRegistry getType: instanceClass.
-        Behavior! casting := Behavior <- result.
+        Behavior! casting := Behavior <- result outerClass.
         ^casting ]
 ]

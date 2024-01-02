@@ -3,9 +3,9 @@ Permission is granted to copy this work provided this copyright statement is ret
 '!
 
 Java Util importAll.
-Hoot Runtime Maps MethodCache import.
 Hoot Runtime Names Primitive import.
 Hoot Runtime Names TypeName import.
+Hoot Runtime Behaviors Mirror import.
 Hoot Runtime Behaviors Typified import.
 Hoot Runtime Behaviors HootRegistry import.
 
@@ -54,11 +54,9 @@ Behavior members: "initializing"
 
 Behavior members: "constructing instances"
 [
-    "Resolves and caches primitive methods."
-    MethodCache! methodDictionary.
-    MethodCache! methodDictionary [ ^methodDictionary ]
-
-    @Protected Behavior "constructs a new Behavior" [ super. ]
+    @Protected! Behavior [ super. self registerType. ]
+    @Protected! Behavior: Typified! aType [ self. ]
+    @Protected! Behavior: Java Lang Class! aClass [ self. ]
 ]
 
 Behavior "comparing" members:
@@ -154,17 +152,7 @@ Behavior members: "creating instances"
 
 Behavior members: "reflecting behavior"
 [
-    Set? Symbol! allSelectors [
-        "all the public method names of this behavior"
-        ^Set fromSelectors: methodDictionary allSelectors ]
-
-    Set? Symbol! selectors [
-        "the public method names defined by this behavior"
-        ^Set fromSelectors: methodDictionary selectors ]
-
-    @Final @Primitive Java Lang Class! primitiveClass [ ^self methodDictionary cachedType ]
     @Final @Primitive Java Lang Class! primitiveSuperclass [ ^self primitiveClass getSuperclass ]
-
     @Primitive Boolean! hasHeritage [
         (self primitiveSuperclass == nil) ifTrue: [ ^False literal ].
         Typified! result := HootRegistry getType: self primitiveSuperclass.
@@ -172,7 +160,7 @@ Behavior members: "reflecting behavior"
         ^True literal ]
 
     @Final Behavior! superior "the superclass as a Behavior" [ ^Behavior <- self superclass ]
-    @Primitive Classified! superclass [
+    @Primitive Typified! superclass [
         self hasHeritage asPrimitive ifFalse: [ ^null ].
         Typified! result := HootRegistry getType: self primitiveSuperclass.
         result hasNoClass ifTrue: [ ^null ].
@@ -181,6 +169,7 @@ Behavior members: "reflecting behavior"
 
 Behavior members: "testing behavior"
 [
+    Boolean! isClass "whether this is a class" [ ^true ]
     Boolean! isBehavior "indicates whether this is a (kind of) Behavior" [ ^true ]
     Boolean! inheritsFrom: Behavior! candidateClass [
         "indicates whether this inherits from a candidate class"
@@ -190,7 +179,10 @@ Behavior members: "testing behavior"
 
 Behavior members: "accessing values"
 [
-    @Abstract String! namePrefix []
+    @Primitive String! namePrefix [
+        Character! first := Character <- self name first.
+        first isVowel asPrimitive ifTrue: [ ^String from: 'an ' ].
+        ^String from: 'a ' ]
 
     String! name [ ^String from: self typeName hootName ]
     String! nameSpace [ ^String from: self typeName hootPackage ]

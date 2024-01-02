@@ -10,7 +10,7 @@ Hoot Runtime Names Primitive import.
 Hoot Runtime Functions Utils import.
 Hoot Runtime Blocks MultiValuable import.
 Hoot Runtime Maps Library importStatics.
-Hoot Runtime Behaviors Invoke import.
+Hoot Runtime Behaviors MethodCall import.
 
 Object subclass: HootRunner. "loads libs and runs code"
 
@@ -41,7 +41,7 @@ HootRunner members: "running code"
 
     @Primitive Void! runNew: String! className with: List? String! argList [
         List? Java Lang Object! args := ArrayList basicNew. args addAll: argList.
-        MultiValuable! mv := (Invoke with with: (Selector named: className primitiveString)) call.
+        MultiValuable! mv := MethodCall make: (Selector named: className primitiveString).
         mv runWith: args.
     ]
 ]

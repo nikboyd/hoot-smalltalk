@@ -1,0 +1,16 @@
+@Notice :'Copyright 2010,2023 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+'!
+
+TestBase subclass: ReflectTest.
+"Tests reflection mechanisms."
+
+ReflectTest members: [
+
+    Void! runTest [ (TestableCode withAll: testBlocks) runTests. ]
+
+    Array! testBlocks := #(
+        '[ ( 5 perform: #negated ) ]'
+        '[ ( 5 perform: #max: : 6 ) ]'
+    ).
+]
