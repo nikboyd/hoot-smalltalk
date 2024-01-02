@@ -60,7 +60,7 @@ public class ValueTest implements Logging {
     @Test public void sampleStatic() throws Throwable {
         Selector c = Selector.named("Hoot.Runtime.Names.Primitive");
         Selector m = Selector.named("elementaryTrue");
-        Boolean result = Invoke.withValues(c.toClass()).with(m).call(Boolean.class);
+        Boolean result = MethodCall.withWrapped(c.toClass()).call(m);
         assertFalse(result == null);
         report(result.getClass().getSimpleName() + ": " + result);
     }

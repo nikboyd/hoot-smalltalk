@@ -162,11 +162,10 @@ Behavior members: "reflecting behavior"
 
     @Primitive Java Lang Class! primitiveClass [ ^self methodDictionary cachedType ]
     @Final Behavior! superior "the superclass as a Behavior" [ ^Behavior <- self superclass ]
-    @Primitive Classified! superclass [
+    @Primitive Typified! superclass [
         "the superclass of this class"
         Typified! result := HootRegistry getType: self primitiveClass getSuperclass.
-        Classified! casting := Classified <- result.
-        ^casting ]
+        ^result ]
 ]
 
 Behavior members: "testing behavior"

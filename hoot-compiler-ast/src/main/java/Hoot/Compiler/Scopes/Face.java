@@ -290,7 +290,6 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     @Override public boolean isReflective() { return false; }
     @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }
 
-    public boolean isClassType() { return typeResolver().equals(ClassType()); }
     public boolean isMetaface() { return containerScope().isFacial(); }
     public boolean isMetaclassBase() { return this.name().equals(Metaclass + "Base"); }
 

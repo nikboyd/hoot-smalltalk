@@ -2,53 +2,30 @@
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 '!
 
-Hoot Exceptions importAll.
-Hoot Runtime Behaviors Invoke import.
+Hoot Runtime Behaviors Call import.
 Smalltalk Core Subject import.
-Java Lang Reflect InvocationTargetException import.
 
-Message subclass: MessageSend.
+Message subclass: Call! MessageSend.
 "A message, including its receiver, the method selector, and method arguments."
+
+MessageSend members: "overrides"
+[
+    @Override Java Lang String! methodName [ ^self selector name ]
+    @Override Java Util List? Java Lang Object! argumentValues [ ^self argumentList ]
+]
 
 MessageSend members: "constructing instances"
 [
     "a message receiver"
-    @Private Subject! receiver.
+    @Private Object! receiver.
     Subject! receiver [ ^receiver ]
 
-    MessageSend: Subject! aReceiver : Selector! methodSelector : Subject! ... methodArguments [
+    "the result of sending this message to its receiver"
+    Object! perform [ ^self callMethod ]
+
+    MessageSend: Object! aReceiver : Selector! methodSelector : Subject! ... methodArguments [
         "constructs a new MessageSend"
         super : methodSelector : methodArguments.
         receiver := aReceiver.
     ]
-
-    @Private Behavior! receiverBehavior [ ^(Behavior <- receiver) ]
-    @Private Class! receiverClass [ ^Class <- receiver class ]
-
-    @Protected Java Lang Reflect Constructor! receiverConstructor [
-        "the constructor for a Behavior"
-        ^self receiverBehavior methodDictionary constructorFor: self argumentCount ]
-
-    @Protected Java Lang Reflect Method! receiverMethod [
-        "the selected receiver method"
-        ^self receiverClass methodDictionary methodNamed: selector name : self argumentCount ]
-
-    @Protected @Primitive Java Lang RuntimeException!
-    appropriated: Java Lang Throwable! exception [
-        "an appropriate(d) exception for rethrowing"
-
-        (exception instanceOf: UnhandledJavaException) ifTrue: [
-            ^UnhandledJavaException <- exception ].
-
-        (exception instanceOf: InvocationTargetException) ifTrue: [
-            ^UnhandledJavaException basicNew: exception getCause ].
-
-        ^UnhandledJavaException basicNew: exception
-    ]
-
-    Object! perform [ "the result of sending this message to its receiver"
-        ^(Invoke withValues: self receiver) call: self selector with: self arguments ]
-
-    Object! construct [ "a new instance of the receiver (a Class)"
-        ^(Invoke withValues: self receiverBehavior primitiveClass) callWith: self arguments ]
 ]

@@ -6,9 +6,9 @@ Java Util List import.
 
 Hoot Runtime Names TypeName import.
 Hoot Runtime Names Primitive import.
+Hoot Runtime Behaviors Typified import.
 Hoot Runtime Behaviors HootRegistry import.
 
-Hoot Behaviors Class import.
 Hoot Behaviors Ordered import.
 Hoot Magnitudes Integer import.
 Hoot Streams TextReadStream import.
@@ -32,9 +32,7 @@ CharacterString "accessing" members:
 
 CharacterString members: "accessing classes"
 [
-    Class! resolvedToClass [
-        ^Class <- (HootRegistry getType: self resolvedToPrimitiveClass) ]
-
+    Typified! resolvedToClass [ ^HootRegistry getType: self resolvedToPrimitiveClass ]
     Java Lang Class! resolvedToPrimitiveClass [
         ^(TypeName fromName: self primitiveString) findPrimitiveClass ]
 ]

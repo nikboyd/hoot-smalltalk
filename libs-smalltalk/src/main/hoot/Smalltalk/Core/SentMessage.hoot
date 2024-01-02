@@ -10,5 +10,5 @@ Subject subtype: SentMessage.
 SentMessage "accessing" members:
 [
     Selector! selector "the message selector" []
-    CollectedSequentially? Subject! arguments "the message arguments" []
+    CollectedSequentially! arguments "the message arguments" []
 ]

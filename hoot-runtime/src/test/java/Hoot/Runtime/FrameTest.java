@@ -3,7 +3,7 @@ package Hoot.Runtime;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Hoot.Runtime.Behaviors.Invoke;
+import Hoot.Runtime.Behaviors.MethodCall;
 import Hoot.Runtime.Blocks.Enclosure;
 import Hoot.Runtime.Faces.IntegerValue;
 import Hoot.Runtime.Faces.Logging;
@@ -119,17 +119,14 @@ public class FrameTest implements Logging {
         Class<?> type = c.toClass();
         assertFalse(type == null);
 
-        Object result = Invoke.with().with(c).call();
+        Object result = MethodCall.make(c);
         assertFalse(result == null);
         report(result.getClass().getSimpleName());
     }
 
     @Test public void samplePerform() throws Throwable {
-        Object result =
-            Invoke.with(Value.self(this), Value.with('5'), Value.with(5))
-                .with(Selector.named("sampleCall"))
-                .call();
-
+        Value[] values = { Value.self(this), Value.with('5'), Value.with(5) };
+        Object result = MethodCall.with(values).call(Selector.named("sampleCall"));
         assertFalse(result == null);
         report(result.getClass().getSimpleName());
     }

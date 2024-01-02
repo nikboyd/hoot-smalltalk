@@ -58,7 +58,6 @@ public class HootRegistry implements Logging {
 
     public static TypeName BooleanType() { return TypeName.fromCache(Hoot, Behaviors, Boolean); }
     public static TypeName BehaviorType() { return TypeName.fromCache(Hoot, Behaviors, Behavior); }
-    public static TypeName ClassType() { return TypeName.fromCache(Hoot, Behaviors, ClassType); }
     public static TypeName MetaclassType() { return TypeName.fromCache(Hoot, Behaviors, MetaclassType); }
 
     public static TypeName NilType() { return TypeName.fromCache(Hoot, Behaviors, Nil); }

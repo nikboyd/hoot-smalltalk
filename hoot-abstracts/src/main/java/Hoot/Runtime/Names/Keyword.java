@@ -101,7 +101,6 @@ public class Keyword {
         "Static", "Final", "Synchronized"
     };
 
-    public static final String ClassType = "Class";
     public static final String MetaclassType = "Metaclass";
     public static final String MetaclassBase = "MetaclassBase";
     public static final String TypeSuffix = "Type";

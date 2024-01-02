@@ -18,6 +18,8 @@ Message members: "constructing instances"
 
     "the method invocation arguments"
     @Protected @Primitive Subject! ... arguments.
+    @Protected @Primitive Java Util List! argumentList [ ^Arrays asList: arguments ]
+    @Protected @Primitive Java Lang Int! argumentCount [ ^self argumentList size ]
 
     Message: Selector! methodSelector : Subject! ... methodArguments [
         "constructs a new Message"
@@ -25,7 +27,5 @@ Message members: "constructing instances"
         arguments := methodArguments.
     ]
 
-    CollectedSequentially? Subject! arguments [ ^null "arguments" ]
-
-    @Protected @Primitive Java Lang Int! argumentCount [ ^(Arrays asList: arguments) size ]
+    CollectedSequentially! arguments [ ^OrderedCollection type from: self argumentList ]
 ]

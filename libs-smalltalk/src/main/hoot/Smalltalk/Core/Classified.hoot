@@ -19,7 +19,7 @@ Classified "accessing hierarchy" members:
     CollectedDistinctly? Classified! allSuperclasses "all the superclasses of this behavior" []
     CollectedDistinctly? Classified! subclasses "the immediate subclasses of this behavior" []
 
-    @Override Classified! superclass "the immediate superclass of this behavior, or nil" []
+    @Override Typified! superclass "the immediate superclass of this behavior, or nil" []
 ]
 
 Classified "identifying class" members:

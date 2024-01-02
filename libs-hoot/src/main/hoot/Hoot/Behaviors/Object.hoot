@@ -146,13 +146,16 @@ Object members: "enumerating"
 
 Object members: "performing methods"
 [
+    MessageSend! send: Selector! selector : Subject! ... args [
+        ^(MessageSend basicNew: self : selector : args) ]
+
     perform: Selector! selector : Subject! ... arguments [
-        ^(MessageSend basicNew: self : selector : arguments) perform ]
+        ^(self send: selector : arguments) perform ]
 
     perform: Selector! selector
     withArguments: Subject! ... arguments [
         "the result of invoking the selected method of the receiver"
-        ^(MessageSend basicNew: self : selector : arguments) perform ]
+        ^(self send: selector : arguments) perform ]
 
     perform: Selector! selector
     with: Subject! a0 with: Subject! a1 with: Subject! a2 with: Subject! a3 [
