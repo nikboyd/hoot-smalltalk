@@ -71,11 +71,20 @@ Hoot Smalltalk also takes advantage of many existing tools and libraries.
 
 * no proprietary virtual machine,
 * no image-based persistence,
-* integration with existing tools (like [Git][git-doc] and GitHub),
-* easy integration with other class libraries.
+* integration with existing [tools][tools] (like [Git][git-doc] and GitHub),
+* easy integration with other class libraries,
+* including integration with [JUnit][junit] for tests.
 
 You can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
 Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
+
+#### BYOVM
+
+Hoot Smalltalk does not provide its own [virtual machine][st-image], like some [Smalltalks][st-imps].
+Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over the last few decades.
+The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove the choice of Java
+as the primary foundation for Hoot Smalltalk.
+That Java derived many of its early technical foundations from Smalltalk also helps.
 
 #### No Image
 
@@ -86,14 +95,6 @@ just as this [Git][git-doc] repository contains the code for Hoot Smalltalk itse
 Simple text files also allow you to use any of the existing integrated development tools that support Java.
 Hoot Smalltalk was developed with [NetBeans][net-beans], largely because of its mature support for
 and integration with [Maven][maven].
-
-#### BYOVM
-
-Hoot Smalltalk does not provide its own [virtual machine][st-image], like some [Smalltalks][st-imps].
-Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over the last few decades.
-The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove the choice of Java
-as the primary foundation for Hoot Smalltalk.
-That Java derived many of its early technical foundations from Smalltalk also helps.
 
 #### Platform Requirements
 
@@ -201,7 +202,7 @@ Some of these use a mix of languages, but there's always a _primary_ language, a
 | [hoot-compiler][hoot-compiler]   | Java | compiler library, [templates][code-lib] |
 | [hoot-compiler-boot][hoot-compiler-boot] | Java | command to run the compiler |
 | [hoot-maven-plugin][hoot-maven-plugin] | Java | run the compiler for a Maven project |
-| [libs-smalltalk][libs-smalltalk]    | Hoot | Smalltalk protocols compiled by plugin |
+| [libs-smalltalk][libs-st]    | Hoot | Smalltalk protocols compiled by plugin |
 | [libs-hoot][libs-hoot]              | Hoot | Hoot library classes compiled by plugin |
 | [hoot-docs-bundle][docs-bundle]     | Java | bundled test coverage reports |
 | [hoot-compiler-bundle][hoot-bundle] | both | plugin + compiler + runtime libs |
@@ -499,11 +500,12 @@ Each link below leads to discussions of the specific language feature design det
 | [Interoperability][xop]    | Hoot method names become compatible host method names. |
 | [Primitives][prims]        | Hoot supports @**Primitive** methods. |
 | [Comments][comments]       | Hoot comments are copied into the host language. |
-| [Library][lib]             | Hoot includes types that define [ANSI Smalltalk][st-ansi] protocols. |
+| [Library][libs-st]         | Hoot includes types that define [ANSI Smalltalk][st-ansi] protocols. |
 | [Blocks][blocks]           | Hoot blocks are implemented with Java Lambdas. |
 | [Threads][threads]         | Hoot blocks support the **fork** protocol for spawning threads. |
 | [Exceptions][except]       | Hoot supports both Smalltalk and Java exception handling. |
 | [Tests][tests]             | Hoot also includes a [test framework][tests]. |
+| [Tools][tools]             | Hoot needs some tools, including Maven. |
 | [FAQ][faq]                 | Frequently asked questions about Hoot. |
 
 | **Back** | **Up** | **Next** |
@@ -511,7 +513,7 @@ Each link below leads to discussions of the specific language feature design det
 | ... | ... | [Language Model](hoot-design/model.md#language-model) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.
@@ -585,6 +587,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [usage]: hoot-design/usage.md#hoot-compiler-usage "Usage"
 [threads]: hoot-design/blocks.md#threads "Threads"
 [tests]: hoot-design/tests.md#test-framework "Tests"
+[tools]: hoot-design/tools.md#tool-integration "Tools"
 [console-apps]: hoot-design/tests.md#running-applications
 [hoot-dotnet]: hoot-design/dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
 
@@ -597,8 +600,7 @@ See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE 
 [hoot-maven-plugin]: hoot-maven-plugin/README.md#hoot-maven-plugin
 [libs-hoot]: libs-hoot/README.md#hoot-class-library
 [hoot-tests]: libs-hoot/src/test/hoot/Hoot/Tests
-[lib]: libs-smalltalk/README.md#hoot-smalltalk-type-library
-[libs-smalltalk]: libs-smalltalk/README.md#hoot-smalltalk-type-library
+[libs-st]: libs-smalltalk/README.md#hoot-smalltalk-type-library
 [hoot-bundle]: hoot-compiler-bundle/README.md
 [libs-bundle]: hoot-libs-bundle/README.md
 [docs-bundle]: hoot-docs-bundle/README.md

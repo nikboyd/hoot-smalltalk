@@ -9,6 +9,6 @@ Also, some sample Hoot Smalltalk code and tests for the compiler to ensure it op
 
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```

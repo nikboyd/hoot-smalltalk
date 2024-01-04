@@ -139,7 +139,7 @@ The workings of JNI and how that can made to work with Hoot Smalltalk are (way) 
 | [Annotations](notes.md#annotations) | [Features](../#features) | [Blocks](blocks.md#blocks) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

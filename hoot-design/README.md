@@ -29,15 +29,16 @@ Each link below leads to discussions of the specific language feature design det
 | [Interoperability][xop]    | Hoot method names become compatible host method names. |
 | [Primitives][prims]        | Hoot supports @**Primitive** methods. |
 | [Comments][comments]       | Hoot comments are copied into the host language. |
-| [Standard Library][lib]    | Hoot includes types that define [ANSI Smalltalk][st-ansi] protocols. |
+| [Library][libs-st]         | Hoot includes types that define [ANSI Smalltalk][st-ansi] protocols. |
 | [Blocks][blocks]           | Hoot blocks are implemented with Java Lambdas. |
 | [Threads][threads]         | Hoot blocks support the **fork** protocol for spawning threads. |
 | [Exceptions][except]       | Hoot supports both Smalltalk and Java exception handling. |
 | [Tests][tests]             | Hoot also includes a [test framework][tests]. |
+| [Tools][tools]             | Hoot needs some tools, including Maven. |
 | [FAQ][faq]                 | Frequently asked questions about Hoot. |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
@@ -66,5 +67,6 @@ provided this copyright statement is retained in all copies.
 [usage]: usage.md#hoot-compiler-usage "Usage"
 [threads]: blocks.md#threads "Threads"
 [tests]: tests.md#test-framework "Tests"
+[tools]: hoot-design/tools.md#tool-integration "Tools"
 [hoot-dotnet]: dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
-[lib]: ../libs-smalltalk/README.md#hoot-smalltalk-type-library
+[libs-st]: ../libs-smalltalk/README.md#hoot-smalltalk-type-library

@@ -52,7 +52,7 @@ Additionally, these mechanisms support rapid [method exits](blocks.md#method-ret
 | [Blocks](blocks.md#blocks) | [Features](../#features) | [Questions](faq.md#frequently-asked-questions) |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

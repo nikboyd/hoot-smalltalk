@@ -60,7 +60,7 @@ Given your library depends on the [hoot-libs-bundle][libs-bundle], you can inclu
 Then, you'll have a way to start your application from the command line similarly.
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

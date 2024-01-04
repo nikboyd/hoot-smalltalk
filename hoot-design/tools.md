@@ -1,0 +1,194 @@
+#### Tool Integration ####
+
+Hoot Smalltalk depends on Java, a JVM, and some associated tools and libraries:
+* shell scripts for [pipelines](#build-and-coverage-pipelines)
+* ANTLR, StringTemplate, `javac` for the [compiler](#hoot-smalltalk-compiler)
+* Maven for the [plugin](#hoot-compiler-plugin), [code inclusion](inclusion.md#source-code-inclusion), and overall [project organization](planning.md#project-planning)
+* JUnit for [tests](tests.md#test-framework)
+* JVM for the underlying runtime
+
+#### Build and Coverage Pipelines
+
+The project build process is driven by a set of [shell scripts][shells].
+During development, it was discovered the Maven builds were a bit compute hungry
+and really run _much_ faster with more than one core.
+Fortunately, GitHub supports builds using [**macOS** with 3 cores][hub-runners] in its workflows.
+
+```
+runs-on: macos-latest
+```
+
+After reviewing and using some alternatives for hosting the build, [GitHub Actions][hub-build]
+was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
+Thereafter, the [test coverage reports][hub-coverage] were migrated from GitHub Pages
+to Google with the [hoot-docs-bundle][docs-bundle].
+
+#### Hoot Smalltalk Compiler
+
+The Hoot Smalltalk compiler was built with [ANTLR 4][antlr] and [StringTemplate][st].
+This project uses [ANTLR][antlr] to generate the Hoot Smalltalk parser from [its grammar][grammar].
+Many thanks to [Terrence Parr][antlr-parr] and the ANTLR team for their passion about language translation!
+
+Overall, the Hoot Smalltalk compiler performs source-to-source translation (trans-coding) from Hoot Smalltalk to Java.
+Then, the Maven tooling uses a standard Java compiler **javac** to translate the intermediate Java sources
+into class files for the Java Virtual Machine **JVM** runtime.
+
+The Hoot Smalltalk compiler accepts directions with a command line interface [CLI][usage], that it uses to invoke the parser.
+The parser recognizes the code in Hoot Smalltalk `.hoot` source files, and builds trees of [StringTemplate][st] ST instances.
+The ST instances then use [code generation templates][code-lib] to output the corresponding Java source code.
+
+Maven helps with all this by packaging the generated class files into Java archive JAR files and providing a
+[build life-cycle][life-cycle] with supportive tools.
+For ease of use and reference, the Hoot Smalltalk compiler and its associated support runtime classes get
+bundled into a single JAR, [hoot-compiler-bundle][hoot-bundle].
+The Hoot project also provides a [Maven plugin](#hoot-compiler-plugin) that takes advantage of the Maven build life-cycle.
+
+#### Hoot Compiler Plugin
+
+Some of the included library projects have no Java source under **src/main/java**, only Hoot Smalltalk sources
+under **src/main/hoot**.
+In cases where a project has Hoot Smalltalk sources, the supplied Hoot [compiler plugin][hoot-maven-plugin]
+runs the [Hoot Smalltalk compiler][usage] to generate Java code from the Hoot Smalltalk `.hoot` sources (trans-coding).
+
+While the Hoot Smalltalk [compiler commands][usage] offer several options, it provides some defaults to simplify its use.
+This allows the [compiler plugin][hoot-maven-plugin] to mimic what might otherwise be done with a compiler command.
+
+The [compiler plugin][hoot-maven-plugin] instructs the Hoot Smalltalk compiler to output the generated the Java code in
+an appropriate folder within the surrounding Maven project, so that it gets compiled by the Java compiler
+during the normal Maven [build life-cycle][life-cycle].
+
+Here's an example invocation of the plugin from the **libs-hoot** [configuration][plugin-example].
+
+```xml
+<plugin>
+    <groupId>hoot-smalltalk</groupId>
+    <artifactId>hoot-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <goals><goal>generate</goal></goals>
+        </execution>
+    </executions>
+</plugin>
+
+```
+
+In this example, the Hoot Smalltalk source code from the [libs-hoot][libs-hoot] project is being translated into Java code
+and placed into the proper place in the folder structure in [libs-hoot][libs-hoot].
+The plugin also detects whether tests written in Hoot Smalltalk are present in the project under **src/test/hoot**,
+and translates those also.
+
+The plugin helps simplify Hoot projects, keeping Hoot Smalltalk source code together with generated project library Java code.
+While the plugin provides support for the various compiler [command arguments][usage], it uses some conventions and
+knowledge of the surrounding context to simplify its configuration.
+
+```
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
+```
+
+
+[bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
+[smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
+[st-syntax]: https://en.wikipedia.org/wiki/Smalltalk#Syntax "Smalltalk Syntax"
+[st-imps]: https://en.wikipedia.org/wiki/Smalltalk#List_of_implementations "Smalltalk Implementations"
+[eco-depot]: https://github.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
+
+[jdk8]: https://openjdk.java.net/projects/jdk8/
+[jdk11]: https://openjdk.java.net/projects/jdk/11/
+[jdk17]: https://openjdk.org/projects/jdk/17/
+[jdk21]: https://openjdk.org/projects/jdk/21/
+[java-lts]: https://www.oracle.com/technetwork/java/java-se-support-roadmap.html
+[java]: https://en.wikipedia.org/wiki/Java_%28programming_language%29 "Java"
+[jvm]: https://en.wikipedia.org/wiki/Java_virtual_machine "Java Virtual Machine"
+[lambdas]: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html
+[inference]: https://developer.oracle.com/java/jdk-10-local-variable-type-inference
+[graal-vm]: https://www.graalvm.org/docs/introduction/
+[graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/jdk-21.0.0
+[truffle]: https://www.graalvm.org/graalvm-as-a-platform/language-implementation-framework/
+
+[ikvm-home]: http://www.ikvm.net/
+[mono-home]: https://www.mono-project.com/
+[dot-net]: https://en.wikipedia.org/wiki/.NET_Framework
+[csharp]: https://en.wikipedia.org/wiki/C_Sharp_%28programming_language%29 "C#"
+[clr]: https://en.wikipedia.org/wiki/Common_Language_Runtime "Common Language Runtime"
+[st]: https://www.stringtemplate.org/ "StringTemplate"
+[antlr]: https://www.antlr.org/ "ANTLR"
+[antlr-grammar]: https://github.com/antlr/antlr4/blob/master/doc/grammars.md
+[antlr-parr]: https://explained.ai/
+[maven]: https://maven.apache.org/
+[maven-350]: https://maven.apache.org/docs/3.5.0/release-notes.html
+[maven-395]: https://maven.apache.org/docs/3.9.5/release-notes.html
+[maven-docker]: https://hub.docker.com/_/maven/
+[life-cycle]: https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+[net-beans]: https://netbeans.apache.org/
+[junit]: https://junit.org/junit4/
+
+[git-doc]: https://git-scm.com/
+[hoot-ansi]: hoot-design/ANSI-X3J20-1.9.pdf
+[squeak-ansi]: http://wiki.squeak.org/squeak/172
+[st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
+[st-image]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence
+[version-control]: https://en.wikipedia.org/wiki/Version_control#Overview
+
+[grammar]: ../hoot-compiler-ast/src/main/antlr4/Hoot/Compiler/Parser/Hoot.g4
+[code-lib]: ../hoot-compiler/src/main/resources/CodeTemplates.stg
+
+[design]: README.md#hoot-smalltalk-design-notes
+[model]: model.md#language-model "Language Model"
+[spaces]: libs.md#name-spaces "Name Spaces"
+[classes]: libs.md#classes-and-metaclasses "Classes"
+[types]: libs.md#types-and-metatypes "Types"
+[access]: notes.md#access-controls "Access Controls"
+[notes]: notes.md#annotations "Annotations"
+[decor]: notes.md#decorations "Decorations"
+[optional]: notes.md#optional-types "Optional Types"
+[generics]: notes.md#generic-types "Generics"
+[methods]: methods.md#methods "Methods"
+[comments]: methods.md#comments "Comments"
+[xop]: methods.md#interoperability "Interoperability"
+[prims]: methods.md#primitive-methods "Primitives"
+[blocks]: blocks.md#blocks "Blocks"
+[except]: exceptions.md#exceptions "Exceptions"
+[faq]: faq.md#frequently-asked-questions "Questions"
+[usage]: usage.md#hoot-compiler-usage "Usage"
+[threads]: blocks.md#threads "Threads"
+[tests]: tests.md#test-framework "Tests"
+[tools]: tools.md#tool-integration "Tools"
+[console-apps]: tests.md#running-applications
+[hoot-dotnet]: dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
+
+[java-extend]: ../java-extend/README.md#java-extensions
+[hoot-abstracts]: ../hoot-abstracts/README.md#hoot-abstractions
+[hoot-runtime]: ../hoot-runtime/README.md#hoot-runtime-library
+[hoot-compiler-ast]: ../hoot-compiler-ast/README.md#hoot-compiler-library
+[hoot-compiler]: ../hoot-compiler/README.md#hoot-compiler
+[hoot-compiler-boot]: ../hoot-compiler-boot/README.md#hoot-compiler-boot
+[hoot-maven-plugin]: ../hoot-maven-plugin/README.md#hoot-maven-plugin
+[libs-hoot]: ../libs-hoot/README.md#hoot-class-library
+[hoot-tests]: ../libs-hoot/src/test/hoot/Hoot/Tests
+[libs-st]: ../libs-smalltalk/README.md#hoot-smalltalk-type-library
+[hoot-bundle]: ../hoot-compiler-bundle/README.md
+[libs-bundle]: ../hoot-libs-bundle/README.md
+[docs-bundle]: ../hoot-docs-bundle/README.md
+[plugin-example]: ../libs-hoot/pom.xml#L44
+[java-profiles]: ../pom.xml#L316
+
+[cloud-repo]: https://cloudsmith.io/~educery/repos/hoot-libs/packages/
+[cloud-build]: https://cloud.google.com/cloud-build
+[cloud-smith]: https://cloudsmith.com/
+
+[hub-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/
+[hub-package]: https://github.com/nikboyd/hoot-smalltalk/packages/1130290
+[hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
+[hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
+[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+[hub-pipe]: ../.github/workflows/main.yml#L11
+
+[shells]: ../shell/README.md#shell-scripts
+[build]: ../shell/build-all-mods.sh
+[build-pipe]: ../cloudbuild.yaml#L4
+[build-cache]: ../cloudbuild.yaml#L36
+[multi-core]: ../cloudbuild.yaml#L47
+[lab-pipe]: ../.gitlab-ci.yml#L11
+[lab-trigger]: ../shell/build-all-mods.sh#L42
+[install-tools]: ../shell/install-tools.sh#L4
