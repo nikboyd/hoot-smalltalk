@@ -1,6 +1,6 @@
 #### Hoot Compiler Usage ####
 
-The [Hoot Smalltalk compiler plugin](../hoot-maven-plugin#hoot-maven-plugin) is now the preferred way to use
+The [Hoot Smalltalk compiler plugin][plugin] is now the preferred way to use
 the Hoot Smalltalk compiler.
 Please refer to those notes. The remainder of this page provides a context for those notes.
 
@@ -25,10 +25,10 @@ usage: hoot-compiler
 
 | **Argument** | **Description** | **Default** |
 | ------------ | --------------- | ----------- |
-| basePath     | overall base folder | the current working directory (from which command is run) |
-| sourcePath   | the folder relative to which Hoot Smalltalk packages will be read   | **basePath**/src/main/hoot |
-| targetPath   | the folder relative to which Java code will be written    | **basePath**/target/generated-sources |
-| packageNames | names of the packages under **sourcePath** to be compiled | all packages under **sourcePath** |
+| basePath     | overall base folder | the current working directory |
+| sourcePath   | a relative Hoot Smalltalk package folder   | **basePath**/src/main/hoot |
+| targetPath   | a relative Java code folder for writing    | **basePath**/target/generated-sources |
+| packageNames | packages under **sourcePath** to compile | all packages under **sourcePath** |
 
 #### Notes
 
@@ -52,3 +52,4 @@ provided this copyright statement is retained in all copies.
 
 
 [maven]: https://maven.apache.org/
+[plugin]: ../hoot-maven-plugin/README.md#hoot-maven-plugin
