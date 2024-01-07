@@ -208,15 +208,18 @@ sample awakenWaitingThread.
 sample awakenAllWaitingThreads.
 ```
 
-| **Back** | **Up** | **Next** |
-| -------- | ------ | -------- |
-| [Methods](methods.md#methods) | [Features](../#features) | [Exceptions](exceptions.md#exceptions) |
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Exceptions][except]</p><img width="250" height="1" /> | <p align="center">[Methods][methods]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
+[features]: README.md#features
+[methods]: methods.md#methods "Methods"
+[except]: exceptions.md#exceptions "Exceptions"
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
 [images]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence "Image Persistence"

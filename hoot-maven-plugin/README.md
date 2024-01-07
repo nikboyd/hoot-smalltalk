@@ -127,16 +127,16 @@ This allows it to locate the folders the compiler needs.
 #### Hoot Conventions
 
 The Hoot Smalltalk compiler uses some conventions for the folders it needs to locate Hoot Smalltalk sources and generate Java code.
-Given it knows a library project folder and the project has its Hoot Smalltalk code located in the expected places,
+Given it knows a library project folder **{lib}** and the project has its Hoot Smalltalk code located in the expected places,
 the compiler will figure out the rest.
 
 | **path** | **default** | **description** |
 | -------- | ----------- | --------------- |
-| base | **{libBase}** | a given library folder, under a Maven project base folder {user.dir} |
-| source | **{libBase}/src/main/hoot** | under which are located Hoot Smalltalk packages with Hoot Smalltalk code |
-| target | **{libBase}/target/generated-sources** | under which the compiler generates Java code |
-| test-source | **{libBase}/src/test/hoot** | under which Hoot Smalltalk test code may be located |
-| test-target | **{libBase}/target/generated-test-sources** | under which the compiler generates Java test code |
+| base | **{lib}** | a given library folder, under a base folder **{user.dir}** |
+| source | **{lib}**/src/main/hoot | package folders with Hoot Smalltalk code |
+| target | **{lib}**/target/generated-sources | under which compiler generates Java code |
+| test-source | **{lib}**/src/test/hoot | under which Hoot Smalltalk test code _may_ be located |
+| test-target | **{lib}**/target/generated-test-sources | under which compiler generates Java test code |
 
 These various locations can be overridden, but sticking to the conventions helps simplify project structure.
 The compiler can use relative paths to locate the **source** and target **folder** for each library project.
@@ -161,14 +161,14 @@ The plugin passes the values from **main-args** to the Hoot Smalltalk compiler.
 
 | **main-args** | **type** | **compiler argument** | **default** |
 | ------------- | -------- | --------------------- | ----------- |
-| folder | path | path to the Java folder under which code will be generated | {libBase}/target/generated-sources |
-| source | path | path to the library Hoot sources | {libBase}/src/main/hoot |
-| test   | bool | `true` indicates you only want to test the compiler | `false` |
-| help   | bool | `true` indicates you want to show the compiler command help | `false` |
+| folder | path | folder under which code will be generated | **{lib}**/target/generated-sources |
+| source | path | library Hoot sources | **{lib}**/src/main/hoot |
+| test   | bool | `true` only tests the compiler | `false` |
+| help   | bool | `true` shows the compiler command help | `false` |
 
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

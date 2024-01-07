@@ -1,6 +1,6 @@
 #### Hoot Compiler Usage ####
 
-The [Hoot Smalltalk compiler plugin](../hoot-maven-plugin#hoot-maven-plugin) is now the preferred way to use
+The [Hoot Smalltalk compiler plugin][plugin] is now the preferred way to use
 the Hoot Smalltalk compiler.
 Please refer to those notes. The remainder of this page provides a context for those notes.
 
@@ -25,10 +25,10 @@ usage: hoot-compiler
 
 | **Argument** | **Description** | **Default** |
 | ------------ | --------------- | ----------- |
-| basePath     | overall base folder | the current working directory (from which command is run) |
-| sourcePath   | the folder relative to which Hoot Smalltalk packages will be read   | **basePath**/src/main/hoot |
-| targetPath   | the folder relative to which Java code will be written    | **basePath**/target/generated-sources |
-| packageNames | names of the packages under **sourcePath** to be compiled | all packages under **sourcePath** |
+| basePath     | overall base folder | the current working directory |
+| sourcePath   | a relative Hoot Smalltalk package folder   | **basePath**/src/main/hoot |
+| targetPath   | a relative Java code folder for writing    | **basePath**/target/generated-sources |
+| packageNames | packages under **sourcePath** to compile | all packages under **sourcePath** |
 
 #### Notes
 
@@ -44,11 +44,16 @@ This provides better integration with the Maven build life-cycle, esp. the abili
 The ability to **clean** before a build provides a convenient way to regenerate a library from its Hoot Smalltalk sources.
 Thereafter, Maven compiles the generated Java code, and packages the resulting class files into a JAR.
 
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Plan](planning.md)</p><img width="250" height="1" /> | <p align="center">[Questions](faq.md)</p><img width="250" height="1" />  | <p align="center">[Features](intro.md#features)</p><img width="250" height="1" />  |
+
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
 
 [maven]: https://maven.apache.org/
+[plugin]: ../hoot-maven-plugin/README.md#hoot-maven-plugin

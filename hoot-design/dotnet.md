@@ -64,16 +64,18 @@ mono hoot-exec.exe Hoot.Tests.TextStream
 ... etc ...
 ```
 
-
-| **Back** | **Up** | **Next** |
-| -------- | ------ | -------- |
-| ... | [Features](../#features) | [Building Hoot Smalltalk](../#build-from-sources) |
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Tools Used][tools]</p><img width="250" height="1" />  | <p align="center">[Build][build]</p><img width="250" height="1" /> | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
-Copyright 2010,2023 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
+[features]: README.md#features
+[build]: build.md#building-from-sources "Build"
+[tools]: tools.md#tool-integration "Tools"
 
 [dot-net-install]: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
 [dot-net]: https://en.wikipedia.org/wiki/.NET_Framework
