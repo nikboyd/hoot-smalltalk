@@ -44,6 +44,10 @@ This provides better integration with the Maven build life-cycle, esp. the abili
 The ability to **clean** before a build provides a convenient way to regenerate a library from its Hoot Smalltalk sources.
 Thereafter, Maven compiles the generated Java code, and packages the resulting class files into a JAR.
 
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Plan](planning.md)</p><img width="250" height="1" /> | <p align="center">[Questions](faq.md)</p><img width="250" height="1" />  | <p align="center">[Features](intro.md#features)</p><img width="250" height="1" />  |
+
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 

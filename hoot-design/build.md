@@ -1,89 +1,106 @@
-#### Tool Integration ####
+#### Words of Advice!
 
-Hoot Smalltalk depends on Java, a JVM, and some associated tools and libraries:
-* shell scripts for [pipelines](#build-and-coverage-pipelines)
-* ANTLR, StringTemplate, `javac` for the [compiler](#hoot-smalltalk-compiler)
-* Maven for the [plugin](#hoot-compiler-plugin), [code inclusion](inclusion.md#source-code-inclusion), and overall [project organization](planning.md#project-planning)
-* JUnit for [tests](tests.md#test-framework)
-* JVM for the underlying runtime
+* Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
+* Don't muddy the waters! Always start _fresh_,  ...
+* Empty your local **.m2/repository** when switching JDK versions. 
+* Use small cycles when writing new code. Start with working code, then: ...
+* [SOP][sop]: write a test, write new code, test the code, ...
+* Repeat until the test passes and you have working code again.
 
-#### Build and Coverage Pipelines
+#### Building from Sources
 
-The project build process is driven by a set of [shell scripts][shells].
-During development, it was discovered the Maven builds were a bit compute hungry
-and really run _much_ faster with more than one core.
-Fortunately, GitHub supports builds using [**macOS** with 3 cores][hub-runners] in its workflows.
+First, prepare your system with the [appropriate tools](#platform-requirements).
+Then, clone this repository, and run the following shell command in the base project folder:
 
 ```
-runs-on: macos-latest
+mvn -U -B clean install
 ```
 
-After reviewing and using some alternatives for hosting the build, [GitHub Actions][hub-build]
-was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
-Thereafter, the [test coverage reports][hub-coverage] were migrated from GitHub Pages
-to Google with the [hoot-docs-bundle][docs-bundle].
+This command will build all the Hoot Smalltalk runtime components and compiler, generate Java sources from
+the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
+This also resembles how the associated [build pipeline](tools.md#build-and-coverage-pipelines) runs in GitHub.
 
-#### Hoot Smalltalk Compiler
-
-The Hoot Smalltalk compiler was built with [ANTLR 4][antlr] and [StringTemplate][st].
-This project uses [ANTLR][antlr] to generate the Hoot Smalltalk parser from [its grammar][grammar].
-Many thanks to [Terrence Parr][antlr-parr] and the ANTLR team for their passion about language translation!
-
-Overall, the Hoot Smalltalk compiler performs source-to-source translation (trans-coding) from Hoot Smalltalk to Java.
-Then, the Maven tooling uses a standard Java compiler **javac** to translate the intermediate Java sources
-into class files for the Java Virtual Machine **JVM** runtime.
-
-The Hoot Smalltalk compiler accepts directions with a command line interface [CLI][usage], that it uses to invoke the parser.
-The parser recognizes the code in Hoot Smalltalk `.hoot` source files, and builds trees of [StringTemplate][st] ST instances.
-The ST instances then use [code generation templates][code-lib] to output the corresponding Java source code.
-
-Maven helps with all this by packaging the generated class files into Java archive JAR files and providing a
-[build life-cycle][life-cycle] with supportive tools.
-For ease of use and reference, the Hoot Smalltalk compiler and its associated support runtime classes get
-bundled into a single JAR, [hoot-compiler-bundle][hoot-bundle].
-The Hoot project also provides a [Maven plugin](#hoot-compiler-plugin) that takes advantage of the Maven build life-cycle.
-
-#### Hoot Compiler Plugin
-
-Some of the included library projects have no Java source under **src/main/java**, only Hoot Smalltalk sources
-under **src/main/hoot**.
-In cases where a project has Hoot Smalltalk sources, the supplied Hoot [compiler plugin][hoot-maven-plugin]
-runs the [Hoot Smalltalk compiler][usage] to generate Java code from the Hoot Smalltalk `.hoot` sources (trans-coding).
-
-While the Hoot Smalltalk [compiler commands][usage] offer several options, it provides some defaults to simplify its use.
-This allows the [compiler plugin][hoot-maven-plugin] to mimic what might otherwise be done with a compiler command.
-
-The [compiler plugin][hoot-maven-plugin] instructs the Hoot Smalltalk compiler to output the generated the Java code in
-an appropriate folder within the surrounding Maven project, so that it gets compiled by the Java compiler
-during the normal Maven [build life-cycle][life-cycle].
-
-Here's an example invocation of the plugin from the **libs-hoot** [configuration][plugin-example].
-
-```xml
-<plugin>
-    <groupId>hoot-smalltalk</groupId>
-    <artifactId>hoot-maven-plugin</artifactId>
-    <executions>
-        <execution>
-            <goals><goal>generate</goal></goals>
-        </execution>
-    </executions>
-</plugin>
+After you've built Hoot for the first time, you can build and run just the library tests as follows:
 
 ```
+mvn -U -B -pl libs-hoot test
+```
 
-In this example, the Hoot Smalltalk source code from the [libs-hoot][libs-hoot] project is being translated into Java code
-and placed into the proper place in the folder structure in [libs-hoot][libs-hoot].
-The plugin also detects whether tests written in Hoot Smalltalk are present in the project under **src/test/hoot**,
-and translates those also.
+You can also be more selective by running a single test with Maven.
 
-The plugin helps simplify Hoot projects, keeping Hoot Smalltalk source code together with generated project library Java code.
-While the plugin provides support for the various compiler [command arguments][usage], it uses some conventions and
-knowledge of the surrounding context to simplify its configuration.
+```
+mvn -U -B -pl libs-hoot test -Dtest=BenchmarkTest
+```
+
+See the included [tests folder][hoot-tests] for a list of the available tests you can run.
+There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
+See the additional [notes][tests] about using this way of running tests with the bundle.
+You can also review the uploaded [test results][hub-coverage].
+
+#### Tools Needed
+
+* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8], but Java SE [JDK 21][jdk21] is now recommended.
+* You'll also need [Maven][maven], currently [version 3.9.5][maven-395] is recommended.
+
+This repo provides a [shell script][install-tools] for installing the required Java and Maven
+versions on Ubuntu using **apt-get**.
+
+If you intend to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], you'll want **JDK 8** (not any later version)
+and some [additional tools][hoot-dotnet], which depend on JDK 8.
+
+#### Platform Requirements
+
+The initial target platforms for Hoot Smalltalk include [Java][java] (and its [JVM][jvm]),
+plus [.Net][dot-net] (and its [CLR][clr]).
+
+Hoot Smalltalk was originally developed with Java SE [JDK 8][jdk8], partly due to its
+[Long Term Support][java-lts] LTS and its support for [Lambdas][lambdas].
+However, Java SE [JDK 11][jdk11] also has LTS and a few nice language enhancements, including
+better type inference and support for local [var][inference] declarations.
+
+* Hoot Smalltalk has now been improved and tested with OpenJDK 8, 11, 17, and 21.
+* With selective Maven [configuration profiles][java-profiles], this project supports JDK 8-10 and JDK 11+.
+
+The Hoot Smalltalk compiler tunes how it generates Java code depending on which Java version is available.
+Advances in the Java platform allow the Hoot Smalltalk compiler to generate simpler Java code.
+While it still supports JDK 8, [JDK 21][jdk21] is now recommended,
+in order to better track the more recent platform upgrades.
+
+That said,
+* Hoot doesn't yet take advantage of any Java features that require a version later than JDK 11.
+* We are tracking some of those being offered by [JDK 21][jdk21].
+
+#### GraalVM Adopted as Recommended Platform
+
+This note was updated in mid Oct 2023.
+
+As of now, Hoot Smalltalk still _works fine_ with JDK 8-17.
+However, with the advent of [GraalVM][graal-vm] and discovery of its support for polyglot programming and
+language development using [Truffle][truffle], all future development of Hoot Smalltalk will be shifting focus
+to integrate with those tools.
+
+Even now, Hoot Smalltalk _as is_ runs fine with GraalVM for JDK 21 [21.0.0][graal-install].
+And so, GraalVM is now recommended as the preferred platform on which to run the associated Java code,
+esp. if you want to track the further development of Hoot Smalltalk.
+
+More discussions about this will emerge as they gain focus. For now, the opportunities seem quite substantial.
+
+#### Dot Net Support
+
+Most of these discussions reference [Java][java] and how the Hoot Smalltalk compiler
+translates Hoot Smalltalk code into Java code.
+However, the design discussions also generally apply to running Hoot Smalltalk on [.Net][hoot-dotnet],
+especially as regards how Hoot Smalltalk maps the Smalltalk [object model](hierarchy.md#type-hierarchy-diagram)
+into a host language and its platform.
+
+Provisional support for running Hoot Smalltalk on the [.Net][dot-net] [CLR][clr] platform requires
+[Mono][mono-home] and [IKVM][ikvm-home].
+If you want to run your Hoot Smalltalk code on the .Net CLR, be sure to read the [additional notes][hoot-dotnet]
+about how this is currently supported.
 
 | **NEXT** | **BACK** | **UP** |
 | -------- | -------- | ------ |
-| <p align="center">[Structure][structure]</p><img width="250" height="1" /> | <p align="center">[Build][build]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
+| <p align="center">[Tools Used][tools]</p><img width="250" height="1" />  | <p align="center">[Introduction][intro]</p><img width="250" height="1" /> | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
@@ -96,6 +113,7 @@ provided this copyright statement is retained in all copies.
 [st-syntax]: https://en.wikipedia.org/wiki/Smalltalk#Syntax "Smalltalk Syntax"
 [st-imps]: https://en.wikipedia.org/wiki/Smalltalk#List_of_implementations "Smalltalk Implementations"
 [eco-depot]: https://github.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
+[sop]: https://en.wikipedia.org/wiki/Standard_operating_procedure
 
 [jdk8]: https://openjdk.java.net/projects/jdk8/
 [jdk11]: https://openjdk.java.net/projects/jdk/11/

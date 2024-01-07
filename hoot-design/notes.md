@@ -98,14 +98,44 @@ constraint needed by the base **Collection** class.
 Also, the **Dictionary** class implements the Smalltalk type defined by **CollectedDictionary**.
 So, it supports the same protocols defined by that standard library type.
 
-| **Back** | **Up** | **Next** |
-| -------- | ------ | -------- |
-| [Name Spaces](libs.md#name-spaces) | [Features](../#features) | [Methods](methods.md#methods) |
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Methods][methods]</p><img width="250" height="1" /> | <p align="center">[Classes][classes]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
+
+[design]: README.md#hoot-smalltalk-design-notes
+[features]: README.md#features
+[intro]: intro.md#introduction "Intro"
+[build]: build.md#building-from-sources "Build"
+[tool-needs]: build.md#tools-needed "Tools Needed"
+[tools]: tools.md#tool-integration "Tools"
+[planning]: planning.md#project-planning "Planning"
+[structure]: structure.md#project-structure "Structure"
+[model]: model.md#language-model "Language Model"
+[spaces]: libs.md#name-spaces "Name Spaces"
+[classes]: libs.md#classes-and-metaclasses "Classes"
+[types]: libs.md#types-and-metatypes "Types"
+[access]: notes.md#access-controls "Access Controls"
+[notes]: notes.md#annotations "Annotations"
+[decor]: notes.md#decorations "Decorations"
+[optional]: notes.md#optional-types "Optional Types"
+[generics]: notes.md#generic-types "Generics"
+[methods]: methods.md#methods "Methods"
+[comments]: methods.md#comments "Comments"
+[xop]: methods.md#interoperability "Interoperability"
+[prims]: methods.md#primitive-methods "Primitives"
+[blocks]: blocks.md#blocks "Blocks"
+[except]: exceptions.md#exceptions "Exceptions"
+[faq]: faq.md#frequently-asked-questions "Questions"
+[usage]: usage.md#hoot-compiler-usage "Usage"
+[threads]: blocks.md#threads "Threads"
+[tests]: tests.md#test-framework "Tests"
+[console-apps]: tests.md#running-applications
+[hoot-dotnet]: dotnet.md#running-hoot-smalltalk-on-net "Dot Net"
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
 [images]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence "Image Persistence"

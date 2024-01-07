@@ -59,6 +59,10 @@ Given your library depends on the [hoot-libs-bundle][libs-bundle], you can inclu
 `extends` **TestableClosure** or that directly `implements` **MultiValuable**.
 Then, you'll have a way to start your application from the command line similarly.
 
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Questions][faq]</p><img width="250" height="1" /> | <p align="center">[Exceptions][except]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
+
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
@@ -66,3 +70,7 @@ provided this copyright statement is retained in all copies.
 
 [junit]: https://junit.org/junit4/
 [libs-bundle]: ../README.md#bundled-libraries
+
+[features]: README.md#features
+[faq]: faq.md#frequently-asked-questions "Questions"
+[except]: exceptions.md#exceptions "Exceptions"

@@ -1,106 +1,64 @@
-#### Platform Requirements
+#### Introduction
 
-This note was updated in mid Oct 2023.
+Hoot Smalltalk (aka Hoot) is `experimental`.
 
-Hoot Smalltalk was originally developed with Java SE [JDK 8][jdk8], partly due to its
-[Long Term Support][java-lts] LTS and its support for [Lambdas][lambdas].
-However, Java SE [JDK 11][jdk11] also has LTS and a few nice language enhancements, including
-better type inference and support for local [var][inference] declarations.
+* Hoot Smalltalk is the natural and conceptual successor to [Bistro Smalltalk][bistro].
+* Hoot builds on and extends the experience gained with [Bistro][bistro].
+* Bistro included and supported some Java keywords like `static`, `public`, `private`.
+* Hoot makes such code decorations optional [annotations][notes].
+* Hoot uses naming conventions, type inference, and Java [lambda functions][lambdas].
+* Hoot provides _**strong**_ [dynamic types][combo-type] at runtime.
 
-Hoot Smalltalk has now been improved and tested with OpenJDK 8, 11, 17, and 21.
-While it still supports JDK 8, and you can still use it, [JDK 21][jdk21] is now recommended,
-in order to better track the more recent platform upgrades.
+Hoot Smalltalk extends some of the ideas pioneered in Bistro:
 
-With selective Maven [configuration profiles][java-profiles], the Hoot project supports 
-JDK 8 (up through 10) and JDK 11 (and above).
-The Hoot Smalltalk compiler will tune how it generates Java code depending on which platform is available.
-Advances in the Java platform allow the Hoot Smalltalk compiler to generate simpler Java code.
+* the [simplicity][st-syntax] and expressiveness of Smalltalk  message syntax,
+* support for _most_ [ANSI standard Smalltalk][libs-st] type protocols,
+* support for [_optional_ types][optional],
+* support for [_generic_ types][generics].
 
-That said, it doesn't yet take advantage of any Java features that require a version later than JDK 11.
-However, we are tracking some of those being offered by [JDK 21][jdk21].
+Hoot Smalltalk also takes advantage of many existing tools and libraries.
 
-The initial target platforms for Hoot Smalltalk include [Java][java] (and its [JVM][jvm]),
-plus [.Net][dot-net] (and its [CLR][clr]).
+* no proprietary [virtual machine](#byovm),
+* no [image-based](#no-image) persistence,
+* integration with existing [tools][tools] (like [Git][git-doc] and GitHub),
+* easy integration with other Java class libraries,
+* including integration with [JUnit][junit] for tests.
 
-So, ...
+So, you can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
 
-Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8], but Java SE [JDK 21][jdk21] is now recommended.
-You'll also need [Maven][maven], currently [version 3.9.5][maven-395] is recommended.
-If you intend to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], you'll want JDK 8 (not any later version)
-and some [additional tools][hoot-dotnet], which depend on JDK 8.
+* Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
 
-This repo provides a [shell script][install-tools] for installing the required Java and Maven
-versions on Ubuntu using **apt-get**.
+#### BYOVM
 
-#### GraalVM Adopted as Recommended Platform
+Hoot Smalltalk does not provide its own [virtual machine][st-vm], like some [Smalltalks][st-imps].
+Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over a few decades.
+The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove 
+the choice of [Java][java] as the primary foundation for Hoot Smalltalk.
+That Java derived many of its [early technical foundations][hot-spot] from Smalltalk also helps.
 
-This note was updated in mid Oct 2023.
+#### No Image
 
-As of now, Hoot Smalltalk still _works fine_ with JDK 8 (through 10) and 11+.
-However, with the advent of [GraalVM][graal-vm] and discovery of its support for polyglot programming and
-language development using [Truffle][truffle], all future development of Hoot Smalltalk will be shifting focus
-to integrate with those tools.
+Hoot Smalltalk does not use [image-based persistence][st-image] for storing its code.
+Rather, like many programming languages, it uses simple text files with `.hoot` file type suffix.
+This allows developers to use popular tools for text editing and source code [version control][version-control],
+just as this [Git][git-doc] repository contains the code for Hoot Smalltalk itself.
+Simple text files also allow you to use any of the existing integrated development tools that support Java.
+Hoot Smalltalk was developed with [NetBeans][net-beans], largely because of its mature support for
+and integration with [Maven][maven].
 
-Even now, Hoot Smalltalk _as is_ runs fine with GraalVM for JDK 21 [21.0.0][graal-install].
-And so, GraalVM is now recommended as the preferred platform on which to run the associated Java code,
-esp. if you want to track the further development of Hoot Smalltalk.
-
-More discussions about this will emerge as they gain focus. For now, the opportunities seem quite substantial.
-
-#### Words of Advice!
-
-* Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
-* Don't muddy the waters! Always start _fresh_,  ...
-* With an empty local **.m2/repository**, when switching JDK versions. 
-* Use small cycles when writing new code. Start with working code, then: ...
-* SOP: write a test, write new code, test the code, ...
-* Repeat until the test passes and you have working code again.
-
-#### Building from Sources
-
-Clone this repository, and run the following shell command in the base project folder:
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Build][build]</p><img width="250" height="1" /> | <p align="center">...</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
-mvn -U -B clean install
+Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+provided this copyright statement is retained in all copies.
 ```
-
-This also resembles how the associated [build pipeline](tools.md#build-and-coverage-pipelines) runs in GitHub.
-This command will build all the Hoot Smalltalk runtime components and compiler, generate Java sources from
-the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
-
-After you've built Hoot for the first time, you can build and run just the library tests as follows:
-
-```
-mvn -U -B -pl libs-hoot test
-```
-
-You can also be more selective by running a single test with Maven.
-
-```
-mvn -U -B -pl libs-hoot test -Dtest=BenchmarkTest
-```
-
-See the included [tests folder][hoot-tests] for a list of the available tests you can run.
-There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
-See the additional [notes][tests] about using this way of running tests with the bundle.
-You can also review the uploaded [test results][hub-coverage].
-
-#### Dot Net Support
-
-Most of these discussions reference [Java][java] and how the Hoot Smalltalk compiler
-translates Hoot Smalltalk code into Java code.
-However, the design discussions also generally apply to running Hoot Smalltalk on [.Net][hoot-dotnet],
-especially as regards how Hoot Smalltalk maps the Smalltalk [object model](hierarchy.md#type-hierarchy-diagram)
-into a host language and its platform.
-
-Provisional support for running Hoot Smalltalk on the [.Net][dot-net] [CLR][clr] platform requires
-[Mono][mono-home] and [IKVM][ikvm-home].
-If you want to run your Hoot Smalltalk code on the .Net CLR, be sure to read the [additional notes][hoot-dotnet]
-about how this is currently supported.
 
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
+[st-vm]: https://github.com/OpenSmalltalk/opensmalltalk-vm/?tab=readme-ov-file#overview
 [st-syntax]: https://en.wikipedia.org/wiki/Smalltalk#Syntax "Smalltalk Syntax"
 [st-imps]: https://en.wikipedia.org/wiki/Smalltalk#List_of_implementations "Smalltalk Implementations"
 [eco-depot]: https://github.com/nikboyd/eco-depot#eco-depot-hazmat-facility-conceptual-model
@@ -112,11 +70,13 @@ about how this is currently supported.
 [java-lts]: https://www.oracle.com/technetwork/java/java-se-support-roadmap.html
 [java]: https://en.wikipedia.org/wiki/Java_%28programming_language%29 "Java"
 [jvm]: https://en.wikipedia.org/wiki/Java_virtual_machine "Java Virtual Machine"
+[hot-spot]: https://en.wikipedia.org/wiki/HotSpot_(virtual_machine)#History
 [lambdas]: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html
 [inference]: https://developer.oracle.com/java/jdk-10-local-variable-type-inference
 [graal-vm]: https://www.graalvm.org/docs/introduction/
 [graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/jdk-21.0.0
 [truffle]: https://www.graalvm.org/graalvm-as-a-platform/language-implementation-framework/
+[combo-type]: https://en.wikipedia.org/wiki/Type_system#Combining_static_and_dynamic_type_checking
 
 [ikvm-home]: http://www.ikvm.net/
 [mono-home]: https://www.mono-project.com/
@@ -126,7 +86,7 @@ about how this is currently supported.
 [st]: https://www.stringtemplate.org/ "StringTemplate"
 [antlr]: https://www.antlr.org/ "ANTLR"
 [antlr-grammar]: https://github.com/antlr/antlr4/blob/master/doc/grammars.md
-[antlr-parr]: https://explained.ai/
+[antlr-parr]: https://parrt.cs.usfca.edu/
 [maven]: https://maven.apache.org/
 [maven-350]: https://maven.apache.org/docs/3.5.0/release-notes.html
 [maven-395]: https://maven.apache.org/docs/3.9.5/release-notes.html
@@ -136,7 +96,7 @@ about how this is currently supported.
 [junit]: https://junit.org/junit4/
 
 [git-doc]: https://git-scm.com/
-[hoot-ansi]: hoot-design/ANSI-X3J20-1.9.pdf
+[hoot-ansi]: ANSI-X3J20-1.9.pdf
 [squeak-ansi]: http://wiki.squeak.org/squeak/172
 [st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
 [st-image]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence
@@ -146,6 +106,8 @@ about how this is currently supported.
 [code-lib]: ../hoot-compiler/src/main/resources/CodeTemplates.stg
 
 [design]: README.md#hoot-smalltalk-design-notes
+[features]: README.md#features
+[build]: build.md#building-from-sources "Build"
 [model]: model.md#language-model "Language Model"
 [spaces]: libs.md#name-spaces "Name Spaces"
 [classes]: libs.md#classes-and-metaclasses "Classes"
@@ -189,14 +151,12 @@ about how this is currently supported.
 [cloud-build]: https://cloud.google.com/cloud-build
 [cloud-smith]: https://cloudsmith.com/
 
-[hub-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/
 [hub-package]: https://github.com/nikboyd/hoot-smalltalk/packages/1130290
 [hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
 [hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
-[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
 [hub-pipe]: ../.github/workflows/main.yml#L11
 
-[shells]: ../shell/README.md#shell-scripts
 [build]: ../shell/build-all-mods.sh
 [build-pipe]: ../cloudbuild.yaml#L4
 [build-cache]: ../cloudbuild.yaml#L36
@@ -204,3 +164,4 @@ about how this is currently supported.
 [lab-pipe]: ../.gitlab-ci.yml#L11
 [lab-trigger]: ../shell/build-all-mods.sh#L42
 [install-tools]: ../shell/install-tools.sh#L4
+

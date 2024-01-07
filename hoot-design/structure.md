@@ -1,89 +1,58 @@
-#### Tool Integration ####
+#### Project Structure
 
-Hoot Smalltalk depends on Java, a JVM, and some associated tools and libraries:
-* shell scripts for [pipelines](#build-and-coverage-pipelines)
-* ANTLR, StringTemplate, `javac` for the [compiler](#hoot-smalltalk-compiler)
-* Maven for the [plugin](#hoot-compiler-plugin), [code inclusion](inclusion.md#source-code-inclusion), and overall [project organization](planning.md#project-planning)
-* JUnit for [tests](tests.md#test-framework)
-* JVM for the underlying runtime
+This repository contains the Hoot Smalltalk runtime, compiler, type and class libraries, and [design docs][design].
+The library projects in this repo have a dependency structure, layer on layer.
+Their transitive dependencies are structured with Maven such that libraries get built in their proper order.
 
-#### Build and Coverage Pipelines
+This repository is organized into the following Maven projects, each of which builds a portion of Hoot overall.
+Some of these use a mix of languages, but there's always a _primary_ language, as indicated.
 
-The project build process is driven by a set of [shell scripts][shells].
-During development, it was discovered the Maven builds were a bit compute hungry
-and really run _much_ faster with more than one core.
-Fortunately, GitHub supports builds using [**macOS** with 3 cores][hub-runners] in its workflows.
+| **Library** | **Code** | **Contents** |
+| ----------- | ------------ | ------------ |
+| [java-extend][java-extend]       | Java | Java library extensions |
+| [hoot-abstracts][hoot-abstracts] | Java | runtime interfaces and classes |
+| [hoot-runtime][hoot-runtime]     | Java | runtime foundation classes |
+| [hoot-compiler-ast][hoot-compiler-ast] | Java | [grammar][grammar], [parser][compiler-tool], AST nodes |
+| [hoot-compiler][hoot-compiler]   | Java | [command line interface][usage], [templates][code-lib] |
+| [hoot-compiler-boot][hoot-compiler-boot] | Java | process to run a compiler command |
+| [hoot-maven-plugin][hoot-maven-plugin] | Java | runs the [compiler][compiler-tool] for a Maven project |
+| [libs-smalltalk][libs-st]    | Hoot | [Smalltalk protocols][libs-st], compiled by [plugin][plugin-tool] |
+| [libs-hoot][libs-hoot]              | Hoot | [Hoot library][libs-hoot] classes, compiled by [plugin][plugin-tool] |
+| [hoot-docs-bundle][docs-bundle]     | Java | bundled test coverage reports |
+| [hoot-compiler-bundle][hoot-bundle] | both | plugin + compiler + runtime libs |
+| [hoot-libs-bundle][libs-bundle]     | both | compiled hoot classes + runtime libs |
 
-```
-runs-on: macos-latest
-```
+#### Bundled Libraries
 
-After reviewing and using some alternatives for hosting the build, [GitHub Actions][hub-build]
-was chosen to host the Hoot Smalltalk [build pipeline][hub-pipe].
-Thereafter, the [test coverage reports][hub-coverage] were migrated from GitHub Pages
-to Google with the [hoot-docs-bundle][docs-bundle].
+Note the last two projects listed above.
+These are bundled libraries that are hosted in [GitHub][hub-bundles].
+Also, notice the Spring Boot application project listed above.
 
-#### Hoot Smalltalk Compiler
+To simplify library dependencies in [other projects][eco-depot], it was decided to bundle the Hoot
+libraries resulting from the Maven build process.
+Two scenarios are most often used:
+1. compiling Hoot Smalltalk source code + associated test code (if present), and
+2. running the resultant applications.
 
-The Hoot Smalltalk compiler was built with [ANTLR 4][antlr] and [StringTemplate][st].
-This project uses [ANTLR][antlr] to generate the Hoot Smalltalk parser from [its grammar][grammar].
-Many thanks to [Terrence Parr][antlr-parr] and the ANTLR team for their passion about language translation!
+Compiling Hoot code needs the Hoot Smalltalk compiler, its associated Maven plugin,
+and the runtime support libraries. 
+This scenario uses the [hoot-compiler-bundle][hoot-bundle].
 
-Overall, the Hoot Smalltalk compiler performs source-to-source translation (trans-coding) from Hoot Smalltalk to Java.
-Then, the Maven tooling uses a standard Java compiler **javac** to translate the intermediate Java sources
-into class files for the Java Virtual Machine **JVM** runtime.
+Running a resulting [application][console-apps] needs the Hoot Smalltalk libraries and supporting runtime libraries.
+This scenario uses the [hoot-libs-bundle][libs-bundle].
 
-The Hoot Smalltalk compiler accepts directions with a command line interface [CLI][usage], that it uses to invoke the parser.
-The parser recognizes the code in Hoot Smalltalk `.hoot` source files, and builds trees of [StringTemplate][st] ST instances.
-The ST instances then use [code generation templates][code-lib] to output the corresponding Java source code.
+The [hoot-maven-plugin](#hoot-compiler-plugin) runs the Hoot compiler from the command line as a sub-task using
+the [hoot-compiler-boot][hoot-compiler-boot] Spring Boot application to launch the compiler.
+This mimics what you would do to run the compiler from the command line _by hand_.
 
-Maven helps with all this by packaging the generated class files into Java archive JAR files and providing a
-[build life-cycle][life-cycle] with supportive tools.
-For ease of use and reference, the Hoot Smalltalk compiler and its associated support runtime classes get
-bundled into a single JAR, [hoot-compiler-bundle][hoot-bundle].
-The Hoot project also provides a [Maven plugin](#hoot-compiler-plugin) that takes advantage of the Maven build life-cycle.
-
-#### Hoot Compiler Plugin
-
-Some of the included library projects have no Java source under **src/main/java**, only Hoot Smalltalk sources
-under **src/main/hoot**.
-In cases where a project has Hoot Smalltalk sources, the supplied Hoot [compiler plugin][hoot-maven-plugin]
-runs the [Hoot Smalltalk compiler][usage] to generate Java code from the Hoot Smalltalk `.hoot` sources (trans-coding).
-
-While the Hoot Smalltalk [compiler commands][usage] offer several options, it provides some defaults to simplify its use.
-This allows the [compiler plugin][hoot-maven-plugin] to mimic what might otherwise be done with a compiler command.
-
-The [compiler plugin][hoot-maven-plugin] instructs the Hoot Smalltalk compiler to output the generated the Java code in
-an appropriate folder within the surrounding Maven project, so that it gets compiled by the Java compiler
-during the normal Maven [build life-cycle][life-cycle].
-
-Here's an example invocation of the plugin from the **libs-hoot** [configuration][plugin-example].
-
-```xml
-<plugin>
-    <groupId>hoot-smalltalk</groupId>
-    <artifactId>hoot-maven-plugin</artifactId>
-    <executions>
-        <execution>
-            <goals><goal>generate</goal></goals>
-        </execution>
-    </executions>
-</plugin>
-
-```
-
-In this example, the Hoot Smalltalk source code from the [libs-hoot][libs-hoot] project is being translated into Java code
-and placed into the proper place in the folder structure in [libs-hoot][libs-hoot].
-The plugin also detects whether tests written in Hoot Smalltalk are present in the project under **src/test/hoot**,
-and translates those also.
-
-The plugin helps simplify Hoot projects, keeping Hoot Smalltalk source code together with generated project library Java code.
-While the plugin provides support for the various compiler [command arguments][usage], it uses some conventions and
-knowledge of the surrounding context to simplify its configuration.
+GitHub provides a package registry for hosting Maven artifacts.
+The bundles and compiler plugin are hosted in the [package registry][hub-bundles] for this repository.
+However, the GitHub package registry does not yet support anonymous access from an external Maven build.
+So, the project artifacts are also hosted in a [Cloudsmith repository][cloud-repo].
 
 | **NEXT** | **BACK** | **UP** |
-| -------- | -------- | ------ |
-| <p align="center">[Structure][structure]</p><img width="250" height="1" /> | <p align="center">[Build][build]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
+| -------- | ------ | -------- |
+| <p align="center">[Project Planning][planning]</p><img width="250" height="1" />  | <p align="center">[Tools Used][tools]</p><img width="250" height="1" /> | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
@@ -109,6 +78,7 @@ provided this copyright statement is retained in all copies.
 [graal-vm]: https://www.graalvm.org/docs/introduction/
 [graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/jdk-21.0.0
 [truffle]: https://www.graalvm.org/graalvm-as-a-platform/language-implementation-framework/
+[combo-type]: https://en.wikipedia.org/wiki/Type_system#Combining_static_and_dynamic_type_checking
 
 [ikvm-home]: http://www.ikvm.net/
 [mono-home]: https://www.mono-project.com/
@@ -118,7 +88,7 @@ provided this copyright statement is retained in all copies.
 [st]: https://www.stringtemplate.org/ "StringTemplate"
 [antlr]: https://www.antlr.org/ "ANTLR"
 [antlr-grammar]: https://github.com/antlr/antlr4/blob/master/doc/grammars.md
-[antlr-parr]: https://explained.ai/
+[antlr-parr]: https://parrt.cs.usfca.edu/
 [maven]: https://maven.apache.org/
 [maven-350]: https://maven.apache.org/docs/3.5.0/release-notes.html
 [maven-395]: https://maven.apache.org/docs/3.9.5/release-notes.html
@@ -128,7 +98,7 @@ provided this copyright statement is retained in all copies.
 [junit]: https://junit.org/junit4/
 
 [git-doc]: https://git-scm.com/
-[hoot-ansi]: hoot-design/ANSI-X3J20-1.9.pdf
+[hoot-ansi]: ANSI-X3J20-1.9.pdf
 [squeak-ansi]: http://wiki.squeak.org/squeak/172
 [st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
 [st-image]: https://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence
@@ -187,14 +157,12 @@ provided this copyright statement is retained in all copies.
 [cloud-build]: https://cloud.google.com/cloud-build
 [cloud-smith]: https://cloudsmith.com/
 
-[hub-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/
 [hub-package]: https://github.com/nikboyd/hoot-smalltalk/packages/1130290
 [hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
 [hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
-[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+[hub-runners]: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
 [hub-pipe]: ../.github/workflows/main.yml#L11
 
-[shells]: ../shell/README.md#shell-scripts
 [build]: ../shell/build-all-mods.sh
 [build-pipe]: ../cloudbuild.yaml#L4
 [build-cache]: ../cloudbuild.yaml#L36

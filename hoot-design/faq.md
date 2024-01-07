@@ -257,16 +257,19 @@ During the development of the Hoot Smalltalk class library, this was found to be
 However, the solution is rather simple.
 Re-order the bits of code so that variable declarations **always precede their usage**.
 
-
-| **Back** | **Up** | **Next** |
-| -------- | ------ | -------- |
-| [Exceptions](exceptions.md#exceptions) | [Features](../#features) | [Compiler Usage](usage.md#hoot-compiler-usage) |
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Compiler Usage][usage]</p><img width="250" height="1" /> | <p align="center">[Tests][tests]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
+[features]: README.md#features
+[except]: exceptions.md#exceptions "Exceptions"
+[usage]: usage.md#hoot-compiler-usage "Usage"
+[tests]: tests.md "Tests"
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"

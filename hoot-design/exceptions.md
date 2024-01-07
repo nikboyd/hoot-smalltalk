@@ -11,10 +11,10 @@ The following table compares the salient aspects of the Smalltalk and Java excep
 | ------------ | ----------- |
 | Java      | models exceptions as instances of exception classes (**Throwable** and its subclasses) |
 | Smalltalk | models exceptions as instances of exception classes (**Exception** and its subclasses) |
-| Java      | special syntax for dealing with exceptions: `try { } catch { } finally { }`, **throw**, and **throws** |
-| Smalltalk | no special syntax, only standard message idioms `[ ] catch: [ ] ensure: [ ]`, `[ ] ifCurtailed: [ ]` |
+| Java      | special exception syntax: `try { } catch { } finally { }`, **throw**, and **throws** |
+| Smalltalk | no special syntax, only standard idioms `[ ] catch: [ ] ensure: [ ]`, `[ ] ifCurtailed: [ ]` |
 | Java      | exception handling is strictly stack oriented - once unwound, old stack frames are unavailable |
-| Smalltalk | fine grained control: whether + when stack frames are unwound, whether execution resumes at the point of origin |
+| Smalltalk | fine grained control: whether + when stack frames are unwound, where execution resumes |
 | Java      | method signatures must declare checked exceptions with a **throws** clause |
 | Smalltalk | exceptions never impact method signatures |
 
@@ -31,7 +31,7 @@ Here are descriptions of some primary elements that participate in this mechanis
 | **Element** | **Description** |
 | ----------- | --------------- |
 | HandledException | an exception raised within a block or method |
-| ExceptionContext | registers exception handlers and manages evaluations within that context |
+| ExceptionContext | registers handlers, manages evaluations within context |
 | Enclosure   | a base class for both block Closures and exception handlers |
 | Closure     | a kind of Enclosure that implements a Block |
 | Block       | emits Statements within a Closure (or Predicate) |
@@ -47,15 +47,19 @@ The stacked **Enclosures** allow method and block closures with final blocks to 
 The stacked **ExceptionContexts** allow exception handlers to be managed properly within nested block scopes.
 Additionally, these mechanisms support rapid [method exits](blocks.md#method-returns-from-blocks) from within nested block scopes.
 
-| **Back** | **Up** | **Next** |
-| -------- | ------ | -------- |
-| [Blocks](blocks.md#blocks) | [Features](../#features) | [Questions](faq.md#frequently-asked-questions) |
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Tests][tests]</p><img width="250" height="1" /> | <p align="center">[Blocks][blocks]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 
+[features]: README.md#features
+[blocks]: blocks.md#blocks "Blocks"
+[faq]: faq.md#frequently-asked-questions "Questions"
+[tests]: tests.md "Tests"
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
