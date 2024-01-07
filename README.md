@@ -11,8 +11,9 @@
 
 [Hoot Smalltalk](#hoot-smalltalk) is a variation of the original [Smalltalk][smalltalk].
 
-* Hoot is [_experimental_][intro]. It runs Smalltalk on a Java Virtual Machine [JVM][jvm].
-* Hoot integrates better Smalltalk [features][features] with those of a JVM.
+* Hoot is [_experimental_][intro]. 
+* Hoot runs Smalltalk on a Java [virtual machine][jvm].
+* Hoot integrates better Smalltalk and Java [features][features].
 
 each badge below links to some test reports:
 <br/>
@@ -21,20 +22,21 @@ each badge below links to some test reports:
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/">
 <img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/maven_badge.png" />
 </a>
-<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/coverage_badge.png" />
-</a>
 </div>
 
 <div align="left" >
-<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/coverage_badge.png" />
+<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/index.html">
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/coverage_badge.png" />
 </a>
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/index.html">
 <img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/coverage_badge.png" />
 </a>
-<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/coverage_badge.png" />
+<br/>
+<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/index.html">
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/coverage_badge.png" />
+</a>
+<a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/index.html">
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/coverage_badge.png" />
 </a>
 </div>
 </td>
