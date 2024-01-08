@@ -229,4 +229,4 @@ provided this copyright statement is retained in all copies.
 [multi-core]: ../cloudbuild.yaml#L47
 [lab-pipe]: ../.gitlab-ci.yml#L11
 [lab-trigger]: ../shell/build-all-mods.sh#L42
-[install-tools]: ../shell/install-tools.sh#L4
+[install-tools]: ../shell/install-maven.sh#L4
