@@ -1,6 +1,6 @@
 #### Tool Integration ####
 
-Hoot Smalltalk depends on Java, a JVM, and some associated tools and libraries:
+Hoot Smalltalk depends on Java, and some associated tools and libraries:
 * shell scripts for [pipelines](#build-and-coverage-pipelines)
 * ANTLR, StringTemplate, `javac` for the [compiler](#hoot-smalltalk-compiler)
 * Maven for the [plugin](#hoot-compiler-plugin), [code inclusion](inclusion.md#source-code-inclusion), and overall [project organization](planning.md#project-planning)

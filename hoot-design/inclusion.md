@@ -46,6 +46,10 @@ While such library source inclusion practice is certainly **not required** to us
 development projects, it remains a possibility. 
 It's _your_ choice whether or not to make your code _visible_ and work _**in the open**_.
 
+| **NEXT** | **BACK** | **UP** |
+| -------- | -------- | ------ |
+| <p align="center">[Compiler][compiler]</p><img width="250" height="1" /> | <p align="center">[Tools][tools]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
+
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
@@ -53,3 +57,9 @@ provided this copyright statement is retained in all copies.
 
 
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
+
+[features]: README.md#features
+[build]: build.md#building-from-sources "Build"
+[compiler]: tools.md#hoot-smalltalk-compiler "Compiler"
+[tools]: tools.md#tool-integration "Tools"
+

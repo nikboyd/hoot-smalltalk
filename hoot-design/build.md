@@ -1,15 +1,6 @@
-#### Words of Advice!
-
-* Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
-* Don't muddy the waters! Always start _fresh_,  ...
-* Empty your local **.m2/repository** when switching JDK versions. 
-* Use small cycles when writing new code. Start with working code, then: ...
-* [SOP][sop]: write a test, write new code, test the code, ...
-* Repeat until the test passes and you have working code again.
-
 #### Building from Sources
 
-First, prepare your system with the [appropriate tools](#platform-requirements).
+First, prepare your system with the [appropriate tools](#tools-needed).
 Then, clone this repository, and run the following shell command in the base project folder:
 
 ```
@@ -19,6 +10,17 @@ mvn -U -B clean install
 This command will build all the Hoot Smalltalk runtime components and compiler, generate Java sources from
 the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
 This also resembles how the associated [build pipeline](tools.md#build-and-coverage-pipelines) runs in GitHub.
+
+#### Words of Advice!
+
+* Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
+* Don't muddy the waters! Always start _fresh_,  ...
+* Empty your local **.m2/repository** when switching JDK versions. 
+* Use small cycles when writing new code. Start with working code, then ...
+* [SOP][sop]: write a test, write new code, test the code, ...
+* Repeat until the test passes and you have working code again.
+
+#### Hoot Tests
 
 After you've built Hoot for the first time, you can build and run just the library tests as follows:
 
@@ -39,27 +41,28 @@ You can also review the uploaded [test results][hub-coverage].
 
 #### Tools Needed
 
-* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8], but Java SE [JDK 21][jdk21] is now recommended.
-* You'll also need [Maven][maven], currently [version 3.9.5][maven-395] is recommended.
+* Java SE [JDK 21][jdk21] is now recommended, but
+* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8].
+* You'll also need [Maven][maven], 
+* Maven [version 3.9.5][maven-395] is recommended.
 
 This repo provides a [shell script][install-tools] for installing the required Java and Maven
 versions on Ubuntu using **apt-get**.
-
-If you intend to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], you'll want **JDK 8** (not any later version)
-and some [additional tools][hoot-dotnet], which depend on JDK 8.
 
 #### Platform Requirements
 
 The initial target platforms for Hoot Smalltalk include [Java][java] (and its [JVM][jvm]),
 plus [.Net][dot-net] (and its [CLR][clr]).
+If you want to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], see the 
+notes about [additional tools][hoot-dotnet], which require JDK 8.
 
 Hoot Smalltalk was originally developed with Java SE [JDK 8][jdk8], partly due to its
-[Long Term Support][java-lts] LTS and its support for [Lambdas][lambdas].
+[Long Term Support][java-lts] LTS and its support for [lambdas][lambdas].
 However, Java SE [JDK 11][jdk11] also has LTS and a few nice language enhancements, including
 better type inference and support for local [var][inference] declarations.
 
 * Hoot Smalltalk has now been improved and tested with OpenJDK 8, 11, 17, and 21.
-* With selective Maven [configuration profiles][java-profiles], this project supports JDK 8-10 and JDK 11+.
+* With selective Maven [profiles][java-profiles], this project supports JDK 8-10 and JDK 11+.
 
 The Hoot Smalltalk compiler tunes how it generates Java code depending on which Java version is available.
 Advances in the Java platform allow the Hoot Smalltalk compiler to generate simpler Java code.
@@ -67,8 +70,9 @@ While it still supports JDK 8, [JDK 21][jdk21] is now recommended,
 in order to better track the more recent platform upgrades.
 
 That said,
-* Hoot doesn't yet take advantage of any Java features that require a version later than JDK 11.
-* We are tracking some of those being offered by [JDK 21][jdk21].
+* Hoot doesn't yet take advantage of any features requiring a version later than Java 11.
+* Though, we are tracking some features offered by [Java 21][jdk21], including ...
+* [Scoped Values][scoped-values], [Sequenced Collections][seq-collect], [String Templates][string-templates]
 
 #### GraalVM Adopted as Recommended Platform
 
@@ -122,6 +126,10 @@ provided this copyright statement is retained in all copies.
 [java-lts]: https://www.oracle.com/technetwork/java/java-se-support-roadmap.html
 [java]: https://en.wikipedia.org/wiki/Java_%28programming_language%29 "Java"
 [jvm]: https://en.wikipedia.org/wiki/Java_virtual_machine "Java Virtual Machine"
+
+[scoped-values]: https://openjdk.org/jeps/446
+[seq-collect]: https://openjdk.org/jeps/431
+[string-templates]: https://openjdk.org/jeps/430
 [lambdas]: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html
 [inference]: https://developer.oracle.com/java/jdk-10-local-variable-type-inference
 [graal-vm]: https://www.graalvm.org/docs/introduction/
