@@ -11,6 +11,18 @@ This command will build all the Hoot Smalltalk runtime components and compiler, 
 the Hoot Smalltalk sources for the various Hoot Smalltalk library types and classes, and run the included library tests.
 This also resembles how the associated [build pipeline](tools.md#build-and-coverage-pipelines) runs in GitHub.
 
+#### Tools Needed
+
+To build and run Hoot Smalltalk, you first need to install
+
+* Java SE [JDK 21][jdk21] is now recommended, but
+* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8].
+* You'll also need [Maven][maven], 
+* Maven [version 3.9.5][maven-395] is recommended.
+
+This repo provides a [shell script][install-tools] for installing the required Java and Maven
+versions on Ubuntu using **apt-get**.
+
 #### Words of Advice!
 
 * Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
@@ -38,16 +50,6 @@ See the included [tests folder][hoot-tests] for a list of the available tests yo
 There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
 See the additional [notes][tests] about using this way of running tests with the bundle.
 You can also review the uploaded [test results][hub-coverage].
-
-#### Tools Needed
-
-* Java SE [JDK 21][jdk21] is now recommended, but
-* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8].
-* You'll also need [Maven][maven], 
-* Maven [version 3.9.5][maven-395] is recommended.
-
-This repo provides a [shell script][install-tools] for installing the required Java and Maven
-versions on Ubuntu using **apt-get**.
 
 #### Platform Requirements
 
