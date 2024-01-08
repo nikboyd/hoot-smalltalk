@@ -55,8 +55,8 @@ for the design of meta-protocols.
 Smalltalk had no [name space](libs.md#name-spaces) mechanism.
 Java and C# both have name space mechanisms built into their languages and VMs.
 The lack of name spaces:
-* often creates type naming conflicts, especially for commonly used names,
-* thereby contaminates names to differentiate them between libraries,
+* often creates type naming conflicts, especially for commonly used names, thereby ...
+* forces us to contaminate names in order to differentiate them between libraries,
 * complicates the integration of libraries from disparate sources.
 
 Smalltalk had no standardized binary distribution mechanism for its class libraries.
