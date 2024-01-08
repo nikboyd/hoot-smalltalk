@@ -24,6 +24,9 @@ The advent and maturing of [GraalVM][graal-vm] furthers this ambition, as can se
 
 **1. Smalltalk is a better modeling language than Java and C#.**
 
+I've been a Java developer for a good portion of my [career][nik-career], many many years.
+Still, I've been a fan of Smalltalk and got to [work with it][nik-st] extensively in the early 90s.
+
 Smalltalk is far more expressive and readable than Java and C#, partly due to Smalltalk's simplicity.
 But also, as I indicated in [Using Natural Language in Software Development][using-natural-language],
 Smalltalk provides a natural way to model the elements of problem descriptions expressed in English
@@ -49,21 +52,25 @@ for the design of meta-protocols.
 
 **3. Java and C# provide name spaces and standardized binary distribution mechanisms.**
 
-Smalltalk had no standardized [name space](libs.md#name-spaces) mechanism.
-This can produce class naming conflicts, and it can complicate the integration of class libraries
-from disparate origins.
+Smalltalk had no [name space](libs.md#name-spaces) mechanism.
 Java and C# both have name space mechanisms built into their languages and VMs.
+The lack of name spaces:
+* often creates type naming conflicts, especially for commonly used names,
+* thereby contaminates names to differentiate them between libraries,
+* complicates the integration of libraries from disparate sources.
 
 Smalltalk had no standardized binary distribution mechanism for its class libraries.
 While a typical Smalltalk image-based memory model contributes to its agility and productivity,
 it complicates final product packaging and deployment.
-Java provides several options for packaging and deploying its binary artifacts, including Java archives - JARs,
-Web archives - WARs, Enterprise archives - EARs, etc.
-C# has its class binaries combined into assemblies as Dynamic Link Libraries - DLLs.
+
+Java provides several options for packaging and deploying its binary artifacts, 
+including JARs=Java archives, WARs=web archives, EARs=enterprise archives, etc.
+C# has its class binaries combined into assemblies as DLLs=dynamic link libraries.
+
 By supporting various byte-coded and bit-coded binary distribution formats, GraalVM provides the mechanisms
 needed to integrate libraries from various independent origins.
 
-**4. The JVM and CLR combined offer relative ubiquity for deployment. LLVM too? WASM??**
+**4. The JVM and CLR offer relative ubiquity for deployment. LLVM too? WASM??**
 
 Given the relative ubiquity of the JVM (esp. with [OpenJDK][open-jdk]) and
 CLR (esp. with [.NET Core][net-core]), and their availability across many platforms,
@@ -73,7 +80,7 @@ and perhaps [Web Assembly WASM][web-assembly].
 
 #### 2021-03 Update
 
-As noted in the [overview][graal-adopt], [GraalVM][graal-vm] was [discovered][vm-news] and appears to offer a well
+As noted in the [build notes][graal-adopt], [GraalVM][graal-vm] was [discovered][vm-news] and appears to offer a well
 designed and mature set of tools for further development of Hoot Smalltalk in the context of [Truffle][truffle].
 GraalVM appears to have both [LLVM][graal-llvm] and [WASM][graal-wasm] in its sights as targets.
 So, prior aspirations toward those appear to be covered by the adoption of GraalVM as base platform for Hoot Smalltalk.
@@ -266,6 +273,9 @@ Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work
 provided this copyright statement is retained in all copies.
 ```
 
+[nik-career]: https://educery.dev/about/cvs/history/#work-history
+[nik-st]: https://educery.dev/about/cvs/citigroup/#summary
+
 [features]: README.md#features
 [except]: exceptions.md#exceptions "Exceptions"
 [usage]: usage.md#hoot-compiler-usage "Usage"
@@ -290,7 +300,7 @@ provided this copyright statement is retained in all copies.
 [web-assembly]: https://webassembly.org/
 [vm-news]: https://www.infoq.com/news/2021/01/graalvm-21-jvm-java/
 
-[graal-adopt]: ../README.md#graalvm-adopted-as-recommended-platform
+[graal-adopt]: build.md#graalvm-adopted-as-recommended-platform
 [graal-vm]: https://www.graalvm.org/docs/introduction/
 [graal-install]: https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-21.0.0.2
 [truffle]: https://www.graalvm.org/graalvm-as-a-platform/language-implementation-framework/

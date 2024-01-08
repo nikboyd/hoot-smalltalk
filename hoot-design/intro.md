@@ -32,7 +32,7 @@ So, you can write tests in Hoot Smalltalk that translate into Java tests run by 
 
 Hoot Smalltalk does not provide its own [virtual machine][st-vm], like some [Smalltalks][st-imps].
 Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over a few decades.
-The maturity of tool chains and the various options for the Java Virtual Machine JVM largely drove 
+The maturity of tool chains and the various options for the [Java virtual machine][jvm] largely drove 
 the choice of [Java][java] as the primary foundation for Hoot Smalltalk.
 That Java derived many of its [early technical foundations][hot-spot] from Smalltalk also helps.
 
@@ -41,7 +41,7 @@ That Java derived many of its [early technical foundations][hot-spot] from Small
 Hoot Smalltalk does not use [image-based persistence][st-image] for storing its code.
 Rather, like many programming languages, it uses simple text files with `.hoot` file type suffix.
 This allows developers to use popular tools for text editing and source code [version control][version-control],
-just as this [Git][git-doc] repository contains the code for Hoot Smalltalk itself.
+just as this [Git][git-doc] repository contains the code for Hoot Smalltalk.
 Simple text files also allow you to use any of the existing integrated development tools that support Java.
 Hoot Smalltalk was developed with [NetBeans][net-beans], largely because of its mature support for
 and integration with [Maven][maven].
