@@ -46,8 +46,8 @@ Double members: "comparing values - final"
 Double members: "comparing values"
 [
     Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloatD = self ] ]
-    Boolean! < aNumber [ ^aNumber asFloatD > self ]
-    Boolean! > aNumber [ ^aNumber asFloatD < self ]
+    Boolean! < Scalar! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloatD > self ] ]
+    Boolean! > Scalar! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloatD < self ] ]
 ]
 
 Double members: "converting"
@@ -78,21 +78,10 @@ Double members: "arithmetic"
         DoubleZero == aNumber asPrimitive ifTrue: [ self zeroDivide. ^self ].
         ^Double from: (self asPrimitive / aNumber asPrimitive) ]
 
-    + Numeric! aNumber [ "this + aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) + n ] ifFalse: [ self + n asFloatD ]]
-
-    - Numeric! aNumber [ "this - aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) - n ] ifFalse: [ self - n asFloatD ]]
-
-    * Numeric! aNumber [ "this * aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) * n ] ifFalse: [ self * n asFloatD ]]
-
-    / Numeric! aNumber [ "this / aNumber"
-        Number! n := Number <- aNumber. ^self generality > n generality
-            ifTrue: [ (n class coerce: self) / n ] ifFalse: [ self / n asFloatD ]]
+    + Numeric! aNumber [ ^self + (Double <- aNumber asFloatD) ]
+    - Numeric! aNumber [ ^self - (Double <- aNumber asFloatD) ]
+    * Numeric! aNumber [ ^self * (Double <- aNumber asFloatD) ]
+    / Numeric! aNumber [ ^self / (Double <- aNumber asFloatD) ]
 ]
 
 Double members: "mathematics"

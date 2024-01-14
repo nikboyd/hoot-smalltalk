@@ -40,11 +40,11 @@ Float members: "constructing instances"
 
 Float members: "comparing values - final"
 [
-    @Primitive @Final Boolean! = Double! aNumber [ ^Boolean from: primitiveValue == aNumber primitiveFloat ]
+    @Primitive @Final Boolean! = Double! aNumber [ ^Boolean from: (primitiveValue equals: aNumber primitiveFloat) ]
     @Primitive @Final Boolean! < Double! aNumber [ ^Boolean from: primitiveValue < aNumber primitiveFloat ]
     @Primitive @Final Boolean! > Double! aNumber [ ^Boolean from: primitiveValue > aNumber primitiveFloat ]
 
-    @Primitive @Final Boolean! = Float! aNumber [ ^Boolean from: primitiveValue == aNumber primitiveFloat ]
+    @Primitive @Final Boolean! = Float! aNumber [ ^Boolean from: (primitiveValue equals: aNumber primitiveFloat) ]
     @Primitive @Final Boolean! < Float! aNumber [ ^Boolean from: primitiveValue < aNumber primitiveFloat ]
     @Primitive @Final Boolean! > Float! aNumber [ ^Boolean from: primitiveValue > aNumber primitiveFloat ]
 ]
@@ -52,8 +52,8 @@ Float members: "comparing values - final"
 Float members: "comparing values"
 [
     Boolean! = Magnitude! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloat = self ] ]
-    Boolean! < aNumber [ ^aNumber asFloat > self ]
-    Boolean! > aNumber [ ^aNumber asFloat < self ]
+    Boolean! < Scalar! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloat > self ] ]
+    Boolean! > Scalar! aNumber [ ^(Number type accepts: aNumber) and: [ (Number <- aNumber) asFloat < self ] ]
 ]
 
 Float "converting" members:
