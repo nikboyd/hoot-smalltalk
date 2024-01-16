@@ -1,0 +1,39 @@
+@Notice :'Copyright 2010,2024 Nikolas S Boyd.
+Permission is granted to copy this work provided this copyright statement is retained in all copies.
+'!
+
+TestBase subclass: BitsTest.
+"Regression tests Smalltalk bit operations."
+
+BitsTest members:
+[
+    Array! testBlocks := #(
+        '[ 5 and: 6 ]'
+        '[ 5 or: 6 ]'
+        '[ 5 >> 6 ]'
+        ''
+        '[ 5 bitInvert ]'
+        '[ 5 bitOr: 7 ]'
+        '[ 5 bitXor: 7 ]'
+        '[ 5 bitAnd: 7 ]'
+        '[ 5 bitShift: 5 ]'
+        '[ 5 bitShift: 5 negated ]'
+        '[ 5 bitAt: 2 ]'
+        '[ 5 bitAt: 2 put: 0 ]'
+        ''
+        '[ 5 codePoint bitOr: Ordinal <- 7 ]'
+        '[ 5 codePoint bitXor: Ordinal <- 7 ]'
+        '[ 5 codePoint bitAnd: Ordinal <- 7 ]'
+        '[ 5 codePoint bitShift: Ordinal <- 5 ]'
+        '[ 5 codePoint bitAt: 2 ]'
+        ''
+        '[ 5 asLongInteger bitInvert ]'
+        '[ 5 asLongInteger bitOr: 7 ]'
+        '[ 5 asLongInteger bitXor: 7 ]'
+        '[ 5 asLongInteger bitAnd: 7 ]'
+        '[ 5 asLongInteger bitAt: 2 ]'
+        '[ 5 asLongInteger bitAt: 2 put: 0 ]'
+    ).
+
+    Void! runTest [ (TestableCode withAll: testBlocks) runTests. ]
+]

@@ -145,10 +145,22 @@ BasicCollectionTest members:
         x :=  x trim.
         x addAllLast: 'ble'.
         self report: 'babble ' value: x.
+        x addAllFirst: 'bla'.
+        self report: '?? ' value: x.
+        x removeAtIndex: 2.
+        self report: '?? ' value: x.
+        x remove: Object <- $a.
+        self report: '?? ' value: x.
+        x removeAll: 'bb'.
+        self report: '?? ' value: x.
+        x addAll: 'bb' before: $a.
+        self report: '?? ' value: x.
+        x addAll: 'bba' after: $l.
+        self report: '?? ' value: x.
     ]
 
     testMatches [
-        self report: '(aaabbbccc) matches regex (aaa.*)'  value: ('aaa.*'   matches: 'aaabbbccc').
+        self report: '(aaabbbccc) matches regex (aaa.*)'  value: ('aaa.*'  matches: 'aaabbbccc').
         self report: '(aaabbbccc) matches regex (a+b+c+)' value: ('a+b+c+' matches: 'aaabbbccc').
         self passed: 'string pattern match tests'.
     ]
