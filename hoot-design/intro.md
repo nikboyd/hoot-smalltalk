@@ -22,19 +22,15 @@ Hoot Smalltalk also takes advantage of many existing tools and libraries.
 * no [image-based](#no-image) persistence,
 * integration with existing [tools][tools] (like [Git][git-doc] and GitHub),
 * easy integration with other Java class libraries,
-* including integration with [JUnit][junit] for tests.
-
-So, you can write tests in Hoot Smalltalk that translate into Java tests run by JUnit.
-
-* Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
+* including [integration](#test-framework) with [JUnit][junit] for tests.
 
 #### BYOVM
 
 Hoot Smalltalk does not provide its own [virtual machine][st-vm], like some [Smalltalks][st-imps].
-Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over a few decades.
-The maturity of tool chains and the various options for the [Java virtual machine][jvm] largely drove 
+Rather, Hoot Smalltalk takes advantage of already existing VMs that have matured over some few decades.
+The maturity of its tool chains and the various options for the [Java virtual machine][jvm] largely drove 
 the choice of [Java][java] as the primary foundation for Hoot Smalltalk.
-That Java derived many of its [early technical foundations][hot-spot] from Smalltalk also helps.
+That Java derived many of its [early technical foundations][hot-spot] from Smalltalk also helped.
 
 #### No Image
 
@@ -46,6 +42,28 @@ Simple text files also allow you to use any of the existing integrated developme
 Hoot Smalltalk was developed with [NetBeans][net-beans], largely because of its mature support for
 and integration with [Maven][maven].
 
+#### Test Framework
+
+Hoot Smalltalk provides its own [test framework][tests] that ultimately integrates with [JUnit][junit].
+So, you can write and run your own tests in Hoot Smalltalk.
+After you've [built Hoot][build] for the first time, you can build and run just the library tests as follows:
+
+```
+mvn -U -B -pl libs-hoot test
+```
+
+You can also be more selective by running the tests in a single test class with Maven.
+
+```
+mvn -U -B -pl libs-hoot test -Dtest=BenchmarkTest
+```
+
+See the included [tests folder][hoot-tests] for a list of the available tests you can run.
+There's also another way to run these tests using the [hoot-libs-bundle][libs-bundle].
+See the additional [notes][tests] about using this way of running tests with the bundle.
+You can also review the uploaded [test results][hub-coverage] that are hosted using the [hoot-docs-bundle][docs-bundle].
+
+
 | **NEXT** | **BACK** | **UP** |
 | -------- | -------- | ------ |
 | <p align="center">[Build][build]</p><img width="250" height="1" /> | <p align="center">...</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
@@ -56,7 +74,7 @@ provided this copyright statement is retained in all copies.
 ```
 
 
-[bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
+[bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/src/master/README.md "Bistro"
 [smalltalk]: https://en.wikipedia.org/wiki/Smalltalk "Smalltalk"
 [st-vm]: https://github.com/OpenSmalltalk/opensmalltalk-vm/?tab=readme-ov-file#overview
 [st-syntax]: https://en.wikipedia.org/wiki/Smalltalk#Syntax "Smalltalk Syntax"
@@ -151,6 +169,7 @@ provided this copyright statement is retained in all copies.
 [cloud-build]: https://cloud.google.com/cloud-build
 [cloud-smith]: https://cloudsmith.com/
 
+[hub-coverage]: https://hoot-docs-host-drm7kw4jza-uw.a.run.app/
 [hub-package]: https://github.com/nikboyd/hoot-smalltalk/packages/1130290
 [hub-bundles]: https://github.com/nikboyd?tab=packages&repo_name=hoot-smalltalk
 [hub-build]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow

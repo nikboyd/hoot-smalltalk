@@ -38,6 +38,7 @@ Each section link below leads to a discussion about specific language features a
 | [Exceptions][except]       | Hoot supports both Smalltalk and Java exception handling. |
 | [Tests][tests]             | Hoot also includes a [test framework][tests]. |
 | [FAQ][faq]                 | Frequently asked questions about Hoot. |
+| [Future](road-map.md)      | Possible paths forward for Hoot |
 
 ```
 Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
