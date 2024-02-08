@@ -39,14 +39,16 @@ public class Variable extends Operand implements ValueSource {
     protected void makeDefined() { this.definesValue = true; }
 
     public Variable makeAssignment() { return defineLocal(); }
-    public Variable defineMember() { defineLocal(facialScope()); return this; }
+    public Variable defineMember() { defineMember(facialScope()); return this; }
+    private void defineMember(Scope s) { if (!s.hasLocal(this.name())) scopeLocal(s); }
+
     public Variable defineLocal() { defineLocal(containerScope()); return this; }
-    private void defineLocal(Scope s) {
-        if (!isDefined()) {
-            makeDefined();
-            s.addLocal(this);
-            reportLocal(s);
-        }
+    private void defineLocal(Scope s) { if (!isDefined()) scopeLocal(s); }
+
+    private void scopeLocal(Scope s) {
+        s.addLocal(this);
+        makeDefined();
+        reportLocal(s);
     }
 
     static final String[] KnownNames = { "f0", "exitID", };

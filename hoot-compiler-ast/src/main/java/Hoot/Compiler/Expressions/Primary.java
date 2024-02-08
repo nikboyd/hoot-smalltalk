@@ -9,6 +9,7 @@ import Hoot.Runtime.Notes.Note;
 import Hoot.Runtime.Values.*;
 import Hoot.Compiler.Scopes.*;
 import Hoot.Compiler.Constants.*;
+import static Hoot.Runtime.Functions.Utils.*;
 
 /**
  * A primary value.
@@ -27,7 +28,7 @@ public class Primary extends Operand {
 
     protected Operand item;
     public String itemClassName() { return this.item.getClass().getSimpleName(); }
-    private void item(Operand item) { this.item = item.inside(this); }
+    private void item(Operand item) { if (hasOne(item)) this.item = item.inside(this); }
     private LiteralName variable() { return (LiteralName)this.item; }
     public LiteralSymbol asSymbol() { return (LiteralSymbol)this.item; }
     public LiteralString asString() { return (LiteralString)this.item; }

@@ -67,7 +67,7 @@ public class Message extends Expression implements MessageSource {
         List<Operand> copy = operands();
         operands.clear();
         for (Operand o : copy) {
-            operands.add(o.cleanTerm());
+            if (hasOne(o)) operands.add(o.cleanTerm());
         }
     }
 

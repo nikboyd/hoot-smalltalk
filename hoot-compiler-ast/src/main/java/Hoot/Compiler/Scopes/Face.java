@@ -147,6 +147,10 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 //        return isInterface() ? TypeFile : ClassFile;
 //    }
 
+    protected boolean definesType = true;
+    public void definesType(boolean value) { this.definesType = value; }
+    @Override public boolean isInterface() { return signature().isInterface(); } //definesType || (isSigned() && 
+
     NamedItem faceSignature;
     public boolean isSigned() { return hasAny(faceSignature); }
     public NamedItem signature() {
@@ -285,7 +289,6 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public boolean isInnard() { return (container() instanceof Block); }
 
     @Override public boolean isAbstract() { return this.isInterface() || super.isAbstract(); }
-    @Override public boolean isInterface() { return signature().isInterface(); }
     @Override public boolean isFacial() { return true; }
     @Override public boolean isReflective() { return false; }
     @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }

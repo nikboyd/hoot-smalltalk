@@ -22,10 +22,10 @@ public class Formula extends Message {
     public static Formula with(UnarySequence term) { return with(term, emptyList(BinaryMessage.class)); }
     public static Formula with(UnarySequence term, List<BinaryMessage> ops) {
         Formula result = new Formula();
-        result.ops.addAll(ops);
+        result.ops.addAll(select(ops, op -> hasOne(op)));
+        result.containAll(result.ops());
         result.primaryTerm = term;
         result.contain(term);
-        result.containAll(ops);
         return result;
     }
 

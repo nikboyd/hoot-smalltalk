@@ -31,13 +31,13 @@ compilationUnit : n=notations ( fileImport )* ( classScope | typeScope ) ;
 classScope      : sign=classSignature ( scopes+=protocolScope )* ;
 typeScope       : sign=typeSignature  ( scopes+=protocolScope )* ;
 
-fileImport      : g=globalReference ( c=caseOption )? m=importSelector Period
-{File.currentFile().importFace(Import.from(File.currentFile(), $g.item, $m.text).withLowerCase(hasOne($ctx.c)));} ;
+fileImport      : g=globalReference ( c=caseOption )? m=importSelector Period ;
+//{File.currentFile().importFace(Import.from(File.currentFile(), $g.item, $m.text).withLowerCase(hasOne($ctx.c)));} ;
 
 importSelector  : ImportOne | ImportAll | ImportStatics ;
 caseOption      : CaseMessage ;
 
-typeSignature   : h=typeHeritage k=subtypeKeyword n=notations sub=globalName ds=detailedSignature p=Period
+typeSignature   : h=typeHeritage k=subtypeKeyword n=notations sub=globalName ds=detailedSignature p=Period 
 {CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent().getParent();
 Face.currentFace().notes().noteAll(map(unit.n.notes, n -> n.item));
 Face.currentFace().signature(TypeSignature.with(
@@ -63,9 +63,9 @@ protocolSignature returns
 [String selector = ""]  : n=notations g=globalName s=metaUnary k=membersKeyword
 {$selector = $s.text; Face.currentFace().selectFace($selector);} ;
 
-namedVariable returns
-[Variable item]         : n=notations type=typeNotation v=valueName ( Assign value=expression )? p=Period
-{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).defineMember();} ;
+namedVariable returns [Variable item]         
+: n=notations type=typeNotation v=valueName ( Assign value=expression )? p=Period ;
+//{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).defineMember();} ;
 
 //==================================================================================================
 // methods + blocks
@@ -125,44 +125,38 @@ blockContent returns
 // values + messages
 //==================================================================================================
 
-exitResult returns
-[Expression item]       : Exit value=expression
-{$item = $value.item.makeExit();} ;
+exitResult returns [Expression item] : Exit value=expression ;
+//{$item = $value.item.makeExit();} ;
 
-statement returns
-[Statement item]        : ( x=assignment | v=evaluation )
-{$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);} ;
+statement  returns [Statement item] : ( x=assignment | v=evaluation ) ;
+//{$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);} ;
 
-construct returns
-[Construct item]        : ref=selfish ( tails+=keywordTail terms+=formula )*
-{$item = Construct.with($ref.item, map($terms, term -> term.item));} ;
+construct  returns [Construct item] : ref=selfish ( tails+=keywordTail terms+=formula )* ;
+//{$item = Construct.with($ref.item, map($terms, term -> term.item));} ;
 
-evaluation returns
-[Expression item]       : value=expression
-{$item = $value.item.makeEvaluated();} ;
+evaluation returns [Expression item] : value=expression ;
+//{$item = $value.item.makeEvaluated();} ;
 
-assignment returns
-[Variable item]         : n=notations type=typeNotation v=valueName Assign value=expression
-{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).makeAssignment();} ;
+assignment returns [Variable item] : n=notations type=typeNotation v=valueName Assign value=expression ;
+//{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).makeAssignment();} ;
 
 primary returns         [Primary item = null]
-:( term=nestedTerm      {$item = Primary.with($term.item);}
-| block=blockScope      {$item = Primary.with($block.b.withNest());}
-| value=literal         {$item = Primary.with($value.item);}
-| type=globalReference  {$item = Primary.with($type.item.makePrimary());}
-| var=variableName      {$item = Primary.with(LiteralName.with($var.name));}
-);
+: term=nestedTerm       # term //{$item = Primary.with($term.item);}
+| block=blockScope      # block //{$item = Primary.with($block.b.withNest());}
+| value=literal         # litValue //{$item = Primary.with($value.item);}
+| type=globalReference  # typeName //{$item = Primary.with($type.item.makePrimary());}
+| var=variableName      # varName //{$item = Primary.with(LiteralName.with($var.name));}
+;
 
 nestedTerm returns
 [Expression item]       : TermInit term=expression TermExit  {$item = $ctx.term.item;} ;
 
-expression returns
-[Expression item]       : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )*
-{$item = Expression.with($ctx.f.item, nullOr(m -> m.item, $ctx.kmsg), map($ctx.cmsgs, msg -> msg.m.item));} ;
+expression returns [Expression item]
+: f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
+//{$item = Expression.with($ctx.f.item, nullOr(m -> m.item, $ctx.kmsg), map($ctx.cmsgs, msg -> msg.m.item));} ;
 
-formula returns
-[Formula item]          : s=unarySequence ( ops+=binaryMessage )*
-{$item = Formula.with($ctx.s.item, map($ctx.ops, op -> op.item));} ;
+formula returns [Formula item] : s=unarySequence ( ops+=binaryMessage )* ;
+//{$item = Formula.with($ctx.s.item, map($ctx.ops, op -> op.item));} ;
 
 unarySequence returns
 [UnarySequence item]    : p=primary ( msgs+=unarySelector )*
@@ -195,9 +189,9 @@ detailedSignature returns
 {$list = itemOr(new TypeList(), nullOr(g -> g.list, $ctx.generics)).withExit(nullOr(x -> x.item, $ctx.exit));} ;
 
 notations                       : ( notes+=notation )* ;
-notation returns
-[KeywordNote item = null]       : At name=globalName ( ( | ( values+=namedValue )+ | ( nakeds+=nakedValue )+ ) Bang )?
-{$item = KeywordNote.with($ctx.name.name, map($ctx.nakeds, n -> n.item), map($ctx.values, n -> n.item));} ;
+notation returns [KeywordNote item = null]
+: At name=globalName ( ( | ( values+=namedValue )+ | ( nakeds+=nakedValue )+ ) Bang )? ;
+//{$item = KeywordNote.with($ctx.name.name, map($ctx.nakeds, n -> n.item), map($ctx.values, n -> n.item));} ;
 
 namedValue returns              [NamedValue item = null]
 : head=keywordHead v=primitive  {$item = NamedValue.with($head.text, $v.item);}
@@ -299,60 +293,58 @@ classUnary : ClassUnary ;
 typeUnary  : TypeUnary ;
 
 unarySelector returns [String selector = Empty]
-: ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) {
-$selector = Keyword.with($s.text).methodName();}
-;
+: ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) ;
+//{$selector = Keyword.with($s.text).methodName();} ;
 
 binaryOperator returns [Operator op]
-: ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) {
-$op = Operator.with($s.text);}
-;
+: ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) ;
+//{$op = Operator.with($s.text);} ;
 
 //==================================================================================================
 // constants
 //==================================================================================================
 
-primitiveValues returns
-[LiteralArray list]       : Pound TermInit ( array+=primitive )* TermExit
-{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
+primitiveValues returns [LiteralArray list]       
+: Pound TermInit ( array+=primitive )* TermExit ;
+//{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
 
-elementValues returns
-[LiteralArray list]       : Pound TermInit ( array+=elementValue )* TermExit
-{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
+elementValues returns [LiteralArray list]       
+: Pound TermInit ( array+=elementValue )* TermExit ;
+//{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
 
-elementValue returns      [Constant item]
-: lit=literal             {$item = $lit.item;}
-| var=variableName        {$item = LiteralName.with($var.text, $start.getLine());}
+elementValue returns [Constant item]
+: lit=literal             # literalValue // {$item = $lit.item;}
+| var=variableName        # variableValue // {$item = LiteralName.with($var.text, $start.getLine());}
 ;
 
-primitive returns         [Constant item]
-: array=primitiveValues   {$item = $array.list;}
-| bool=literalBoolean     {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
-| value=ConstantCharacter {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
-| value=ConstantInteger   {$item = LiteralInteger.with($start.getText(), $start.getLine());}
-| value=ConstantFloat     {$item = LiteralFloat.with($start.getText(), $start.getLine());}
-| value=ConstantSymbol    {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
-| value=ConstantString    {$item = LiteralString.with($start.getText(), $start.getLine());}
+primitive returns [Constant item]
+: array=primitiveValues   # primArray // {$item = $array.list;}
+| bool=literalBoolean     # primBool // {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
+| value=ConstantCharacter # primChar // {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
+| value=ConstantInteger   # primInt // {$item = LiteralInteger.with($start.getText(), $start.getLine());}
+| value=ConstantFloat     # primFloat // {$item = LiteralFloat.with($start.getText(), $start.getLine());}
+| value=ConstantSymbol    # primSymbol // {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
+| value=ConstantString    # primString // {$item = LiteralString.with($start.getText(), $start.getLine());}
 ;
 
-selfish returns           [Constant item]
-: refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
-| refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
+selfish returns [Constant item]
+: refSelf=literalSelf     # selfSelfish //{$item = LiteralName.with($refSelf.text, $start.getLine());}
+| refSuper=literalSuper   # superSelfish // {$item = LiteralName.with($refSuper.text, $start.getLine());}
 ;
 
-literal returns           [Constant item]
-: array=elementValues     {$item = $array.list;}
-| refNil=literalNil       {$item = LiteralNil.with($start.getText(), $start.getLine());}
-| refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
-| refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
-| bool=literalBoolean     {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
-| value=ConstantCharacter {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
-| value=ConstantDecimal   {$item = LiteralDecimal.with($start.getText(), $start.getLine());}
-| value=ConstantFloat     {$item = LiteralFloat.with($start.getText(), $start.getLine());}
-| value=ConstantInteger   {$item = LiteralInteger.with($start.getText(), $start.getLine());}
-| n=radixedNumber         {$item = LiteralRadical.with($start.getText(), $start.getLine());}
-| value=ConstantSymbol    {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
-| value=ConstantString    {$item = LiteralString.with($start.getText(), $start.getLine());}
+literal returns [Constant item]
+: array=elementValues     # arrayLiteraal // {$item = $array.list;}
+| refNil=literalNil       # nilLiteral // {$item = LiteralNil.with($start.getText(), $start.getLine());}
+| refSelf=literalSelf     # selfLiteral // {$item = LiteralName.with($refSelf.text, $start.getLine());}
+| refSuper=literalSuper   # superLiteral // {$item = LiteralName.with($refSuper.text, $start.getLine());}
+| bool=literalBoolean     # boolLiteral // {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
+| value=ConstantCharacter # charLiteral // {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
+| value=ConstantDecimal   # decimalLiteral // {$item = LiteralDecimal.with($start.getText(), $start.getLine());}
+| value=ConstantFloat     # floatLiteral  // {$item = LiteralFloat.with($start.getText(), $start.getLine());}
+| value=ConstantInteger   # intLiteral // {$item = LiteralInteger.with($start.getText(), $start.getLine());}
+| n=radixedNumber         # numLiteral // {$item = LiteralRadical.with($start.getText(), $start.getLine());}
+| value=ConstantSymbol    # symbolLiteral  // {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
+| value=ConstantString    # stringLiteral // {$item = LiteralString.with($start.getText(), $start.getLine());}
 ;
 
 //==================================================================================================
@@ -390,7 +382,10 @@ At      : '@' ;
 // literal numbers
 //==================================================================================================
 
-radixedNumber  : ConstantBinary | ConstantOctal | ConstantHex ;
+constantFloat   : ConstantFloat ;
+constantDecimal : ConstantDecimal ;
+constantInteger : ConstantInteger ;
+radixedNumber   : ConstantBinary | ConstantOctal | ConstantHex ;
 
 ConstantBinary  : BinaryRadix  BinaryDigit+ ;
 ConstantOctal   : OctalRadix   OctalDigit+ ;
