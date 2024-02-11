@@ -20,6 +20,8 @@ import static Hoot.Compiler.Parser.HootParser.*;
  */
 public class HootFileListener extends HootBaseListener implements Logging {
 
+    // file scopes
+
     @Override public void exitFileImport(FileImportContext ctx) {
         File.currentFile().importFace(
             Import.from(File.currentFile(), ctx.g.item, ctx.m.getText()).withLowerCase(hasOne(ctx.c)));
@@ -44,6 +46,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
 //        ));
     }
 
+    // methods + blocks
+
     @Override public void exitNamedVariable(NamedVariableContext ctx) {
         ctx.item = Variable.named(ctx.v.name,
             nullOr(x -> x.item, ctx.type),
@@ -51,6 +55,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
             .withNotes(map(ctx.n.notes, n -> n.item))
             .defineMember();
     }
+
+    // values + messages
 
     @Override public void exitExitResult(ExitResultContext ctx) {
         ctx.item = ctx.value.item.makeExit();
@@ -76,6 +82,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
             .makeAssignment();
     }
 
+    // primary
+
     @Override public void exitTerm(TermContext ctx) {
         ctx.item = Primary.with(ctx.term.item);
     }
@@ -96,9 +104,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
         ctx.item = Primary.with(LiteralName.with(ctx.var.name));
     }
 
-    @Override public void exitNotation(NotationContext ctx) {
-        ctx.item = KeywordNote.with(ctx.name.name, map(ctx.nakeds, n -> n.item), map(ctx.values, n -> n.item));
-        report(ctx.item.notice());
+    @Override public void exitNestedTerm(NestedTermContext ctx) {
+        ctx.item = ctx.term.item;
     }
 
     @Override public void exitExpression(ExpressionContext ctx) {
@@ -109,14 +116,38 @@ public class HootFileListener extends HootBaseListener implements Logging {
         ctx.item = Formula.with(ctx.s.item, map(ctx.ops, op -> op.item));
     }
 
+    @Override public void exitUnarySequence(UnarySequenceContext ctx) {
+        ctx.item = UnarySequence.with(ctx.p.item, map(ctx.msgs, m -> m.selector));
+    }
+
     @Override public void exitUnarySelector(UnarySelectorContext ctx) {
         ctx.selector = Keyword.with(ctx.s.getText()).methodName();
+    }
+
+    @Override public void exitBinaryMessage(BinaryMessageContext ctx) {
+        ctx.item = BinaryMessage.with(ctx.operator.op, Formula.with(ctx.term.item));
     }
 
     @Override public void exitBinaryOperator(BinaryOperatorContext ctx) {
         ctx.op = Operator.with(ctx.s.getText());
         report("op "+ctx.op.methodName());
     }
+
+    @Override public void exitKeywordMessage(KeywordMessageContext ctx) {
+        ctx.item = KeywordMessage.with(
+            map(ctx.kh, head -> head.selector),
+            map(ctx.kt, tail -> tail.selector),
+            map(ctx.fs, term -> term.item));
+    }
+
+    // notations
+
+    @Override public void exitNotation(NotationContext ctx) {
+        ctx.item = KeywordNote.with(ctx.name.name, map(ctx.nakeds, n -> n.item), map(ctx.values, n -> n.item));
+        report(ctx.item.notice());
+    }
+
+    // constants
 
     @Override public void exitPrimitiveValues(PrimitiveValuesContext ctx) {
         ctx.list = LiteralArray.withItems(map(ctx.array, v -> v.item));

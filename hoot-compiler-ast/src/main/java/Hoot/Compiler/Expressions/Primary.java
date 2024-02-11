@@ -24,7 +24,7 @@ public class Primary extends Operand {
     protected Primary(Operand item) { this(); item(item); }
     public static Primary with(Operand item) { return new Primary(item); }
     public static Primary frameGlobal() { return with(Global.named(Frame.className())); }
-    @Override public void clean() { super.clean(); this.item.clean(); }
+    @Override public void clean() { super.clean(); if (hasOne(item)) this.item.clean(); }
 
     protected Operand item;
     public String itemClassName() { return this.item.getClass().getSimpleName(); }

@@ -126,19 +126,10 @@ blockContent returns
 //==================================================================================================
 
 exitResult returns [Expression item] : Exit value=expression ;
-//{$item = $value.item.makeExit();} ;
-
-statement  returns [Statement item] : ( x=assignment | v=evaluation ) ;
-//{$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);} ;
-
-construct  returns [Construct item] : ref=selfish ( tails+=keywordTail terms+=formula )* ;
-//{$item = Construct.with($ref.item, map($terms, term -> term.item));} ;
-
+statement  returns [Statement item]  : ( x=assignment | v=evaluation ) ;
+construct  returns [Construct item]  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
 evaluation returns [Expression item] : value=expression ;
-//{$item = $value.item.makeEvaluated();} ;
-
-assignment returns [Variable item] : n=notations type=typeNotation v=valueName Assign value=expression ;
-//{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).makeAssignment();} ;
+assignment returns [Variable item]   : n=notations type=typeNotation v=valueName Assign value=expression ;
 
 primary returns         [Primary item = null]
 : term=nestedTerm       # term //{$item = Primary.with($term.item);}
@@ -148,27 +139,14 @@ primary returns         [Primary item = null]
 | var=variableName      # varName //{$item = Primary.with(LiteralName.with($var.name));}
 ;
 
-nestedTerm returns
-[Expression item]       : TermInit term=expression TermExit  {$item = $ctx.term.item;} ;
-
-expression returns [Expression item]
-: f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
-//{$item = Expression.with($ctx.f.item, nullOr(m -> m.item, $ctx.kmsg), map($ctx.cmsgs, msg -> msg.m.item));} ;
-
-formula returns [Formula item] : s=unarySequence ( ops+=binaryMessage )* ;
-//{$item = Formula.with($ctx.s.item, map($ctx.ops, op -> op.item));} ;
-
-unarySequence returns
-[UnarySequence item]    : p=primary ( msgs+=unarySelector )*
-{$item = UnarySequence.with($ctx.p.item, map($ctx.msgs, m -> m.selector));} ;
-
-binaryMessage returns
-[BinaryMessage item]    : operator=binaryOperator term=unarySequence
-{$item = BinaryMessage.with($ctx.operator.op, Formula.with($ctx.term.item));} ;
-
-keywordMessage returns
-[KeywordMessage item]   : kh+=keywordHead fs+=formula ((kh+=keywordHead fs+=formula)+ | (kt+=keywordTail fs+=formula)+ | )
-{$item = KeywordMessage.with(map($ctx.kh, head -> head.selector), map($ctx.kt, tail -> tail.selector), map($ctx.fs, term -> term.item));} ;
+nestedTerm returns [Expression item] : TermInit term=expression TermExit ;
+expression returns [Expression item] : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
+formula    returns [Formula item]    : s=unarySequence ( ops+=binaryMessage )* ;
+unarySequence returns [UnarySequence item] : p=primary ( msgs+=unarySelector )* ;
+binaryMessage returns [BinaryMessage item] : operator=binaryOperator term=unarySequence ;
+keywordMessage returns [KeywordMessage item]
+: kh+=keywordHead fs+=formula ((kh+=keywordHead fs+=formula)+ | (kt+=keywordTail fs+=formula)+ | ) ;
+//{$item = KeywordMessage.with(map($ctx.kh, head -> head.selector), map($ctx.kt, tail -> tail.selector), map($ctx.fs, term -> term.item));} ;
 
 messageCascade          : Cascade m=message ;
 message returns         [Message item = null]
@@ -184,8 +162,7 @@ message returns         [Message item = null]
 classHeritage : Nil | superClass=signedType ;
 typeHeritage  : Nil | superTypes+=detailedType ( Comma superTypes+=detailedType )* ;
 
-detailedSignature returns
-[TypeList list = null]          : ( generics=genericTypes )? ( Exit exit=detailedType )?
+detailedSignature returns [TypeList list = null] : ( generics=genericTypes )? ( Exit exit=detailedType )?
 {$list = itemOr(new TypeList(), nullOr(g -> g.list, $ctx.generics)).withExit(nullOr(x -> x.item, $ctx.exit));} ;
 
 notations                       : ( notes+=notation )* ;
