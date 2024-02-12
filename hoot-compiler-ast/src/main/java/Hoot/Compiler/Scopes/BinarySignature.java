@@ -24,7 +24,7 @@ public class BinarySignature extends BasicSignature {
         return result; }
 
     protected Operator op;
-    @Override public String name() { return op.methodName(); }
+    @Override public String name() { return emptyOr(namedOp -> namedOp.methodName(), this.op); }
     @Override public BasicSignature eraseTypes() {
         return BinarySignature.with(DetailedType.RootType, map(arguments(), arg -> arg.withErasure()), op); }
 

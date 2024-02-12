@@ -40,7 +40,7 @@ public class KeywordNote extends Note {
     public Emission emitNakedValues() { return emitList(map(nakedValues(), v -> v.emitItem())); }
 
     @Override public String notice() {
-        return (!this.isNotice() || nakedCount() == 0) ? Empty :
-                trimQuotes(SingleQuote, nakedValues().get(0).scalarValue().rawValue()); }
+        return (isNotice() && nakedCount() > 0)?
+            trimQuotes(SingleQuote, nakedValues().get(0).scalarValue().rawValue()): Empty; }
 
 } // KeywordNote

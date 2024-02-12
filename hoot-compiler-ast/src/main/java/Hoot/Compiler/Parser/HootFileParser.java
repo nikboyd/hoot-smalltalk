@@ -22,7 +22,7 @@ public class HootFileParser implements FileParser {
 
     HootParser.CompilationUnitContext resultUnit;
     @Override public ParserRuleContext parseResult() { return resultUnit; }
-    @Override public ParseTreeListener listener() { return new HootBaseListener(); }
+    @Override public ParseTreeListener listener() { return new HootFileListener(); }
 
     CommonTokenStream tokenStream; // cached token stream
     @Override public CommonTokenStream tokenStream() { return tokenStream; }

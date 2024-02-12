@@ -21,7 +21,7 @@ public class Operator implements Named {
         return (InverseMap.containsKey(selector)) ? InverseMap.get(selector) : Empty; }
 
     private String op = Empty;
-    @Override public String name() { return this.op; }
+    @Override public String name() { return emptyOr(opText -> opText, this.op); }
 
     public boolean isCast() { return Keyword.As.equals(methodName()); }
     public boolean isAssignment() { return !name().isEmpty() && AssignOperators.contains(name()); }

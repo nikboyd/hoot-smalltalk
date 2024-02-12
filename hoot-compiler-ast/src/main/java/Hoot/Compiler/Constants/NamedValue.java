@@ -2,6 +2,7 @@ package Hoot.Compiler.Constants;
 
 import Hoot.Runtime.Emissions.*;
 import Hoot.Runtime.Faces.Named;
+import static Hoot.Runtime.Functions.Utils.hasOne;
 
 /**
  * A named value.
@@ -20,7 +21,7 @@ public class NamedValue extends Constant implements Named {
     @Override public String name() { return name; }
 
     protected Item value;
-    public Item itemValue() { return value; }
+    public Item itemValue() { return hasOne(value)? value: LiteralString.with("", sourceLine); }
     public Scalar scalarValue() { return (Scalar)itemValue(); }
 
     @Override public Emission emitItem() {

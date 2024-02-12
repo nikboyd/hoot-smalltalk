@@ -1,5 +1,5 @@
 //==================================================================================================
-// Copyright 2010,2021 Nikolas S Boyd.
+// Copyright 2010,2024 Nikolas S Boyd.
 // Permission is granted to copy this work provided this copyright statement is retained in all copies.
 //==================================================================================================
 
@@ -31,156 +31,88 @@ compilationUnit : n=notations ( fileImport )* ( classScope | typeScope ) ;
 classScope      : sign=classSignature ( scopes+=protocolScope )* ;
 typeScope       : sign=typeSignature  ( scopes+=protocolScope )* ;
 
-fileImport      : g=globalReference ( c=caseOption )? m=importSelector Period
-{File.currentFile().importFace(Import.from(File.currentFile(), $g.item, $m.text).withLowerCase(hasOne($ctx.c)));} ;
-
+fileImport      : g=globalReference ( c=caseOption )? m=importSelector Period ;
 importSelector  : ImportOne | ImportAll | ImportStatics ;
 caseOption      : CaseMessage ;
 
-typeSignature   : h=typeHeritage k=subtypeKeyword n=notations sub=globalName ds=detailedSignature p=Period
-{CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent().getParent();
-Face.currentFace().notes().noteAll(map(unit.n.notes, n -> n.item));
-Face.currentFace().signature(TypeSignature.with(
-TypeList.withDetails(map($ctx.h.superTypes, t -> t.item)),
-DetailedType.with(Global.named($ctx.sub.name), $ctx.ds.list),
-new NoteList().noteAll(map($ctx.n.notes, n -> n.item)), $ctx.k.getText(),
-Comment.findComment($ctx.h.getStart(), $ctx.p)));} ;
+typeSignature   : h=typeHeritage k=subtypeKeyword n=notations sub=globalName ds=detailedSignature p=Period ;
+classSignature  : h=classHeritage k=subclassKeyword n=notations ts=typeNotes sub=globalName ds=detailedSignature p=Period ;
 
-classSignature  : h=classHeritage k=subclassKeyword n=notations ts=typeNotes sub=globalName ds=detailedSignature p=Period
-{CompilationUnitContext unit = (CompilationUnitContext)$ctx.getParent().getParent();
-Face.currentFace().notes().noteAll(map(unit.n.notes, n -> n.item));
-Face.currentFace().signature(ClassSignature.with(
-nullOr(t -> t.item, $ctx.h.superClass),
-DetailedType.with(Global.named($ctx.sub.name), $ctx.ds.list),
-TypeList.withDetails(map($ctx.ts.types, t -> t.item)),
-new NoteList().noteAll(map($ctx.n.notes, n -> n.item)), $ctx.k.getText(),
-Comment.findComment($ctx.h.getStart(), $ctx.p)));} ;
-
+protocolSignature returns [String selector = ""]  : n=notations g=globalName s=metaUnary k=membersKeyword ;
 protocolScope   : sign=protocolSignature b=BlockInit ( members+=classMember )* x=BlockExit ;
 classMember     : v=namedVariable | m=methodScope ;
 
-protocolSignature returns
-[String selector = ""]  : n=notations g=globalName s=metaUnary k=membersKeyword
-{$selector = $s.text; Face.currentFace().selectFace($selector);} ;
-
-namedVariable returns
-[Variable item]         : n=notations type=typeNotation v=valueName ( Assign value=expression )? p=Period
-{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).defineMember();} ;
+namedVariable returns [Variable item]
+: n=notations type=typeNotation v=valueName ( Assign value=expression )? p=Period ;
 
 //==================================================================================================
 // methods + blocks
 //==================================================================================================
 
-methodScope returns
-[Method item] : n=notations sign=methodSignature b=methodBeg ( c=construct Period )? content=blockContent x=methodEnd ;
+methodScope returns [Method item] 
+: n=notations sign=methodSignature b=methodBeg ( c=construct Period )? content=blockContent x=methodEnd ;
 
-methodBeg : BlockInit
-{$methodScope::item = new Method().makeCurrent();
-MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
-$methodScope::item.notes().noteAll(map(scope.n.notes, n -> n.item));
-$methodScope::item.signature(scope.sign.item);} ;
-
-methodEnd : BlockExit
-{MethodScopeContext scope = (MethodScopeContext)$ctx.getParent();
-$methodScope::item.content(scope.content.item);
-$methodScope::item.construct(nullOr(r -> r.item, nullOr(ctx -> ctx.c, scope)));
-$methodScope::item.popScope();} ;
-
+methodBeg : BlockInit ;
+methodEnd : BlockExit ;
 methodSignature returns [BasicSignature item]
-: ks=keywordSignature   {$item=KeywordSignature.with(nullOr(t -> t.item, $ctx.ks.result), $ctx.ks.name.argList, $ctx.ks.name.headList, $ctx.ks.name.tailList);}
-| bs=binarySignature    {$item=BinarySignature.with(nullOr(t -> t.item, $ctx.bs.result), map($ctx.bs.args, arg -> arg.item), $ctx.bs.name.op);}
-| us=unarySignature     {$item=UnarySignature.with(nullOr(t -> t.item, $ctx.us.result), $ctx.us.name.selector);}
+: ks=keywordSignature  # keywordSig
+| bs=binarySignature   # binarySig
+| us=unarySignature    # unarySig
 ;
 
 unarySignature   : result=typeNotation name=unarySelector ;
 binarySignature  : result=typeNotation name=binaryOperator args+=namedArgument ;
 keywordSignature : result=typeNotation name=headsAndTails ;
 
-headsAndTails returns
-[List<Variable> argList, List<String> headList, List<String> tailList]
-  : kh+=keywordHead args+=namedArgument ( | (kh+=keywordHead args+=namedArgument)+ | (kt+=keywordTail args+=namedArgument)+ )
-{$argList = map($ctx.args, arg -> arg.item);
-$headList = map($ctx.kh, head -> head.selector);
-$tailList = map($ctx.kt, tail -> tail.selector);} ;
+headsAndTails returns [List<Variable> argList, List<String> headList, List<String> tailList]
+:    kh+=keywordHead args+=namedArgument 
+( | (kh+=keywordHead args+=namedArgument)+ 
+  | (kt+=keywordTail args+=namedArgument)+
+)
+;
 
-namedArgument returns
-[Variable item]         : n=notations type=typeNotation v=variableName
-{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type)).withNotes(map($ctx.n.notes, n -> n.item));} ;
+namedArgument returns [Variable item] : n=notations type=typeNotation v=variableName ;
+blockScope returns [Block b] : blockBeg sign=blockSignature content=blockContent blockEnd ;
+blockBeg : BlockInit ;
+blockEnd : BlockExit ;
 
-blockScope returns      [Block b] : blockBeg sign=blockSignature content=blockContent blockEnd ;
-blockBeg : BlockInit    {$blockScope::b = new Block().makeCurrent();} ;
-blockEnd : BlockExit    {$blockScope::b.content(((BlockScopeContext)$ctx.getParent()).content.item);
-                         $blockScope::b.popScope();} ;
+blockSignature returns [KeywordSignature item]
+: ( | type=typeNotation ( tails+=keywordTail args+=namedArgument )+ Bar ) ;
 
-blockSignature returns
-[KeywordSignature item] : ( | type=typeNotation ( tails+=keywordTail args+=namedArgument )+ Bar )
-{$item = KeywordSignature.with(nullOr(t -> t.item, $ctx.type), map($ctx.args, arg -> arg.item));
-$blockScope::b.signature($item);} ;
-
-blockContent returns
-[BlockContent item]     : ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | )
-{$item = BlockContent.with(map($ctx.s, term -> term.item), nullOr(ctx -> ctx.item, $ctx.r), $ctx.p.size());} ;
+blockContent returns [BlockContent item]
+: ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) ;
 
 //==================================================================================================
 // values + messages
 //==================================================================================================
 
-exitResult returns
-[Expression item]       : Exit value=expression
-{$item = $value.item.makeExit();} ;
+evaluation returns [Expression item] : value=expression ;
+exitResult returns [Expression item] : Exit value=expression ;
+statement  returns [Statement item]  : ( x=assignment | v=evaluation ) ;
+construct  returns [Construct item]  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
+assignment returns [Variable item]   : n=notations type=typeNotation v=valueName Assign value=expression ;
 
-statement returns
-[Statement item]        : ( x=assignment | v=evaluation )
-{$item = Statement.with($ctx.v == null ? $ctx.x.item : $ctx.v.item);} ;
+primary returns [Primary item = null]
+: term=nestedTerm       # term
+| block=blockScope      # block
+| value=literal         # litValue
+| type=globalReference  # typeName
+| var=variableName      # varName
+;
 
-construct returns
-[Construct item]        : ref=selfish ( tails+=keywordTail terms+=formula )*
-{$item = Construct.with($ref.item, map($terms, term -> term.item));} ;
+nestedTerm     returns [Expression item]    : TermInit term=expression TermExit ;
+expression     returns [Expression item]    : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
+formula        returns [Formula item]       : s=unarySequence ( ops+=binaryMessage )* ;
+unarySequence  returns [UnarySequence item] : p=primary ( msgs+=unarySelector )* ;
+binaryMessage  returns [BinaryMessage item] : operator=binaryOperator term=unarySequence ;
+keywordMessage returns [KeywordMessage item]
+: kh+=keywordHead fs+=formula ((kh+=keywordHead fs+=formula)+ | (kt+=keywordTail fs+=formula)+ | ) ;
 
-evaluation returns
-[Expression item]       : value=expression
-{$item = $value.item.makeEvaluated();} ;
-
-assignment returns
-[Variable item]         : n=notations type=typeNotation v=valueName Assign value=expression
-{$item = Variable.named($ctx.v.name, nullOr(x -> x.item, $ctx.type), nullOr(x -> x.item, $ctx.value)).withNotes(map($ctx.n.notes, n -> n.item)).makeAssignment();} ;
-
-primary returns         [Primary item = null]
-:( term=nestedTerm      {$item = Primary.with($term.item);}
-| block=blockScope      {$item = Primary.with($block.b.withNest());}
-| value=literal         {$item = Primary.with($value.item);}
-| type=globalReference  {$item = Primary.with($type.item.makePrimary());}
-| var=variableName      {$item = Primary.with(LiteralName.with($var.name));}
-);
-
-nestedTerm returns
-[Expression item]       : TermInit term=expression TermExit  {$item = $ctx.term.item;} ;
-
-expression returns
-[Expression item]       : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )*
-{$item = Expression.with($ctx.f.item, nullOr(m -> m.item, $ctx.kmsg), map($ctx.cmsgs, msg -> msg.m.item));} ;
-
-formula returns
-[Formula item]          : s=unarySequence ( ops+=binaryMessage )*
-{$item = Formula.with($ctx.s.item, map($ctx.ops, op -> op.item));} ;
-
-unarySequence returns
-[UnarySequence item]    : p=primary ( msgs+=unarySelector )*
-{$item = UnarySequence.with($ctx.p.item, map($ctx.msgs, m -> m.selector));} ;
-
-binaryMessage returns
-[BinaryMessage item]    : operator=binaryOperator term=unarySequence
-{$item = BinaryMessage.with($ctx.operator.op, Formula.with($ctx.term.item));} ;
-
-keywordMessage returns
-[KeywordMessage item]   : kh+=keywordHead fs+=formula ((kh+=keywordHead fs+=formula)+ | (kt+=keywordTail fs+=formula)+ | )
-{$item = KeywordMessage.with(map($ctx.kh, head -> head.selector), map($ctx.kt, tail -> tail.selector), map($ctx.fs, term -> term.item));} ;
-
-messageCascade          : Cascade m=message ;
-message returns         [Message item = null]
-: kmsg=keywordMessage   {$item = $kmsg.item;} # KeywordSelection
-| bmsg=binaryMessage    {$item = $bmsg.item;} # BinarySelection
-| umsg=unarySelector    {$item = UnarySequence.with($umsg.selector);} # UnarySelection
+messageCascade : Cascade m=message ;
+message returns [Message item = null]
+: kmsg=keywordMessage   # keywordSelection
+| bmsg=binaryMessage    # binarySelection
+| umsg=unarySelector    # unarySelection
 ;
 
 //==================================================================================================
@@ -189,47 +121,30 @@ message returns         [Message item = null]
 
 classHeritage : Nil | superClass=signedType ;
 typeHeritage  : Nil | superTypes+=detailedType ( Comma superTypes+=detailedType )* ;
+detailedSignature returns [TypeList list = null] : ( generics=genericTypes )? ( Exit exit=detailedType )? ;
 
-detailedSignature returns
-[TypeList list = null]          : ( generics=genericTypes )? ( Exit exit=detailedType )?
-{$list = itemOr(new TypeList(), nullOr(g -> g.list, $ctx.generics)).withExit(nullOr(x -> x.item, $ctx.exit));} ;
+notations : ( notes+=notation )* ;
+notation returns [KeywordNote item = null]
+: At name=globalName ( ( | ( values+=namedValue )+ | ( nakeds+=nakedValue )+ ) Bang )? ;
 
-notations                       : ( notes+=notation )* ;
-notation returns
-[KeywordNote item = null]       : At name=globalName ( ( | ( values+=namedValue )+ | ( nakeds+=nakedValue )+ ) Bang )?
-{$item = KeywordNote.with($ctx.name.name, map($ctx.nakeds, n -> n.item), map($ctx.values, n -> n.item));} ;
-
-namedValue returns              [NamedValue item = null]
-: head=keywordHead v=primitive  {$item = NamedValue.with($head.text, $v.item);}
-| head=keywordHead g=globalName {$item = NamedValue.with($head.text, Global.with($g.name));}
+namedValue returns [NamedValue item = null]
+: head=keywordHead v=primitive  # namedPrim
+| head=keywordHead g=globalName # namedGlobal
 ;
 
-nakedValue returns              [NamedValue item = null]
-: tail=keywordTail v=primitive  {$item = NamedValue.with(Empty, $v.item);}
-| tail=keywordTail g=globalName {$item = NamedValue.with(Empty, Global.with($g.name));}
+nakedValue returns [NamedValue item = null]
+: tail=keywordTail v=primitive  # nakedPrim
+| tail=keywordTail g=globalName # nakedGlobal
 ;
 
-typeNotes                       : ( types+=detailedType Bang )* ;
-detailedType returns            [DetailedType item = null]
-: extent=extendType             {$item = $extent.item;}
-| signed=signedType             {$item = $signed.item;}
-;
+typeNotes : ( types+=detailedType Bang )* ;
+detailedType returns [DetailedType item = null]
+: extent=extendType # extentItem | signed=signedType # signedItem ;
 
-typeNotation returns
-[DetailedType item = null]      : ( | type=detailedType Bang ( etc=Etc )? )
-{$item = nullOr(t -> t.item.makeArrayed($ctx.etc != null), $ctx.type);} ;
-
-genericTypes returns
-[TypeList list = null]          : Quest types+=detailedType ( keywordTail types+=detailedType )*
-{$list = TypeList.withDetails(map($types, t -> t.item));} ;
-
-extendType returns
-[DetailedType item = null]      : g=globalName Extends baseType=detailedType
-{$item = DetailedType.with(Global.with($g.name), $baseType.item).makeExtensive();} ;
-
-signedType returns
-[DetailedType item = null]      : g=globalReference details=detailedSignature
-{$item = DetailedType.with($g.item, $details.list);} ;
+typeNotation returns [DetailedType item = null] : ( | type=detailedType Bang ( etc=Etc )? ) ;
+extendType   returns [DetailedType item = null] : g=globalName Extends baseType=detailedType ;
+signedType   returns [DetailedType item = null] : g=globalReference details=detailedSignature ;
+genericTypes returns [TypeList list = null]     : Quest types+=detailedType ( keywordTail types+=detailedType )* ;
 
 //==================================================================================================
 // references
@@ -240,31 +155,17 @@ literalSelf    : Self  ;
 literalSuper   : Super ;
 literalBoolean : True | False ;
 
-valueName returns       [String name = Empty]
-: ( v=variableName      {$name = $v.name;}
-  | g=globalName        {$name = $g.name;}
-  )
-;
-
-variableName returns    [String name = Empty]
-: v=LocalName           {$name = $v.text;}
-;
-
-globalName returns      [String name = Empty]
-: g=GlobalName          {$name = $g.text;}
-;
-
-globalReference returns   [Global item = null]
-: ( names+=globalName )+  {$item = Global.withList(map($names, n -> n.name));}
-;
+variableName    returns [String name = Empty] : v=LocalName ;
+globalName      returns [String name = Empty] : g=GlobalName ;
+globalReference returns [Global item = null]  : ( names+=globalName )+ ;
+valueName       returns [String name = Empty] : v=variableName # varValue | g=globalName # globalValue ;
 
 //==================================================================================================
 // keywords
 //==================================================================================================
 
-subclassKeyword   : Subclass {File.currentFile().faceScope().makeCurrent();} ;
-subtypeKeyword    : Subtype  {File.currentFile().faceScope().makeCurrent();} ;
-
+subclassKeyword   : Subclass ;
+subtypeKeyword    : Subtype  ;
 metaclassKeyword  : Metaclass ;
 metatypeKeyword   : Metatype ;
 classKeyword      : Class ;
@@ -281,14 +182,8 @@ reservedWord
 | ImportOne  | ImportAll | ImportStatics
 ;
 
-keywordHead returns [String selector = Empty]
-: head=KeywordHead  {$selector = $head.text;}
-| word=reservedWord {$selector = $word.text;}
-;
-
-keywordTail returns [String selector = Empty]
-: tail=KeywordTail  {$selector = $tail.text;}
-;
+keywordTail returns [String selector = Empty] : tail=KeywordTail ;
+keywordHead returns [String selector = Empty] : head=KeywordHead # headText | word=reservedWord # wordText ;
 
 //==================================================================================================
 // selectors
@@ -298,61 +193,49 @@ metaUnary  : classUnary | typeUnary | ;
 classUnary : ClassUnary ;
 typeUnary  : TypeUnary ;
 
-unarySelector returns [String selector = Empty]
-: ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) {
-$selector = Keyword.with($s.text).methodName();}
-;
-
-binaryOperator returns [Operator op]
-: ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) {
-$op = Operator.with($s.text);}
-;
+unarySelector  returns [String selector = Empty] : ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) ;
+binaryOperator returns [Operator op] : ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) ;
 
 //==================================================================================================
 // constants
 //==================================================================================================
 
-primitiveValues returns
-[LiteralArray list]       : Pound TermInit ( array+=primitive )* TermExit
-{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
+primitiveValues returns [LiteralArray list] : Pound TermInit ( array+=primitive )*    TermExit ;
+elementValues   returns [LiteralArray list] : Pound TermInit ( array+=elementValue )* TermExit ;
 
-elementValues returns
-[LiteralArray list]       : Pound TermInit ( array+=elementValue )* TermExit
-{$list = LiteralArray.withItems(map($array, v -> v.item));} ;
-
-elementValue returns      [Constant item]
-: lit=literal             {$item = $lit.item;}
-| var=variableName        {$item = LiteralName.with($var.text, $start.getLine());}
+elementValue returns [Constant item]
+: lit=literal             # literalValue
+| var=variableName        # variableValue
 ;
 
-primitive returns         [Constant item]
-: array=primitiveValues   {$item = $array.list;}
-| bool=literalBoolean     {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
-| value=ConstantCharacter {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
-| value=ConstantInteger   {$item = LiteralInteger.with($start.getText(), $start.getLine());}
-| value=ConstantFloat     {$item = LiteralFloat.with($start.getText(), $start.getLine());}
-| value=ConstantSymbol    {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
-| value=ConstantString    {$item = LiteralString.with($start.getText(), $start.getLine());}
+primitive returns [Constant item]
+: array=primitiveValues   # primArray
+| bool=literalBoolean     # primBool
+| value=ConstantCharacter # primChar
+| value=ConstantInteger   # primInt
+| value=ConstantFloat     # primFloat
+| value=ConstantSymbol    # primSymbol
+| value=ConstantString    # primString
 ;
 
-selfish returns           [Constant item]
-: refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
-| refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
+selfish returns [Constant item]
+: refSelf=literalSelf     # selfSelfish
+| refSuper=literalSuper   # superSelfish
 ;
 
-literal returns           [Constant item]
-: array=elementValues     {$item = $array.list;}
-| refNil=literalNil       {$item = LiteralNil.with($start.getText(), $start.getLine());}
-| refSelf=literalSelf     {$item = LiteralName.with($refSelf.text, $start.getLine());}
-| refSuper=literalSuper   {$item = LiteralName.with($refSuper.text, $start.getLine());}
-| bool=literalBoolean     {$item = LiteralBoolean.with($start.getText(), $start.getLine());}
-| value=ConstantCharacter {$item = LiteralCharacter.with($start.getText(), $start.getLine());}
-| value=ConstantDecimal   {$item = LiteralDecimal.with($start.getText(), $start.getLine());}
-| value=ConstantFloat     {$item = LiteralFloat.with($start.getText(), $start.getLine());}
-| value=ConstantInteger   {$item = LiteralInteger.with($start.getText(), $start.getLine());}
-| n=radixedNumber         {$item = LiteralRadical.with($start.getText(), $start.getLine());}
-| value=ConstantSymbol    {$item = LiteralSymbol.with($start.getText(), $start.getLine());}
-| value=ConstantString    {$item = LiteralString.with($start.getText(), $start.getLine());}
+literal returns [Constant item]
+: array=elementValues     # arrayLiteral
+| refNil=literalNil       # nilLiteral
+| refSelf=literalSelf     # selfLiteral
+| refSuper=literalSuper   # superLiteral
+| bool=literalBoolean     # boolLiteral
+| value=ConstantCharacter # charLiteral
+| value=ConstantDecimal   # decimalLiteral
+| value=ConstantFloat     # floatLiteral
+| value=ConstantInteger   # intLiteral
+| n=radixedNumber         # numLiteral
+| value=ConstantSymbol    # symbolLiteral
+| value=ConstantString    # stringLiteral
 ;
 
 //==================================================================================================
@@ -390,7 +273,10 @@ At      : '@' ;
 // literal numbers
 //==================================================================================================
 
-radixedNumber  : ConstantBinary | ConstantOctal | ConstantHex ;
+constantFloat   : ConstantFloat ;
+constantDecimal : ConstantDecimal ;
+constantInteger : ConstantInteger ;
+radixedNumber   : ConstantBinary | ConstantOctal | ConstantHex ;
 
 ConstantBinary  : BinaryRadix  BinaryDigit+ ;
 ConstantOctal   : OctalRadix   OctalDigit+ ;
@@ -535,5 +421,3 @@ fragment Zero           : '0' ;
 
 WhiteSpaces : WhiteSpace+ -> skip ;
 fragment WhiteSpace : [ \t\r\n\f] ;
-
-//==================================================================================================

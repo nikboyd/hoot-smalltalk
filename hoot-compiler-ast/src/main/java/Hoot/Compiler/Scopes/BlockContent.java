@@ -24,7 +24,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
     public static BlockContent with(List<Statement> statements, Expression exit, int periodCount) {
         BlockContent result = new BlockContent();
         result.periodCount = periodCount;
-        result.statements.addAll(statements);
+        result.statements.addAll(select(statements, s -> hasOne(s)));
         result.addResult(exit);
         return result.acquireStatements();
     }
@@ -36,8 +36,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
     public List<Statement> statements() { return this.statements; }
     @Override public boolean isEmpty() { return this.statements.isEmpty(); }
     private Statement firstStatement() { return this.isEmpty() ? null : statements().get(0); }
-    private Statement finalStatement() {
-        return this.isEmpty() ? null : statements().get(countStatements() - 1); }
+    private Statement finalStatement() { return this.isEmpty() ? null : statements().get(countStatements() - 1); }
 
     public void add(Statement s) { if (s != null) this.statements.add(s); }
     public void add(Construct c) {

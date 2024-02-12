@@ -4,6 +4,7 @@ import java.util.*;
 import Hoot.Compiler.Constants.Constant;
 import Hoot.Compiler.Constants.LiteralName;
 import Hoot.Runtime.Emissions.Emission;
+import static Hoot.Runtime.Functions.Utils.hasOne;
 
 /**
  * A constructor invocation.
@@ -17,7 +18,8 @@ public class Construct extends KeywordMessage {
     public Construct() { super(); }
     public Construct(List<Formula> terms) { this(); this.terms.addAll(terms); }
     public static Construct with(Constant c, List<Formula> terms) {
-        return new Construct(terms).withTerm(
+        Construct result = new Construct(terms);
+        return result.withTerm(
             Formula.with(UnarySequence.with(Primary.with((LiteralName)c)))); }
 
     @Override public boolean isConstruct() { return true; }
