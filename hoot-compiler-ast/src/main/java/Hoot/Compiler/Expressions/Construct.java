@@ -19,7 +19,6 @@ public class Construct extends KeywordMessage {
     public Construct(List<Formula> terms) { this(); this.terms.addAll(terms); }
     public static Construct with(Constant c, List<Formula> terms) {
         Construct result = new Construct(terms);
-        result.report(hasOne(c)+" has name");
         return result.withTerm(
             Formula.with(UnarySequence.with(Primary.with((LiteralName)c)))); }
 

@@ -33,8 +33,7 @@ public class ClosureCompiler implements Logging {
         fakeFile.makeCurrent();
         fakeFile.addStandardImports();
         fakeFile.faceScope().makeCurrent();
-        m = new Method(); // initialize with faked up scope
-        m.makeCurrent(); // push upper scopes
+        m = new Method().makeCurrent(); // initialize with faked up scope
         m.signature(KeywordSignature.emptyNiladic());
         blockParser = new HootBlockParser(code);
     }
@@ -44,7 +43,7 @@ public class ClosureCompiler implements Logging {
         buildEvaluator().evaluate(NoArgs), () -> Scope.currentFile().popScope()); }
 
     HootBlockParser blockParser;
-    ClosureCompiler parseClosure() { this.blockParser.parseTokens(); return this; }
+    ClosureCompiler parseClosure() { this.blockParser.parseTokens(); this.blockParser.walkResult(); return this; }
     HootParser.BlockScopeContext blockScope() { return this.blockParser.blockScope(); }
     String compiledCode() { return blockScope().b.emitContents().render(); }
 

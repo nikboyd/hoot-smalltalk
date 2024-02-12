@@ -20,7 +20,7 @@ public class HootBlockParser implements LanguageParser {
     HootParser.BlockScopeContext blockScope;
     public HootParser.BlockScopeContext blockScope() { return this.blockScope; }
     @Override public ParserRuleContext parseResult() { return blockScope(); }
-    @Override public ParseTreeListener listener() { return new HootBaseListener(); }
+    @Override public ParseTreeListener listener() { return new HootFileListener(); }
 
     CommonTokenStream tokenStream;
     @Override public CommonTokenStream tokenStream() { return tokenStream; }
