@@ -230,5 +230,5 @@ provided this copyright statement is retained in all copies.
 [hoot-ansi]: ANSI-X3J20-1.9.pdf
 [squeak-ansi]: https://wiki.squeak.org/squeak/172
 [st-ansi]: https://web.archive.org/web/20060216073334/http://www.smalltalk.org/versions/ANSIStandardSmalltalk.html
-[type-diagram]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/behaviors.svg "Metaclasses"
-[packages]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/packages.svg "Packaging"
+[type-diagram]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/pics/behaviors.svg "Metaclasses"
+[packages]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/pics/packages.svg "Packaging"

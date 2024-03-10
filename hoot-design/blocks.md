@@ -235,4 +235,4 @@ provided this copyright statement is retained in all copies.
 
 [bistro]: https://bitbucket.org/nik_boyd/bistro-smalltalk/ "Bistro"
 [except]: exceptions.md#exceptions "Exceptions"
-[block-model]: closures.png
+[block-model]: pics/closures.png

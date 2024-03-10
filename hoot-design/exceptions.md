@@ -72,4 +72,4 @@ provided this copyright statement is retained in all copies.
 [github]: https://github.com/ "GitHub"
 [nexus]: https://www.sonatype.com/nexus "Sonatype Nexus"
 [generics]: https://en.wikipedia.org/wiki/Parametric_polymorphism "Generic Types"
-[exception-model]: closures.png
+[exception-model]: pics/closures.png

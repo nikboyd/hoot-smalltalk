@@ -15,4 +15,4 @@ provided this copyright statement is retained in all copies.
 [classes]: libs.md#classes-and-metaclasses "Classes"
 [types]: libs.md#types-and-metatypes "Types"
 
-[type-diagram]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/behaviors.svg "Metaclasses"
+[type-diagram]: https://github.com/nikboyd/hoot-smalltalk/blob/main/hoot-design/pics/behaviors.svg "Metaclasses"
