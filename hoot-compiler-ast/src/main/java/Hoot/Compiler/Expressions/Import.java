@@ -21,6 +21,7 @@ public class Import extends Message {
     public Import(File file, Global g, String s) { super(file); this.operands.add(g); this.selector.append(s); }
     public static Import from(File file, TypeName type) { return from(file, type.toGlobal(), Import); }
     public static Import from(File file, Global g, String s) { return new Import(file, g, s); }
+    public static Import from(Global g, String s) { return from(File.currentFile(), g, s); }
 
     public static final Global RuntimeFaces = Global.with("Hoot", "Runtime", "Faces");
     public static Import runtimeFaces(File aFile) { return from(aFile, RuntimeFaces, ImportAll); }

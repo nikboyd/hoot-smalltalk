@@ -42,7 +42,7 @@ public class Variable extends Operand implements ValueSource {
     public Variable defineMember() { defineMember(facialScope()); return this; }
     private void defineMember(Scope s) { if (!s.hasLocal(this.name())) scopeLocal(s); }
 
-    public Variable defineLocal() { defineLocal(containerScope()); return this; }
+    public Variable defineLocal() { defineLocal(blockScope()); return this; }
     private void defineLocal(Scope s) { if (!isDefined()) scopeLocal(s); }
 
     private void scopeLocal(Scope s) {

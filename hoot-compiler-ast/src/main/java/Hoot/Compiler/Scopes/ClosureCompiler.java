@@ -45,7 +45,7 @@ public class ClosureCompiler implements Logging {
     HootBlockParser blockParser;
     ClosureCompiler parseClosure() { this.blockParser.parseTokens(); this.blockParser.walkResult(); return this; }
     HootParser.BlockScopeContext blockScope() { return this.blockParser.blockScope(); }
-    String compiledCode() { return blockScope().b.emitContents().render(); }
+    String compiledCode() { return m.emitContents().render(); }
 
     static final String[] NoNames = {};
     private String[] importedTypes() { // only non-static imports

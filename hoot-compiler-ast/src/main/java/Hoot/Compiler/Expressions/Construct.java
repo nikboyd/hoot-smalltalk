@@ -4,7 +4,6 @@ import java.util.*;
 import Hoot.Compiler.Constants.Constant;
 import Hoot.Compiler.Constants.LiteralName;
 import Hoot.Runtime.Emissions.Emission;
-import static Hoot.Runtime.Functions.Utils.hasOne;
 
 /**
  * A constructor invocation.

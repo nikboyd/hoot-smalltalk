@@ -10,13 +10,11 @@ import Hoot.Runtime.Behaviors.*;
 import Hoot.Runtime.Emissions.*;
 
 import static Hoot.Runtime.Emissions.Emission.*;
-import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Name.Metaclass;
 import static Hoot.Runtime.Names.Name.Metatype;
 import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Names.Operator.Dot;
 import static Hoot.Runtime.Names.Keyword.Nil;
-import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
 
 /**

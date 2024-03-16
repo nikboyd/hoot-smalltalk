@@ -25,7 +25,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
         BlockContent result = new BlockContent();
         result.periodCount = periodCount;
         result.statements.addAll(select(statements, s -> hasOne(s)));
-        result.addResult(exit);
+        result.addResult(exit); // can have exit == null
         return result.acquireStatements();
     }
 

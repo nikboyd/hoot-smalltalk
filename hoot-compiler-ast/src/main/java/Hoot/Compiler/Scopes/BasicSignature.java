@@ -26,6 +26,7 @@ public abstract class BasicSignature extends NamedItem implements ScopeSource {
     @Override public void clean() { super.clean(); args().clean(); }
     public boolean hasLocal(String symbolName) { return args().containsSymbol(symbolName); }
     public Variable localNamed(String symbolName) { return args().symbolNamed(symbolName); }
+    public void defineLocals() { args().defineLocals(); }
 
     protected DetailedType resultType;
     public DetailedType resultType() { return this.resultType; }

@@ -10,6 +10,15 @@ Posit "comparing" members:
     eqv: Posit! aPosit "result (this = aPosit)" []
 
     @Override Java Lang Boolean! primitiveBoolean "its primitive value" []
+
+    @Primitive Posit! valueOrFalse [
+        Posit! result := self value. result == nil ifFalse: [ ^result ].
+        ^Posit <- HootRegistry falseValue ]
+
+    @Primitive Posit! whileTrue: NiladicValuable! aBlock [ 
+        Posit! result := self valueOrFalse.
+        [ result primitiveBoolean ] whileTrue: [ aBlock value. result := self valueOrFalse. ]. 
+        ^result ]
 ]
 
 Posit "operating logically" members:

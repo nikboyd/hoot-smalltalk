@@ -3,116 +3,95 @@
 // Permission is granted to copy this work provided this copyright statement is retained in all copies.
 //==================================================================================================
 
-grammar Hoot; // located in resources/antlr4/Hoot/Compiler/Parser
-
-@header {
-import Hoot.Runtime.Notes.*;
-import Hoot.Runtime.Names.*;
-import Hoot.Runtime.Values.*;
-import static Hoot.Runtime.Functions.Utils.*;
-
-import Hoot.Compiler.Notes.*;
-import Hoot.Compiler.Scopes.*;
-import Hoot.Compiler.Scopes.File;
-import Hoot.Compiler.Scopes.Block;
-import Hoot.Compiler.Expressions.*;
-import Hoot.Compiler.Constants.*;
-}
-
-@members {
-static final String Empty = "";
-}
+grammar Hoot; // resources/antlr4/Hoot/Compiler/Parser
 
 //==================================================================================================
 // file scopes
 //==================================================================================================
 
 compilationUnit : n=notations ( fileImport )* ( classScope | typeScope ) ;
-classScope      : sign=classSignature ( scopes+=protocolScope )* ;
-typeScope       : sign=typeSignature  ( scopes+=protocolScope )* ;
+classScope : sign=classSign ( scopes+=protocolScope )* ;
+typeScope  : sign=typeSign  ( scopes+=protocolScope )* ;
 
-fileImport      : g=globalReference ( c=caseOption )? m=importSelector Period ;
-importSelector  : ImportOne | ImportAll | ImportStatics ;
-caseOption      : CaseMessage ;
+fileImport : g=globalRefer ( c=caseOption )? m=important Period ;
+important  : ImportOne | ImportAll | ImportStatics ;
+caseOption : CaseMessage ;
 
-typeSignature   : h=typeHeritage k=subtypeKeyword n=notations sub=globalName ds=detailedSignature p=Period ;
-classSignature  : h=classHeritage k=subclassKeyword n=notations ts=typeNotes sub=globalName ds=detailedSignature p=Period ;
+typeSign  : h=typeHeritage  k=subtypeKeyword  n=notations              sub=globalName ds=detailedSign p=Period ;
+classSign : h=classHeritage k=subclassKeyword n=notations ts=typeNotes sub=globalName ds=detailedSign p=Period ;
 
-protocolSignature returns [String selector = ""]  : n=notations g=globalName s=metaUnary k=membersKeyword ;
-protocolScope   : sign=protocolSignature b=BlockInit ( members+=classMember )* x=BlockExit ;
-classMember     : v=namedVariable | m=methodScope ;
-
-namedVariable returns [Variable item]
-: n=notations type=typeNotation v=valueName ( Assign value=expression )? p=Period ;
+protocolSign  : n=notations g=globalName s=metaUnary k=membersKeyword ;
+protocolScope : sign=protocolSign b=BlockInit ( members+=classMember )* x=BlockExit ;
+classMember   : v=namedVar # varMember | m=methodScope # methodMember ;
 
 //==================================================================================================
 // methods + blocks
 //==================================================================================================
 
-methodScope returns [Method item] 
-: n=notations sign=methodSignature b=methodBeg ( c=construct Period )? content=blockContent x=methodEnd ;
-
 methodBeg : BlockInit ;
 methodEnd : BlockExit ;
-methodSignature returns [BasicSignature item]
-: ks=keywordSignature  # keywordSig
-| bs=binarySignature   # binarySig
-| us=unarySignature    # unarySig
+methodScope
+: n=notations sign=methodSign 
+  b=methodBeg ( c=construct Period )? content=blockFill 
+  x=methodEnd ;
+
+methodSign
+: ks=keywordSign # keywordSig
+| bs=binarySign  # binarySig
+| us=unarySign   # unarySig
 ;
 
-unarySignature   : result=typeNotation name=unarySelector ;
-binarySignature  : result=typeNotation name=binaryOperator args+=namedArgument ;
-keywordSignature : result=typeNotation name=headsAndTails ;
+namedArg    : n=notations type=typeNote v=varName ;
+unarySign   : result=typeNote name=unarySelector ;
+binarySign  : result=typeNote name=binaryOperator args+=namedArg ;
+keywordSign : result=typeNote name=headsAndTails ;
 
-headsAndTails returns [List<Variable> argList, List<String> headList, List<String> tailList]
-:    kh+=keywordHead args+=namedArgument 
-( | (kh+=keywordHead args+=namedArgument)+ 
-  | (kt+=keywordTail args+=namedArgument)+
-)
-;
+headsAndTails
+:  kh+=keywordHead args+=namedArg ( 
+| (kh+=keywordHead args+=namedArg)+ 
+| (kt+=keywordTail args+=namedArg)+ ) ;
 
-namedArgument returns [Variable item] : n=notations type=typeNotation v=variableName ;
-blockScope returns [Block b] : blockBeg sign=blockSignature content=blockContent blockEnd ;
+blockScope : blockBeg sign=blockSign content=blockFill blockEnd ;
 blockBeg : BlockInit ;
 blockEnd : BlockExit ;
 
-blockSignature returns [KeywordSignature item]
-: ( | type=typeNotation ( tails+=keywordTail args+=namedArgument )+ Bar ) ;
-
-blockContent returns [BlockContent item]
-: ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) ;
+blockSign : ( | type=typeNote ( tails+=keywordTail args+=namedArg )+ Bar ) ;
+blockFill : ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) ;
 
 //==================================================================================================
 // values + messages
 //==================================================================================================
 
-evaluation returns [Expression item] : value=expression ;
-exitResult returns [Expression item] : Exit value=expression ;
-statement  returns [Statement item]  : ( x=assignment | v=evaluation ) ;
-construct  returns [Construct item]  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
-assignment returns [Variable item]   : n=notations type=typeNotation v=valueName Assign value=expression ;
+evaluation : value=expression ;
+exitResult : Exit value=expression ;
+statement  : ( x=assignment | v=evaluation ) ;
+construct  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
+assignment : n=notations type=typeNote v=valueName   Assign value=expression ;
+namedVar   : n=notations type=typeNote v=valueName ( Assign value=expression )? p=Period ;
 
-primary returns [Primary item = null]
-: term=nestedTerm       # term
-| block=blockScope      # block
-| value=literal         # litValue
-| type=globalReference  # typeName
-| var=variableName      # varName
+primary
+: n=nestedTerm   # term
+| b=blockScope   # block
+| l=literal      # litValue
+| g=globalRefer  # typeName
+| v=varName      # variable
 ;
 
-nestedTerm     returns [Expression item]    : TermInit term=expression TermExit ;
-expression     returns [Expression item]    : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
-formula        returns [Formula item]       : s=unarySequence ( ops+=binaryMessage )* ;
-unarySequence  returns [UnarySequence item] : p=primary ( msgs+=unarySelector )* ;
-binaryMessage  returns [BinaryMessage item] : operator=binaryOperator term=unarySequence ;
-keywordMessage returns [KeywordMessage item]
-: kh+=keywordHead fs+=formula ((kh+=keywordHead fs+=formula)+ | (kt+=keywordTail fs+=formula)+ | ) ;
+nestedTerm     : TermInit term=expression TermExit ;
+expression     : f=formula ( kmsg=keywordMessage )? ( cmsgs+=messageCascade )* ;
+formula        : s=unarySequence ( ops+=binaryMessage )* ;
+unarySequence  : p=primary ( msgs+=unarySelector )* ;
+binaryMessage  : operator=binaryOperator term=unarySequence ;
+keywordMessage 
+:  kh+=keywordHead fs+=formula ( 
+| (kh+=keywordHead fs+=formula)+ 
+| (kt+=keywordTail fs+=formula)+ ) ;
 
 messageCascade : Cascade m=message ;
-message returns [Message item = null]
-: kmsg=keywordMessage   # keywordSelection
-| bmsg=binaryMessage    # binarySelection
-| umsg=unarySelector    # unarySelection
+message
+: kmsg=keywordMessage # keywordSelection
+| bmsg=binaryMessage  # binarySelection
+| umsg=unarySelector  # unarySelection
 ;
 
 //==================================================================================================
@@ -121,30 +100,33 @@ message returns [Message item = null]
 
 classHeritage : Nil | superClass=signedType ;
 typeHeritage  : Nil | superTypes+=detailedType ( Comma superTypes+=detailedType )* ;
-detailedSignature returns [TypeList list = null] : ( generics=genericTypes )? ( Exit exit=detailedType )? ;
+detailedSign  : ( generics=genericArgs )? ( Exit exit=detailedType )? ;
 
 notations : ( notes+=notation )* ;
-notation returns [KeywordNote item = null]
-: At name=globalName ( ( | ( values+=namedValue )+ | ( nakeds+=nakedValue )+ ) Bang )? ;
+notation  :  At name=globalName ( ( 
+| (values+=namedValue)+ 
+| (nakeds+=nakedValue)+ ) Bang )? ;
 
-namedValue returns [NamedValue item = null]
+namedValue
 : head=keywordHead v=primitive  # namedPrim
 | head=keywordHead g=globalName # namedGlobal
 ;
 
-nakedValue returns [NamedValue item = null]
+nakedValue
 : tail=keywordTail v=primitive  # nakedPrim
 | tail=keywordTail g=globalName # nakedGlobal
 ;
 
 typeNotes : ( types+=detailedType Bang )* ;
-detailedType returns [DetailedType item = null]
-: extent=extendType # extentItem | signed=signedType # signedItem ;
+typeNote  : ( | type=detailedType Bang ( etc=Etc )? ) ;
 
-typeNotation returns [DetailedType item = null] : ( | type=detailedType Bang ( etc=Etc )? ) ;
-extendType   returns [DetailedType item = null] : g=globalName Extends baseType=detailedType ;
-signedType   returns [DetailedType item = null] : g=globalReference details=detailedSignature ;
-genericTypes returns [TypeList list = null]     : Quest types+=detailedType ( keywordTail types+=detailedType )* ;
+detailedType
+: extent=extendType # extentItem 
+| signed=signedType # signedItem ;
+
+extendType  : g=globalName Extends baseType=detailedType ;
+signedType  : g=globalRefer details=detailedSign ;
+genericArgs : Quest types+=detailedType ( keywordTail types+=detailedType )* ;
 
 //==================================================================================================
 // references
@@ -155,10 +137,10 @@ literalSelf    : Self  ;
 literalSuper   : Super ;
 literalBoolean : True | False ;
 
-variableName    returns [String name = Empty] : v=LocalName ;
-globalName      returns [String name = Empty] : g=GlobalName ;
-globalReference returns [Global item = null]  : ( names+=globalName )+ ;
-valueName       returns [String name = Empty] : v=variableName # varValue | g=globalName # globalValue ;
+varName     : v=LocalName ;
+globalName  : g=GlobalName ;
+globalRefer : ( names+=globalName )+ ;
+valueName   : v=varName # varValue | g=globalName # globalValue ;
 
 //==================================================================================================
 // keywords
@@ -182,8 +164,8 @@ reservedWord
 | ImportOne  | ImportAll | ImportStatics
 ;
 
-keywordTail returns [String selector = Empty] : tail=KeywordTail ;
-keywordHead returns [String selector = Empty] : head=KeywordHead # headText | word=reservedWord # wordText ;
+keywordTail : tail=KeywordTail ;
+keywordHead : head=KeywordHead # headText | word=reservedWord # wordText ;
 
 //==================================================================================================
 // selectors
@@ -193,22 +175,22 @@ metaUnary  : classUnary | typeUnary | ;
 classUnary : ClassUnary ;
 typeUnary  : TypeUnary ;
 
-unarySelector  returns [String selector = Empty] : ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) ;
-binaryOperator returns [Operator op] : ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) ;
+unarySelector  : ( s=LocalName | s=ClassUnary | s=TypeUnary | s=GlobalName ) ;
+binaryOperator : ( s=At | s=Bar | s=Comma | s=BinaryOperator | s=Usage ) ;
 
 //==================================================================================================
 // constants
 //==================================================================================================
 
-primitiveValues returns [LiteralArray list] : Pound TermInit ( array+=primitive )*    TermExit ;
-elementValues   returns [LiteralArray list] : Pound TermInit ( array+=elementValue )* TermExit ;
+primitiveValues : Pound TermInit ( array+=primitive )*    TermExit ;
+elementValues   : Pound TermInit ( array+=elementValue )* TermExit ;
 
-elementValue returns [Constant item]
-: lit=literal             # literalValue
-| var=variableName        # variableValue
+elementValue
+: lit=literal # literalValue
+| var=varName # variableValue
 ;
 
-primitive returns [Constant item]
+primitive
 : array=primitiveValues   # primArray
 | bool=literalBoolean     # primBool
 | value=ConstantCharacter # primChar
@@ -218,12 +200,12 @@ primitive returns [Constant item]
 | value=ConstantString    # primString
 ;
 
-selfish returns [Constant item]
+selfish
 : refSelf=literalSelf     # selfSelfish
 | refSuper=literalSuper   # superSelfish
 ;
 
-literal returns [Constant item]
+literal
 : array=elementValues     # arrayLiteral
 | refNil=literalNil       # nilLiteral
 | refSelf=literalSelf     # selfLiteral
