@@ -32,46 +32,42 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     @Override public void enterTypeSign(TypeSignContext ctx) {
         Face.currentFace().definesType(true); }
-    
+
     // types + classes
 
     @Override public void exitTypeSign(TypeSignContext ctx) {
         Face.currentFace().notes().noteAll(notes(unit(ctx)));
         Face.currentFace().signature(sign(ctx));
     }
-    
+
     @Override public void exitClassSign(ClassSignContext ctx) {
         Face.currentFace().notes().noteAll(notes(unit(ctx)));
         Face.currentFace().signature(sign(ctx));
     }
 
-    CompilationUnitContext unit(TypeSignContext ctx) { return (CompilationUnitContext)ctx.getParent().getParent(); }
-    TypeSignature sign(TypeSignContext ctx) {
-        return TypeSignature.with(superNotes(ctx), subNote(ctx), 
-                           notes(ctx), keyword(ctx), comment(ctx)); }
-
+    CompilationUnitContext unit(TypeSignContext ctx)  { return (CompilationUnitContext)ctx.getParent().getParent(); }
     CompilationUnitContext unit(ClassSignContext ctx) { return (CompilationUnitContext)ctx.getParent().getParent(); }
+
+    TypeSignature sign(TypeSignContext ctx) {
+        return TypeSignature.with(superNotes(ctx), subNote(ctx),
+            notes(ctx), keyword(ctx), comment(ctx)); }
+
     ClassSignature sign(ClassSignContext ctx) {
-        return ClassSignature.with(superNote(ctx), subNote(ctx), 
-            subNotes(ctx), notes(ctx), keyword(ctx), comment(ctx)); }
+        return ClassSignature.with(superNote(ctx), subNote(ctx), subNotes(ctx),
+            notes(ctx), keyword(ctx), comment(ctx)); }
 
     Hoot.Compiler.Scopes.Face faceScope() { return File.currentFile().faceScope(); }
     @Override public void exitSubclassKeyword(SubclassKeywordContext ctx) { faceScope().makeCurrent(); }
     @Override public void exitSubtypeKeyword(SubtypeKeywordContext ctx)   { faceScope().makeCurrent(); }
 
     String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }
-    @Override public void exitProtocolSign(ProtocolSignContext ctx) {
-        Face.currentFace().selectFace(metaProto(ctx)); }
-    
+    @Override public void exitProtocolSign(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
     @Override public void exitProtocolScope(ProtocolScopeContext ctx) {}
+    @Override public void exitMemberSlot(MemberSlotContext ctx)     { Face.currentFace().addLocal(value(ctx)); }
+    @Override public void exitMethodMember(MethodMemberContext ctx) { Face.currentFace().addMethod(methodScope(ctx.m)); }
 
-    @Override public void exitVarMember(VarMemberContext ctx) {
-        Face.currentFace().addLocal(value(ctx)); }
-    @Override public void exitMethodMember(MethodMemberContext ctx) {
-        Face.currentFace().addMethod(methodScope(ctx.m)); }
-    
     // methods + blocks
-    
+
     Method methodScope(MethodScopeContext ctx) {
         Method m = new Method(Face.currentFace()).makeCurrent();
         m.notes().noteAll(notes(ctx));
@@ -95,15 +91,15 @@ public class HootFileListener extends HootBaseListener implements Logging {
         b.content(block(ctx.b));
         b.popScope();
         return b; }
-    
+
     // names
 
     String name(GlobalValueContext ctx) { return name(ctx.g); }
     String name(GlobalNameContext ctx) { return ctx.g.getText(); }
-    String name(VarValueContext ctx) { return name(ctx.v); }
-    String name(VarNameContext ctx) { return ctx.v.getText(); }
+    String name(LocalValueContext ctx) { return name(ctx.v); }
+    String name(LocalNameContext ctx) { return ctx.v.getText(); }
     String name(ValueNameContext ctx) {
-        if (ctx instanceof VarValueContext) return name((VarValueContext)ctx);
+        if (ctx instanceof LocalValueContext) return name((LocalValueContext)ctx);
         if (ctx instanceof GlobalValueContext) return name((GlobalValueContext)ctx);
         return null; }
 
@@ -130,12 +126,12 @@ public class HootFileListener extends HootBaseListener implements Logging {
     UnarySignature sign(UnarySigContext ctx) { return sign(ctx.us); }
     UnarySignature sign(UnarySignContext ctx) {
         return UnarySignature.with(note(ctx.result), selector(ctx.name)); }
-    
+
     // messages
 
     List<String> heads(List<KeywordHeadContext> cs) { return map(cs, c -> c.getText()); }
     List<String> tails(List<KeywordTailContext> cs) { return map(cs, c -> c.getText()); }
-    List<Variable> args(List<NamedArgContext> ns) { return map(ns, n -> value(n)); }
+    List<Variable> args(List<ArgumentContext> ns)   { return map(ns, n -> value(n)); }
 
     List<String> selectors(List<UnarySelectorContext> cs) { return map(cs, s -> selector(s)); }
     String selector(UnarySelectorContext ctx) { return Keyword.with(ctx.s.getText()).methodName(); }
@@ -164,7 +160,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
         if (ctx instanceof UnarySelectionContext)   return selector((UnarySelectionContext)ctx);
         return null;
     }
-    
+
     // values
 
     Primary value(TermContext ctx)     { return Primary.with(term(ctx)); }
@@ -180,7 +176,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
         if (ctx instanceof TypeNameContext) return value((TypeNameContext) ctx);
         if (ctx instanceof VariableContext)  return value((VariableContext) ctx);
         return null; }
-    
+
     List<Formula> values(List<FormulaContext> fs) { return map(fs, f -> value(f)); }
     Formula value(FormulaContext ctx) { return Formula.with(message(ctx.s), messages(ctx.ops)); }
 
@@ -197,22 +193,20 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     List<Statement> evals(List<StatementContext> ss) { return mapList(ss, s -> hasOne(s), s -> value(s)); }
     Statement value(StatementContext ctx) {
-        return hasNone(ctx)? null: Statement.with(hasOne(ctx.v)? value(ctx.v): value(ctx.x)); }
+        return hasNone(ctx)? null: Statement.with(hasOne(ctx.v)? value(ctx.v): value(ctx.n)); }
 
     Construct value(MethodScopeContext ctx) { return value(ctx.c); }
-    Construct value(ConstructContext ctx) { 
+    Construct value(ConstructContext ctx) {
         return hasNone(ctx)? null: Construct.with(literal(ctx.ref), values(ctx.terms)); }
 
-    Variable part(NamedVarContext ctx) { return Variable.named(name(ctx.v), note(ctx.type)); }
-    Variable part(NamedArgContext ctx) { return Variable.named(name(ctx.v), note(ctx.type)); }
-    Variable part(AssignmentContext ctx)    { return Variable.named(name(ctx.v), note(ctx.type)); }
+    Variable part(MemberVarContext ctx)  { return Variable.named(name(ctx.v), note(ctx.type)); }
+    Variable part(ArgumentContext ctx)   { return Variable.named(name(ctx.v), note(ctx.type)); }
+    Variable part(AssignmentContext ctx) { return Variable.named(name(ctx.v), note(ctx.type), value(ctx.value)); }
 
-    Variable value(NamedArgContext ctx) { return part(ctx).withNotes(notes(ctx.n)); }
-    Variable value(AssignmentContext ctx) {
-        return part(ctx).withValue(value(ctx.value)).withNotes(notes(ctx.n)).makeAssignment(); }
-    
-    Variable value(VarMemberContext ctx) { return value(ctx.v); }
-    Variable value(NamedVarContext ctx) {
+    Variable value(ArgumentContext ctx)   { return part(ctx).withNotes(notes(ctx.n)); }
+    Variable value(AssignmentContext ctx) { return part(ctx).withNotes(notes(ctx.n)).makeAssignment(); }
+    Variable value(MemberSlotContext ctx) { return value(ctx.v); }
+    Variable value(MemberVarContext ctx) {
         return part(ctx).withValue(value(ctx.value)).withNotes(notes(ctx.n)).defineMember(); }
 
     Global global(TypeNameContext ctx) { return value(ctx.g).makePrimary(); }
@@ -231,7 +225,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
     LiteralArray literal(ArrayLiteralContext ctx) { return values(ctx.array); }
     LiteralArray values(ElementValuesContext ctx) { return LiteralArray.withItems(list(ctx.array)); }
     List<Constant> list(List<ElementValueContext> vs) { return map(vs, v -> value(v)); }
-    
+
     // notes
 
     TypeList superNotes(TypeSignContext ctx) { return TypeList.withDetails(notes(ctx.h.superTypes)); }
@@ -282,19 +276,19 @@ public class HootFileListener extends HootBaseListener implements Logging {
         if (ctx instanceof NamedPrimContext)   return note((NamedPrimContext)ctx);
         if (ctx instanceof NamedGlobalContext)   return note((NamedGlobalContext)ctx);
         return null; }
-    
+
     // literals
 
     String keyword(TypeSignContext ctx) { return ctx.k.getText(); }
     String keyword(ClassSignContext ctx) { return ctx.k.getText(); }
     String comment(TypeSignContext ctx) { return Comment.findComment(ctx.h.getStart(), ctx.p); }
     String comment(ClassSignContext ctx) { return Comment.findComment(ctx.h.getStart(), ctx.p); }
-    
+
     Constant literal(SelfishContext ctx) {
         if (ctx instanceof SelfSelfishContext)  return literal((SelfSelfishContext)ctx);
         if (ctx instanceof SuperSelfishContext) return literal((SuperSelfishContext)ctx);
         return null; }
-    
+
     Constant literal(PrimitiveContext ctx) {
         if (ctx instanceof PrimBoolContext) return literal((PrimBoolContext)ctx);
         if (ctx instanceof PrimCharContext) return literal((PrimCharContext)ctx);
@@ -304,7 +298,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
         if (ctx instanceof PrimStringContext) return literal((PrimStringContext)ctx);
         if (ctx instanceof PrimArrayContext)  return literal((PrimArrayContext)ctx);
         return null; }
-    
+
     Constant literal(LitValueContext ctx) { return literal(ctx.l); }
     Constant literal(LiteralContext ctx) {
         if (ctx instanceof ArrayLiteralContext) return literal((ArrayLiteralContext)ctx);
@@ -331,16 +325,16 @@ public class HootFileListener extends HootBaseListener implements Logging {
     LiteralNil literal(NilLiteralContext ctx) { return LiteralNil.with(ctx.refNil.getText(), ctx.start.getLine()); }
     LiteralRadical literal(NumLiteralContext ctx) { return LiteralRadical.with(ctx.n.getText(), ctx.start.getLine()); }
     LiteralDecimal literal(DecimalLiteralContext ctx) { return LiteralDecimal.with(ctx.value.getText(), ctx.start.getLine()); }
-    
+
     LiteralCharacter literal(PrimCharContext ctx) { return LiteralCharacter.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralCharacter literal(CharLiteralContext ctx) { return LiteralCharacter.with(ctx.value.getText(), ctx.start.getLine()); }
-    
+
     LiteralBoolean literal(PrimBoolContext ctx) { return LiteralBoolean.with(ctx.bool.getText(), ctx.start.getLine()); }
     LiteralBoolean literal(BoolLiteralContext ctx) { return LiteralBoolean.with(ctx.bool.getText(), ctx.start.getLine()); }
-    
+
     LiteralFloat literal(PrimFloatContext ctx) { return LiteralFloat.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralFloat literal(FloatLiteralContext ctx) { return LiteralFloat.with(ctx.value.getText(), ctx.start.getLine()); }
-    
+
     LiteralInteger literal(PrimIntContext ctx) { return LiteralInteger.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralInteger literal(IntLiteralContext ctx) { return LiteralInteger.with(ctx.value.getText(), ctx.start.getLine()); }
 

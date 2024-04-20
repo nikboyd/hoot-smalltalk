@@ -22,7 +22,7 @@ classSign : h=classHeritage k=subclassKeyword n=notations ts=typeNotes sub=globa
 
 protocolSign  : n=notations g=globalName s=metaUnary k=membersKeyword ;
 protocolScope : sign=protocolSign b=BlockInit ( members+=classMember )* x=BlockExit ;
-classMember   : v=namedVar # varMember | m=methodScope # methodMember ;
+classMember   : v=memberVar # memberSlot | m=methodScope # methodMember ;
 
 //==================================================================================================
 // methods + blocks
@@ -41,21 +41,21 @@ methodSign
 | us=unarySign   # unarySig
 ;
 
-namedArg    : n=notations type=typeNote v=varName ;
+argument    : n=notations type=typeNote v=localName ;
 unarySign   : result=typeNote name=unarySelector ;
-binarySign  : result=typeNote name=binaryOperator args+=namedArg ;
+binarySign  : result=typeNote name=binaryOperator args+=argument ;
 keywordSign : result=typeNote name=headsAndTails ;
 
 headsAndTails
-:  kh+=keywordHead args+=namedArg ( 
-| (kh+=keywordHead args+=namedArg)+ 
-| (kt+=keywordTail args+=namedArg)+ ) ;
+:  kh+=keywordHead args+=argument ( 
+| (kh+=keywordHead args+=argument)+ 
+| (kt+=keywordTail args+=argument)+ ) ;
 
 blockScope : blockBeg sign=blockSign content=blockFill blockEnd ;
 blockBeg : BlockInit ;
 blockEnd : BlockExit ;
 
-blockSign : ( | type=typeNote ( tails+=keywordTail args+=namedArg )+ Bar ) ;
+blockSign : ( | type=typeNote ( tails+=keywordTail args+=argument )+ Bar ) ;
 blockFill : ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) ;
 
 //==================================================================================================
@@ -64,17 +64,17 @@ blockFill : ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitRe
 
 evaluation : value=expression ;
 exitResult : Exit value=expression ;
-statement  : ( x=assignment | v=evaluation ) ;
+statement  : ( n=assignment | v=evaluation ) ;
 construct  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
 assignment : n=notations type=typeNote v=valueName   Assign value=expression ;
-namedVar   : n=notations type=typeNote v=valueName ( Assign value=expression )? p=Period ;
+memberVar  : n=notations type=typeNote v=valueName ( Assign value=expression )? p=Period ;
 
 primary
 : n=nestedTerm   # term
 | b=blockScope   # block
 | l=literal      # litValue
 | g=globalRefer  # typeName
-| v=varName      # variable
+| v=localName    # variable
 ;
 
 nestedTerm     : TermInit term=expression TermExit ;
@@ -137,10 +137,10 @@ literalSelf    : Self  ;
 literalSuper   : Super ;
 literalBoolean : True | False ;
 
-varName     : v=LocalName ;
+localName   : v=LocalName ;
 globalName  : g=GlobalName ;
 globalRefer : ( names+=globalName )+ ;
-valueName   : v=varName # varValue | g=globalName # globalValue ;
+valueName   : v=localName # localValue | g=globalName # globalValue ;
 
 //==================================================================================================
 // keywords
@@ -187,7 +187,7 @@ elementValues   : Pound TermInit ( array+=elementValue )* TermExit ;
 
 elementValue
 : lit=literal # literalValue
-| var=varName # variableValue
+| var=localName # variableValue
 ;
 
 primitive
