@@ -19,9 +19,9 @@ import Hoot.Compiler.Scopes.*;
  */
 public class KeywordMessage extends Message {
 
-    public KeywordMessage() { super(Scope.current()); }
-    protected KeywordMessage(List<String> heads, List<String> tails, List<Formula> items) {
-        this(); this.heads.addAll(heads); this.tails.addAll(tails); this.terms.addAll(items); }
+    public KeywordMessage() { super(Scope.current()); this.keyword = Keyword.with(); }
+    protected KeywordMessage(Keyword keyword, List<Formula> items) {
+        this(); this.keyword = keyword; this.terms.addAll(items); }
 
     public static KeywordMessage frameNew() { return KeywordMessage.with(BasicNew, Formula.with(UnarySequence.frame())); }
     public static KeywordMessage with(String head, Formula... items) {
@@ -31,8 +31,11 @@ public class KeywordMessage extends Message {
         return with(wrap(head), tails, wrap(items));
     }
 
+    public static KeywordMessage with(Keyword keyword, List<Formula> items) {
+        return new KeywordMessage(keyword, items).initialize(); }
+
     public static KeywordMessage with(List<String> heads, List<String> tails, List<Formula> items) {
-        return new KeywordMessage(heads, tails, items).initialize(); }
+        return with(Keyword.with(heads, tails), items); }
 
 //    @Override public void clean() { super.clean(); cleanTerms(); }
     private KeywordMessage initialize() {
@@ -41,13 +44,8 @@ public class KeywordMessage extends Message {
         this.containAll(formulas());
         return this; }
 
-
-    List<String> heads = emptyList(String.class);
-    public List<String> heads() { return heads; }
-    List<String> tails = emptyList(String.class);
-    public List<String> tails() { return tails; }
-
-    public Keyword methodKeyword() { return Keyword.with(heads(), tails()); }
+    Keyword keyword;
+    public Keyword methodKeyword() { return this.keyword; }
     @Override public String methodName() { return methodKeyword().methodName(); }
     @Override public boolean needsStatement() { return !this.hasPrimitiveBlock(); }
     @Override public boolean containsExit() { return matchAny(formulas(), f -> f.exitsMethod()); }

@@ -1,6 +1,7 @@
 package Hoot.Compiler.Parser;
 
 import java.util.*;
+import java.util.function.*;
 import Hoot.Runtime.Notes.*;
 import Hoot.Runtime.Names.*;
 import Hoot.Runtime.Values.*;
@@ -21,53 +22,47 @@ import static Hoot.Compiler.Parser.HootParser.*;
  */
 public class HootFileListener extends HootBaseListener implements Logging {
 
+    // facial methods
+
+    void defineType()  { Face.currentFace().definesType(true); }
+    void defineClass() { Face.currentFace().definesType(false); }
+
     // file scopes
 
-    @Override public void exitFileImport(FileImportContext ctx) { File.currentFile().importFace(imported(ctx)); }
-    Import importSpec(FileImportContext ctx) { return Import.from(value(ctx.g), ctx.m.getText()); }
+    @Override public void enterTypeSign(TypeSignContext ctx)   { defineType(); }
+    @Override public void enterClassSign(ClassSignContext ctx) { defineClass(); }
+    @Override public void exitFileImport(FileImportContext ctx) { importFace(ctx); }
+    void importFace(FileImportContext ctx) { File.currentFile().importFace(imported(ctx)); }
     Import imported(FileImportContext ctx) { return importSpec(ctx).withLowerCase(hasOne(ctx.c)); }
-
-    @Override public void enterClassSign(ClassSignContext ctx) {
-        Face.currentFace().definesType(false); }
-
-    @Override public void enterTypeSign(TypeSignContext ctx) {
-        Face.currentFace().definesType(true); }
+    Import importSpec(FileImportContext ctx) { return Import.from(value(ctx.g), ctx.m.getText()); }
 
     // types + classes
 
-    @Override public void exitTypeSign(TypeSignContext ctx) {
-        Face.currentFace().notes().noteAll(notes(unit(ctx)));
-        Face.currentFace().signature(sign(ctx));
-    }
-
-    @Override public void exitClassSign(ClassSignContext ctx) {
-        Face.currentFace().notes().noteAll(notes(unit(ctx)));
-        Face.currentFace().signature(sign(ctx));
-    }
-
-    CompilationUnitContext unit(TypeSignContext ctx)  { return (CompilationUnitContext)ctx.getParent().getParent(); }
-    CompilationUnitContext unit(ClassSignContext ctx) { return (CompilationUnitContext)ctx.getParent().getParent(); }
-
+    @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    void signFace(TypeSignContext ctx) { Face.currentFace().signature(sign(ctx)); }
     TypeSignature sign(TypeSignContext ctx) {
-        return TypeSignature.with(superNotes(ctx), subNote(ctx),
+        return TypeSignature.with(types(ctx), type(ctx),
             notes(ctx), keyword(ctx), comment(ctx)); }
 
+    @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    void signFace(ClassSignContext ctx) { Face.currentFace().signature(sign(ctx)); }
     ClassSignature sign(ClassSignContext ctx) {
-        return ClassSignature.with(superNote(ctx), subNote(ctx), subNotes(ctx),
+        return ClassSignature.with(superType(ctx), type(ctx), types(ctx),
             notes(ctx), keyword(ctx), comment(ctx)); }
 
     Hoot.Compiler.Scopes.Face faceScope() { return File.currentFile().faceScope(); }
     @Override public void exitSubclassKeyword(SubclassKeywordContext ctx) { faceScope().makeCurrent(); }
     @Override public void exitSubtypeKeyword(SubtypeKeywordContext ctx)   { faceScope().makeCurrent(); }
 
-    String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }
-    @Override public void exitProtocolSign(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
     @Override public void exitProtocolScope(ProtocolScopeContext ctx) {}
-    @Override public void exitMemberSlot(MemberSlotContext ctx)     { Face.currentFace().addLocal(value(ctx)); }
-    @Override public void exitMethodMember(MethodMemberContext ctx) { Face.currentFace().addMethod(methodScope(ctx.m)); }
+    @Override public void exitProtocolSign(ProtocolSignContext ctx) { faceProto(ctx); }
+    void faceProto(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
+    String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }
 
     // methods + blocks
 
+    @Override public void exitMethodMember(MethodMemberContext ctx) { faceMethod(ctx); }
+    void faceMethod(MethodMemberContext ctx) { Face.currentFace().addMethod(methodScope(ctx.m)); }
     Method methodScope(MethodScopeContext ctx) {
         Method m = new Method(Face.currentFace()).makeCurrent();
         m.notes().noteAll(notes(ctx));
@@ -78,11 +73,10 @@ public class HootFileListener extends HootBaseListener implements Logging {
         return m;
     }
 
-    Nest blockNest(BlockContext ctx) { return blockScope(ctx).withNest(); }
+    Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
     BlockContent block(MethodScopeContext ctx) { return block(ctx.content); }
     BlockContent block(BlockScopeContext ctx)  { return block(ctx.content); }
-    BlockContent block(BlockFillContext ctx) {
-        return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
+    BlockContent block(BlockFillContext ctx)   { return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
 
     Block blockScope(BlockContext ctx) {
         Block b = new Block().makeCurrent();
@@ -98,106 +92,71 @@ public class HootFileListener extends HootBaseListener implements Logging {
     String name(GlobalNameContext ctx) { return ctx.g.getText(); }
     String name(LocalValueContext ctx) { return name(ctx.v); }
     String name(LocalNameContext ctx) { return ctx.v.getText(); }
-    String name(ValueNameContext ctx) {
-        if (ctx instanceof LocalValueContext) return name((LocalValueContext)ctx);
-        if (ctx instanceof GlobalValueContext) return name((GlobalValueContext)ctx);
-        return null; }
+    String name(ValueNameContext ctx) { return applyMatched(names, ctx); }
 
     // signatures
 
-    BasicSignature sign(MethodScopeContext ctx) { return sign(ctx.sign); }
-    BasicSignature sign(MethodSignContext ctx) {
-        if (ctx instanceof KeywordSigContext) return sign((KeywordSigContext)ctx);
-        if (ctx instanceof BinarySigContext)  return sign((BinarySigContext)ctx);
-        if (ctx instanceof UnarySigContext)   return sign((UnarySigContext)ctx);
-        return null; }
-
-    KeywordSignature sign(BlockSignContext ctx) {
-        return KeywordSignature.with(note(ctx.type), args(ctx.args)); }
-
-    KeywordSignature sign(KeywordSigContext ctx) { return sign(ctx.ks); }
-    KeywordSignature sign(KeywordSignContext ctx) {
-        return KeywordSignature.with(note(ctx.result), args(ctx.name.args), heads(ctx.name.kh), tails(ctx.name.kt)); }
-
-    BinarySignature sign(BinarySigContext ctx) { return sign(ctx.bs); }
-    BinarySignature sign(BinarySignContext ctx) {
-        return BinarySignature.with(note(ctx.result), args(ctx.args), selector(ctx.name)); }
-
-    UnarySignature sign(UnarySigContext ctx) { return sign(ctx.us); }
-    UnarySignature sign(UnarySignContext ctx) {
-        return UnarySignature.with(note(ctx.result), selector(ctx.name)); }
+    BasicSignature   sign(MethodScopeContext ctx) { return sign(ctx.sign); }
+    BasicSignature   sign(MethodSignContext ctx)  { return applyMatched(signs, ctx); }
+    KeywordSignature sign(BlockSignContext ctx)   { return KeywordSignature.with(note(ctx.type), args(ctx.args)); }
+    KeywordSignature sign(KeywordSignContext ctx) { return KeywordSignature.with(note(ctx.result), args(ctx.name.args), keyword(ctx)); }
+    BinarySignature  sign(BinarySignContext ctx)  { return BinarySignature.with(note(ctx.result), args(ctx.args), message(ctx.name)); }
+    UnarySignature   sign(UnarySignContext ctx)   { return UnarySignature.with(note(ctx.result), selector(ctx.name)); }
+    UnarySignature   sign(UnarySigContext ctx)    { return sign(ctx.us); }
+    BinarySignature  sign(BinarySigContext ctx)   { return sign(ctx.bs); }
+    KeywordSignature sign(KeywordSigContext ctx)  { return sign(ctx.ks); }
 
     // messages
 
+    List<Variable> args(List<ArgumentContext> ns) { return map(ns, n -> value(n)); }
+    Keyword keyword(KeywordMessageContext ctx) { return Keyword.with(heads(ctx.kh), tails(ctx.kt)); }
+    Keyword keyword(KeywordSignContext ctx) { return Keyword.with(heads(ctx.name.kh), tails(ctx.name.kt)); }
     List<String> heads(List<KeywordHeadContext> cs) { return map(cs, c -> c.getText()); }
     List<String> tails(List<KeywordTailContext> cs) { return map(cs, c -> c.getText()); }
-    List<Variable> args(List<ArgumentContext> ns)   { return map(ns, n -> value(n)); }
 
     List<String> selectors(List<UnarySelectorContext> cs) { return map(cs, s -> selector(s)); }
     String selector(UnarySelectorContext ctx) { return Keyword.with(ctx.s.getText()).methodName(); }
+    UnarySequence message(UnarySelectionContext ctx) { return UnarySequence.with(selector(ctx.umsg)); }
+    UnarySequence message(UnarySequenceContext ctx) { return UnarySequence.with(value(ctx.p), selectors(ctx.msgs)); }
 
-    UnarySequence selector(UnarySelectionContext ctx) { return UnarySequence.with(selector(ctx.umsg)); }
-    UnarySequence message(UnarySequenceContext ctx) {
-        return UnarySequence.with(value(ctx.p), selectors(ctx.msgs)); }
-
-    Operator selector(BinaryOperatorContext ctx) { return Operator.with(ctx.s.getText()); }
     List<BinaryMessage> messages(List<BinaryMessageContext> ms) { return map(ms, m -> message(m)); }
-
+    BinaryMessage message(BinaryMessageContext ctx) { return BinaryMessage.with(message(ctx.operator), term(ctx)); }
     BinaryMessage message(BinarySelectionContext ctx) { return message(ctx.bmsg);  }
-    BinaryMessage message(BinaryMessageContext ctx) {
-        return BinaryMessage.with(selector(ctx.operator), Formula.with(message(ctx.term))); }
+    Operator message(BinaryOperatorContext ctx) { return Operator.with(ctx.s.getText()); }
 
     KeywordMessage message(KeywordSelectionContext ctx) { return message(ctx.kmsg); }
-    KeywordMessage message(KeywordMessageContext ctx) {
-        if (hasNone(ctx)) return null;
-        return KeywordMessage.with(heads(ctx.kh), tails(ctx.kt), values(ctx.fs)); }
-
+    KeywordMessage message(KeywordMessageContext ctx) { return hasNone(ctx)? null: send(ctx); }
+    KeywordMessage send(KeywordMessageContext ctx) { return KeywordMessage.with(keyword(ctx), values(ctx.fs)); }
     List<Message> cascades(List<MessageCascadeContext> ms) { return map(ms, mc -> message(mc.m)); }
-    Message message(MessageContext ctx) {
-        if (hasNone(ctx)) return null;
-        if (ctx instanceof KeywordSelectionContext) return message((KeywordSelectionContext) ctx);
-        if (ctx instanceof BinarySelectionContext)  return message((BinarySelectionContext)ctx);
-        if (ctx instanceof UnarySelectionContext)   return selector((UnarySelectionContext)ctx);
-        return null;
-    }
+    Message message(MessageContext ctx) { return applyMatched(messages, ctx); }
 
     // values
 
-    Primary value(TermContext ctx)     { return Primary.with(term(ctx)); }
-    Primary value(BlockContext ctx)    { return Primary.with(blockNest(ctx)); }
-    Primary value(LitValueContext ctx) { return Primary.with(literal(ctx)); }
+    Primary value(TermContext ctx)     { return Primary.with(value(ctx.n)); }
+    Primary value(BlockContext ctx)    { return Primary.with(nest(ctx)); }
+    Primary value(LitValueContext ctx) { return Primary.with(literal(ctx.l)); }
     Primary value(TypeNameContext ctx) { return Primary.with(global(ctx)); }
     Primary value(VariableContext ctx) { return Primary.with(literal(ctx)); }
-    Primary value(PrimaryContext ctx) {
-        if (hasNone(ctx)) return null;
-        if (ctx instanceof TermContext)     return value((TermContext) ctx);
-        if (ctx instanceof BlockContext)    return value((BlockContext) ctx);
-        if (ctx instanceof LitValueContext) return value((LitValueContext) ctx);
-        if (ctx instanceof TypeNameContext) return value((TypeNameContext) ctx);
-        if (ctx instanceof VariableContext)  return value((VariableContext) ctx);
-        return null; }
+    Primary value(PrimaryContext ctx)  { return applyMatched(terms, ctx); }
 
     List<Formula> values(List<FormulaContext> fs) { return map(fs, f -> value(f)); }
     Formula value(FormulaContext ctx) { return Formula.with(message(ctx.s), messages(ctx.ops)); }
+    Formula term(BinaryMessageContext ctx) { return Formula.with(message(ctx.term)); }
 
-    Expression term(TermContext ctx) { return value(ctx.n); }
     Expression value(NestedTermContext ctx) { return value(ctx.term); }
-    Expression value(ExpressionContext ctx) {
-        return hasNone(ctx)? null: Expression.with(value(ctx.f), message(ctx.kmsg), cascades(ctx.cmsgs)); }
-
-    Expression value(ExitResultContext ctx) {
-        boolean hasExit = (hasOne(ctx) && hasOne(ctx.value));
-        return hasExit? value(ctx.value).makeExit(): null; }
-
+    Expression value(ExpressionContext ctx) { return hasNone(ctx)? null: send(ctx); }
     Expression value(EvaluationContext ctx) { return value(ctx.value).makeEvaluated(); }
+    Expression value(ExitResultContext ctx) { return !hasExit(ctx)? null: value(ctx.value).makeExit(); }
+    Expression send(ExpressionContext ctx) { return Expression.with(value(ctx.f), message(ctx.kmsg), cascades(ctx.cmsgs)); }
+    boolean hasExit(ExitResultContext ctx) { return hasOne(ctx) && hasOne(ctx.value); }
 
     List<Statement> evals(List<StatementContext> ss) { return mapList(ss, s -> hasOne(s), s -> value(s)); }
-    Statement value(StatementContext ctx) {
-        return hasNone(ctx)? null: Statement.with(hasOne(ctx.v)? value(ctx.v): value(ctx.n)); }
+    Statement value(StatementContext ctx) { return hasNone(ctx)? null: say(ctx); }
+    Statement say(StatementContext ctx) { return Statement.with(hasOne(ctx.v)? value(ctx.v): value(ctx.n)); }
 
     Construct value(MethodScopeContext ctx) { return value(ctx.c); }
-    Construct value(ConstructContext ctx) {
-        return hasNone(ctx)? null: Construct.with(literal(ctx.ref), values(ctx.terms)); }
+    Construct value(ConstructContext ctx) { return hasNone(ctx)? null: say(ctx); }
+    Construct say(ConstructContext ctx) { return Construct.with(literal(ctx.ref), values(ctx.terms)); }
 
     Variable part(MemberVarContext ctx)  { return Variable.named(name(ctx.v), note(ctx.type)); }
     Variable part(ArgumentContext ctx)   { return Variable.named(name(ctx.v), note(ctx.type)); }
@@ -205,57 +164,61 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     Variable value(ArgumentContext ctx)   { return part(ctx).withNotes(notes(ctx.n)); }
     Variable value(AssignmentContext ctx) { return part(ctx).withNotes(notes(ctx.n)).makeAssignment(); }
-    Variable value(MemberSlotContext ctx) { return value(ctx.v); }
-    Variable value(MemberVarContext ctx) {
-        return part(ctx).withValue(value(ctx.value)).withNotes(notes(ctx.n)).defineMember(); }
+
+    @Override public void exitMemberSlot(MemberSlotContext ctx) { faceSlot(ctx); }
+    void faceSlot(MemberSlotContext ctx) { Face.currentFace().addLocal(member(ctx.v)); }
+    Variable member(MemberVarContext ctx) { return slot(ctx).defineMember(); }
+    Variable slot(MemberVarContext ctx) { return part(ctx).withValue(value(ctx.value)).withNotes(notes(ctx.n)); }
 
     Global global(TypeNameContext ctx) { return value(ctx.g).makePrimary(); }
     Global value(GlobalReferContext ctx) { return Global.withList(map(ctx.names, n -> name(n))); }
     Constant value(LiteralValueContext ctx) { return literal(ctx.lit); }
-    Constant value(ElementValueContext ctx) {
-        if (ctx instanceof LiteralValueContext)  return value((LiteralValueContext)ctx);
-        if (ctx instanceof VariableValueContext) return value((VariableValueContext)ctx);
-        return null; }
-
+    Constant value(ElementValueContext ctx) { return applyMatched(elements, ctx); }
 
     LiteralArray literal(PrimArrayContext ctx) { return values(ctx.array); }
-    LiteralArray values(PrimitiveValuesContext ctx) { return LiteralArray.withItems(lits(ctx.array)); }
-    List<Constant> lits(List<PrimitiveContext> vs) { return map(vs, v -> literal(v)); }
+    LiteralArray values(PrimitiveValuesContext ctx) { return LiteralArray.withItems(prims(ctx.array)); }
+    List<Constant> prims(List<PrimitiveContext> vs) { return map(vs, v -> literal(v)); }
 
     LiteralArray literal(ArrayLiteralContext ctx) { return values(ctx.array); }
-    LiteralArray values(ElementValuesContext ctx) { return LiteralArray.withItems(list(ctx.array)); }
-    List<Constant> list(List<ElementValueContext> vs) { return map(vs, v -> value(v)); }
+    LiteralArray values(ElementValuesContext ctx) { return LiteralArray.withItems(cons(ctx.array)); }
+    List<Constant> cons(List<ElementValueContext> vs) { return map(vs, v -> value(v)); }
 
     // notes
 
-    TypeList superNotes(TypeSignContext ctx) { return TypeList.withDetails(notes(ctx.h.superTypes)); }
-    TypeList subNotes(ClassSignContext ctx) { return TypeList.withDetails(notes(ctx.ts.types)); }
-    TypeList notes(GenericArgsContext ctx) { return hasNone(ctx)? null: TypeList.withDetails(notes(ctx.types)); }
-    TypeList notes(DetailedSignContext ctx) { return itemOr(new TypeList(), notes(ctx.generics)).withExit(note(ctx.exit)); }
+    TypeList types(ClassSignContext ctx) { return TypeList.withDetails(types(ctx.ts.types)); }
+    TypeList types(TypeSignContext ctx)  { return TypeList.withDetails(types(ctx.h.superTypes)); }
+    TypeList types(GenericArgsContext ctx) { return TypeList.withDetails(types(ctx.types)); }
+    TypeList types(DetailedSignContext ctx) { return hasNone(ctx)? new TypeList(): notes(ctx.generics); }
+    TypeList notes(GenericArgsContext ctx) { return hasNone(ctx)? new TypeList(): types(ctx); }
+    TypeList notes(DetailedSignContext ctx) { return types(ctx).withExit(type(ctx.exit)); }
 
-    DetailedType note(ExtentItemContext ctx) { return note(ctx.extent); }
-    DetailedType note(SignedItemContext ctx) { return note(ctx.signed); }
-    DetailedType note(TypeNoteContext ctx) {
-        return (hasNone(ctx) || hasNone(ctx.type))? null: note(ctx.type).makeArrayed(hasOne(ctx.etc)); }
+    DetailedType type(ExtentItemContext ctx) { return note(ctx.extent); }
+    DetailedType type(SignedItemContext ctx) { return note(ctx.signed); }
+    DetailedType note(TypeNoteContext ctx) { return !hasType(ctx)? null: type(ctx); }
+    DetailedType type(TypeNoteContext ctx) { return type(ctx.type).makeArrayed(hasOne(ctx.etc)); }
+    boolean hasType(TypeNoteContext ctx) { return hasOne(ctx) && hasOne(ctx.type); }
 
-    List<DetailedType> notes(List<DetailedTypeContext> cs) { return map(cs, c -> note(c)); }
-    DetailedType note(DetailedTypeContext ctx) {
-        if (hasNone(ctx)) return null;
-        if (ctx instanceof ExtentItemContext)   return note((ExtentItemContext)ctx);
-        if (ctx instanceof SignedItemContext)   return note((SignedItemContext)ctx);
-        return null; }
+    List<DetailedType> types(List<DetailedTypeContext> cs) { return map(cs, c -> type(c)); }
+    DetailedType type(DetailedTypeContext ctx) { return applyMatched(details, ctx); }
 
     Global subName(TypeSignContext ctx) { return Global.named(name(ctx.sub)); }
     Global subName(ClassSignContext ctx) { return Global.named(name(ctx.sub)); }
-    DetailedType superNote(ClassSignContext ctx) { return note(ctx.h.superClass); }
-    DetailedType subNote(TypeSignContext ctx) { return DetailedType.with(subName(ctx), notes(ctx.ds)); }
-    DetailedType subNote(ClassSignContext ctx) { return DetailedType.with(subName(ctx), notes(ctx.ds)); }
-    DetailedType note(SignedTypeContext ctx) { return hasNone(ctx)? null: DetailedType.with(value(ctx.g), notes(ctx.details)); }
-    DetailedType note(ExtendTypeContext ctx) { return DetailedType.with(Global.with(name(ctx.g)), note(ctx.baseType)).makeExtensive(); }
+    DetailedType superType(ClassSignContext ctx) { return note(ctx.h.superClass); }
+    DetailedType type(TypeSignContext ctx) { return DetailedType.with(subName(ctx), notes(ctx.ds)); }
+    DetailedType type(ClassSignContext ctx) { return DetailedType.with(subName(ctx), notes(ctx.ds)); }
+    DetailedType note(SignedTypeContext ctx) { return hasNone(ctx)? null: type(ctx); }
+    DetailedType note(ExtendTypeContext ctx) { return type(ctx).makeExtensive(); }
+    DetailedType type(SignedTypeContext ctx) { return DetailedType.with(value(ctx.g), notes(ctx.ds)); }
+    DetailedType type(ExtendTypeContext ctx) { return DetailedType.with(Global.with(name(ctx.g)), type(ctx.baseType)); }
 
     List<Note> notes(CompilationUnitContext ctx) { return notes(ctx.n); }
     List<Note> notes(MethodScopeContext ctx) { return notes(ctx.n); }
     List<Note> notes(NotationsContext ctx) { return map(ctx.notes, n -> note(n)); }
+
+    void faceNotes(TypeSignContext ctx) { Face.currentFace().notes().noteAll(notes(unit(ctx))); }
+    void faceNotes(ClassSignContext ctx) { Face.currentFace().notes().noteAll(notes(unit(ctx))); }
+    CompilationUnitContext unit(TypeSignContext ctx)  { return (CompilationUnitContext)ctx.getParent().getParent(); }
+    CompilationUnitContext unit(ClassSignContext ctx) { return (CompilationUnitContext)ctx.getParent().getParent(); }
 
     NoteList notes(TypeSignContext ctx) { return new NoteList().noteAll(notes(ctx.n)); }
     NoteList notes(ClassSignContext ctx) { return new NoteList().noteAll(notes(ctx.n)); }
@@ -264,18 +227,12 @@ public class HootFileListener extends HootBaseListener implements Logging {
     List<NamedValue> nakeds(List<NakedValueContext> cs) { return map(cs, c -> note(c)); }
     NamedValue note(NakedPrimContext ctx) { return NamedValue.with(Empty, literal(ctx.v)); }
     NamedValue note(NakedGlobalContext ctx) { return NamedValue.with(Empty, Global.with(name(ctx.g))); }
-    NamedValue note(NakedValueContext ctx) {
-        if (ctx instanceof NakedPrimContext)   return note((NakedPrimContext)ctx);
-        if (ctx instanceof NakedGlobalContext)   return note((NakedGlobalContext)ctx);
-        return null; }
+    NamedValue note(NakedValueContext ctx) { return applyMatched(nakeds, ctx); }
 
     List<NamedValue> nameds(List<NamedValueContext> cs) { return map(cs, c -> note(c)); }
     NamedValue note(NamedPrimContext ctx) { return NamedValue.with(ctx.head.getText(), literal(ctx.v)); }
     NamedValue note(NamedGlobalContext ctx) { return NamedValue.with(ctx.head.getText(), Global.with(name(ctx.g))); }
-    NamedValue note(NamedValueContext ctx) {
-        if (ctx instanceof NamedPrimContext)   return note((NamedPrimContext)ctx);
-        if (ctx instanceof NamedGlobalContext)   return note((NamedGlobalContext)ctx);
-        return null; }
+    NamedValue note(NamedValueContext ctx) { return applyMatched(nameds, ctx); }
 
     // literals
 
@@ -284,38 +241,10 @@ public class HootFileListener extends HootBaseListener implements Logging {
     String comment(TypeSignContext ctx) { return Comment.findComment(ctx.h.getStart(), ctx.p); }
     String comment(ClassSignContext ctx) { return Comment.findComment(ctx.h.getStart(), ctx.p); }
 
-    Constant literal(SelfishContext ctx) {
-        if (ctx instanceof SelfSelfishContext)  return literal((SelfSelfishContext)ctx);
-        if (ctx instanceof SuperSelfishContext) return literal((SuperSelfishContext)ctx);
-        return null; }
+    Constant literal(SelfishContext ctx) { return applyMatched(selfs, ctx); }
+    Constant literal(LiteralContext ctx) { return applyMatched(lits, ctx); }
+    Constant literal(PrimitiveContext ctx) { return applyMatched(prims, ctx); }
 
-    Constant literal(PrimitiveContext ctx) {
-        if (ctx instanceof PrimBoolContext) return literal((PrimBoolContext)ctx);
-        if (ctx instanceof PrimCharContext) return literal((PrimCharContext)ctx);
-        if (ctx instanceof PrimIntContext)  return literal((PrimIntContext)ctx);
-        if (ctx instanceof PrimFloatContext)  return literal((PrimFloatContext)ctx);
-        if (ctx instanceof PrimSymbolContext) return literal((PrimSymbolContext)ctx);
-        if (ctx instanceof PrimStringContext) return literal((PrimStringContext)ctx);
-        if (ctx instanceof PrimArrayContext)  return literal((PrimArrayContext)ctx);
-        return null; }
-
-    Constant literal(LitValueContext ctx) { return literal(ctx.l); }
-    Constant literal(LiteralContext ctx) {
-        if (ctx instanceof ArrayLiteralContext) return literal((ArrayLiteralContext)ctx);
-        if (ctx instanceof NilLiteralContext)   return literal((NilLiteralContext)ctx);
-        if (ctx instanceof SelfLiteralContext)  return literal((SelfLiteralContext)ctx);
-        if (ctx instanceof SuperLiteralContext) return literal((SuperLiteralContext)ctx);
-        if (ctx instanceof BoolLiteralContext)  return literal((BoolLiteralContext)ctx);
-        if (ctx instanceof CharLiteralContext)  return literal((CharLiteralContext)ctx);
-        if (ctx instanceof FloatLiteralContext)  return literal((FloatLiteralContext)ctx);
-        if (ctx instanceof IntLiteralContext)    return literal((IntLiteralContext)ctx);
-        if (ctx instanceof NumLiteralContext)    return literal((NumLiteralContext)ctx);
-        if (ctx instanceof SymbolLiteralContext) return literal((SymbolLiteralContext)ctx);
-        if (ctx instanceof StringLiteralContext) return literal((StringLiteralContext)ctx);
-        if (ctx instanceof DecimalLiteralContext) return literal((DecimalLiteralContext)ctx);
-        return null; }
-
-//    LiteralName value(VariableValueContext ctx) { return LiteralName.with(ctx.var.getText(), ctx.start.getLine()); }
     LiteralName literal(VariableContext ctx) { return LiteralName.with(name(ctx.v)); }
     LiteralName literal(SelfSelfishContext ctx) { return LiteralName.with(ctx.refSelf.getText(), ctx.start.getLine()); }
     LiteralName literal(SuperSelfishContext ctx) { return LiteralName.with(ctx.refSuper.getText(), ctx.start.getLine()); }
@@ -328,20 +257,81 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     LiteralCharacter literal(PrimCharContext ctx) { return LiteralCharacter.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralCharacter literal(CharLiteralContext ctx) { return LiteralCharacter.with(ctx.value.getText(), ctx.start.getLine()); }
-
     LiteralBoolean literal(PrimBoolContext ctx) { return LiteralBoolean.with(ctx.bool.getText(), ctx.start.getLine()); }
     LiteralBoolean literal(BoolLiteralContext ctx) { return LiteralBoolean.with(ctx.bool.getText(), ctx.start.getLine()); }
 
     LiteralFloat literal(PrimFloatContext ctx) { return LiteralFloat.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralFloat literal(FloatLiteralContext ctx) { return LiteralFloat.with(ctx.value.getText(), ctx.start.getLine()); }
-
     LiteralInteger literal(PrimIntContext ctx) { return LiteralInteger.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralInteger literal(IntLiteralContext ctx) { return LiteralInteger.with(ctx.value.getText(), ctx.start.getLine()); }
 
     LiteralSymbol literal(PrimSymbolContext ctx) { return LiteralSymbol.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralSymbol literal(SymbolLiteralContext ctx) { return LiteralSymbol.with(ctx.value.getText(), ctx.start.getLine()); }
-
     LiteralString literal(PrimStringContext ctx) { return LiteralString.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralString literal(StringLiteralContext ctx) { return LiteralString.with(ctx.value.getText(), ctx.start.getLine()); }
+
+    <T,R> R apply(Function f, T it) { return (R)f.apply(it); } // apply function for matched item class
+    <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) { if (hasNone(it)) return null;
+        for (Class<T> c : m.keySet()) if (c.isInstance(it)) return apply(m.get(c), c.cast(it)); return null; }
+
+    final HashMap<Class, Function<? extends ValueNameContext, String>> names = new HashMap<>();
+    final HashMap<Class, Function<? extends MethodSignContext, BasicSignature>> signs = new HashMap<>();
+    final HashMap<Class, Function<? extends MessageContext, Message>> messages = new HashMap<>();
+    final HashMap<Class, Function<? extends PrimaryContext, Primary>> terms = new HashMap<>();
+    final HashMap<Class, Function<? extends ElementValueContext, Constant>> elements = new HashMap<>();
+    final HashMap<Class, Function<? extends DetailedTypeContext, DetailedType>> details = new HashMap<>();
+    final HashMap<Class, Function<? extends NakedValueContext, NamedValue>> nakeds = new HashMap<>();
+    final HashMap<Class, Function<? extends NamedValueContext, NamedValue>> nameds = new HashMap<>();
+    final HashMap<Class, Function<? extends PrimitiveContext, Constant>> prims = new HashMap<>();
+    final HashMap<Class, Function<? extends SelfishContext, Constant>> selfs = new HashMap<>();
+    final HashMap<Class, Function<? extends LiteralContext, Constant>> lits = new HashMap<>();
+    public HootFileListener() {
+        lits.put(ArrayLiteralContext.class, (ArrayLiteralContext ctx) -> literal(ctx));
+        lits.put(NilLiteralContext.class,   (NilLiteralContext ctx) -> literal(ctx));
+        lits.put(SelfLiteralContext.class,  (SelfLiteralContext ctx) -> literal(ctx));
+        lits.put(SuperLiteralContext.class, (SuperLiteralContext ctx) -> literal(ctx));
+        lits.put(BoolLiteralContext.class,  (BoolLiteralContext ctx) -> literal(ctx));
+        lits.put(CharLiteralContext.class,  (CharLiteralContext ctx) -> literal(ctx));
+        lits.put(FloatLiteralContext.class, (FloatLiteralContext ctx) -> literal(ctx));
+        lits.put(IntLiteralContext.class,   (IntLiteralContext ctx) -> literal(ctx));
+        lits.put(NumLiteralContext.class,   (NumLiteralContext ctx) -> literal(ctx));
+        lits.put(SymbolLiteralContext.class,  (SymbolLiteralContext ctx) -> literal(ctx));
+        lits.put(StringLiteralContext.class,  (StringLiteralContext ctx) -> literal(ctx));
+        lits.put(DecimalLiteralContext.class, (DecimalLiteralContext ctx) -> literal(ctx));
+
+        prims.put(PrimBoolContext.class, (PrimBoolContext ctx) -> literal(ctx));
+        prims.put(PrimCharContext.class, (PrimCharContext ctx) -> literal(ctx));
+        prims.put(PrimIntContext.class,  (PrimIntContext ctx) -> literal(ctx));
+        prims.put(PrimFloatContext.class, (PrimFloatContext ctx) -> literal(ctx));
+        prims.put(PrimSymbolContext.class, (PrimSymbolContext ctx) -> literal(ctx));
+        prims.put(PrimStringContext.class, (PrimStringContext ctx) -> literal(ctx));
+        prims.put(PrimArrayContext.class,  (PrimArrayContext ctx) -> literal(ctx));
+
+        selfs.put(SelfSelfishContext.class,  (SelfSelfishContext ctx) -> literal(ctx));
+        selfs.put(SuperSelfishContext.class, (SuperSelfishContext ctx) -> literal(ctx));
+        nameds.put(NamedPrimContext.class,   (NamedPrimContext ctx) -> note(ctx));
+        nameds.put(NamedGlobalContext.class, (NamedGlobalContext ctx) -> note(ctx));
+        nakeds.put(NakedPrimContext.class,   (NakedPrimContext ctx) -> note(ctx));
+        nakeds.put(NakedGlobalContext.class, (NakedGlobalContext ctx) -> note(ctx));
+        details.put(ExtentItemContext.class, (ExtentItemContext ctx) -> type(ctx));
+        details.put(SignedItemContext.class, (SignedItemContext ctx) -> type(ctx));
+        elements.put(LiteralValueContext.class,  (LiteralValueContext ctx) -> value(ctx));
+        elements.put(VariableValueContext.class, (VariableValueContext ctx) -> value(ctx));
+
+        terms.put(TermContext.class, (TermContext ctx) -> value(ctx));
+        terms.put(BlockContext.class, (BlockContext ctx) -> value(ctx));
+        terms.put(LitValueContext.class, (LitValueContext ctx) -> value(ctx));
+        terms.put(TypeNameContext.class, (TypeNameContext ctx) -> value(ctx));
+        terms.put(VariableContext.class, (VariableContext ctx) -> value(ctx));
+
+        names.put(LocalValueContext.class, (LocalValueContext ctx) -> name(ctx));
+        names.put(GlobalValueContext.class, (GlobalValueContext ctx) -> name(ctx));
+        signs.put(KeywordSigContext.class, (KeywordSigContext ctx) -> sign(ctx));
+        signs.put(BinarySigContext.class, (BinarySigContext ctx) -> sign(ctx));
+        signs.put(UnarySigContext.class, (UnarySigContext ctx) -> sign(ctx));
+        messages.put(KeywordSelectionContext.class, (KeywordSelectionContext ctx) -> message(ctx));
+        messages.put(BinarySelectionContext.class, (BinarySelectionContext ctx) -> message(ctx));
+        messages.put(UnarySelectionContext.class, (UnarySelectionContext ctx) -> message(ctx));
+    }
 
 } // HootFileListener

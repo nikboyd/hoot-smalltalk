@@ -125,7 +125,7 @@ detailedType
 | signed=signedType # signedItem ;
 
 extendType  : g=globalName Extends baseType=detailedType ;
-signedType  : g=globalRefer details=detailedSign ;
+signedType  : g=globalRefer ds=detailedSign ;
 genericArgs : Quest types+=detailedType ( keywordTail types+=detailedType )* ;
 
 //==================================================================================================
