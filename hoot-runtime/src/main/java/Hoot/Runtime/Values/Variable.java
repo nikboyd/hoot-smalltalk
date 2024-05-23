@@ -71,15 +71,19 @@ public class Variable extends Operand implements ValueSource {
 
     private static Variable frameFrom(Scope context) {
         return named(Frame.name(0), Frame.className(), context); }
+    
+    // for member only, infer type from name if needed. --nik
+    public static Variable memberNamed(String name, DetailedType type) {
+        return from(Scope.currentFace(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
 
     public static Variable named(String name, DetailedType type, Operand value) {
-        return from(Scope.current(), name, type).withValue(value).resolveType(); }
+        return from(Scope.currentBlock(), name, type).withValue(value).resolveType(); }
 
-    public static Variable named(String name, DetailedType type) {
-        // for arguments only, infer type from name if needed. --nik
-        return from(Scope.current(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
+    // for arguments only, infer type from name if needed. --nik
+    public static Variable argNamed(String name, DetailedType type) {
+        return from(Scope.currentBlock(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
 
-    private static Variable named(String name, String type, Scope container) {
+    public static Variable named(String name, String type, Scope container) {
         return from(container, name, DetailedType.with(Global.named(type))); }
 
     public Variable withErasure() {

@@ -40,7 +40,7 @@ public class ClosureCompiler implements Logging {
 
     static final Object[] NoArgs = { };
     public Object evaluate() { return nullOrTryLoudly(() ->
-        buildEvaluator().evaluate(NoArgs), () -> Scope.currentFile().popScope()); }
+        buildEvaluator().evaluate(NoArgs), () -> Scope.popFileScope()); }
 
     HootBlockParser blockParser;
     ClosureCompiler parseClosure() { this.blockParser.parseTokens(); this.blockParser.walkResult(); return this; }

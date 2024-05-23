@@ -18,7 +18,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  */
 public class Primary extends Operand {
 
-    public Primary() { super(Scope.current()); }
+    public Primary() { super(Scope.currentBlock()); }
     protected Primary(Operand item) { this(); item(item); }
     public static Primary with(Operand item) { return new Primary(item); }
     public static Primary frameGlobal() { return with(Global.named(Frame.className())); }

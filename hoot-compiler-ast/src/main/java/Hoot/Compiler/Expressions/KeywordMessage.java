@@ -19,7 +19,7 @@ import Hoot.Compiler.Scopes.*;
  */
 public class KeywordMessage extends Message {
 
-    public KeywordMessage() { super(Scope.current()); this.keyword = Keyword.with(); }
+    public KeywordMessage() { super(Scope.currentBlock()); this.keyword = Keyword.with(); }
     protected KeywordMessage(Keyword keyword, List<Formula> items) {
         this(); this.keyword = keyword; this.terms.addAll(items); }
 

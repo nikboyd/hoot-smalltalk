@@ -16,8 +16,10 @@ import Hoot.Compiler.Expressions.*;
  */
 public class BlockContent extends Item implements ScopeSource, Resulting {
 
-    public BlockContent() { this(Scope.current()); }
-    public BlockContent(Scope s) { super(s); }
+    Block block;
+    @Override public Block block() { return this.block; }
+    public BlockContent() { this(Block.currentBlock()); }
+    public BlockContent(Block b) { super(b); this.block = b; }
     @Override public void clean() { super.clean(); statements().forEach(s -> s.clean()); }
 
     public static BlockContent emptyBlock() { return new BlockContent(); }
@@ -78,7 +80,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
 
         // for methods ...
         if (hasOne(b) && b.isMethod()) {
-            Method m = method();
+            Method m = Method.currentMethod();
             if (x == null && m.isPrimitive()) {
                 // primitive methods are coded exactly as wanted
                 return; // done here

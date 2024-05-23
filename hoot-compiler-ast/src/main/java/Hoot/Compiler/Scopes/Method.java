@@ -30,8 +30,9 @@ public class Method extends Block {
     protected void noteOverride() { if (this.needsOverrideNote()) notes().note(OverrideNote); }
     public boolean needsOverrideNote() { return overridesHeritage() || matchesStandardOverride(); }
 
-    @Override public Method makeCurrent() { super.makeCurrent(); return this; } //Face.currentFace().addMethod(this); 
-    public static Method currentMethod() { return from(Scope.current()); }
+    @Override public Method makeCurrent() { return (Method)Scope.makeCurrentBlock(this); }
+//    @Override public Method makeCurrent() { super.makeCurrent(); return this; }
+    public static Method currentMethod() { return from(Scope.findCurrentMethod()); }
     public static Method from(Item item) { return nullOr(m -> (Method)m, item.methodScope()); }
     public void construct(Construct c) { content().add(c); }
 

@@ -17,7 +17,7 @@ import static Hoot.Runtime.Functions.Utils.*;
 public class Statement extends Item implements ScopeSource, Resulting {
 
     public Statement(Item parent) { super(parent); }
-    protected Statement(Operand item) { this(Scope.current()); this.item = item.inside(this); }
+    protected Statement(Operand item) { this(Scope.currentBlock()); this.item = item.inside(this); }
     public static Statement with(Operand item) { if (item == null) return null; return new Statement(item); }
     @Override public void clean() { super.clean(); this.item.clean(); }
 

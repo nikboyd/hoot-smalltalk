@@ -18,7 +18,8 @@ import static Hoot.Runtime.Functions.Utils.*;
 public class ValueTest implements Logging {
 
     @Test public void sampleVariable() {
-        Variable v = Variable.named("sample", null);
+        Scope s = new Scope(null) {};
+        Variable v = Variable.named("sample", "SomeType", s);
         v.emitOperand();
         v.emitVariable();
         v.emitArgument(true);
@@ -26,7 +27,6 @@ public class ValueTest implements Logging {
         v.emitType();
 //        v.emitProperty();
 
-        Scope s = new Scope(null) {};
         s.addLocal(v);
         s.localNamed("sample");
         s.locals().definedSymbols();

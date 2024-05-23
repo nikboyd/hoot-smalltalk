@@ -84,20 +84,20 @@ public abstract class Item implements EmissionSource, Resolver {
     protected Scope findScope(Predicate<Item> p) { return findItem(Scope.class, p); }
     public Operand variableContainer() { return findItem(Operand.class, s -> s.isVariable()); }
 
-    public Scope blockScope() { return findScope(s -> s.isBlock()); }
+    public Scope blockScope() { return Scope.currentBlock(); }
     public Scope methodScope() { return findScope(s -> s.isMethod()); }
-    public Scope facialScope() { return findScope(s -> s.isFacial()); }
-    public Scope fileScope() { return findScope(s -> s.isFile()); }
+    public Scope facialScope() { return Scope.currentFace(); }
+    public Scope fileScope() { return Scope.currentFile(); }
 
     public List<Scope> blockScopes() {
-        Scope b = blockScope();
-        Scope m = methodScope();
-        List<Scope> results = emptyList(Scope.class);
-        if (hasOne(m)) { // collect all block scopes within a method
-            while (b != m) { results.add(b); b = b.containerScope(); }
-            results.add(m); // including the method scope
-        }
-        return results;
+//        Scope b = blockScope();
+//        Scope m = methodScope();
+//        List<Scope> results = emptyList(Scope.class);
+//        if (hasOne(m)) { // collect all block scopes within a method
+//            while (b != m) { results.add(b); b = b.containerScope(); }
+//            results.add(m); // including the method scope
+//        }
+        return Scope.recentBlockScopes();
     }
 
     @Override public int nestLevel() {

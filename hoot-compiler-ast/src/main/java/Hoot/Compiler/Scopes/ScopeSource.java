@@ -15,12 +15,12 @@ import static Hoot.Runtime.Emissions.Emission.*;
  */
 public interface ScopeSource extends EmissionSource {
 
-    default File file() { return File.from((Item)this); }
-    default Face face() { return Face.from((Item)this); }
+    default File file() { return File.currentFile(); }
+    default Face face() { return Face.currentFace(); }
     default Variable variable() { return Variable.from((Item)this); }
-    default Method method() { return Method.from((Item)this); }
-    default Block block() { return Block.from((Item)this); }
-    default Block parentBlock() { return Block.from(((Item)this).parentItem(Block.class)); }
+    default Method method() { return Method.currentMethod(); }
+    default Block block() { return Block.currentBlock(); }
+    default Block parentBlock() { return Block.from(((Item)this).parentItem(Block.class)); } // ?? used ??
 
     default Emission emitOptimizedBlock(Emission locals, int level, String type, Emission arguments, Emission content, List<Emission> argNames) {
         return emit("OptimizedBlock").with("locals", locals).with("argNames", emitList(argNames))

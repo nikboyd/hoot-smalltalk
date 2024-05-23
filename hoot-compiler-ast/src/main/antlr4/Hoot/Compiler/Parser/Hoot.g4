@@ -9,9 +9,10 @@ grammar Hoot; // resources/antlr4/Hoot/Compiler/Parser
 // file scopes
 //==================================================================================================
 
-compilationUnit : n=notations ( fileImport )* ( classScope | typeScope ) ;
+compilationUnit : n=notations ( fileImport )* ( classScope | typeScope ) eof ;
 classScope : sign=classSign ( scopes+=protocolScope )* ;
 typeScope  : sign=typeSign  ( scopes+=protocolScope )* ;
+eof : ;
 
 fileImport : g=globalRefer ( c=caseOption )? m=important Period ;
 important  : ImportOne | ImportAll | ImportStatics ;

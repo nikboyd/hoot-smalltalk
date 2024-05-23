@@ -17,9 +17,9 @@ import static Hoot.Runtime.Names.TypeName.JavaRoot;
  * @see "Copyright 2010,2021 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
-public class ClassSignature extends NamedItem implements ScopeSource {
+public class ClassSignature extends TypeHeritage implements ScopeSource {
 
-    public ClassSignature() { super(Scope.current()); }
+    public ClassSignature() { super(); }
     public static ClassSignature with(Global superClass, Global subtype, String keyword) {
         return with(DetailedType.with(superClass), DetailedType.with(subtype), null, null, keyword, ""); }
     public static ClassSignature with(
@@ -27,9 +27,9 @@ public class ClassSignature extends NamedItem implements ScopeSource {
             NoteList notes, String keyword, String comment) {
         ClassSignature result = new ClassSignature();
         result.notes = hasSome(notes)? notes: new NoteList();
-        result.types = hasSome(heritage)? heritage: TypeList.withDetails();
+        result.heritage = hasSome(heritage)? heritage: TypeList.withDetails();
         result.superClass = superClass;
-        result.subclass = subtype;
+        result.subtype = subtype;
         result.keyword = keyword;
         result.comment = comment;
         return result;
@@ -38,9 +38,9 @@ public class ClassSignature extends NamedItem implements ScopeSource {
     @Override public ClassSignature metaSignature() {
         ClassSignature result = new ClassSignature();
         if (faceScope().isMetaclassBase()) return result;
-        result.types = TypeList.withDetails(types().listMetaTypes());
+        result.heritage = TypeList.withDetails(types().listMetaTypes());
         result.superClass = superMetaType();
-        result.subclass = DetailedType.MetaClass;
+        result.subtype = DetailedType.MetaClass;
         result.keyword = keyword;
         return result;
     }
@@ -54,25 +54,14 @@ public class ClassSignature extends NamedItem implements ScopeSource {
         if (!hasSuperclass()) return !s.hasSuperclass();
         return superType().equals(s.superType()); }
 
-    protected String comment;
-    @Override public String comment() { return this.comment; }
-
-    protected String keyword;
-    public String subtypeKeyword() { return this.keyword; }
-
-    protected TypeList types;
-    public TypeList types() { return this.types; }
+    public TypeList types() { return heritage(); }
     public Emission metaFaces() { return (types().isEmpty() ? null : types().emitMetaNames()); }
     public Emission faces() {
         List<Emission> faces = types().detailedTypesCode();
         return (faces.isEmpty() ? null : emitList(faces));
     }
 
-    protected DetailedType subclass;
-    public DetailedType subType() { return this.subclass; }
     public String subclassName() { return subType().typeName().name(); }
-    public TypeList details() { return subType().details(); }
-
     @Override public String description() { return name() + " -> " + baseName(); }
     @Override public String name() { return subclassName(); }
     @Override public String shortName() { return name(); }
@@ -81,9 +70,9 @@ public class ClassSignature extends NamedItem implements ScopeSource {
 
     protected DetailedType superClass;
     public DetailedType superType() { return this.superClass; }
-    public int superHash() { return hasSuperclass() ? superType().hashCode() : 0; }
     public boolean hasSuperclass() { return hasAny(superType()); }
-    @Override public boolean hasNoHeritage() { return !hasSuperclass() && types().isEmpty(); }
+    public int superHash() { return hasSuperclass() ? superType().hashCode() : 0; }
+    @Override public boolean hasNoHeritage() { return !hasSuperclass() && super.hasNoHeritage(); }
 
     public Emission superClass() { return (hasSuperclass() ? superType().emitItem() : emitObject()); }
     public Emission superMetaClass() {
@@ -134,7 +123,7 @@ public class ClassSignature extends NamedItem implements ScopeSource {
         return copyList(results);
     }
 
-    public Face faceScope() { return Face.from(this); }
+    public Face faceScope() { return face(); }
     public Typified faceNamed(String name) { return faceScope().faceNamed(name); }
     public Typified superior() { return faceScope().superclass(); }
 

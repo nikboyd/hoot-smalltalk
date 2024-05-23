@@ -24,8 +24,8 @@ public class Block extends Scope implements Signed, ClosureSource {
 
     public Block() { this(Block.currentBlock()); }
     public Block(Scope aScope) { super(aScope); checkScope(); }
-    public static Block currentBlock() { return from(Scope.current()); }
-    public static Block from(Item item) { return nullOr(b -> (Block)b, item.blockScope()); }
+    public static Block currentBlock() { return from(Scope.currentBlock()); }
+    public static Block from(Item item) { return nullOr(b -> (Block)b, item); }
     public static Block emptyBlock() {
         Block result = new Block();
         result.signature(KeywordSignature.emptyNiladic());
@@ -34,7 +34,9 @@ public class Block extends Scope implements Signed, ClosureSource {
     }
 
     @Override public void clean() { sig.clean(); content.clean(); super.clean(); }
-    @Override public Block makeCurrent() { super.makeCurrent(); return this; }
+    @Override public Block makeCurrent() { return (Block)Scope.makeCurrentBlock(this); }
+    @Override public Scope popScope() { Scope.popBlockScope(); return currentBlock(); }
+//    @Override public Block makeCurrent() { super.makeCurrent(); return this; }
     private void checkScope() { if (hasNone(container())) warn("null parent scope in Block"); }
 
     @Override public boolean isBlock() { return true; }

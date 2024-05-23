@@ -5,6 +5,7 @@ import java.util.function.*;
 import Hoot.Runtime.Notes.*;
 import Hoot.Runtime.Names.*;
 import Hoot.Runtime.Values.*;
+import Hoot.Runtime.Behaviors.Scope;
 
 import Hoot.Compiler.Notes.*;
 import Hoot.Compiler.Scopes.*;
@@ -27,6 +28,12 @@ public class HootFileListener extends HootBaseListener implements Logging {
     void defineType()  { Face.currentFace().definesType(true); }
     void defineClass() { Face.currentFace().definesType(false); }
 
+    @Override public void exitEof(EofContext ctx) {
+        Face.currentFace().popScope();
+        File.currentFile().popScope();
+        report("===== EOF ====="); 
+    }
+
     // file scopes
 
     @Override public void enterTypeSign(TypeSignContext ctx)   { defineType(); }
@@ -39,13 +46,16 @@ public class HootFileListener extends HootBaseListener implements Logging {
     // types + classes
 
     @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(TypeSignContext ctx) { Face.currentFace().signature(sign(ctx)); }
+    void signFace(TypeSignContext ctx) { 
+        Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
     TypeSignature sign(TypeSignContext ctx) {
         return TypeSignature.with(types(ctx), type(ctx),
             notes(ctx), keyword(ctx), comment(ctx)); }
 
+    // make class sig extend type sig
     @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(ClassSignContext ctx) { Face.currentFace().signature(sign(ctx)); }
+    void signFace(ClassSignContext ctx) { 
+        Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
     ClassSignature sign(ClassSignContext ctx) {
         return ClassSignature.with(superType(ctx), type(ctx), types(ctx),
             notes(ctx), keyword(ctx), comment(ctx)); }
@@ -54,36 +64,51 @@ public class HootFileListener extends HootBaseListener implements Logging {
     @Override public void exitSubclassKeyword(SubclassKeywordContext ctx) { faceScope().makeCurrent(); }
     @Override public void exitSubtypeKeyword(SubtypeKeywordContext ctx)   { faceScope().makeCurrent(); }
 
-    @Override public void exitProtocolScope(ProtocolScopeContext ctx) {}
-    @Override public void exitProtocolSign(ProtocolSignContext ctx) { faceProto(ctx); }
+    @Override public void exitProtocolScope(ProtocolScopeContext ctx) { report("exited protocol"); }
+    @Override public void exitProtocolSign(ProtocolSignContext ctx) { report("entered protocol"); faceProto(ctx); }
     void faceProto(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
     String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }
 
     // methods + blocks
 
+    // create a fake method in which a variable gets defined, then transfer it into the class
+    // so that value expressions and their parts have a block context for reference
+    @Override public void enterMemberSlot(MemberSlotContext ctx) { }
+    @Override public void exitMemberSlot(MemberSlotContext ctx) { faceSlot(ctx); }
+    void faceSlot(MemberSlotContext ctx) { Face.currentFace().addLocal(member(ctx.v)); }
+
+    @Override public void enterMethodMember(MethodMemberContext ctx) {  }
     @Override public void exitMethodMember(MethodMemberContext ctx) { faceMethod(ctx); }
-    void faceMethod(MethodMemberContext ctx) { Face.currentFace().addMethod(methodScope(ctx.m)); }
+    void faceMethod(MethodMemberContext ctx) {
+        Method m = methodScope(ctx.m);
+        Face.currentFace().addMethod(m);
+        m.popScope();
+//        m.report(m.description()+" exit");
+    }
+
     Method methodScope(MethodScopeContext ctx) {
         Method m = new Method(Face.currentFace()).makeCurrent();
         m.notes().noteAll(notes(ctx));
         m.signature(sign(ctx));
-        m.content(block(ctx));
+        m.content(blockFill(ctx));
         m.construct(value(ctx));
-        m.popScope();
+//        m.popScope();
+        m.reportScope();
         return m;
     }
 
     Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
-    BlockContent block(MethodScopeContext ctx) { return block(ctx.content); }
-    BlockContent block(BlockScopeContext ctx)  { return block(ctx.content); }
-    BlockContent block(BlockFillContext ctx)   { return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
+    BlockContent blockFill(MethodScopeContext ctx) { return blockFill(ctx.content); }
+    BlockContent blockFill(BlockScopeContext ctx)  { return blockFill(ctx.content); }
+    BlockContent blockFill(BlockFillContext ctx) { return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
 
     Block blockScope(BlockContext ctx) {
         Block b = new Block().makeCurrent();
         b.signature(sign(ctx.b.sign));
         b.signature().defineLocals();
-        b.content(block(ctx.b));
-        b.popScope();
+        b.content(blockFill(ctx.b));
+//        b.popScope();
+        b.report(b.nestLevel()+" level");
         return b; }
 
     // names
@@ -133,11 +158,21 @@ public class HootFileListener extends HootBaseListener implements Logging {
     // values
 
     Primary value(TermContext ctx)     { return Primary.with(value(ctx.n)); }
-    Primary value(BlockContext ctx)    { return Primary.with(nest(ctx)); }
     Primary value(LitValueContext ctx) { return Primary.with(literal(ctx.l)); }
     Primary value(TypeNameContext ctx) { return Primary.with(global(ctx)); }
     Primary value(VariableContext ctx) { return Primary.with(literal(ctx)); }
     Primary value(PrimaryContext ctx)  { return applyMatched(terms, ctx); }
+    Primary value(BlockContext ctx)    {
+        Nest n = nest(ctx);
+        try {
+            return Primary.with(n);
+        }
+        finally {
+            n.blockScope().report(n.blockScope()+" exit");
+//            n.blockScope().popScope();
+            Scope.popBlockScope();
+        }
+    }
 
     List<Formula> values(List<FormulaContext> fs) { return map(fs, f -> value(f)); }
     Formula value(FormulaContext ctx) { return Formula.with(message(ctx.s), messages(ctx.ops)); }
@@ -158,15 +193,13 @@ public class HootFileListener extends HootBaseListener implements Logging {
     Construct value(ConstructContext ctx) { return hasNone(ctx)? null: say(ctx); }
     Construct say(ConstructContext ctx) { return Construct.with(literal(ctx.ref), values(ctx.terms)); }
 
-    Variable part(MemberVarContext ctx)  { return Variable.named(name(ctx.v), note(ctx.type)); }
-    Variable part(ArgumentContext ctx)   { return Variable.named(name(ctx.v), note(ctx.type)); }
+    Variable part(MemberVarContext ctx)  { return Variable.memberNamed(name(ctx.v), note(ctx.type)); }
+    Variable part(ArgumentContext ctx)   { return Variable.argNamed(name(ctx.v), note(ctx.type)); }
     Variable part(AssignmentContext ctx) { return Variable.named(name(ctx.v), note(ctx.type), value(ctx.value)); }
 
     Variable value(ArgumentContext ctx)   { return part(ctx).withNotes(notes(ctx.n)); }
     Variable value(AssignmentContext ctx) { return part(ctx).withNotes(notes(ctx.n)).makeAssignment(); }
 
-    @Override public void exitMemberSlot(MemberSlotContext ctx) { faceSlot(ctx); }
-    void faceSlot(MemberSlotContext ctx) { Face.currentFace().addLocal(member(ctx.v)); }
     Variable member(MemberVarContext ctx) { return slot(ctx).defineMember(); }
     Variable slot(MemberVarContext ctx) { return part(ctx).withValue(value(ctx.value)).withNotes(notes(ctx.n)); }
 

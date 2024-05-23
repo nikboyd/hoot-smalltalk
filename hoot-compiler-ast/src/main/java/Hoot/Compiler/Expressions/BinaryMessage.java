@@ -15,7 +15,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  */
 public class BinaryMessage extends Message {
 
-    public BinaryMessage() { super(Scope.current()); }
+    public BinaryMessage() { super(Scope.currentBlock()); }
     public BinaryMessage(Operator op) { this(); operator = op; }
     public static BinaryMessage with(Operator op, Formula term) { return new BinaryMessage(op).withTerm(term); }
 

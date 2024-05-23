@@ -34,7 +34,7 @@ public class Expression extends Operand implements ScopeSource, MessageSource {
         return Expression.with(term, message, wrap(cascades)); }
 
     public static Expression with(Formula term, KeywordMessage message, List<Message> cascades) {
-        Expression result = new Expression(Scope.current());
+        Expression result = new Expression(Scope.currentBlock());
         result.message = message;
         result.cascades.addAll(cascades);
         return result.withTerm(term);
