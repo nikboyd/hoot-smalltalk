@@ -303,9 +303,11 @@ public class HootFileListener extends HootBaseListener implements Logging {
     LiteralString literal(PrimStringContext ctx) { return LiteralString.with(ctx.value.getText(), ctx.start.getLine()); }
     LiteralString literal(StringLiteralContext ctx) { return LiteralString.with(ctx.value.getText(), ctx.start.getLine()); }
 
-    <T,R> R apply(Function f, T it) { return (R)f.apply(it); } // apply function for matched item class
-    <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) { if (hasNone(it)) return null;
-        for (Class<T> c : m.keySet()) if (c.isInstance(it)) return apply(m.get(c), c.cast(it)); return null; }
+    @SuppressWarnings("unchecked") <T,R> R apply(Function f, T it) { return (R)f.apply(it); }
+    @SuppressWarnings("unchecked") <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) {
+        if (hasNone(it)) return null; for (Class<T> c : m.keySet())
+            if (c.isInstance(it)) return apply(m.get(c), c.cast(it));
+        return null; }
 
     final HashMap<Class, Function<? extends ValueNameContext, String>> names = new HashMap<>();
     final HashMap<Class, Function<? extends MethodSignContext, BasicSignature>> signs = new HashMap<>();

@@ -17,9 +17,11 @@ import static Hoot.Runtime.Functions.Utils.*;
 public class Statement extends Item implements ScopeSource, Resulting {
 
     public Statement(Item parent) { super(parent); }
-    protected Statement(Operand item) { this(Scope.currentBlock()); this.item = item.inside(this); }
-    public static Statement with(Operand item) { if (item == null) return null; return new Statement(item); }
-    @Override public void clean() { super.clean(); this.item.clean(); }
+    protected Statement() { this(Scope.currentBlock()); }
+    protected Statement withItem(Operand item) { this.item = item.inside(this); return this; }
+    public static Statement with(Operand item) { return (hasNo(item))? null: new Statement().withItem(item); }
+    @Override public Block block() { return BlockContent.from(container).block(); }
+    @Override public Method method() { return block().method(); }
 
     protected Operand item;
     public boolean isConstruct() { return item.isConstruct(); }
@@ -27,6 +29,7 @@ public class Statement extends Item implements ScopeSource, Resulting {
     @Override public boolean containsExit() { return item.containsExit(); }
     @Override public boolean isResult() { return item.isResult(); }
     @Override public boolean isFramed() { return falseOr(m -> m.needsFrame(), method()); }
+    @Override public void clean() { super.clean(); this.item.clean(); }
 
     public boolean parentProducesPredicate() { return falseOr(p -> p.producesPredicate(), findParent(Statement.class)); }
     public boolean producesPredicate() { return item.producesPredicate(); }

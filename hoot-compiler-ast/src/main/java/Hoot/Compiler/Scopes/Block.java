@@ -65,6 +65,8 @@ public class Block extends Scope implements Signed, ClosureSource {
     public BasicSignature signature() { return sig; }
     public boolean isSigned() { return hasOne(sig); }
     public void signature(BasicSignature s) { this.sig = s.inside(this); reportScope(); }
+
+    @Override public Method method() { return signature().method(); }
     @Override public String description() { return method().description() + "::" + blockName(); }
 
     @Override public boolean hasLocal(String symbolName) {

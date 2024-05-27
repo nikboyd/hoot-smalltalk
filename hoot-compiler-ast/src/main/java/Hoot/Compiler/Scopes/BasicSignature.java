@@ -19,6 +19,8 @@ import Hoot.Runtime.Emissions.*;
  */
 public abstract class BasicSignature extends NamedItem implements ScopeSource {
 
+    Method method = Method.from(Scope.findCurrentMethod());
+    @Override public Method method() { return this.method; }
     public BasicSignature() { super(Scope.currentBlock()); }
     protected Table args = new Table(Scope.currentBlock());
     public Table args() { return this.args; }

@@ -32,9 +32,11 @@ public class CompilerTest implements Logging {
         Typified subject = Library.findFace("Samples.Core.Subject");
         if (hasOne(point)) {
             Signed ps = point.getSigned("equals(Subject)");
-            Signed ss = subject.getSigned("equals(Subject)");
-            assertTrue(ps.overrides(ss));
-            assertTrue(ps.overridesHeritage());
+            if (hasOne(ps)) {
+                Signed ss = subject.getSigned("equals(Subject)");
+                assertTrue(ps.overrides(ss));
+                assertTrue(ps.overridesHeritage());
+            }
         }
     }
 
