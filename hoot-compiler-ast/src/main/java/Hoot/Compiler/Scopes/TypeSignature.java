@@ -89,6 +89,6 @@ public class TypeSignature extends TypeHeritage implements ScopeSource {
 
     Emission emitMetaHeritage() { return hasHeritage() ? heritage().emitMetaNames() : NoValue; }
     @Override public Emission emitMetaItem() {
-        return emitTypeSignature(metaDecorators(), Metatype, NoValue, emitMetaHeritage()); }
+        return emitTypeSignature(metaDecorators(), Metatype, details().emitDetails(true), emitMetaHeritage()); }
 
 } // TypeSignature
