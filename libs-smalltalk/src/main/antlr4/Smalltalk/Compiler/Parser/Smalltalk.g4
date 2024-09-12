@@ -127,7 +127,7 @@ $headList = map($ctx.heads, head -> head.selector);}
 
 namedArgument returns [Variable item = null]
 : v=variableName {
-$item = Variable.named($ctx.v.name, null)
+$item = Variable.argNamed($ctx.v.name, null)
 //.withNotes(map($ctx.notes, n -> n.item))
 ;}
 ;

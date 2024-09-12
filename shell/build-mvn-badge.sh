@@ -15,5 +15,5 @@ mvn_color="red" && [[ $mvn_code == 0 ]] && mvn_color="green"
 mvn_state="failed" && [[ $mvn_code == 0 ]] && mvn_state="passed"
 mvn_url="https://raster.shields.io/static/v1?label=$mvn_label&message=$mvn_state&color=$mvn_color"
 if [ -d $cover_folder ]; then
-    curl $mvn_url > $cover_folder/maven_badge.png
+    curl -s $mvn_url > $cover_folder/maven_badge.png
 fi

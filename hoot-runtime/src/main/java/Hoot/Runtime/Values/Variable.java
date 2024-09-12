@@ -83,7 +83,7 @@ public class Variable extends Operand implements ValueSource {
     public static Variable argNamed(String name, DetailedType type) {
         return from(Scope.currentBlock(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
 
-    public static Variable named(String name, String type, Scope container) {
+    static Variable named(String name, String type, Scope container) {
         return from(container, name, DetailedType.with(Global.named(type))); }
 
     public Variable withErasure() {
