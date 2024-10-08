@@ -35,6 +35,10 @@ public class HootFileListener extends HootBaseListener implements Logging {
     }
 
     // file scopes
+    // make File track active Face and MetaFace for adding Methods
+    // use protocols to switch between Face and MetaFace
+    // within each Face, track active Method and its Blocks
+    // also track active member Variable
 
     @Override public void enterTypeSign(TypeSignContext ctx)   { defineType(); }
     @Override public void enterClassSign(ClassSignContext ctx) { defineClass(); }
@@ -64,7 +68,10 @@ public class HootFileListener extends HootBaseListener implements Logging {
     @Override public void exitSubclassKeyword(SubclassKeywordContext ctx) { faceScope().makeCurrent(); }
     @Override public void exitSubtypeKeyword(SubtypeKeywordContext ctx)   { faceScope().makeCurrent(); }
 
-    @Override public void exitProtocolScope(ProtocolScopeContext ctx) { report("exited protocol"); }
+    @Override public void exitProtocolScope(ProtocolScopeContext ctx) {
+        Face.currentFace().popScope();
+        report("exited protocol"); }
+
     @Override public void exitProtocolSign(ProtocolSignContext ctx) { report("entered protocol"); faceProto(ctx); }
     void faceProto(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
     String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }

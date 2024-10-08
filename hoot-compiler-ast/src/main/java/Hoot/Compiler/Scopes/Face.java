@@ -151,7 +151,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
     protected boolean definesType = true;
     public void definesType(boolean value) { this.definesType = value; }
-    @Override public boolean isInterface() { return signature().isInterface(); } //definesType || (isSigned() && 
+    @Override public boolean isInterface() { return this.definesType || signature().isInterface(); } //definesType || (isSigned() && 
 
     TypeHeritage faceSignature;
     public boolean isSigned() { return hasAny(faceSignature); }
@@ -315,7 +315,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
     @Override public String packageName() { return typePackage().fullName(); }
     public Package typePackage() { return file().facePackage(); }
-    public Face typeFace() { return (this.isMetaface() ? container().asType(Face.class) : this); }
+    public Face typeFace() { return (this.isMetaface() ? file().faceScope() : this); }
     public String typeName() { return (this.isMetaface() ? metaName(typeFace().name()) : name()); }
     @Override public Mirror typeMirror() { return Mirror.forClass(typeClass()); }
 

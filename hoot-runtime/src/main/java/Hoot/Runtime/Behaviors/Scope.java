@@ -23,7 +23,7 @@ public abstract class Scope extends NamedItem implements Resulting {
 
     static final Deque<Scope> FaceScopes = new ArrayDeque<>();
     static void pushFaceScope(Scope s) { FaceScopes.push(s); }
-    public static void popFaceScope() { popSafely(FaceScopes); }
+    public static void popFaceScope() { if (FaceScopes.size() > 1) popSafely(FaceScopes); }
     public static Scope currentFace() { return peekSafely(FaceScopes); }
     public static Scope makeCurrentFace(Scope s) { return makeCurrent(s, FaceScopes); }
 
