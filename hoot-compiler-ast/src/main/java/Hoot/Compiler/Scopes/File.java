@@ -36,15 +36,20 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         File file = new File(pkgName, faceName).makeCurrent();
         file.faceScope().makeCurrent();
         return file; }
-    
+
     public File() { super(null); }
     public File(String packageName, String faceName) {
         this(); facePackage = Package.named(packageName);
         fullName = TypeName.fromName(Name.formType(packageName, faceName)); }
 
-    protected Scope currentScope = this; // manage scopes with each file here
+    protected Scope currentScope = this; // manage scopes within each file here
     @Override protected void currentScope(Scope aScope) { this.currentScope = aScope; }
     @Override public Scope currentScope() { return this.currentScope; }
+
+    // each file needs to track its focus: the current active scopes, both facial and member
+    // facial scope varies between main and meta faces while parsing switched with protocol selector
+    // each facial scope tracks its member focus scope which varies between methods and variables
+    // the parse cursor focus wanders through the code of each file parsed
 
     public static File currentFile() { return from(Scope.currentFile()); }
     public static File from(Item item) { return nullOr(f -> (File)f, Scope.currentFile()); }

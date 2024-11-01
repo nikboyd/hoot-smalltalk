@@ -31,9 +31,12 @@ public class HootFileListener extends HootBaseListener implements Logging {
     @Override public void exitEof(EofContext ctx) {
         Face.currentFace().popScope();
         File.currentFile().popScope();
-        report("===== EOF ====="); 
+        report("===== EOF =====");
     }
 
+    // a librarian knows and manages some libraries
+    // each library contains some packages, faces and files contained in a JAR or a source folder
+    // each library has a name, its JAR name and also its source folder path
     // file scopes
     // make File track active Face and MetaFace for adding Methods
     // use protocols to switch between Face and MetaFace
@@ -50,7 +53,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
     // types + classes
 
     @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(TypeSignContext ctx) { 
+    void signFace(TypeSignContext ctx) {
         Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
     TypeSignature sign(TypeSignContext ctx) {
         return TypeSignature.with(types(ctx), type(ctx),
@@ -58,7 +61,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     // make class sig extend type sig
     @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(ClassSignContext ctx) { 
+    void signFace(ClassSignContext ctx) {
         Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
     ClassSignature sign(ClassSignContext ctx) {
         return ClassSignature.with(superType(ctx), type(ctx), types(ctx),
