@@ -34,7 +34,7 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     // make a new file and its face current
     static UnitFile makeUnit(String faceName, String pkgName) {
         File file = new File(pkgName, faceName).makeCurrent();
-        file.faceScope().makeCurrent();
+//        file.faceScope().makeCurrent();
         return file; }
 
     public File() { super(null); }
@@ -156,6 +156,8 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     @Override public Face faceScope() { return faceScope; }
     @Override public Scope facialScope() { return this.faceScope(); }
     public String faceName() { return faceScope.name(); }
+    @Override public Scope activeFacia() { return activeFace(); }
+    public Face activeFace() { return faceScope().mainScope()? faceScope(): faceScope().metaFace(); }
 
     public Typified faceNamed(String faceName) {
         String baseFace = Name.withoutMeta(faceName);
@@ -273,11 +275,13 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     void reportWriting() { report("writing " + targetFilename()); }
     @Override public Emission emitScope() { return faceScope().emitScope(emitLibraryScope()); }
     @Override public void writeCode() {
+        makeCurrent();
         clean();
         if (hasSome(makeTargetFolder())) { // any failure already reported
             reportWriting();
             tokenCompiler().fileParser().writeCode(emitScope());
         }
+        popScope();
     }
 
 } // File

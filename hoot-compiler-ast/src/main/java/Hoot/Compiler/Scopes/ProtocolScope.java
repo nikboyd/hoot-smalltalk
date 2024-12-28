@@ -15,6 +15,17 @@ import Hoot.Runtime.Emissions.Item;
  */
 public class ProtocolScope extends Item {
 
+    public ProtocolScope(String n, String s) { this.className = n; this.selector = s; }
+    public static ProtocolScope with(String className, String selector) { return new ProtocolScope(className, selector); }
+
+    public boolean metaScope() { return !mainScope(); }
+    public boolean mainScope() { return selector.isEmpty(); }
+    public String selector() { return this.selector; }
+    String selector = "";
+
+    public String className() { return this.className; }
+    String className = "";
+
 //    public static ProtocolScope with(ProtocolSignatureContext context) {
 //        return new ProtocolScope().context(context);
 //    }

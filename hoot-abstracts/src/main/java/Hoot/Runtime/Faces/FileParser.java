@@ -14,8 +14,8 @@ import Hoot.Runtime.Emissions.Emission;
  */
 public interface FileParser extends LanguageParser {
 
-    UnitFile tokenFile();
-    void parseTokens(UnitFile aFile);
+    default UnitFile tokenFile() { return null; }
+    default void parseTokens(UnitFile aFile) {}
 
     default boolean wasParsed() { return !notParsed(); }
     default boolean notParsed() { return !wasParsed(); }

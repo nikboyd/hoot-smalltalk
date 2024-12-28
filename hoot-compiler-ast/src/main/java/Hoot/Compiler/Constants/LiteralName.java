@@ -35,8 +35,8 @@ public class LiteralName extends Constant implements Named {
 
     public List<Typified> faceHeritage() {
         List<Typified> results = emptyList(Typified.class);
-        results.add((Typified)facialScope());
-        results.addAll(facialScope().simpleHeritage());
+        results.add((Typified)activeFacia());
+        results.addAll(activeFacia().simpleHeritage());
         return results; }
 
     public Variable referencedLocal() {

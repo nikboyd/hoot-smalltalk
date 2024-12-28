@@ -211,8 +211,11 @@ public class HootMain implements Logging {
 
     void compilePackages() { prepareCompile(); compileOrTest(); }
     void prepareCompile() { prepareFolders(); cacheLibs(); cachePackages(); loadPaths(); }
-    void compileOrTest() { if (testWanted()) reportPackages(); else compileAllPackages(); }
     void compileAllPackages() { packages().forEach(p -> compilePackage(Package.named(p))); }
+    void compileOrTest() {
+        if (testWanted()) reportPackages(); 
+        else compileAllPackages();
+    }
 
     static final String PackageReport = "packages: %s";
     void reportPackages() { report(format(PackageReport, joinWith(Blank, packages()))); testPackages(); }

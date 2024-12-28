@@ -25,14 +25,13 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     // facial methods
 
-    void defineType()  { Face.currentFace().definesType(true); }
-    void defineClass() { Face.currentFace().definesType(false); }
+    void defineType()  { faceScope().definesType(true); }
+    void defineClass() { faceScope().definesType(false); }
 
-    @Override public void exitEof(EofContext ctx) {
-        Face.currentFace().popScope();
-        File.currentFile().popScope();
-        report("===== EOF =====");
-    }
+    Face activeFace() { return fileScope().activeFace(); }
+    Face faceScope() { return fileScope().faceScope(); }
+    File fileScope() { return File.currentFile(); }
+    @Override public void exitEof(EofContext ctx) { fileScope().popScope(); }
 
     // a librarian knows and manages some libraries
     // each library contains some packages, faces and files contained in a JAR or a source folder
@@ -46,37 +45,28 @@ public class HootFileListener extends HootBaseListener implements Logging {
     @Override public void enterTypeSign(TypeSignContext ctx)   { defineType(); }
     @Override public void enterClassSign(ClassSignContext ctx) { defineClass(); }
     @Override public void exitFileImport(FileImportContext ctx) { importFace(ctx); }
-    void importFace(FileImportContext ctx) { File.currentFile().importFace(imported(ctx)); }
+    void importFace(FileImportContext ctx) { fileScope().importFace(imported(ctx)); }
     Import imported(FileImportContext ctx) { return importSpec(ctx).withLowerCase(hasOne(ctx.c)); }
     Import importSpec(FileImportContext ctx) { return Import.from(value(ctx.g), ctx.m.getText()); }
 
     // types + classes
 
     @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(TypeSignContext ctx) {
-        Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
+    void signFace(TypeSignContext ctx) { faceScope().signature(sign(ctx)); }
     TypeSignature sign(TypeSignContext ctx) {
-        return TypeSignature.with(types(ctx), type(ctx),
-            notes(ctx), keyword(ctx), comment(ctx)); }
+        return TypeSignature.with(types(ctx), type(ctx), notes(ctx), keyword(ctx), comment(ctx)); }
 
     // make class sig extend type sig
     @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
-    void signFace(ClassSignContext ctx) {
-        Face.currentFace().signature(sign(ctx)); Face.currentFace().reportSigned(); }
+    void signFace(ClassSignContext ctx) { faceScope().signature(sign(ctx)); }
     ClassSignature sign(ClassSignContext ctx) {
-        return ClassSignature.with(superType(ctx), type(ctx), types(ctx),
-            notes(ctx), keyword(ctx), comment(ctx)); }
+        return ClassSignature.with(superType(ctx), type(ctx), 
+                types(ctx), notes(ctx), keyword(ctx), comment(ctx)); }
 
-    Hoot.Compiler.Scopes.Face faceScope() { return File.currentFile().faceScope(); }
-    @Override public void exitSubclassKeyword(SubclassKeywordContext ctx) { faceScope().makeCurrent(); }
-    @Override public void exitSubtypeKeyword(SubtypeKeywordContext ctx)   { faceScope().makeCurrent(); }
-
-    @Override public void exitProtocolScope(ProtocolScopeContext ctx) {
-        Face.currentFace().popScope();
-        report("exited protocol"); }
-
-    @Override public void exitProtocolSign(ProtocolSignContext ctx) { report("entered protocol"); faceProto(ctx); }
-    void faceProto(ProtocolSignContext ctx) { Face.currentFace().selectFace(metaProto(ctx)); }
+    ProtocolScope protoScope(String n, String s) { return ProtocolScope.with(n, s); }
+    @Override public void exitProtocolSign(ProtocolSignContext ctx) { addProtocol(ctx); }
+    void addProtocol(ProtocolSignContext ctx) { faceScope().addScope(protoScope(protoFace(ctx), metaProto(ctx))); }
+    String protoFace(ProtocolSignContext ctx) { return ctx.globalName().getText(); }
     String metaProto(ProtocolSignContext ctx) { return hasOne(ctx.s)? ctx.s.getText(): ""; }
 
     // methods + blocks
@@ -85,27 +75,19 @@ public class HootFileListener extends HootBaseListener implements Logging {
     // so that value expressions and their parts have a block context for reference
     @Override public void enterMemberSlot(MemberSlotContext ctx) { }
     @Override public void exitMemberSlot(MemberSlotContext ctx) { faceSlot(ctx); }
-    void faceSlot(MemberSlotContext ctx) { Face.currentFace().addLocal(member(ctx.v)); }
+    void faceSlot(MemberSlotContext ctx) { activeFace().addLocal(member(ctx.v)); }
 
     @Override public void enterMethodMember(MethodMemberContext ctx) {  }
     @Override public void exitMethodMember(MethodMemberContext ctx) { faceMethod(ctx); }
-    void faceMethod(MethodMemberContext ctx) {
-        Method m = methodScope(ctx.m);
-        Face.currentFace().addMethod(m);
-        m.popScope();
-//        m.report(m.description()+" exit");
-    }
+    void faceMethod(MethodMemberContext ctx) { activeFace().addMethod(methodScope(ctx.m)); }
 
     Method methodScope(MethodScopeContext ctx) {
-        Method m = new Method(Face.currentFace()).makeCurrent();
+        Method m = new Method(activeFace()).makeCurrent();
         m.notes().noteAll(notes(ctx));
         m.signature(sign(ctx));
         m.content(blockFill(ctx));
         m.construct(value(ctx));
-//        m.popScope();
-        m.reportScope();
-        return m;
-    }
+        return m; }
 
     Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
     BlockContent blockFill(MethodScopeContext ctx) { return blockFill(ctx.content); }
@@ -117,8 +99,6 @@ public class HootFileListener extends HootBaseListener implements Logging {
         b.signature(sign(ctx.b.sign));
         b.signature().defineLocals();
         b.content(blockFill(ctx.b));
-//        b.popScope();
-        b.report(b.nestLevel()+" level");
         return b; }
 
     // names
@@ -178,8 +158,6 @@ public class HootFileListener extends HootBaseListener implements Logging {
             return Primary.with(n);
         }
         finally {
-            n.blockScope().report(n.blockScope()+" exit");
-//            n.blockScope().popScope();
             Scope.popBlockScope();
         }
     }
@@ -258,8 +236,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
     List<Note> notes(MethodScopeContext ctx) { return notes(ctx.n); }
     List<Note> notes(NotationsContext ctx) { return map(ctx.notes, n -> note(n)); }
 
-    void faceNotes(TypeSignContext ctx) { Face.currentFace().notes().noteAll(notes(unit(ctx))); }
-    void faceNotes(ClassSignContext ctx) { Face.currentFace().notes().noteAll(notes(unit(ctx))); }
+    void faceNotes(TypeSignContext ctx)  { faceScope().notes().noteAll(notes(unit(ctx))); }
+    void faceNotes(ClassSignContext ctx) { faceScope().notes().noteAll(notes(unit(ctx))); }
     CompilationUnitContext unit(TypeSignContext ctx)  { return (CompilationUnitContext)ctx.getParent().getParent(); }
     CompilationUnitContext unit(ClassSignContext ctx) { return (CompilationUnitContext)ctx.getParent().getParent(); }
 
@@ -315,7 +293,8 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     @SuppressWarnings("unchecked") <T,R> R apply(Function f, T it) { return (R)f.apply(it); }
     @SuppressWarnings("unchecked") <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) {
-        if (hasNone(it)) return null; for (Class<T> c : m.keySet())
+        if (hasNone(it)) return null;
+        for (Class c : m.keySet())
             if (c.isInstance(it)) return apply(m.get(c), c.cast(it));
         return null; }
 

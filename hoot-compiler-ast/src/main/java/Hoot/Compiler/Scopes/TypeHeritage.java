@@ -17,7 +17,7 @@ public class TypeHeritage extends NamedItem implements ScopeSource {
     Face faceScope;
     @Override public Face face() { return this.faceScope; }
     public Face face(Face f) { this.faceScope = f; return f; }
-    public TypeHeritage() { super(Scope.currentFace()); }
+    public TypeHeritage() { super(Face.currentFace()); }
     @Override public File file() { return face().file(); }
 
     public String subtypeName() { return subType().typeName().name(); }

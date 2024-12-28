@@ -140,7 +140,7 @@ public class ClassSignature extends TypeHeritage implements ScopeSource {
 
     @Override public Emission emitItem() { return hasSuperclass() ? emitClassSignature() : emitNilSubclassSignature(); }
     @Override public Emission emitMetaItem() {
-        return emitClassSignature(metaDecorators(), MetaclassType, NoValue, superMetaClass(), metaFaces()); }
+        return emitClassSignature(metaDecorators(), MetaclassType, details().emitDetails(true), superMetaClass(), metaFaces()); }
 
     private Emission emitClassSignature() {
         return emitClassSignature(decorators(), subclassName(), details().emitDetails(true), superClass(), faces()); }

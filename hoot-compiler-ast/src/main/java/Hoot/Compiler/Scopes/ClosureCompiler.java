@@ -32,7 +32,7 @@ public class ClosureCompiler implements Logging {
     private void makeScriptScope(String code) {
         fakeFile.makeCurrent();
         fakeFile.addStandardImports();
-        fakeFile.faceScope().makeCurrent();
+//        fakeFile.faceScope().makeCurrent();
         m = new Method().makeCurrent(); // initialize with faked up scope
         m.signature(KeywordSignature.emptyNiladic());
         blockParser = new HootBlockParser(code);

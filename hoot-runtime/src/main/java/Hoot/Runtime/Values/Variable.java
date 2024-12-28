@@ -39,7 +39,7 @@ public class Variable extends Operand implements ValueSource {
     protected void makeDefined() { this.definesValue = true; }
 
     public Variable makeAssignment() { return defineLocal(); }
-    public Variable defineMember() { defineMember(facialScope()); return this; }
+    public Variable defineMember() { defineMember(activeFacia()); return this; }
     private void defineMember(Scope s) { if (!s.hasLocal(this.name())) scopeLocal(s); }
 
     public Variable defineLocal() { defineLocal(blockScope()); return this; }
@@ -73,15 +73,16 @@ public class Variable extends Operand implements ValueSource {
         return named(Frame.name(0), Frame.className(), context); }
     
     // for member only, infer type from name if needed. --nik
+    static DetailedType inferType(String name) { return DetailedType.from(TypeName.inferFrom(name)); }
     public static Variable memberNamed(String name, DetailedType type) {
-        return from(Scope.currentFace(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
+        return from(Scope.currentFile().activeFacia(), name, hasAny(type) ? type : inferType(name)); }
 
     public static Variable named(String name, DetailedType type, Operand value) {
         return from(Scope.currentBlock(), name, type).withValue(value).resolveType(); }
 
     // for arguments only, infer type from name if needed. --nik
     public static Variable argNamed(String name, DetailedType type) {
-        return from(Scope.currentBlock(), name, hasAny(type) ? type : DetailedType.from(TypeName.inferFrom(name))); }
+        return from(Scope.currentBlock(), name, hasAny(type) ? type : inferType(name)); }
 
     static Variable named(String name, String type, Scope container) {
         return from(container, name, DetailedType.with(Global.named(type))); }
@@ -191,8 +192,8 @@ public class Variable extends Operand implements ValueSource {
 
     public List<Typified> faceHeritage() {
         List<Typified> results = emptyList(Typified.class);
-        results.add((Typified)facialScope());
-        results.addAll(facialScope().simpleHeritage());
+        results.add((Typified)activeFacia());
+        results.addAll(activeFacia().simpleHeritage());
         return results; }
 
     public Emission variableNotes() { return emitSequence(notes().variableNotesOnlyDecor()); }

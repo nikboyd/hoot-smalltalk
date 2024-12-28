@@ -51,8 +51,10 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         }
     }
 
-    public static Face currentFace() { return from(Scope.currentFace()); }
-    public static Face from(Item item) { return nullOr(f -> (Face)f, Scope.currentFace()); }
+    public static File currentFile() { return File.currentFile(); }
+    public static Face activeFace() { return currentFile().activeFace(); }
+    public static Face currentFace() { return currentFile().faceScope(); }
+    public static Face from(Item item) { return nullOr(f -> (Face)f, currentFace()); }
     @Override public Face makeCurrent() { return (Face)Scope.makeCurrentFace(this); }
     @Override public Scope popScope() { Scope.popFaceScope(); return currentFace(); }
 //    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }
@@ -167,7 +169,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
         // now, collect all the related notes here
         notes().noteAll(this.faceSignature.notes().notes());
-        reportScope(); return this;
+//        reportScope(); 
+        return this;
     }
 
     public void reportSigned() { report("signed "+description()); }
@@ -185,8 +188,15 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
                 this.signature().knownTypes(); }
 
     List<ProtocolScope> memberScopes = emptyList(ProtocolScope.class);
+    public int memberScopeIndex() { return memberScopes().size()-1; }
     public List<ProtocolScope> memberScopes() { return this.memberScopes; }
-    public void addScope(ProtocolScope scope) { this.memberScopes.add(scope); }
+    public boolean mainScope() { return memberScopes().isEmpty()? true: memberScopeNow().mainScope(); }
+    public ProtocolScope memberScopeNow() { 
+        return memberScopes().isEmpty()? null: memberScopes().get(memberScopeIndex()); }
+    public void addScope(ProtocolScope scope) {
+        memberScopes().add(scope);
+        if (!mainScope()) addMetaface();
+    }
 
     List<Method> methods = emptyList(Method.class);
     public int methodCount() { return methods.size(); }
@@ -238,13 +248,13 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         this.metaFace.signature(signature().metaSignature());
     }
 
-    public Face selectFace(String selector) {
-        // selector == 'class' or empty from parser
-        if (selector.isEmpty()) return typeFace().makeCurrent();
-        if (this.isMetaface()) return makeCurrent();
-        // add metaFace (1st encounter)
-        return addMetaface().makeCurrent();
-    }
+//    public Face selectFace(String selector) {
+//        // selector == 'class' or empty from parser
+//        if (selector.isEmpty()) return typeFace().makeCurrent();
+//        if (this.isMetaface()) return makeCurrent();
+//        // add metaFace (1st encounter)
+//        return addMetaface().makeCurrent();
+//    }
 
     public Typified baseFace() { return faceNamed(typeFace().baseName()); }
     @Override public Typified superclass() { return faceNamed(baseName()); }

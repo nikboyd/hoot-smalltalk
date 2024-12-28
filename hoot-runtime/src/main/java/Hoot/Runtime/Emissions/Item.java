@@ -86,7 +86,8 @@ public abstract class Item implements EmissionSource, Resolver {
 
     public Scope blockScope() { return Scope.currentBlock(); }
     public Scope methodScope() { return findScope(s -> s.isMethod()); }
-    public Scope facialScope() { return Scope.currentFace(); }
+    public Scope facialScope() { return fileScope().facialScope(); }
+    public Scope activeFacia() { return fileScope().activeFacia(); }
     public Scope fileScope() { return Scope.currentFile(); }
 
     public List<Scope> blockScopes() {
