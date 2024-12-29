@@ -31,8 +31,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public Face(File container) { super(container); this.fileScope = container; }
     protected String cachedDescription; // helps debugging
 
-    @Override public int hashCode() { return isSigned() ? signature().hashCode() : super.hashCode(); }
     protected boolean equals(Face f) { return isSigned() && f.isSigned() && signature().equals(f.signature()); }
+    @Override public int hashCode() { return isSigned() ? signature().hashCode() : super.hashCode(); }
     @Override public boolean equals(Object face) {
         return hasAny(face) && getClass() == face.getClass() && falseOr(f -> this.equals(f), (Face) face); }
 
@@ -56,7 +56,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public static Face currentFace() { return currentFile().faceScope(); }
     public static Face from(Item item) { return nullOr(f -> (Face)f, currentFace()); }
     @Override public Face makeCurrent() { return (Face)Scope.makeCurrentFace(this); }
-    @Override public Scope popScope() { Scope.popFaceScope(); return currentFace(); }
+//    @Override public Scope popScope() { Scope.popFaceScope(); return currentFace(); }
 //    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }
 
     public static Typified named(TypeName type) { return named(type.fullName()); }
@@ -196,6 +196,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public void addScope(ProtocolScope scope) {
         memberScopes().add(scope);
         if (!mainScope()) addMetaface();
+//        scope.reportScope();
     }
 
     List<Method> methods = emptyList(Method.class);
@@ -273,6 +274,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public void addMethod(Method method) {
         method.container(this);
         methods.add(method);
+//        if (name().endsWith("TestableClosure"))
+//        report(description()+" added "+method.description());
     }
 
     /**
@@ -302,7 +305,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     @Override public boolean isReflective() { return false; }
     @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }
 
-    public boolean isMetaface() { return containerScope().isFacial(); }
+    public boolean isMetaface() { return this.name().startsWith("Meta"); }
     public boolean isMetaclassBase() { return this.name().equals(Metaclass + "Base"); }
 
     public String className() { return this.isMetaface() ? typeFace().name() + " class" : name(); }

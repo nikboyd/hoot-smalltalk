@@ -85,6 +85,7 @@
                         <package>Hoot.Collections</package>
                         <package>Hoot.Geometry</package>
                         <package>Hoot.Streams</package>
+                        <package>Hoot.Metrics</package>
                         <package>Hoot.Tests</package>
                         <package>Hoot.Tools</package>
                     </packages>

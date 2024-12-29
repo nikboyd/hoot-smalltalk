@@ -77,14 +77,14 @@ public class ClassSignature extends TypeHeritage implements ScopeSource {
     public Emission superClass() { return (hasSuperclass() ? superType().emitItem() : emitObject()); }
     public Emission superMetaClass() {
         if (!hasSuperclass()) return emitObject();
-        if (Keyword.Object.equals(subclassName())) return emitItem(MetaclassBase);
+        if (Keyword.Object.equals(subclassName())) return emitItem(Behavior);
         return superType().emitMetaName(false);
     }
 
     private DetailedType superMetaType() {
         if (!hasSuperclass()) return null;
         return JavaRoot.getName().equals(superClass.simpleName()) ?
-                DetailedType.with(Global.with(MetaclassBase)) :
+                DetailedType.with(Global.with(Behavior)) :
                 DetailedType.with(Global.with(superClass.simpleName(), MetaclassType));
     }
 
@@ -140,7 +140,7 @@ public class ClassSignature extends TypeHeritage implements ScopeSource {
 
     @Override public Emission emitItem() { return hasSuperclass() ? emitClassSignature() : emitNilSubclassSignature(); }
     @Override public Emission emitMetaItem() {
-        return emitClassSignature(metaDecorators(), MetaclassType, details().emitDetails(true), superMetaClass(), metaFaces()); }
+        return emitClassSignature(metaDecorators(), MetaclassType, NoValue, superMetaClass(), metaFaces()); }
 
     private Emission emitClassSignature() {
         return emitClassSignature(decorators(), subclassName(), details().emitDetails(true), superClass(), faces()); }

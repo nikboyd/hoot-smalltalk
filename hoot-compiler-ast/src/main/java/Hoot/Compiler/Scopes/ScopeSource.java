@@ -16,7 +16,7 @@ import static Hoot.Runtime.Emissions.Emission.*;
 public interface ScopeSource extends EmissionSource {
 
     default File file() { return File.currentFile(); }
-    default Face face() { return Face.currentFace(); }
+    default Face face() { return Face.activeFace(); }
     default Variable variable() { return Variable.from((Item)this); }
     default Method method() { return Method.currentMethod(); }
     default Block block() { return Block.currentBlock(); }

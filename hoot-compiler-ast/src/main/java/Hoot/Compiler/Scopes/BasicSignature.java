@@ -21,6 +21,8 @@ public abstract class BasicSignature extends NamedItem implements ScopeSource {
 
     Method method = Method.from(Scope.findCurrentMethod());
     @Override public Method method() { return this.method; }
+    @Override public Face face() { return method().face(); }
+
     public BasicSignature() { super(Scope.currentBlock()); }
     protected Table args = new Table(Scope.currentBlock());
     public Table args() { return this.args; }
@@ -90,13 +92,16 @@ public abstract class BasicSignature extends NamedItem implements ScopeSource {
     }
 
     private List<Emission> emitGenericDetails() {
+//        report("in "+description()+" meta="+face().isMetaface());
         HashSet<String> types = copySet(knownTypes.keySet());
+//        report(" known types "+types.toString());
         if (!method().isStatic() && !face().isMetaface()) {
             types.removeAll(facialScope().knownTypes());
         }
 
         List<Emission> results = emptyList(Emission.class);
         types.forEach(typeName -> results.add(knownTypes.get(typeName)));
+//        report(" known types "+types.toString());
         return results;
     }
 

@@ -25,6 +25,11 @@ public class ProtocolScope extends Item {
 
     public String className() { return this.className; }
     String className = "";
+    
+    static final String ProtoForm = "%s %s members";
+    public void reportScope() {
+        report(String.format(ProtoForm, className(), mainScope()? "main": selector()));
+    }
 
 //    public static ProtocolScope with(ProtocolSignatureContext context) {
 //        return new ProtocolScope().context(context);

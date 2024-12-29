@@ -25,14 +25,15 @@ TestableClosure "constructing" members:
 
     @Property String! name := String emptyString.
     @Static TestableClosure! named: String! name [ ^TestableClosure basicNew: name ]
-    String! description [ ^name notEmpty ifFalse: [ String from: self getClass getSimpleName ] ifTrue: [ name ] ]
+    String! description [ 
+        ^name notEmpty ifFalse: [ String from: self getClass getSimpleName ] ifTrue: [ name ] ]
 
     "also make instantiable by other classes"
     @Protected! TestableClosure: String! nameString [ name := nameString. ]
     @Protected! TestableClosure: Closure! c [ closure := c. ]
 
     @Static TestableClosure! named: String! name
-    repeat: SmallInteger! count closure: Closure! c [
+        repeat: SmallInteger! count closure: Closure! c [
         ^((TestableClosure basicNew: name) with: c) reportAfterRepeated: count ]
 ]
 
@@ -49,13 +50,14 @@ TestableClosure "snapshot" members:
     MetricsSnapshot! afterTest := MetricsSnapshot basicNew.
     Void! snapshotAfterTest [ afterTest := MetricsSnapshot basicNew. ]
 
-    Array? MetricsSnapshot! snapshots [ ^#( beforeTest afterTest ) ]
+    "Array? MetricsSnapshot! snapshots [ ^#( beforeTest afterTest ) ]"
     reportSnapshots [
         beforeTest reportUsage: 'afore test'.
         afterTest  reportUsage: 'after test'.
         afterTest  reportHeapUsage.
         self log cr.
     ]
+
 ]
 
 TestableClosure "reporting" members:

@@ -23,8 +23,12 @@ import Hoot.Compiler.Expressions.*;
  */
 public class Method extends Block {
 
-    public Method() { this(Face.currentFace()); }
-    public Method(Face face) { super(face); this.content = new BlockContent(this); }
+    public Method() { this(Face.activeFace()); }
+    public Method(Face face) { super(face);
+        this.aFace = face; this.content = new BlockContent(this); }
+
+    Face aFace = Face.activeFace();
+    @Override public Face face() { return this.aFace; }
 
     @Override public void clean() { super.clean(); noteOverride(); }
     protected void noteOverride() { if (this.needsOverrideNote()) notes().note(OverrideNote); }

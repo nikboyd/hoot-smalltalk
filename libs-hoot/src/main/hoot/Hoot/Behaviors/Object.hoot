@@ -21,6 +21,8 @@ Java Lang Object subclass:
 
 Object class members:
 [
+    @Override Boolean! isMetaclass [ ^true ]
+    Behavior! instanceClass [ ^HootRegistry getRegistered: self outerClass ]
     Subject! new [ ^(Primitive newInstance: self outerClass) ]
     Boolean! accepts: Java Lang Object! item [
         ^Boolean from: (self outerClass isInstance: item) ]
