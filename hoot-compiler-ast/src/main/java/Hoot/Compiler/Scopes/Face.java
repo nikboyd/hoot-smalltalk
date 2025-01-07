@@ -55,7 +55,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public static Face activeFace() { return currentFile().activeFace(); }
     public static Face currentFace() { return currentFile().faceScope(); }
     public static Face from(Item item) { return nullOr(f -> (Face)f, currentFace()); }
-    @Override public Face makeCurrent() { return (Face)Scope.makeCurrentFace(this); }
+    @Override public Face makeCurrent() { return this; } // no op
 //    @Override public Scope popScope() { Scope.popFaceScope(); return currentFace(); }
 //    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }
 
@@ -429,7 +429,10 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     }
 
 
-    public List<Emission> emitMethods() { return map(methods(), m -> m.emitScope()); }
+    public List<Emission> emitMethods() { 
+        return map(methods(), m -> m.emitScope());
+    }
+
     @Override public List<Emission> emitLocalVariables() {
         return map(locals().definedSymbols(), v -> emitStatement(v.emitItem())); }
 

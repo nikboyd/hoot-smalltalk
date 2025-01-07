@@ -88,7 +88,11 @@ public class Method extends Block {
     private List<String> argumentSignatures() { return map(arguments(), arg -> arg.typeResolver().shortName()); }
 
     public Emission emitNotes() { return emitSequence(notes().methodNotesWithoutDecor()); }
-    @Override public Emission emitScope() { return isAbstract() ? emitAbstract() : emitSimple(); }
+    @Override public Emission emitScope() {
+        makeCurrent(); // manage scope
+        try { return isAbstract() ? emitAbstract() : emitSimple(); }
+        finally { popScope(); }
+    }
 
     @Override public boolean needsFrame() {
         if (isEmpty()) return false;

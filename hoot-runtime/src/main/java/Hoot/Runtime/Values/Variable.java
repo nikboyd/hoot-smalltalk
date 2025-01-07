@@ -220,9 +220,11 @@ public class Variable extends Operand implements ValueSource {
 
     @Override public Emission emitOperand() {
         if (this.hasValue()) {
-            if (this.isStacked()) return this.hasTypeNote() ? emitSequence(emitSimply(), emitBinding()) : emitBoundValue();
+            if (this.isStacked()) return this.hasTypeNote() ? 
+                emitSequence(emitSimply(), emitBinding()) : emitBoundValue();
             if (this.referencesStacked()) return emitBoundValue();
             if (operandValue().hasCascades()) return emitValue();
+            if (!definesValue()) return emitPair(name(), emitValue());
         }
 
         return emitSimply();

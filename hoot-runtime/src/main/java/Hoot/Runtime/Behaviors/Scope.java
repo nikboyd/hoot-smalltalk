@@ -21,12 +21,6 @@ public abstract class Scope extends NamedItem implements Resulting {
     public static Scope currentFile() { return peekSafely(FileScopes); }
     public static Scope makeCurrentFile(Scope s) { return makeCurrent(s, FileScopes); }
 
-    static final Deque<Scope> FaceScopes = new ArrayDeque<>();
-    static void pushFaceScope(Scope s) { FaceScopes.push(s); }
-    public static void popFaceScope() { if (FaceScopes.size() > 1) popSafely(FaceScopes); }
-    public static Scope currentFace() { return peekSafely(FaceScopes); }
-    public static Scope makeCurrentFace(Scope s) { return makeCurrent(s, FaceScopes); }
-
     static final Deque<Scope> BlockScopes = new ArrayDeque<>();
     static void pushBlockScope(Scope s) { BlockScopes.push(s); }
     public static void popBlockScope() { popSafely(BlockScopes); }
@@ -44,36 +38,19 @@ public abstract class Scope extends NamedItem implements Resulting {
         BlockScopes.iterator().forEachRemaining((b) -> { if (b.isMethod() && bs.isEmpty()) bs.add(b); });
         return bs.isEmpty()? null: bs.get(0); }
 
-    static <S extends Scope> S peekSafely(Deque<S> s) { return s.isEmpty()? null: (S)s.peek(); }
     static void popSafely(Deque<?> s) { if (!s.isEmpty()) s.pop(); }
+    static <S extends Scope> S peekSafely(Deque<S> s) { return s.isEmpty()? null: (S)s.peek(); }
     static <S extends Scope>boolean currently(S scope, Deque<S> s) { return peekSafely(s) == scope; }
     static <S extends Scope> S makeCurrent(S scope, Deque<S> s) { if (!currently(scope, s)) s.push(scope); return scope; }
 
     // make scope stack for files, faces, methods = blocks
-    private static final Deque<Scope> Scopes = new ArrayDeque<>();
-    private static void popSafely() { if (!Scopes.isEmpty()) Scopes.pop(); }
-//    public static Scope currentFile() { return Scopes.empty() ? null : Scopes.peek(); }
     private void pushScope(Scope scope) {
         if (scope.isFile()) pushFileScope(scope);
-        if (scope.isFacial()) pushFaceScope(scope);
         if (scope.isBlock() || scope.isMethod()) pushBlockScope(scope);
-
-//        if (scope.isFile()) {
-//            Scopes.push(scope);
-//        }
-//        else {
-//            currentFile().currentScope(scope);
-//        }
-//        reportScope(currentScope());
+//        reportScope(scope);
     }
 
     public Scope popScope() {
-//        if (this.isFile()) {
-//            popSafely();
-//        }
-//        else {
-//            currentFile().currentScope(nullOr(s -> s.containerScope(), current()));
-//        }
         return reportScope(currentScope());
     }
 
@@ -98,9 +75,9 @@ public abstract class Scope extends NamedItem implements Resulting {
 
     protected Table locals = new Table(this);
     public Table locals() { return this.locals; }
+    public void addLocal(Variable variable) { locals().addSymbol(variable); }
     public boolean hasLocals() { return !locals().isEmpty(); }
     public boolean hasLocal(String symbolName) { return locals().containsSymbol(symbolName); }
-    public void addLocal(Variable variable) { locals().addSymbol(variable); }
     public Variable localNamed(String symbol) { return locals().symbolNamed(symbol); }
 
     @Override public Emission emitItem() { return emitScope(); }

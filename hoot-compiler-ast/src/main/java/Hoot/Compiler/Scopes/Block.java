@@ -36,7 +36,6 @@ public class Block extends Scope implements Signed, ClosureSource {
     @Override public void clean() { sig.clean(); content.clean(); super.clean(); }
     @Override public Block makeCurrent() { return (Block)Scope.makeCurrentBlock(this); }
     @Override public Scope popScope() { Scope.popBlockScope(); return currentBlock(); }
-//    @Override public Block makeCurrent() { super.makeCurrent(); return this; }
     private void checkScope() { if (hasNone(container())) warn("null parent scope in Block"); }
 
     @Override public boolean isBlock() { return true; }
@@ -126,7 +125,11 @@ public class Block extends Scope implements Signed, ClosureSource {
         return emitBlockSignature(blockName(), erasure, emitList(emitArguments()), emitEmpty()); }
 
     public Emission emitFinalValue() { return isEmpty() ? emitEmpty() : content().emitFinalValue(); }
-    public Emission emitContents() { return isEmpty() ? emitEmpty() : content().emitItem(); }
+    public Emission emitContents() {
+        makeCurrent(); // manage scope
+        try { return isEmpty() ? emitEmpty() : content().emitItem(); }
+        finally { popScope(); }
+    }
 
     static final String[] valueMessages = { "value", "value", "value_value" };
     private String valueMessage() { return valueMessages[argumentCount()]; }
