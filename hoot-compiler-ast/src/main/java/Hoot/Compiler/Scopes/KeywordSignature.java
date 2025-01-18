@@ -17,7 +17,9 @@ import static Hoot.Runtime.Names.Keyword.*;
 public class KeywordSignature extends BasicSignature {
 
     public KeywordSignature() { super(); this.keyword = Keyword.with(); }
-    public static KeywordSignature emptyNiladic() { return with(null, emptyList(Variable.class)); }
+    public static KeywordSignature emptyNiladic() {
+        return with(DetailedType.named(Keyword.Void), emptyList(Variable.class)); }
+
     public static KeywordSignature with(DetailedType resultType, List<Variable> args) {
         List<Variable> allArgs = hasSome(args)? args: emptyList(Variable.class);
         List<String> tails = emptyList(String.class); for (Variable arg : allArgs) tails.add(Colon);

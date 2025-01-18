@@ -47,6 +47,7 @@
         <!-- keep ANTLR versions in sync -->
         <version.antlr>4.13.1</version.antlr>
         <version.antlr.st>4.3.4</version.antlr.st>
+        <version.janino>3.1.12</version.janino>
 
         <version.spring-boot>2.5.15</version.spring-boot>
         <version.slf4j>1.7.30</version.slf4j>

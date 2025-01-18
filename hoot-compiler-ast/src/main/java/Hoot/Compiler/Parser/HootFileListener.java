@@ -91,7 +91,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
     BlockContent blockFill(MethodScopeContext ctx) { return blockFill(ctx.content); }
-    BlockContent blockFill(BlockScopeContext ctx)  { return blockFill(ctx.content); }
+    public BlockContent blockFill(BlockScopeContext ctx)  { return blockFill(ctx.content); }
     BlockContent blockFill(BlockFillContext ctx) { return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
 
     Block blockScope(BlockContext ctx) {
