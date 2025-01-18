@@ -36,6 +36,7 @@ public interface ValueSource extends EmissionSource {
         return emit("Variable").name(name).type(type).with("notes", notes).value(value).comment(comment); }
 
     default Emission emitTransient(String name, Emission type, Emission value, boolean needsCast) {
-        return emit("TransientLocal").name(name).type(type).value(value).with("cast", needsCast ? type : emitEmpty()); }
+        return emit("TransientLocal").name(name).type(type).value(value)
+                .with("cast", needsCast ? type : emitEmpty()); }
 
 } // ValueSource

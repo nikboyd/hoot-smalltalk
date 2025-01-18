@@ -1,13 +1,10 @@
 package Hoot.Compiler.Scopes;
 
-import java.util.*;
 import org.codehaus.janino.*;
-
-import Hoot.Compiler.Parser.*;
 import Hoot.Runtime.Behaviors.Scope;
 import Hoot.Compiler.Parser.HootBlockParser;
 import static Hoot.Runtime.Functions.Exceptional.*;
-import static Hoot.Runtime.Functions.Utils.*;
+import static Hoot.Runtime.Faces.Logging.*;
 import Hoot.Runtime.Faces.Logging;
 
 /**
@@ -24,45 +21,36 @@ public class ClosureCompiler implements Logging {
      * @param code a code block
      * @return a result
      */
-    public static Object evaluate(String code) { return new ClosureCompiler(code).parseClosure().evaluate(); }
-    public ClosureCompiler(String closureCode) { makeScriptScope(closureCode); }
+    public static Object evaluate(String code) {
+        return create(code).parseClosure().evaluate(); }
 
-    Method m; // wait to initialize
-    File fakeFile = new File("Hoot.Scripts", "Scripted");
-    private void makeScriptScope(String code) {
-        fakeFile.makeCurrent();
-        fakeFile.addStandardImports();
-        fakeFile.faceScope().makeCurrent();
-        m = new Method().makeCurrent(); // initialize with faked up scope
-        m.signature(KeywordSignature.emptyNiladic());
-        blockParser = new HootBlockParser(code);
-    }
+    static ClosureCompiler create(String code) { return new ClosureCompiler(code); }
+    public ClosureCompiler(String code) { blockParser = HootBlockParser.create(code); }
+    ClosureCompiler parseClosure() { parser().parseClosure(); return this; }
 
-    static final Object[] NoArgs = { };
-    public Object evaluate() { return nullOrTryLoudly(() ->
-        buildEvaluator().evaluate(NoArgs), () -> Scope.currentFile().popScope()); }
+    public Object evaluate() {
+        String javaCode = compiledCode();
+        return isEmpty(javaCode)? null: evaluateJava(javaCode); }
+
+    static final Object[] NoArgs = {};
+    Object evaluateJava(String javaCode) {
+        return nullOrTryLoudly(() -> 
+            buildEvaluator(javaCode).evaluate(NoArgs), 
+            () -> Scope.popFileScope()); }
 
     HootBlockParser blockParser;
-    ClosureCompiler parseClosure() { this.blockParser.parseTokens(); this.blockParser.walkResult(); return this; }
-    HootParser.BlockScopeContext blockScope() { return this.blockParser.blockScope(); }
-    String compiledCode() { return blockScope().b.emitContents().render(); }
+    HootBlockParser parser() { return this.blockParser; }
+    String compiledCode() { return parser().compiledCode().trim(); }
 
-    static final String[] NoNames = {};
-    private String[] importedTypes() { // only non-static imports
-        List<String> results = map(select(fakeFile.faceImports(), imp -> !imp.importsStatics()), imp -> imp.importedName());
-        return unwrap(results, NoNames); }
-
-    String[] argNames = {};
-    Class<?>[] argTypes = {};
-    Class<?>[] thrownTypes = {};
     Class<?> returnType = Object.class;
-    private ScriptEvaluator buildEvaluator() throws Exception {
-        ScriptEvaluator result = new ScriptEvaluator();
+    // uses Janino - https://janino-compiler.github.io/janino/
+    private ExpressionEvaluator buildEvaluator(String javaCode) throws Exception {
+        ExpressionEvaluator result = new ExpressionEvaluator();
         result.setReturnType(returnType);
-        result.setDefaultImports(importedTypes());
-        result.setParameters(argNames, argTypes);
-        result.setThrownExceptions(thrownTypes);
-        result.cook(compiledCode());
+        result.setDefaultExpressionType(returnType);
+        result.setDefaultImports(parser().importedTypes());
+        result.setStaticMethod(true);
+        result.cook(javaCode);
         return result;
     }
 

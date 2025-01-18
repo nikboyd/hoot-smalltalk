@@ -2,7 +2,6 @@ package Hoot.Compiler.Scopes;
 
 import java.util.*;
 import Hoot.Runtime.Emissions.*;
-import Hoot.Runtime.Behaviors.Scope;
 import Hoot.Runtime.Faces.Resulting;
 import static Hoot.Runtime.Functions.Utils.*;
 import Hoot.Compiler.Expressions.*;
@@ -16,8 +15,13 @@ import Hoot.Compiler.Expressions.*;
  */
 public class BlockContent extends Item implements ScopeSource, Resulting {
 
-    public BlockContent() { this(Scope.current()); }
-    public BlockContent(Scope s) { super(s); }
+    Block block;
+    @Override public Block block() { return this.block; }
+    @Override public Method method() { return block().method(); }
+
+    public BlockContent() { this(Block.currentBlock()); }
+    public BlockContent(Block b) { super(b); this.block = b; }
+    public static BlockContent from(Item item) { return nullOr(b -> (BlockContent)b, item); }
     @Override public void clean() { super.clean(); statements().forEach(s -> s.clean()); }
 
     public static BlockContent emptyBlock() { return new BlockContent(); }
@@ -25,7 +29,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
         BlockContent result = new BlockContent();
         result.periodCount = periodCount;
         result.statements.addAll(select(statements, s -> hasOne(s)));
-        result.addResult(exit);
+        result.addResult(exit); // can have exit == null
         return result.acquireStatements();
     }
 
@@ -78,7 +82,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
 
         // for methods ...
         if (hasOne(b) && b.isMethod()) {
-            Method m = method();
+            Method m = Method.currentMethod();
             if (x == null && m.isPrimitive()) {
                 // primitive methods are coded exactly as wanted
                 return; // done here

@@ -26,7 +26,7 @@ public class HootFileParser implements FileParser {
 
     CommonTokenStream tokenStream; // cached token stream
     @Override public CommonTokenStream tokenStream() { return tokenStream; }
-    CommonTokenStream tokenStream(CommonTokenStream stream) { this.tokenStream = stream; return stream; }
+//    CommonTokenStream tokenStream(CommonTokenStream stream) { this.tokenStream = stream; return stream; }
 
     TokenSource source;
     TokenSource createLexer() { return new HootLexer(createInputStream()); }
@@ -34,7 +34,7 @@ public class HootFileParser implements FileParser {
 
     UnitFile tokenFile;
     @Override public UnitFile tokenFile() { return tokenFile; }
-    String tokenFilepath() { return tokenFile.sourceFile().getAbsolutePath(); }
+//    String tokenFilepath() { return tokenFile.sourceFile().getAbsolutePath(); }
 
     HootParser parser;
     HootParser createParser() { return new HootParser(tokenStream()); }

@@ -14,7 +14,7 @@ WriteStream? ElementType -> Object. "A write-able stream (on a collection)."
 
 WriteStream class members:
 [
-    WriteStream! with: CollectedVariably? ElementType -> Subject! aCollection [ ^WriteStream basicNew: aCollection ]
+    WriteStream! with: CollectedVariably! aCollection [ ^WriteStream basicNew: aCollection ]
 
     String! lineSeparator [ ^LineSeparator ]
 ]
@@ -43,7 +43,7 @@ WriteStream "writing" members:
     nextPut: ElementType! element [
         (self collectsElements: Object <- element) ifTrue: [
             self contents add: element.
-            position := position + 1.
+            self position: self position + 1.
         ].
     ]
 
@@ -51,7 +51,7 @@ WriteStream "writing" members:
         elements notEmpty ifTrue: [
             (self collectsElements: Object <- elements first) ifTrue: [
                 self contents addAll: elements.
-                position := position + elements size.
+                self position: self position + elements size.
             ]
         ].
     ]

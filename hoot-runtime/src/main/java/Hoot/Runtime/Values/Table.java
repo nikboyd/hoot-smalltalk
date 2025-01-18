@@ -37,6 +37,7 @@ public class Table extends NamedItem {
     public List<Variable> symbols() { return copyList(order); }
     public List<Variable> definedSymbols() { return select(order, v -> !v.isEmpty()); }
     @Override public boolean isEmpty() { return this.order == null || this.order.isEmpty(); }
+    public void defineLocals() { definedSymbols().forEach(v -> v.defineLocal()); }
 
     /**
      * Establishes (container) as the container for this scope.

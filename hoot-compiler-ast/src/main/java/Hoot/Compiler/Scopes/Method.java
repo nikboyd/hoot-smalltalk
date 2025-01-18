@@ -23,15 +23,20 @@ import Hoot.Compiler.Expressions.*;
  */
 public class Method extends Block {
 
-    public Method() { this(Face.currentFace()); }
-    public Method(Face face) { super(face); this.content = new BlockContent(this); }
+    public Method() { this(Face.activeFace()); }
+    public Method(Face face) { super(face);
+        this.aFace = face; this.content = new BlockContent(this); }
+
+    Face aFace = Face.activeFace();
+    @Override public Face face() { return this.aFace; }
 
     @Override public void clean() { super.clean(); noteOverride(); }
     protected void noteOverride() { if (this.needsOverrideNote()) notes().note(OverrideNote); }
     public boolean needsOverrideNote() { return overridesHeritage() || matchesStandardOverride(); }
 
-    @Override public Method makeCurrent() { super.makeCurrent(); Face.currentFace().addMethod(this); return this; }
-    public static Method currentMethod() { return from(Scope.current()); }
+    @Override public Method makeCurrent() { return (Method)Scope.makeCurrentBlock(this); }
+//    @Override public Method makeCurrent() { super.makeCurrent(); return this; }
+    public static Method currentMethod() { return from(Scope.findCurrentMethod()); }
     public static Method from(Item item) { return nullOr(m -> (Method)m, item.methodScope()); }
     public void construct(Construct c) { content().add(c); }
 
@@ -83,7 +88,11 @@ public class Method extends Block {
     private List<String> argumentSignatures() { return map(arguments(), arg -> arg.typeResolver().shortName()); }
 
     public Emission emitNotes() { return emitSequence(notes().methodNotesWithoutDecor()); }
-    @Override public Emission emitScope() { return isAbstract() ? emitAbstract() : emitSimple(); }
+    @Override public Emission emitScope() {
+        makeCurrent(); // manage scope
+        try { return isAbstract() ? emitAbstract() : emitSimple(); }
+        finally { popScope(); }
+    }
 
     @Override public boolean needsFrame() {
         if (isEmpty()) return false;

@@ -77,6 +77,19 @@
             <plugin>
                 <groupId>hoot-smalltalk</groupId>
                 <artifactId>hoot-maven-plugin</artifactId>
+                <configuration>
+                    <packages>
+                        <package>Hoot.Behaviors</package>
+                        <package>Hoot.Magnitudes</package>
+                        <package>Hoot.Exceptions</package>
+                        <package>Hoot.Collections</package>
+                        <package>Hoot.Geometry</package>
+                        <package>Hoot.Streams</package>
+                        <package>Hoot.Metrics</package>
+                        <package>Hoot.Tests</package>
+                        <package>Hoot.Tools</package>
+                    </packages>
+                </configuration>
                 <executions>
                     <execution>
                         <goals><goal>generate</goal></goals>

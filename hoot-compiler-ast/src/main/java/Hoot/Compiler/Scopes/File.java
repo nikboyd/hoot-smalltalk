@@ -1,9 +1,6 @@
 package Hoot.Compiler.Scopes;
 
-import java.io.*;
 import java.util.*;
-//import org.stringtemplate.v4.AutoIndentWriter;
-
 import Hoot.Runtime.Faces.*;
 import Hoot.Runtime.Names.*;
 import Hoot.Runtime.Emissions.*;
@@ -12,13 +9,12 @@ import Hoot.Runtime.Maps.Package;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Maps.Library.*;
 import static Hoot.Runtime.Emissions.Emission.*;
-import static Hoot.Runtime.Maps.Package.*;
 
+import Hoot.Runtime.Maps.Library;
 import Hoot.Compiler.Notes.Comment;
 import Hoot.Compiler.Expressions.Import;
 import static Hoot.Compiler.Expressions.Import.*;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
-import Hoot.Runtime.Maps.Library;
 import static Hoot.Runtime.Names.Keyword.Smalltalk;
 import static Hoot.Runtime.Names.TypeName.EmptyType;
 import static org.apache.commons.lang3.StringUtils.defaultString;
@@ -32,21 +28,33 @@ import static org.apache.commons.lang3.StringUtils.defaultString;
  */
 public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSource {
 
+    public static final UnitFile.Factory StandardUnitFactory = (f, p) -> makeUnit(f, p);
+    static { Package.UnitFactory = StandardUnitFactory; }
+
+    // make a new file and its face current
+    static UnitFile makeUnit(String faceName, String pkgName) {
+        File file = new File(pkgName, faceName).makeCurrent();
+//        file.faceScope().makeCurrent();
+        return file; }
+
     public File() { super(null); }
     public File(String packageName, String faceName) {
         this(); facePackage = Package.named(packageName);
         fullName = TypeName.fromName(Name.formType(packageName, faceName)); }
 
-    public static final UnitFile.Factory StandardUnitFactory = (faceName, pkgName) -> new File(pkgName, faceName);
-    static { UnitFactory = StandardUnitFactory; }
-
-    protected Scope currentScope = this; // manage scopes with each file here
+    protected Scope currentScope = this; // manage scopes within each file here
     @Override protected void currentScope(Scope aScope) { this.currentScope = aScope; }
     @Override public Scope currentScope() { return this.currentScope; }
 
+    // each file needs to track its focus: the current active scopes, both facial and member
+    // facial scope varies between main and meta faces while parsing switched with protocol selector
+    // each facial scope tracks its member focus scope which varies between methods and variables
+    // the parse cursor focus wanders through the code of each file parsed
+
     public static File currentFile() { return from(Scope.currentFile()); }
-    public static File from(Item item) { return nullOr(f -> (File)f, item.fileScope()); }
-    @Override public Scope makeCurrent() { return super.makeCurrent(); }
+    public static File from(Item item) { return nullOr(f -> (File)f, Scope.currentFile()); }
+    @Override public File makeCurrent() { return (File)Scope.makeCurrentFile(this); }
+    @Override public Scope popScope() { Scope.popFileScope(); return currentFile(); }
 
     protected Map<String, UnitFile> peerFaces = emptyMap(UnitFile.class);
     protected Map<String, UnitFile> peers() { return this.peerFaces; }
@@ -148,6 +156,8 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     @Override public Face faceScope() { return faceScope; }
     @Override public Scope facialScope() { return this.faceScope(); }
     public String faceName() { return faceScope.name(); }
+    @Override public Scope activeFacia() { return activeFace(); }
+    public Face activeFace() { return faceScope().mainScope()? faceScope(): faceScope().metaFace(); }
 
     public Typified faceNamed(String faceName) {
         String baseFace = Name.withoutMeta(faceName);
@@ -265,11 +275,13 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     void reportWriting() { report("writing " + targetFilename()); }
     @Override public Emission emitScope() { return faceScope().emitScope(emitLibraryScope()); }
     @Override public void writeCode() {
+        makeCurrent();
         clean();
         if (hasSome(makeTargetFolder())) { // any failure already reported
             reportWriting();
             tokenCompiler().fileParser().writeCode(emitScope());
         }
+        popScope();
     }
 
 } // File

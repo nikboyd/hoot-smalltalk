@@ -15,9 +15,9 @@ import static Hoot.Runtime.Names.Name.Metatype;
  * @see "Copyright 2010,2021 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
-public class TypeSignature extends NamedItem implements ScopeSource {
+public class TypeSignature extends TypeHeritage implements ScopeSource {
 
-    public TypeSignature() { super(Scope.current()); }
+    public TypeSignature() { super(); }
     @Override public boolean isInterface() { return true; }
 
     public static TypeSignature with(
@@ -49,19 +49,6 @@ public class TypeSignature extends NamedItem implements ScopeSource {
         if (hasNoHeritage()) return s.hasNoHeritage();
         return heritage().equals(s.heritage()); }
 
-    String comment;
-    @Override public String comment() { return this.comment; }
-
-    String keyword;
-    public String subtypeKeyword() { return this.keyword; }
-
-    DetailedType subtype;
-    public DetailedType subType() { return this.subtype; }
-    public TypeList details() { return subType().details(); }
-    public String subtypeName() { return subType().typeName().name(); }
-
-    TypeList heritage;
-    public TypeList heritage() { return this.heritage; }
     @Override public boolean hasNoHeritage() { return heritage().isEmpty(); }
     @Override public List<Typified> typeHeritage() {
         Set<Typified> results = emptySet(Typified.class);
@@ -76,14 +63,14 @@ public class TypeSignature extends NamedItem implements ScopeSource {
     }
 
     public Typified faceNamed(String name) { return faceScope().faceNamed(name); }
-    public Face faceScope() { return containerScope().asType(Face.class); }
+    public Face faceScope() { return face(); }
 
+    public List<String> decor() { return notes().typeDecor(); }
     @Override public String description() { return name() + " -> " + baseName(); }
     @Override public String name() { return subtypeName(); }
     @Override public String fullName() { return faceScope().fullName(); }
-    @Override public String baseName() { return !hasHeritage() ? Empty : heritage().list().get(0).toTypeName().fullName(); }
-
-    public List<String> decor() { return notes().typeDecor(); }
+    @Override public String baseName() { 
+        return !hasHeritage() ? Empty : heritage().list().get(0).toTypeName().fullName(); }
 
     @Override public List<String> knownTypes() {
         HashSet<String> results = emptySet(String.class);
@@ -102,6 +89,6 @@ public class TypeSignature extends NamedItem implements ScopeSource {
 
     Emission emitMetaHeritage() { return hasHeritage() ? heritage().emitMetaNames() : NoValue; }
     @Override public Emission emitMetaItem() {
-        return emitTypeSignature(metaDecorators(), Metatype, NoValue, emitMetaHeritage()); }
+        return emitTypeSignature(metaDecorators(), Metatype, details().emitDetails(true), emitMetaHeritage()); }
 
 } // TypeSignature

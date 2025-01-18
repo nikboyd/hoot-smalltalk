@@ -62,10 +62,11 @@ public class HootMain implements Logging {
 
     static String normalPath(String p) { return Package.normalPath(p); }
     String defaultSourcePath() { return defaultSourceFolder().getPath(); }
-    File defaultSourceFolder() {
-        return new File(removeTail(normalPath(targetTail()), targetFolder.getPath()), normalPath(sourceTail())); }
-    String removeTail(String tail, String path) {
-        return (path.endsWith(tail)) ? path.substring(0, path.length() - tail.length()) : path; }
+    File defaultSourceFolder() { return new File(normalTargetFolder(), normalSource()); }
+    String normalSource() { return normalPath(sourceTail()); }
+    String normalTargetFolder() { return removeTail(normalPath(targetTail()), targetFolderPath()); }
+    String shorten(String path, String tail) { return path.substring(0, path.length() - tail.length()); }
+    String removeTail(String tail, String path) { return path.endsWith(tail)? shorten(path, tail): path; }
 
     String targetTail() { return hasTestSource() ? TargetTest : TargetPath; }
     String sourceTail() { return hasTestSource() ? SourceTest : SourcePath; }
@@ -73,6 +74,7 @@ public class HootMain implements Logging {
         return hasTestSource() ? testSourcePath() :
                hasMainSource() ? sourcePath() : defaultSourcePath(); }
 
+    String targetFolderPath() { return targetFolder.getPath(); }
     String targetPath() { return emptyOr((c) -> c.getOptionValue(Folder, targetTail()), command); }
     String sourcePath() { return emptyOr((c) -> c.getOptionValue(Source, sourceTail()), command); }
     String sourceType() { return emptyOr((c) -> c.getOptionValue(Language, SourceFileType), command); }
@@ -209,8 +211,11 @@ public class HootMain implements Logging {
 
     void compilePackages() { prepareCompile(); compileOrTest(); }
     void prepareCompile() { prepareFolders(); cacheLibs(); cachePackages(); loadPaths(); }
-    void compileOrTest() { if (testWanted()) reportPackages(); else compileAllPackages(); }
     void compileAllPackages() { packages().forEach(p -> compilePackage(Package.named(p))); }
+    void compileOrTest() {
+        if (testWanted()) reportPackages(); 
+        else compileAllPackages();
+    }
 
     static final String PackageReport = "packages: %s";
     void reportPackages() { report(format(PackageReport, joinWith(Blank, packages()))); testPackages(); }

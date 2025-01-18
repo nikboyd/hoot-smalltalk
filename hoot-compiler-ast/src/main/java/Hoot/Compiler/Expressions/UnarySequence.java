@@ -22,7 +22,7 @@ import Hoot.Compiler.Constants.*;
  */
 public class UnarySequence extends Message {
 
-    public UnarySequence() { super(Scope.current()); }
+    public UnarySequence() { super(Scope.currentBlock()); }
     @Override public void clean() { super.clean(); cleanPrimary(); }
 
     public static UnarySequence yourself() { return with(Primary.with(LiteralName.with(Self))); }

@@ -37,7 +37,7 @@ public abstract class NamedItem extends Item implements Named {
     void warnMissing(String search, String name) { warn(format(MissingReport, search, fullName(), name)); }
 
     public boolean reportWhetherKnown(String search, Typified type, String name) {
-        if (StringUtils.isEmpty(name) || hasNo(type)) {
+        if (StringUtils.isEmpty(name) || !hasSome(type)) {
 //            warnMissing(search, name);
             return false;
         }

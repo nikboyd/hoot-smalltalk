@@ -16,7 +16,7 @@ import Hoot.Compiler.Scopes.*;
  */
 public class Formula extends Message {
 
-    public Formula() { super(Scope.current()); }
+    public Formula() { super(Scope.currentBlock()); }
     @Override public void clean() { super.clean(); cleanPrimary(); cleanOps(); }
 
     public static Formula with(UnarySequence term) { return with(term, emptyList(BinaryMessage.class)); }

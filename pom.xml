@@ -47,6 +47,7 @@
         <!-- keep ANTLR versions in sync -->
         <version.antlr>4.13.1</version.antlr>
         <version.antlr.st>4.3.4</version.antlr.st>
+        <version.janino>3.1.12</version.janino>
 
         <version.spring-boot>2.5.15</version.spring-boot>
         <version.slf4j>1.7.30</version.slf4j>
@@ -396,6 +397,7 @@
                 <maven.compiler.target>21</maven.compiler.target>
                 <maven.compiler.release>21</maven.compiler.release>
                 <version.spring-boot>3.1.4</version.spring-boot>
+                <version.maven.jacoco>0.8.12</version.maven.jacoco>
                 <compiler-args>-proc:full</compiler-args>
             </properties>
         </profile>

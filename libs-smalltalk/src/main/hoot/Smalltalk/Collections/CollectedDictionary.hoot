@@ -18,7 +18,7 @@ CollectedDictionary type "accessing hierarchy" members:
 
 CollectedDictionary "accessing keys" members:
 [
-    CollectedDistinctly? KeyType! keys "the keys" []
+    CollectedDistinctly? KeyType -> Scalar! keys "the keys" []
 
     KeyType! keyAtValue: ElementType! element "the index associated with an element" []
 
@@ -46,7 +46,7 @@ CollectedDictionary "accessing elements" members:
 
     Associated! add: Associated! elementPair "adds elementPair to this dictionary" []
 
-    CollectedDictionary! addAll: CollectedDictionary? KeyType : ElementType! elementPairs
+    CollectedDictionary! addAll: CollectedDictionary? KeyType -> Scalar : ElementType! elementPairs
     "adds some elementPairs from another to this dictionary" []
 ]
 
@@ -68,10 +68,10 @@ CollectedDictionary "removing elements" members:
     ElementType! removeKey: KeyType! key ifAbsent: NiladicValuable! aBlock
     "removes the element associated with the supplied key, or evaluates aBlock if the key is missing" []
 
-    removeAllKeys: CollectedDistinctly? KeyType! keys
+    removeAllKeys: CollectedDistinctly? KeyType -> Scalar! keys
     "removes all elements identified by the supplied keys" []
 
-    removeAllKeys: CollectedDistinctly? KeyType! keys ifAbsent: MonadicValuable! aBlock
+    removeAllKeys: CollectedDistinctly? KeyType -> Scalar! keys ifAbsent: MonadicValuable! aBlock
     "removes all elements identified by the supplied keys, and evaluates aBlock with every missing key" []
 ]
 

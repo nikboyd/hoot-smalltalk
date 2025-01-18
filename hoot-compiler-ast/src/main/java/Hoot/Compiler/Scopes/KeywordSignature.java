@@ -16,28 +16,34 @@ import static Hoot.Runtime.Names.Keyword.*;
  */
 public class KeywordSignature extends BasicSignature {
 
-    public KeywordSignature() { super(); }
-    public static KeywordSignature emptyNiladic() { return with(null, emptyList(Variable.class)); }
+    public KeywordSignature() { super(); this.keyword = Keyword.with(); }
+    public static KeywordSignature emptyNiladic() {
+        return with(DetailedType.named(Keyword.Void), emptyList(Variable.class)); }
+
     public static KeywordSignature with(DetailedType resultType, List<Variable> args) {
         List<Variable> allArgs = hasSome(args)? args: emptyList(Variable.class);
         List<String> tails = emptyList(String.class); for (Variable arg : allArgs) tails.add(Colon);
         return with(resultType, allArgs, emptyList(String.class), tails); }
 
+
     public static KeywordSignature with(
-            DetailedType resultType, List<Variable> args, List<String> heads, List<String> tails) {
+            DetailedType resultType, List<Variable> args, Keyword keyword) {
         KeywordSignature result = new KeywordSignature();
+        result.keyword = keyword;
         result.resultType = resultType;
         result.args.withAll(hasSome(args)? args: emptyList(Variable.class));
-        result.heads.addAll(hasSome(heads)? heads: emptyList(String.class));
-        result.tails.addAll(hasSome(tails)? tails: emptyList(String.class));
         return result;
     }
 
-    List<String> heads = emptyList(String.class);
-    List<String> tails = emptyList(String.class);
-    @Override public String name() { return Keyword.with(heads, tails).methodName(); }
+    public static KeywordSignature with(
+            DetailedType resultType, List<Variable> args, List<String> heads, List<String> tails) {
+        return with(resultType, args, Keyword.with(heads, tails));
+    }
+
+    Keyword keyword;
+    @Override public String name() { return this.keyword.methodName(); }
     @Override public BasicSignature eraseTypes() {
         return KeywordSignature.with(DetailedType.RootType,
-                map(arguments(), arg -> arg.withErasure()), heads, tails); }
+                map(arguments(), arg -> arg.withErasure()), keyword); }
 
 } // KeywordSignature

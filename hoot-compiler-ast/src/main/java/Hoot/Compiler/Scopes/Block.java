@@ -24,8 +24,8 @@ public class Block extends Scope implements Signed, ClosureSource {
 
     public Block() { this(Block.currentBlock()); }
     public Block(Scope aScope) { super(aScope); checkScope(); }
-    public static Block currentBlock() { return from(Scope.current()); }
-    public static Block from(Item item) { return nullOr(b -> (Block)b, item.blockScope()); }
+    public static Block currentBlock() { return from(Scope.currentBlock()); }
+    public static Block from(Item item) { return nullOr(b -> (Block)b, item); }
     public static Block emptyBlock() {
         Block result = new Block();
         result.signature(KeywordSignature.emptyNiladic());
@@ -34,7 +34,8 @@ public class Block extends Scope implements Signed, ClosureSource {
     }
 
     @Override public void clean() { sig.clean(); content.clean(); super.clean(); }
-    @Override public Block makeCurrent() { super.makeCurrent(); return this; }
+    @Override public Block makeCurrent() { return (Block)Scope.makeCurrentBlock(this); }
+    @Override public Scope popScope() { Scope.popBlockScope(); return currentBlock(); }
     private void checkScope() { if (hasNone(container())) warn("null parent scope in Block"); }
 
     @Override public boolean isBlock() { return true; }
@@ -63,6 +64,8 @@ public class Block extends Scope implements Signed, ClosureSource {
     public BasicSignature signature() { return sig; }
     public boolean isSigned() { return hasOne(sig); }
     public void signature(BasicSignature s) { this.sig = s.inside(this); reportScope(); }
+
+    @Override public Method method() { return signature().method(); }
     @Override public String description() { return method().description() + "::" + blockName(); }
 
     @Override public boolean hasLocal(String symbolName) {
@@ -122,7 +125,11 @@ public class Block extends Scope implements Signed, ClosureSource {
         return emitBlockSignature(blockName(), erasure, emitList(emitArguments()), emitEmpty()); }
 
     public Emission emitFinalValue() { return isEmpty() ? emitEmpty() : content().emitFinalValue(); }
-    public Emission emitContents() { return isEmpty() ? emitEmpty() : content().emitItem(); }
+    public Emission emitContents() {
+        makeCurrent(); // manage scope
+        try { return isEmpty() ? emitEmpty() : content().emitItem(); }
+        finally { popScope(); }
+    }
 
     static final String[] valueMessages = { "value", "value", "value_value" };
     private String valueMessage() { return valueMessages[argumentCount()]; }

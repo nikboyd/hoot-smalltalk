@@ -1,0 +1,4 @@
+Object subclass: Scripted.
+Scripted members: [
+    Object! doIt %s
+]

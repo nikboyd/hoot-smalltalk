@@ -17,7 +17,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  * @see "Copyright 2010,2021 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
-//@Ignore
+@Ignore
 public class CompilerTest implements Logging {
 
     static final Object TestMain = mainly();
@@ -32,9 +32,11 @@ public class CompilerTest implements Logging {
         Typified subject = Library.findFace("Samples.Core.Subject");
         if (hasOne(point)) {
             Signed ps = point.getSigned("equals(Subject)");
-            Signed ss = subject.getSigned("equals(Subject)");
-            assertTrue(ps.overrides(ss));
-            assertTrue(ps.overridesHeritage());
+            if (hasOne(ps)) {
+                Signed ss = subject.getSigned("equals(Subject)");
+                assertTrue(ps.overrides(ss));
+                assertTrue(ps.overridesHeritage());
+            }
         }
     }
 

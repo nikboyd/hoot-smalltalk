@@ -25,10 +25,10 @@ Dictionary class members: "creating instances"
     Dictionary! new [ "a new empty Dictionary" ^self new: 10 ]
     Dictionary! new: Ordinal! capacity [ ^Dictionary basicNew: capacity ]
 
-    Dictionary! withAll: CollectedDictionary? KeyType -> Scalar : ElementType -> Subject! pairedElements [
+    Dictionary! withAll: CollectedDictionary! pairedElements [
         Dictionary! results := self new: pairedElements size.
         pairedElements keysAndValuesDo:
-            [ : KeyType! key : ElementType! value | results at: Object <- key put: Object <- value. ].
+            [ : Object! key : Object! value | results at: key put: value. ].
         ^results ]
 
     Dictionary! from: Java Util Map! primitiveMap [

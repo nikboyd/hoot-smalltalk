@@ -10,13 +10,11 @@ import Hoot.Runtime.Behaviors.*;
 import Hoot.Runtime.Emissions.*;
 
 import static Hoot.Runtime.Emissions.Emission.*;
-import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Name.Metaclass;
 import static Hoot.Runtime.Names.Name.Metatype;
 import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Names.Operator.Dot;
 import static Hoot.Runtime.Names.Keyword.Nil;
-import static Hoot.Runtime.Functions.Exceptional.*;
 import static Hoot.Runtime.Functions.Utils.*;
 
 /**
@@ -28,11 +26,13 @@ import static Hoot.Runtime.Functions.Utils.*;
  */
 public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSource {
 
-    public Face(Scope container) { super(container); }
+    File fileScope;
+    @Override public File file() { return fileScope; }
+    public Face(File container) { super(container); this.fileScope = container; }
     protected String cachedDescription; // helps debugging
 
-    @Override public int hashCode() { return isSigned() ? signature().hashCode() : super.hashCode(); }
     protected boolean equals(Face f) { return isSigned() && f.isSigned() && signature().equals(f.signature()); }
+    @Override public int hashCode() { return isSigned() ? signature().hashCode() : super.hashCode(); }
     @Override public boolean equals(Object face) {
         return hasAny(face) && getClass() == face.getClass() && falseOr(f -> this.equals(f), (Face) face); }
 
@@ -51,14 +51,18 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         }
     }
 
-    public static Face currentFace() { return from(Scope.current()); }
-    public static Face from(Item item) { return nullOr(f -> (Face)f, item.facialScope()); }
-    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }
+    public static File currentFile() { return File.currentFile(); }
+    public static Face activeFace() { return currentFile().activeFace(); }
+    public static Face currentFace() { return currentFile().faceScope(); }
+    public static Face from(Item item) { return nullOr(f -> (Face)f, currentFace()); }
+    @Override public Face makeCurrent() { return this; } // no op
+//    @Override public Scope popScope() { Scope.popFaceScope(); return currentFace(); }
+//    @Override public Face makeCurrent() { File.currentFile().currentScope(this); return this; }
 
     public static Typified named(TypeName type) { return named(type.fullName()); }
     public static Typified named(String faceName) { return Library.findFace(faceName); }
     public static Typified from(Class type) { return named(type.getCanonicalName()); }
-    public Typified faceNamed(String name) { return File.from(this).faceNamed(name); }
+    public Typified faceNamed(String name) { return file().faceNamed(name); }
 
     /**
      * Java package root.
@@ -149,9 +153,9 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
     protected boolean definesType = true;
     public void definesType(boolean value) { this.definesType = value; }
-    @Override public boolean isInterface() { return signature().isInterface(); } //definesType || (isSigned() && 
+    @Override public boolean isInterface() { return this.definesType || signature().isInterface(); } //definesType || (isSigned() && 
 
-    NamedItem faceSignature;
+    TypeHeritage faceSignature;
     public boolean isSigned() { return hasAny(faceSignature); }
     public NamedItem signature() {
         if (!isSigned()) { file().parse(); }
@@ -160,13 +164,16 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public Face signature(NamedItem signature) {
         if (hasNo(signature)) return this;
         this.faceSignature = signature.inside(this);
+        this.faceSignature.face(this);
         this.cachedDescription = description();
 
         // now, collect all the related notes here
         notes().noteAll(this.faceSignature.notes().notes());
-        reportScope(); return this;
+//        reportScope(); 
+        return this;
     }
 
+    public void reportSigned() { report("signed "+description()); }
     @Override public String description() { return "Face " + signedDescription(); }
     @Override public String baseName() { return emptyOr(s -> s.baseName(), signature()); }
     public String signedDescription() { return isSigned() ? signature().description() : fileScope().name(); }
@@ -181,12 +188,15 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
                 this.signature().knownTypes(); }
 
     List<ProtocolScope> memberScopes = emptyList(ProtocolScope.class);
-    public List<ProtocolScope> memberScopes() {
-        return this.memberScopes;
-    }
-
+    public int memberScopeIndex() { return memberScopes().size()-1; }
+    public List<ProtocolScope> memberScopes() { return this.memberScopes; }
+    public boolean mainScope() { return memberScopes().isEmpty()? true: memberScopeNow().mainScope(); }
+    public ProtocolScope memberScopeNow() { 
+        return memberScopes().isEmpty()? null: memberScopes().get(memberScopeIndex()); }
     public void addScope(ProtocolScope scope) {
-        this.memberScopes.add(scope);
+        memberScopes().add(scope);
+        if (!mainScope()) addMetaface();
+//        scope.reportScope();
     }
 
     List<Method> methods = emptyList(Method.class);
@@ -232,20 +242,20 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     protected Face metaFace = null;
     @Override public Typified $class() { return this.metaFace; }
     @Override public boolean hasMetaface() { return this.metaFace != null; }
-    public Face addMetaface() { if (!this.hasMetaface()) metaFace(new Face(this)); return this.metaFace; }
+    public Face addMetaface() { if (!this.hasMetaface()) metaFace(new Face(file())); return this.metaFace; }
     public Face metaFace() { return this.metaFace; }
     public void metaFace(Face aFace) {
         this.metaFace = aFace;
         this.metaFace.signature(signature().metaSignature());
     }
 
-    public Face selectFace(String selector) {
-        // selector == 'class' or empty from parser
-        if (selector.isEmpty()) return typeFace().makeCurrent();
-        if (this.isMetaface()) return makeCurrent();
-        // add metaFace (1st encounter)
-        return addMetaface().makeCurrent();
-    }
+//    public Face selectFace(String selector) {
+//        // selector == 'class' or empty from parser
+//        if (selector.isEmpty()) return typeFace().makeCurrent();
+//        if (this.isMetaface()) return makeCurrent();
+//        // add metaFace (1st encounter)
+//        return addMetaface().makeCurrent();
+//    }
 
     public Typified baseFace() { return faceNamed(typeFace().baseName()); }
     @Override public Typified superclass() { return faceNamed(baseName()); }
@@ -264,14 +274,16 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public void addMethod(Method method) {
         method.container(this);
         methods.add(method);
+//        if (name().endsWith("TestableClosure"))
+//        report(description()+" added "+method.description());
     }
 
     /**
      * Adds a new method to those defined by this face.
      */
-    public void addMethod() {
-        addMethod(new Method(this));
-    }
+//    public void addMethod() {
+//        addMethod(new Method(this));
+//    }
 
     public boolean isPackaged() {
         return (typePackage() instanceof Package);
@@ -293,7 +305,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     @Override public boolean isReflective() { return false; }
     @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }
 
-    public boolean isMetaface() { return containerScope().isFacial(); }
+    public boolean isMetaface() { return this.name().startsWith("Meta"); }
     public boolean isMetaclassBase() { return this.name().equals(Metaclass + "Base"); }
 
     public String className() { return this.isMetaface() ? typeFace().name() + " class" : name(); }
@@ -315,8 +327,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public Mirror baseMirror() { return Mirror.forClass(baseClass()); }
 
     @Override public String packageName() { return typePackage().fullName(); }
-    public Package typePackage() { return File.from(this).facePackage(); }
-    public Face typeFace() { return (this.isMetaface() ? container().asType(Face.class) : this); }
+    public Package typePackage() { return file().facePackage(); }
+    public Face typeFace() { return (this.isMetaface() ? file().faceScope() : this); }
     public String typeName() { return (this.isMetaface() ? metaName(typeFace().name()) : name()); }
     @Override public Mirror typeMirror() { return Mirror.forClass(typeClass()); }
 
@@ -417,7 +429,10 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     }
 
 
-    public List<Emission> emitMethods() { return map(methods(), m -> m.emitScope()); }
+    public List<Emission> emitMethods() { 
+        return map(methods(), m -> m.emitScope());
+    }
+
     @Override public List<Emission> emitLocalVariables() {
         return map(locals().definedSymbols(), v -> emitStatement(v.emitItem())); }
 

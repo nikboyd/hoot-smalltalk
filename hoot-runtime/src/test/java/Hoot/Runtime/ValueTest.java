@@ -9,6 +9,8 @@ import Hoot.Runtime.Names.Selector;
 import Hoot.Runtime.Values.Value;
 import Hoot.Runtime.Values.Variable;
 import static Hoot.Runtime.Functions.Utils.*;
+import Hoot.Runtime.Names.Global;
+import Hoot.Runtime.Notes.DetailedType;
 
 /**
  * Confirms proper operation of named values.
@@ -18,7 +20,8 @@ import static Hoot.Runtime.Functions.Utils.*;
 public class ValueTest implements Logging {
 
     @Test public void sampleVariable() {
-        Variable v = Variable.named("sample", null);
+        Scope s = new Scope(null) {};
+        Variable v = Variable.from(s, "sample", DetailedType.with(Global.named("SomeType")));
         v.emitOperand();
         v.emitVariable();
         v.emitArgument(true);
@@ -26,7 +29,6 @@ public class ValueTest implements Logging {
         v.emitType();
 //        v.emitProperty();
 
-        Scope s = new Scope(null) {};
         s.addLocal(v);
         s.localNamed("sample");
         s.locals().definedSymbols();

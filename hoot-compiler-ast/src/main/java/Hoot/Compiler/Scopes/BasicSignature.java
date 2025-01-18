@@ -19,13 +19,18 @@ import Hoot.Runtime.Emissions.*;
  */
 public abstract class BasicSignature extends NamedItem implements ScopeSource {
 
-    public BasicSignature() { super(Scope.current()); }
-    protected Table args = new Table(Scope.current());
+    Method method = Method.from(Scope.findCurrentMethod());
+    @Override public Method method() { return this.method; }
+    @Override public Face face() { return method().face(); }
+
+    public BasicSignature() { super(Scope.currentBlock()); }
+    protected Table args = new Table(Scope.currentBlock());
     public Table args() { return this.args; }
     public List<Variable> arguments() { return args().definedSymbols(); }
     @Override public void clean() { super.clean(); args().clean(); }
     public boolean hasLocal(String symbolName) { return args().containsSymbol(symbolName); }
     public Variable localNamed(String symbolName) { return args().symbolNamed(symbolName); }
+    public void defineLocals() { args().defineLocals(); }
 
     protected DetailedType resultType;
     public DetailedType resultType() { return this.resultType; }
@@ -87,13 +92,16 @@ public abstract class BasicSignature extends NamedItem implements ScopeSource {
     }
 
     private List<Emission> emitGenericDetails() {
+//        report("in "+description()+" meta="+face().isMetaface());
         HashSet<String> types = copySet(knownTypes.keySet());
+//        report(" known types "+types.toString());
         if (!method().isStatic() && !face().isMetaface()) {
             types.removeAll(facialScope().knownTypes());
         }
 
         List<Emission> results = emptyList(Emission.class);
         types.forEach(typeName -> results.add(knownTypes.get(typeName)));
+//        report(" known types "+types.toString());
         return results;
     }
 
