@@ -16,7 +16,7 @@ ReadStream? ElementType -> Object. "A readable stream (on a collection)."
 
 ReadStream class members:
 [
-    ReadStream! on: CollectedReadably? ElementType -> Subject! aCollection [ ^ReadStream basicNew: aCollection ]
+    ReadStream! on: CollectedReadably! aCollection [ ^ReadStream basicNew: aCollection ]
 ]
 
 ReadStream members: "constructing instances"
