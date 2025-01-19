@@ -20,23 +20,23 @@ each badge below links to some test reports:
 
 <div align="left" >
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/maven_badge.png" />
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/maven_badge.png?" />
 </a>
 </div>
 
 <div align="left" >
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/coverage_badge.png" />
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/libs-hoot/coverage_badge.png?" />
 </a>
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/coverage_badge.png" />
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-runtime/coverage_badge.png?" />
 </a>
 <br/>
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/coverage_badge.png" />
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-plugin/coverage_badge.png?" />
 </a>
 <a href="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/index.html">
-<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/coverage_badge.png" />
+<img src="https://hoot-docs-host-drm7kw4jza-uw.a.run.app/hoot-compiler/coverage_badge.png?" />
 </a>
 </div>
 </td>
