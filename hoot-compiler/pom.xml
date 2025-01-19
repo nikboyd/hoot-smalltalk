@@ -92,7 +92,7 @@
                     <execution><goals><goal>antlr4</goal></goals></execution>
                 </executions>
             </plugin>
-<!--
+
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven.surefire}</version>
@@ -115,7 +115,7 @@
                     </execution>
                 </executions>
             </plugin>
--->
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
