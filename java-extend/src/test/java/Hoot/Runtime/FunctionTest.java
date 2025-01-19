@@ -8,7 +8,7 @@ import static Hoot.Runtime.Functions.Utils.*;
 
 /**
  * Confirms proper operation of functional extensions.
- * @author Copyright 2010,2023 Nikolas S. Boyd. All rights reserved.
+ * @author Copyright 2010,2025 Nikolas S. Boyd. All rights reserved.
  * @author nik <nikboyd@sonic.net>
  */
 public class FunctionTest implements Logging {

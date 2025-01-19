@@ -7,7 +7,7 @@ import static Hoot.Runtime.Functions.Exceptional.*;
  * Implementors of this marker are expected to override value and count.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2019 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface Selector extends Named, Valued {

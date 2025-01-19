@@ -14,7 +14,7 @@ import Hoot.Runtime.Notes.DetailedType;
 
 /**
  * Confirms proper operation of named values.
- * @author Copyright 2010,2017 Nikolas S. Boyd. All rights reserved.
+ * @author Copyright 2010,2025 Nikolas S. Boyd. All rights reserved.
  * @author nik <nikboyd@sonic.net>
  */
 public class ValueTest implements Logging {

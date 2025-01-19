@@ -16,7 +16,7 @@ import Hoot.Runtime.Faces.Logging;
  * Confirms proper operation of path loading.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class PathTest implements Logging {

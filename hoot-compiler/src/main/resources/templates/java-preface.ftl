@@ -1,5 +1,5 @@
 [#ftl]
-[#-- Copyright 2010,2019 Nikolas S Boyd.
+[#-- Copyright 2010,2025 Nikolas S Boyd.
 Permission is granted to copy this work provided this copyright statement is retained in all copies.
 --]
 [#if file.notice()??]

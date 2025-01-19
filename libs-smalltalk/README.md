@@ -134,7 +134,7 @@ The Hoot library code followed suit where appropriate.
 | 5.10.4 | FileStream factory | Hoot Streams [FileStream][file-stream] class |
 
 ```
-Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

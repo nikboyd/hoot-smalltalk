@@ -50,7 +50,7 @@ each badge below links to some test reports:
 
 
 ```
-Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 See https://github.com/nikboyd/hoot-smalltalk/blob/main/LICENSE.txt for LICENSE details.

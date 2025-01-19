@@ -10,7 +10,7 @@ import static Hoot.Runtime.Emissions.Emission.*;
  * Grafts scopes and their emissions onto items of different kinds.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface ScopeSource extends EmissionSource {

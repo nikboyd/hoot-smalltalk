@@ -9,7 +9,7 @@ import Hoot.Runtime.Emissions.Emission;
  * A constructor invocation.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Construct extends KeywordMessage {

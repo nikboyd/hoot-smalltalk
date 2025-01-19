@@ -41,7 +41,7 @@ Each section link below leads to a discussion about specific language features a
 | [Future](road-map.md)      | Possible paths forward for Hoot |
 
 ```
-Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

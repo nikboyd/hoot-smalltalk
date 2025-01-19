@@ -23,7 +23,7 @@ import static org.apache.commons.lang3.StringUtils.defaultString;
  * A class (or type) file, including the package name, imports, and a face definition.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSource {

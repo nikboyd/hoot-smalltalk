@@ -12,7 +12,7 @@ import static Hoot.Runtime.Names.Name.Metatype;
  * A type definition signature.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class TypeSignature extends TypeHeritage implements ScopeSource {

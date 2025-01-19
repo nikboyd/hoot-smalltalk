@@ -14,7 +14,7 @@ import static Hoot.Runtime.Names.TypeName.EmptyType;
  * A reference to self, super, or some scoped variable.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class LiteralName extends Constant implements Named {

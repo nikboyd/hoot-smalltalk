@@ -9,7 +9,7 @@ import Hoot.Runtime.Notes.TypeList;
  * Describes the heritage of a type.
  * 
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2024 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class TypeHeritage extends NamedItem implements ScopeSource {

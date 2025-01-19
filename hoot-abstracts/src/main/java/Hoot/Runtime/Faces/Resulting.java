@@ -9,7 +9,7 @@ package Hoot.Runtime.Faces;
  * nested ^exits are method results that bail out of a method, and require special frames and handling
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2019 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface Resulting {

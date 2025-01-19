@@ -13,7 +13,7 @@ import Hoot.Runtime.Faces.Logging;
  * Locates all package folders relative to a base path from the class path.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2021 Nikolas S Boyd."
+ * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class PathMap implements Logging {

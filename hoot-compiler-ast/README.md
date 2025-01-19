@@ -15,7 +15,7 @@ the AST nodes have been separated out from the remaining compiler.
 
 
 ```
-Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

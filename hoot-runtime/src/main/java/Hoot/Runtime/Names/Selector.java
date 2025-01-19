@@ -15,7 +15,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  * A method name (Smalltalk selector).
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2021 Nikolas S Boyd."
+ * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Selector extends NamedItem implements Hoot.Runtime.Faces.Selector, EmissionSource {

@@ -7,7 +7,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  * Common standard utility functions for executing closures and handling exceptions.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2019 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface Exceptional extends Hoot.Runtime.Faces.Logging {

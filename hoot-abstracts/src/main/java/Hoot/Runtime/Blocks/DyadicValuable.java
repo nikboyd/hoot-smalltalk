@@ -5,7 +5,7 @@ package Hoot.Runtime.Blocks;
  * Defines the type signature for ANSI Smalltalk DyadicValuable (section 5.4.6).
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2019 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public interface DyadicValuable extends Arguable {

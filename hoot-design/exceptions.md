@@ -52,7 +52,7 @@ Additionally, these mechanisms support rapid [method exits](blocks.md#method-ret
 | <p align="center">[Tests][tests]</p><img width="250" height="1" /> | <p align="center">[Blocks][blocks]</p><img width="250" height="1" />  | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
-Copyright 2010,2024 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
 provided this copyright statement is retained in all copies.
 ```
 

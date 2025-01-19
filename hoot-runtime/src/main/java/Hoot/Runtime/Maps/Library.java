@@ -18,7 +18,7 @@ import static Hoot.Runtime.Names.Primitive.*;
  * Packages are located relative to the system class path established by the Java environment.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2021 Nikolas S Boyd."
+ * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Library implements TypeName.Resolver {

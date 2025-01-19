@@ -9,7 +9,7 @@ import Hoot.Runtime.Faces.Logging;
  * Emits generated code using StringTemplate v4.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2019 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Emission implements Emitter, Logging {

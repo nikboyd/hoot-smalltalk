@@ -8,7 +8,7 @@ import static Hoot.Runtime.Functions.Utils.hasOne;
  * A named value.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class NamedValue extends Constant implements Named {

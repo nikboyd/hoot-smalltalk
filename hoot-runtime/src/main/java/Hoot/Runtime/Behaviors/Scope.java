@@ -10,7 +10,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  * A language scope, and management thereof.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2021 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public abstract class Scope extends NamedItem implements Resulting {

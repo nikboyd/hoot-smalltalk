@@ -25,7 +25,7 @@ import static Hoot.Runtime.Values.Exit.*;
  * A variable, including its name, type, and (optional) initial value.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2021 Nikolas S Boyd."
+ * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Variable extends Operand implements ValueSource {

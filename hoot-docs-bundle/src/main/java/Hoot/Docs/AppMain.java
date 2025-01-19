@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 /**
  * Launches the documentation server.
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 2010,2023 Nikolas S Boyd."
+ * @see "Copyright 2010,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 @SpringBootApplication

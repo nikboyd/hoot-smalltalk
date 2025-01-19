@@ -13,7 +13,7 @@ import static Hoot.Runtime.Functions.Utils.*;
  * A primary value.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2021 Nikolas S Boyd."
+ * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Primary extends Operand {
