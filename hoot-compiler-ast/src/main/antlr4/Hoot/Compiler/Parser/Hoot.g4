@@ -3,7 +3,7 @@
 // Permission is granted to copy this work provided this copyright statement is retained in all copies.
 //==================================================================================================
 
-grammar Hoot; // resources/antlr4/Hoot/Compiler/Parser
+grammar Hoot; // hoot-compiler-ast/src/main/resources/antlr4/Hoot/Compiler/Parser
 
 //==================================================================================================
 // file scopes
