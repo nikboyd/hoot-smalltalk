@@ -25,6 +25,7 @@ public interface LanguageParser extends Logging {
 
     ParseTreeListener listener();
     ParserRuleContext parseResult();
-    default void walkResult() { new ParseTreeWalker().walk(listener(), parseResult()); }
+    default ParseTreeWalker treeWalker() { return new ParseTreeWalker(); }
+    default void walkParsedResults() { treeWalker().walk(listener(), parseResult()); }
 
 } // LanguageParser

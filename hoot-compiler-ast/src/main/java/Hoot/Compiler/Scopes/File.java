@@ -17,7 +17,7 @@ import static Hoot.Compiler.Expressions.Import.*;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Keyword.Smalltalk;
 import static Hoot.Runtime.Names.TypeName.EmptyType;
-import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * A class (or type) file, including the package name, imports, and a face definition.
@@ -198,9 +198,8 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     TokenCompiler tokenCompiler;
     TokenCompiler tokenCompiler() {
         if (hasSome(tokenCompiler)) return tokenCompiler;
-        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
+        tokenCompiler = new TokenCompiler(this); return tokenCompiler; }
 
-//    @Override public TokenStream tokenStream() { return tokenCompiler().tokenStream(); }
     @Override public boolean isFile() { return true; }
     @Override public int nestLevel() { return 0; }
     public String notice() { return this.faceScope.notes().notice(); }
@@ -215,11 +214,10 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     public boolean needsCollections() { return facePackage.definesBehaviors() || facePackage.definesMagnitudes(); }
 
     String fileType = languageType();
-    public String fileType() { return this.fileType; }
+    @Override public String fileType() { return this.fileType; }
 
-//    static String LanguageType = SourceFileType;
     public static String fileType(String type) {
-        Library.languageType(defaultString(type, SourceFileType));
+        Library.languageType(defaultIfEmpty(type, SourceFileType));
         Logging.logger(File.class).info("processing sources " + languageType()); return type; }
 
     public String sourceFilename() { return initialName() + fileType(); }

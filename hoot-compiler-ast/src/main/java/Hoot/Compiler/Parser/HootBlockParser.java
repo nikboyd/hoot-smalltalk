@@ -41,7 +41,7 @@ public class HootBlockParser implements LanguageParser {
     String injectBlock(String blockCode) { return String.format(loadScript(), blockCode); }
     public void parseClosure() {
         parseTokens();
-        walkResult();
+        walkParsedResults();
     }
 
     

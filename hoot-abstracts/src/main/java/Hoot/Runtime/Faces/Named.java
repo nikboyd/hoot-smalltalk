@@ -1,12 +1,8 @@
 package Hoot.Runtime.Faces;
 
-import java.util.*;
-import org.apache.commons.lang3.StringUtils;
-
 import Hoot.Runtime.Emissions.EmissionSource;
 import static Hoot.Runtime.Names.Keyword.Self;
 import static Hoot.Runtime.Names.Operator.Dot;
-import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Faces.Logging.*;
 
 /**

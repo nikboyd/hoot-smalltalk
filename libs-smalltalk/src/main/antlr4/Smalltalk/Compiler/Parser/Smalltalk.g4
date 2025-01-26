@@ -15,13 +15,13 @@ grammar Smalltalk; // libs-smalltalk/src/main/resources/antlr4/Smalltalk/Compile
 compilationUnit : ( unitHeader?  cms+=methodReader )* ;
 
 unitHeader : ( filedHeader | classHeader ) ;
-filedHeader : fc=filedComment banger cs=classSignature cr=commentHeader ;
-filedComment : fc=ConstantString ;
+filedHeader : fc=filedComment Bang cs=classSignature cr=commentHeader ;
+filedComment : fc=quotedString ;
 
-classHeader : cc=codedComment banger ms=classSignature ;
+classHeader : cc=codedComment Bang ms=classSignature ;
 codedComment : cc=codeComment ;
 
-commentHeader : banger x=expression banger c=ConstantString banger ;
+commentHeader : Bang x=expression Bang c=quotedString Bang ;
 
 //==================================================================================================
 // class scope
@@ -236,6 +236,7 @@ fragment Word   : Letter+ ;
 // strings
 //==================================================================================================
 
+quotedString : ConstantString ;
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString Dot? ;
 ConstantString    : QuotedString ConstantString? ;

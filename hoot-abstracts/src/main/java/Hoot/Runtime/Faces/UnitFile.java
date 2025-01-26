@@ -36,6 +36,7 @@ public interface UnitFile extends Named, LanguageParser.Factory {
     java.io.File sourceFile();
     java.io.File targetFile();
     String targetFilename();
+    String fileType();
 
     @Override default FileParser createParser() { return null; }
 
