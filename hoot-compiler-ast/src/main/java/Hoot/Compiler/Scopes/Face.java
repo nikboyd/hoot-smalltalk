@@ -64,45 +64,18 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public static Typified from(Class type) { return named(type.getCanonicalName()); }
     public Typified faceNamed(String name) { return file().faceNamed(name); }
 
-    /**
-     * Java package root.
-     */
+    // Java package root
     protected static final String rootPackage = "java.";
 
-    /**
-     * Separates metaClass names from their associated class names.
-     */
+    // Separates metaClass names from their associated class names
     protected static final String metaSeparator = ".";
 
     static final String ClassType = "class";
     static final String TypeType = "interface";
     public String type() { return this.isInterface() ? TypeType : ClassType; }
 
-    /**
-     * Returns the root base metaClass name.
-     *
-     * @return the root base metaClass name.
-     */
-    public static String baseMetaclassName() {
-        return "smalltalk.behavior.Class";
-    }
-
-    /**
-     * Returns a meta-name for the supplied (name).
-     *
-     * @param name the name of some Hoot entity.
-     * @return a meta-name
-     */
-    public static String metaName(String name) {
-        return name + Name.Metatype;
-    }
-
-    /**
-     * Returns whether the supplied (faceName) has a metaFace.
-     *
-     * @param faceName the name of a Hoot face (class or type).
-     * @return whether the indicated face has a metaFace
-     */
+    public static String baseMetaclassName() { return "smalltalk.behavior.Class"; }
+    public static String metaName(String name) { return name + Name.Metatype; }
     public static boolean metafaceExists(String faceName) {
         if (faceName.isEmpty()) {
             return false;
@@ -124,32 +97,13 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         return mirror.hasMetaclass();
     }
 
-    /**
-     * Returns a metaClass name for the supplied (className).
-     *
-     * @param className the name of a Hoot class.
-     * @return a metaClass name
-     */
     public static String metaclassName(String className) {
         return (metafaceExists(className) ? metaName(className) : baseMetaclassName());
     }
 
-    /**
-     * Returns a metaType name for the supplied (typeName).
-     *
-     * @param typeName the name of a Hoot type.
-     * @return a metaType name
-     */
     public static String metatypeName(String typeName) {
         return (metafaceExists(typeName) ? metaName(typeName) : Empty);
     }
-
-
-//    static final String TypeFile = "java-type.ftl";
-//    static final String ClassFile = "java-class.ftl";
-//    public String codeFile() {
-//        return isInterface() ? TypeFile : ClassFile;
-//    }
 
     protected boolean definesType = true;
     public void definesType(boolean value) { this.definesType = value; }
@@ -157,9 +111,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
     TypeHeritage faceSignature;
     public boolean isSigned() { return hasAny(faceSignature); }
-    public NamedItem signature() {
-        if (!isSigned()) { file().parse(); }
-        return this.faceSignature; }
+    public NamedItem signature() { file().checkParse(); return this.faceSignature; }
 
     public Face signature(NamedItem signature) {
         if (hasNo(signature)) return this;
@@ -169,8 +121,14 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 
         // now, collect all the related notes here
         notes().noteAll(this.faceSignature.notes().notes());
-//        reportScope(); 
         return this;
+    }
+    
+    @Override public void register() {
+        if (isSigned()) { // only if ready
+            typePackage().addFace(this);
+//            report("registered: "+fullName());
+        }
     }
 
     public void reportSigned() { report("signed "+description()); }
@@ -249,14 +207,6 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         this.metaFace.signature(signature().metaSignature());
     }
 
-//    public Face selectFace(String selector) {
-//        // selector == 'class' or empty from parser
-//        if (selector.isEmpty()) return typeFace().makeCurrent();
-//        if (this.isMetaface()) return makeCurrent();
-//        // add metaFace (1st encounter)
-//        return addMetaface().makeCurrent();
-//    }
-
     public Typified baseFace() { return faceNamed(typeFace().baseName()); }
     @Override public Typified superclass() { return faceNamed(baseName()); }
     @Override public Class<?> primitiveClass() { return typeClass(); }
@@ -278,26 +228,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
 //        report(description()+" added "+method.description());
     }
 
-    /**
-     * Adds a new method to those defined by this face.
-     */
-//    public void addMethod() {
-//        addMethod(new Method(this));
-//    }
-
-    public boolean isPackaged() {
-        return (typePackage() instanceof Package);
-    }
-
-    /**
-     * Returns whether this face is derived from a Java class.
-     *
-     * @return whether this face is derived from a Java class.
-     */
-    public boolean hasElementaryBase() {
-        return !baseMirror().hasMetaclass();
-    }
-
+    public boolean isPackaged() { return (typePackage() instanceof Package); }
+    public boolean hasElementaryBase() { return !baseMirror().hasMetaclass(); }
     public boolean isInnard() { return (container() instanceof Block); }
 
     @Override public boolean isAbstract() { return this.isInterface() || super.isAbstract(); }
@@ -305,8 +237,8 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     @Override public boolean isReflective() { return false; }
     @Override public boolean resolves(Named reference) { return hasLocal(reference.name().toString()); }
 
-    public boolean isMetaface() { return this.name().startsWith("Meta"); }
-    public boolean isMetaclassBase() { return this.name().equals(Metaclass + "Base"); }
+    public boolean isMetaface() { return isSigned()? this.name().startsWith("Meta"): false; }
+//    public boolean isMetaclassBase() { return this.name().equals(Metaclass + "Base"); }
 
     public String className() { return this.isMetaface() ? typeFace().name() + " class" : name(); }
     private String metaName() { return typeFace().name() + Dollar + metaFaceType(); }

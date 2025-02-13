@@ -14,34 +14,32 @@ grammar Smalltalk; // libs-smalltalk/src/main/resources/antlr4/Smalltalk/Compile
 
 compilationUnit : ( unitHeader?  cms+=methodReader )* ;
 
-unitHeader : ( filedHeader | classHeader ) ;
-filedHeader : fc=filedComment Bang cs=classSignature cr=commentHeader ;
-filedComment : fc=quotedString ;
-
-classHeader : cc=codedComment Bang ms=classSignature ;
-codedComment : cc=codeComment ;
-
+unitHeader    : ( filedHeader | classHeader ) ;
+filedHeader   : fc=filedComment cs=classSignature cr=commentHeader ;
 commentHeader : Bang x=expression Bang c=quotedString Bang ;
+filedComment  : fc=quotedString Bang ;
+
+classHeader   : cc=codedComment ms=classSignature ;
+codedComment  : cc=codeComment Bang ;
 
 //==================================================================================================
 // class scope
 //==================================================================================================
 
-classSignature  : x=expression banger ;
-
-methodReader : banger pr=protoHeader banger ms=methodScope banger ;
-protoHeader  : p=expression ;
+classSignature : x=expression Bang ;
+methodReader   : Bang pr=protoHeader Bang ms=methodScope Bang ;
+protoHeader    : p=expression ;
 
 //==================================================================================================
 // method scopes
 //==================================================================================================
 
-methodBeg : whiteSpaces? cc=codeComment* ;
-methodEnd : BlockExit ;
+methodBeg : whiteSpaces? cc+=codeComment* ;
+//methodEnd : ;
 methodScope
 : sign=methodSign 
-  b=methodBeg ( vs=localVariables )? content=blockFill 
-  x=methodEnd ;
+  b=methodBeg ( vs=localVariables )? content=blockFill ;
+//  x=methodEnd ;
 
 methodSign
 : ks=keywordSign # keywordSig
@@ -99,7 +97,6 @@ keywordMessage
 | ) ;
 
 messageCascade : Cascade m=message ;
-
 message
 : kmsg=keywordMessage # keywordSelection
 | bmsg=binaryMessage  # binarySelection
@@ -112,13 +109,8 @@ message
 
 unarySelector  : ( s=LocalName ) ;
 binaryOperator : ( s=BinaryOperator ) ;
-
-//==================================================================================================
-// keywords
-//==================================================================================================
-
-keywordTail : tail=KeywordTail ;
-keywordHead : head=KeywordHead # headText ;
+keywordTail    : tail=KeywordTail ;
+keywordHead    : head=KeywordHead # headText ;
 
 //==================================================================================================
 // references
@@ -164,7 +156,7 @@ literal
 | value=ConstantInteger   # intLiteral
 | n=radixedNumber         # numLiteral
 | value=ConstantSymbol    # symbolLiteral
-| value=ConstantString    # stringLiteral
+| value=quotedString      # stringLiteral
 ;
 
 //==================================================================================================
@@ -237,25 +229,26 @@ fragment Word   : Letter+ ;
 //==================================================================================================
 
 quotedString : ConstantString ;
+codeComment  : CodeComment ;
+
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString Dot? ;
-ConstantString    : QuotedString ConstantString? ;
+ConstantString    : SingleString ConstantString? ;
 
-codeComment : CodeComment ;
-CodeComment : QuotedComment -> channel(HIDDEN) ;
+fragment CodeComment  : DoubleString -> channel(HIDDEN) ;
+//fragment SingleString : '\'' ( ~['"] | DoubleString )* '\'' ;
+//fragment DoubleString :  '"' ( ~['"] | SingleString )* '"' ;
+fragment SingleString : SingleQuote .*? SingleQuote ;
+fragment DoubleString : DoubleQuote .*? DoubleQuote ;
 
-fragment QuotedString  : SingleQuote .*? SingleQuote ;
-fragment QuotedComment : DoubleQuote .*? DoubleQuote ;
-
-fragment SymbolString
+fragment SymbolString // SingleString+ ??
 : KeywordHead+
-| ConstantString
 | BinaryOperator
 | Name
 ;
 
-fragment DoubleQuote : '"' ;
-fragment SingleQuote : '\'' ;
+fragment DoubleQuote  : '"' ;
+fragment SingleQuote  : '\'' ;
 
 //==================================================================================================
 // punctuators

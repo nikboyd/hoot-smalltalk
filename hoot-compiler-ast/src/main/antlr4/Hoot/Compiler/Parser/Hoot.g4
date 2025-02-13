@@ -331,11 +331,11 @@ fragment Letter : UpperCase | LowerCase ;
 
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString ;
-ConstantString    : QuotedString ConstantString? ;
-CodeComment       : QuotedComment -> channel(HIDDEN) ;
+ConstantString    : SingleString ConstantString? ;
+CodeComment       : DoubleString -> channel(HIDDEN) ;
 
-fragment QuotedString  : SingleQuote .*? SingleQuote ;
-fragment QuotedComment : DoubleQuote .*? DoubleQuote ;
+fragment SingleString : SingleQuote .*? SingleQuote ;
+fragment DoubleString : DoubleQuote .*? DoubleQuote ;
 
 fragment SymbolString
 : KeywordHead+ KeywordTail*

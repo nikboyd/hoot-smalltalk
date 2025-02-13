@@ -23,6 +23,15 @@ public class SmalltalkFileListener extends SmalltalkBaseListener implements Logg
 
     File fileScope() { return File.currentFile(); }
     Face activeFace() { return fileScope().activeFace(); }
+    
+    @Override public void enterCompilationUnit(CompilationUnitContext ctx) { 
+        report("found unit"); }
+    @Override public void exitCompilationUnit(CompilationUnitContext ctx)  { report("leave unit"); }
+    @Override public void exitQuotedString(QuotedStringContext ctx)  { report("found quoted string"); }
+
+    @Override public void enterUnitHeader(UnitHeaderContext ctx) { report("found unit header"); }
+    @Override public void enterFiledHeader(FiledHeaderContext ctx) { report("found file header"); }
+    @Override public void enterFiledComment(FiledCommentContext ctx) { report("found file comment"); }
 
     String quoted(String text) { return String.format("'%s'", text); }
     @Override public void exitFiledComment(FiledCommentContext ctx) {
@@ -168,7 +177,7 @@ public class SmalltalkFileListener extends SmalltalkBaseListener implements Logg
     LiteralArray values(ElementValuesContext ctx) { return LiteralArray.withItems(cons(ctx.array)); }
     List<Constant> cons(List<ElementValueContext> vs) { return map(vs, v -> value(v)); }
 
-    Constant literal(SelfishContext ctx) { return applyMatched(selfs, ctx); }
+//    Constant literal(SelfishContext ctx) { return applyMatched(selfs, ctx); }
     Constant literal(LiteralContext ctx) { return applyMatched(lits, ctx); }
 
     LiteralName literal(VariableContext ctx) { return LiteralName.with(name(ctx.v)); }

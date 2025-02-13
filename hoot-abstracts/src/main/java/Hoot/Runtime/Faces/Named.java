@@ -17,6 +17,7 @@ public interface Named extends Valued {
     default CharSequence name() { return EmissionSource.Empty; } // implementors should override
     default String shortName() { return name().toString(); } // implementors should override
     default String fullName() { return name().toString(); } // implementors should override
+    default void register() {} // implementors should override as needed
 
     default int nestLevel() { return 0; }
     default boolean isSelfish() { return Self.equals(shortName()); }

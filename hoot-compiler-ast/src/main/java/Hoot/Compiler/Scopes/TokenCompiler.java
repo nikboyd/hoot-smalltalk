@@ -27,9 +27,10 @@ public class TokenCompiler implements Logging, LanguageParser {
     static final HashMap<String, String> ParserTypes = new HashMap<>();
     static final HashMap<String, String> ListenerTypes = new HashMap<>();
     static {
-        ParserTypes.put(SourceFileType, "Hoot.Compiler.Parser.HootFileParser");
-        ParserTypes.put(ChunkFileType,  "Smalltalk.Compiler.Parser.SmalltalkFileParser");
+        ParserTypes.put(SourceFileType,   "Hoot.Compiler.Parser.HootFileParser");
         ListenerTypes.put(SourceFileType, "Hoot.Compiler.Parser.HootFileListener");
+
+        ParserTypes.put(ChunkFileType,    "Smalltalk.Compiler.Parser.SmalltalkFileParser");
         ListenerTypes.put(ChunkFileType,  "Smalltalk.Compiler.Parser.SmalltalkFileListener");
     }
 
@@ -46,41 +47,53 @@ public class TokenCompiler implements Logging, LanguageParser {
     }
 
     public boolean compile() {
-        java.io.File sourceFile = tokenFile().sourceFile();
-        if (hasNo(sourceFile) || !sourceFile.exists()) { reportMissing(); return false; }
-        parseTokens(); if (wasParsed()) { emitCode(); return true; }
-        return false; // should not arrive here
+        if (hasSource()) { parseTokens(); return emittedCode(); }
+        else { reportMissing(); return false; }
     }
 
     @Override public void parseTokens() { if (notParsed()) runLoudly(
-        () -> { makeFileCurrent(); parseUnit(); }, () -> { popScope(); }); }
+        () -> { makeFileCurrent(); parseUnit(); }, () -> { }); }
 
-    void emitCode() { tokenFile().writeCode(); }
+    boolean emittedCode() { return wasParsed()? emitCode(): false; }
+    boolean emitCode()    { makeFileCurrent(); tokenFile().writeCode(); return true; }
     void parseUnit() {
         reportParsing();
         parseTokenFile();
         captureComments();
         walkParsedResults();
+        tokenFile().faceScope().register();
     }
 
     UnitFile tokenFile;
     UnitFile tokenFile() { return tokenFile; }
     private String fileType() { return tokenFile().fileType(); }
+    java.io.File sourceFile() { return tokenFile().sourceFile(); }
 
     FileParser fileParser;
     FileParser fileParser() { return this.fileParser; }
     @Override public ParserRuleContext parseResult() { return fileParser().parseResult(); }
     void parseTokenFile() { fileParser().parseTokens(tokenFile()); }
 
+    public void walkParsedResults() { 
+//        report("walking ... "+parseResult().getClass().getName());
+        treeWalker().walk(listener(), parseResult()); }
+
     @Override public CommonTokenStream tokenStream() { return fileParser().tokenStream(); }
     public boolean wasParsed() { return fileParser().wasParsed(); }
     public boolean notParsed() { return fileParser().notParsed(); }
+    public boolean hasSource() {
+        java.io.File sourceFile = tokenFile().sourceFile(); 
+        return hasSome(sourceFile) && sourceFile.exists(); }
 
     void captureComments() { tokenFile().acceptComments(buildComments(fileParser().tokenStream())); }
     void makeFileCurrent() { tokenFile().makeCurrent(); }
-    void popScope() { tokenFile().popScope(); }
+//    void popScope() { tokenFile().popScope(); }
 
-    void reportParsing() { report("parsing " + tokenFile().sourceFile().getName()); }
+    static final String ParseForm = "parsing %s";
+    String parserName() { return fileParser().getClass().getSimpleName(); }
+    String formatParse() { return String.format(ParseForm, sourceFile().getName()); } //parserName(), 
+    void reportParsing() { report(formatParse()); }
+    void reportParsed()  { report("parsed  " + tokenFile().sourceFile().getName()); }
     void reportMissing() { error("can't find source file for " + tokenFile().name()); }
 
 } //  TokenCompiler
