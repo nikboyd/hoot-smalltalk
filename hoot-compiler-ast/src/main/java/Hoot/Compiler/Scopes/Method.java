@@ -13,6 +13,7 @@ import static Hoot.Runtime.Notes.Note.OverrideNote;
 import static Hoot.Runtime.Names.Keyword.Colon;
 
 import Hoot.Compiler.Expressions.*;
+import Hoot.Runtime.Notes.Note;
 
 /**
  * A method.
@@ -44,6 +45,7 @@ public class Method extends Block {
     @Override public String description() { return isSigned() ? signature().description() : faceName() + ">>unknown"; }
     public String scopeID() { return Quote + description() + Quote; }
 
+    public void sign(BasicSignature s, List<Note> notes) { signature(s); notes().noteAll(notes); }
     @Override public void signature(BasicSignature s) {
         super.signature(s);
         this.sig.mergeDetails();
@@ -53,7 +55,6 @@ public class Method extends Block {
     }
 
     public boolean isVoid() { return notes().isVoid() || signature().returnsVoid(); }
-
     @Override public boolean isMethod() { return true; }
     @Override public boolean isAbstract() { return (face().isInterface() && this.isEmpty()) ? true : super.isAbstract(); }
     @Override public boolean isConstructor() { return name().equals(face().defaultName()) || Metaclass.equals(name()); }

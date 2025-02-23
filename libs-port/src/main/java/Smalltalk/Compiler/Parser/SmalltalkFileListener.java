@@ -12,6 +12,7 @@ import Hoot.Compiler.Scopes.Block;
 import Hoot.Compiler.Expressions.*;
 import Hoot.Compiler.Constants.*;
 import Hoot.Runtime.Faces.Logging;
+import Hoot.Runtime.Notes.DetailedType;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Smalltalk.Compiler.Parser.SmalltalkParser.*;
 
@@ -42,26 +43,34 @@ public class SmalltalkFileListener extends SmalltalkBaseListener implements Logg
 
     // Global subclass: Symbol instanceVariableNames: String 
     //      classVariableNames: String poolDictionaries: String category: String
-    @Override public void exitClassSignature(ClassSignatureContext ctx) {
-        Global superGlobal = globalFrom(value(ctx.x.f));
-        KeywordMessage m = message(ctx.x.kmsg);
-        Global subGlobal = globalFrom(primarySymbol(m.formulas().get(0)));
-        String message = m.methodName();
-        ClassSignature cs = ClassSignature.with(superGlobal, subGlobal, message);
-        String[] vars = primaryString(m.formulas().get(1)).unquotedValue().split(" ");
-        report(cs.description());
+    @Override public void exitClassSignature(ClassSignatureContext ctx) { signFace(ctx, message(ctx.x.kmsg)); }
+    void signFace(ClassSignatureContext ctx, KeywordMessage m) {
+        activeFace().signature(signClass(ctx, m)); 
+        report(activeFace().description());
+        defineMemberVars(varNames(m)); }
+
+    ClassSignature signClass(ClassSignatureContext ctx, KeywordMessage m) {
+        return ClassSignature.with(superType(ctx), subType(m), m.methodName()); }
+
+    String[] varNames(KeywordMessage m) { return primaryString(m, 1).split(" "); }
+    void defineMemberVars(String[] vars) {
         report(wrap(vars).toString());
-        //for (String v : vars) Variable.from(Face.currentFace(), v, DetailedType.RootType).defineMember();
-        //Face.currentFace().makeCurrent(); // no op
+        for (String v : vars) Variable.from(activeFace(), v, DetailedType.RootType).defineMember();
     }
     
     // Global methodsFor: String stamp: String
     @Override public void exitProtoHeader(ProtoHeaderContext ctx) {
-        Global classGlobal = globalFrom(value(ctx.p.f));
-        KeywordMessage m = message(ctx.p.kmsg);
-        LiteralString proto = primaryString(m.formulas().get(0));
-        report(classGlobal.name()+" proto: "+quoted(proto.unquotedValue()));
-        //Face face = Face.currentFace();
+        Formula f = value(ctx.p.f);
+        Global classGlobal = globalFrom(f);
+        if (hasSome(classGlobal)) {
+            KeywordMessage m = message(ctx.p.kmsg);
+            String proto = primaryString(m, 0);
+            report(classGlobal.name()+" proto: "+quoted(proto));
+            if (m.formulas().size() > 1) {
+                String stamp = primaryString(m, 1);
+                report(classGlobal.name()+" stamp: "+quoted(stamp));
+            }
+        }
     }
     
     @Override public void exitMethodReader(MethodReaderContext ctx) {
@@ -81,11 +90,16 @@ public class SmalltalkFileListener extends SmalltalkBaseListener implements Logg
         b.content(blockFill(ctx.b));
         return b; }
 
+    Global subType(KeywordMessage m) { return globalFrom(primarySymbol(m.formulas().get(0))); }
+    Global superType(ClassSignatureContext ctx) { return globalFrom(value(ctx.x.f)); }
+    Global globalFrom(Formula f) {
+        return f.primaryTerm().hasPrimary()? f.primaryTerm().primary().asGlobal(): null; }
 
-    Global globalFrom(Formula f) { return f.primaryTerm().primary().asGlobal(); }
     Global globalFrom(LiteralSymbol s) { return Global.named(s.encodedValue()); }
     LiteralSymbol primarySymbol(Formula f) { return f.primaryTerm().primary().asSymbol(); }
     LiteralString primaryString(Formula f) { return f.primaryTerm().primary().asString(); }
+    String primaryString(KeywordMessage m, int x) {
+        return primaryString(m.formulas().get(x)).unquotedValue(); }
 
     Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
     BlockContent blockFill(MethodScopeContext ctx) { return blockFill(ctx.content); }

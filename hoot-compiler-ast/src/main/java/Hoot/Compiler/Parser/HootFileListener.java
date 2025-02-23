@@ -51,13 +51,13 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     // types + classes
 
-    @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    @Override public void exitTypeSign(TypeSignContext ctx) { signFace(ctx); } // faceNotes(ctx); ??
     void signFace(TypeSignContext ctx) { faceScope().signature(sign(ctx)); }
     TypeSignature sign(TypeSignContext ctx) {
         return TypeSignature.with(types(ctx), type(ctx), notes(ctx), keyword(ctx), comment(ctx)); }
 
     // make class sig extend type sig
-    @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    @Override public void exitClassSign(ClassSignContext ctx) { signFace(ctx); } // faceNotes(ctx); ??
     void signFace(ClassSignContext ctx) { faceScope().signature(sign(ctx)); }
     ClassSignature sign(ClassSignContext ctx) {
         return ClassSignature.with(superType(ctx), type(ctx), 
@@ -83,8 +83,7 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     Method methodScope(MethodScopeContext ctx) {
         Method m = new Method(activeFace()).makeCurrent();
-        m.notes().noteAll(notes(ctx));
-        m.signature(sign(ctx));
+        m.sign(sign(ctx), notes(ctx));
         m.content(blockFill(ctx));
         m.construct(value(ctx));
         return m; }

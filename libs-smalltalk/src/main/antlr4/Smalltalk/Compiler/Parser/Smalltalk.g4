@@ -15,9 +15,10 @@ grammar Smalltalk; // libs-smalltalk/src/main/resources/antlr4/Smalltalk/Compile
 compilationUnit : ( unitHeader?  cms+=methodReader )* ;
 
 unitHeader    : ( filedHeader | classHeader ) ;
-filedHeader   : fc=filedComment cs=classSignature cr=commentHeader ;
-commentHeader : Bang x=expression Bang c=quotedString Bang ;
+filedHeader   : fc=filedComment cs=classSignature ch=commentHeader ;
+commentHeader : Bang x=expression Bang cc=headComment ;
 filedComment  : fc=quotedString Bang ;
+headComment   : hc=quotedString Bang ;
 
 classHeader   : cc=codedComment ms=classSignature ;
 codedComment  : cc=codeComment Bang ;
@@ -27,19 +28,20 @@ codedComment  : cc=codeComment Bang ;
 //==================================================================================================
 
 classSignature : x=expression Bang ;
-methodReader   : Bang pr=protoHeader Bang ms=methodScope Bang ;
+methodReader   : Bang pr=protoHeader Bang ms=methodScope Bang Bang ;
 protoHeader    : p=expression ;
 
 //==================================================================================================
 // method scopes
 //==================================================================================================
 
-methodBeg : whiteSpaces? cc+=codeComment* ;
-//methodEnd : ;
 methodScope
 : sign=methodSign 
   b=methodBeg ( vs=localVariables )? content=blockFill ;
 //  x=methodEnd ;
+
+methodBeg : cc+=codeComment* ;
+//methodEnd : ;
 
 methodSign
 : ks=keywordSign # keywordSig
@@ -66,17 +68,21 @@ blockBeg : BlockInit ;
 blockEnd : BlockExit ;
 
 blockSign : ( | ( tails+=keywordTail args+=argument )+ Bar ) ;
-blockFill : ( s+=statement p+=Period )* ( s+=statement ( p+=Period )? | r=exitResult | ) ;
+blockFill 
+: ( s+=statement p+=Period cc+=codeComment* )* 
+( s+=statement ( p+=Period cc+=codeComment* )? 
+| r=exitResult             cc+=codeComment*
+| ) ;
 
 //==================================================================================================
 // messages + statements
 //==================================================================================================
 
 evaluation : value=expression ;
-exitResult : Exit value=expression ;
+exitResult : Exit cc+=codeComment* value=expression ;
 statement  : ( n=assignment | v=evaluation ) ;
 construct  : ref=selfish ( tails+=keywordTail terms+=formula )* ;
-assignment : v=valueName Assign value=expression ;
+assignment : v=valueName Assign cc+=codeComment* value=expression ;
 
 primary
 : n=nestedTerm   # term
@@ -126,7 +132,7 @@ globalName  : g=GlobalName ;
 globalRefer : ( names+=globalName )+ ;
 valueName   : v=localName # localValue | g=globalName # globalValue ;
 
-localVariables : Bar ( names+=localName )* Bar ;
+localVariables : Bar ( names+=localName cc+=codeComment? )* Bar ;
 
 //==================================================================================================
 // constants
@@ -229,15 +235,16 @@ fragment Word   : Letter+ ;
 //==================================================================================================
 
 quotedString : ConstantString ;
-codeComment  : CodeComment ;
+codeComment  : cc=CommentsCode ;
 
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString Dot? ;
 ConstantString    : SingleString ConstantString? ;
+CommentsCode      : CodeComment CommentsCode? ;
 
 fragment CodeComment  : DoubleString -> channel(HIDDEN) ;
-//fragment SingleString : '\'' ( ~['"] | DoubleString )* '\'' ;
-//fragment DoubleString :  '"' ( ~['"] | SingleString )* '"' ;
+//fragment SingleString : SingleQuote ( NonQuote | DoubleString )* SingleQuote ;
+//fragment DoubleString : DoubleQuote ( NonQuote | SingleString )* DoubleQuote ;
 fragment SingleString : SingleQuote .*? SingleQuote ;
 fragment DoubleString : DoubleQuote .*? DoubleQuote ;
 
@@ -247,6 +254,7 @@ fragment SymbolString // SingleString+ ??
 | Name
 ;
 
+fragment NonQuote     : ~['"] ;
 fragment DoubleQuote  : '"' ;
 fragment SingleQuote  : '\'' ;
 
@@ -331,7 +339,7 @@ fragment Zero         : '0' ;
 //==================================================================================================
 
 whiteSpaces : WhiteSpaces ;
-WhiteSpaces : WhiteSpace+ -> skip ;
+WhiteSpaces : WhiteSpace* -> skip ;
 fragment WhiteSpace : [ \t\r\n\f] ;
 fragment Blank : [ ] ;
 

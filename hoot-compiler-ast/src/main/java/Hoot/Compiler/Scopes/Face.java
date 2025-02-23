@@ -123,13 +123,9 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
         notes().noteAll(this.faceSignature.notes().notes());
         return this;
     }
-    
-    @Override public void register() {
-        if (isSigned()) { // only if ready
-            typePackage().addFace(this);
-//            report("registered: "+fullName());
-        }
-    }
+
+    @Override public void register() { // only if ready
+        if (isSigned()) typePackage().addFace(this); }
 
     public void reportSigned() { report("signed "+description()); }
     @Override public String description() { return "Face " + signedDescription(); }
@@ -154,7 +150,6 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public void addScope(ProtocolScope scope) {
         memberScopes().add(scope);
         if (!mainScope()) addMetaface();
-//        scope.reportScope();
     }
 
     List<Method> methods = emptyList(Method.class);
@@ -224,8 +219,6 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     public void addMethod(Method method) {
         method.container(this);
         methods.add(method);
-//        if (name().endsWith("TestableClosure"))
-//        report(description()+" added "+method.description());
     }
 
     public boolean isPackaged() { return (typePackage() instanceof Package); }
@@ -248,8 +241,9 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     @Override public boolean hasHeritage() { return (hasAny(baseName()) && !Nil.equals(baseName())); }
     @Override public boolean hasNoHeritage() { return (hasNo(baseName()) || Nil.equals(baseName())); }
 
-    @Override public List<Typified> simpleHeritage() { return signature().simpleHeritage(); }
     @Override public List<Typified> typeHeritage() { return signature().typeHeritage(); }
+    @Override public List<Typified> simpleHeritage() {
+        return hasNo(signature())? new ArrayList<>(): signature().simpleHeritage(); }
 
     public String basePackageName() { return Name.packageName(fullBaseName()); }
     public String fullBaseName() { return emptyOr(f -> f.fullName(), baseFace()); }

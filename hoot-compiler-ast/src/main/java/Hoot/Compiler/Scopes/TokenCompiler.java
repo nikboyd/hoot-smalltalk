@@ -76,6 +76,7 @@ public class TokenCompiler implements Logging, LanguageParser {
 
     public void walkParsedResults() { 
 //        report("walking ... "+parseResult().getClass().getName());
+        tokenFile().makeCurrent();
         treeWalker().walk(listener(), parseResult()); }
 
     @Override public CommonTokenStream tokenStream() { return fileParser().tokenStream(); }
