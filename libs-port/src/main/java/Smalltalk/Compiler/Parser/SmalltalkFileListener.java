@@ -24,54 +24,50 @@ public class SmalltalkFileListener extends SmalltalkBaseListener implements Logg
 
     File fileScope() { return File.currentFile(); }
     Face activeFace() { return fileScope().activeFace(); }
-    
-    @Override public void enterCompilationUnit(CompilationUnitContext ctx) { 
-        report("found unit"); }
-    @Override public void exitCompilationUnit(CompilationUnitContext ctx)  { report("leave unit"); }
-    @Override public void exitQuotedString(QuotedStringContext ctx)  { report("found quoted string"); }
 
-    @Override public void enterUnitHeader(UnitHeaderContext ctx) { report("found unit header"); }
-    @Override public void enterFiledHeader(FiledHeaderContext ctx) { report("found file header"); }
-    @Override public void enterFiledComment(FiledCommentContext ctx) { report("found file comment"); }
+//    @Override public void enterCompilationUnit(CompilationUnitContext ctx) { 
+//        report("found unit"); }
+//    @Override public void exitCompilationUnit(CompilationUnitContext ctx)  { report("leave unit"); }
+//    @Override public void exitQuotedString(QuotedStringContext ctx)  { report("found quoted string"); }
+//
+//    @Override public void enterUnitHeader(UnitHeaderContext ctx) { report("found unit header"); }
+//    @Override public void enterFiledHeader(FiledHeaderContext ctx) { report("found file header"); }
+//    @Override public void enterFiledComment(FiledCommentContext ctx) { report("found file comment"); }
 
-    String quoted(String text) { return String.format("'%s'", text); }
-    @Override public void exitFiledComment(FiledCommentContext ctx) {
-        report("file comment: "+quoted(ctx.fc.getText())); }
-    
-    @Override public void exitCodedComment(CodedCommentContext ctx) {
-        report("code comment: "+quoted(ctx.cc.getText())); }
+//    String quoted(String text) { return String.format("'%s'", text); }
+//    @Override public void exitFiledComment(FiledCommentContext ctx) {
+//        report("file comment: "+quoted(ctx.fc.getText())); }
+//    
+//    @Override public void exitCodedComment(CodedCommentContext ctx) {
+//        report("code comment: "+quoted(ctx.cc.getText())); }
 
     // Global subclass: Symbol instanceVariableNames: String 
     //      classVariableNames: String poolDictionaries: String category: String
     @Override public void exitClassSignature(ClassSignatureContext ctx) { signFace(ctx, message(ctx.x.kmsg)); }
     void signFace(ClassSignatureContext ctx, KeywordMessage m) {
         activeFace().signature(signClass(ctx, m)); 
-        report(activeFace().description());
-        defineMemberVars(varNames(m)); }
-
-    ClassSignature signClass(ClassSignatureContext ctx, KeywordMessage m) {
-        return ClassSignature.with(superType(ctx), subType(m), m.methodName()); }
+//        report(activeFace().description());
+        for (String v : varNames(m)) makeVar(v); }
 
     String[] varNames(KeywordMessage m) { return primaryString(m, 1).split(" "); }
-    void defineMemberVars(String[] vars) {
-        report(wrap(vars).toString());
-        for (String v : vars) Variable.from(activeFace(), v, DetailedType.RootType).defineMember();
-    }
+    void makeVar(String v) { Variable.from(activeFace(), v, DetailedType.RootType).defineMember(); }
+    ClassSignature signClass(ClassSignatureContext ctx, KeywordMessage m) {
+        return ClassSignature.with(superType(ctx), subType(m), m.methodName()); }
     
     // Global methodsFor: String stamp: String
-    @Override public void exitProtoHeader(ProtoHeaderContext ctx) {
-        Formula f = value(ctx.p.f);
-        Global classGlobal = globalFrom(f);
-        if (hasSome(classGlobal)) {
-            KeywordMessage m = message(ctx.p.kmsg);
-            String proto = primaryString(m, 0);
-            report(classGlobal.name()+" proto: "+quoted(proto));
-            if (m.formulas().size() > 1) {
-                String stamp = primaryString(m, 1);
-                report(classGlobal.name()+" stamp: "+quoted(stamp));
-            }
-        }
-    }
+//    @Override public void exitProtoHeader(ProtoHeaderContext ctx) {
+//        Formula f = value(ctx.p.f);
+//        Global classGlobal = globalFrom(f);
+//        if (hasSome(classGlobal)) {
+//            KeywordMessage m = message(ctx.p.kmsg);
+//            String proto = primaryString(m, 0);
+//            report(classGlobal.name()+" proto: "+quoted(proto));
+//            if (m.formulas().size() > 1) {
+//                String stamp = primaryString(m, 1);
+//                report(classGlobal.name()+" stamp: "+quoted(stamp));
+//            }
+//        }
+//    }
     
     @Override public void exitMethodReader(MethodReaderContext ctx) {
         activeFace().addMethod(methodScope(ctx.ms));
