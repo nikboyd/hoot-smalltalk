@@ -16,15 +16,34 @@ import static Hoot.Runtime.Names.Keyword.*;
  */
 public class KeywordSignature extends BasicSignature {
 
+    public KeywordSignature(Block b) { super(b); this.keyword = Keyword.with(); }
     public KeywordSignature() { super(); this.keyword = Keyword.with(); }
     public static KeywordSignature emptyNiladic() {
         return with(DetailedType.named(Keyword.Void), emptyList(Variable.class)); }
+
+    public static KeywordSignature with(Block b, DetailedType resultType, List<Variable> args) {
+        List<Variable> allArgs = hasSome(args)? args: emptyList(Variable.class);
+        List<String> tails = emptyList(String.class); for (Variable arg : allArgs) tails.add(Colon);
+        KeywordSignature result = new KeywordSignature(b);
+        result.keyword = Keyword.with(emptyList(String.class), tails);
+        result.resultType = resultType;
+        result.args.withAll(hasSome(args)? args: emptyList(Variable.class));
+        return result; }
 
     public static KeywordSignature with(DetailedType resultType, List<Variable> args) {
         List<Variable> allArgs = hasSome(args)? args: emptyList(Variable.class);
         List<String> tails = emptyList(String.class); for (Variable arg : allArgs) tails.add(Colon);
         return with(resultType, allArgs, emptyList(String.class), tails); }
 
+
+    public static KeywordSignature with(Method m,
+            DetailedType resultType, List<Variable> args, Keyword keyword) {
+        KeywordSignature result = new KeywordSignature(m);
+        result.keyword = keyword;
+        result.resultType = resultType;
+        result.args.withAll(hasSome(args)? args: emptyList(Variable.class));
+        return result;
+    }
 
     public static KeywordSignature with(
             DetailedType resultType, List<Variable> args, Keyword keyword) {

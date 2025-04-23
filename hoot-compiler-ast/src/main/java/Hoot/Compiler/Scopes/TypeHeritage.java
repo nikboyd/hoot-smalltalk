@@ -1,6 +1,5 @@
 package Hoot.Compiler.Scopes;
 
-import Hoot.Runtime.Behaviors.Scope;
 import Hoot.Runtime.Emissions.NamedItem;
 import Hoot.Runtime.Notes.DetailedType;
 import Hoot.Runtime.Notes.TypeList;
@@ -33,6 +32,7 @@ public class TypeHeritage extends NamedItem implements ScopeSource {
     String keyword;
 
     @Override public String comment() { return this.comment; }
+    public void comment(String value) { this.comment = value; }
     String comment;
 
 } // TypeHeritage

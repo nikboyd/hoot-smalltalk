@@ -35,6 +35,7 @@ public abstract class Scope extends NamedItem implements Resulting {
 
     public static Scope findCurrentMethod() {
         List<Scope> bs = new ArrayList<>(); // scan available block scopes
+        if (BlockScopes.isEmpty()) return null;
         BlockScopes.iterator().forEachRemaining((b) -> { if (b.isMethod() && bs.isEmpty()) bs.add(b); });
         return bs.isEmpty()? null: bs.get(0); }
 
@@ -57,7 +58,8 @@ public abstract class Scope extends NamedItem implements Resulting {
     public Scope(NamedItem parentItem) { super(parentItem); }
     @Override public String description() { return name(); }
     @Override public void clean() { super.clean(); locals().clean(); 
-        whisper("cleaned " + description()); }
+//        whisper("cleaned " + description());
+    }
 
     protected void currentScope(Scope scope) { }
     public Scope currentScope() { return current(); }

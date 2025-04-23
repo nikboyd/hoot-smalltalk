@@ -54,7 +54,7 @@ public class BlockContent extends Item implements ScopeSource, Resulting {
     @Override public int nestLevel() { return block().nestLevel(); }
     @Override public boolean containsExit() { return !isEmpty() && matchAny(statements(), s -> s.exitsMethod()); }
 
-    private BlockContent acquireStatements() {
+    public BlockContent acquireStatements() {
         this.statements().forEach(s -> s.inside(this));
 
         // ensure final statement is a result when needed

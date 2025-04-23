@@ -112,6 +112,7 @@ public class Face extends Scope implements Typified, TypeName.Resolver, ScopeSou
     TypeHeritage faceSignature;
     public boolean isSigned() { return hasAny(faceSignature); }
     public NamedItem signature() { file().checkParse(); return this.faceSignature; }
+    public void comment(String value) { faceSignature.comment(value); }
 
     public Face signature(NamedItem signature) {
         if (hasNo(signature)) return this;
