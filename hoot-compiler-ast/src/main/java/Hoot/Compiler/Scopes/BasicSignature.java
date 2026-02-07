@@ -19,11 +19,12 @@ import Hoot.Runtime.Emissions.*;
  */
 public abstract class BasicSignature extends NamedItem implements ScopeSource {
 
-    Method method = Method.from(Scope.findCurrentMethod());
-    @Override public Method method() { return this.method; }
+    Block  block;
+    @Override public Method method() { return (Method)this.block.methodScope(); }
     @Override public Face face() { return method().face(); }
 
     public BasicSignature() { super(Scope.currentBlock()); }
+    public BasicSignature(Block b) { super(b); block = b; }
     protected Table args = new Table(Scope.currentBlock());
     public Table args() { return this.args; }
     public List<Variable> arguments() { return args().definedSymbols(); }

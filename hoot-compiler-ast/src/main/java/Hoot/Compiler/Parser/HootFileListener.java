@@ -51,13 +51,13 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     // types + classes
 
-    @Override public void exitTypeSign(TypeSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    @Override public void exitTypeSign(TypeSignContext ctx) { signFace(ctx); } // faceNotes(ctx); ??
     void signFace(TypeSignContext ctx) { faceScope().signature(sign(ctx)); }
     TypeSignature sign(TypeSignContext ctx) {
         return TypeSignature.with(types(ctx), type(ctx), notes(ctx), keyword(ctx), comment(ctx)); }
 
     // make class sig extend type sig
-    @Override public void exitClassSign(ClassSignContext ctx) { faceNotes(ctx); signFace(ctx); }
+    @Override public void exitClassSign(ClassSignContext ctx) { signFace(ctx); } // faceNotes(ctx); ??
     void signFace(ClassSignContext ctx) { faceScope().signature(sign(ctx)); }
     ClassSignature sign(ClassSignContext ctx) {
         return ClassSignature.with(superType(ctx), type(ctx), 
@@ -79,24 +79,23 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     @Override public void enterMethodMember(MethodMemberContext ctx) {  }
     @Override public void exitMethodMember(MethodMemberContext ctx) { faceMethod(ctx); }
-    void faceMethod(MethodMemberContext ctx) { activeFace().addMethod(methodScope(ctx.m)); }
+    void faceMethod(MethodMemberContext ctx) { activeFace().addMethod(methodScope(ctx.m).acquireStatements()); }
 
     Method methodScope(MethodScopeContext ctx) {
         Method m = new Method(activeFace()).makeCurrent();
-        m.notes().noteAll(notes(ctx));
-        m.signature(sign(ctx));
+        m.sign(sign(ctx, m), notes(ctx));
         m.content(blockFill(ctx));
         m.construct(value(ctx));
         return m; }
 
-    Nest nest(BlockContext ctx) { return blockScope(ctx).withNest(); }
+    Nest nest(BlockContext ctx) { return blockScope(ctx).acquireStatements().withNest(); }
     BlockContent blockFill(MethodScopeContext ctx) { return blockFill(ctx.content); }
     public BlockContent blockFill(BlockScopeContext ctx)  { return blockFill(ctx.content); }
     BlockContent blockFill(BlockFillContext ctx) { return BlockContent.with(evals(ctx.s), value(ctx.r), ctx.p.size()); }
 
     Block blockScope(BlockContext ctx) {
         Block b = new Block().makeCurrent();
-        b.signature(sign(ctx.b.sign));
+        b.signature(sign(ctx.b.sign, b));
         b.signature().defineLocals();
         b.content(blockFill(ctx.b));
         return b; }
@@ -111,15 +110,17 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
     // signatures
 
-    BasicSignature   sign(MethodScopeContext ctx) { return sign(ctx.sign); }
-    BasicSignature   sign(MethodSignContext ctx)  { return applyMatched(signs, ctx); }
-    KeywordSignature sign(BlockSignContext ctx)   { return KeywordSignature.with(note(ctx.type), args(ctx.args)); }
-    KeywordSignature sign(KeywordSignContext ctx) { return KeywordSignature.with(note(ctx.result), args(ctx.name.args), keyword(ctx)); }
-    BinarySignature  sign(BinarySignContext ctx)  { return BinarySignature.with(note(ctx.result), args(ctx.args), message(ctx.name)); }
-    UnarySignature   sign(UnarySignContext ctx)   { return UnarySignature.with(note(ctx.result), selector(ctx.name)); }
-    UnarySignature   sign(UnarySigContext ctx)    { return sign(ctx.us); }
-    BinarySignature  sign(BinarySigContext ctx)   { return sign(ctx.bs); }
-    KeywordSignature sign(KeywordSigContext ctx)  { return sign(ctx.ks); }
+    BasicSignature   sign(MethodScopeContext ctx, Method m) { return sign(ctx.sign, m); }
+    BasicSignature   sign(MethodSignContext ctx, Method m)  { return applyMatched(signs, ctx, m); }
+    KeywordSignature sign(BlockSignContext ctx, Block b)    { return KeywordSignature.with(b, note(ctx.type), args(ctx.args)); }
+
+    KeywordSignature sign(KeywordSignContext ctx, Method m) { return KeywordSignature.with(m, note(ctx.result), args(ctx.name.args), keyword(ctx)); }
+    BinarySignature  sign(BinarySignContext ctx, Method m)  { return BinarySignature.with(m, note(ctx.result), args(ctx.args), message(ctx.name)); }
+    UnarySignature   sign(UnarySignContext ctx, Method m)   { return UnarySignature.with(m, note(ctx.result), selector(ctx.name)); }
+
+    UnarySignature   sign(UnarySigContext ctx, Method m)    { return sign(ctx.us, m); }
+    BinarySignature  sign(BinarySigContext ctx, Method m)   { return sign(ctx.bs, m); }
+    KeywordSignature sign(KeywordSigContext ctx, Method m)  { return sign(ctx.ks, m); }
 
     // messages
 
@@ -292,20 +293,31 @@ public class HootFileListener extends HootBaseListener implements Logging {
     LiteralString literal(StringLiteralContext ctx) { return LiteralString.with(ctx.value.getText(), ctx.start.getLine()); }
 
     @SuppressWarnings("unchecked") <T,R> R apply(Function f, T it) { return (R)f.apply(it); }
-    @SuppressWarnings("unchecked") <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) {
+    @SuppressWarnings("unchecked") <T,R> R apply(BiFunction f, T it, Method m) { return (R)f.apply(it, m); }
+    @SuppressWarnings("unchecked") 
+    <B, T extends B, R> R applyMatched(HashMap<Class, BiFunction<? extends B,Method,R>> m, B it, Method x) {
+        if (hasNone(it)) return null;
+        for (Class c : m.keySet())
+            if (c.isInstance(it)) 
+                return apply(m.get(c), c.cast(it), x);
+        return null; }
+
+    @SuppressWarnings("unchecked") 
+    <B, T extends B, R> R applyMatched(HashMap<Class, Function<? extends B,R>> m, B it) {
         if (hasNone(it)) return null;
         for (Class c : m.keySet())
             if (c.isInstance(it)) return apply(m.get(c), c.cast(it));
         return null; }
 
-    final HashMap<Class, Function<? extends ValueNameContext, String>> names = new HashMap<>();
-    final HashMap<Class, Function<? extends MethodSignContext, BasicSignature>> signs = new HashMap<>();
-    final HashMap<Class, Function<? extends MessageContext, Message>> messages = new HashMap<>();
+    final HashMap<Class, BiFunction<? extends MethodSignContext, Method, BasicSignature>> signs = new HashMap<>();
+
     final HashMap<Class, Function<? extends PrimaryContext, Primary>> terms = new HashMap<>();
+    final HashMap<Class, Function<? extends ValueNameContext, String>> names = new HashMap<>();
     final HashMap<Class, Function<? extends ElementValueContext, Constant>> elements = new HashMap<>();
     final HashMap<Class, Function<? extends DetailedTypeContext, DetailedType>> details = new HashMap<>();
     final HashMap<Class, Function<? extends NakedValueContext, NamedValue>> nakeds = new HashMap<>();
     final HashMap<Class, Function<? extends NamedValueContext, NamedValue>> nameds = new HashMap<>();
+    final HashMap<Class, Function<? extends MessageContext, Message>> messages = new HashMap<>();
     final HashMap<Class, Function<? extends PrimitiveContext, Constant>> prims = new HashMap<>();
     final HashMap<Class, Function<? extends SelfishContext, Constant>> selfs = new HashMap<>();
     final HashMap<Class, Function<? extends LiteralContext, Constant>> lits = new HashMap<>();
@@ -350,9 +362,11 @@ public class HootFileListener extends HootBaseListener implements Logging {
 
         names.put(LocalValueContext.class, (LocalValueContext ctx) -> name(ctx));
         names.put(GlobalValueContext.class, (GlobalValueContext ctx) -> name(ctx));
-        signs.put(KeywordSigContext.class, (KeywordSigContext ctx) -> sign(ctx));
-        signs.put(BinarySigContext.class, (BinarySigContext ctx) -> sign(ctx));
-        signs.put(UnarySigContext.class, (UnarySigContext ctx) -> sign(ctx));
+
+        signs.put(KeywordSigContext.class, (KeywordSigContext ctx, Method m) -> sign(ctx, m));
+        signs.put(BinarySigContext.class, (BinarySigContext ctx, Method m) -> sign(ctx, m));
+        signs.put(UnarySigContext.class, (UnarySigContext ctx, Method m) -> sign(ctx, m));
+
         messages.put(KeywordSelectionContext.class, (KeywordSelectionContext ctx) -> message(ctx));
         messages.put(BinarySelectionContext.class, (BinarySelectionContext ctx) -> message(ctx));
         messages.put(UnarySelectionContext.class, (UnarySelectionContext ctx) -> message(ctx));

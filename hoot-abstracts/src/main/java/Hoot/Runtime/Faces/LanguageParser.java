@@ -21,10 +21,11 @@ public interface LanguageParser extends Logging {
     } // Factory
 
     default void parseTokens() {}
-    CommonTokenStream tokenStream();
+    default ParseTreeWalker treeWalker() { return new ParseTreeWalker(); }
+//    default void walkParsedResults() { treeWalker().walk(listener(), parseResult()); }
 
+    CommonTokenStream tokenStream();
     ParseTreeListener listener();
     ParserRuleContext parseResult();
-    default void walkResult() { new ParseTreeWalker().walk(listener(), parseResult()); }
 
 } // LanguageParser

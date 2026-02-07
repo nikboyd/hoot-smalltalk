@@ -17,7 +17,7 @@ import static Hoot.Compiler.Expressions.Import.*;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import static Hoot.Runtime.Names.Keyword.Smalltalk;
 import static Hoot.Runtime.Names.TypeName.EmptyType;
-import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * A class (or type) file, including the package name, imports, and a face definition.
@@ -34,12 +34,21 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     // make a new file and its face current
     static UnitFile makeUnit(String faceName, String pkgName) {
         File file = new File(pkgName, faceName).makeCurrent();
-//        file.faceScope().makeCurrent();
         return file; }
 
-    public File() { super(null); }
+    TypeName fullName = EmptyType; // initial name, not final name!
+    public String initialName() { return this.fullName.shortName(); }
+    boolean initiallyNamed() { return hasSome(fullName) && this.fullName.isUnknown(); }
+    @Override public String fullName() {
+        if (!initiallyNamed()) return this.fullName.fullName();
+        return facePackage().qualify(initialName()); }
+
+    Face faceScope = new Face(this);
+    @Override public Face faceScope() { return faceScope; }
+    public Package facePackage() { return Package.from(this); }
+
     public File(String packageName, String faceName) {
-        this(); facePackage = Package.named(packageName);
+        super(Package.named(packageName));
         fullName = TypeName.fromName(Name.formType(packageName, faceName)); }
 
     protected Scope currentScope = this; // manage scopes within each file here
@@ -59,7 +68,9 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     protected Map<String, UnitFile> peerFaces = emptyMap(UnitFile.class);
     protected Map<String, UnitFile> peers() { return this.peerFaces; }
     @Override public void clean() { super.clean(); importAllFaces(); faceScope.clean(); }
-    @Override public void parse() {  tokenCompiler().parseTokens(); facePackage.addFace(faceScope()); }
+    @Override public void parse() {  checkParse(); } // addPackageFace();
+    public void checkParse() { if (!faceScope().isSigned()) parseTokens(); }
+    public void parseTokens() { tokenCompiler().parseTokens(); }
     @Override public boolean compile() { return tokenCompiler().compile(); }
     @Override public void peers(Map<String, UnitFile> peers) {
         if (hasKeys(peers)) {
@@ -145,17 +156,11 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         faceImports().forEach((faceImport) -> { faceImport.addToFaces(importedFaces); });
     }
 
-    TypeName fullName = EmptyType;
-    public void fullName(String fullName) { this.fullName = TypeName.fromName(fullName); }
-    public String initialName() { return this.fullName.shortName(); }
     @Override public String name() { return initialName(); }
-    @Override public String fullName() { return facePackage().qualify(initialName()); }
     @Override public String description() { return "File " + initialName(); }
 
-    Face faceScope = new Face(this);
-    @Override public Face faceScope() { return faceScope; }
-    @Override public Scope facialScope() { return this.faceScope(); }
-    public String faceName() { return faceScope.name(); }
+    public String faceName() { return faceScope().name(); }
+    @Override public Scope facialScope() { return faceScope(); }
     @Override public Scope activeFacia() { return activeFace(); }
     public Face activeFace() { return faceScope().mainScope()? faceScope(): faceScope().metaFace(); }
 
@@ -174,7 +179,7 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
             Typified result = facePackage().faceNamed(baseFace);
             if (Face.class.isInstance(result)) {
                 Face found = (Face)result;
-                if (!found.isSigned()) found.file().parse();
+                found.file().checkParse();
             }
             if (metaNamed) result = nullOr(r -> r.$class(), result);
             reportFace(result, searchName, "peers");
@@ -198,41 +203,36 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     TokenCompiler tokenCompiler;
     TokenCompiler tokenCompiler() {
         if (hasSome(tokenCompiler)) return tokenCompiler;
-        tokenCompiler = new TokenCompiler(this, fileType()); return tokenCompiler; }
+        tokenCompiler = new TokenCompiler(this); return tokenCompiler; }
 
-//    @Override public TokenStream tokenStream() { return tokenCompiler().tokenStream(); }
     @Override public boolean isFile() { return true; }
     @Override public int nestLevel() { return 0; }
     public String notice() { return this.faceScope.notes().notice(); }
 
-    protected Package facePackage = null;
-    public Package facePackage() { return facePackage; }
-    public String packageName() { return facePackage.name(); }
-    public String packagePathname() { return facePackage.pathname(); }
-    public void namePackage(String packageName) { facePackage = Package.named(packageName); }
+    public String packageName() { return facePackage().name(); }
+    public String packagePathname() { return facePackage().pathname(); }
 
-    public boolean needsMagnitudes() { return facePackage.definesBehaviors(); }
-    public boolean needsCollections() { return facePackage.definesBehaviors() || facePackage.definesMagnitudes(); }
+    public boolean needsMagnitudes() { return facePackage().definesBehaviors(); }
+    public boolean needsCollections() { return facePackage().definesBehaviors() || facePackage().definesMagnitudes(); }
 
     String fileType = languageType();
-    public String fileType() { return this.fileType; }
+    @Override public String fileType() { return this.fileType; }
 
-//    static String LanguageType = SourceFileType;
     public static String fileType(String type) {
-        Library.languageType(defaultString(type, SourceFileType));
+        Library.languageType(defaultIfEmpty(type, SourceFileType));
         Logging.logger(File.class).info("processing sources " + languageType()); return type; }
 
     public String sourceFilename() { return initialName() + fileType(); }
     @Override public String targetFilename() { return initialName() + TargetFileType; }
 
     @Override public java.io.File sourceFile() {
-        java.io.File packageFolder = facePackage.sourceFolder();
+        java.io.File packageFolder = facePackage().sourceFolder();
         if (packageFolder == null) return null;
         return new java.io.File(packageFolder, sourceFilename());
     }
 
     public java.io.File makeTargetFolder() { return facePackage().createTarget(); }
-    public java.io.File targetFolder() { return facePackage.targetFolder(); }
+    public java.io.File targetFolder() { return facePackage().targetFolder(); }
     @Override public java.io.File targetFile() {
         java.io.File packageFolder = targetFolder();
         if (packageFolder == null) return null;
@@ -262,7 +262,7 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
         TypeName result = importedTypeNamed(reference);
         if (result != null) return result;
 
-        Typified face = facePackage.faceNamed(name);
+        Typified face = facePackage().faceNamed(name);
         if (face != null) return TypeName.fromOther(face);
 
         return CurrentLib.resolveTypeNamed(reference);
@@ -275,13 +275,15 @@ public class File extends Scope implements UnitFile, TypeName.Resolver, ScopeSou
     void reportWriting() { report("writing " + targetFilename()); }
     @Override public Emission emitScope() { return faceScope().emitScope(emitLibraryScope()); }
     @Override public void writeCode() {
-        makeCurrent();
-        clean();
-        if (hasSome(makeTargetFolder())) { // any failure already reported
-            reportWriting();
-            tokenCompiler().fileParser().writeCode(emitScope());
+        if (faceScope().isSigned()) {
+            makeCurrent();
+            clean();
+            if (hasSome(makeTargetFolder())) { // any failure already reported
+                reportWriting();
+                tokenCompiler().fileParser().writeCode(emitScope());
+            }
+            popScope();
         }
-        popScope();
     }
 
 } // File

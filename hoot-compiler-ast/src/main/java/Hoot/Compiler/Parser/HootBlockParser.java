@@ -41,7 +41,7 @@ public class HootBlockParser implements LanguageParser {
     String injectBlock(String blockCode) { return String.format(loadScript(), blockCode); }
     public void parseClosure() {
         parseTokens();
-        walkResult();
+        walkParsedResults();
     }
 
     
@@ -68,6 +68,7 @@ public class HootBlockParser implements LanguageParser {
     HootParser.CompilationUnitContext resultUnit;
     @Override public ParserRuleContext parseResult() { return resultUnit; }
     @Override public HootFileListener listener() { return new HootFileListener(); }
+    public void walkParsedResults() { treeWalker().walk(listener(), parseResult()); }
 
     CommonTokenStream tokenStream;
     @Override public CommonTokenStream tokenStream() { return tokenStream; }

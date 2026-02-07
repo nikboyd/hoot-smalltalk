@@ -1,6 +1,5 @@
-package Hoot.Compiler.Parser;
+package Smalltalk.Compiler.Parser;
 
-import Hoot.Compiler.Parser.*;
 import Hoot.Runtime.Faces.UnitFile;
 import Hoot.Runtime.Faces.FileParser;
 import static Hoot.Runtime.Functions.Utils.*;
@@ -9,22 +8,22 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
- * Parses Hoot code and provides the resulting AST and token stream.
+ * Parses Smalltalk code and provides the resulting AST and token stream.
  * @author Nik Boyd <nik.boyd@educery.dev>
  */
-public class HootFileParser implements FileParser {
-
-    public HootFileParser() { }
-    @Override public void parseTokens(UnitFile aFile) {
+public class SmalltalkFileParser implements FileParser {
+    
+    public SmalltalkFileParser() { }
+    @Override public void parseTokens(UnitFile aFile) { // order matters
         tokenFile = aFile; tokenStream = createTokenStream();
         parser = createParser(); resultUnit = parser().compilationUnit(); }
 
-    HootParser.CompilationUnitContext resultUnit;
+    SmalltalkParser.CompilationUnitContext resultUnit;
     @Override public ParserRuleContext parseResult() { return resultUnit; }
-    @Override public ParseTreeListener listener() { return new HootFileListener(); }
+    @Override public ParseTreeListener listener() { return new SmalltalkFileListener(); }
 
-    HootParser createParser() { return new HootParser(tokenStream()); }
-    TokenSource createLexer() { return new HootLexer(createInputStream()); }
+    TokenSource createLexer() { return new SmalltalkLexer(createInputStream()); }
+    SmalltalkParser createParser() { return new SmalltalkParser(tokenStream()); }
     CommonTokenStream createTokenStream() { return new CommonTokenStream(createLexer()); }
 
     @Override public CommonTokenStream tokenStream() { return tokenStream; }
@@ -34,7 +33,7 @@ public class HootFileParser implements FileParser {
     UnitFile tokenFile; // cached file
 
     @Override public boolean wasParsed() { return hasOne(parser()); }
-    HootParser parser() { return parser; }
-    HootParser parser; // cached parser
+    SmalltalkParser parser() { return parser; }
+    SmalltalkParser parser; // cached parser
 
-} // HootFileParser
+} // SmalltalkFileParser

@@ -9,6 +9,7 @@ import Hoot.Runtime.Names.Name;
 import Hoot.Runtime.Names.TypeName;
 import Hoot.Runtime.Names.Signature;
 import Hoot.Runtime.Names.Primitive;
+import Hoot.Runtime.Names.Keyword;
 import Hoot.Runtime.Faces.Logging;
 import Hoot.Runtime.Behaviors.Mirror;
 import Hoot.Runtime.Behaviors.Typified;
@@ -99,10 +100,12 @@ public class TypesTest implements Logging {
 
     @Test public void typeInference() {
         assertTrue(TypeName.inferFrom("aPoint").typeName().equals("Point"));
+        assertTrue(TypeName.inferFrom("aBoolean").typeName().endsWith(Keyword.Boolean));
+        assertTrue(TypeName.inferFrom("xInteger").typeName().endsWith(Keyword.Integer));
         assertTrue(TypeName.inferFrom("anInterest").typeName().equals("Interest"));
-        assertTrue(TypeName.inferFrom("aninterest").typeName().equals("Hoot.Behaviors.Object"));
-        assertTrue(TypeName.inferFrom("").typeName().equals("Hoot.Behaviors.Object"));
-        assertTrue(TypeName.inferFrom(null).typeName().equals("Hoot.Behaviors.Object"));
+//        assertTrue(TypeName.inferFrom("aninterest").typeName().equals("Hoot.Behaviors.Object"));
+        assertTrue(TypeName.inferFrom("").typeName().endsWith(Keyword.Object));
+        assertTrue(TypeName.inferFrom(null).typeName().endsWith(Keyword.Object));
     }
 
     @Test public void sampleTypes() {

@@ -8,7 +8,6 @@ import Hoot.Runtime.Faces.Named;
 import Hoot.Runtime.Names.TypeName;
 import Hoot.Runtime.Behaviors.Mirror;
 import Hoot.Runtime.Behaviors.Typified;
-import Hoot.Runtime.Emissions.Item;
 import Hoot.Runtime.Faces.UnitFile;
 import Hoot.Runtime.Faces.Logging;
 import static Hoot.Runtime.Functions.Utils.*;
@@ -20,6 +19,8 @@ import static Hoot.Runtime.Names.Operator.Dot;
 import static Hoot.Runtime.Names.Primitive.Blank;
 import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
+import Hoot.Runtime.Emissions.Item;
+import Hoot.Runtime.Emissions.NamedItem;
 import static Hoot.Runtime.Exceptions.ExceptionBase.*;
 import static Hoot.Runtime.Names.Name.removeTail;
 import org.apache.commons.lang3.SystemUtils;
@@ -32,11 +33,12 @@ import org.codehaus.plexus.util.StringUtils;
  * @see "Copyright 1999,2025 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
-public class Package implements Named, Logging {
+public class Package extends NamedItem implements Logging {
 
     public Package() { this(Empty); }
-    public Package(String packageName) { super(); name = packageName; }
+    public Package(String packageName) { super(null); name = packageName; }
     public Package(String packageName, String folderPath) { this(packageName); baseFolder = folderPath; }
+    public static Package from(Item it) { return (Package)it.container(); }
 
     String name;
     @Override public String name() { return name; }
@@ -76,8 +78,7 @@ public class Package implements Named, Logging {
 
         results.putAll(createPeers());
         results.values().forEach(f -> f.addStandardImports());
-        results.values().forEach(f -> addFace((Typified)((Item)f).facialScope()));
-        results.values().forEach(f -> f.parse());
+        results.values().forEach(f -> f.parse()); // also registers face
 
         return results;
     }

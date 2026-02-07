@@ -26,12 +26,16 @@ public class Block extends Scope implements Signed, ClosureSource {
     public Block(Scope aScope) { super(aScope); checkScope(); }
     public static Block currentBlock() { return from(Scope.currentBlock()); }
     public static Block from(Item item) { return nullOr(b -> (Block)b, item); }
+    public static Block with(KeywordSignature s, BlockContent c) {
+        Block b = new Block().makeCurrent(); 
+        b.signature(s); b.signature().defineLocals(); 
+        b.content(c); return b; }
+
     public static Block emptyBlock() {
         Block result = new Block();
         result.signature(KeywordSignature.emptyNiladic());
         result.content(BlockContent.emptyBlock());
-        return result;
-    }
+        return result; }
 
     @Override public void clean() { sig.clean(); content.clean(); super.clean(); }
     @Override public Block makeCurrent() { return (Block)Scope.makeCurrentBlock(this); }
@@ -59,6 +63,7 @@ public class Block extends Scope implements Signed, ClosureSource {
     protected BlockContent content;
     public BlockContent content() { return this.content; }
     public void content(BlockContent content) { if (hasOne(content)) this.content = content; }
+    public Block acquireStatements() { content().acquireStatements(); return this; }
 
     protected BasicSignature sig;
     public BasicSignature signature() { return sig; }

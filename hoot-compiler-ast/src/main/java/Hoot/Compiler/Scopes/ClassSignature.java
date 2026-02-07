@@ -37,7 +37,6 @@ public class ClassSignature extends TypeHeritage implements ScopeSource {
 
     @Override public ClassSignature metaSignature() {
         ClassSignature result = new ClassSignature();
-        if (faceScope().isMetaclassBase()) return result;
         result.heritage = TypeList.withDetails(types().listMetaTypes());
         result.superClass = superMetaType();
         result.subtype = DetailedType.MetaClass;

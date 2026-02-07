@@ -131,10 +131,12 @@ public class Keyword {
     public static final String String = "String";
     public static final String Symbol = "Symbol";
 
+    public static final String Number = "Number";
     public static final String Fixed = "Fixed";
     public static final String Float = "Float";
     public static final String Double = "Double";
     public static final String Integer = "Integer";
+    public static final String Fraction = "Fraction";
     public static final String Character = "Character";
     public static final String SmallInteger = "SmallInteger";
 

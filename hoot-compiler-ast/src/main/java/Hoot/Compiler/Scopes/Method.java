@@ -13,6 +13,7 @@ import static Hoot.Runtime.Notes.Note.OverrideNote;
 import static Hoot.Runtime.Names.Keyword.Colon;
 
 import Hoot.Compiler.Expressions.*;
+import Hoot.Runtime.Notes.Note;
 
 /**
  * A method.
@@ -34,16 +35,20 @@ public class Method extends Block {
     protected void noteOverride() { if (this.needsOverrideNote()) notes().note(OverrideNote); }
     public boolean needsOverrideNote() { return overridesHeritage() || matchesStandardOverride(); }
 
+    public void construct(Construct c) { content().add(c); }
     @Override public Method makeCurrent() { return (Method)Scope.makeCurrentBlock(this); }
 //    @Override public Method makeCurrent() { super.makeCurrent(); return this; }
-    public static Method currentMethod() { return from(Scope.findCurrentMethod()); }
+    public static Method currentMethod() { Scope s = Scope.findCurrentMethod(); return hasNo(s)? null: from(s); }
     public static Method from(Item item) { return nullOr(m -> (Method)m, item.methodScope()); }
-    public void construct(Construct c) { content().add(c); }
+    public static Method with(BasicSignature s, BlockContent c) {
+        Method m = new Method().makeCurrent(); m.signature(s); 
+        m.content(c); return m; }
 
     @Override public String faceName() { return face().typeName(); }
     @Override public String description() { return isSigned() ? signature().description() : faceName() + ">>unknown"; }
     public String scopeID() { return Quote + description() + Quote; }
 
+    public void sign(BasicSignature s, List<Note> notes) { signature(s); notes().noteAll(notes); }
     @Override public void signature(BasicSignature s) {
         super.signature(s);
         this.sig.mergeDetails();
@@ -51,9 +56,10 @@ public class Method extends Block {
         addLocal(Variable.exitFrom(this, UnarySequence.exitFrom(this)));
         addLocal(Variable.frame(this, Expression.frameNew()));
     }
+    
+    @Override public Method acquireStatements() { return (Method)super.acquireStatements(); }
 
     public boolean isVoid() { return notes().isVoid() || signature().returnsVoid(); }
-
     @Override public boolean isMethod() { return true; }
     @Override public boolean isAbstract() { return (face().isInterface() && this.isEmpty()) ? true : super.isAbstract(); }
     @Override public boolean isConstructor() { return name().equals(face().defaultName()) || Metaclass.equals(name()); }

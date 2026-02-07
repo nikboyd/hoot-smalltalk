@@ -1,12 +1,8 @@
 package Hoot.Runtime.Faces;
 
-import java.util.*;
-import org.apache.commons.lang3.StringUtils;
-
 import Hoot.Runtime.Emissions.EmissionSource;
 import static Hoot.Runtime.Names.Keyword.Self;
 import static Hoot.Runtime.Names.Operator.Dot;
-import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Faces.Logging.*;
 
 /**
@@ -21,6 +17,7 @@ public interface Named extends Valued {
     default CharSequence name() { return EmissionSource.Empty; } // implementors should override
     default String shortName() { return name().toString(); } // implementors should override
     default String fullName() { return name().toString(); } // implementors should override
+    default void register() {} // implementors should override as needed
 
     default int nestLevel() { return 0; }
     default boolean isSelfish() { return Self.equals(shortName()); }

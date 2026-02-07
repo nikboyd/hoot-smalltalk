@@ -20,8 +20,10 @@ public class Statement extends Item implements ScopeSource, Resulting {
     protected Statement() { this(Scope.currentBlock()); }
     protected Statement withItem(Operand item) { this.item = item.inside(this); return this; }
     public static Statement with(Operand item) { return (hasNo(item))? null: new Statement().withItem(item); }
-    @Override public Block block() { return BlockContent.from(container).block(); }
-    @Override public Method method() { return block().method(); }
+
+    @Override public Block block() { return nullOr(c -> c.block(), content()); }
+    @Override public Method method() { return nullOr(c -> c.method(), content()); }
+    BlockContent content() { return findParent(BlockContent.class); }
 
     protected Operand item;
     public boolean isConstruct() { return item.isConstruct(); }
@@ -31,6 +33,7 @@ public class Statement extends Item implements ScopeSource, Resulting {
     @Override public boolean isFramed() { return falseOr(m -> m.needsFrame(), method()); }
     @Override public void clean() { super.clean(); this.item.clean(); }
 
+    public boolean insidePrimitiveMethod() { return falseOr(m -> m.isPrimitive(), method()); }
     public boolean parentProducesPredicate() { return falseOr(p -> p.producesPredicate(), findParent(Statement.class)); }
     public boolean producesPredicate() { return item.producesPredicate(); }
     public boolean throwsException() { return this.item.throwsException(); }
@@ -54,7 +57,7 @@ public class Statement extends Item implements ScopeSource, Resulting {
     }
 
     private Emission emitStatement() {
-        if (method().isPrimitive()) {
+        if (insidePrimitiveMethod()) {
             return this.item.needsStatement() ?
                 this.item.emitStatement(this.item.emitPrimitive()) :
                 this.item.emitPrimitive();
@@ -63,15 +66,13 @@ public class Statement extends Item implements ScopeSource, Resulting {
         return this.item.emitStatement(); }
 
     private Emission emitResult() {
-        if (this.item.hasCascades()) {
-            return this.item.emitOperand();
-        }
-        return method().isPrimitive() ?
+        if (this.item.hasCascades()) return this.item.emitOperand();
+        return insidePrimitiveMethod() ?
                 this.item.emitResult(block().emitResultType(), this.item.emitPrimitive()) :
                 this.item.emitResult(block().emitResultType(), this.item.emitOperand()); }
 
     private Emission emitOperand() {
-        return method().isPrimitive() ?
+        return insidePrimitiveMethod() ?
                 this.item.emitPrimitive() :
                 this.item.emitOperand(); }
 

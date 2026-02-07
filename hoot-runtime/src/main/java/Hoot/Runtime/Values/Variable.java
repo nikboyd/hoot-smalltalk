@@ -157,6 +157,7 @@ public class Variable extends Operand implements ValueSource {
     @Override public void makeTransient() { notes().makeTransient(); }
     public boolean needsAccess() { return !notes().hasAccess(); }
 
+    public boolean isArgument() { return containerScope().isBlock(); }
     public boolean isMember() { return containerScope().isFacial(); }
     public boolean isDefined() { return referencesMember() || referencesLocal(); }
     public String scopeDescription() { return isMember() ? "member" : "local"; }
@@ -190,11 +191,22 @@ public class Variable extends Operand implements ValueSource {
     public Variable referencedMember() {
         return nullOr(s -> s.localNamed(name()), findFirst(faceHeritage(), fs -> fs.resolves(this))); }
 
+    Typified activeType() { return (Typified)activeFacia(); }
     public List<Typified> faceHeritage() {
         List<Typified> results = emptyList(Typified.class);
-        results.add((Typified)activeFacia());
-        results.addAll(activeFacia().simpleHeritage());
+        if (hasSome(activeFacia())) {
+            results.add(activeType());
+            results.addAll(faciaHeritage());
+        }
         return results; }
+
+//    String missingScope() { return isArgument()? methodScope().description(): activeFacia().name(); }
+    List<Typified> faciaHeritage() {
+        List<Typified> related = activeFacia().simpleHeritage();
+//        if (related.isEmpty() && activeFacia().hasHeritage())
+//            report("warning! missing face heritage "+missingScope());
+        return related;
+    }
 
     public Emission variableNotes() { return emitSequence(notes().variableNotesOnlyDecor()); }
     public Emission argumentNotes() { return emitSequence(notes().argumentNotesOnlyDecor()); }

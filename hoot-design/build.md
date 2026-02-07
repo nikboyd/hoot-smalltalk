@@ -1,7 +1,8 @@
 #### Building from Sources
 
 First, prepare your system with the [appropriate tools](#tools-needed).
-Then, clone this repository, and run the following shell command in the base project folder:
+Then, clone this repository, and<br>
+run the following shell command in the base project folder:
 
 ```
 mvn -U -B clean install
@@ -15,9 +16,9 @@ This also resembles how the associated [build pipeline](tools.md#build-and-cover
 
 To build and run Hoot Smalltalk, you first need to install
 
-* Java SE [JDK 21][jdk21] is now recommended, but
-* Hoot Smalltalk _requires_ at least Java SE [JDK 8][jdk8].
-* You'll also need [Maven][maven], 
+* Java SE [JDK 25][jdk25] is now recommended, but
+* Hoot Smalltalk now _requires_ at least Java SE [JDK 17][jdk17].
+* You'll also need [Maven][maven],
 * Maven [version 3.9.5][maven-395] is recommended.
 
 This repo provides a [shell script][install-tools] for installing the required Java and Maven
@@ -27,7 +28,7 @@ versions on Ubuntu using **apt-get**.
 
 * Ensure you have set **JAVA_HOME** for the JDK: the Hoot compiler _needs_ this.
 * Don't muddy the waters! Always start _fresh_,  ...
-* Empty your local **.m2/repository** when switching JDK versions. 
+* Empty your local **.m2/repository** when switching JDK versions.
 * Use small cycles when writing new code. Start with working code, then ...
 * [SOP][sop]: write a test, write new code, test the code, ...
 * Repeat until the test passes and you have working code again.
@@ -55,7 +56,7 @@ You can also review the uploaded [test results][hub-coverage].
 
 The initial target platforms for Hoot Smalltalk include [Java][java] (and its [JVM][jvm]),
 plus [.Net][dot-net] (and its [CLR][clr]).
-If you want to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], see the 
+If you want to run Hoot Smalltalk on the [.Net][dot-net] [CLR][clr], see the
 notes about [additional tools][hoot-dotnet], which require JDK 8.
 
 Hoot Smalltalk was originally developed with Java SE [JDK 8][jdk8], partly due to its
@@ -80,7 +81,7 @@ That said,
 
 This note was updated in mid Oct 2023.
 
-As of now, Hoot Smalltalk still _works fine_ with JDK 8-17.
+As of now, Hoot Smalltalk still _works fine_ with JDK 17-25.
 However, with the advent of [GraalVM][graal-vm] and discovery of its support for polyglot programming and
 language development using [Truffle][truffle], all future development of Hoot Smalltalk will be shifting focus
 to integrate with those tools.
@@ -109,7 +110,7 @@ about how this is currently supported.
 | <p align="center">[Tools Used][tools]</p><img width="250" height="1" />  | <p align="center">[Introduction][intro]</p><img width="250" height="1" /> | <p align="center">[Features][features]</p><img width="250" height="1" />  |
 
 ```
-Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work 
+Copyright 2010,2025 Nikolas S Boyd. Permission is granted to copy this work
 provided this copyright statement is retained in all copies.
 ```
 
@@ -125,6 +126,7 @@ provided this copyright statement is retained in all copies.
 [jdk11]: https://openjdk.java.net/projects/jdk/11/
 [jdk17]: https://openjdk.org/projects/jdk/17/
 [jdk21]: https://openjdk.org/projects/jdk/21/
+[jdk25]: https://openjdk.org/projects/jdk/25/
 [java-lts]: https://www.oracle.com/technetwork/java/java-se-support-roadmap.html
 [java]: https://en.wikipedia.org/wiki/Java_%28programming_language%29 "Java"
 [jvm]: https://en.wikipedia.org/wiki/Java_virtual_machine "Java Virtual Machine"

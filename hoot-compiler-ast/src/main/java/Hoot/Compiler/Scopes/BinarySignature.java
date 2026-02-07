@@ -16,6 +16,14 @@ import static Hoot.Runtime.Functions.Utils.*;
 public class BinarySignature extends BasicSignature {
 
     public BinarySignature() { super(); }
+    public BinarySignature(Block b) { super(b); }
+    public static BinarySignature with(Method m, DetailedType resultType, List<Variable> args, Operator op) {
+        BinarySignature result = new BinarySignature(m);
+        result.resultType = resultType;
+        result.args.withAll(args);
+        result.op = op;
+        return result; }
+
     public static BinarySignature with(DetailedType resultType, List<Variable> args, Operator op) {
         BinarySignature result = new BinarySignature();
         result.resultType = resultType;

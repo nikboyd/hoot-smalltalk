@@ -12,6 +12,13 @@ import Hoot.Runtime.Notes.*;
 public class UnarySignature extends BasicSignature {
 
     public UnarySignature() { super(); }
+    public UnarySignature(Block b) { super(b); }
+    public static UnarySignature with(Method m, DetailedType resultType, String selector) {
+        UnarySignature result = new UnarySignature(m);
+        result.resultType = resultType;
+        result.selector = selector;
+        return result; }
+
     public static UnarySignature with(DetailedType resultType, String selector) {
         UnarySignature result = new UnarySignature();
         result.resultType = resultType;

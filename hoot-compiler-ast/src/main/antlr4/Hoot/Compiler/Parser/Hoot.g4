@@ -3,7 +3,7 @@
 // Permission is granted to copy this work provided this copyright statement is retained in all copies.
 //==================================================================================================
 
-grammar Hoot; // resources/antlr4/Hoot/Compiler/Parser
+grammar Hoot; // hoot-compiler-ast/src/main/resources/antlr4/Hoot/Compiler/Parser
 
 //==================================================================================================
 // file scopes
@@ -331,11 +331,11 @@ fragment Letter : UpperCase | LowerCase ;
 
 ConstantCharacter : '$' . ;
 ConstantSymbol    : Pound SymbolString ;
-ConstantString    : QuotedString ConstantString? ;
-CodeComment       : QuotedComment -> channel(HIDDEN) ;
+ConstantString    : SingleString ConstantString? ;
+CodeComment       : DoubleString -> channel(HIDDEN) ;
 
-fragment QuotedString  : SingleQuote .*? SingleQuote ;
-fragment QuotedComment : DoubleQuote .*? DoubleQuote ;
+fragment SingleString : SingleQuote .*? SingleQuote ;
+fragment DoubleString : DoubleQuote .*? DoubleQuote ;
 
 fragment SymbolString
 : KeywordHead+ KeywordTail*

@@ -17,13 +17,13 @@ import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Faces.Logging.*;
 import static Hoot.Runtime.Names.Operator.*;
 
-import static Hoot.Runtime.Names.Keyword.Array;
 import static Hoot.Runtime.Names.Keyword.Arrayed;
 import static Hoot.Runtime.Names.Keyword.Behaviors;
 import static Hoot.Runtime.Names.Keyword.Collections;
+import static Hoot.Runtime.Names.Keyword.Magnitudes;
 import static Hoot.Runtime.Names.Keyword.TypeSuffix;
-import static Hoot.Runtime.Names.Keyword.Object;
 import static Hoot.Runtime.Names.Keyword.Hoot;
+
 import static Hoot.Runtime.Names.Name.removeTail;
 import static Hoot.Runtime.Names.Primitive.Blank;
 import static Hoot.Runtime.Notes.Decor.Generic;
@@ -105,14 +105,27 @@ public class TypeName implements Named {
         if (isEmpty(variableName)) return RootType();
         if (hasSome(s) && s.isFacial()) {
             if (Typified.from(s).matchesTail(variableName))
+                // variable name matches scope name
                 return TypeName.fromName(s.name());
         }
+
         for (String prefix : Prefixes) {
             if (variableName.startsWith(prefix)) {
                 String result = variableName.substring(prefix.length());
-                if (isCapitalized(result)) return TypeName.fromName(result);
+                if (isCapitalized(result))
+                    // matches arg naming convention
+                    return TypeName.fromName(result);
             }
         }
+
+        for (TypeName n : TypeCache.values()) {
+            if (!n.isUnknown() && variableName.endsWith(n.tailMost()) && 
+                Character.isLowerCase(variableName.charAt(0))) {
+                // matches arg naming conventions
+                return n;
+            }
+        }
+
         return RootType();
     }
 
@@ -303,15 +316,30 @@ public class TypeName implements Named {
     public static final TypeName VoidType = TypeName.from(void.class);
     public static final TypeName EmptyType = new TypeName(emptyList(String.class), emptyList(String.class));
     static final HashMap<String, TypeName> TypeCache = emptyMap(TypeName.class);
+    static void register(TypeName n) { TypeCache.put(n.typeName(), n); }
     static {
+        register(VoidType);
+        register(ObjectType);
+        register(RootType());
+        register(ArrayType());
+        register(StringType());
+//        register(NumberType());
+//        register(IntegerType());
+//        register(FloatType());
+//        register(FractionType());
+
         TypeCache.put(Empty, EmptyType);
-        TypeCache.put(VoidType.typeName(), VoidType);
-        TypeCache.put(ObjectType.typeName(), ObjectType);
     }
 
     public static TypeName ObjectType() { return TypeName.fromCache(JavaRoot.getCanonicalName()); }
-    public static TypeName RootType() { return TypeName.fromCache(Hoot, Behaviors, Object); }
-    public static TypeName ArrayType() { return TypeName.fromCache(Hoot, Collections, Array); }
+    public static TypeName RootType() { return TypeName.fromCache(Hoot, Behaviors, Keyword.Object); }
+    public static TypeName ArrayType() { return TypeName.fromCache(Hoot, Collections, Keyword.Array); }
+    public static TypeName StringType() { return TypeName.fromCache(Hoot, Collections, Keyword.String); }
+
+    public static TypeName NumberType() { return TypeName.fromCache(Hoot, Magnitudes, Keyword.Number); }
+    public static TypeName IntegerType() { return TypeName.fromCache(Hoot, Magnitudes, Keyword.Integer); }
+    public static TypeName FloatType() { return TypeName.fromCache(Hoot, Magnitudes, Keyword.Float); }
+    public static TypeName FractionType() { return TypeName.fromCache(Hoot, Magnitudes, Keyword.Fraction); }
 
     /**
      * Resolves a type from its references.
