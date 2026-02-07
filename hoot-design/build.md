@@ -1,7 +1,8 @@
 #### Building from Sources
 
 First, prepare your system with the [appropriate tools](#tools-needed).
-Then, clone this repository, and run the following shell command in the base project folder:
+Then, clone this repository, and<br>
+run the following shell command in the base project folder:
 
 ```
 mvn -U -B clean install
