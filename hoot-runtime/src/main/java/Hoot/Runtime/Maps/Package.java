@@ -30,7 +30,7 @@ import org.codehaus.plexus.util.StringUtils;
  * A package of class definitions.
  *
  * @author nik <nikboyd@sonic.net>
- * @see "Copyright 1999,2025 Nikolas S Boyd."
+ * @see "Copyright 1999,2026 Nikolas S Boyd."
  * @see "Permission is granted to copy this work provided this copyright statement is retained in all copies."
  */
 public class Package extends NamedItem implements Logging {
