@@ -288,6 +288,7 @@ public class Name {
     }
 
     public static String removeTail(String name, String tail) {
+        if (hasNo(name)) return "";
         if (!name.endsWith(tail)) return name;
         String result = name.substring(0, name.length() - tail.length());
         if (result.endsWith(Dot)) result = result.substring(0, result.length() - 1);

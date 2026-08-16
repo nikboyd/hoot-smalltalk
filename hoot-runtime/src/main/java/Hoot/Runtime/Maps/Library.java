@@ -254,11 +254,11 @@ public class Library implements TypeName.Resolver {
     public static String languageType() { return LanguageType; }
     public static String languageType(String type) { LanguageType = type; return type; }
     public static FilenameFilter sourceFileFilter() {
-        return ((File dir, String name) -> name.endsWith(languageType())); }
+        return ((File dir, String name) -> hasSome(name) && name.endsWith(languageType())); }
 
     public static final String TargetFileType = ".java";
     public static FilenameFilter TargetFileFilter =
-        ((File dir, String name) -> name.endsWith(TargetFileType));
+        ((File dir, String name) -> hasSome(name) && name.endsWith(TargetFileType));
 
     static final String DiscoveryReport = "%s found %d faces";
     public void reportFacesWhen(String libName) { if (whenSource(libName)) reportFaces(); }

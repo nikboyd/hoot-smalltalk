@@ -50,8 +50,8 @@
         <version.janino>3.1.12</version.janino>
 
         <version.spring-boot>2.5.15</version.spring-boot>
-        <version.slf4j>1.7.30</version.slf4j>
-        <version.log4j>2.20.0</version.log4j>
+        <version.slf4j>1.7.36</version.slf4j>
+        <version.log4j>2.25.5</version.log4j>
 
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>

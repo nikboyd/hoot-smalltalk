@@ -209,7 +209,7 @@ public class Package extends NamedItem implements Logging {
     }
 
     public static final String WildCard = ".*";
-    public static boolean namesAllFaces(String importName) { return importName.endsWith(WildCard); }
+    public static boolean namesAllFaces(String importName) { return hasSome(importName) && importName.endsWith(WildCard); }
     public static String nameWithout(String tail, String name) { return removeTail(name, tail); }
     public static String nameFrom(File baseFolder, File packageFolder) {
         return nameFrom(packageFolder.getPath().substring(baseFolder.getPath().length())); }

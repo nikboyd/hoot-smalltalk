@@ -22,7 +22,7 @@ public class ZipMap extends PathMap {
      * @param pathname the pathname of a potential archive file.
      */
     public static boolean supports(String pathname) {
-        return matchAny(FileTypes, type -> pathname.endsWith(type)); }
+        return matchAny(FileTypes, type -> hasSome(pathname) && pathname.endsWith(type)); }
 
     public static final String[] SupportedFileTypes = { ".zip", ".ZIP", ".jar", ".JAR" };
     public static final List<String> FileTypes = wrap(SupportedFileTypes);

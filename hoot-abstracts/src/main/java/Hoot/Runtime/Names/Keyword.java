@@ -44,7 +44,7 @@ public class Keyword {
     public String methodName() {
         if (words.isEmpty()) return Empty;
         String result = translate();
-        while (result.endsWith(Under)) result = result.substring(0, result.length() - 1);
+        while (hasSome(result) && result.endsWith(Under)) result = result.substring(0, result.length() - 1);
         return (MethodMap.containsKey(result) ? MethodMap.get(result) : result);
     }
 

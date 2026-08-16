@@ -78,7 +78,7 @@ public class MethodCache implements Valued {
 
         // determine method argument classes
         if (arguments == null) {
-            if (selector.endsWith(IfAbsent)) {
+            if ((selector != null) && selector.endsWith(IfAbsent)) {
                 arguments = classesWithBlock(argumentCount, 1);
             }
             else {
@@ -126,7 +126,7 @@ public class MethodCache implements Valued {
 
     static final String IfAbsent = ":ifAbsent:";
     protected boolean qualifiesAsAbsentia(String methodName, Class[] types) {
-        if (!methodName.endsWith(IfAbsent)) return false;
+        if (hasSome(methodName) && !methodName.endsWith(IfAbsent)) return false;
 
         Class[] arguments = classesWithBlock(types.length, 1);
         for(int i = 0; i < types.length; i++) {
