@@ -3,7 +3,6 @@ package Hoot.Compiler.Mojo;
 import java.io.*;
 import java.util.*;
 import Hoot.Runtime.Faces.Logging;
-import static Hoot.Runtime.Functions.Utils.*;
 
 import org.apache.maven.plugin.*;
 import org.apache.maven.plugins.annotations.*;

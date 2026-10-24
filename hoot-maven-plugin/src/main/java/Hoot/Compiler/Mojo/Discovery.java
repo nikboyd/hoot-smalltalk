@@ -16,6 +16,7 @@ import org.apache.maven.repository.internal.*;
 import Hoot.Runtime.Faces.Logging;
 import static Hoot.Runtime.Functions.Utils.*;
 import static Hoot.Runtime.Functions.Exceptional.*;
+import org.eclipse.aether.artifact.AbstractArtifact;
 
 /**
  * Discovers locally available library JARs cached by Maven.
@@ -27,7 +28,7 @@ public class Discovery implements Logging {
 
     List<RemoteRepository> remotes = emptyList(RemoteRepository.class);
     List<RemoteRepository> remotes() { return this.remotes; }
-    Artifact buildArtifact(String partName) { return new DefaultArtifact(partName); }
+    AbstractArtifact buildArtifact(String partName) { return new DefaultArtifact(partName); }
     ArtifactRequest buildRequest(Artifact art) { return new ArtifactRequest(art, remotes(), null); }
     ArtifactRequest requestArtifact(String partName) { return buildRequest(buildArtifact(partName)); }
 

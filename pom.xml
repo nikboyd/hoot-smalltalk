@@ -53,6 +53,9 @@
         <version.slf4j>1.7.36</version.slf4j>
         <version.log4j>2.25.5</version.log4j>
 
+        <version.maven-api>3.9.16</version.maven-api>
+        <version.maven-annotate>3.9.0</version.maven-annotate>
+        <version.maven-resolver>1.9.27</version.maven-resolver>
         <version.maven.war>3.2.3</version.maven.war>
         <version.maven.asm>3.1.1</version.maven.asm>
         <version.maven-plugin>3.9.0</version.maven-plugin>
@@ -234,25 +237,51 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-resolver-provider</artifactId>
+                <version>${version.maven-api}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-api</artifactId>
+                <version>${version.maven-resolver}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-spi</artifactId>
+                <version>${version.maven-resolver}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-supplier</artifactId>
+                <version>${version.maven-resolver}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-impl</artifactId>
+                <version>${version.maven-resolver}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-connector-basic</artifactId>
+                <version>${version.maven-resolver}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.maven.resolver</groupId>
                 <artifactId>maven-resolver-transport-file</artifactId>
-                <version>1.8.1</version>
+                <version>${version.maven-resolver}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.resolver</groupId>
                 <artifactId>maven-resolver-transport-http</artifactId>
-                <version>1.8.1</version>
+                <version>${version.maven-resolver}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.resolver</groupId>
                 <artifactId>maven-resolver-transport-wagon</artifactId>
-                <version>1.8.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-resolver-provider</artifactId>
-                <version>3.8.6</version>
+                <version>${version.maven-resolver}</version>
             </dependency>
 
             <dependency>

@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import Hoot.Runtime.Names.Name;
-import Hoot.Runtime.Faces.Named;
 import Hoot.Runtime.Names.TypeName;
 import Hoot.Runtime.Behaviors.Mirror;
 import Hoot.Runtime.Behaviors.Typified;
@@ -16,7 +15,6 @@ import static Hoot.Runtime.Maps.Library.*;
 import static Hoot.Runtime.Maps.ClassPath.*;
 import static Hoot.Runtime.Names.Keyword.*;
 import static Hoot.Runtime.Names.Operator.Dot;
-import static Hoot.Runtime.Names.Primitive.Blank;
 import static Hoot.Runtime.Names.Primitive.Dollar;
 import static Hoot.Runtime.Behaviors.HootRegistry.*;
 import Hoot.Runtime.Emissions.Item;
@@ -24,7 +22,7 @@ import Hoot.Runtime.Emissions.NamedItem;
 import static Hoot.Runtime.Exceptions.ExceptionBase.*;
 import static Hoot.Runtime.Names.Name.removeTail;
 import org.apache.commons.lang3.SystemUtils;
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A package of class definitions.

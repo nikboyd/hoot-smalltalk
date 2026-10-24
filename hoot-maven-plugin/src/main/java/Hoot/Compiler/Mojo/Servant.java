@@ -43,12 +43,16 @@ public class Servant implements Logging {
     static final String CompilerSpec = "hoot-smalltalk:hoot-compiler-boot:";
     Artifact locateArtifact() { return Discovery.lookup(CompilerSpec + version()).getArtifact(); }
     String locateCompiler() { return locateArtifact().getFile().getAbsolutePath(); }
+    
+    static final String BootFile = "hoot-compiler-boot";
+    static final String BootSpec = "%s/target/%s-%s.jar";
+    String buildSpec() { return String.format(BootSpec, BootFile, BootFile, version()); }
 
     static final String Quote = "\"";
     static final String WinShell = "cmd.exe";
     static final String WinCommand = "'%%JAVA_HOME%%\\bin\\java' -jar %s";
     String buildWinCommand(String... args) {
-        String result = format(WinCommand, locateCompiler()).replace("'", Quote);
+        String result = format(WinCommand, buildSpec()).replace("'", Quote);
         for (String s : args) { result += " " + s; }
         report("running "+result);
         return result; }
@@ -56,7 +60,7 @@ public class Servant implements Logging {
     static final String Shell = "/bin/sh";
     static final String JavaCommand = "$JAVA_HOME/bin/java -jar %s";
     String buildJavaCommand(String... args) {
-        String result = format(JavaCommand, locateCompiler());
+        String result = format(JavaCommand, buildSpec());
         for (String s : args) { result += " " + s; }
         report("running "+result);
         return result; }
